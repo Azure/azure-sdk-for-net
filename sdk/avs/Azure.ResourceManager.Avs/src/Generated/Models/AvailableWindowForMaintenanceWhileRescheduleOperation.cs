@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> Time window in which Customer can reschedule maintenance. </summary>
-    public partial class AvailableWindowForMaintenanceWhileRescheduleOperation : RescheduleOperationConstraint
+    public partial class AvailableWindowForMaintenanceWhileRescheduleOperation : AvsRescheduleOperationConstraint
     {
         /// <summary> Initializes a new instance of <see cref="AvailableWindowForMaintenanceWhileRescheduleOperation"/>. </summary>
         internal AvailableWindowForMaintenanceWhileRescheduleOperation()

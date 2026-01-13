@@ -12,19 +12,19 @@ using Azure.ResourceManager.Avs;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> The properties of a VMware Firewall license. </summary>
-    public partial class VmwareFirewallLicenseProperties : LicenseProperties
+    public partial class VMwareFirewallLicenseProperties : AvsLicenseProperties
     {
-        /// <summary> Initializes a new instance of <see cref="VmwareFirewallLicenseProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareFirewallLicenseProperties"/>. </summary>
         /// <param name="cores"> Number of cores included in the license, measured per hour. </param>
         /// <param name="endOn"> UTC datetime when the license expires. </param>
-        public VmwareFirewallLicenseProperties(int cores, DateTimeOffset endOn) : base(LicenseKind.VmwareFirewall)
+        public VMwareFirewallLicenseProperties(int cores, DateTimeOffset endOn) : base(LicenseKind.VMwareFirewall)
         {
             Cores = cores;
             EndOn = endOn;
-            Labels = new ChangeTrackingList<Label>();
+            Labels = new ChangeTrackingList<AvsLicenseLabel>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VmwareFirewallLicenseProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareFirewallLicenseProperties"/>. </summary>
         /// <param name="kind"> License kind. </param>
         /// <param name="provisioningState"> The state of the license provisioning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="broadcomSiteId"> The Broadcom site ID associated with the license. </param>
         /// <param name="broadcomContractNumber"> The Broadcom contract number associated with the license. </param>
         /// <param name="labels"> Additional labels passed through for license reporting. </param>
-        internal VmwareFirewallLicenseProperties(LicenseKind kind, LicenseProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string licenseKey, int cores, DateTimeOffset endOn, string broadcomSiteId, string broadcomContractNumber, IList<Label> labels) : base(kind, provisioningState, additionalBinaryDataProperties)
+        internal VMwareFirewallLicenseProperties(LicenseKind kind, AvsLicenseProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string licenseKey, int cores, DateTimeOffset endOn, string broadcomSiteId, string broadcomContractNumber, IList<AvsLicenseLabel> labels) : base(kind, provisioningState, additionalBinaryDataProperties)
         {
             LicenseKey = licenseKey;
             Cores = cores;
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.Avs.Models
         public string BroadcomContractNumber { get; set; }
 
         /// <summary> Additional labels passed through for license reporting. </summary>
-        public IList<Label> Labels { get; }
+        public IList<AvsLicenseLabel> Labels { get; }
     }
 }

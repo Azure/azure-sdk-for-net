@@ -344,10 +344,10 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Avs.LicenseData"/> instance for mocking. </returns>
-        public static LicenseData LicenseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LicenseProperties properties = default)
+        /// <returns> A new <see cref="Avs.AvsLicenseData"/> instance for mocking. </returns>
+        public static AvsLicenseData AvsLicenseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AvsLicenseProperties properties = default)
         {
-            return new LicenseData(
+            return new AvsLicenseData(
                 id,
                 name,
                 resourceType,
@@ -358,14 +358,14 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary>
         /// The properties of a license
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VmwareFirewallLicenseProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VMwareFirewallLicenseProperties"/>.
         /// </summary>
         /// <param name="kind"> License kind. </param>
         /// <param name="provisioningState"> The state of the license provisioning. </param>
-        /// <returns> A new <see cref="Models.LicenseProperties"/> instance for mocking. </returns>
-        public static LicenseProperties LicenseProperties(string kind = default, LicenseProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.AvsLicenseProperties"/> instance for mocking. </returns>
+        public static AvsLicenseProperties AvsLicenseProperties(string kind = default, AvsLicenseProvisioningState? provisioningState = default)
         {
-            return new UnknownLicenseProperties(new LicenseKind(kind), provisioningState, additionalBinaryDataProperties: null);
+            return new UnknownAvsLicenseProperties(new LicenseKind(kind), provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The properties of a VMware Firewall license. </summary>
@@ -376,13 +376,13 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="broadcomSiteId"> The Broadcom site ID associated with the license. </param>
         /// <param name="broadcomContractNumber"> The Broadcom contract number associated with the license. </param>
         /// <param name="labels"> Additional labels passed through for license reporting. </param>
-        /// <returns> A new <see cref="Models.VmwareFirewallLicenseProperties"/> instance for mocking. </returns>
-        public static VmwareFirewallLicenseProperties VmwareFirewallLicenseProperties(LicenseProvisioningState? provisioningState = default, string licenseKey = default, int cores = default, DateTimeOffset endOn = default, string broadcomSiteId = default, string broadcomContractNumber = default, IEnumerable<Label> labels = default)
+        /// <returns> A new <see cref="Models.VMwareFirewallLicenseProperties"/> instance for mocking. </returns>
+        public static VMwareFirewallLicenseProperties VMwareFirewallLicenseProperties(AvsLicenseProvisioningState? provisioningState = default, string licenseKey = default, int cores = default, DateTimeOffset endOn = default, string broadcomSiteId = default, string broadcomContractNumber = default, IEnumerable<AvsLicenseLabel> labels = default)
         {
-            labels ??= new ChangeTrackingList<Label>();
+            labels ??= new ChangeTrackingList<AvsLicenseLabel>();
 
-            return new VmwareFirewallLicenseProperties(
-                LicenseKind.VmwareFirewall,
+            return new VMwareFirewallLicenseProperties(
+                LicenseKind.VMwareFirewall,
                 provisioningState,
                 additionalBinaryDataProperties: null,
                 licenseKey,
@@ -419,10 +419,10 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Avs.MaintenanceData"/> instance for mocking. </returns>
-        public static MaintenanceData MaintenanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MaintenanceProperties properties = default)
+        /// <returns> A new <see cref="Avs.AvsMaintenanceData"/> instance for mocking. </returns>
+        public static AvsMaintenanceData AvsMaintenanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AvsMaintenanceProperties properties = default)
         {
-            return new MaintenanceData(
+            return new AvsMaintenanceData(
                 id,
                 name,
                 resourceType,
@@ -437,25 +437,25 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="clusterId"> Cluster ID for on which maintenance will be applied. Empty if maintenance is at private cloud level. </param>
         /// <param name="infoLink"> Link to maintenance info. </param>
         /// <param name="impact"> Impact on the resource during maintenance period. </param>
-        /// <param name="scheduledByMicrosoft"> If maintenance is scheduled by Microsoft. </param>
+        /// <param name="isScheduledByMicrosoft"> If maintenance is scheduled by Microsoft. </param>
         /// <param name="state"> The state of the maintenance. </param>
         /// <param name="scheduledStartOn"> Scheduled maintenance start time. </param>
         /// <param name="estimatedDurationInMinutes"> Estimated time maintenance will take in minutes. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="operations"> Operations on  maintenance. </param>
         /// <param name="maintenanceReadiness"> Indicates whether the maintenance is ready to proceed. </param>
-        /// <returns> A new <see cref="Models.MaintenanceProperties"/> instance for mocking. </returns>
-        public static MaintenanceProperties MaintenanceProperties(MaintenanceType? component = default, string displayName = default, int? clusterId = default, string infoLink = default, string impact = default, bool? scheduledByMicrosoft = default, MaintenanceState state = default, DateTimeOffset? scheduledStartOn = default, long? estimatedDurationInMinutes = default, MaintenanceProvisioningState? provisioningState = default, IEnumerable<MaintenanceManagementOperation> operations = default, MaintenanceReadiness maintenanceReadiness = default)
+        /// <returns> A new <see cref="Models.AvsMaintenanceProperties"/> instance for mocking. </returns>
+        public static AvsMaintenanceProperties AvsMaintenanceProperties(AvsMaintenanceType? component = default, string displayName = default, int? clusterId = default, string infoLink = default, string impact = default, bool? isScheduledByMicrosoft = default, AvsMaintenanceState state = default, DateTimeOffset? scheduledStartOn = default, long? estimatedDurationInMinutes = default, AvsMaintenanceProvisioningState? provisioningState = default, IEnumerable<AvsMaintenanceManagementOperation> operations = default, AvsMaintenanceReadiness maintenanceReadiness = default)
         {
-            operations ??= new ChangeTrackingList<MaintenanceManagementOperation>();
+            operations ??= new ChangeTrackingList<AvsMaintenanceManagementOperation>();
 
-            return new MaintenanceProperties(
+            return new AvsMaintenanceProperties(
                 component,
                 displayName,
                 clusterId,
                 infoLink,
                 impact,
-                scheduledByMicrosoft,
+                isScheduledByMicrosoft,
                 state,
                 scheduledStartOn,
                 estimatedDurationInMinutes,
@@ -470,31 +470,31 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="message"> Failure/Success info. </param>
         /// <param name="startedOn"> Time when current state started. </param>
         /// <param name="endedOn"> Time when current state ended. </param>
-        /// <returns> A new <see cref="Models.MaintenanceState"/> instance for mocking. </returns>
-        public static MaintenanceState MaintenanceState(MaintenanceStateName? name = default, string message = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default)
+        /// <returns> A new <see cref="Models.AvsMaintenanceState"/> instance for mocking. </returns>
+        public static AvsMaintenanceState AvsMaintenanceState(AvsMaintenanceStateName? name = default, string message = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default)
         {
-            return new MaintenanceState(name, message, startedOn, endedOn, additionalBinaryDataProperties: null);
+            return new AvsMaintenanceState(name, message, startedOn, endedOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Scheduling window constraint. </summary>
         /// <param name="isDisabled"> If scheduling is disabled. </param>
         /// <param name="disabledReason"> Reason for schedule disabled. </param>
         /// <param name="constraints"> Constraints for scheduling maintenance. </param>
-        /// <returns> A new <see cref="Models.ScheduleOperation"/> instance for mocking. </returns>
-        public static ScheduleOperation ScheduleOperation(bool? isDisabled = default, string disabledReason = default, IEnumerable<ScheduleOperationConstraint> constraints = default)
+        /// <returns> A new <see cref="Models.AvsScheduleOperation"/> instance for mocking. </returns>
+        public static AvsScheduleOperation AvsScheduleOperation(bool? isDisabled = default, string disabledReason = default, IEnumerable<AvsScheduleOperationConstraint> constraints = default)
         {
-            constraints ??= new ChangeTrackingList<ScheduleOperationConstraint>();
+            constraints ??= new ChangeTrackingList<AvsScheduleOperationConstraint>();
 
-            return new ScheduleOperation(MaintenanceManagementOperationKind.Schedule, additionalBinaryDataProperties: null, isDisabled, disabledReason, constraints.ToList());
+            return new AvsScheduleOperation(MaintenanceManagementOperationKind.Schedule, additionalBinaryDataProperties: null, isDisabled, disabledReason, constraints.ToList());
         }
 
         /// <summary> Time window in which Customer has option to schedule maintenance. </summary>
         /// <param name="startsOn"> Start date time. </param>
         /// <param name="endsOn"> End date Time. </param>
-        /// <returns> A new <see cref="Models.SchedulingWindow"/> instance for mocking. </returns>
-        public static SchedulingWindow SchedulingWindow(DateTimeOffset startsOn = default, DateTimeOffset endsOn = default)
+        /// <returns> A new <see cref="Models.AvsSchedulingWindow"/> instance for mocking. </returns>
+        public static AvsSchedulingWindow AvsSchedulingWindow(DateTimeOffset startsOn = default, DateTimeOffset endsOn = default)
         {
-            return new SchedulingWindow(ScheduleOperationConstraintKind.SchedulingWindow, additionalBinaryDataProperties: null, startsOn, endsOn);
+            return new AvsSchedulingWindow(ScheduleOperationConstraintKind.SchedulingWindow, additionalBinaryDataProperties: null, startsOn, endsOn);
         }
 
         /// <summary> Time window in which Customer can to schedule maintenance. </summary>
@@ -531,12 +531,12 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="isDisabled"> If rescheduling is disabled. </param>
         /// <param name="disabledReason"> Reason for reschedule disabled. </param>
         /// <param name="constraints"> Constraints for rescheduling maintenance. </param>
-        /// <returns> A new <see cref="Models.RescheduleOperation"/> instance for mocking. </returns>
-        public static RescheduleOperation RescheduleOperation(bool? isDisabled = default, string disabledReason = default, IEnumerable<RescheduleOperationConstraint> constraints = default)
+        /// <returns> A new <see cref="Models.AvsRescheduleOperation"/> instance for mocking. </returns>
+        public static AvsRescheduleOperation AvsRescheduleOperation(bool? isDisabled = default, string disabledReason = default, IEnumerable<AvsRescheduleOperationConstraint> constraints = default)
         {
-            constraints ??= new ChangeTrackingList<RescheduleOperationConstraint>();
+            constraints ??= new ChangeTrackingList<AvsRescheduleOperationConstraint>();
 
-            return new RescheduleOperation(MaintenanceManagementOperationKind.Reschedule, additionalBinaryDataProperties: null, isDisabled, disabledReason, constraints.ToList());
+            return new AvsRescheduleOperation(MaintenanceManagementOperationKind.Reschedule, additionalBinaryDataProperties: null, isDisabled, disabledReason, constraints.ToList());
         }
 
         /// <summary> Time window in which Customer can reschedule maintenance. </summary>
@@ -563,18 +563,18 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="isDisabled"> If maintenanceReadiness refresh is disabled. </param>
         /// <param name="disabledReason"> Reason disabling refresh for maintenanceReadiness. </param>
         /// <param name="status"> Status of the operation. </param>
-        /// <param name="refreshedByMicrosoft"> Indicates if the operation was refreshed by Microsoft. </param>
+        /// <param name="isRefreshedByMicrosoft"> Indicates if the operation was refreshed by Microsoft. </param>
         /// <param name="message"> Additional message about the operation. </param>
-        /// <returns> A new <see cref="Models.MaintenanceReadinessRefreshOperation"/> instance for mocking. </returns>
-        public static MaintenanceReadinessRefreshOperation MaintenanceReadinessRefreshOperation(bool? isDisabled = default, string disabledReason = default, MaintenanceReadinessRefreshOperationStatus? status = default, bool? refreshedByMicrosoft = default, string message = default)
+        /// <returns> A new <see cref="Models.AvsMaintenanceReadinessRefreshOperation"/> instance for mocking. </returns>
+        public static AvsMaintenanceReadinessRefreshOperation AvsMaintenanceReadinessRefreshOperation(bool? isDisabled = default, string disabledReason = default, AvsMaintenanceReadinessRefreshOperationStatus? status = default, bool? isRefreshedByMicrosoft = default, string message = default)
         {
-            return new MaintenanceReadinessRefreshOperation(
+            return new AvsMaintenanceReadinessRefreshOperation(
                 MaintenanceManagementOperationKind.MaintenanceReadinessRefresh,
                 additionalBinaryDataProperties: null,
                 isDisabled,
                 disabledReason,
                 status,
-                refreshedByMicrosoft,
+                isRefreshedByMicrosoft,
                 message);
         }
 
@@ -583,30 +583,30 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="status"> The current readiness status of maintenance. </param>
         /// <param name="message"> A summary message of the readiness check result. </param>
         /// <param name="failedChecks"> A list of failed checks, if any. </param>
-        /// <param name="lastUpdated"> The timestamp of the last readiness update. </param>
-        /// <returns> A new <see cref="Models.MaintenanceReadiness"/> instance for mocking. </returns>
-        public static MaintenanceReadiness MaintenanceReadiness(MaintenanceCheckType @type = default, MaintenanceReadinessStatus status = default, string message = default, IEnumerable<MaintenanceFailedCheck> failedChecks = default, DateTimeOffset? lastUpdated = default)
+        /// <param name="lastUpdatedOn"> The timestamp of the last readiness update. </param>
+        /// <returns> A new <see cref="Models.AvsMaintenanceReadiness"/> instance for mocking. </returns>
+        public static AvsMaintenanceReadiness AvsMaintenanceReadiness(AvsMaintenanceCheckType @type = default, AvsMaintenanceReadinessStatus status = default, string message = default, IEnumerable<AvsMaintenanceFailedCheck> failedChecks = default, DateTimeOffset? lastUpdatedOn = default)
         {
-            failedChecks ??= new ChangeTrackingList<MaintenanceFailedCheck>();
+            failedChecks ??= new ChangeTrackingList<AvsMaintenanceFailedCheck>();
 
-            return new MaintenanceReadiness(
+            return new AvsMaintenanceReadiness(
                 @type,
                 status,
                 message,
                 failedChecks.ToList(),
-                lastUpdated,
+                lastUpdatedOn,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> Details about a failed maintenance check. </summary>
         /// <param name="name"> The name of the failed check. </param>
         /// <param name="impactedResources"> A list of resources impacted by the failed check. </param>
-        /// <returns> A new <see cref="Models.MaintenanceFailedCheck"/> instance for mocking. </returns>
-        public static MaintenanceFailedCheck MaintenanceFailedCheck(string name = default, IEnumerable<ImpactedMaintenanceResourceDetails> impactedResources = default)
+        /// <returns> A new <see cref="Models.AvsMaintenanceFailedCheck"/> instance for mocking. </returns>
+        public static AvsMaintenanceFailedCheck AvsMaintenanceFailedCheck(string name = default, IEnumerable<ImpactedMaintenanceResourceDetails> impactedResources = default)
         {
             impactedResources ??= new ChangeTrackingList<ImpactedMaintenanceResourceDetails>();
 
-            return new MaintenanceFailedCheck(name, impactedResources.ToList(), additionalBinaryDataProperties: null);
+            return new AvsMaintenanceFailedCheck(name, impactedResources.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Details about a resource impacted by a failed check. </summary>
@@ -625,9 +625,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name of the error. </param>
         /// <param name="details"> Additional details about the error. </param>
         /// <param name="resolutionSteps"> Steps to resolve the error. </param>
-        /// <param name="actionRequired"> Indicates whether action is required by the customer. </param>
+        /// <param name="isActionRequired"> Indicates whether action is required by the customer. </param>
         /// <returns> A new <see cref="Models.ImpactedMaintenanceResourceError"/> instance for mocking. </returns>
-        public static ImpactedMaintenanceResourceError ImpactedMaintenanceResourceError(string errorCode = default, string name = default, string details = default, IEnumerable<string> resolutionSteps = default, bool? actionRequired = default)
+        public static ImpactedMaintenanceResourceError ImpactedMaintenanceResourceError(string errorCode = default, string name = default, string details = default, IEnumerable<string> resolutionSteps = default, bool? isActionRequired = default)
         {
             resolutionSteps ??= new ChangeTrackingList<string>();
 
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 details,
                 resolutionSteps.ToList(),
-                actionRequired,
+                isActionRequired,
                 additionalBinaryDataProperties: null);
         }
 
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="kind"> License kind. </param>
         /// <param name="provisioningState"> The state of the license provisioning. </param>
         /// <returns> A new <see cref="Models.VcfLicense"/> instance for mocking. </returns>
-        public static VcfLicense VcfLicense(string kind = default, LicenseProvisioningState? provisioningState = default)
+        public static VcfLicense VcfLicense(string kind = default, AvsLicenseProvisioningState? provisioningState = default)
         {
             return new UnknownVcfLicense(new VcfLicenseKind(kind), provisioningState, additionalBinaryDataProperties: null);
         }
@@ -917,9 +917,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="broadcomContractNumber"> The Broadcom contract number associated with the license. </param>
         /// <param name="labels"> Additional labels passed through for license reporting. </param>
         /// <returns> A new <see cref="Models.Vcf5License"/> instance for mocking. </returns>
-        public static Vcf5License Vcf5License(LicenseProvisioningState? provisioningState = default, string licenseKey = default, int cores = default, DateTimeOffset endOn = default, string broadcomSiteId = default, string broadcomContractNumber = default, IEnumerable<Label> labels = default)
+        public static Vcf5License Vcf5License(AvsLicenseProvisioningState? provisioningState = default, string licenseKey = default, int cores = default, DateTimeOffset endOn = default, string broadcomSiteId = default, string broadcomContractNumber = default, IEnumerable<AvsLicenseLabel> labels = default)
         {
-            labels ??= new ChangeTrackingList<Label>();
+            labels ??= new ChangeTrackingList<AvsLicenseLabel>();
 
             return new Vcf5License(
                 VcfLicenseKind.Vcf5,

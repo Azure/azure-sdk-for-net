@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="kind"> License kind. </param>
         /// <param name="provisioningState"> The state of the license provisioning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownVcfLicense(VcfLicenseKind kind, LicenseProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", provisioningState, additionalBinaryDataProperties)
+        internal UnknownVcfLicense(VcfLicenseKind kind, AvsLicenseProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", provisioningState, additionalBinaryDataProperties)
         {
         }
     }

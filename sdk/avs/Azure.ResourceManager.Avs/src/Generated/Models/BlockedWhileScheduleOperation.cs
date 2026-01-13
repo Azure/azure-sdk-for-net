@@ -12,7 +12,7 @@ using Azure.ResourceManager.Avs;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> Time ranges blocked for scheduling maintenance. </summary>
-    public partial class BlockedWhileScheduleOperation : ScheduleOperationConstraint
+    public partial class BlockedWhileScheduleOperation : AvsScheduleOperationConstraint
     {
         /// <summary> Initializes a new instance of <see cref="BlockedWhileScheduleOperation"/>. </summary>
         internal BlockedWhileScheduleOperation()

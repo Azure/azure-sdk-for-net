@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
-                foreach (Label item in Labels)
+                foreach (AvsLicenseLabel item in Labels)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -97,14 +97,14 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             VcfLicenseKind kind = default;
-            LicenseProvisioningState? provisioningState = default;
+            AvsLicenseProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string licenseKey = default;
             int cores = default;
             DateTimeOffset endOn = default;
             string broadcomSiteId = default;
             string broadcomContractNumber = default;
-            IList<Label> labels = default;
+            IList<AvsLicenseLabel> labels = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    provisioningState = new LicenseProvisioningState(prop.Value.GetString());
+                    provisioningState = new AvsLicenseProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("licenseKey"u8))
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    List<Label> array = new List<Label>();
+                    List<AvsLicenseLabel> array = new List<AvsLicenseLabel>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Label.DeserializeLabel(item, options));
+                        array.Add(AvsLicenseLabel.DeserializeAvsLicenseLabel(item, options));
                     }
                     labels = array;
                     continue;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Avs.Models
                 endOn,
                 broadcomSiteId,
                 broadcomContractNumber,
-                labels ?? new ChangeTrackingList<Label>());
+                labels ?? new ChangeTrackingList<AvsLicenseLabel>());
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

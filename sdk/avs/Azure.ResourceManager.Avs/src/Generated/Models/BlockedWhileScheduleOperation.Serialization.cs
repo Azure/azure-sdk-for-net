@@ -14,7 +14,7 @@ using Azure.ResourceManager.Avs;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> Time ranges blocked for scheduling maintenance. </summary>
-    public partial class BlockedWhileScheduleOperation : ScheduleOperationConstraint, IJsonModel<BlockedWhileScheduleOperation>
+    public partial class BlockedWhileScheduleOperation : AvsScheduleOperationConstraint, IJsonModel<BlockedWhileScheduleOperation>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ScheduleOperationConstraint JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AvsScheduleOperationConstraint JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BlockedWhileScheduleOperation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ScheduleOperationConstraint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AvsScheduleOperationConstraint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BlockedWhileScheduleOperation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name of the error. </param>
         /// <param name="details"> Additional details about the error. </param>
         /// <param name="resolutionSteps"> Steps to resolve the error. </param>
-        /// <param name="actionRequired"> Indicates whether action is required by the customer. </param>
+        /// <param name="isActionRequired"> Indicates whether action is required by the customer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImpactedMaintenanceResourceError(string errorCode, string name, string details, IReadOnlyList<string> resolutionSteps, bool? actionRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImpactedMaintenanceResourceError(string errorCode, string name, string details, IReadOnlyList<string> resolutionSteps, bool? isActionRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ErrorCode = errorCode;
             Name = name;
             Details = details;
             ResolutionSteps = resolutionSteps;
-            ActionRequired = actionRequired;
+            IsActionRequired = isActionRequired;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.Avs.Models
         public IReadOnlyList<string> ResolutionSteps { get; }
 
         /// <summary> Indicates whether action is required by the customer. </summary>
-        public bool? ActionRequired { get; }
+        public bool? IsActionRequired { get; }
     }
 }

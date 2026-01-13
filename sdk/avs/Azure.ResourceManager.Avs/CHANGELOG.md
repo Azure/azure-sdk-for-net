@@ -4,11 +4,8 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-verion to 2025-09-01.
+- Make `Azure.ResourceManager.Avs` AOT-compatible.
 
 ## 1.5.0 (2025-07-02)
 

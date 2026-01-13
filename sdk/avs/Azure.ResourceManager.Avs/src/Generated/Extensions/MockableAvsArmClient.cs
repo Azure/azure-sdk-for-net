@@ -107,22 +107,22 @@ namespace Azure.ResourceManager.Avs.Mocking
             return new IscsiPathResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="LicenseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="AvsLicenseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LicenseResource"/> object. </returns>
-        public virtual LicenseResource GetLicenseResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsLicenseResource"/> object. </returns>
+        public virtual AvsLicenseResource GetAvsLicenseResource(ResourceIdentifier id)
         {
-            LicenseResource.ValidateResourceId(id);
-            return new LicenseResource(Client, id);
+            AvsLicenseResource.ValidateResourceId(id);
+            return new AvsLicenseResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MaintenanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="AvsMaintenanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceResource"/> object. </returns>
-        public virtual MaintenanceResource GetMaintenanceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsMaintenanceResource"/> object. </returns>
+        public virtual AvsMaintenanceResource GetAvsMaintenanceResource(ResourceIdentifier id)
         {
-            MaintenanceResource.ValidateResourceId(id);
-            return new MaintenanceResource(Client, id);
+            AvsMaintenanceResource.ValidateResourceId(id);
+            return new AvsMaintenanceResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="PlacementPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ActionRequired))
+            if (options.Format != "W" && Optional.IsDefined(IsActionRequired))
             {
                 writer.WritePropertyName("actionRequired"u8);
-                writer.WriteBooleanValue(ActionRequired.Value);
+                writer.WriteBooleanValue(IsActionRequired.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Avs.Models
             string name = default;
             string details = default;
             IReadOnlyList<string> resolutionSteps = default;
-            bool? actionRequired = default;
+            bool? isActionRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    actionRequired = prop.Value.GetBoolean();
+                    isActionRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 details,
                 resolutionSteps ?? new ChangeTrackingList<string>(),
-                actionRequired,
+                isActionRequired,
                 additionalBinaryDataProperties);
         }
 

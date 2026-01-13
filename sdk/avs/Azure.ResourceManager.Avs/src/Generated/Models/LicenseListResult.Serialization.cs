@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (LicenseData item in Value)
+            foreach (AvsLicenseData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            IList<LicenseData> value = default;
+            IList<AvsLicenseData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<LicenseData> array = new List<LicenseData>();
+                    List<AvsLicenseData> array = new List<AvsLicenseData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LicenseData.DeserializeLicenseData(item, options));
+                        array.Add(AvsLicenseData.DeserializeAvsLicenseData(item, options));
                     }
                     value = array;
                     continue;

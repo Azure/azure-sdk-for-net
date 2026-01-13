@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Avs.Models
     internal readonly partial struct LicenseKind : IEquatable<LicenseKind>
     {
         private readonly string _value;
-        private const string VmwareFirewallValue = "VmwareFirewall";
+        private const string VMwareFirewallValue = "VmwareFirewall";
 
         /// <summary> Initializes a new instance of <see cref="LicenseKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Avs.Models
             _value = value;
         }
 
-        /// <summary> Gets the VmwareFirewall. </summary>
-        public static LicenseKind VmwareFirewall { get; } = new LicenseKind(VmwareFirewallValue);
+        /// <summary> Gets the VMwareFirewall. </summary>
+        public static LicenseKind VMwareFirewall { get; } = new LicenseKind(VMwareFirewallValue);
 
         /// <summary> Determines if two <see cref="LicenseKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

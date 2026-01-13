@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             Cores = cores;
             EndOn = endOn;
-            Labels = new ChangeTrackingList<Label>();
+            Labels = new ChangeTrackingList<AvsLicenseLabel>();
         }
 
         /// <summary> Initializes a new instance of <see cref="Vcf5License"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="broadcomSiteId"> The Broadcom site ID associated with the license. </param>
         /// <param name="broadcomContractNumber"> The Broadcom contract number associated with the license. </param>
         /// <param name="labels"> Additional labels passed through for license reporting. </param>
-        internal Vcf5License(VcfLicenseKind kind, LicenseProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string licenseKey, int cores, DateTimeOffset endOn, string broadcomSiteId, string broadcomContractNumber, IList<Label> labels) : base(kind, provisioningState, additionalBinaryDataProperties)
+        internal Vcf5License(VcfLicenseKind kind, AvsLicenseProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string licenseKey, int cores, DateTimeOffset endOn, string broadcomSiteId, string broadcomContractNumber, IList<AvsLicenseLabel> labels) : base(kind, provisioningState, additionalBinaryDataProperties)
         {
             LicenseKey = licenseKey;
             Cores = cores;
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.Avs.Models
         public string BroadcomContractNumber { get; set; }
 
         /// <summary> Additional labels passed through for license reporting. </summary>
-        public IList<Label> Labels { get; }
+        public IList<AvsLicenseLabel> Labels { get; }
     }
 }

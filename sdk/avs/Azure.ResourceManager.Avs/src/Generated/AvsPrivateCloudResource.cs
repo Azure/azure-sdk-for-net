@@ -1272,36 +1272,36 @@ namespace Azure.ResourceManager.Avs
             return new IscsiPathResource(Client, Id.AppendChildResource("iscsiPaths", "default"));
         }
 
-        /// <summary> Gets a collection of Licenses in the <see cref="AvsPrivateCloudResource"/>. </summary>
-        /// <returns> An object representing collection of Licenses and their operations over a LicenseResource. </returns>
-        public virtual LicenseCollection GetLicenses()
+        /// <summary> Gets a collection of AvsLicenses in the <see cref="AvsPrivateCloudResource"/>. </summary>
+        /// <returns> An object representing collection of AvsLicenses and their operations over a AvsLicenseResource. </returns>
+        public virtual AvsLicenseCollection GetAvsLicenses()
         {
-            return GetCachedClient(client => new LicenseCollection(client, Id));
+            return GetCachedClient(client => new AvsLicenseCollection(client, Id));
         }
 
         /// <summary> Get a License. </summary>
         /// <param name="licenseName"> Name of the license. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LicenseResource>> GetLicenseAsync(LicenseName licenseName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsLicenseResource>> GetAvsLicenseAsync(AvsLicenseName licenseName, CancellationToken cancellationToken = default)
         {
-            return await GetLicenses().GetAsync(licenseName, cancellationToken).ConfigureAwait(false);
+            return await GetAvsLicenses().GetAsync(licenseName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a License. </summary>
         /// <param name="licenseName"> Name of the license. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<LicenseResource> GetLicense(LicenseName licenseName, CancellationToken cancellationToken = default)
+        public virtual Response<AvsLicenseResource> GetAvsLicense(AvsLicenseName licenseName, CancellationToken cancellationToken = default)
         {
-            return GetLicenses().Get(licenseName, cancellationToken);
+            return GetAvsLicenses().Get(licenseName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Maintenances in the <see cref="AvsPrivateCloudResource"/>. </summary>
-        /// <returns> An object representing collection of Maintenances and their operations over a MaintenanceResource. </returns>
-        public virtual MaintenanceCollection GetMaintenances()
+        /// <summary> Gets a collection of AvsMaintenances in the <see cref="AvsPrivateCloudResource"/>. </summary>
+        /// <returns> An object representing collection of AvsMaintenances and their operations over a AvsMaintenanceResource. </returns>
+        public virtual AvsMaintenanceCollection GetAvsMaintenances()
         {
-            return GetCachedClient(client => new MaintenanceCollection(client, Id));
+            return GetCachedClient(client => new AvsMaintenanceCollection(client, Id));
         }
 
         /// <summary> Get a Maintenance. </summary>
@@ -1310,11 +1310,11 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MaintenanceResource>> GetMaintenanceAsync(string maintenanceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsMaintenanceResource>> GetAvsMaintenanceAsync(string maintenanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(maintenanceName, nameof(maintenanceName));
 
-            return await GetMaintenances().GetAsync(maintenanceName, cancellationToken).ConfigureAwait(false);
+            return await GetAvsMaintenances().GetAsync(maintenanceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Maintenance. </summary>
@@ -1323,11 +1323,11 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MaintenanceResource> GetMaintenance(string maintenanceName, CancellationToken cancellationToken = default)
+        public virtual Response<AvsMaintenanceResource> GetAvsMaintenance(string maintenanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(maintenanceName, nameof(maintenanceName));
 
-            return GetMaintenances().Get(maintenanceName, cancellationToken);
+            return GetAvsMaintenances().Get(maintenanceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AvsProvisionedNetworks in the <see cref="AvsPrivateCloudResource"/>. </summary>

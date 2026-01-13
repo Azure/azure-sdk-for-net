@@ -201,39 +201,39 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LicenseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="AvsLicenseResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAvsArmClient.GetLicenseResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAvsArmClient.GetAvsLicenseResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LicenseResource"/> object. </returns>
-        public static LicenseResource GetLicenseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsLicenseResource"/> object. </returns>
+        public static AvsLicenseResource GetAvsLicenseResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAvsArmClient(client).GetLicenseResource(id);
+            return GetMockableAvsArmClient(client).GetAvsLicenseResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MaintenanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="AvsMaintenanceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAvsArmClient.GetMaintenanceResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAvsArmClient.GetAvsMaintenanceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MaintenanceResource"/> object. </returns>
-        public static MaintenanceResource GetMaintenanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsMaintenanceResource"/> object. </returns>
+        public static AvsMaintenanceResource GetAvsMaintenanceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAvsArmClient(client).GetMaintenanceResource(id);
+            return GetMockableAvsArmClient(client).GetAvsMaintenanceResource(id);
         }
 
         /// <summary>

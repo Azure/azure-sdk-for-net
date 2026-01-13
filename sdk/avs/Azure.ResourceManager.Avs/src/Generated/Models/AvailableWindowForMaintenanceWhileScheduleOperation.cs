@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> Time window in which Customer can to schedule maintenance. </summary>
-    public partial class AvailableWindowForMaintenanceWhileScheduleOperation : ScheduleOperationConstraint
+    public partial class AvailableWindowForMaintenanceWhileScheduleOperation : AvsScheduleOperationConstraint
     {
         /// <summary> Initializes a new instance of <see cref="AvailableWindowForMaintenanceWhileScheduleOperation"/>. </summary>
         internal AvailableWindowForMaintenanceWhileScheduleOperation()

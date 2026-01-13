@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (MaintenanceData item in Value)
+            foreach (AvsMaintenanceData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            IList<MaintenanceData> value = default;
+            IList<AvsMaintenanceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<MaintenanceData> array = new List<MaintenanceData>();
+                    List<AvsMaintenanceData> array = new List<AvsMaintenanceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceData.DeserializeMaintenanceData(item, options));
+                        array.Add(AvsMaintenanceData.DeserializeAvsMaintenanceData(item, options));
                     }
                     value = array;
                     continue;

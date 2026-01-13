@@ -62,6 +62,8 @@ namespace Azure.ResourceManager.Avs
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static Azure.ResourceManager.Avs.AvsCloudLinkResource GetAvsCloudLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Avs.AvsHostResource GetAvsHostResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Avs.AvsLicenseResource GetAvsLicenseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Avs.AvsMaintenanceResource GetAvsMaintenanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Avs.AvsPrivateCloudResource> GetAvsPrivateCloud(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string privateCloudName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Avs.AvsPrivateCloudAddonResource GetAvsPrivateCloudAddonResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsPrivateCloudResource>> GetAvsPrivateCloudAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string privateCloudName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -80,8 +82,6 @@ namespace Azure.ResourceManager.Avs
         public static Azure.ResourceManager.Avs.GlobalReachConnectionResource GetGlobalReachConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Avs.HcxEnterpriseSiteResource GetHcxEnterpriseSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Avs.IscsiPathResource GetIscsiPathResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Avs.LicenseResource GetLicenseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Avs.MaintenanceResource GetMaintenanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Avs.PlacementPolicyResource GetPlacementPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Avs.ScriptCmdletResource GetScriptCmdletResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Avs.ScriptExecutionResource GetScriptExecutionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -142,6 +142,108 @@ namespace Azure.ResourceManager.Avs
         Azure.ResourceManager.Avs.AvsHostData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsHostData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsHostData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsHostData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AvsLicenseCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Avs.AvsLicenseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.AvsLicenseResource>, System.Collections.IEnumerable
+    {
+        protected AvsLicenseCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Avs.AvsLicenseResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Avs.Models.AvsLicenseName licenseName, Azure.ResourceManager.Avs.AvsLicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Avs.AvsLicenseResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Avs.Models.AvsLicenseName licenseName, Azure.ResourceManager.Avs.AvsLicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Avs.Models.AvsLicenseName licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Avs.Models.AvsLicenseName licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Avs.AvsLicenseResource> Get(Azure.ResourceManager.Avs.Models.AvsLicenseName licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Avs.AvsLicenseResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Avs.AvsLicenseResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsLicenseResource>> GetAsync(Azure.ResourceManager.Avs.Models.AvsLicenseName licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Avs.AvsLicenseResource> GetIfExists(Azure.ResourceManager.Avs.Models.AvsLicenseName licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Avs.AvsLicenseResource>> GetIfExistsAsync(Azure.ResourceManager.Avs.Models.AvsLicenseName licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Avs.AvsLicenseResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Avs.AvsLicenseResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Avs.AvsLicenseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.AvsLicenseResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class AvsLicenseData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.AvsLicenseData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsLicenseData>
+    {
+        public AvsLicenseData() { }
+        public Azure.ResourceManager.Avs.Models.AvsLicenseProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.AvsLicenseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.AvsLicenseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.AvsLicenseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.AvsLicenseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsLicenseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsLicenseData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsLicenseData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AvsLicenseResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.AvsLicenseData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsLicenseData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected AvsLicenseResource() { }
+        public virtual Azure.ResourceManager.Avs.AvsLicenseData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, Azure.ResourceManager.Avs.Models.AvsLicenseName licenseName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Avs.AvsLicenseResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsLicenseResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Avs.Models.AvsLicenseProperties> GetProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.Models.AvsLicenseProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Avs.AvsLicenseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.AvsLicenseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.AvsLicenseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.AvsLicenseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsLicenseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsLicenseData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsLicenseData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Avs.AvsLicenseResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Avs.AvsLicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Avs.AvsLicenseResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Avs.AvsLicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AvsMaintenanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Avs.AvsMaintenanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.AvsMaintenanceResource>, System.Collections.IEnumerable
+    {
+        protected AvsMaintenanceCollection() { }
+        public virtual Azure.Response<bool> Exists(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Avs.AvsMaintenanceResource> Get(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Avs.AvsMaintenanceResource> GetAll(Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName? stateName = default(Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName?), Azure.ResourceManager.Avs.Models.AvsMaintenanceStatusFilter? status = default(Azure.ResourceManager.Avs.Models.AvsMaintenanceStatusFilter?), System.DateTimeOffset? from = default(System.DateTimeOffset?), System.DateTimeOffset? to = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Avs.AvsMaintenanceResource> GetAllAsync(Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName? stateName = default(Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName?), Azure.ResourceManager.Avs.Models.AvsMaintenanceStatusFilter? status = default(Azure.ResourceManager.Avs.Models.AvsMaintenanceStatusFilter?), System.DateTimeOffset? from = default(System.DateTimeOffset?), System.DateTimeOffset? to = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsMaintenanceResource>> GetAsync(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Avs.AvsMaintenanceResource> GetIfExists(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Avs.AvsMaintenanceResource>> GetIfExistsAsync(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Avs.AvsMaintenanceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Avs.AvsMaintenanceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Avs.AvsMaintenanceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.AvsMaintenanceResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class AvsMaintenanceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.AvsMaintenanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsMaintenanceData>
+    {
+        internal AvsMaintenanceData() { }
+        public Azure.ResourceManager.Avs.Models.AvsMaintenanceProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.AvsMaintenanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.AvsMaintenanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.AvsMaintenanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.AvsMaintenanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsMaintenanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsMaintenanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsMaintenanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AvsMaintenanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.AvsMaintenanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsMaintenanceData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected AvsMaintenanceResource() { }
+        public virtual Azure.ResourceManager.Avs.AvsMaintenanceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string maintenanceName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Avs.AvsMaintenanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsMaintenanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Avs.AvsMaintenanceResource> InitiateChecks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsMaintenanceResource>> InitiateChecksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Avs.AvsMaintenanceResource> Reschedule(Azure.ResourceManager.Avs.Models.AvsMaintenanceReschedule body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsMaintenanceResource>> RescheduleAsync(Azure.ResourceManager.Avs.Models.AvsMaintenanceReschedule body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Avs.AvsMaintenanceResource> Schedule(Azure.ResourceManager.Avs.Models.AvsMaintenanceSchedule body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsMaintenanceResource>> ScheduleAsync(Azure.ResourceManager.Avs.Models.AvsMaintenanceSchedule body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Avs.AvsMaintenanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.AvsMaintenanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.AvsMaintenanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.AvsMaintenanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsMaintenanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsMaintenanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsMaintenanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AvsPrivateCloudAddonCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Avs.AvsPrivateCloudAddonResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.AvsPrivateCloudAddonResource>, System.Collections.IEnumerable
     {
@@ -445,6 +547,12 @@ namespace Azure.ResourceManager.Avs
         public virtual Azure.Response<Azure.ResourceManager.Avs.AvsCloudLinkResource> GetAvsCloudLink(string cloudLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsCloudLinkResource>> GetAvsCloudLinkAsync(string cloudLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Avs.AvsCloudLinkCollection GetAvsCloudLinks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Avs.AvsLicenseResource> GetAvsLicense(Azure.ResourceManager.Avs.Models.AvsLicenseName licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsLicenseResource>> GetAvsLicenseAsync(Azure.ResourceManager.Avs.Models.AvsLicenseName licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Avs.AvsLicenseCollection GetAvsLicenses() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Avs.AvsMaintenanceResource> GetAvsMaintenance(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsMaintenanceResource>> GetAvsMaintenanceAsync(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Avs.AvsMaintenanceCollection GetAvsMaintenances() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Avs.AvsPrivateCloudAddonResource> GetAvsPrivateCloudAddon(string addonName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsPrivateCloudAddonResource>> GetAvsPrivateCloudAddonAsync(string addonName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Avs.AvsPrivateCloudAddonCollection GetAvsPrivateCloudAddons() { throw null; }
@@ -467,12 +575,6 @@ namespace Azure.ResourceManager.Avs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.HcxEnterpriseSiteResource>> GetHcxEnterpriseSiteAsync(string hcxEnterpriseSiteName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Avs.HcxEnterpriseSiteCollection GetHcxEnterpriseSites() { throw null; }
         public virtual Azure.ResourceManager.Avs.IscsiPathResource GetIscsiPath() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Avs.LicenseResource> GetLicense(Azure.ResourceManager.Avs.Models.LicenseName licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.LicenseResource>> GetLicenseAsync(Azure.ResourceManager.Avs.Models.LicenseName licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Avs.LicenseCollection GetLicenses() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Avs.MaintenanceResource> GetMaintenance(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.MaintenanceResource>> GetMaintenanceAsync(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Avs.MaintenanceCollection GetMaintenances() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Avs.ScriptExecutionResource> GetScriptExecution(string scriptExecutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.ScriptExecutionResource>> GetScriptExecutionAsync(string scriptExecutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Avs.ScriptExecutionCollection GetScriptExecutions() { throw null; }
@@ -824,108 +926,6 @@ namespace Azure.ResourceManager.Avs
         Azure.ResourceManager.Avs.IscsiPathData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.IscsiPathData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.IscsiPathData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.IscsiPathData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class LicenseCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Avs.LicenseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.LicenseResource>, System.Collections.IEnumerable
-    {
-        protected LicenseCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Avs.LicenseResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Avs.Models.LicenseName licenseName, Azure.ResourceManager.Avs.LicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Avs.LicenseResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Avs.Models.LicenseName licenseName, Azure.ResourceManager.Avs.LicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Avs.Models.LicenseName licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Avs.Models.LicenseName licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Avs.LicenseResource> Get(Azure.ResourceManager.Avs.Models.LicenseName licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Avs.LicenseResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Avs.LicenseResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.LicenseResource>> GetAsync(Azure.ResourceManager.Avs.Models.LicenseName licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Avs.LicenseResource> GetIfExists(Azure.ResourceManager.Avs.Models.LicenseName licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Avs.LicenseResource>> GetIfExistsAsync(Azure.ResourceManager.Avs.Models.LicenseName licenseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Avs.LicenseResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Avs.LicenseResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Avs.LicenseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.LicenseResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class LicenseData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.LicenseData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.LicenseData>
-    {
-        public LicenseData() { }
-        public Azure.ResourceManager.Avs.Models.LicenseProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.LicenseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.LicenseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.LicenseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.LicenseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.LicenseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.LicenseData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.LicenseData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class LicenseResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.LicenseData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.LicenseData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected LicenseResource() { }
-        public virtual Azure.ResourceManager.Avs.LicenseData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, Azure.ResourceManager.Avs.Models.LicenseName licenseName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Avs.LicenseResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.LicenseResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Avs.Models.LicenseProperties> GetProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.Models.LicenseProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Avs.LicenseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.LicenseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.LicenseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.LicenseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.LicenseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.LicenseData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.LicenseData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Avs.LicenseResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Avs.LicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Avs.LicenseResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Avs.LicenseData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class MaintenanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Avs.MaintenanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.MaintenanceResource>, System.Collections.IEnumerable
-    {
-        protected MaintenanceCollection() { }
-        public virtual Azure.Response<bool> Exists(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Avs.MaintenanceResource> Get(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Avs.MaintenanceResource> GetAll(Azure.ResourceManager.Avs.Models.MaintenanceStateName? stateName = default(Azure.ResourceManager.Avs.Models.MaintenanceStateName?), Azure.ResourceManager.Avs.Models.MaintenanceStatusFilter? status = default(Azure.ResourceManager.Avs.Models.MaintenanceStatusFilter?), System.DateTimeOffset? from = default(System.DateTimeOffset?), System.DateTimeOffset? to = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Avs.MaintenanceResource> GetAllAsync(Azure.ResourceManager.Avs.Models.MaintenanceStateName? stateName = default(Azure.ResourceManager.Avs.Models.MaintenanceStateName?), Azure.ResourceManager.Avs.Models.MaintenanceStatusFilter? status = default(Azure.ResourceManager.Avs.Models.MaintenanceStatusFilter?), System.DateTimeOffset? from = default(System.DateTimeOffset?), System.DateTimeOffset? to = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.MaintenanceResource>> GetAsync(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Avs.MaintenanceResource> GetIfExists(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Avs.MaintenanceResource>> GetIfExistsAsync(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Avs.MaintenanceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Avs.MaintenanceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Avs.MaintenanceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.MaintenanceResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class MaintenanceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.MaintenanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.MaintenanceData>
-    {
-        internal MaintenanceData() { }
-        public Azure.ResourceManager.Avs.Models.MaintenanceProperties Properties { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.MaintenanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.MaintenanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.MaintenanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.MaintenanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.MaintenanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.MaintenanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.MaintenanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MaintenanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.MaintenanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.MaintenanceData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected MaintenanceResource() { }
-        public virtual Azure.ResourceManager.Avs.MaintenanceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string maintenanceName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Avs.MaintenanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.MaintenanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Avs.MaintenanceResource> InitiateChecks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.MaintenanceResource>> InitiateChecksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Avs.MaintenanceResource> Reschedule(Azure.ResourceManager.Avs.Models.MaintenanceReschedule body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.MaintenanceResource>> RescheduleAsync(Azure.ResourceManager.Avs.Models.MaintenanceReschedule body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Avs.MaintenanceResource> Schedule(Azure.ResourceManager.Avs.Models.MaintenanceSchedule body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.MaintenanceResource>> ScheduleAsync(Azure.ResourceManager.Avs.Models.MaintenanceSchedule body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Avs.MaintenanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.MaintenanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.MaintenanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.MaintenanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.MaintenanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.MaintenanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.MaintenanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PlacementPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Avs.PlacementPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.PlacementPolicyResource>, System.Collections.IEnumerable
     {
@@ -1697,6 +1697,8 @@ namespace Azure.ResourceManager.Avs.Mocking
         protected MockableAvsArmClient() { }
         public virtual Azure.ResourceManager.Avs.AvsCloudLinkResource GetAvsCloudLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Avs.AvsHostResource GetAvsHostResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Avs.AvsLicenseResource GetAvsLicenseResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Avs.AvsMaintenanceResource GetAvsMaintenanceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Avs.AvsPrivateCloudAddonResource GetAvsPrivateCloudAddonResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Avs.AvsPrivateCloudClusterResource GetAvsPrivateCloudClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Avs.AvsPrivateCloudClusterVirtualMachineResource GetAvsPrivateCloudClusterVirtualMachineResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1708,8 +1710,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         public virtual Azure.ResourceManager.Avs.GlobalReachConnectionResource GetGlobalReachConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Avs.HcxEnterpriseSiteResource GetHcxEnterpriseSiteResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Avs.IscsiPathResource GetIscsiPathResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Avs.LicenseResource GetLicenseResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Avs.MaintenanceResource GetMaintenanceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Avs.PlacementPolicyResource GetPlacementPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Avs.ScriptCmdletResource GetScriptCmdletResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Avs.ScriptExecutionResource GetScriptExecutionResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1863,6 +1863,14 @@ namespace Azure.ResourceManager.Avs.Models
         public static Azure.ResourceManager.Avs.Models.AvsEncryptionKeyVaultProperties AvsEncryptionKeyVaultProperties(string keyName = null, string keyVersion = null, string autoDetectedKeyVersion = null, System.Uri keyVaultUri = null, Azure.ResourceManager.Avs.Models.AvsEncryptionKeyStatus? keyState = default(Azure.ResourceManager.Avs.Models.AvsEncryptionKeyStatus?), Azure.ResourceManager.Avs.Models.AvsEncryptionVersionType? versionType = default(Azure.ResourceManager.Avs.Models.AvsEncryptionVersionType?)) { throw null; }
         public static Azure.ResourceManager.Avs.AvsHostData AvsHostData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.AvsHostProperties properties = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Avs.Models.AvsSku sku = null) { throw null; }
         public static Azure.ResourceManager.Avs.Models.AvsHostProperties AvsHostProperties(string kind = null, Azure.ResourceManager.Avs.Models.AvsHostProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AvsHostProvisioningState?), string displayName = null, string moRefId = null, string fqdn = null, Azure.ResourceManager.Avs.Models.AvsHostMaintenance? maintenance = default(Azure.ResourceManager.Avs.Models.AvsHostMaintenance?), string faultDomain = null) { throw null; }
+        public static Azure.ResourceManager.Avs.AvsLicenseData AvsLicenseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.AvsLicenseProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsLicenseProperties AvsLicenseProperties(string kind = null, Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Avs.AvsMaintenanceData AvsMaintenanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.AvsMaintenanceProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceFailedCheck AvsMaintenanceFailedCheck(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.ImpactedMaintenanceResourceDetails> impactedResources = null) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceProperties AvsMaintenanceProperties(Azure.ResourceManager.Avs.Models.AvsMaintenanceType? component = default(Azure.ResourceManager.Avs.Models.AvsMaintenanceType?), string displayName = null, int? clusterId = default(int?), string infoLink = null, string impact = null, bool? isScheduledByMicrosoft = default(bool?), Azure.ResourceManager.Avs.Models.AvsMaintenanceState state = null, System.DateTimeOffset? scheduledStartOn = default(System.DateTimeOffset?), long? estimatedDurationInMinutes = default(long?), Azure.ResourceManager.Avs.Models.AvsMaintenanceProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AvsMaintenanceProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation> operations = null, Azure.ResourceManager.Avs.Models.AvsMaintenanceReadiness maintenanceReadiness = null) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceReadiness AvsMaintenanceReadiness(Azure.ResourceManager.Avs.Models.AvsMaintenanceCheckType type = default(Azure.ResourceManager.Avs.Models.AvsMaintenanceCheckType), Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessStatus status = default(Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessStatus), string message = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.AvsMaintenanceFailedCheck> failedChecks = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperation AvsMaintenanceReadinessRefreshOperation(bool? isDisabled = default(bool?), string disabledReason = null, Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperationStatus? status = default(Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperationStatus?), bool? isRefreshedByMicrosoft = default(bool?), string message = null) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceState AvsMaintenanceState(Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName? name = default(Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName?), string message = null, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Avs.Models.AvsManagementCluster AvsManagementCluster(int? clusterSize, Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, System.Collections.Generic.IEnumerable<string> hosts) { throw null; }
         public static Azure.ResourceManager.Avs.Models.AvsManagementCluster AvsManagementCluster(int? clusterSize = default(int?), Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState?), int? clusterId = default(int?), System.Collections.Generic.IEnumerable<string> hosts = null, string vsanDatastoreName = null) { throw null; }
         public static Azure.ResourceManager.Avs.AvsPrivateCloudAddonData AvsPrivateCloudAddonData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.AvsPrivateCloudAddonProperties properties = null) { throw null; }
@@ -1887,12 +1895,15 @@ namespace Azure.ResourceManager.Avs.Models
         public static Azure.ResourceManager.Avs.Models.AvsProvisionedNetworkProperties AvsProvisionedNetworkProperties(Azure.ResourceManager.Avs.Models.AvsProvisionedNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AvsProvisionedNetworkProvisioningState?), string addressPrefix = null, Azure.ResourceManager.Avs.Models.AvsProvisionedNetworkType? networkType = default(Azure.ResourceManager.Avs.Models.AvsProvisionedNetworkType?)) { throw null; }
         public static Azure.ResourceManager.Avs.AvsPureStoragePolicyData AvsPureStoragePolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.AvsPureStoragePolicyProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Avs.Models.AvsPureStoragePolicyProperties AvsPureStoragePolicyProperties(string storagePolicyDefinition = null, string storagePoolId = null, Azure.ResourceManager.Avs.Models.AvsPureStoragePolicyProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AvsPureStoragePolicyProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsRescheduleOperation AvsRescheduleOperation(bool? isDisabled = default(bool?), string disabledReason = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint> constraints = null) { throw null; }
         public static Azure.ResourceManager.Avs.Models.AvsResourceSku AvsResourceSku(Azure.ResourceManager.Avs.Models.AvsResourceSkuResourceType resourceType = default(Azure.ResourceManager.Avs.Models.AvsResourceSkuResourceType), string name = null, string tier = null, string size = null, string family = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.AvsResourceSkuLocationInfo> locationInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.AvsResourceSkuCapabilities> capabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.AvsResourceSkuRestrictions> restrictions = null) { throw null; }
         public static Azure.ResourceManager.Avs.Models.AvsResourceSkuCapabilities AvsResourceSkuCapabilities(string name = null, string value = null) { throw null; }
         public static Azure.ResourceManager.Avs.Models.AvsResourceSkuLocationInfo AvsResourceSkuLocationInfo(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.AvsResourceSkuZoneDetails> zoneDetails = null) { throw null; }
         public static Azure.ResourceManager.Avs.Models.AvsResourceSkuRestrictionInfo AvsResourceSkuRestrictionInfo(System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
         public static Azure.ResourceManager.Avs.Models.AvsResourceSkuRestrictions AvsResourceSkuRestrictions(Azure.ResourceManager.Avs.Models.AvsResourceSkuRestrictionsType? type = default(Azure.ResourceManager.Avs.Models.AvsResourceSkuRestrictionsType?), System.Collections.Generic.IEnumerable<string> values = null, Azure.ResourceManager.Avs.Models.AvsResourceSkuRestrictionInfo restrictionInfo = null, Azure.ResourceManager.Avs.Models.AvsResourceSkuRestrictionsReasonCode? reasonCode = default(Azure.ResourceManager.Avs.Models.AvsResourceSkuRestrictionsReasonCode?)) { throw null; }
         public static Azure.ResourceManager.Avs.Models.AvsResourceSkuZoneDetails AvsResourceSkuZoneDetails(System.Collections.Generic.IEnumerable<string> name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.AvsResourceSkuCapabilities> capabilities = null) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsScheduleOperation AvsScheduleOperation(bool? isDisabled = default(bool?), string disabledReason = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint> constraints = null) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsSchedulingWindow AvsSchedulingWindow(System.DateTimeOffset startsOn = default(System.DateTimeOffset), System.DateTimeOffset endsOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaAvailabilityResult AvsSubscriptionQuotaAvailabilityResult(System.Collections.Generic.IReadOnlyDictionary<string, int> hostsRemaining = null, Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaEnabled? quotaEnabled = default(Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaEnabled?)) { throw null; }
         public static Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialAvailabilityResult AvsSubscriptionTrialAvailabilityResult(Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialStatus? status = default(Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialStatus?), int? availableHosts = default(int?)) { throw null; }
         public static Azure.ResourceManager.Avs.Models.BlockedDatesConstraintTimeRange BlockedDatesConstraintTimeRange(System.DateTimeOffset startsOn = default(System.DateTimeOffset), System.DateTimeOffset endsOn = default(System.DateTimeOffset), string reason = null) { throw null; }
@@ -1907,21 +1918,10 @@ namespace Azure.ResourceManager.Avs.Models
         public static Azure.ResourceManager.Avs.HcxEnterpriseSiteData HcxEnterpriseSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.HcxEnterpriseSiteProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.HcxEnterpriseSiteProvisioningState?), string activationKey = null, Azure.ResourceManager.Avs.Models.HcxEnterpriseSiteStatus? status = default(Azure.ResourceManager.Avs.Models.HcxEnterpriseSiteStatus?)) { throw null; }
         public static Azure.ResourceManager.Avs.HcxEnterpriseSiteData HcxEnterpriseSiteData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string activationKey, Azure.ResourceManager.Avs.Models.HcxEnterpriseSiteStatus? status) { throw null; }
         public static Azure.ResourceManager.Avs.Models.ImpactedMaintenanceResourceDetails ImpactedMaintenanceResourceDetails(string id = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.ImpactedMaintenanceResourceError> errors = null) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.ImpactedMaintenanceResourceError ImpactedMaintenanceResourceError(string errorCode = null, string name = null, string details = null, System.Collections.Generic.IEnumerable<string> resolutionSteps = null, bool? actionRequired = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.ImpactedMaintenanceResourceError ImpactedMaintenanceResourceError(string errorCode = null, string name = null, string details = null, System.Collections.Generic.IEnumerable<string> resolutionSteps = null, bool? isActionRequired = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Avs.IscsiPathData IscsiPathData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.IscsiPathProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.IscsiPathProvisioningState?), string networkBlock = null) { throw null; }
-        public static Azure.ResourceManager.Avs.LicenseData LicenseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.LicenseProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.LicenseProperties LicenseProperties(string kind = null, Azure.ResourceManager.Avs.Models.LicenseProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.LicenseProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Avs.MaintenanceData MaintenanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.MaintenanceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceFailedCheck MaintenanceFailedCheck(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.ImpactedMaintenanceResourceDetails> impactedResources = null) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceProperties MaintenanceProperties(Azure.ResourceManager.Avs.Models.MaintenanceType? component = default(Azure.ResourceManager.Avs.Models.MaintenanceType?), string displayName = null, int? clusterId = default(int?), string infoLink = null, string impact = null, bool? scheduledByMicrosoft = default(bool?), Azure.ResourceManager.Avs.Models.MaintenanceState state = null, System.DateTimeOffset? scheduledStartOn = default(System.DateTimeOffset?), long? estimatedDurationInMinutes = default(long?), Azure.ResourceManager.Avs.Models.MaintenanceProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.MaintenanceProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation> operations = null, Azure.ResourceManager.Avs.Models.MaintenanceReadiness maintenanceReadiness = null) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceReadiness MaintenanceReadiness(Azure.ResourceManager.Avs.Models.MaintenanceCheckType type = default(Azure.ResourceManager.Avs.Models.MaintenanceCheckType), Azure.ResourceManager.Avs.Models.MaintenanceReadinessStatus status = default(Azure.ResourceManager.Avs.Models.MaintenanceReadinessStatus), string message = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.MaintenanceFailedCheck> failedChecks = null, System.DateTimeOffset? lastUpdated = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperation MaintenanceReadinessRefreshOperation(bool? isDisabled = default(bool?), string disabledReason = null, Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperationStatus? status = default(Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperationStatus?), bool? refreshedByMicrosoft = default(bool?), string message = null) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceState MaintenanceState(Azure.ResourceManager.Avs.Models.MaintenanceStateName? name = default(Azure.ResourceManager.Avs.Models.MaintenanceStateName?), string message = null, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Avs.PlacementPolicyData PlacementPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.PlacementPolicyProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Avs.Models.PlacementPolicyProperties PlacementPolicyProperties(string type = null, Azure.ResourceManager.Avs.Models.PlacementPolicyState? state = default(Azure.ResourceManager.Avs.Models.PlacementPolicyState?), string displayName = null, Azure.ResourceManager.Avs.Models.PlacementPolicyProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.PlacementPolicyProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.RescheduleOperation RescheduleOperation(bool? isDisabled = default(bool?), string disabledReason = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint> constraints = null) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.ScheduleOperation ScheduleOperation(bool? isDisabled = default(bool?), string disabledReason = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint> constraints = null) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.SchedulingWindow SchedulingWindow(System.DateTimeOffset startsOn = default(System.DateTimeOffset), System.DateTimeOffset endsOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.ResourceManager.Avs.ScriptCmdletData ScriptCmdletData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.ScriptCmdletProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.ScriptCmdletProvisioningState?), string description = null, System.TimeSpan? timeout = default(System.TimeSpan?), Azure.ResourceManager.Avs.Models.ScriptCmdletAudience? audience = default(Azure.ResourceManager.Avs.Models.ScriptCmdletAudience?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.ScriptParameter> parameters = null) { throw null; }
         public static Azure.ResourceManager.Avs.ScriptCmdletData ScriptCmdletData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, System.TimeSpan? timeout, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.ScriptParameter> parameters) { throw null; }
         public static Azure.ResourceManager.Avs.ScriptExecutionData ScriptExecutionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier scriptCmdletId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.ScriptExecutionParameterDetails> parameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.ScriptExecutionParameterDetails> hiddenParameters = null, string failureReason = null, string timeout = null, string retention = null, System.DateTimeOffset? submittedOn = default(System.DateTimeOffset?), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? finishedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Avs.Models.ScriptExecutionProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.ScriptExecutionProvisioningState?), System.Collections.Generic.IEnumerable<string> output = null, System.BinaryData namedOutputs = null, System.Collections.Generic.IEnumerable<string> information = null, System.Collections.Generic.IEnumerable<string> warnings = null, System.Collections.Generic.IEnumerable<string> errors = null) { throw null; }
@@ -1929,11 +1929,11 @@ namespace Azure.ResourceManager.Avs.Models
         public static Azure.ResourceManager.Avs.ScriptPackageData ScriptPackageData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, string version, string company, System.Uri uri) { throw null; }
         public static Azure.ResourceManager.Avs.Models.ScriptParameter ScriptParameter(Azure.ResourceManager.Avs.Models.ScriptParameterType? parameterType = default(Azure.ResourceManager.Avs.Models.ScriptParameterType?), string name = null, string description = null, Azure.ResourceManager.Avs.Models.ParameterVisibilityStatus? visibility = default(Azure.ResourceManager.Avs.Models.ParameterVisibilityStatus?), Azure.ResourceManager.Avs.Models.ParameterOptionalityStatus? optional = default(Azure.ResourceManager.Avs.Models.ParameterOptionalityStatus?)) { throw null; }
         public static Azure.ResourceManager.Avs.Models.SpecializedAvsHostProperties SpecializedAvsHostProperties(Azure.ResourceManager.Avs.Models.AvsHostProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AvsHostProvisioningState?), string displayName = null, string moRefId = null, string fqdn = null, Azure.ResourceManager.Avs.Models.AvsHostMaintenance? maintenance = default(Azure.ResourceManager.Avs.Models.AvsHostMaintenance?), string faultDomain = null) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.Vcf5License Vcf5License(Azure.ResourceManager.Avs.Models.LicenseProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.LicenseProvisioningState?), string licenseKey = null, int cores = 0, System.DateTimeOffset endOn = default(System.DateTimeOffset), string broadcomSiteId = null, string broadcomContractNumber = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.Label> labels = null) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.VcfLicense VcfLicense(string kind = null, Azure.ResourceManager.Avs.Models.LicenseProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.LicenseProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.Vcf5License Vcf5License(Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState?), string licenseKey = null, int cores = 0, System.DateTimeOffset endOn = default(System.DateTimeOffset), string broadcomSiteId = null, string broadcomContractNumber = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.AvsLicenseLabel> labels = null) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.VcfLicense VcfLicense(string kind = null, Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Avs.Models.VmHostPlacementPolicyProperties VmHostPlacementPolicyProperties(Azure.ResourceManager.Avs.Models.PlacementPolicyState? state = default(Azure.ResourceManager.Avs.Models.PlacementPolicyState?), string displayName = null, Azure.ResourceManager.Avs.Models.PlacementPolicyProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.PlacementPolicyProvisioningState?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> vmMembers = null, System.Collections.Generic.IEnumerable<string> hostMembers = null, Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType affinityType = default(Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType), Azure.ResourceManager.Avs.Models.VmHostPlacementPolicyAffinityStrength? affinityStrength = default(Azure.ResourceManager.Avs.Models.VmHostPlacementPolicyAffinityStrength?), Azure.ResourceManager.Avs.Models.AzureHybridBenefitType? azureHybridBenefitType = default(Azure.ResourceManager.Avs.Models.AzureHybridBenefitType?)) { throw null; }
         public static Azure.ResourceManager.Avs.Models.VmPlacementPolicyProperties VmPlacementPolicyProperties(Azure.ResourceManager.Avs.Models.PlacementPolicyState? state = default(Azure.ResourceManager.Avs.Models.PlacementPolicyState?), string displayName = null, Azure.ResourceManager.Avs.Models.PlacementPolicyProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.PlacementPolicyProvisioningState?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> vmMembers = null, Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType affinityType = default(Azure.ResourceManager.Avs.Models.AvsPlacementPolicyAffinityType)) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.VmwareFirewallLicenseProperties VmwareFirewallLicenseProperties(Azure.ResourceManager.Avs.Models.LicenseProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.LicenseProvisioningState?), string licenseKey = null, int cores = 0, System.DateTimeOffset endOn = default(System.DateTimeOffset), string broadcomSiteId = null, string broadcomContractNumber = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.Label> labels = null) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.VMwareFirewallLicenseProperties VMwareFirewallLicenseProperties(Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState?), string licenseKey = null, int cores = 0, System.DateTimeOffset endOn = default(System.DateTimeOffset), string broadcomSiteId = null, string broadcomContractNumber = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.AvsLicenseLabel> labels = null) { throw null; }
         public static Azure.ResourceManager.Avs.WorkloadNetworkData WorkloadNetworkData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData) { throw null; }
         public static Azure.ResourceManager.Avs.WorkloadNetworkData WorkloadNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.WorkloadNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.WorkloadNetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Avs.WorkloadNetworkDhcpData WorkloadNetworkDhcpData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.WorkloadNetworkDhcpEntity properties = null) { throw null; }
@@ -1970,14 +1970,14 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator !=(Azure.ResourceManager.Avs.Models.AvailabilityStrategy left, Azure.ResourceManager.Avs.Models.AvailabilityStrategy right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AvailableWindowForMaintenanceWhileRescheduleOperation : Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvailableWindowForMaintenanceWhileRescheduleOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvailableWindowForMaintenanceWhileRescheduleOperation>
+    public partial class AvailableWindowForMaintenanceWhileRescheduleOperation : Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvailableWindowForMaintenanceWhileRescheduleOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvailableWindowForMaintenanceWhileRescheduleOperation>
     {
         internal AvailableWindowForMaintenanceWhileRescheduleOperation() { }
         public System.DateTimeOffset EndsOn { get { throw null; } }
         public System.DateTimeOffset StartsOn { get { throw null; } }
-        protected override Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Avs.Models.AvailableWindowForMaintenanceWhileRescheduleOperation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvailableWindowForMaintenanceWhileRescheduleOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvailableWindowForMaintenanceWhileRescheduleOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1985,14 +1985,14 @@ namespace Azure.ResourceManager.Avs.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvailableWindowForMaintenanceWhileRescheduleOperation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvailableWindowForMaintenanceWhileRescheduleOperation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AvailableWindowForMaintenanceWhileScheduleOperation : Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvailableWindowForMaintenanceWhileScheduleOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvailableWindowForMaintenanceWhileScheduleOperation>
+    public partial class AvailableWindowForMaintenanceWhileScheduleOperation : Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvailableWindowForMaintenanceWhileScheduleOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvailableWindowForMaintenanceWhileScheduleOperation>
     {
         internal AvailableWindowForMaintenanceWhileScheduleOperation() { }
         public System.DateTimeOffset EndsOn { get { throw null; } }
         public System.DateTimeOffset StartsOn { get { throw null; } }
-        protected override Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Avs.Models.AvailableWindowForMaintenanceWhileScheduleOperation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvailableWindowForMaintenanceWhileScheduleOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvailableWindowForMaintenanceWhileScheduleOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2206,6 +2206,335 @@ namespace Azure.ResourceManager.Avs.Models
         public static implicit operator Azure.ResourceManager.Avs.Models.AvsHostProvisioningState (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Avs.Models.AvsHostProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsHostProvisioningState left, Azure.ResourceManager.Avs.Models.AvsHostProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AvsLicenseLabel : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsLicenseLabel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsLicenseLabel>
+    {
+        public AvsLicenseLabel(string key, string value) { }
+        public string Key { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsLicenseLabel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsLicenseLabel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.Models.AvsLicenseLabel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsLicenseLabel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsLicenseLabel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.AvsLicenseLabel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsLicenseLabel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsLicenseLabel>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsLicenseLabel>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvsLicenseName : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsLicenseName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvsLicenseName(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsLicenseName VMwareFirewall { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsLicenseName other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsLicenseName left, Azure.ResourceManager.Avs.Models.AvsLicenseName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsLicenseName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsLicenseName? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsLicenseName left, Azure.ResourceManager.Avs.Models.AvsLicenseName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public abstract partial class AvsLicenseProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsLicenseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsLicenseProperties>
+    {
+        internal AvsLicenseProperties() { }
+        public Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsLicenseProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsLicenseProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.Models.AvsLicenseProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsLicenseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsLicenseProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.AvsLicenseProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsLicenseProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsLicenseProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsLicenseProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvsLicenseProvisioningState : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvsLicenseProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState left, Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState left, Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvsMaintenanceCheckType : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsMaintenanceCheckType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvsMaintenanceCheckType(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceCheckType Precheck { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceCheckType Preflight { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsMaintenanceCheckType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsMaintenanceCheckType left, Azure.ResourceManager.Avs.Models.AvsMaintenanceCheckType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsMaintenanceCheckType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsMaintenanceCheckType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsMaintenanceCheckType left, Azure.ResourceManager.Avs.Models.AvsMaintenanceCheckType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AvsMaintenanceFailedCheck : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceFailedCheck>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceFailedCheck>
+    {
+        internal AvsMaintenanceFailedCheck() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.ImpactedMaintenanceResourceDetails> ImpactedResources { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsMaintenanceFailedCheck JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsMaintenanceFailedCheck PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.Models.AvsMaintenanceFailedCheck System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceFailedCheck>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceFailedCheck>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.AvsMaintenanceFailedCheck System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceFailedCheck>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceFailedCheck>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceFailedCheck>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class AvsMaintenanceManagementOperation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation>
+    {
+        internal AvsMaintenanceManagementOperation() { }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AvsMaintenanceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceProperties>
+    {
+        internal AvsMaintenanceProperties() { }
+        public int? ClusterId { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsMaintenanceType? Component { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public long? EstimatedDurationInMinutes { get { throw null; } }
+        public string Impact { get { throw null; } }
+        public string InfoLink { get { throw null; } }
+        public bool? IsScheduledByMicrosoft { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsMaintenanceReadiness MaintenanceReadiness { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation> Operations { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsMaintenanceProvisioningState? ProvisioningState { get { throw null; } }
+        public System.DateTimeOffset? ScheduledStartOn { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsMaintenanceState State { get { throw null; } }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsMaintenanceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsMaintenanceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.Models.AvsMaintenanceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.AvsMaintenanceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvsMaintenanceProvisioningState : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsMaintenanceProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvsMaintenanceProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsMaintenanceProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsMaintenanceProvisioningState left, Azure.ResourceManager.Avs.Models.AvsMaintenanceProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsMaintenanceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsMaintenanceProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsMaintenanceProvisioningState left, Azure.ResourceManager.Avs.Models.AvsMaintenanceProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AvsMaintenanceReadiness : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReadiness>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReadiness>
+    {
+        internal AvsMaintenanceReadiness() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.AvsMaintenanceFailedCheck> FailedChecks { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
+        public string Message { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessStatus Status { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsMaintenanceCheckType Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsMaintenanceReadiness JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsMaintenanceReadiness PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.Models.AvsMaintenanceReadiness System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReadiness>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReadiness>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.AvsMaintenanceReadiness System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReadiness>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReadiness>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReadiness>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AvsMaintenanceReadinessRefreshOperation : Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperation>
+    {
+        internal AvsMaintenanceReadinessRefreshOperation() { }
+        public string DisabledReason { get { throw null; } }
+        public bool? IsDisabled { get { throw null; } }
+        public bool? IsRefreshedByMicrosoft { get { throw null; } }
+        public string Message { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperationStatus? Status { get { throw null; } }
+        protected override Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvsMaintenanceReadinessRefreshOperationStatus : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvsMaintenanceReadinessRefreshOperationStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperationStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperationStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperationStatus NotApplicable { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperationStatus NotStarted { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperationStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperationStatus left, Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperationStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperationStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperationStatus left, Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessRefreshOperationStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvsMaintenanceReadinessStatus : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvsMaintenanceReadinessStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessStatus DataNotAvailable { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessStatus NotApplicable { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessStatus NotReady { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessStatus Ready { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessStatus left, Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessStatus left, Azure.ResourceManager.Avs.Models.AvsMaintenanceReadinessStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AvsMaintenanceReschedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReschedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReschedule>
+    {
+        public AvsMaintenanceReschedule() { }
+        public string Message { get { throw null; } set { } }
+        public System.DateTimeOffset? RescheduleOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsMaintenanceReschedule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsMaintenanceReschedule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.Models.AvsMaintenanceReschedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReschedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReschedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.AvsMaintenanceReschedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReschedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReschedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceReschedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AvsMaintenanceSchedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceSchedule>
+    {
+        public AvsMaintenanceSchedule() { }
+        public string Message { get { throw null; } set { } }
+        public System.DateTimeOffset? ScheduleOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsMaintenanceSchedule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsMaintenanceSchedule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.Models.AvsMaintenanceSchedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.AvsMaintenanceSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AvsMaintenanceState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceState>
+    {
+        internal AvsMaintenanceState() { }
+        public System.DateTimeOffset? EndedOn { get { throw null; } }
+        public string Message { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName? Name { get { throw null; } }
+        public System.DateTimeOffset? StartedOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsMaintenanceState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsMaintenanceState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.Models.AvsMaintenanceState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.AvsMaintenanceState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsMaintenanceState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvsMaintenanceStateName : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvsMaintenanceStateName(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName Failed { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName InProgress { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName NotScheduled { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName Scheduled { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName Success { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName left, Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName left, Azure.ResourceManager.Avs.Models.AvsMaintenanceStateName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvsMaintenanceStatusFilter : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsMaintenanceStatusFilter>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvsMaintenanceStatusFilter(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceStatusFilter Active { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceStatusFilter Inactive { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsMaintenanceStatusFilter other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsMaintenanceStatusFilter left, Azure.ResourceManager.Avs.Models.AvsMaintenanceStatusFilter right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsMaintenanceStatusFilter (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsMaintenanceStatusFilter? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsMaintenanceStatusFilter left, Azure.ResourceManager.Avs.Models.AvsMaintenanceStatusFilter right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AvsMaintenanceType : System.IEquatable<Azure.ResourceManager.Avs.Models.AvsMaintenanceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AvsMaintenanceType(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceType Esxi { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceType Nsxt { get { throw null; } }
+        public static Azure.ResourceManager.Avs.Models.AvsMaintenanceType Vcsa { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.AvsMaintenanceType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.AvsMaintenanceType left, Azure.ResourceManager.Avs.Models.AvsMaintenanceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsMaintenanceType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.AvsMaintenanceType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsMaintenanceType left, Azure.ResourceManager.Avs.Models.AvsMaintenanceType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class AvsManagementCluster : Azure.ResourceManager.Avs.Models.CommonClusterProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsManagementCluster>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsManagementCluster>
@@ -2499,6 +2828,35 @@ namespace Azure.ResourceManager.Avs.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsPureStorageVolume>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsPureStorageVolume>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AvsRescheduleOperation : Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsRescheduleOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsRescheduleOperation>
+    {
+        internal AvsRescheduleOperation() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint> Constraints { get { throw null; } }
+        public string DisabledReason { get { throw null; } }
+        public bool? IsDisabled { get { throw null; } }
+        protected override Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.Models.AvsRescheduleOperation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsRescheduleOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsRescheduleOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.AvsRescheduleOperation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsRescheduleOperation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsRescheduleOperation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsRescheduleOperation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class AvsRescheduleOperationConstraint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint>
+    {
+        internal AvsRescheduleOperationConstraint() { }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class AvsResourceSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsResourceSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsResourceSku>
     {
         internal AvsResourceSku() { }
@@ -2649,6 +3007,50 @@ namespace Azure.ResourceManager.Avs.Models
         Azure.ResourceManager.Avs.Models.AvsResourceSkuZoneDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsResourceSkuZoneDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsResourceSkuZoneDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsResourceSkuZoneDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AvsScheduleOperation : Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsScheduleOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsScheduleOperation>
+    {
+        internal AvsScheduleOperation() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint> Constraints { get { throw null; } }
+        public string DisabledReason { get { throw null; } }
+        public bool? IsDisabled { get { throw null; } }
+        protected override Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Avs.Models.AvsMaintenanceManagementOperation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.Models.AvsScheduleOperation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsScheduleOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsScheduleOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.AvsScheduleOperation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsScheduleOperation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsScheduleOperation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsScheduleOperation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class AvsScheduleOperationConstraint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint>
+    {
+        internal AvsScheduleOperationConstraint() { }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AvsSchedulingWindow : Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsSchedulingWindow>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsSchedulingWindow>
+    {
+        internal AvsSchedulingWindow() { }
+        public System.DateTimeOffset EndsOn { get { throw null; } }
+        public System.DateTimeOffset StartsOn { get { throw null; } }
+        protected override Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.Models.AvsSchedulingWindow System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsSchedulingWindow>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsSchedulingWindow>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.AvsSchedulingWindow System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsSchedulingWindow>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsSchedulingWindow>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsSchedulingWindow>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AvsSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsSku>
     {
@@ -2809,14 +3211,14 @@ namespace Azure.ResourceManager.Avs.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.BlockedDatesConstraintTimeRange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.BlockedDatesConstraintTimeRange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BlockedWhileRescheduleOperation : Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.BlockedWhileRescheduleOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.BlockedWhileRescheduleOperation>
+    public partial class BlockedWhileRescheduleOperation : Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.BlockedWhileRescheduleOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.BlockedWhileRescheduleOperation>
     {
         internal BlockedWhileRescheduleOperation() { }
         public Azure.ResourceManager.Avs.Models.BlockedDatesConstraintCategory Category { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.BlockedDatesConstraintTimeRange> TimeRanges { get { throw null; } }
-        protected override Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Avs.Models.AvsRescheduleOperationConstraint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Avs.Models.BlockedWhileRescheduleOperation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.BlockedWhileRescheduleOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.BlockedWhileRescheduleOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2824,14 +3226,14 @@ namespace Azure.ResourceManager.Avs.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.BlockedWhileRescheduleOperation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.BlockedWhileRescheduleOperation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BlockedWhileScheduleOperation : Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.BlockedWhileScheduleOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.BlockedWhileScheduleOperation>
+    public partial class BlockedWhileScheduleOperation : Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.BlockedWhileScheduleOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.BlockedWhileScheduleOperation>
     {
         internal BlockedWhileScheduleOperation() { }
         public Azure.ResourceManager.Avs.Models.BlockedDatesConstraintCategory Category { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.BlockedDatesConstraintTimeRange> TimeRanges { get { throw null; } }
-        protected override Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Avs.Models.AvsScheduleOperationConstraint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Avs.Models.BlockedWhileScheduleOperation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.BlockedWhileScheduleOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.BlockedWhileScheduleOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3088,9 +3490,9 @@ namespace Azure.ResourceManager.Avs.Models
     public partial class ImpactedMaintenanceResourceError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.ImpactedMaintenanceResourceError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.ImpactedMaintenanceResourceError>
     {
         internal ImpactedMaintenanceResourceError() { }
-        public bool? ActionRequired { get { throw null; } }
         public string Details { get { throw null; } }
         public string ErrorCode { get { throw null; } }
+        public bool? IsActionRequired { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ResolutionSteps { get { throw null; } }
         protected virtual Azure.ResourceManager.Avs.Models.ImpactedMaintenanceResourceError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3142,69 +3544,6 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator !=(Azure.ResourceManager.Avs.Models.IscsiPathProvisioningState left, Azure.ResourceManager.Avs.Models.IscsiPathProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Label : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.Label>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.Label>
-    {
-        public Label(string key, string value) { }
-        public string Key { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Avs.Models.Label JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Avs.Models.Label PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.Models.Label System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.Label>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.Label>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.Label System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.Label>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.Label>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.Label>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LicenseName : System.IEquatable<Azure.ResourceManager.Avs.Models.LicenseName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LicenseName(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.LicenseName VmwareFirewall { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.LicenseName other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.LicenseName left, Azure.ResourceManager.Avs.Models.LicenseName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.LicenseName (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.LicenseName? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.LicenseName left, Azure.ResourceManager.Avs.Models.LicenseName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public abstract partial class LicenseProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.LicenseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.LicenseProperties>
-    {
-        internal LicenseProperties() { }
-        public Azure.ResourceManager.Avs.Models.LicenseProvisioningState? ProvisioningState { get { throw null; } }
-        protected virtual Azure.ResourceManager.Avs.Models.LicenseProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Avs.Models.LicenseProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.Models.LicenseProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.LicenseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.LicenseProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.LicenseProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.LicenseProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.LicenseProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.LicenseProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LicenseProvisioningState : System.IEquatable<Azure.ResourceManager.Avs.Models.LicenseProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LicenseProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.LicenseProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.LicenseProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.LicenseProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.LicenseProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.LicenseProvisioningState left, Azure.ResourceManager.Avs.Models.LicenseProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.LicenseProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.LicenseProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.LicenseProvisioningState left, Azure.ResourceManager.Avs.Models.LicenseProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LunMountMode : System.IEquatable<Azure.ResourceManager.Avs.Models.LunMountMode>
     {
@@ -3220,272 +3559,6 @@ namespace Azure.ResourceManager.Avs.Models
         public static implicit operator Azure.ResourceManager.Avs.Models.LunMountMode (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Avs.Models.LunMountMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Avs.Models.LunMountMode left, Azure.ResourceManager.Avs.Models.LunMountMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MaintenanceCheckType : System.IEquatable<Azure.ResourceManager.Avs.Models.MaintenanceCheckType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MaintenanceCheckType(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceCheckType Precheck { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceCheckType Preflight { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.MaintenanceCheckType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.MaintenanceCheckType left, Azure.ResourceManager.Avs.Models.MaintenanceCheckType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.MaintenanceCheckType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.MaintenanceCheckType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.MaintenanceCheckType left, Azure.ResourceManager.Avs.Models.MaintenanceCheckType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class MaintenanceFailedCheck : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceFailedCheck>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceFailedCheck>
-    {
-        internal MaintenanceFailedCheck() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.ImpactedMaintenanceResourceDetails> ImpactedResources { get { throw null; } }
-        public string Name { get { throw null; } }
-        protected virtual Azure.ResourceManager.Avs.Models.MaintenanceFailedCheck JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Avs.Models.MaintenanceFailedCheck PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.Models.MaintenanceFailedCheck System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceFailedCheck>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceFailedCheck>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.MaintenanceFailedCheck System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceFailedCheck>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceFailedCheck>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceFailedCheck>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public abstract partial class MaintenanceManagementOperation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation>
-    {
-        internal MaintenanceManagementOperation() { }
-        protected virtual Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MaintenanceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceProperties>
-    {
-        internal MaintenanceProperties() { }
-        public int? ClusterId { get { throw null; } }
-        public Azure.ResourceManager.Avs.Models.MaintenanceType? Component { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public long? EstimatedDurationInMinutes { get { throw null; } }
-        public string Impact { get { throw null; } }
-        public string InfoLink { get { throw null; } }
-        public Azure.ResourceManager.Avs.Models.MaintenanceReadiness MaintenanceReadiness { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation> Operations { get { throw null; } }
-        public Azure.ResourceManager.Avs.Models.MaintenanceProvisioningState? ProvisioningState { get { throw null; } }
-        public bool? ScheduledByMicrosoft { get { throw null; } }
-        public System.DateTimeOffset? ScheduledStartOn { get { throw null; } }
-        public Azure.ResourceManager.Avs.Models.MaintenanceState State { get { throw null; } }
-        protected virtual Azure.ResourceManager.Avs.Models.MaintenanceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Avs.Models.MaintenanceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.Models.MaintenanceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.MaintenanceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MaintenanceProvisioningState : System.IEquatable<Azure.ResourceManager.Avs.Models.MaintenanceProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MaintenanceProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.MaintenanceProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.MaintenanceProvisioningState left, Azure.ResourceManager.Avs.Models.MaintenanceProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.MaintenanceProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.MaintenanceProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.MaintenanceProvisioningState left, Azure.ResourceManager.Avs.Models.MaintenanceProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class MaintenanceReadiness : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceReadiness>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceReadiness>
-    {
-        internal MaintenanceReadiness() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.MaintenanceFailedCheck> FailedChecks { get { throw null; } }
-        public System.DateTimeOffset? LastUpdated { get { throw null; } }
-        public string Message { get { throw null; } }
-        public Azure.ResourceManager.Avs.Models.MaintenanceReadinessStatus Status { get { throw null; } }
-        public Azure.ResourceManager.Avs.Models.MaintenanceCheckType Type { get { throw null; } }
-        protected virtual Azure.ResourceManager.Avs.Models.MaintenanceReadiness JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Avs.Models.MaintenanceReadiness PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.Models.MaintenanceReadiness System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceReadiness>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceReadiness>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.MaintenanceReadiness System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceReadiness>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceReadiness>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceReadiness>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MaintenanceReadinessRefreshOperation : Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperation>
-    {
-        internal MaintenanceReadinessRefreshOperation() { }
-        public string DisabledReason { get { throw null; } }
-        public bool? IsDisabled { get { throw null; } }
-        public string Message { get { throw null; } }
-        public bool? RefreshedByMicrosoft { get { throw null; } }
-        public Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperationStatus? Status { get { throw null; } }
-        protected override Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MaintenanceReadinessRefreshOperationStatus : System.IEquatable<Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperationStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MaintenanceReadinessRefreshOperationStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperationStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperationStatus InProgress { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperationStatus NotApplicable { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperationStatus NotStarted { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperationStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperationStatus left, Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperationStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperationStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperationStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperationStatus left, Azure.ResourceManager.Avs.Models.MaintenanceReadinessRefreshOperationStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MaintenanceReadinessStatus : System.IEquatable<Azure.ResourceManager.Avs.Models.MaintenanceReadinessStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MaintenanceReadinessStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceReadinessStatus DataNotAvailable { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceReadinessStatus NotApplicable { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceReadinessStatus NotReady { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceReadinessStatus Ready { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.MaintenanceReadinessStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.MaintenanceReadinessStatus left, Azure.ResourceManager.Avs.Models.MaintenanceReadinessStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.MaintenanceReadinessStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.MaintenanceReadinessStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.MaintenanceReadinessStatus left, Azure.ResourceManager.Avs.Models.MaintenanceReadinessStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class MaintenanceReschedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceReschedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceReschedule>
-    {
-        public MaintenanceReschedule() { }
-        public string Message { get { throw null; } set { } }
-        public System.DateTimeOffset? RescheduleOn { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Avs.Models.MaintenanceReschedule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Avs.Models.MaintenanceReschedule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.Models.MaintenanceReschedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceReschedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceReschedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.MaintenanceReschedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceReschedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceReschedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceReschedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MaintenanceSchedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceSchedule>
-    {
-        public MaintenanceSchedule() { }
-        public string Message { get { throw null; } set { } }
-        public System.DateTimeOffset? ScheduleOn { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Avs.Models.MaintenanceSchedule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Avs.Models.MaintenanceSchedule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.Models.MaintenanceSchedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.MaintenanceSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MaintenanceState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceState>
-    {
-        internal MaintenanceState() { }
-        public System.DateTimeOffset? EndedOn { get { throw null; } }
-        public string Message { get { throw null; } }
-        public Azure.ResourceManager.Avs.Models.MaintenanceStateName? Name { get { throw null; } }
-        public System.DateTimeOffset? StartedOn { get { throw null; } }
-        protected virtual Azure.ResourceManager.Avs.Models.MaintenanceState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Avs.Models.MaintenanceState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.Models.MaintenanceState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.MaintenanceState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.MaintenanceState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.MaintenanceState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MaintenanceStateName : System.IEquatable<Azure.ResourceManager.Avs.Models.MaintenanceStateName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MaintenanceStateName(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceStateName Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceStateName Failed { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceStateName InProgress { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceStateName NotScheduled { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceStateName Scheduled { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceStateName Success { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.MaintenanceStateName other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.MaintenanceStateName left, Azure.ResourceManager.Avs.Models.MaintenanceStateName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.MaintenanceStateName (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.MaintenanceStateName? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.MaintenanceStateName left, Azure.ResourceManager.Avs.Models.MaintenanceStateName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MaintenanceStatusFilter : System.IEquatable<Azure.ResourceManager.Avs.Models.MaintenanceStatusFilter>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MaintenanceStatusFilter(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceStatusFilter Active { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceStatusFilter Inactive { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.MaintenanceStatusFilter other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.MaintenanceStatusFilter left, Azure.ResourceManager.Avs.Models.MaintenanceStatusFilter right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.MaintenanceStatusFilter (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.MaintenanceStatusFilter? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.MaintenanceStatusFilter left, Azure.ResourceManager.Avs.Models.MaintenanceStatusFilter right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MaintenanceType : System.IEquatable<Azure.ResourceManager.Avs.Models.MaintenanceType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MaintenanceType(string value) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceType ESXI { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceType NSXT { get { throw null; } }
-        public static Azure.ResourceManager.Avs.Models.MaintenanceType VCSA { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Avs.Models.MaintenanceType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Avs.Models.MaintenanceType left, Azure.ResourceManager.Avs.Models.MaintenanceType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.MaintenanceType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Avs.Models.MaintenanceType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Avs.Models.MaintenanceType left, Azure.ResourceManager.Avs.Models.MaintenanceType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -3676,79 +3749,6 @@ namespace Azure.ResourceManager.Avs.Models
         Azure.ResourceManager.Avs.Models.PSCredentialExecutionParameterDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.PSCredentialExecutionParameterDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.PSCredentialExecutionParameterDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.PSCredentialExecutionParameterDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RescheduleOperation : Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.RescheduleOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.RescheduleOperation>
-    {
-        internal RescheduleOperation() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint> Constraints { get { throw null; } }
-        public string DisabledReason { get { throw null; } }
-        public bool? IsDisabled { get { throw null; } }
-        protected override Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.Models.RescheduleOperation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.RescheduleOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.RescheduleOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.RescheduleOperation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.RescheduleOperation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.RescheduleOperation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.RescheduleOperation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public abstract partial class RescheduleOperationConstraint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint>
-    {
-        internal RescheduleOperationConstraint() { }
-        protected virtual Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.RescheduleOperationConstraint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ScheduleOperation : Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.ScheduleOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.ScheduleOperation>
-    {
-        internal ScheduleOperation() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint> Constraints { get { throw null; } }
-        public string DisabledReason { get { throw null; } }
-        public bool? IsDisabled { get { throw null; } }
-        protected override Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Avs.Models.MaintenanceManagementOperation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.Models.ScheduleOperation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.ScheduleOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.ScheduleOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.ScheduleOperation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.ScheduleOperation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.ScheduleOperation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.ScheduleOperation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public abstract partial class ScheduleOperationConstraint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint>
-    {
-        internal ScheduleOperationConstraint() { }
-        protected virtual Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SchedulingWindow : Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.SchedulingWindow>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.SchedulingWindow>
-    {
-        internal SchedulingWindow() { }
-        public System.DateTimeOffset EndsOn { get { throw null; } }
-        public System.DateTimeOffset StartsOn { get { throw null; } }
-        protected override Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Avs.Models.ScheduleOperationConstraint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.Models.SchedulingWindow System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.SchedulingWindow>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.SchedulingWindow>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.SchedulingWindow System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.SchedulingWindow>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.SchedulingWindow>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.SchedulingWindow>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScriptCmdletAudience : System.IEquatable<Azure.ResourceManager.Avs.Models.ScriptCmdletAudience>
@@ -3986,7 +3986,7 @@ namespace Azure.ResourceManager.Avs.Models
         public string BroadcomSiteId { get { throw null; } set { } }
         public int Cores { get { throw null; } set { } }
         public System.DateTimeOffset EndOn { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Avs.Models.Label> Labels { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Avs.Models.AvsLicenseLabel> Labels { get { throw null; } }
         public string LicenseKey { get { throw null; } set { } }
         protected override Azure.ResourceManager.Avs.Models.VcfLicense JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4001,7 +4001,7 @@ namespace Azure.ResourceManager.Avs.Models
     public abstract partial class VcfLicense : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.VcfLicense>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.VcfLicense>
     {
         internal VcfLicense() { }
-        public Azure.ResourceManager.Avs.Models.LicenseProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsLicenseProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.Avs.Models.VcfLicense JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Avs.Models.VcfLicense PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4079,24 +4079,24 @@ namespace Azure.ResourceManager.Avs.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.VmPlacementPolicyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.VmPlacementPolicyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VmwareFirewallLicenseProperties : Azure.ResourceManager.Avs.Models.LicenseProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.VmwareFirewallLicenseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.VmwareFirewallLicenseProperties>
+    public partial class VMwareFirewallLicenseProperties : Azure.ResourceManager.Avs.Models.AvsLicenseProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.VMwareFirewallLicenseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.VMwareFirewallLicenseProperties>
     {
-        public VmwareFirewallLicenseProperties(int cores, System.DateTimeOffset endOn) { }
+        public VMwareFirewallLicenseProperties(int cores, System.DateTimeOffset endOn) { }
         public string BroadcomContractNumber { get { throw null; } set { } }
         public string BroadcomSiteId { get { throw null; } set { } }
         public int Cores { get { throw null; } set { } }
         public System.DateTimeOffset EndOn { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Avs.Models.Label> Labels { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Avs.Models.AvsLicenseLabel> Labels { get { throw null; } }
         public string LicenseKey { get { throw null; } set { } }
-        protected override Azure.ResourceManager.Avs.Models.LicenseProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Avs.Models.AvsLicenseProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Avs.Models.LicenseProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Avs.Models.AvsLicenseProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Avs.Models.VmwareFirewallLicenseProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.VmwareFirewallLicenseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.VmwareFirewallLicenseProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.VmwareFirewallLicenseProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.VmwareFirewallLicenseProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.VmwareFirewallLicenseProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.VmwareFirewallLicenseProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Avs.Models.VMwareFirewallLicenseProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.VMwareFirewallLicenseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.VMwareFirewallLicenseProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.VMwareFirewallLicenseProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.VMwareFirewallLicenseProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.VMwareFirewallLicenseProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.VMwareFirewallLicenseProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class WorkloadNetworkDhcpEntity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.WorkloadNetworkDhcpEntity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.WorkloadNetworkDhcpEntity>
     {

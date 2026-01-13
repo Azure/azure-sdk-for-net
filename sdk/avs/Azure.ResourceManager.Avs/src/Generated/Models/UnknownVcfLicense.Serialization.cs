@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             VcfLicenseKind kind = default;
-            LicenseProvisioningState? provisioningState = default;
+            AvsLicenseProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    provisioningState = new LicenseProvisioningState(prop.Value.GetString());
+                    provisioningState = new AvsLicenseProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

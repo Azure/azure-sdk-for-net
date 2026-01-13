@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="kind"> License kind. </param>
         /// <param name="provisioningState"> The state of the license provisioning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VcfLicense(VcfLicenseKind kind, LicenseProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VcfLicense(VcfLicenseKind kind, AvsLicenseProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             ProvisioningState = provisioningState;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Avs.Models
         internal VcfLicenseKind Kind { get; set; }
 
         /// <summary> The state of the license provisioning. </summary>
-        public LicenseProvisioningState? ProvisioningState { get; }
+        public AvsLicenseProvisioningState? ProvisioningState { get; }
     }
 }

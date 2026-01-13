@@ -15,7 +15,7 @@ using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal partial class MaintenancesGetAllAsyncCollectionResultOfT : AsyncPageable<MaintenanceData>
+    internal partial class MaintenancesGetAllAsyncCollectionResultOfT : AsyncPageable<AvsMaintenanceData>
     {
         private readonly Maintenances _client;
         private readonly Guid _subscriptionId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of MaintenancesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<MaintenanceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<AvsMaintenanceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 MaintenanceListResult result = MaintenanceListResult.FromResponse(response);
-                yield return Page<MaintenanceData>.FromValues((IReadOnlyList<MaintenanceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AvsMaintenanceData>.FromValues((IReadOnlyList<AvsMaintenanceData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _privateCloudName, _stateName, _status, _from, _to, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _privateCloudName, _stateName, _status, _from, _to, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MaintenanceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AvsMaintenanceCollection.GetAll");
             scope.Start();
             try
             {
