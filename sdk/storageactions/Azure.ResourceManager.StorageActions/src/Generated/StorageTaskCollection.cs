@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.StorageActions
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="storageTaskName"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="data"> The parameters to create a Storage Task. </param>
+        /// <param name="storageTaskData"> The parameters to create a Storage Task. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageTaskName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageTaskName"/> or <paramref name="storageTaskData"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageTaskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<StorageTaskResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageTaskName, StorageTaskData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StorageTaskResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageTaskName, StorageTaskData storageTaskData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageTaskName, nameof(storageTaskName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(storageTaskData, nameof(storageTaskData));
 
             using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskCollection.CreateOrUpdate");
             scope.Start();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageTasksRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageTaskName, StorageTaskData.ToRequestContent(data), context);
+                HttpMessage message = _storageTasksRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageTaskName, StorageTaskData.ToRequestContent(storageTaskData), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageActionsArmOperation<StorageTaskResource> operation = new StorageActionsArmOperation<StorageTaskResource>(
                     new StorageTaskOperationSource(Client),
@@ -140,14 +140,14 @@ namespace Azure.ResourceManager.StorageActions
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="storageTaskName"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="data"> The parameters to create a Storage Task. </param>
+        /// <param name="storageTaskData"> The parameters to create a Storage Task. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageTaskName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageTaskName"/> or <paramref name="storageTaskData"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageTaskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<StorageTaskResource> CreateOrUpdate(WaitUntil waitUntil, string storageTaskName, StorageTaskData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StorageTaskResource> CreateOrUpdate(WaitUntil waitUntil, string storageTaskName, StorageTaskData storageTaskData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageTaskName, nameof(storageTaskName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(storageTaskData, nameof(storageTaskData));
 
             using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskCollection.CreateOrUpdate");
             scope.Start();
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.StorageActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageTasksRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageTaskName, StorageTaskData.ToRequestContent(data), context);
+                HttpMessage message = _storageTasksRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageTaskName, StorageTaskData.ToRequestContent(storageTaskData), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageActionsArmOperation<StorageTaskResource> operation = new StorageActionsArmOperation<StorageTaskResource>(
                     new StorageTaskOperationSource(Client),
