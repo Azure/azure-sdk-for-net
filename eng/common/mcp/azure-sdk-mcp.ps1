@@ -146,7 +146,9 @@ try {
     Copy-Item -Path $tempExe -Destination $exeDestination -Force
 }
 catch {
-    if ($_.Exception.Message -match 'being used by another process') {
+    # Detect a file-in-use (sharing violation) error in a locale-independent way.
+    # ERROR_SHARING_VIOLATION => 0x80070020 => -2147024864
+    if (($_.Exception -is [System.IO.IOException]) -and ($_.Exception.HResult -eq -2147024864)) {
         log -warn "Could not update '$exeDestination' because it is currently running. Using temporary copy instead."
         log -warn "The update will be applied the next time the tool is installed when no instance is running."
         $exeToRun = $tempExe
