@@ -163,9 +163,6 @@ foreach ($InstallationTokenOwner in $InstallationTokenOwners)
     $env:GH_TOKEN = $installationToken
     & gh auth status
   }
-  catch {
-    Write-Warning "gh CLI not found or auth status failed: $($_.Exception.Message)"
-  }
   finally{
     $env:GH_TOKEN = $gh_token_value_before
   }
