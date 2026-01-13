@@ -7,6 +7,7 @@ using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -92,7 +93,7 @@ namespace Azure.Generator.Management.Utilities
                     inputParameter.Type is InputPrimitiveType primitiveType &&
                     primitiveType.Kind == InputPrimitiveTypeKind.String)
                 {
-                    outputParameter = RenameWithNewInstance(outputParameter, "scope", description: "The scope that the resource will apply against.");
+                    outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.");
                     scopeParameterTransformed = true;
                 }
 
@@ -122,10 +123,10 @@ namespace Azure.Generator.Management.Utilities
             return [.. requiredParameters, .. optionalParameters];
         }
 
-        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, string? description = null)
+        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null)
             => new(
                     name: normalizedName,
-                    description: outputParameter.Description,
+                    description: description ?? outputParameter.Description,
                     type: outputParameter.Type,
                     defaultValue: outputParameter.DefaultValue,
                     isRef: outputParameter.IsRef,
