@@ -74,11 +74,8 @@ namespace Azure.AI.Inference.Tests.Samples
                 }
                 if (chatUpdate.Role.HasValue)
                 {
-                    Assert.Multiple(() =>
-                    {
-                        Assert.That(gotRole, Is.False);
-                        Assert.That(chatUpdate.Role.Value, Is.EqualTo(ChatRole.Assistant));
-                    });
+                    Assert.That(gotRole, Is.False);
+                    Assert.That(chatUpdate.Role.Value, Is.EqualTo(ChatRole.Assistant));
                     gotRole = true;
                 }
 #endif
@@ -88,13 +85,11 @@ namespace Azure.AI.Inference.Tests.Samples
                 }
             }
 
-            Assert.Multiple(() =>
-            {
 #if !SNIPPET
-                Assert.That(!string.IsNullOrEmpty(id), Is.True);
-                Assert.That(!string.IsNullOrEmpty(model), Is.True);
-                Assert.That(gotRole, Is.True);
-            });
+            Assert.That(!string.IsNullOrEmpty(id), Is.True);
+            Assert.That(!string.IsNullOrEmpty(model), Is.True);
+            Assert.That(gotRole, Is.True);
+
             var result = contentBuilder.ToString();
             Assert.That(result, Is.Not.Null.Or.Empty);
 #endif

@@ -285,14 +285,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     return Task.CompletedTask;
                     },
                     message =>
-                    { Assert.Multiple(() => {
+                    {
 #if SNIPPET
                         Console.WriteLine(message.Subject); // prints "Updated subject"
                         Console.WriteLine(message.SessionId); // prints "sessionId"
                         Console.WriteLine("Second send plugin executed!");
 #else
                         Assert.That(message.Subject, Is.EqualTo("Updated subject"));
-                        Assert.That(message.SessionId, Is.EqualTo("sessionId")); });
+                        Assert.That(message.SessionId, Is.EqualTo("sessionId"));
 #endif
                         return Task.CompletedTask;
                     },
