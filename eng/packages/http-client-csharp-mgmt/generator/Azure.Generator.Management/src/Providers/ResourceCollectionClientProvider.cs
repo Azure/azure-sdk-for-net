@@ -30,7 +30,8 @@ namespace Azure.Generator.Management.Providers
     internal sealed class ResourceCollectionClientProvider : TypeProvider
     {
         private readonly ResourceMetadata _resourceMetadata;
-        private readonly Dictionary<ParameterProvider, FieldProvider> _pathParameterMap;
+        private readonly IReadOnlyList<ParameterProvider> _extraCtorParameters;
+        private readonly IReadOnlyList<FieldProvider> _extraFields;
         private readonly ResourceClientProvider _resource;
         private readonly ResourceMethod? _getAll;
         private readonly ResourceMethod? _create;
@@ -64,7 +65,7 @@ namespace Azure.Generator.Management.Providers
 
             // this depends on _getAll being initialized
             // TODO -- this is some extra contextual parameters in resource collection, we need to find a way to update this and include this information in a universal way
-            _pathParameterMap = BuildPathParameterMap();
+            (_extraCtorParameters, _extraFields) = BuildExtraConstructorParametersAndFields();
         }
 
         private static OperationContext InitializeContext(ResourceCollectionClientProvider enclosingType, ResourceMetadata resourceMetadata, ResourceMethod? getAll)
@@ -91,10 +92,13 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
+        private IReadOnlyDictionary<string, FieldProvider>? _parameterNameToFieldMap;
+
         private FieldProvider FindField(string variableName)
         {
-            // TODO -- refactor this.
-            return _pathParameterMap.Values.First(field => field.Name == $"_{variableName}");
+            _parameterNameToFieldMap ??= _extraCtorParameters.ToDictionary(p => p.WireInfo.SerializedName, p => p.Field!);
+            // in this case, there must be a match
+            return _parameterNameToFieldMap[variableName];
         }
 
         /// <summary>
@@ -123,9 +127,10 @@ namespace Azure.Generator.Management.Providers
             return RequestPathPattern.GetFromScope(resourceMetadata.ResourceScope);
         }
 
-        private Dictionary<ParameterProvider, FieldProvider> BuildPathParameterMap()
+        private (IReadOnlyList<ParameterProvider> ExtraParameters, IReadOnlyList<FieldProvider> ExtraFields) BuildExtraConstructorParametersAndFields()
         {
-            var map = new Dictionary<ParameterProvider, FieldProvider>();
+            var extraParameters = new List<ParameterProvider>();
+            var extraFields = new List<FieldProvider>();
             var secondaryContextualParameters = _operationContext.SecondaryContextualPathParameters;
             foreach (var contextualParameter in secondaryContextualParameters)
             {
@@ -135,9 +140,10 @@ namespace Azure.Generator.Management.Providers
                     ResourceHelpers.GetRequestPathParameterType(contextualParameter.VariableName, _getAll!.InputMethod));
                 var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, parameter.Type, $"_{contextualParameter.VariableName}", this, description: $"The {contextualParameter.VariableName}.");
                 parameter.Field = field;
-                map.Add(parameter, field);
+                extraParameters.Add(parameter);
+                extraFields.Add(field);
             }
-            return map;
+            return (extraParameters, extraFields);
         }
 
         private static void InitializeMethods(
@@ -170,7 +176,7 @@ namespace Azure.Generator.Management.Providers
 
         public ResourceClientProvider Resource => _resource;
         // TODO -- remove this and introduce a FactoryMethodSignature to replace this property
-        public IReadOnlyList<ParameterProvider> PathParameters => _pathParameterMap.Keys.ToList();
+        public IReadOnlyList<ParameterProvider> PathParameters => _extraCtorParameters;
 
         // Cached Get method providers for reuse in other places
         public MethodProvider? GetAsyncMethodProvider => _getAsyncMethodProvider ??= BuildGetMethod(isAsync: true);
@@ -234,7 +240,7 @@ namespace Azure.Generator.Management.Providers
                 fields.Add(clientInfo.DiagnosticsField);
                 fields.Add(clientInfo.RestClientField);
             }
-            return [.. fields, .. _pathParameterMap.Values];
+            return [.. fields, .. _extraFields];
         }
 
         protected override ConstructorProvider[] BuildConstructors()
@@ -252,7 +258,7 @@ namespace Azure.Generator.Management.Providers
             var initializer = new ConstructorInitializer(true, baseParameters);
             var parameters = new List<ParameterProvider>(baseParameters);
 
-            parameters.AddRange(_pathParameterMap.Keys);
+            parameters.AddRange(_extraCtorParameters);
 
             var signature = new ConstructorSignature(
                 Type,
@@ -269,9 +275,9 @@ namespace Azure.Generator.Management.Providers
             bodyStatements.Add(thisCollection.TryGetApiVersion(_resourceTypeExpression, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate());
 
             // Assign all path parameter fields by assigning from the path parameters
-            foreach (var kvp in _pathParameterMap)
+            foreach (var parameter in _extraCtorParameters)
             {
-                bodyStatements.Add(kvp.Value.Assign(kvp.Key).Terminate());
+                bodyStatements.Add(parameter.Field!.Assign(parameter).Terminate());
             }
 
             // Initialize all client diagnostics and rest client fields
