@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public LargeInstanceHardwareTypeName(string value) { throw null; }
         public static Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareTypeName CiscoUcs { get { throw null; } }
         public static Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareTypeName Hpe { get { throw null; } }
-        public static Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareTypeName Sdflex { get { throw null; } }
+        public static Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareTypeName SDFlex { get { throw null; } }
         public bool Equals(Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareTypeName other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }

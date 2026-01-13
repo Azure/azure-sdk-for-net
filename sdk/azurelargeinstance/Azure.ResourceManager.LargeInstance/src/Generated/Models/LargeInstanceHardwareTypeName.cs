@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <summary> Hardware type of HPE from vendor Hewlett Packard Enterprise. </summary>
         private const string HpeValue = "HPE";
         /// <summary> Hardware type of SDFLEX. </summary>
-        private const string SdflexValue = "SDFLEX";
+        private const string SDFlexValue = "SDFLEX";
 
         /// <summary> Initializes a new instance of <see cref="LargeInstanceHardwareTypeName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public static LargeInstanceHardwareTypeName Hpe { get; } = new LargeInstanceHardwareTypeName(HpeValue);
 
         /// <summary> Hardware type of SDFLEX. </summary>
-        public static LargeInstanceHardwareTypeName Sdflex { get; } = new LargeInstanceHardwareTypeName(SdflexValue);
+        public static LargeInstanceHardwareTypeName SDFlex { get; } = new LargeInstanceHardwareTypeName(SDFlexValue);
 
         /// <summary> Determines if two <see cref="LargeInstanceHardwareTypeName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
