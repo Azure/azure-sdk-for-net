@@ -1,4 +1,4 @@
 directory: specification/vmware/resource-manager/Microsoft.AVS/AVS
-commit: 817fd824b75ffc1c0d9c3067f66de8c703bd8062
+commit: 381b558b1f9f05ddaefce3ac2cd9cea9cfb19239
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
