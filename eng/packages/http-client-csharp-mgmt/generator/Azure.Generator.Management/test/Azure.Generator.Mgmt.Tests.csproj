@@ -29,11 +29,11 @@
 
   <ItemGroup>
     <Compile Remove="**\TestData\**\*.cs" />
-		<Compile Remove="Common\**" />
+    <Compile Remove="Common\**" />
   </ItemGroup>
 
   <ItemGroup>
-		<ProjectReference Include="Common\Azure.Generator.Management.Tests.Common.csproj" />
+    <ProjectReference Include="Common\Azure.Generator.Management.Tests.Common.csproj" />
   </ItemGroup>
 
 </Project>

@@ -91,6 +91,10 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                     {
                         arguments.Add(argument);
                     }
+                    else
+                    {
+                        arguments.Add(Default);
+                    }
                 }
             }
             else if (parameter.Type.Equals(typeof(RequestContent)))
