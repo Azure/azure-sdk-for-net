@@ -138,9 +138,25 @@ if (-not (Test-Path $toolInstallDirectory)) {
 }
 $exeName = Split-Path $tempExe -Leaf
 $exeDestination = Join-Path $toolInstallDirectory $exeName
-Copy-Item -Path $tempExe -Destination $exeDestination -Force
 
-log "Package $package is installed at $exeDestination"
+# On Windows, if the exe is already running, we can't overwrite it.
+# In that case, fall back to running from the temp directory.
+$exeToRun = $exeDestination
+try {
+    Copy-Item -Path $tempExe -Destination $exeDestination -Force
+}
+catch {
+    if ($_.Exception.Message -match 'being used by another process') {
+        log -warn "Could not update '$exeDestination' because it is currently running. Using temporary copy instead."
+        log -warn "The update will be applied the next time the tool is installed when no instance is running."
+        $exeToRun = $tempExe
+    }
+    else {
+        throw
+    }
+}
+
+log "Package $package is installed at $exeToRun"
 if (!$UpdatePathInProfile) {
     log -warn "To add the tool to PATH for new shell sessions, re-run with -UpdatePathInProfile to modify the shell profile file."
 }
@@ -150,5 +166,5 @@ else {
 }
 
 if ($Run) {
-    Start-Process -WorkingDirectory $RunDirectory -FilePath $exeDestination -ArgumentList 'start' -NoNewWindow -Wait
+    Start-Process -WorkingDirectory $RunDirectory -FilePath $exeToRun -ArgumentList 'start' -NoNewWindow -Wait
 }
