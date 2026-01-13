@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.Search.Models
     {
         public static string ToSerialString(this SearchServiceHostingMode value) => value switch
         {
-            SearchServiceHostingMode.Default => "default",
-            SearchServiceHostingMode.HighDensity => "highDensity",
+            SearchServiceHostingMode.Default => "Default",
+            SearchServiceHostingMode.HighDensity => "HighDensity",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServiceHostingMode value.")
         };
 
         public static SearchServiceHostingMode ToSearchServiceHostingMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "default")) return SearchServiceHostingMode.Default;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "highDensity")) return SearchServiceHostingMode.HighDensity;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return SearchServiceHostingMode.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HighDensity")) return SearchServiceHostingMode.HighDensity;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServiceHostingMode value.");
         }
     }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </summary>
+    /// <summary> This value can be set to 'Enabled' to avoid breaking changes on existing customer resources and templates. If set to 'Disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </summary>
     public readonly partial struct SearchServicePublicInternetAccess : IEquatable<SearchServicePublicInternetAccess>
     {
         private readonly string _value;
@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Search.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string EnabledValue = "enabled";
-        private const string DisabledValue = "disabled";
-        private const string SecuredByPerimeterValue = "securedByPerimeter";
+        private const string EnabledValue = "Enabled";
+        private const string DisabledValue = "Disabled";
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> The search service is accessible from traffic originating from the public internet. </summary>
         public static SearchServicePublicInternetAccess Enabled { get; } = new SearchServicePublicInternetAccess(EnabledValue);

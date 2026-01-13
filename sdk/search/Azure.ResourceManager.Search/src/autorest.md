@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Search
 namespace: Azure.ResourceManager.Search
-require: https://github.com/Azure/azure-rest-api-specs/blob/2e0a040b078aaf7f67cc8bafc18214d355715ca4/specification/search/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/0020c91ce30ada9a6f0317c314dd71a517ec36f8/specification/search/resource-manager/Microsoft.Search/Search/readme.md
 #tag: package-2025-05-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -56,7 +56,7 @@ rename-mapping:
   QueryKey: SearchServiceQueryKey
   ResourceAssociation: SearchServiceNetworkSecurityPerimeterResourceAssociation
   ResourceAssociationAccessMode: SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode
-  ResourceType: SearchServiceResourceType
+  CheckNameAvailabilityInputType: SearchServiceResourceType
   SearchEncryptionWithCmk: SearchEncryptionWithCmkEnforcement
   SearchService.properties.disableLocalAuth: isLocalAuthDisabled
   SearchService.properties.publicNetworkAccess: PublicInternetAccess
@@ -119,7 +119,7 @@ override-operation-name:
 # Remove "stopped" enum from SearchServiceStatus
 directive:
   - from: search.json
-    where: $.definitions.SearchServiceProperties.properties.status
+    where: $.definitions.SearchServiceStatus
     transform: >
       $.enum.includes('stopped') ? $.enum.splice($.enum.indexOf('stopped'), 1) : undefined;
       $['x-ms-enum'].values.map(e => e.value).includes('stopped') ? $['x-ms-enum'].values.splice($['x-ms-enum'].values.map(e => e.value).indexOf('stopped'), 1) : undefined;
@@ -127,4 +127,10 @@ directive:
     where: $.definitions
     transform: >
       $.QuotaUsageResult.properties.id['x-ms-format'] = 'arm-id';
+  - from: search.json
+    where: $.paths..parameters[?(@.name=="x-ms-client-request-id" && @.in=="header")]
+    transform: >
+      $["x-ms-client-request-id"] = true;
+      $["x-ms-parameter-location"] = "method";
+      $["x-ms-parameter-grouping"] = { name: "search-management-request-options" };
 ```
