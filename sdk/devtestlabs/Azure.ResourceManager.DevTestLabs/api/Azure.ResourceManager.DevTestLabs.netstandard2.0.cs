@@ -1671,9 +1671,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostThresholdStatus (string value) { throw null; }
@@ -1690,9 +1688,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType Reported { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType Unavailable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType (string value) { throw null; }
@@ -1709,9 +1705,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType None { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageOSType (string value) { throw null; }
@@ -1833,9 +1827,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus (string value) { throw null; }
@@ -1873,9 +1865,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission Contributor { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission Reader { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentPermission (string value) { throw null; }
@@ -1951,9 +1941,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption None { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption UploadFilesAndGenerateSasTokens { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption (string value) { throw null; }
@@ -2047,9 +2035,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption ReadOnly { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption ReadWrite { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabHostCachingOption (string value) { throw null; }
@@ -2091,9 +2077,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState DeprovisionRequested { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState NonDeprovisioned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabLinuxOSState (string value) { throw null; }
@@ -2152,9 +2136,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType AutoShutdown { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType Cost { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType (string value) { throw null; }
@@ -2241,9 +2223,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType AllowedValuesPolicy { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType MaxValuePolicy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType (string value) { throw null; }
@@ -2267,9 +2247,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName UserOwnedLabVmCount { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName UserOwnedLabVmCountInSubnet { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName (string value) { throw null; }
@@ -2307,9 +2285,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyStatus (string value) { throw null; }
@@ -2349,9 +2325,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk Disabled { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPremiumDataDisk (string value) { throw null; }
@@ -2378,9 +2352,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType CalendarMonth { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType Custom { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabReportingCycleType (string value) { throw null; }
@@ -2478,9 +2450,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType StorageAccount { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType VsoGit { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabSourceControlType (string value) { throw null; }
@@ -2497,9 +2467,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType Standard { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType StandardSsd { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabStorageType (string value) { throw null; }
@@ -2572,9 +2540,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabTargetCostStatus (string value) { throw null; }
@@ -2590,9 +2556,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabTransportProtocol (string value) { throw null; }
@@ -2609,9 +2573,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType Default { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType (string value) { throw null; }
@@ -2723,9 +2685,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource FromGalleryImage { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource FromSharedGalleryImage { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCreationSource (string value) { throw null; }
@@ -2786,9 +2746,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static Azure.ResourceManager.DevTestLabs.Models.WindowsOSState SysprepApplied { get { throw null; } }
         public static Azure.ResourceManager.DevTestLabs.Models.WindowsOSState SysprepRequested { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DevTestLabs.Models.WindowsOSState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DevTestLabs.Models.WindowsOSState left, Azure.ResourceManager.DevTestLabs.Models.WindowsOSState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.WindowsOSState (string value) { throw null; }

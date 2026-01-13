@@ -704,7 +704,6 @@ namespace Azure.Provisioning.CosmosDB
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.CosmosDB.CosmosDBAccount FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.CosmosDB.CosmosDBAccountKeyList GetKeys() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -763,7 +762,6 @@ namespace Azure.Provisioning.CosmosDB
     {
         Default = 0,
         Restore = 1,
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         PointInTimeRestore = 2,
     }
     public partial class CosmosDBAccountKeyList : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -831,11 +829,8 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole CosmosRestoreOperator { get { throw null; } }
         public static Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole DocumentDBAccountContributor { get { throw null; } }
         public bool Equals(Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string GetBuiltInRoleName(Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole left, Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole right) { throw null; }
         public static implicit operator Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole (string value) { throw null; }
@@ -962,7 +957,6 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> LocationName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class CosmosDBFirewallRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public CosmosDBFirewallRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1113,7 +1107,6 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<string> Status { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum CosmosDBProvisioningState
     {
         Succeeded = 0,
@@ -1155,7 +1148,6 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CosmosDBServiceSize> InstanceSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBAccount? Parent { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.CosmosDB.CosmosDBServiceProperties Properties { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CosmosDBServiceType> ServiceType { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -2137,7 +2129,6 @@ namespace Azure.Provisioning.CosmosDB
         public DataTransferJobGetResult(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.CosmosDB.DataTransferDataSourceSink Destination { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.TimeSpan> Duration { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.CosmosDB.ErrorResponse? Error { get { throw null; } }
         public Azure.Provisioning.CosmosDB.CosmosDBErrorResult ErrorResult { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -2196,7 +2187,6 @@ namespace Azure.Provisioning.CosmosDB
         public DataTransferJobProperties() { }
         public Azure.Provisioning.CosmosDB.DataTransferDataSourceSink Destination { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.TimeSpan> Duration { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.CosmosDB.ErrorResponse? Error { get { throw null; } }
         public Azure.Provisioning.CosmosDB.CosmosDBErrorResult ErrorResult { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> JobName { get { throw null; } }
@@ -2252,7 +2242,6 @@ namespace Azure.Provisioning.CosmosDB
         True = 1,
         False = 2,
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ErrorResponse : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ErrorResponse() { }
@@ -2679,7 +2668,6 @@ namespace Azure.Provisioning.CosmosDB
         public MaterializedViewsBuilderServiceResourceCreateUpdateProperties() { }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MongoCluster : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public MongoCluster(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -2705,7 +2693,6 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2024_07_01;
         }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MongoClusterRestoreParameters : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MongoClusterRestoreParameters() { }
@@ -2713,7 +2700,6 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<string> SourceResourceId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum MongoClusterStatus
     {
         Ready = 0,
@@ -3081,7 +3067,6 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<string> Sku { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum NodeKind
     {
         Shard = 0,
