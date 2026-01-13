@@ -1,10 +1,10 @@
 # Unit Testing with Microsoft.ClientModel.TestFramework
 
-This sample demonstrates how to use the Test Framework's mock utilities and testing helpers to write comprehensive unit tests for your client libraries.
+This sample demonstrates how to use the test framework's mock utilities and testing helpers to write comprehensive unit tests for your client libraries.
 
 ## Key Mock Components
 
-The Test Framework provides several mock implementations for unit testing:
+The test framework provides several mock implementations for unit testing:
 
 - `MockCredential` - Mock authentication token provider
 - `MockPipelineTransport` - Mock HTTP transport

@@ -1,6 +1,6 @@
 # Test Utilities with Microsoft.ClientModel.TestFramework
 
-This sample demonstrates the advanced utilities and helpers available in the Test Framework for specialized testing scenarios and common testing patterns.
+This sample demonstrates the advanced utilities and helpers available in the test framework for specialized testing scenarios and common testing patterns.
 
 ## Environment Variable Management
 

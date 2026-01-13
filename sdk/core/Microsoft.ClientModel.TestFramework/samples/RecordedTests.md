@@ -1,6 +1,6 @@
 # Recorded tests with Microsoft.ClientModel.TestFramework
 
-This sample demonstrates how to use the Test Framework's recording capabilities to create fast, deterministic tests that can run against live services or recorded interactions.
+This sample demonstrates how to use the test framework's recording capabilities to create fast, deterministic tests that can run against live services or recorded interactions.
 
 ## Overview
 

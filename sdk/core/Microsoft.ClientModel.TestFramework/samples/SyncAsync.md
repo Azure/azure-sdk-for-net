@@ -1,6 +1,6 @@
 # Sync/Async Testing with Microsoft.ClientModel.TestFramework
 
-This sample demonstrates how to write tests that automatically validate both synchronous and asynchronous code paths with a single test implementation using the Test Framework's sync/async testing capabilities.
+This sample demonstrates how to write tests that automatically validate both synchronous and asynchronous code paths with a single test implementation using the test framework's sync/async testing capabilities.
 
 ## Requirements
 

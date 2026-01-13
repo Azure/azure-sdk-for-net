@@ -25,10 +25,12 @@ public class MockClient
 
     public MockClient(Uri uri, MockClientOptions options) : this(options)
     {
+        // parameters are ignored because they are illustrative for samples
     }
 
     public MockClient(Uri endpoint, AuthenticationTokenProvider credential, MockClientOptions options = null) : this(options)
     {
+        // parameters are ignored because they are illustrative for samples
     }
 
     public virtual ClientResult GetResource(string id, RequestOptions options = null)
