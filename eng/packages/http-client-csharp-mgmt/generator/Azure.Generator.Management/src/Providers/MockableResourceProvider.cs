@@ -248,12 +248,10 @@ namespace Azure.Generator.Management.Providers
                 // the first method is returning the collection
                 var collection = resource.ResourceCollection!;
                 var collectionMethodSignature = resource.FactoryMethodSignature;
-                // we skip the first two parameters in the ctor signature which are client and id, these parameters are pass through parameters
-                var extraParameters = collectionMethodSignature.Parameters.Skip(2);
 
                 var bodyStatement = Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"),
                     client => New.Instance(collection.Type,
-                        [client, This.As<ArmResource>().Id(), .. extraParameters.Skip(2)]))); // the first two parameters have values, others we just pass through them.
+                        [client, This.As<ArmResource>().Id(), .. collectionMethodSignature.Parameters]))); // the first two parameters have values, others we just pass through them.
                 yield return new MethodProvider(
                     collectionMethodSignature,
                     bodyStatement,
@@ -265,16 +263,16 @@ namespace Azure.Generator.Management.Providers
                 if (getAsyncMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    yield return BuildGetMethod(this, getAsyncMethod, collectionMethodSignature, extraParameters, $"Get{resource.ResourceName}Async");
+                    yield return BuildGetMethod(this, getAsyncMethod, collectionMethodSignature, $"Get{resource.ResourceName}Async");
                 }
 
                 if (getMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    yield return BuildGetMethod(this, getMethod, collectionMethodSignature, extraParameters, $"Get{resource.ResourceName}");
+                    yield return BuildGetMethod(this, getMethod, collectionMethodSignature, $"Get{resource.ResourceName}");
                 }
 
-                static MethodProvider BuildGetMethod(TypeProvider enclosingType, MethodProvider resourceGetMethod, MethodSignature collectionGetSignature, IEnumerable<ParameterProvider> pathParameters, string methodName)
+                static MethodProvider BuildGetMethod(TypeProvider enclosingType, MethodProvider resourceGetMethod, MethodSignature collectionGetSignature, string methodName)
                 {
                     var signature = new MethodSignature(
                         methodName,
@@ -282,7 +280,7 @@ namespace Azure.Generator.Management.Providers
                         resourceGetMethod.Signature.Modifiers,
                         resourceGetMethod.Signature.ReturnType,
                         resourceGetMethod.Signature.ReturnDescription,
-                        [.. pathParameters, .. resourceGetMethod.Signature.Parameters],
+                        [.. collectionGetSignature.Parameters, .. resourceGetMethod.Signature.Parameters],
                         Attributes: [new AttributeStatement(typeof(ForwardsClientCallsAttribute))]);
 
                     var method = new MethodProvider(

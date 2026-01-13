@@ -69,7 +69,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <returns> An object representing collection of PlaywrightQuotas and their operations over a PlaywrightQuotaResource. </returns>
         public virtual PlaywrightQuotaCollection GetAllPlaywrightQuota(AzureLocation location)
         {
-            return this.GetCachedClient(client => new PlaywrightQuotaCollection(client, Id));
+            return GetCachedClient(client => new PlaywrightQuotaCollection(client, Id, location));
         }
 
         /// <summary>
@@ -89,12 +89,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PlaywrightQuotaResource>> GetPlaywrightQuotaAsync(PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightQuotaResource>> GetPlaywrightQuotaAsync(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
-            return await this.GetAllPlaywrightQuota(location).GetAsync(playwrightQuotaName, cancellationToken).ConfigureAwait(false);
+            return await GetAllPlaywrightQuota(location).GetAsync(playwrightQuotaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -114,12 +115,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<PlaywrightQuotaResource> GetPlaywrightQuota(PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightQuotaResource> GetPlaywrightQuota(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
-            return this.GetAllPlaywrightQuota(location).Get(playwrightQuotaName, cancellationToken);
+            return GetAllPlaywrightQuota(location).Get(playwrightQuotaName, cancellationToken);
         }
 
         /// <summary>
