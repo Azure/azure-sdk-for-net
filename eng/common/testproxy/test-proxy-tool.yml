@@ -64,15 +64,6 @@ steps:
       displayName: 'Configure Kestrel and PROXY_MANUAL_START Variables'
       condition: and(succeeded(), ${{ parameters.condition }})
 
-    - task: UseDotNet@2
-      displayName: "Use .NET SDK 9.0.x"
-      retryCountOnTaskFailure: 3
-      condition: and(succeeded(), eq(variables['DOTNET_HOST'],''), ${{ parameters.condition }})
-      inputs:
-        packageType: sdk
-        version: 9.0.x
-        performMultiLevelLookup: true
-
     - pwsh: |
         $invocation = @"
         Start-Process $(Build.BinariesDirectory)/test-proxy/test-proxy.exe
@@ -107,6 +98,7 @@ steps:
       workingDirectory: "${{ parameters.rootFolder }}"
       env:
         DOTNET_ROLL_FORWARD: 'Major'
+        DOTNET_ROOT: $(HOME)/.dotnet
 
     - pwsh: |
         for ($i = 0; $i -lt 10; $i++) {
