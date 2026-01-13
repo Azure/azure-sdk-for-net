@@ -241,8 +241,8 @@ namespace Azure.Generator.Management.Models
 
         /// <summary>
         /// Builds a mapping from operation path parameters to contextual parameters.
-        /// Parameters are matched by their key (the constant segment before the parameter) first,
-        /// and if no key match is found, by their name.
+        /// Parameters are matched based on the position of their variable segments within the shared
+        /// prefix between the operation path and the contextual (and secondary contextual) paths.
         /// </summary>
         /// <param name="operationPath">The operation's request path.</param>
         /// <returns>A parameter mapping that maps operation parameter names to contextual parameters.</returns>
