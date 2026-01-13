@@ -169,10 +169,10 @@ sample-gen:
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/c131197f8ee69a3486ffaf6c3d640e116c5c9bda/specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2022-06-01/policyAssignments.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/c131197f8ee69a3486ffaf6c3d640e116c5c9bda/specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2021-06-01/policyDefinitions.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/c131197f8ee69a3486ffaf6c3d640e116c5c9bda/specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2021-06-01/policySetDefinitions.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/c131197f8ee69a3486ffaf6c3d640e116c5c9bda/specification/resources/resource-manager/Microsoft.Authorization/policy/stable/2020-09-01/dataPolicyManifests.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/817861452040bf29d14b57ac7418560e4680e06e/specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/policyAssignments.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/policyDefinitions.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/policySetDefinitions.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/78eac0bd58633028293cb1ec1709baa200bed9e2/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/dataPolicyManifests.json
     - https://github.com/Azure/azure-rest-api-specs/blob/78eac0bd58633028293cb1ec1709baa200bed9e2/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-05-01/locks.json
     - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/resources.json
     - https://github.com/Azure/azure-rest-api-specs/blob/78eac0bd58633028293cb1ec1709baa200bed9e2/specification/resources/resource-manager/Microsoft.Resources/stable/2022-12-01/subscriptions.json
