@@ -67,7 +67,7 @@ MapsClient client = CreateProxyFromClient(new MapsClient(
     new ApiKeyCredential("fake-key"),
     options));
 
- var result = await client.GetCountryCodeAsync("test");
+var result = await client.GetCountryCodeAsync("test");
 
 var request = mockTransport.Requests[0];
 ```
