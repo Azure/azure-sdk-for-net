@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         private const string NetworkProxyUpdatingValue = "NetworkProxyUpdating";
         private const string NetworkProxyUpdateCompleteValue = "NetworkProxyUpdateComplete";
         private const string NetworkProxyUpdateFailedValue = "NetworkProxyUpdateFailed";
-        private const string NetworkDNSUpdatePreparingValue = "NetworkDNSUpdatePreparing";
-        private const string NetworkDNSUpdatingValue = "NetworkDNSUpdating";
-        private const string NetworkDNSUpdateCompleteValue = "NetworkDNSUpdateComplete";
-        private const string NetworkDNSUpdateFailedValue = "NetworkDNSUpdateFailed";
+        private const string NetworkDnsUpdatePreparingValue = "NetworkDNSUpdatePreparing";
+        private const string NetworkDnsUpdatingValue = "NetworkDNSUpdating";
+        private const string NetworkDnsUpdateCompleteValue = "NetworkDNSUpdateComplete";
+        private const string NetworkDnsUpdateFailedValue = "NetworkDNSUpdateFailed";
         private const string ArcGatewayUpdatePreparingValue = "ArcGatewayUpdatePreparing";
         private const string ArcGatewayUpdatingValue = "ArcGatewayUpdating";
         private const string ArcGatewayUpdateCompleteValue = "ArcGatewayUpdateComplete";
@@ -178,17 +178,17 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <summary> Gets the NetworkProxyUpdateFailed. </summary>
         public static ResourceConnectorStatus NetworkProxyUpdateFailed { get; } = new ResourceConnectorStatus(NetworkProxyUpdateFailedValue);
 
-        /// <summary> Gets the NetworkDNSUpdatePreparing. </summary>
-        public static ResourceConnectorStatus NetworkDNSUpdatePreparing { get; } = new ResourceConnectorStatus(NetworkDNSUpdatePreparingValue);
+        /// <summary> Gets the NetworkDnsUpdatePreparing. </summary>
+        public static ResourceConnectorStatus NetworkDnsUpdatePreparing { get; } = new ResourceConnectorStatus(NetworkDnsUpdatePreparingValue);
 
-        /// <summary> Gets the NetworkDNSUpdating. </summary>
-        public static ResourceConnectorStatus NetworkDNSUpdating { get; } = new ResourceConnectorStatus(NetworkDNSUpdatingValue);
+        /// <summary> Gets the NetworkDnsUpdating. </summary>
+        public static ResourceConnectorStatus NetworkDnsUpdating { get; } = new ResourceConnectorStatus(NetworkDnsUpdatingValue);
 
-        /// <summary> Gets the NetworkDNSUpdateComplete. </summary>
-        public static ResourceConnectorStatus NetworkDNSUpdateComplete { get; } = new ResourceConnectorStatus(NetworkDNSUpdateCompleteValue);
+        /// <summary> Gets the NetworkDnsUpdateComplete. </summary>
+        public static ResourceConnectorStatus NetworkDnsUpdateComplete { get; } = new ResourceConnectorStatus(NetworkDnsUpdateCompleteValue);
 
-        /// <summary> Gets the NetworkDNSUpdateFailed. </summary>
-        public static ResourceConnectorStatus NetworkDNSUpdateFailed { get; } = new ResourceConnectorStatus(NetworkDNSUpdateFailedValue);
+        /// <summary> Gets the NetworkDnsUpdateFailed. </summary>
+        public static ResourceConnectorStatus NetworkDnsUpdateFailed { get; } = new ResourceConnectorStatus(NetworkDnsUpdateFailedValue);
 
         /// <summary> Gets the ArcGatewayUpdatePreparing. </summary>
         public static ResourceConnectorStatus ArcGatewayUpdatePreparing { get; } = new ResourceConnectorStatus(ArcGatewayUpdatePreparingValue);

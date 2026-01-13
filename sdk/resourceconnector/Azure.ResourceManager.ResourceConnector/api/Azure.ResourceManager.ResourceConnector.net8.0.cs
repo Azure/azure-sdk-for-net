@@ -439,10 +439,10 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ImageProvisioned { get { throw null; } }
         public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ImageProvisioning { get { throw null; } }
         public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus ImageUnknown { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkDNSUpdateComplete { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkDNSUpdateFailed { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkDNSUpdatePreparing { get { throw null; } }
-        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkDNSUpdating { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkDnsUpdateComplete { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkDnsUpdateFailed { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkDnsUpdatePreparing { get { throw null; } }
+        public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkDnsUpdating { get { throw null; } }
         public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkProxyUpdateComplete { get { throw null; } }
         public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkProxyUpdateFailed { get { throw null; } }
         public static Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorStatus NetworkProxyUpdatePreparing { get { throw null; } }
