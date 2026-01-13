@@ -96,7 +96,23 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
             return new PageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetAllCollectionResultOfT(MongoClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MongoClusterResource(Client, data));
         }
 
-        /// <summary> Check if mongo cluster name is available for use. </summary>
+        /// <summary>
+        /// Check if mongo cluster name is available for use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/checkMongoClusterNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MongoClusters_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,7 +145,23 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
             }
         }
 
-        /// <summary> Check if mongo cluster name is available for use. </summary>
+        /// <summary>
+        /// Check if mongo cluster name is available for use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/checkMongoClusterNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MongoClusters_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
