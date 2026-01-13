@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
             AvsHostResource avsHost = await getAvsHostResource().GetAsync();
             Assert.AreEqual(avsHost.Data.Name, HOST_ID);
         }
-
         [TestCase, Order(2)]
         [RecordedTest]
         public async Task Get_AvsHostsCollection()
