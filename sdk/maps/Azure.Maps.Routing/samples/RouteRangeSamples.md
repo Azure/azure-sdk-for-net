@@ -44,6 +44,8 @@ RouteRangeOptions options = new RouteRangeOptions(123.75, 46)
     TimeBudget = new TimeSpan(0, 20, 0)
 };
 Response<RouteRangeResult> result = client.GetRouteRange(options);
+Assert.Multiple(() =>
+{
 ```
 
 You can fine tune the route range via different options:

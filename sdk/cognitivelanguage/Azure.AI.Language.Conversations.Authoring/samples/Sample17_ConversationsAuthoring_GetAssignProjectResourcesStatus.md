@@ -82,6 +82,6 @@ Console.WriteLine($"Job ID: {sampleJobId}");
 // Call status API
 Response<ConversationAuthoringProjectResourcesState> sampleStatusResponse = await sampleProjectClient.GetAssignProjectResourcesStatusAsync(sampleJobId);
 
-Assert.IsNotNull(sampleStatusResponse);
+Assert.That(sampleStatusResponse, Is.Not.Null);
 Console.WriteLine($"Deployment assignment status: {sampleStatusResponse.Value.Status}");
 ```

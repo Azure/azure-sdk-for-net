@@ -42,8 +42,8 @@ try
 }
 catch ( RequestFailedException ex )
 {
-    /// OperationID is contained in the exception message and can be used for troubleshooting purposes
-    Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+/// OperationID is contained in the exception message and can be used for troubleshooting purposes
+Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
 }
 ```
 

@@ -43,6 +43,9 @@ foreach (BinaryData project in projects)
 {
     Console.WriteLine(project);
 }
+
+Assert.Multiple(() =>
+{
 ```
 
 ### Adding a knowledge base source
@@ -80,6 +83,9 @@ foreach (BinaryData source in sources)
 {
     Console.WriteLine(source);
 }
+
+Assert.Multiple(() =>
+{
 ```
 
 ### Deploy your Project
@@ -97,6 +103,9 @@ foreach (BinaryData deployment in deployments)
 {
     Console.WriteLine(deployment);
 }
+
+Assert.Multiple(() =>
+{
 ```
 
 ## Asynchronous
@@ -129,6 +138,9 @@ await foreach (BinaryData project in projects)
 {
     Console.WriteLine(project);
 }
+
+Assert.Multiple(async () =>
+{
 ```
 
 ### Adding a knowledge base source
@@ -162,6 +174,9 @@ await foreach (BinaryData source in sources)
 {
     Console.WriteLine(source);
 }
+
+Assert.Multiple(async () =>
+{
 ```
 
 ### Deploy your Project
@@ -179,4 +194,7 @@ await foreach (BinaryData deployment in deployments)
 {
     Console.WriteLine(deployment);
 }
+
+Assert.Multiple(async () =>
+{
 ```

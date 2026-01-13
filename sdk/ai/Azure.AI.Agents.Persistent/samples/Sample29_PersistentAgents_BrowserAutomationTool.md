@@ -112,9 +112,9 @@ do
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
-Assert.AreEqual(
-    RunStatus.Completed,
+Assert.That(
     run.Status,
+    Is.EqualTo(RunStatus.Completed),
     run.LastError?.Message);
 Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
@@ -151,9 +151,9 @@ do
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
-Assert.AreEqual(
-    RunStatus.Completed,
+Assert.That(
     run.Status,
+    Is.EqualTo(RunStatus.Completed),
     run.LastError?.Message);
 List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
     threadId: thread.Id,

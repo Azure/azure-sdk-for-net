@@ -97,6 +97,9 @@ foreach (var operationResult in operationState.Actions.Items)
         }
     }
 }
+
+Assert.Multiple(() =>
+{
 ```
 
 ## Synchronous

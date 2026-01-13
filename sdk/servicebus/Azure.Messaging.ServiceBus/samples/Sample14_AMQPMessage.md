@@ -78,4 +78,6 @@ byte? priority = header.Priority;
 string customFooterValue = (string)receivedAmqpMessage.Footer["custom-footer-property"];
 string customMessageAnnotation = (string)receivedAmqpMessage.MessageAnnotations["custom-message-annotation"];
 string customDeliveryAnnotation = (string)receivedAmqpMessage.DeliveryAnnotations["custom-delivery-annotation"];
+Assert.Multiple(() =>
+{
 ```

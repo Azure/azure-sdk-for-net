@@ -97,7 +97,7 @@ Now, to validate if the groceries are expensive without making a network call, u
 
 ```C# Snippet:DocumentAnalysisUseMocks
 bool isExpensive = await IsExpensiveAsync(fakeModelId, fakeDocumentUri, mockClient.Object);
-Assert.IsTrue(isExpensive);
+Assert.That(isExpensive, Is.True);
 ```
 
 [moq]: https://github.com/Moq/moq4/

@@ -25,6 +25,8 @@ Operation<BinaryData> exportOperation = client.Export(WaitUntil.Completed, expor
 // retrieve export operation response, and extract url of exported file
 JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
 string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
+Assert.Multiple(() =>
+{
 ```
 
 ### Importing a project
@@ -51,6 +53,8 @@ RequestContent importRequestContent = RequestContent.Create(new
 
 Operation<BinaryData> importOperation = client.Import(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
 Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
+Assert.Multiple(() =>
+{
 ```
 
 ### Getting Project Details
@@ -73,6 +77,8 @@ Operation<BinaryData> exportOperation = await client.ExportAsync(WaitUntil.Compl
 // retrieve export operation response, and extract url of exported file
 JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
 string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
+Assert.Multiple(() =>
+{
 ```
 
 ### Importing a project
@@ -97,6 +103,8 @@ RequestContent importRequestContent = RequestContent.Create(new
 
 Operation<BinaryData> importOperation = await client.ImportAsync(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
 Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
+Assert.Multiple(() =>
+{
 ```
 
 ### Getting Project Details

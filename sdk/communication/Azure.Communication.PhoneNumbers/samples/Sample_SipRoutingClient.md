@@ -34,6 +34,8 @@ client.SetRoutes(newRoutes);
 ```C# Snippet:RetrieveList
 var trunksResponse = client.GetTrunks();
 var routesResponse = client.GetRoutes();
+Assert.Multiple(() =>
+{
 ```
 
 ## Operations on a single trunk

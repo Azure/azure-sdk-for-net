@@ -49,6 +49,9 @@ foreach (BinaryData source in sources)
 {
     Console.WriteLine(source);
 }
+
+Assert.Multiple(() =>
+{
 ```
 
 ### Adding a qna pair
@@ -83,6 +86,9 @@ foreach (var qna in qnas)
 {
     Console.WriteLine(qna);
 }
+
+Assert.Multiple(() =>
+{
 ```
 
 ### Updating synonyms
@@ -119,6 +125,9 @@ foreach (BinaryData synonym in synonyms)
 {
     Console.WriteLine(synonym);
 }
+
+Assert.Multiple(() =>
+{
 ```
 
 ### Add active learning feedback
@@ -177,6 +186,9 @@ await foreach (BinaryData source in sources)
 {
     Console.WriteLine(source);
 }
+
+Assert.Multiple(async () =>
+{
 ```
 
 ### Adding a qna pair
@@ -209,6 +221,9 @@ await foreach (var qna in qnas)
 {
     Console.WriteLine(qna);
 }
+
+Assert.Multiple(async () =>
+{
 ```
 
 ### Updating synonyms
@@ -245,6 +260,9 @@ await foreach (BinaryData synonym in synonyms)
 {
     Console.WriteLine(synonym);
 }
+
+Assert.Multiple(async () =>
+{
 ```
 
 ### Add active learning feedback

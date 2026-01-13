@@ -287,6 +287,8 @@ RouteRangeOptions options = new RouteRangeOptions(123.75, 46)
     TimeBudget = new TimeSpan(0, 20, 0)
 };
 Response<RouteRangeResult> result = client.GetRouteRange(options);
+Assert.Multiple(() =>
+{
 ```
 
 For more detailed examples, please see the [route range samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Routing/samples/RouteMatrixSamples.md) page.

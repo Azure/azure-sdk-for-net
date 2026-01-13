@@ -46,4 +46,6 @@ Console.WriteLine(receivedEmployee.Age);
 
 // complete the message, thereby deleting it from the service
 await receiver.CompleteMessageAsync(receivedMessage);
+Assert.Multiple(async () =>
+{
 ```

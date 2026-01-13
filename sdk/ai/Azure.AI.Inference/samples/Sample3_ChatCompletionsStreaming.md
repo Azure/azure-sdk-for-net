@@ -39,6 +39,9 @@ await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
         contentBuilder.Append(chatUpdate.ContentUpdate);
     }
 }
+
+Assert.Multiple(() =>
+{
 System.Console.WriteLine(contentBuilder.ToString());
 ```
 

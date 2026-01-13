@@ -170,6 +170,9 @@ using (FileStream fileStream = File.Create(".\\BerlinStaticImageWithPinsAndPaths
 {
     image.Value.CopyTo(fileStream);
 }
+
+Assert.Multiple(() =>
+{
 ```
 
 The rendered image will look like:

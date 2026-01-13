@@ -39,7 +39,7 @@ Now, to validate if the document is in Spanish without making a network call, us
 ```C# Snippet:UseMocks
 TextAnalyticsClient client = mockClient.Object;
 bool result = await IsSpanishAsync("Este documento está en español.", client, default);
-Assert.IsTrue(result);
+Assert.That(result, Is.True);
 ```
 
 [moq]: https://github.com/Moq/moq4/

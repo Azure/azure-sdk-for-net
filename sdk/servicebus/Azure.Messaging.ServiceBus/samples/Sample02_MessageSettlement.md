@@ -73,6 +73,8 @@ ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
 // The reason and the description that we specified when dead-lettering the message will be available in the received dead letter message.
 string reason = dlqMessage.DeadLetterReason;
 string description = dlqMessage.DeadLetterErrorDescription;
+Assert.Multiple(() =>
+{
 ```
 
 ## Renew the lock for a message and then complete it

@@ -66,6 +66,8 @@ namespace Azure
         /// var credential = new AzureNamedKeyCredential(&quot;SomeName&quot;, &quot;SomeKey&quot;);
         ///
         /// (string name, string key) = credential;
+        /// Assert.Multiple(() =&gt;
+        /// {
         /// </code>
         /// </example>
         /// <seealso href="https://docs.microsoft.com/dotnet/csharp/deconstruct">Deconstructing tuples and other types</seealso>

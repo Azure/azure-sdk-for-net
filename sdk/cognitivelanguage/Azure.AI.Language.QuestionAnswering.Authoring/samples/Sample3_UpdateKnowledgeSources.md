@@ -52,6 +52,8 @@ Operation updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, tes
 BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
 Console.WriteLine($"Sources: {sources}");
+Assert.Multiple(() =>
+{
 ```
 
 ### Adding a qna pair
@@ -82,6 +84,8 @@ Operation updateQnasOperation = Client.UpdateQnas(WaitUntil.Completed, testProje
 BinaryData qnas = updateQnasOperation.GetRawResponse().Content;
 
 Console.WriteLine($"Qnas: {qnas}");
+Assert.Multiple(() =>
+{
 ```
 
 ### Updating synonyms
@@ -172,6 +176,8 @@ Operation updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Com
 BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
 Console.WriteLine($"Sources: {sources}");
+Assert.Multiple(() =>
+{
 ```
 
 ### Adding a qna pair
@@ -200,6 +206,8 @@ Operation updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed
 BinaryData qnas = updateQnasOperation.GetRawResponse().Content;
 
 Console.WriteLine($"Qnas: {qnas}");
+Assert.Multiple(() =>
+{
 ```
 
 ### Updating synonyms
@@ -236,6 +244,9 @@ await foreach (WordAlterationsGroups synonym in synonyms)
 {
     Console.WriteLine(synonym);
 }
+
+Assert.Multiple(async () =>
+{
 ```
 
 ### Add active learning feedback

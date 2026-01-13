@@ -23,6 +23,8 @@ The easiest approach is to download both the receipt and the signed statement to
 ```C# Snippet:CodeTransparencySample2_GetEntryStatement
 Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);
 byte[] transparentStatementBytes = transparentStatementResponse.Value.ToArray();
+Assert.Multiple(() =>
+{
 ```
 
 ### Raw receipt

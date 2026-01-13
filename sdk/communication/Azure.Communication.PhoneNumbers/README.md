@@ -196,6 +196,9 @@ var request = new CreateOrUpdateReservationOptions(reservationId)
 };
 var response = await client.CreateOrUpdateReservationAsync(request);
 var reservation = response.Value;
+
+Assert.Multiple(() =>
+{
 ```
 
 Partial failures are possible, so it is important to check the status of each individual phone number.
@@ -228,6 +231,8 @@ Get the list of currently configured trunks or routes.
 ```C# Snippet:RetrieveListAsync
 var trunksResponse = await client.GetTrunksAsync();
 var routesResponse = await client.GetRoutesAsync();
+Assert.Multiple(() =>
+{
 ```
 
 #### Replace SIP trunks and routes

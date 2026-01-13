@@ -44,6 +44,8 @@ while (!backupOperation.HasCompleted)
 
 // Get the Uri for the location of you backup blob.
 Uri folderUri = backupOperation.Value.FolderUri;
+Assert.Multiple(() =>
+{
 ```
 
 ## Performing a full key restore
@@ -63,6 +65,8 @@ while (!restoreOperation.HasCompleted)
     Thread.Sleep(3000);
 }
 Uri restoreResult = backupOperation.Value.FolderUri;
+Assert.Multiple(() =>
+{
 ```
 
 <!-- LINKS -->

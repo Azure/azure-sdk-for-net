@@ -79,7 +79,7 @@ Now, to validate if the groceries are expensive without making a network call, u
 
 ```C# Snippet:FormRecognizerUseMocks
 bool result = await IsExpensiveAsync(fakeModelId, fakeDocumentUri, mockClient.Object);
-Assert.IsTrue(result);
+Assert.That(result, Is.True);
 ```
 
 [moq]: https://github.com/Moq/moq4/

@@ -43,4 +43,6 @@ string receivedJson = (string) deserializer.ReadObject(reader);
 
 // deserialize the JSON string into TestModel
 TestModel output = JsonSerializer.Deserialize<TestModel>(receivedJson);
+Assert.Multiple(() =>
+{
 ```

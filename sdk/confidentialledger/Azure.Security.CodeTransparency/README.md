@@ -56,6 +56,8 @@ string entryId = CborUtils.GetStringValueFromCborMapByKey(operationResult.Value.
 Console.WriteLine($"The entry ID to use to retrieve the receipt and transparent statement is {{{entryId}}}");
 Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);
 byte[] transparentStatementBytes = transparentStatementResponse.Value.ToArray();
+Assert.Multiple(() =>
+{
 ```
 
 After obtaining the transparent statement, you can distribute it so others can verify its inclusion in the service. The verifier checks that the receipt was issued for the given signature and that its signature was endorsed by the service. Because users might not know which service instance the statement came from, they can extract that information from the receipt to create the client for verification.

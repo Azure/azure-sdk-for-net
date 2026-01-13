@@ -20,6 +20,9 @@ var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
 var credential = new DefaultAzureCredential();
+
+Assert.Multiple(() =>
+{
 ```
 
 Each of the Event Hubs client types are safe to cache and use for the lifetime of the application, which is best practice when the application publishes or reads events regularly or semi-regularly. The clients hold responsibility for efficient resource management, working to keep resource usage low during periods of inactivity and manage health during periods of higher use. Calling either the `CloseAsync` or `DisposeAsync` method on a client as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.

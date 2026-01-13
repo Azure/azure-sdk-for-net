@@ -32,6 +32,8 @@ Operation exportOperation = client.Export(WaitUntil.Completed, exportedProjectNa
 // retrieve export operation response, and extract url of exported file
 JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.GetRawResponse().Content);
 string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
+Assert.Multiple(() =>
+{
 ```
 
 ### Importing a project
@@ -58,6 +60,8 @@ RequestContent importRequestContent = RequestContent.Create(new
 
 Operation importOperation = client.Import(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
 Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
+Assert.Multiple(() =>
+{
 ```
 
 ### Getting Project Details
@@ -80,6 +84,8 @@ Operation exportOperation = await client.ExportAsync(WaitUntil.Completed, export
 // retrieve export operation response, and extract url of exported file
 JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.GetRawResponse().Content);
 string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
+Assert.Multiple(() =>
+{
 ```
 
 ### Importing a project
@@ -104,6 +110,8 @@ RequestContent importRequestContent = RequestContent.Create(new
 
 Operation importOperation = await client.ImportAsync(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
 Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
+Assert.Multiple(() =>
+{
 ```
 
 ### Getting Project Details

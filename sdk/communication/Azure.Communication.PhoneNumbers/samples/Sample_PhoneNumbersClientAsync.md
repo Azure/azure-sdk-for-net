@@ -96,6 +96,9 @@ var request = new CreateOrUpdateReservationOptions(reservationId)
 };
 var response = await client.CreateOrUpdateReservationAsync(request);
 var reservation = response.Value;
+
+Assert.Multiple(() =>
+{
 ```
 
 ## Checking for partial failures

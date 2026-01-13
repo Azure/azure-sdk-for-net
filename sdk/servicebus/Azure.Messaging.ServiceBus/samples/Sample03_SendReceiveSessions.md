@@ -39,6 +39,9 @@ await receiver.SetSessionStateAsync(new BinaryData("some state"));
 
 // the state can be retrieved for the session as well
 BinaryData state = await receiver.GetSessionStateAsync();
+
+Assert.Multiple(() =>
+{
 ```
 
 ## Receive from a specific session
@@ -50,6 +53,9 @@ ServiceBusSessionReceiver receiver = await client.AcceptSessionAsync(queueName, 
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 Console.WriteLine(receivedMessage.SessionId);
+
+Assert.Multiple(() =>
+{
 ```
 
 ## Settling session messages

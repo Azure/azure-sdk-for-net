@@ -83,6 +83,8 @@ Operation updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, new
 BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
 Console.WriteLine($"Sources: {sources}");
+Assert.Multiple(() =>
+{
 ```
 
 ### Deploy your Project
@@ -100,6 +102,9 @@ foreach (ProjectDeployment deployment in deployments)
 {
     Console.WriteLine(deployment);
 }
+
+Assert.Multiple(() =>
+{
 ```
 
 ## Asynchronous
@@ -132,6 +137,9 @@ await foreach (QuestionAnsweringProject project in projects)
 {
     Console.WriteLine(project);
 }
+
+Assert.Multiple(async () =>
+{
 ```
 
 ### Adding a knowledge base source
@@ -161,6 +169,8 @@ Operation updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Com
 BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
 Console.WriteLine($"Sources: {sources}");
+Assert.Multiple(() =>
+{
 ```
 
 ### Deploy your Project
@@ -178,5 +188,8 @@ await foreach (ProjectDeployment deployment in deployments)
 {
     Console.WriteLine(deployment);
 }
+
+Assert.Multiple(async () =>
+{
 ```
 

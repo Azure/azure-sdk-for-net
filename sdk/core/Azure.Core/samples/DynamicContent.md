@@ -131,6 +131,8 @@ dynamic content = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase
 
 // JSON is `{ "id" : "123", "name" : "Widget" }`
 Widget widget = (Widget)content;
+Assert.Multiple(() =>
+{
 ```
 
 ```C# Snippet:AzureCoreDynamicJsonPOCO

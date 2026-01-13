@@ -34,6 +34,8 @@ await client.SetRoutesAsync(newRoutes);
 ```C# Snippet:RetrieveListAsync
 var trunksResponse = await client.GetTrunksAsync();
 var routesResponse = await client.GetRoutesAsync();
+Assert.Multiple(() =>
+{
 ```
 
 ## Operations on a single trunk

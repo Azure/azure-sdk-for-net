@@ -208,6 +208,9 @@ foreach (BinaryData project in projects)
 {
     Console.WriteLine(project);
 }
+
+Assert.Multiple(() =>
+{
 ```
 
 #### Deploy your project
@@ -227,6 +230,9 @@ foreach (BinaryData deployment in deployments)
 {
     Console.WriteLine(deployment);
 }
+
+Assert.Multiple(() =>
+{
 ```
 
 #### Add a knowledge source
@@ -262,6 +268,9 @@ foreach (BinaryData source in sources)
 {
     Console.WriteLine(source);
 }
+
+Assert.Multiple(() =>
+{
 ```
 
 ## Troubleshooting

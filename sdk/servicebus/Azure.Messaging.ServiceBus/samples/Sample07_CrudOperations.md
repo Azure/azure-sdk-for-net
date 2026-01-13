@@ -91,6 +91,8 @@ var subscriptionOptions = new CreateSubscriptionOptions(topicName, subscriptionN
     UserMetadata = "some metadata"
 };
 SubscriptionProperties createdSubscription = await client.CreateSubscriptionAsync(subscriptionOptions);
+Assert.Multiple(() =>
+{
 ```
 
 ## Get a topic

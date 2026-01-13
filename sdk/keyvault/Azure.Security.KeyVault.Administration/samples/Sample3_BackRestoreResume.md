@@ -22,6 +22,8 @@ Response<KeyVaultBackupResult> backupResult = await backupOperation.WaitForCompl
 
 // Get the Uri for the location of you backup blob.
 Uri folderUri = backupResult.Value.FolderUri;
+Assert.Multiple(() =>
+{
 ```
 
 ## Checking status of a full key restore operation
@@ -37,4 +39,6 @@ KeyVaultRestoreOperation restoreOperation = new KeyVaultRestoreOperation(client,
 
 // Wait for completion of the RestoreOperation.
 KeyVaultRestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
+Assert.Multiple(() =>
+{
 ```

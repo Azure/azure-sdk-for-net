@@ -82,14 +82,14 @@ for (int index = 0; index < batchCountThreshold; index++)
 
 foreach (var eventData in sourceEvents)
 {
-    Assert.True(batch.TryAdd(eventData));
+    Assert.That(batch.TryAdd(eventData), Is.True);
 }
 
 // Since there area already batchCountThreshold number of events in the batch, this event will be rejected
 // from the batch.
 
 EventData eventData4 = new EventData("Sample-Event-4-will-fail");
-Assert.IsFalse(batch.TryAdd(eventData4));
+Assert.That(batch.TryAdd(eventData4), Is.False);
 
 // Here we are mocking the SendAsync method so it will throw an exception if the batch passed into it is
 // not the one we are expecting to send.
@@ -118,9 +118,9 @@ mockProducer
 
 foreach (EventData eventData in backingList)
 {
-    Assert.IsTrue(sourceEvents.Contains(eventData));
+    Assert.That(sourceEvents, Does.Contain(eventData));
 }
-Assert.AreEqual(backingList.Count, sourceEvents.Count);
+Assert.That(sourceEvents, Has.Count.EqualTo(backingList.Count));
 ```
 
 ## Publishing events using an `EventHubBufferedProducerClient`

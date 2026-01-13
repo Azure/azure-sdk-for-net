@@ -141,6 +141,9 @@ foreach (ProjectDeployment deployment in deployments)
 {
     Console.WriteLine(deployment);
 }
+
+Assert.Multiple(() =>
+{
 ```
 
 ### Add (or update) knowledge sources
@@ -170,6 +173,8 @@ Operation updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, new
 BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
 Console.WriteLine($"Sources: {sources}");
+Assert.Multiple(() =>
+{
 ```
 
 > Additional operations (update QnAs, export, delete) follow similar patterns using `Operation<T>` or direct `Response` objects.

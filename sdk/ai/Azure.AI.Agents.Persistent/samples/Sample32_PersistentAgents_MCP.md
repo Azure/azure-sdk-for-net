@@ -107,9 +107,9 @@ while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress || r
     }
 }
 
-Assert.AreEqual(
-    RunStatus.Completed,
+Assert.That(
     run.Status,
+    Is.EqualTo(RunStatus.Completed),
     run.LastError?.Message);
 ```
 
@@ -172,9 +172,9 @@ while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress || r
     }
 }
 
-Assert.AreEqual(
-    RunStatus.Completed,
+Assert.That(
     run.Status,
+    Is.EqualTo(RunStatus.Completed),
     run.LastError?.Message);
 ```
 

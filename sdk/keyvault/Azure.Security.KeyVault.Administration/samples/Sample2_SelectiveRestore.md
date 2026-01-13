@@ -15,4 +15,6 @@ KeyVaultSelectiveKeyRestoreOperation restoreOperation = await Client.StartSelect
 
 // Wait for completion of the RestoreOperation.
 KeyVaultSelectiveKeyRestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
+Assert.Multiple(() =>
+{
 ```

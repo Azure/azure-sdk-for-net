@@ -72,6 +72,9 @@ while (!updateCapabilitiesOperation.HasCompleted)
     SleepIfNotInPlaybackMode();
     updateCapabilitiesOperation.UpdateStatus();
 }
+
+Assert.Multiple(() =>
+{
 ```
 
 ## Release phone numbers
@@ -117,6 +120,9 @@ var request = new CreateOrUpdateReservationOptions(reservationId)
 };
 var response = client.CreateOrUpdateReservation(request);
 var reservation = response.Value;
+
+Assert.Multiple(() =>
+{
 ```
 
 ## Checking for partial failures

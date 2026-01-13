@@ -316,7 +316,7 @@ await using ServiceBusSender sender = client.CreatePluginSender(queueName, new L
     return Task.CompletedTask;
     },
     message =>
-    {
+    { Assert.Multiple(() => {
         Console.WriteLine(message.Subject); // prints "Updated subject"
         Console.WriteLine(message.SessionId); // prints "sessionId"
         Console.WriteLine("Second send plugin executed!");

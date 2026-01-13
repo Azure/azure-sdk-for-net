@@ -87,6 +87,9 @@ if (targetIntentResult is QuestionAnsweringTargetIntentResult questionAnsweringT
         Console.WriteLine(answer.Answer?.ToString());
     }
 }
+
+Assert.Multiple(() =>
+{
 ```
 
 ### Conversation
@@ -109,6 +112,9 @@ if (targetIntentResult is ConversationTargetIntentResult conversationTargetInten
         Console.WriteLine();
     }
 }
+
+Assert.Multiple(() =>
+{
 ```
 
 ### LUIS

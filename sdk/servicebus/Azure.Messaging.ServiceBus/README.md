@@ -319,6 +319,8 @@ ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
 // The reason and the description that we specified when dead-lettering the message will be available in the received dead letter message.
 string reason = dlqMessage.DeadLetterReason;
 string description = dlqMessage.DeadLetterErrorDescription;
+Assert.Multiple(() =>
+{
 ```
 
 For more information, see the [overview of ServiceBus dead letter queues](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-dead-letter-queues).
