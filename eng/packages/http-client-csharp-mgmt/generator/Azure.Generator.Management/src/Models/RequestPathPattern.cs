@@ -73,25 +73,9 @@ namespace Azure.Generator.Management.Models
         /// <returns></returns>
         public bool IsAncestorOf(RequestPathPattern other)
         {
-            // Ancestor detection: compare only constant segments, skip variable segments.
-            // To be the parent of other, you must at least be shorter than other.
-            if (other.Count <= Count)
-                return false;
-            for (int i = 0; i < Count; i++)
-            {
-                if (this[i].IsConstant)
-                {
-                    if (!this[i].Equals(other[i]))
-                        return false;
-                }
-                else // variable segment
-                {
-                    if (!other[i].IsConstant)
-                        continue;
-                    return false;
-                }
-            }
-            return true;
+            // To be the ancestor of other, you must be shorter than other,
+            // and all segments of this must match the beginning of other.
+            return other.Count > Count && GetMaximumSharingSegmentsCount(this, other) == Count;
         }
 
         /// <summary>
