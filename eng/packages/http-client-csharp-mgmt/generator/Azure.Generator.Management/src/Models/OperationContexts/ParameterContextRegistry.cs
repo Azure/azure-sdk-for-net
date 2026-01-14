@@ -86,15 +86,7 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                 else
                 {
                     // contextual is null then this is a pass through parameter
-                    var argument = FindParameter(methodParameters, parameter);
-                    if (argument != null)
-                    {
-                        arguments.Add(argument);
-                    }
-                    else
-                    {
-                        arguments.Add(Default);
-                    }
+                    arguments.Add(FindParameter(methodParameters, parameter));
                 }
             }
             else if (parameter.Type.Equals(typeof(RequestContent)))
@@ -117,21 +109,13 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
             else
             {
                 // we did not find it and this parameter does not fall into any known conversion case, so we just pass it through.
-                var argument = FindParameter(methodParameters, parameter);
-                if (argument != null)
-                {
-                    arguments.Add(argument);
-                }
-                else
-                {
-                    arguments.Add(Default);
-                }
+                arguments.Add(FindParameter(methodParameters, parameter));
             }
         }
 
         return arguments;
 
-        static ValueExpression? FindParameter(IReadOnlyList<ParameterProvider> parameters, ParameterProvider parameterToFind)
+        static ValueExpression FindParameter(IReadOnlyList<ParameterProvider> parameters, ParameterProvider parameterToFind)
         {
             var methodParam = parameters.SingleOrDefault(p => p.WireInfo.SerializedName == parameterToFind.WireInfo.SerializedName);
             if (methodParam != null)
@@ -139,7 +123,7 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                 return Convert(methodParam, methodParam.Type, parameterToFind.Type);
             }
 
-            return null;
+            return Default;
         }
 
         static ValueExpression Convert(ValueExpression expression, CSharpType fromType, CSharpType toType)
