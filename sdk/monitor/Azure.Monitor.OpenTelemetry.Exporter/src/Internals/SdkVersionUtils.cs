@@ -141,6 +141,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case SdkVersionType.Exporter:
                     default:
                         ExtensionLabel = "ext";
+                        // if we do not recognise the extension type, providing an extension version is meaningless,
+                        // clear the extension version so that the exporter version is used instead.
+                        s_extensionVersionOverride = null;
                         break;
                 }
 
