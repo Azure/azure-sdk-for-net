@@ -5,6 +5,7 @@ using Azure.AI.AgentServer.Contracts.Generated.Agents;
 using Azure.AI.AgentServer.Contracts.Generated.Conversations;
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
 using Azure.AI.AgentServer.Contracts.Generated.Responses;
+using Azure.AI.AgentServer.Core.AgentRun;
 using Azure.AI.AgentServer.Core.Common.Http.Json;
 
 namespace Azure.AI.AgentServer.Responses.Invocation;
@@ -18,7 +19,7 @@ public static class ResponsesExtensions
     /// Converts a create response request to a response object.
     /// </summary>
     /// <param name="request">The create response request.</param>
-    /// <param name="context">Optional agent invocation context.</param>
+    /// <param name="context">Optional agent run context.</param>
     /// <param name="output">Optional collection of output items.</param>
     /// <param name="status">The response status.</param>
     /// <param name="createdAt">Optional creation timestamp.</param>
@@ -26,7 +27,7 @@ public static class ResponsesExtensions
     /// <returns>A response object.</returns>
     public static Contracts.Generated.Responses.Response ToResponse(
         this CreateResponseRequest request,
-        AgentInvocationContext? context = null,
+        AgentRunContext? context = null,
         IEnumerable<ItemResource>? output = null,
         ResponseStatus status = ResponseStatus.Completed,
         DateTimeOffset? createdAt = null,

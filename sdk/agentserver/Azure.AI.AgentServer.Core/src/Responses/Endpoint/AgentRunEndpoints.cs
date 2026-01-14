@@ -3,15 +3,13 @@
 
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
 using Azure.AI.AgentServer.Contracts.Generated.Responses;
-using Azure.AI.AgentServer.Core.Common.Id;
+using Azure.AI.AgentServer.Core.AgentRun;
 using Azure.AI.AgentServer.Core.Telemetry;
 using Azure.AI.AgentServer.Responses.Invocation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
-using OpenTelemetry;
 
 namespace Azure.AI.AgentServer.Responses.Endpoint;
 
@@ -42,60 +40,19 @@ public static class AgentRunEndpoints
         return endpoints;
     }
 
-    private static async Task<IResult> CreateResponseAsync([FromBody] CreateResponseRequest request,
+    private static async Task<IResult> CreateResponseAsync(
         AgentInvoker invoker,
         ILogger<AgentRunEndpointsLogger> logger,
         HttpContext httpContext,
         CancellationToken ct)
     {
-        var idGenerator = FoundryIdGenerator.From(request);
-        var requestId = GetRequestId(httpContext);
-        var context = new AgentInvocationContext(idGenerator, idGenerator.ResponseId, idGenerator.ConversationId);
-        var scopeAttrs = CreateContextAttributions(context, requestId, request);
+        // AgentRunContext is already created and set up by AgentRunContextMiddleware
+        // OpenTelemetry baggage is already configured by the middleware
+        var context = httpContext.Items["AgentRunContext"] as AgentRunContext
+            ?? throw new InvalidOperationException("AgentRunContext not found. Ensure AgentRunContextMiddleware is registered.");
 
-        UpdateContextBaggage(scopeAttrs);
-        await using var _ = AgentInvocationContext.Setup(context).ConfigureAwait(false);
-        using var activity = context.StartActivity(logger, request);
+        using var activity = context.StartActivity(logger, context.Request);
 
-        return await invoker.InvokeAsync(requestId, request, context, ct).ConfigureAwait(false);
-    }
-
-    private static Dictionary<string, string> CreateContextAttributions(
-        AgentInvocationContext agentContext,
-        string? requestId,
-        CreateResponseRequest requestBody)
-    {
-        var scopeAttrs = new Dictionary<string, string>()
-        {
-            { "azure.ai.agentserver.responses.response_id", agentContext.ResponseId },
-            { "azure.ai.agentserver.responses.conversation_id", agentContext.ConversationId },
-            { "azure.ai.agentserver.responses.streaming", (requestBody.Stream ?? false).ToString() },
-        };
-        if (!string.IsNullOrEmpty(requestId))
-        {
-            scopeAttrs["azure.ai.agentserver.responses.request_id"] = requestId;
-        }
-
-        return scopeAttrs;
-    }
-
-    private static string? GetRequestId(HttpContext httpContext)
-    {
-        if (httpContext.Request.Headers.TryGetValue("X-Request-Id", out var reqId))
-        {
-            return !string.IsNullOrWhiteSpace(reqId)
-                ? reqId.ToString()
-                : null;
-        }
-
-        return null;
-    }
-
-    private static void UpdateContextBaggage(Dictionary<string, string> scopeAttrs)
-    {
-        foreach (var kv in scopeAttrs)
-        {
-            Baggage.SetBaggage(kv.Key, kv.Value);
-        }
+        return await invoker.InvokeAsync(httpContext, ct).ConfigureAwait(false);
     }
 }
