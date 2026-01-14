@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Verify custom Webhook authentication
             Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication, Is.Not.Null);
-            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.EndpointUri.ToString(), Is.EqualTo(EventSubscriptionDestinationEndpoint));
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.EndpointUri, Is.EqualTo(new Uri(EventSubscriptionDestinationEndpoint)));
             Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryApplicationIdOrUri.ToString(), Is.EqualTo(AzureActiveDirectoryApplicationId));
             Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryTenantId, Is.EqualTo(AzureActiveDirectoryTenantId));
             Assert.That(CustomWebhookAuthenticationManagedIdentityType.UserAssigned, Is.EqualTo(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.Identity.IdentityType));

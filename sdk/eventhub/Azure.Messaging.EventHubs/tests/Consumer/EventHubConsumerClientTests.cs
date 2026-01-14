@@ -1387,7 +1387,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 // should be at least one total, but no more than one for each published event.
 
                 Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
-                Assert.That(receivedEvents, Has.Count.AtLeast(events.Count + 1).And.LessThanOrEqualTo(events.Count * 2), "There should be empty events present due to the wait time.");
+                Assert.That(receivedEvents.Count, Is.AtLeast(events.Count + 1), "There should be empty events present due to the wait time.");
+                Assert.That(receivedEvents.Count, Is.LessThanOrEqualTo(events.Count * 2), "There should be empty events present due to the wait time.");
             });
             Assert.That(receivedEvents.Where(item => item != null), Is.EquivalentTo(events), "The received events should match the published events when empty events are removed.");
         }

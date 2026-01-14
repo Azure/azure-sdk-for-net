@@ -40,8 +40,6 @@ await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
     }
 }
 
-Assert.Multiple(() =>
-{
 System.Console.WriteLine(contentBuilder.ToString());
 ```
 
