@@ -7,7 +7,7 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql;
 
-[CodeGenType("AzureResourceManagerMySqlFlexibleServersContext")]
+[Microsoft.TypeSpec.Generator.Customizations.CodeGenType("AzureResourceManagerMySqlFlexibleServersContext")]
 [ModelReaderWriterBuildable(typeof(MySqlFlexibleServersPrivateEndpointConnection))]
 public partial class AzureResourceManagerMySqlContext
 {

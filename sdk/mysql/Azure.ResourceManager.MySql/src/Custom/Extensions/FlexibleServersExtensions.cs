@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    [CodeGenType("MySqlFlexibleServersExtensions")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("MySqlFlexibleServersExtensions")]
     public static partial class FlexibleServersExtensions
     {
         /// <summary>

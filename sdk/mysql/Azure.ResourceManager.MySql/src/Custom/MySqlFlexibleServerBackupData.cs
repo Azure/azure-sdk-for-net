@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// A class representing the MySqlFlexibleServerBackup data model.
     /// Server backup properties
     /// </summary>
-    [CodeGenModel(Usage = new[] { "input" })]
+    //[CodeGenModel(Usage = new[] { "input" })]
     public partial class MySqlFlexibleServerBackupData : ResourceData
     {
     }

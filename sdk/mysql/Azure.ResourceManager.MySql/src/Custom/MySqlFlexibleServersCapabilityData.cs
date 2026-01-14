@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// A class representing the MySqlFlexibleServersCapability data model.
     /// Represents a location capability set.
     /// </summary>
-    [CodeGenModel(Usage = new[] { "input" })]
+    //[CodeGenModel(Usage = new[] { "input" })]
     public partial class MySqlFlexibleServersCapabilityData : ResourceData
     {
     }

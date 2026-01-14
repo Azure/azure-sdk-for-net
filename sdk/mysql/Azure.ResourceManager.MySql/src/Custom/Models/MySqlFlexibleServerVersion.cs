@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public readonly partial struct MySqlFlexibleServerVersion : IEquatable<MySqlFlexibleServerVersion>
     {
         /// <summary> 5.7. </summary>
-        [CodeGenMember("Five7")]
+        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("Five7")]
         public static MySqlFlexibleServerVersion Ver5_7 { get; } = new MySqlFlexibleServerVersion(Ver5_7Value);
         /// <summary> 8.0.21. </summary>
-        [CodeGenMember("Eight021")]
+        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("Eight021")]
         public static MySqlFlexibleServerVersion Ver8_0_21 { get; } = new MySqlFlexibleServerVersion(Ver8_0_21Value);
     }
 }

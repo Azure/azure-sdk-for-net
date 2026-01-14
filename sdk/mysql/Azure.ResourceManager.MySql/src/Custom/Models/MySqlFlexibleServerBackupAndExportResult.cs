@@ -9,7 +9,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Represents BackupAndExportAPI Response. </summary>
-    [CodeGenModel(Usage = new[] { "input" })]
+    //[CodeGenModel(Usage = new[] { "input" })]
     public partial class MySqlFlexibleServerBackupAndExportResult : ResourceData
     {
     }

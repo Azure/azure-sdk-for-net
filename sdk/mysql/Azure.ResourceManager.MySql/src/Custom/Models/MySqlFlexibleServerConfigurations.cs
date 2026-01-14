@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public partial class MySqlFlexibleServerConfigurations
     {
         /// <summary> The Configuration items on this page. </summary>
-        [CodeGenMember("Value")]
+        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("Value")]
         public IReadOnlyList<MySqlFlexibleServerConfigurationData> Values { get; }
     }
 }

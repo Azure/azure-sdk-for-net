@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// A class representing the MySqlFlexibleServerMaintenance data model.
     /// Represents a maintenance.
     /// </summary>
-    [CodeGenModel(Usage = new[] { "input" })]
+    //[CodeGenModel(Usage = new[] { "input" })]
     public partial class MySqlFlexibleServerMaintenanceData : ResourceData
     {
     }

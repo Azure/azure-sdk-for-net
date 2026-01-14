@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-
+/*
 [assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.Optional")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.ChangeTrackingList")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.Argument")]
@@ -10,3 +10,4 @@ using Azure.Core;
 [assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.Utf8JsonRequestContent")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.ChangeTrackingDictionary")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.ModelSerializationExtensions")]
+*/
