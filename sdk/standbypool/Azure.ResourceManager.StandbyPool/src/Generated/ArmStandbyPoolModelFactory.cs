@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -280,6 +281,41 @@ namespace Azure.ResourceManager.StandbyPool.Models
         public static StandbyContainerGroupPoolPrediction StandbyContainerGroupPoolPrediction(IEnumerable<long> forecastValuesInstancesRequestedCount = default, DateTimeOffset forecastStartOn = default, string forecastInfo = default)
         {
             return new StandbyContainerGroupPoolPrediction(forecastValuesInstancesRequestedCount is null ? default : new StandbyContainerGroupPoolForecastValues((forecastValuesInstancesRequestedCount ?? new ChangeTrackingList<long>()).ToList(), null), forecastStartOn, forecastInfo, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="zone"></param>
+        /// <param name="standbyVirtualMachineInstanceCountsByState"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StandbyVirtualMachineInstanceCountSummary StandbyVirtualMachineInstanceCountSummary(long? zone, IEnumerable<PoolVirtualMachineStateCount> standbyVirtualMachineInstanceCountsByState)
+        {
+            standbyVirtualMachineInstanceCountsByState ??= new ChangeTrackingList<PoolVirtualMachineStateCount>();
+
+            return new StandbyVirtualMachineInstanceCountSummary(zone, default, serializedAdditionalRawData: null);
+        }
+
+        /// <param name="instanceCountSummary"></param>
+        /// <param name="provisioningState"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StandbyContainerGroupPoolRuntimeViewProperties StandbyContainerGroupPoolRuntimeViewProperties(IEnumerable<ContainerGroupInstanceCountSummary> instanceCountSummary, StandbyProvisioningState? provisioningState)
+        {
+            return StandbyContainerGroupPoolRuntimeViewProperties(instanceCountSummary, status: default, provisioningState, prediction: default);
+        }
+
+        /// <param name="elasticityProfile"></param>
+        /// <param name="containerGroupProperties"></param>
+        /// <param name="provisioningState"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StandbyContainerGroupPoolProperties StandbyContainerGroupPoolProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties, StandbyProvisioningState? provisioningState)
+        {
+            return StandbyContainerGroupPoolProperties(elasticityProfile, containerGroupProperties, zones: default, provisioningState);
+        }
+
+        /// <param name="instanceCountSummary"></param>
+        /// <param name="provisioningState"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StandbyVirtualMachinePoolRuntimeViewProperties StandbyVirtualMachinePoolRuntimeViewProperties(IEnumerable<StandbyVirtualMachineInstanceCountSummary> instanceCountSummary, StandbyProvisioningState? provisioningState)
+        {
+            return StandbyVirtualMachinePoolRuntimeViewProperties(instanceCountSummary, status: default, provisioningState, prediction: default);
         }
     }
 }
