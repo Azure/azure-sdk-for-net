@@ -9,6 +9,7 @@ pr:
       - feature/*
       - hotfix/*
       - release/*
+      - sync-eng/*
   paths:
     include:
       - .github/CODEOWNERS
