@@ -41,8 +41,8 @@ namespace Azure.Search.Documents.Perf.Scenarios
             AutocompleteResults autocompleteResults = SearchClient.Autocomplete(SearchText, SuggesterName, cancellationToken: cancellationToken).Value;
 
 #if DEBUG
-            Assert.AreEqual(1, autocompleteResults.Results.Count);
-            Assert.AreEqual("historic", autocompleteResults.Results[0].Text);
+            Assert.That(autocompleteResults.Results.Count, Is.EqualTo(1));
+            Assert.That(autocompleteResults.Results[0].Text, Is.EqualTo("historic"));
 #endif
         }
 
@@ -55,8 +55,8 @@ namespace Azure.Search.Documents.Perf.Scenarios
             AutocompleteResults autocompleteResults = (await SearchClient.AutocompleteAsync(SearchText, SuggesterName, cancellationToken: cancellationToken)).Value;
 
 #if DEBUG
-            Assert.AreEqual(1, autocompleteResults.Results.Count);
-            Assert.AreEqual("historic", autocompleteResults.Results[0].Text);
+            Assert.That(autocompleteResults.Results.Count, Is.EqualTo(1));
+            Assert.That(autocompleteResults.Results[0].Text, Is.EqualTo("historic"));
 #endif
         }
     }

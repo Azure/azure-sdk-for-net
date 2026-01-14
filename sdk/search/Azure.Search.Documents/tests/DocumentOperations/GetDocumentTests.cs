@@ -115,7 +115,7 @@ namespace Azure.Search.Documents.Tests
             Response<SearchDocument> response = await client.GetDocumentAsync<SearchDocument>("3");
             dynamic hotel = response.Value;
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.AreEqual("3", hotel.hotelId);
+            Assert.That(hotel.hotelId, Is.EqualTo("3"));
         }
 
         [Test]

@@ -148,7 +148,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using(StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
                 Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
                 Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
                 Assert.That(parsed.SharedAccessSignature, Is.EqualTo(sharedAccessSignature), "The precomputed SAS should match.");
@@ -174,7 +174,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using(StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
                 Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
                 Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
                 Assert.That(parsed.SharedAccessSignature, Is.EqualTo(sharedAccessSignature), "The precomputed SAS should match.");
@@ -200,7 +200,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using(StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
                 Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
                 Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
                 Assert.That(parsed.SharedAccessSignature, Is.EqualTo(sharedAccessSignature), "The precomputed SAS should match.");
@@ -225,7 +225,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using(StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
                 Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
                 Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
                 Assert.That(parsed.EntityPath, Is.EqualTo(eventHub), "The Service Bus path should match.");
@@ -249,7 +249,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using(StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
                 Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
                 Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
                 Assert.That(parsed.EntityPath, Is.EqualTo(eventHub), "The Service Bus path should match.");
@@ -273,7 +273,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using(StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
                 Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
                 Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
                 Assert.That(parsed.EntityPath, Is.EqualTo(eventHub), "The Service Bus path should match.");
@@ -297,7 +297,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using(StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
                 Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
                 Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
                 Assert.That(parsed.EntityPath, Is.EqualTo(eventHub), "The Service Bus path should match.");
@@ -322,7 +322,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using(StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
                 Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
                 Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
                 Assert.That(parsed.SharedAccessSignature, Is.EqualTo(shardAccessSignature), "The precomputed SAS should match.");
@@ -347,7 +347,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using((IComparer<string>)StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
+                Assert.That(parsed.Endpoint?.Host, Is.EqualTo(endpoint).Using(StringComparer.OrdinalIgnoreCase), "The endpoint host should match.");
                 Assert.That(parsed.SharedAccessKeyName, Is.EqualTo(sasKeyName), "The SAS key name should match.");
                 Assert.That(parsed.SharedAccessKey, Is.EqualTo(sasKey), "The SAS key value should match.");
                 Assert.That(parsed.EntityPath, Is.EqualTo(eventHub), "The Service Bus path should match.");

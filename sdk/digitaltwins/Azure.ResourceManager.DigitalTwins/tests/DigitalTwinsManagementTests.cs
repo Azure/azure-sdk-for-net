@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
                 Assert.That(endpointResource.Data.Name, Is.EqualTo(endpointName));
                 Assert.That(endpointResource.Data.Properties.AuthenticationType, Is.EqualTo(DigitalTwinsAuthenticationType.IdentityBased));
             });
-            Assert.IsAssignableFrom<DigitalTwinsEventHubProperties>(endpointResource.Data.Properties);
+            Assert.That(endpointResource.Data.Properties, Is.AssignableFrom<DigitalTwinsEventHubProperties>());
             DigitalTwinsEventHubProperties eventHubEndpointProperties = (DigitalTwinsEventHubProperties)endpointResource.Data.Properties;
             Assert.Multiple(() =>
             {

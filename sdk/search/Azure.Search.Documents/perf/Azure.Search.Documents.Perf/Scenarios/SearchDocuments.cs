@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Perf.Scenarios
             }
 
 #if DEBUG
-            Assert.AreEqual(Options.Count, searchResults.TotalCount);
+            Assert.That(Options.Count, Is.EqualTo(searchResults.TotalCount));
 #endif
         }
 
@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Perf.Scenarios
             }
 
 #if DEBUG
-            Assert.AreEqual(Options.Count, searchResults.TotalCount);
+            Assert.That(Options.Count, Is.EqualTo(searchResults.TotalCount));
 #endif
         }
     }

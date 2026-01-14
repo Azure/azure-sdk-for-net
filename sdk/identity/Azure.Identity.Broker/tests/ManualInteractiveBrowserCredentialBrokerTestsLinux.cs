@@ -34,7 +34,7 @@ namespace Azure.Identity.Broker.Tests
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
-            Assert.NotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace Azure.Identity.Broker.Tests
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
-            Assert.NotNull(token.Token);
+            Assert.That(token.Token, Is.Not.Null);
 
             var brokerEvents = _listener.EventData.Where(e => e.Payload.Any(p => p.ToString().Contains("source: Broker"))).ToList();
             Assert.That(brokerEvents, Is.Not.Empty, "Expected to find log event with source: Broker");

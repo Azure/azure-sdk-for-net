@@ -218,20 +218,20 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             resourceGroupName = rgResource.Data.Name;
             //Testing PUT Operation
             TrafficControllerResource tcCreate = (await CreateTrafficControllerAsync(location, resourceGroupName, tcName)).Value;
-            Assert.NotNull(tcCreate, "Traffic Controller is Null");
-            Assert.AreEqual(tcCreate.Data.Name, tcName);
-            Assert.AreEqual(tcCreate.Data.TrafficControllerProvisioningState?.ToString(), "Succeeded");
+            Assert.That(tcCreate, Is.Not.Null, "Traffic Controller is Null");
+            Assert.That(tcCreate.Data.Name, Is.EqualTo(tcName));
+            Assert.That(tcCreate.Data.TrafficControllerProvisioningState?.ToString(), Is.EqualTo("Succeeded"));
 
             //Testing GET Operation
             TrafficControllerResource tcGet = await GetTrafficControllerAsync(resourceGroupName, tcName);
-            Assert.NotNull(tcGet, "Traffic Controller is Null");
-            Assert.AreEqual(tcGet.Data.Name, tcName);
-            Assert.AreEqual(tcGet.Data.TrafficControllerProvisioningState?.ToString(), "Succeeded");
+            Assert.That(tcGet, Is.Not.Null, "Traffic Controller is Null");
+            Assert.That(tcGet.Data.Name, Is.EqualTo(tcName));
+            Assert.That(tcGet.Data.TrafficControllerProvisioningState?.ToString(), Is.EqualTo("Succeeded"));
 
             //Testing DELETE Operation
             var tcDelete = await tcGet.DeleteAsync(WaitUntil.Completed);
             var deleteResponse = tcDelete.WaitForCompletionResponse();
-            Assert.AreEqual(deleteResponse.IsError, false);
+            Assert.That(deleteResponse.IsError, Is.EqualTo(false));
             await DeleteResourceGroupAsync(rgResource);
         }
 
@@ -253,15 +253,15 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             //Testing PUT Operation
             string frontendName = Recording.GenerateAssetName("tc-frontend");
             var frontendCreation = (await CreateFrontendAsync(rgResource, frontendName, tc, location)).Value;
-            Assert.IsNotNull(frontendCreation);
-            Assert.AreEqual(frontendCreation.Data.Name, frontendName);
-            Assert.AreEqual(frontendCreation.Data.ProvisioningState?.ToString(), "Succeeded");
+            Assert.That(frontendCreation, Is.Not.Null);
+            Assert.That(frontendCreation.Data.Name, Is.EqualTo(frontendName));
+            Assert.That(frontendCreation.Data.ProvisioningState?.ToString(), Is.EqualTo("Succeeded"));
 
             //Testing GET Operation
             var frontendGet = await GetFrontendAsync(frontendName, tc);
-            Assert.IsNotNull(frontendGet);
-            Assert.AreEqual(frontendGet.Data.Name, frontendName);
-            Assert.AreEqual(frontendGet.Data.ProvisioningState?.ToString(), "Succeeded");
+            Assert.That(frontendGet, Is.Not.Null);
+            Assert.That(frontendGet.Data.Name, Is.EqualTo(frontendName));
+            Assert.That(frontendGet.Data.ProvisioningState?.ToString(), Is.EqualTo("Succeeded"));
 
             //Testing DELETE Operation
             var frontendDelete = await frontendGet.DeleteAsync(WaitUntil.Completed);
@@ -290,15 +290,15 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
 
             string associationName = Recording.GenerateAssetName("tc-association");
             TrafficControllerAssociationResource associationCreate = (await CreateAssociationAsync(resourceGroupName, associationName, tc, location)).Value;
-            Assert.IsNotNull(associationCreate);
-            Assert.AreEqual(associationCreate.Data.Name, associationName);
-            Assert.AreEqual(associationCreate.Data.ProvisioningState?.ToString(), "Succeeded");
+            Assert.That(associationCreate, Is.Not.Null);
+            Assert.That(associationCreate.Data.Name, Is.EqualTo(associationName));
+            Assert.That(associationCreate.Data.ProvisioningState?.ToString(), Is.EqualTo("Succeeded"));
 
             //Testing the GET Operation
             TrafficControllerAssociationResource associationGet = await GetAssociationAsync(associationName, tc);
-            Assert.IsNotNull(associationGet);
-            Assert.AreEqual(associationGet.Data.Name, associationName);
-            Assert.AreEqual(associationGet.Data.ProvisioningState?.ToString(), "Succeeded");
+            Assert.That(associationGet, Is.Not.Null);
+            Assert.That(associationGet.Data.Name, Is.EqualTo(associationName));
+            Assert.That(associationGet.Data.ProvisioningState?.ToString(), Is.EqualTo("Succeeded"));
 
             //Testing DELETE Operation
             await DeleteAssociation(associationGet);

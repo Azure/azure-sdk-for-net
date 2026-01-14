@@ -28,7 +28,7 @@ namespace Azure.Security.Attestation.Tests
 
             string policy = await adminclient.GetPolicyAsync(AttestationType.SgxEnclave);
 
-            Assert.IsTrue(policy.StartsWith("version"));
+            Assert.That(policy.StartsWith("version"), Is.True);
         }
 
         [RecordedTest]
@@ -38,7 +38,7 @@ namespace Azure.Security.Attestation.Tests
 
             string policy = await adminclient.GetPolicyAsync(AttestationType.SgxEnclave);
 
-            Assert.IsTrue(policy.StartsWith("version"));
+            Assert.That(policy.StartsWith("version"), Is.True);
         }
 
         [RecordedTest]
@@ -48,7 +48,7 @@ namespace Azure.Security.Attestation.Tests
 
             string policy = await adminclient.GetPolicyAsync(AttestationType.SgxEnclave);
 
-            Assert.IsTrue(policy.StartsWith("version"));
+            Assert.That(policy.StartsWith("version"), Is.True);
         }
 
         public const string disallowDebugging = "version=1.0;" +
@@ -90,8 +90,8 @@ namespace Azure.Security.Attestation.Tests
             }
 
             var policySetResult = await adminClient.ResetPolicyAsync(AttestationType.OpenEnclave, (rsaKey != null ? new AttestationTokenSigningKey(rsaKey, x509Certificate) : null));
-            Assert.AreEqual(200, policySetResult.GetRawResponse().Status);
-            Assert.AreEqual(PolicyModification.Removed, policySetResult.Value.PolicyResolution);
+            Assert.That(policySetResult.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(policySetResult.Value.PolicyResolution, Is.EqualTo(PolicyModification.Removed));
         }
 
         [RecordedTest]
@@ -117,27 +117,27 @@ namespace Azure.Security.Attestation.Tests
 
                 disallowDebuggingHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.Serialize()));
 
-                Assert.AreEqual(200, policySetResult.GetRawResponse().Status);
-                Assert.AreEqual(PolicyModification.Updated, policySetResult.Value.PolicyResolution);
-                CollectionAssert.AreEqual(disallowDebuggingHash, policySetResult.Value.PolicyTokenHash.ToArray());
+                Assert.That(policySetResult.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(policySetResult.Value.PolicyResolution, Is.EqualTo(PolicyModification.Updated));
+                Assert.That(policySetResult.Value.PolicyTokenHash.ToArray(), Is.EqualTo(disallowDebuggingHash));
             }
 
             {
                 string policyResult = await adminclient.GetPolicyAsync(AttestationType.OpenEnclave);
 
-                Assert.AreEqual(disallowDebugging, policyResult);
+                Assert.That(policyResult, Is.EqualTo(disallowDebugging));
             }
             {
                 var policySetResult = await adminclient.ResetPolicyAsync(AttestationType.OpenEnclave);
-                Assert.AreEqual(200, policySetResult.GetRawResponse().Status);
-                Assert.AreEqual(PolicyModification.Removed, policySetResult.Value.PolicyResolution);
+                Assert.That(policySetResult.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(policySetResult.Value.PolicyResolution, Is.EqualTo(PolicyModification.Removed));
             }
 
             {
                 var policyResult = await adminclient.GetPolicyAsync(AttestationType.OpenEnclave);
 
                 // And when we're done, policy should be reset to the original value.
-                Assert.AreEqual(originalPolicy, policyResult.Value);
+                Assert.That(policyResult.Value, Is.EqualTo(originalPolicy));
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.Security.Attestation.Tests
             var adminclient = TestEnvironment.GetIsolatedAdministrationClient(this);
 
             var error = Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await adminclient.SetPolicyAsync(AttestationType.OpenEnclave, disallowDebugging));
-            Assert.AreEqual(400, error.Status);
+            Assert.That(error.Status, Is.EqualTo(400));
             await Task.Yield();
         }
 
@@ -184,28 +184,28 @@ namespace Azure.Security.Attestation.Tests
                     BinaryData.FromObjectAsJson(new StoredAttestationPolicy { AttestationPolicy = disallowDebugging }), new AttestationTokenSigningKey(rsaKey, x509Certificate));
                 disallowDebuggingHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.Serialize()));
 
-                Assert.AreEqual(200, policySetResult.GetRawResponse().Status);
-                Assert.AreEqual(PolicyModification.Updated, policySetResult.Value.PolicyResolution);
-                CollectionAssert.AreEqual(disallowDebuggingHash, policySetResult.Value.PolicyTokenHash.ToArray());
-                Assert.AreEqual(x509Certificate, policySetResult.Value.PolicySigner.SigningCertificates[0]);
+                Assert.That(policySetResult.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(policySetResult.Value.PolicyResolution, Is.EqualTo(PolicyModification.Updated));
+                Assert.That(policySetResult.Value.PolicyTokenHash.ToArray(), Is.EqualTo(disallowDebuggingHash));
+                Assert.That(policySetResult.Value.PolicySigner.SigningCertificates[0], Is.EqualTo(x509Certificate));
             }
 
             {
                 var policyResult = await adminClient.GetPolicyAsync(AttestationType.OpenEnclave);
 
-                Assert.AreEqual(disallowDebugging, policyResult.Value);
+                Assert.That(policyResult.Value, Is.EqualTo(disallowDebugging));
             }
             {
                 var policySetResult = await adminClient.ResetPolicyAsync(AttestationType.OpenEnclave, new AttestationTokenSigningKey(rsaKey, x509Certificate));
-                Assert.AreEqual(200, policySetResult.GetRawResponse().Status);
-                Assert.AreEqual(PolicyModification.Removed, policySetResult.Value.PolicyResolution);
+                Assert.That(policySetResult.GetRawResponse().Status, Is.EqualTo(200));
+                Assert.That(policySetResult.Value.PolicyResolution, Is.EqualTo(PolicyModification.Removed));
             }
 
             {
                 var policyResult = await adminClient.GetPolicyAsync(AttestationType.OpenEnclave);
 
                 // And when we're done, policy should be reset to the original value.
-                Assert.AreEqual(originalPolicy, policyResult.Value);
+                Assert.That(policyResult.Value, Is.EqualTo(originalPolicy));
             }
         }
 
@@ -231,7 +231,7 @@ namespace Azure.Security.Attestation.Tests
             var adminclient = TestEnvironment.GetIsolatedAdministrationClient(this);
             {
                 var certificateResult = await adminclient.GetPolicyManagementCertificatesAsync();
-                Assert.AreNotEqual(0, certificateResult.Value.Count);
+                Assert.That(certificateResult.Value.Count, Is.Not.EqualTo(0));
 
                 bool foundInitialRoot = false;
                 foreach (var cert in certificateResult.Value)
@@ -242,7 +242,7 @@ namespace Azure.Security.Attestation.Tests
                         break;
                     }
                 }
-                Assert.IsTrue(foundInitialRoot);
+                Assert.That(foundInitialRoot, Is.True);
             }
         }
 
@@ -252,7 +252,7 @@ namespace Azure.Security.Attestation.Tests
             var adminclient = TestEnvironment.GetSharedAdministrationClient(this);
             {
                 var certificateResult = await adminclient.GetPolicyManagementCertificatesAsync();
-                Assert.AreEqual(0, certificateResult.Value.Count);
+                Assert.That(certificateResult.Value.Count, Is.EqualTo(0));
             }
         }
 
@@ -267,8 +267,8 @@ namespace Azure.Security.Attestation.Tests
                 var modificationResult = await adminClient.AddPolicyManagementCertificateAsync(
                     TestEnvironment.PolicyCertificate2,
                     new AttestationTokenSigningKey(rsaKey, x509Certificate));
-                Assert.AreEqual(PolicyCertificateResolution.IsPresent, modificationResult.Value.CertificateResolution);
-                Assert.AreEqual(TestEnvironment.PolicyCertificate2.Thumbprint, modificationResult.Value.CertificateThumbprint);
+                Assert.That(modificationResult.Value.CertificateResolution, Is.EqualTo(PolicyCertificateResolution.IsPresent));
+                Assert.That(modificationResult.Value.CertificateThumbprint, Is.EqualTo(TestEnvironment.PolicyCertificate2.Thumbprint));
 
                 // Verify that the certificate we got back was in fact added.
                 var certificateResult = await adminClient.GetPolicyManagementCertificatesAsync();
@@ -281,7 +281,7 @@ namespace Azure.Security.Attestation.Tests
                         break;
                     }
                 }
-                Assert.IsTrue(foundAddedCertificate);
+                Assert.That(foundAddedCertificate, Is.True);
             }
 
             // Add the same certificate a second time, that should generate the same result.
@@ -289,8 +289,8 @@ namespace Azure.Security.Attestation.Tests
                 var modificationResult = await adminClient.AddPolicyManagementCertificateAsync(
                     TestEnvironment.PolicyCertificate2,
                     new AttestationTokenSigningKey(rsaKey, x509Certificate));
-                Assert.AreEqual(PolicyCertificateResolution.IsPresent, modificationResult.Value.CertificateResolution);
-                Assert.AreEqual(TestEnvironment.PolicyCertificate2.Thumbprint, modificationResult.Value.CertificateThumbprint);
+                Assert.That(modificationResult.Value.CertificateResolution, Is.EqualTo(PolicyCertificateResolution.IsPresent));
+                Assert.That(modificationResult.Value.CertificateThumbprint, Is.EqualTo(TestEnvironment.PolicyCertificate2.Thumbprint));
 
                 // Verify that the certificate we got back was in fact added.
                 var certificateResult = await adminClient.GetPolicyManagementCertificatesAsync();
@@ -303,15 +303,15 @@ namespace Azure.Security.Attestation.Tests
                         break;
                     }
                 }
-                Assert.IsTrue(foundAddedCertificate);
+                Assert.That(foundAddedCertificate, Is.True);
             }
 
             {
                 var modificationResult = await adminClient.RemovePolicyManagementCertificateAsync(
                     TestEnvironment.PolicyCertificate2,
                     new AttestationTokenSigningKey(rsaKey, x509Certificate));
-                Assert.AreEqual(PolicyCertificateResolution.IsAbsent, modificationResult.Value.CertificateResolution);
-                Assert.AreEqual(TestEnvironment.PolicyCertificate2.Thumbprint, modificationResult.Value.CertificateThumbprint);
+                Assert.That(modificationResult.Value.CertificateResolution, Is.EqualTo(PolicyCertificateResolution.IsAbsent));
+                Assert.That(modificationResult.Value.CertificateThumbprint, Is.EqualTo(TestEnvironment.PolicyCertificate2.Thumbprint));
 
                 // Verify that the certificate we got back was in fact added.
                 var certificateResult = await adminClient.GetPolicyManagementCertificatesAsync();
@@ -324,7 +324,7 @@ namespace Azure.Security.Attestation.Tests
                         break;
                     }
                 }
-                Assert.IsFalse(foundAddedCertificate);
+                Assert.That(foundAddedCertificate, Is.False);
             }
         }
     }

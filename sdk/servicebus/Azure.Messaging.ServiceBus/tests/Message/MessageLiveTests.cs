@@ -211,9 +211,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                         Assert.That(sentMessage.ContentType, Is.EqualTo(received.ContentType));
                         Assert.That(sentMessage.CorrelationId, Is.EqualTo(received.CorrelationId));
                     });
-                    Assert.AreEqual(received.Subject, sentMessage.Subject);
-                    Assert.AreEqual(received.ContentType, sentMessage.ContentType);
-                    Assert.AreEqual(received.CorrelationId, sentMessage.CorrelationId);
+                    Assert.That(received.Subject, Is.EqualTo(sentMessage.Subject));
+                    Assert.That(received.ContentType, Is.EqualTo(sentMessage.ContentType));
+                    Assert.That(received.CorrelationId, Is.EqualTo(sentMessage.CorrelationId));
                     Assert.Multiple(() =>
                     {
                         Assert.That(sentMessage.MessageId, Is.EqualTo(received.MessageId));
@@ -354,9 +354,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                         Assert.That(sentMessage.ContentType, Is.EqualTo(received.ContentType));
                         Assert.That(sentMessage.CorrelationId, Is.EqualTo(received.CorrelationId));
                     });
-                    Assert.AreEqual(received.Subject, sentMessage.Subject);
-                    Assert.AreEqual(received.ContentType, sentMessage.ContentType);
-                    Assert.AreEqual(received.CorrelationId, sentMessage.CorrelationId);
+                    Assert.That(received.Subject, Is.EqualTo(sentMessage.Subject));
+                    Assert.That(received.ContentType, Is.EqualTo(sentMessage.ContentType));
+                    Assert.That(received.CorrelationId, Is.EqualTo(sentMessage.CorrelationId));
                     Assert.Multiple(() =>
                     {
                         Assert.That(sentMessage.MessageId, Is.EqualTo(received.MessageId));

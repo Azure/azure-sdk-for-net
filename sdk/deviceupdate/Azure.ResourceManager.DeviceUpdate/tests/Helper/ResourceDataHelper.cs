@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
                     Assert.That(getResult.Data.Identity.TenantId, Is.EqualTo(model.Data.Identity.TenantId));
                     Assert.That(getResult.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(model.Data.Identity.ManagedServiceIdentityType));
                 });
-                Assert.AreEqual(model.Data.Identity.UserAssignedIdentities.Count, getResult.Data.Identity.UserAssignedIdentities.Count);
+                Assert.That(model.Data.Identity.UserAssignedIdentities.Count, Is.EqualTo(getResult.Data.Identity.UserAssignedIdentities.Count));
                 foreach (var kv in model.Data.Identity.UserAssignedIdentities)
                 {
                     Assert.Multiple(() =>

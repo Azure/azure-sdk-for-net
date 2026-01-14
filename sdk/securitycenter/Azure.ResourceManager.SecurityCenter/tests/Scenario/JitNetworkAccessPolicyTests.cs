@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 Assert.That(jitNetworkAccessPolicy.Data.VirtualMachines.First().Ports.First().Number, Is.EqualTo(8080));
                 Assert.That(jitNetworkAccessPolicy.Data.VirtualMachines.First().Ports.First().Protocol.ToString(), Is.EqualTo("TCP"));
             });
-            Assert.AreEqual(8080, jitNetworkAccessPolicy.Data.VirtualMachines.First().Ports.First().Number);
+            Assert.That(jitNetworkAccessPolicy.Data.VirtualMachines.First().Ports.First().Number, Is.EqualTo(8080));
         }
     }
 }

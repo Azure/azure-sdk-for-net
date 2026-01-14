@@ -147,10 +147,10 @@ namespace Azure.Security.Attestation.Tests
 
             validationOptions.TokenValidated += (args) =>
             {
-                Assert.AreEqual(1, args.Signer.SigningCertificates.Count);
-                Assert.IsNotNull(args.Signer.SigningCertificates[0]);
-                CollectionAssert.AreEqual(fullCertificate.Export(X509ContentType.Cert), args.Signer.SigningCertificates[0].Export(X509ContentType.Cert));
-                Assert.AreEqual(fullCertificate, args.Signer.SigningCertificates[0]);
+                Assert.That(args.Signer.SigningCertificates.Count, Is.EqualTo(1));
+                Assert.That(args.Signer.SigningCertificates[0], Is.Not.Null);
+                Assert.That(args.Signer.SigningCertificates[0].Export(X509ContentType.Cert), Is.EqualTo(fullCertificate.Export(X509ContentType.Cert)));
+                Assert.That(args.Signer.SigningCertificates[0], Is.EqualTo(fullCertificate));
                 return Task.CompletedTask;
             };
 
@@ -170,10 +170,10 @@ namespace Azure.Security.Attestation.Tests
         {
             var parsedToken = AttestationToken.Deserialize(serializedToken);
             await Task.Yield();
-            Assert.IsTrue(await parsedToken.ValidateTokenAsync(tokenOptions ?? new AttestationTokenValidationOptions { ValidateExpirationTime = true }, null));
+            Assert.That(await parsedToken.ValidateTokenAsync(tokenOptions ?? new AttestationTokenValidationOptions { ValidateExpirationTime = true }, null), Is.True);
 
             // The body of the token should match the expected body.
-            Assert.AreEqual(JsonSerializer.Serialize(expectedBody), Encoding.UTF8.GetString(parsedToken.TokenBodyBytes.ToArray()));
+            Assert.That(Encoding.UTF8.GetString(parsedToken.TokenBodyBytes.ToArray()), Is.EqualTo(JsonSerializer.Serialize(expectedBody)));
         }
     }
 }

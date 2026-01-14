@@ -768,8 +768,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.That(getEventSubscription1, Is.Not.Null);
             Assert.That(namespaceTopicSubscriptionName1, Is.EqualTo(getEventSubscription1.Data.Name));
             Assert.That(DeliveryMode.Queue.ToString(), Is.EqualTo(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString()));
-            Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.Queue.EventTimeToLive, TimeSpan.FromDays(1));
-            Assert.AreEqual(5, getEventSubscription1.Data.DeliveryConfiguration.Queue.MaxDeliveryCount);
+            Assert.That(getEventSubscription1.Data.DeliveryConfiguration.Queue.EventTimeToLive, Is.EqualTo(TimeSpan.FromDays(1)));
+            Assert.That(5, Is.EqualTo(getEventSubscription1.Data.DeliveryConfiguration.Queue.MaxDeliveryCount));
 
             //update event subscription
             DeliveryConfiguration deliveryConfiguration2 = new DeliveryConfiguration()
@@ -788,25 +788,25 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
             var updateEventSubscription1 = (await createEventsubscription1.UpdateAsync(WaitUntil.Completed, subscriptionPatch)).Value;
             Assert.That(updateEventSubscription1, Is.Not.Null);
-            Assert.AreEqual(updateEventSubscription1.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+            Assert.That(updateEventSubscription1.Data.ProvisioningState, Is.EqualTo(SubscriptionProvisioningState.Succeeded));
 
             var getUpdatedEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
             Assert.That(getUpdatedEventSubscription1, Is.Not.Null);
-            Assert.AreEqual(getUpdatedEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
-            Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Queue.ToString());
-            Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.Queue.EventTimeToLive, TimeSpan.FromDays(0.5));
-            Assert.AreEqual(6, getUpdatedEventSubscription1.Data.DeliveryConfiguration.Queue.MaxDeliveryCount);
+            Assert.That(getUpdatedEventSubscription1.Data.Name, Is.EqualTo(namespaceTopicSubscriptionName1));
+            Assert.That(getUpdatedEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), Is.EqualTo(DeliveryMode.Queue.ToString()));
+            Assert.That(getUpdatedEventSubscription1.Data.DeliveryConfiguration.Queue.EventTimeToLive, Is.EqualTo(TimeSpan.FromDays(0.5)));
+            Assert.That(getUpdatedEventSubscription1.Data.DeliveryConfiguration.Queue.MaxDeliveryCount, Is.EqualTo(6));
 
             // List all event subscriptions
             var listAllSubscriptionsBefore = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listAllSubscriptionsBefore, Is.Not.Null);
-            Assert.AreEqual(1, listAllSubscriptionsBefore.Count);
+            Assert.That(listAllSubscriptionsBefore.Count, Is.EqualTo(1));
 
             // Delete event subscriptions
             await getUpdatedEventSubscription1.DeleteAsync(WaitUntil.Completed);
             var listAllSubscriptionsAfter = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listAllSubscriptionsAfter, Is.Not.Null);
-            Assert.AreEqual(0, listAllSubscriptionsAfter.Count);
+            Assert.That(listAllSubscriptionsAfter.Count, Is.EqualTo(0));
 
             // delete all resources
             await namespaceTopicsResponse1.DeleteAsync(WaitUntil.Completed);
@@ -947,30 +947,30 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
             var updateEventSubscription1 = (await createEventsubscription1.UpdateAsync(WaitUntil.Completed, subscriptionPatch)).Value;
             Assert.That(updateEventSubscription1, Is.Not.Null);
-            Assert.AreEqual(updateEventSubscription1.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+            Assert.That(updateEventSubscription1.Data.ProvisioningState, Is.EqualTo(SubscriptionProvisioningState.Succeeded));
 
             var getUpdatedEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
             Assert.That(getUpdatedEventSubscription1, Is.Not.Null);
-            Assert.AreEqual(getUpdatedEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
-            Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Push.ToString());
+            Assert.That(getUpdatedEventSubscription1.Data.Name, Is.EqualTo(namespaceTopicSubscriptionName1));
+            Assert.That(getUpdatedEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), Is.EqualTo(DeliveryMode.Push.ToString()));
 
             // List all event subscriptions
             var listAllSubscriptionsBefore = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listAllSubscriptionsBefore, Is.Not.Null);
-            Assert.AreEqual(3, listAllSubscriptionsBefore.Count);
+            Assert.That(listAllSubscriptionsBefore.Count, Is.EqualTo(3));
 
             // Delete event subscriptions
             await getUpdatedEventSubscription1.DeleteAsync(WaitUntil.Completed);
             var listAllSubscriptionsAfter = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listAllSubscriptionsAfter, Is.Not.Null);
-            Assert.AreEqual(2, listAllSubscriptionsAfter.Count);
+            Assert.That(listAllSubscriptionsAfter.Count, Is.EqualTo(2));
 
             // delete all resources
             await createEventsubscription2.DeleteAsync(WaitUntil.Completed);
             await createEventsubscription3.DeleteAsync(WaitUntil.Completed);
             var listAllSubscriptionsAfterAllDeleted = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listAllSubscriptionsAfterAllDeleted, Is.Not.Null);
-            Assert.AreEqual(0, listAllSubscriptionsAfterAllDeleted.Count);
+            Assert.That(listAllSubscriptionsAfterAllDeleted.Count, Is.EqualTo(0));
             await namespaceTopicsResponse1.DeleteAsync(WaitUntil.Completed);
             await createNamespaceResponse.DeleteAsync(WaitUntil.Completed);
             await ResourceGroup.DeleteAsync(WaitUntil.Completed);
@@ -1107,30 +1107,30 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
             var updateEventSubscription1 = (await createEventsubscription1.UpdateAsync(WaitUntil.Completed, subscriptionPatch)).Value;
             Assert.That(updateEventSubscription1, Is.Not.Null);
-            Assert.AreEqual(updateEventSubscription1.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
+            Assert.That(updateEventSubscription1.Data.ProvisioningState, Is.EqualTo(SubscriptionProvisioningState.Succeeded));
 
             var getUpdatedEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
             Assert.That(getUpdatedEventSubscription1, Is.Not.Null);
-            Assert.AreEqual(getUpdatedEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
-            Assert.AreEqual(getUpdatedEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Push.ToString());
+            Assert.That(getUpdatedEventSubscription1.Data.Name, Is.EqualTo(namespaceTopicSubscriptionName1));
+            Assert.That(getUpdatedEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), Is.EqualTo(DeliveryMode.Push.ToString()));
 
             // List all event subscriptions
             var listAllSubscriptionsBefore = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listAllSubscriptionsBefore, Is.Not.Null);
-            Assert.AreEqual(3, listAllSubscriptionsBefore.Count);
+            Assert.That(listAllSubscriptionsBefore.Count, Is.EqualTo(3));
 
             // Delete event subscriptions
             await getUpdatedEventSubscription1.DeleteAsync(WaitUntil.Completed);
             var listAllSubscriptionsAfter = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listAllSubscriptionsAfter, Is.Not.Null);
-            Assert.AreEqual(2, listAllSubscriptionsAfter.Count);
+            Assert.That(listAllSubscriptionsAfter.Count, Is.EqualTo(2));
 
             // delete all resources
             await createEventsubscription2.DeleteAsync(WaitUntil.Completed);
             await createEventsubscription3.DeleteAsync(WaitUntil.Completed);
             var listAllSubscriptionsAfterAllDeleted = await subscriptionsCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(listAllSubscriptionsAfterAllDeleted, Is.Not.Null);
-            Assert.AreEqual(0, listAllSubscriptionsAfterAllDeleted.Count);
+            Assert.That(listAllSubscriptionsAfterAllDeleted.Count, Is.EqualTo(0));
             await namespaceTopicsResponse1.DeleteAsync(WaitUntil.Completed);
             await createNamespaceResponse.DeleteAsync(WaitUntil.Completed);
             await ResourceGroup.DeleteAsync(WaitUntil.Completed);

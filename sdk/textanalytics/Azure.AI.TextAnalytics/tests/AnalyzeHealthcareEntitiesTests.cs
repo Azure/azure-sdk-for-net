@@ -100,7 +100,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.That(result1.Entities, Has.Count.EqualTo(s_document1ExpectedEntitiesOutput.Count));
                 Assert.That(result1.Id, Is.Not.Null);
             });
-            Assert.AreEqual("1", result1.Id);
+            Assert.That(result1.Id, Is.EqualTo("1"));
 
             foreach (HealthcareEntity entity in result1.Entities)
             {
