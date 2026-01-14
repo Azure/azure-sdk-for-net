@@ -573,13 +573,13 @@ directive:
   - from: swagger-document
     where: $.definitions.TableVerticalValidationDataSettings.properties.cvSplitColumnNames
     transform: $["x-nullable"] = true;
-  - from: workspaceRP.json
+  - from: swagger-document
     where: $.definitions
     transform: >
       $.PrivateLinkResourceProperties.properties.groupId.readOnly = true;
       $.PrivateLinkResourceProperties.properties.requiredMembers.readOnly = true;
   # quite a few x-ms-client-name extensions are defined in the swagger, we here erase them all to prevent some funny interactions between our own renaming configuration
-  - from: mfe.json
+  - from: swagger-document
     where: $.definitions
     transform: >
       $.CodeContainerResource["x-ms-client-name"] = undefined;
