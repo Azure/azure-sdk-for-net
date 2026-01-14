@@ -7,10 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
     /// <summary> Properties of the private endpoint connection. </summary>
     public partial class PrivateEndpointConnectionProperties
@@ -21,7 +21,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkServiceConnectionState"/> is null. </exception>
-        public PrivateEndpointConnectionProperties(AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        public PrivateEndpointConnectionProperties(AzureGeneratorMgmtTypeSpecPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
         {
             Argument.AssertNotNull(privateLinkServiceConnectionState, nameof(privateLinkServiceConnectionState));
 
@@ -35,7 +35,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionProperties(IReadOnlyList<string> groupIds, SubResource privateEndpoint, AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState privateLinkServiceConnectionState, AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointConnectionProperties(IReadOnlyList<string> groupIds, SubResource privateEndpoint, AzureGeneratorMgmtTypeSpecPrivateLinkServiceConnectionState privateLinkServiceConnectionState, AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;
@@ -54,10 +54,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         [WirePath("privateLinkServiceConnectionState")]
-        public AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public AzureGeneratorMgmtTypeSpecPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         [WirePath("provisioningState")]
-        public AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+        public AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }

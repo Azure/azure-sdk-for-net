@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
     /// <summary> Offer details for the marketplace that is selected by the user. </summary>
     public partial class OfferDetails

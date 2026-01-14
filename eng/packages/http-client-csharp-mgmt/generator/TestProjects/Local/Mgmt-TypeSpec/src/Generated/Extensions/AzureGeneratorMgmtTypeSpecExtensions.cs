@@ -10,52 +10,52 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Generator.MgmtTypeSpec.Tests.Mocking;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
+using Azure.Generator.MgmtTypeSpec.Mocking;
+using Azure.Generator.MgmtTypeSpec.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
-    /// <summary> A class to add extension methods to Azure.Generator.MgmtTypeSpec.Tests. </summary>
-    public static partial class AzureGeneratorMgmtTypeSpecTestsExtensions
+    /// <summary> A class to add extension methods to Azure.Generator.MgmtTypeSpec. </summary>
+    public static partial class AzureGeneratorMgmtTypeSpecExtensions
     {
         /// <param name="client"></param>
-        private static MockableAzureGeneratorMgmtTypeSpecTestsArmClient GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(ArmClient client)
+        private static MockableAzureGeneratorMgmtTypeSpecArmClient GetMockableAzureGeneratorMgmtTypeSpecArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableAzureGeneratorMgmtTypeSpecTestsArmClient(client0, ResourceIdentifier.Root));
+            return client.GetCachedClient(client0 => new MockableAzureGeneratorMgmtTypeSpecArmClient(client0, ResourceIdentifier.Root));
         }
 
         /// <param name="resourceGroupResource"></param>
-        private static MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(ResourceGroupResource resourceGroupResource)
+        private static MockableAzureGeneratorMgmtTypeSpecResourceGroupResource GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroupResource.GetCachedClient(client => new MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(client, resourceGroupResource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableAzureGeneratorMgmtTypeSpecResourceGroupResource(client, resourceGroupResource.Id));
         }
 
         /// <param name="subscriptionResource"></param>
-        private static MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(SubscriptionResource subscriptionResource)
+        private static MockableAzureGeneratorMgmtTypeSpecSubscriptionResource GetMockableAzureGeneratorMgmtTypeSpecSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return subscriptionResource.GetCachedClient(client => new MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(client, subscriptionResource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableAzureGeneratorMgmtTypeSpecSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <param name="tenantResource"></param>
-        private static MockableAzureGeneratorMgmtTypeSpecTestsTenantResource GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(TenantResource tenantResource)
+        private static MockableAzureGeneratorMgmtTypeSpecTenantResource GetMockableAzureGeneratorMgmtTypeSpecTenantResource(TenantResource tenantResource)
         {
-            return tenantResource.GetCachedClient(client => new MockableAzureGeneratorMgmtTypeSpecTestsTenantResource(client, tenantResource.Id));
+            return tenantResource.GetCachedClient(client => new MockableAzureGeneratorMgmtTypeSpecTenantResource(client, tenantResource.Id));
         }
 
         /// <param name="managementGroupResource"></param>
-        private static MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(ManagementGroupResource managementGroupResource)
+        private static MockableAzureGeneratorMgmtTypeSpecManagementGroupResource GetMockableAzureGeneratorMgmtTypeSpecManagementGroupResource(ManagementGroupResource managementGroupResource)
         {
-            return managementGroupResource.GetCachedClient(client => new MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(client, managementGroupResource.Id));
+            return managementGroupResource.GetCachedClient(client => new MockableAzureGeneratorMgmtTypeSpecManagementGroupResource(client, managementGroupResource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -66,14 +66,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetPrivateEndpointConnectionResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="StorageSyncServiceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetStorageSyncServiceResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetStorageSyncServiceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -84,14 +84,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetStorageSyncServiceResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetStorageSyncServiceResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="FooResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetFooResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetFooResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -102,14 +102,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetFooResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetFooResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetFooSettingsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetFooSettingsResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -120,14 +120,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetFooSettingsResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetFooSettingsResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetBarResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetBarResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -138,14 +138,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetBarResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetBarResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="BarSettingsResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetBarSettingsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetBarSettingsResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -156,14 +156,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetBarSettingsResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetBarSettingsResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="BarQuotaResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetBarQuotaResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetBarQuotaResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -174,14 +174,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetBarQuotaResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetBarQuotaResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="BazResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetBazResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetBazResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -192,14 +192,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetBazResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetBazResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="ZooResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetZooResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetZooResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -210,14 +210,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetZooResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetZooResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="EndpointResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetEndpointResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetEndpointResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -228,14 +228,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEndpointResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetEndpointResource(id);
         }
 
         /// <summary>
         /// Gets a collection of <see cref="EndpointResourceCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetEndpointResources(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetEndpointResources(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -246,14 +246,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEndpointResources(scope);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetEndpointResources(scope);
         }
 
         /// <summary>
         /// Gets the endpoint to the resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetEndpointResource(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetEndpointResource(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -266,14 +266,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEndpointResource(scope, endpointName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetEndpointResource(scope, endpointName, cancellationToken);
         }
 
         /// <summary>
         /// Gets the endpoint to the resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetEndpointResourceAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetEndpointResourceAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -286,14 +286,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEndpointResourceAsync(scope, endpointName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetEndpointResourceAsync(scope, endpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="SelfHelpResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetSelfHelpResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetSelfHelpResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -304,14 +304,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSelfHelpResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetSelfHelpResource(id);
         }
 
         /// <summary>
         /// Gets a collection of <see cref="SelfHelpResourceCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetSelfHelpResources(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetSelfHelpResources(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -322,14 +322,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSelfHelpResources(scope);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetSelfHelpResources(scope);
         }
 
         /// <summary>
         /// Get a SelfHelpResource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetSelfHelpResource(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetSelfHelpResource(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -342,14 +342,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSelfHelpResource(scope, selfHelpName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetSelfHelpResource(scope, selfHelpName, cancellationToken);
         }
 
         /// <summary>
         /// Get a SelfHelpResource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetSelfHelpResourceAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetSelfHelpResourceAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -362,14 +362,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSelfHelpResourceAsync(scope, selfHelpName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetSelfHelpResourceAsync(scope, selfHelpName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="PlaywrightQuotaResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetPlaywrightQuotaResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetPlaywrightQuotaResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -380,14 +380,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetPlaywrightQuotaResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetPlaywrightQuotaResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="JobResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetJobResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetJobResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -398,14 +398,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetJobResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetJobResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="HciVmInstanceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetHciVmInstanceResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetHciVmInstanceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -416,14 +416,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetHciVmInstanceResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetHciVmInstanceResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="HciVmInstanceResource"/> along with the instance operations that can be performed on it in the ArmClient
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetHciVmInstance(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetHciVmInstance(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -434,14 +434,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetHciVmInstance(scope);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetHciVmInstance(scope);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="GroupQuotaSubscriptionRequestStatusResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetGroupQuotaSubscriptionRequestStatusResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetGroupQuotaSubscriptionRequestStatusResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -452,14 +452,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetGroupQuotaSubscriptionRequestStatusResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetGroupQuotaSubscriptionRequestStatusResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="GroupQuotaLimitListResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetGroupQuotaLimitListResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetGroupQuotaLimitListResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -470,14 +470,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetGroupQuotaLimitListResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetGroupQuotaLimitListResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="SubscriptionQuotaAllocationsListResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetSubscriptionQuotaAllocationsListResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetSubscriptionQuotaAllocationsListResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -488,14 +488,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSubscriptionQuotaAllocationsListResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetSubscriptionQuotaAllocationsListResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="JooResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetJooResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetJooResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -506,14 +506,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetJooResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetJooResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="SAPVirtualInstanceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetSAPVirtualInstanceResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetSAPVirtualInstanceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -524,14 +524,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSAPVirtualInstanceResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetSAPVirtualInstanceResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="BestPracticeResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetBestPracticeResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetBestPracticeResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -542,14 +542,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetBestPracticeResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetBestPracticeResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="BestPracticeVersionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetBestPracticeVersionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetBestPracticeVersionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -560,14 +560,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetBestPracticeVersionResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetBestPracticeVersionResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="ResourceTypeTestResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetResourceTypeTestResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetResourceTypeTestResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -578,14 +578,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetResourceTypeTestResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetResourceTypeTestResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="SampleDataResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetSampleDataResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetSampleDataResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -596,14 +596,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSampleDataResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetSampleDataResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="WorkloadNetworksResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetWorkloadNetworksResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetWorkloadNetworksResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -614,14 +614,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetWorkloadNetworksResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetWorkloadNetworksResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="WorkloadNetworkVmGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetWorkloadNetworkVmGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetWorkloadNetworkVmGroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -632,14 +632,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetWorkloadNetworkVmGroupResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetWorkloadNetworkVmGroupResource(id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="WorkloadNetworkSegmentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetWorkloadNetworkSegmentResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetWorkloadNetworkSegmentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -650,14 +650,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetWorkloadNetworkSegmentResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetWorkloadNetworkSegmentResource(id);
         }
 
         /// <summary>
         /// CheckNameAvailability
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.CheckNameAvailabilityAsync(ResourceIdentifier, CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.CheckNameAvailabilityAsync(ResourceIdentifier, CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -669,14 +669,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).CheckNameAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).CheckNameAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// CheckNameAvailability
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.CheckNameAvailability(ResourceIdentifier, CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.CheckNameAvailability(ResourceIdentifier, CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -688,14 +688,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).CheckNameAvailability(scope, content, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).CheckNameAvailability(scope, content, cancellationToken);
         }
 
         /// <summary>
         /// List ScheduledActionResources resources by parent
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetByVmsAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetByVmsAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -707,14 +707,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetByVmsAsync(scope, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetByVmsAsync(scope, cancellationToken);
         }
 
         /// <summary>
         /// List ScheduledActionResources resources by parent
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetByVms(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient.GetByVms(ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -726,14 +726,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetByVms(scope, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecArmClient(client).GetByVms(scope, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of StorageSyncServices in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetStorageSyncServices()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetStorageSyncServices()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -743,14 +743,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetStorageSyncServices();
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetStorageSyncServices();
         }
 
         /// <summary>
         /// Gets the specified storage sync service.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetStorageSyncServiceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetStorageSyncServiceAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -762,14 +762,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetStorageSyncServiceAsync(storageSyncServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetStorageSyncServiceAsync(storageSyncServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the specified storage sync service.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetStorageSyncService(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetStorageSyncService(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -781,14 +781,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetStorageSyncService(storageSyncServiceName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetStorageSyncService(storageSyncServiceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of Foos in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetFoos()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetFoos()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -798,14 +798,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetFoos();
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetFoos();
         }
 
         /// <summary>
         /// Get a Foo
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetFooAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetFooAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -817,14 +817,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetFooAsync(fooName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetFooAsync(fooName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a Foo
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetFoo(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetFoo(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -836,14 +836,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetFoo(fooName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetFoo(fooName, cancellationToken);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="ResourceGroupResource"/>.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetFooSettings()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetFooSettings()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -853,14 +853,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetFooSettings();
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetFooSettings();
         }
 
         /// <summary>
         /// Gets a collection of Bazs in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetBazs()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetBazs()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -870,14 +870,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetBazs();
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetBazs();
         }
 
         /// <summary>
         /// Get a Baz
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetBazAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetBazAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -889,14 +889,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetBazAsync(bazName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetBazAsync(bazName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a Baz
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetBaz(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetBaz(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -908,14 +908,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetBaz(bazName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetBaz(bazName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of Zoos in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetZoos()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetZoos()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -925,14 +925,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetZoos();
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetZoos();
         }
 
         /// <summary>
         /// Get a Zoo
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetZooAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetZooAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -944,14 +944,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetZooAsync(zooName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetZooAsync(zooName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a Zoo
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetZoo(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetZoo(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -963,14 +963,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetZoo(zooName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetZoo(zooName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of JobResources in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetJobResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetJobResources()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -980,14 +980,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetJobResources();
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetJobResources();
         }
 
         /// <summary>
         /// Gets information about the specified job.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetJobResourceAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetJobResourceAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1000,14 +1000,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetJobResourceAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetJobResourceAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets information about the specified job.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetJobResource(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetJobResource(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1020,14 +1020,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetJobResource(jobName, expand, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetJobResource(jobName, expand, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of Joos in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetJoos()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetJoos()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1037,14 +1037,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetJoos();
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetJoos();
         }
 
         /// <summary>
         /// Get a Joo
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetJooAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetJooAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1056,14 +1056,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetJooAsync(jooName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetJooAsync(jooName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a Joo
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetJoo(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetJoo(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1075,14 +1075,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetJoo(jooName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetJoo(jooName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of SAPVirtualInstances in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetSAPVirtualInstances()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetSAPVirtualInstances()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1092,14 +1092,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSAPVirtualInstances();
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetSAPVirtualInstances();
         }
 
         /// <summary>
         /// Gets a Virtual Instance for SAP solutions resource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetSAPVirtualInstanceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetSAPVirtualInstanceAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1111,14 +1111,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSAPVirtualInstanceAsync(sapVirtualInstanceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetSAPVirtualInstanceAsync(sapVirtualInstanceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a Virtual Instance for SAP solutions resource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetSAPVirtualInstance(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetSAPVirtualInstance(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1130,14 +1130,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSAPVirtualInstance(sapVirtualInstanceName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetSAPVirtualInstance(sapVirtualInstanceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ResourceTypeTestResources in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetResourceTypeTestResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetResourceTypeTestResources()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1147,14 +1147,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetResourceTypeTestResources();
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetResourceTypeTestResources();
         }
 
         /// <summary>
         /// Get a test resource with nullable ResourceType
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetResourceTypeTestResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetResourceTypeTestResourceAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1166,14 +1166,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetResourceTypeTestResourceAsync(resourceTypeTestResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetResourceTypeTestResourceAsync(resourceTypeTestResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a test resource with nullable ResourceType
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetResourceTypeTestResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetResourceTypeTestResource(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1185,14 +1185,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetResourceTypeTestResource(resourceTypeTestResourceName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetResourceTypeTestResource(resourceTypeTestResourceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of SampleDatas in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetSampleDatas()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetSampleDatas()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1202,14 +1202,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSampleDatas();
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetSampleDatas();
         }
 
         /// <summary>
         /// Get a SampleData
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetSampleDataAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetSampleDataAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1221,14 +1221,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSampleDataAsync(sampleDataName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetSampleDataAsync(sampleDataName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a SampleData
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetSampleData(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetSampleData(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1240,14 +1240,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSampleData(sampleDataName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetSampleData(sampleDataName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of WorkloadNetworks in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworks()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetWorkloadNetworks()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1257,14 +1257,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworks();
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetWorkloadNetworks();
         }
 
         /// <summary>
         /// Get a WorkloadNetworks
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworksAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetWorkloadNetworksAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1276,14 +1276,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworksAsync(workloadNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetWorkloadNetworksAsync(workloadNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a WorkloadNetworks
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworks(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetWorkloadNetworks(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1295,14 +1295,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworks(workloadNetworkName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetWorkloadNetworks(workloadNetworkName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of WorkloadNetworkVmGroups in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkVmGroups()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetWorkloadNetworkVmGroups()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1312,7 +1312,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkVmGroups();
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetWorkloadNetworkVmGroups();
         }
 
         /// <summary>
@@ -1320,7 +1320,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// Uses
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkVmGroupAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetWorkloadNetworkVmGroupAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1332,7 +1332,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkVmGroupAsync(vmGroupId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetWorkloadNetworkVmGroupAsync(vmGroupId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1340,7 +1340,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// Uses
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkVmGroup(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetWorkloadNetworkVmGroup(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1352,14 +1352,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkVmGroup(vmGroupId, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetWorkloadNetworkVmGroup(vmGroupId, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of WorkloadNetworkSegments in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkSegments()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetWorkloadNetworkSegments()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1369,7 +1369,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkSegments();
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetWorkloadNetworkSegments();
         }
 
         /// <summary>
@@ -1377,7 +1377,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// Uses
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkSegmentAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetWorkloadNetworkSegmentAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1389,7 +1389,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkSegmentAsync(segmentId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetWorkloadNetworkSegmentAsync(segmentId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1397,7 +1397,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// Uses
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkSegment(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetWorkloadNetworkSegment(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1409,14 +1409,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkSegment(segmentId, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetWorkloadNetworkSegment(segmentId, cancellationToken);
         }
 
         /// <summary>
         /// list private links on the given resource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetAllPrivateLinkResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetAllPrivateLinkResourcesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1427,14 +1427,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetAllPrivateLinkResourcesAsync(cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetAllPrivateLinkResourcesAsync(cancellationToken);
         }
 
         /// <summary>
         /// list private links on the given resource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetAllPrivateLinkResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetAllPrivateLinkResources(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1445,14 +1445,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetAllPrivateLinkResources(cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetAllPrivateLinkResources(cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of PlaywrightQuotas in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetAllPlaywrightQuota(AzureLocation)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecSubscriptionResource.GetAllPlaywrightQuota(AzureLocation)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1463,14 +1463,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetAllPlaywrightQuota(location);
+            return GetMockableAzureGeneratorMgmtTypeSpecSubscriptionResource(subscriptionResource).GetAllPlaywrightQuota(location);
         }
 
         /// <summary>
         /// Get subscription-level location-based Playwright quota resource by name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetPlaywrightQuotaAsync(AzureLocation, PlaywrightQuotaName, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecSubscriptionResource.GetPlaywrightQuotaAsync(AzureLocation, PlaywrightQuotaName, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1483,14 +1483,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetPlaywrightQuotaAsync(location, playwrightQuotaName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecSubscriptionResource(subscriptionResource).GetPlaywrightQuotaAsync(location, playwrightQuotaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get subscription-level location-based Playwright quota resource by name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetPlaywrightQuota(AzureLocation, PlaywrightQuotaName, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecSubscriptionResource.GetPlaywrightQuota(AzureLocation, PlaywrightQuotaName, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1503,14 +1503,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetPlaywrightQuota(location, playwrightQuotaName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecSubscriptionResource(subscriptionResource).GetPlaywrightQuota(location, playwrightQuotaName, cancellationToken);
         }
 
         /// <summary>
         /// List Foo resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetFoosAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecSubscriptionResource.GetFoosAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1521,14 +1521,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetFoosAsync(cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecSubscriptionResource(subscriptionResource).GetFoosAsync(cancellationToken);
         }
 
         /// <summary>
         /// List Foo resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetFoos(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecSubscriptionResource.GetFoos(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1539,14 +1539,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetFoos(cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecSubscriptionResource(subscriptionResource).GetFoos(cancellationToken);
         }
 
         /// <summary>
         /// List Baz resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetBazsAsync(int?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecSubscriptionResource.GetBazsAsync(int?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1558,14 +1558,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetBazsAsync(top, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecSubscriptionResource(subscriptionResource).GetBazsAsync(top, cancellationToken);
         }
 
         /// <summary>
         /// List Baz resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetBazs(int?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecSubscriptionResource.GetBazs(int?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1577,14 +1577,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetBazs(top, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecSubscriptionResource(subscriptionResource).GetBazs(top, cancellationToken);
         }
 
         /// <summary>
         /// List Zoo resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetZoosAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecSubscriptionResource.GetZoosAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1595,14 +1595,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetZoosAsync(cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecSubscriptionResource(subscriptionResource).GetZoosAsync(cancellationToken);
         }
 
         /// <summary>
         /// List Zoo resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetZoos(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecSubscriptionResource.GetZoos(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1613,14 +1613,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetZoos(cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecSubscriptionResource(subscriptionResource).GetZoos(cancellationToken);
         }
 
         /// <summary>
         /// Runs the input conditions against input object metadata properties and designates matched objects in response.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.PreviewActionsAsync(AzureLocation, FooPreviewAction, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecSubscriptionResource.PreviewActionsAsync(AzureLocation, FooPreviewAction, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1632,14 +1632,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, body, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, body, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Runs the input conditions against input object metadata properties and designates matched objects in response.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.PreviewActions(AzureLocation, FooPreviewAction, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecSubscriptionResource.PreviewActions(AzureLocation, FooPreviewAction, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1651,14 +1651,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PreviewActions(location, body, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecSubscriptionResource(subscriptionResource).PreviewActions(location, body, cancellationToken);
         }
 
         /// <summary>
         /// Get the recommended SAP Availability Zone Pair Details for your region.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetAvailabilityZoneDetailsAsync(AzureLocation, SAPAvailabilityZoneDetailsRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecSubscriptionResource.GetAvailabilityZoneDetailsAsync(AzureLocation, SAPAvailabilityZoneDetailsRequest, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1670,14 +1670,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetAvailabilityZoneDetailsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecSubscriptionResource(subscriptionResource).GetAvailabilityZoneDetailsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the recommended SAP Availability Zone Pair Details for your region.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetAvailabilityZoneDetails(AzureLocation, SAPAvailabilityZoneDetailsRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecSubscriptionResource.GetAvailabilityZoneDetails(AzureLocation, SAPAvailabilityZoneDetailsRequest, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1689,14 +1689,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetAvailabilityZoneDetails(location, content, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecSubscriptionResource(subscriptionResource).GetAvailabilityZoneDetails(location, content, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of BestPractices in the <see cref="TenantResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetBestPractices()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTenantResource.GetBestPractices()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -1706,14 +1706,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetBestPractices();
+            return GetMockableAzureGeneratorMgmtTypeSpecTenantResource(tenantResource).GetBestPractices();
         }
 
         /// <summary>
         /// Get a BestPractice
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetBestPracticeAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTenantResource.GetBestPracticeAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -1725,14 +1725,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetBestPracticeAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecTenantResource(tenantResource).GetBestPracticeAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a BestPractice
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetBestPractice(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTenantResource.GetBestPractice(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -1744,7 +1744,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetBestPractice(bestPracticeName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTenantResource(tenantResource).GetBestPractice(bestPracticeName, cancellationToken);
         }
 
         /// <summary>
@@ -1752,7 +1752,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// This is a non-resource LRO operation that returns NetworkSiblingSet.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.QueryNetworkSiblingSetAsync(WaitUntil, QueryNetworkSiblingSetRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTenantResource.QueryNetworkSiblingSetAsync(WaitUntil, QueryNetworkSiblingSetRequest, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -1764,7 +1764,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).QueryNetworkSiblingSetAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecTenantResource(tenantResource).QueryNetworkSiblingSetAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1772,7 +1772,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// This is a non-resource LRO operation that returns NetworkSiblingSet.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.QueryNetworkSiblingSet(WaitUntil, QueryNetworkSiblingSetRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTenantResource.QueryNetworkSiblingSet(WaitUntil, QueryNetworkSiblingSetRequest, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -1784,14 +1784,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).QueryNetworkSiblingSet(waitUntil, content, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTenantResource(tenantResource).QueryNetworkSiblingSet(waitUntil, content, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of GroupQuotaSubscriptionRequestStatuses in the <see cref="ManagementGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource.GetGroupQuotaSubscriptionRequestStatuses()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecManagementGroupResource.GetGroupQuotaSubscriptionRequestStatuses()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
@@ -1801,14 +1801,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).GetGroupQuotaSubscriptionRequestStatuses();
+            return GetMockableAzureGeneratorMgmtTypeSpecManagementGroupResource(managementGroupResource).GetGroupQuotaSubscriptionRequestStatuses();
         }
 
         /// <summary>
         /// Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource.GetGroupQuotaSubscriptionRequestStatusAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecManagementGroupResource.GetGroupQuotaSubscriptionRequestStatusAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
@@ -1820,14 +1820,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).GetGroupQuotaSubscriptionRequestStatusAsync(requestId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecManagementGroupResource(managementGroupResource).GetGroupQuotaSubscriptionRequestStatusAsync(requestId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource.GetGroupQuotaSubscriptionRequestStatus(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecManagementGroupResource.GetGroupQuotaSubscriptionRequestStatus(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
@@ -1839,14 +1839,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).GetGroupQuotaSubscriptionRequestStatus(requestId, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecManagementGroupResource(managementGroupResource).GetGroupQuotaSubscriptionRequestStatus(requestId, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of GroupQuotaLimitLists in the <see cref="ManagementGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource.GetGroupQuotaLimitLists()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecManagementGroupResource.GetGroupQuotaLimitLists()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
@@ -1856,14 +1856,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).GetGroupQuotaLimitLists();
+            return GetMockableAzureGeneratorMgmtTypeSpecManagementGroupResource(managementGroupResource).GetGroupQuotaLimitLists();
         }
 
         /// <summary>
         /// Gets the GroupQuotaLimits for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource.GetGroupQuotaLimitListAsync(string, string, AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecManagementGroupResource.GetGroupQuotaLimitListAsync(string, string, AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
@@ -1877,14 +1877,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).GetGroupQuotaLimitListAsync(groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecManagementGroupResource(managementGroupResource).GetGroupQuotaLimitListAsync(groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the GroupQuotaLimits for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource.GetGroupQuotaLimitList(string, string, AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecManagementGroupResource.GetGroupQuotaLimitList(string, string, AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
@@ -1898,14 +1898,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).GetGroupQuotaLimitList(groupQuotaName, resourceProviderName, location, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecManagementGroupResource(managementGroupResource).GetGroupQuotaLimitList(groupQuotaName, resourceProviderName, location, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of SubscriptionQuotaAllocationsLists in the <see cref="ManagementGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource.GetSubscriptionQuotaAllocationsLists()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecManagementGroupResource.GetSubscriptionQuotaAllocationsLists()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
@@ -1915,14 +1915,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).GetSubscriptionQuotaAllocationsLists();
+            return GetMockableAzureGeneratorMgmtTypeSpecManagementGroupResource(managementGroupResource).GetSubscriptionQuotaAllocationsLists();
         }
 
         /// <summary>
         /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource.GetSubscriptionQuotaAllocationsListAsync(Guid, string, string, AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecManagementGroupResource.GetSubscriptionQuotaAllocationsListAsync(Guid, string, string, AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
@@ -1937,14 +1937,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).GetSubscriptionQuotaAllocationsListAsync(subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecManagementGroupResource(managementGroupResource).GetSubscriptionQuotaAllocationsListAsync(subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource.GetSubscriptionQuotaAllocationsList(Guid, string, string, AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecManagementGroupResource.GetSubscriptionQuotaAllocationsList(Guid, string, string, AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
@@ -1959,7 +1959,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).GetSubscriptionQuotaAllocationsList(subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecManagementGroupResource(managementGroupResource).GetSubscriptionQuotaAllocationsList(subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken);
         }
     }
 }

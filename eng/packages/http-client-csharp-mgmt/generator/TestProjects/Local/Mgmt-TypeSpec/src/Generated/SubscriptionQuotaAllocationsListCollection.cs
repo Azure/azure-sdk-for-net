@@ -12,10 +12,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary>
     /// A class representing a collection of <see cref="SubscriptionQuotaAllocationsListResource"/> and their operations.
@@ -38,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal SubscriptionQuotaAllocationsListCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(SubscriptionQuotaAllocationsListResource.ResourceType, out string subscriptionQuotaAllocationsListApiVersion);
-            _subscriptionQuotaAllocationsListsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", SubscriptionQuotaAllocationsListResource.ResourceType.Namespace, Diagnostics);
+            _subscriptionQuotaAllocationsListsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec", SubscriptionQuotaAllocationsListResource.ResourceType.Namespace, Diagnostics);
             _subscriptionQuotaAllocationsListsRestClient = new SubscriptionQuotaAllocationsLists(_subscriptionQuotaAllocationsListsClientDiagnostics, Pipeline, Endpoint, subscriptionQuotaAllocationsListApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }

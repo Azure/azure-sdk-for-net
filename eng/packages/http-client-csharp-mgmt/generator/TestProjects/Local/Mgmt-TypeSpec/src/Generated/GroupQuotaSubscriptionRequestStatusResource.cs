@@ -12,10 +12,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary>
     /// A class representing a GroupQuotaSubscriptionRequestStatus along with the instance operations that can be performed on it.
@@ -50,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal GroupQuotaSubscriptionRequestStatusResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string groupQuotaSubscriptionRequestStatusApiVersion);
-            _groupQuotaSubscriptionRequestStatusesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
+            _groupQuotaSubscriptionRequestStatusesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             _groupQuotaSubscriptionRequestStatusesRestClient = new GroupQuotaSubscriptionRequestStatuses(_groupQuotaSubscriptionRequestStatusesClientDiagnostics, Pipeline, Endpoint, groupQuotaSubscriptionRequestStatusApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }

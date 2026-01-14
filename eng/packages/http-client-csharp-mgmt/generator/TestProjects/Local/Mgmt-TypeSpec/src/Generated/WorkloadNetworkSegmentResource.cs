@@ -13,10 +13,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary>
     /// A class representing a WorkloadNetworkSegment along with the instance operations that can be performed on it.
@@ -53,9 +54,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal WorkloadNetworkSegmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string workloadNetworkSegmentApiVersion);
-            _workloadNetworkSegmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
+            _workloadNetworkSegmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             _workloadNetworkSegmentsRestClient = new WorkloadNetworkSegments(_workloadNetworkSegmentsClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
-            _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
+            _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -234,7 +235,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _workloadNetworkSegmentsRestClient.CreateUpdateSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworkSegmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation<WorkloadNetworkSegmentResource> operation = new TestsArmOperation<WorkloadNetworkSegmentResource>(
+                MgmtTypeSpecArmOperation<WorkloadNetworkSegmentResource> operation = new MgmtTypeSpecArmOperation<WorkloadNetworkSegmentResource>(
                     new WorkloadNetworkSegmentOperationSource(Client),
                     _workloadNetworkSegmentsClientDiagnostics,
                     Pipeline,
@@ -294,7 +295,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _workloadNetworkSegmentsRestClient.CreateUpdateSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworkSegmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation<WorkloadNetworkSegmentResource> operation = new TestsArmOperation<WorkloadNetworkSegmentResource>(
+                MgmtTypeSpecArmOperation<WorkloadNetworkSegmentResource> operation = new MgmtTypeSpecArmOperation<WorkloadNetworkSegmentResource>(
                     new WorkloadNetworkSegmentOperationSource(Client),
                     _workloadNetworkSegmentsClientDiagnostics,
                     Pipeline,
@@ -350,7 +351,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _workloadNetworksRestClient.CreateDeleteSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation operation = new TestsArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -400,7 +401,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _workloadNetworksRestClient.CreateDeleteSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation operation = new TestsArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

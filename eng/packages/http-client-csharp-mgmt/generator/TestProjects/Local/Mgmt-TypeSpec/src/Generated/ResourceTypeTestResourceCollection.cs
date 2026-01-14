@@ -12,10 +12,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary>
     /// A class representing a collection of <see cref="ResourceTypeTestResource"/> and their operations.
@@ -38,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal ResourceTypeTestResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceTypeTestResource.ResourceType, out string resourceTypeTestResourceApiVersion);
-            _resourceTypeTestsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceTypeTestResource.ResourceType.Namespace, Diagnostics);
+            _resourceTypeTestsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec", ResourceTypeTestResource.ResourceType.Namespace, Diagnostics);
             _resourceTypeTestsRestClient = new ResourceTypeTests(_resourceTypeTestsClientDiagnostics, Pipeline, Endpoint, resourceTypeTestResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -94,7 +95,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 Response<ResourceTypeTestResourceData> response = Response.FromValue(ResourceTypeTestResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TestsArmOperation<ResourceTypeTestResource> operation = new TestsArmOperation<ResourceTypeTestResource>(Response.FromValue(new ResourceTypeTestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MgmtTypeSpecArmOperation<ResourceTypeTestResource> operation = new MgmtTypeSpecArmOperation<ResourceTypeTestResource>(Response.FromValue(new ResourceTypeTestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -149,7 +150,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 Response<ResourceTypeTestResourceData> response = Response.FromValue(ResourceTypeTestResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TestsArmOperation<ResourceTypeTestResource> operation = new TestsArmOperation<ResourceTypeTestResource>(Response.FromValue(new ResourceTypeTestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MgmtTypeSpecArmOperation<ResourceTypeTestResource> operation = new MgmtTypeSpecArmOperation<ResourceTypeTestResource>(Response.FromValue(new ResourceTypeTestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

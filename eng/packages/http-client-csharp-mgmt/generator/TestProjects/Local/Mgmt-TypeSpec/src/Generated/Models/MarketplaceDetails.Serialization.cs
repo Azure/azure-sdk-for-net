@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
     /// <summary> Marketplace details for an organization. </summary>
     public partial class MarketplaceDetails : IJsonModel<MarketplaceDetails>
@@ -136,7 +136,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support writing '{options.Format}' format.");
             }

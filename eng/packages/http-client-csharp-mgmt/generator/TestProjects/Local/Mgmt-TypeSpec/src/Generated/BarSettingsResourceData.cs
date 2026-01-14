@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
+using Azure.Generator.MgmtTypeSpec.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class BarSettingsResourceData : ResourceData
@@ -28,19 +28,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="prop2"> Gets or sets the Prop2. </param>
         /// <param name="discriminatorProperty"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="propertyLeft"/>, <paramref name="anotherPropertyLeft"/>, <paramref name="innerProp2"/>, <paramref name="middleProp2"/>, <paramref name="prop1"/> or <paramref name="discriminatorProperty"/> is null. </exception>
-        public BarSettingsResourceData(string propertyLeft, string anotherPropertyLeft, string innerProp2, int middleProp1, IDictionary<string, string> middleProp2, IEnumerable<string> prop1, int prop2, LimitJsonObject discriminatorProperty)
+        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/>, <paramref name="middleProp2"/>, <paramref name="prop1"/> or <paramref name="discriminatorProperty"/> is null. </exception>
+        public BarSettingsResourceData(int? propertyLeft, int? anotherPropertyLeft, string innerProp2, int middleProp1, IDictionary<string, string> middleProp2, IEnumerable<string> prop1, int prop2, LimitJsonObject discriminatorProperty)
         {
-            Argument.AssertNotNull(propertyLeft, nameof(propertyLeft));
-            Argument.AssertNotNull(anotherPropertyLeft, nameof(anotherPropertyLeft));
             Argument.AssertNotNull(innerProp2, nameof(innerProp2));
             Argument.AssertNotNull(middleProp2, nameof(middleProp2));
             Argument.AssertNotNull(prop1, nameof(prop1));
             Argument.AssertNotNull(discriminatorProperty, nameof(discriminatorProperty));
 
             StringArray = new ChangeTrackingList<string>();
-            Property = new BarQuotaProperties(propertyLeft);
-            AnotherProperty = new BarQuotaProperties(anotherPropertyLeft);
+            Property = propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value);
+            AnotherProperty = anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value);
             FlattenedNestedProperty = new BarNestedQuotaProperties(innerProp2, middleProp1, middleProp2, prop1, prop2);
             DiscriminatorProperty = discriminatorProperty;
         }
@@ -110,7 +108,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> enabled. </summary>
         [WirePath("property.left")]
-        public string PropertyLeft
+        public int? PropertyLeft
         {
             get
             {
@@ -118,13 +116,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
-                Property = new BarQuotaProperties(value);
+                Property = value.HasValue ? new BarQuotaProperties(value.Value) : default;
             }
         }
 
         /// <summary> enabled. </summary>
         [WirePath("anotherProperty.left")]
-        public string AnotherPropertyLeft
+        public int? AnotherPropertyLeft
         {
             get
             {
@@ -132,7 +130,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
-                AnotherProperty = new BarQuotaProperties(value);
+                AnotherProperty = value.HasValue ? new BarQuotaProperties(value.Value) : default;
             }
         }
 

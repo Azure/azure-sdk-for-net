@@ -10,7 +10,8 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
+using Azure.Generator.MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
@@ -64,7 +65,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _top, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetBazs");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecSubscriptionResource.GetBazs");
             scope.Start();
             try
             {

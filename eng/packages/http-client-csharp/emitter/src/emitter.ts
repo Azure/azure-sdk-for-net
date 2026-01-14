@@ -7,6 +7,8 @@ import { $onEmit as $onMTGEmit } from "@typespec/http-client-csharp";
 import { AzureEmitterOptions } from "./options.js";
 import { $lib } from "./lib/lib.js";
 
+const PACKAGE_NAME_TEMPLATE = "{package-name}";
+
 export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   context.options["generator-name"] ??= "AzureClientGenerator";
   context.options["emitter-extension-path"] ??= import.meta.url;
@@ -19,11 +21,11 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   // This must happen before package-name defaults to namespace
   if (
     context.options["namespace"] &&
-    context.options["namespace"].includes("{package-name}") &&
+    context.options["namespace"].includes(PACKAGE_NAME_TEMPLATE) &&
     context.options["package-name"]
   ) {
     context.options["namespace"] = context.options["namespace"].replace(
-      /{package-name}/g,
+      new RegExp(PACKAGE_NAME_TEMPLATE.replace(/[{}]/g, "\\$&"), "g"),
       context.options["package-name"]
     );
   }

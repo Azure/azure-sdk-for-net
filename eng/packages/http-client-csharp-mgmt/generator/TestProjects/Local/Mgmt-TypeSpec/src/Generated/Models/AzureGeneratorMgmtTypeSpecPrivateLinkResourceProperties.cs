@@ -7,29 +7,29 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
     /// <summary> Properties of a private link resource. </summary>
-    public partial class AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties
+    public partial class AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties"/>. </summary>
-        internal AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties"/>. </summary>
+        internal AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

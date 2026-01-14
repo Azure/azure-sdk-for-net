@@ -9,16 +9,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
     /// <summary> Properties of a private link resource. </summary>
-    public partial class AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties : IJsonModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties>
+    public partial class AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties : IJsonModel<AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
@@ -88,24 +88,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties IJsonModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties IJsonModel<AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties(document.RootElement, options);
+            return DeserializeAzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties DeserializeAzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,47 +169,47 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties(groupId, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties(groupId, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties(document.RootElement, options);
+                        return DeserializeAzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

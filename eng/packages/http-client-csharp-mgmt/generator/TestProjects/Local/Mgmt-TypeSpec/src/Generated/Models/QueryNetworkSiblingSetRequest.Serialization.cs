@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
     /// <summary> Request for querying network sibling set. </summary>
     public partial class QueryNetworkSiblingSetRequest : IJsonModel<QueryNetworkSiblingSetRequest>
@@ -122,7 +122,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(QueryNetworkSiblingSetRequest)} does not support writing '{options.Format}' format.");
             }

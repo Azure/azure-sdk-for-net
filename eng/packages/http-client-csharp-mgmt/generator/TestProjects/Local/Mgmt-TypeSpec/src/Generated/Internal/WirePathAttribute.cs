@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     [AttributeUsage(AttributeTargets.Property)]
     internal partial class WirePathAttribute : Attribute

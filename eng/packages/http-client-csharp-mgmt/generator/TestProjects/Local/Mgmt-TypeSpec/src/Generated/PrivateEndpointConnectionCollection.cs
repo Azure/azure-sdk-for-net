@@ -12,9 +12,10 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary>
     /// A class representing a collection of <see cref="PrivateEndpointConnectionResource"/> and their operations.
@@ -37,7 +38,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal PrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(PrivateEndpointConnectionResource.ResourceType, out string privateEndpointConnectionApiVersion);
-            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", PrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
+            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec", PrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
             _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, privateEndpointConnectionApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -75,7 +76,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<PrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
@@ -88,9 +89,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation<PrivateEndpointConnectionResource> operation = new TestsArmOperation<PrivateEndpointConnectionResource>(
+                MgmtTypeSpecArmOperation<PrivateEndpointConnectionResource> operation = new MgmtTypeSpecArmOperation<PrivateEndpointConnectionResource>(
                     new PrivateEndpointConnectionOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
@@ -133,7 +134,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<PrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
@@ -146,9 +147,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation<PrivateEndpointConnectionResource> operation = new TestsArmOperation<PrivateEndpointConnectionResource>(
+                MgmtTypeSpecArmOperation<PrivateEndpointConnectionResource> operation = new MgmtTypeSpecArmOperation<PrivateEndpointConnectionResource>(
                     new PrivateEndpointConnectionOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
@@ -203,7 +204,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData> response = Response.FromValue(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData> response = Response.FromValue(AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -252,7 +253,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData> response = Response.FromValue(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData> response = Response.FromValue(AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -302,14 +303,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData> response = default;
+                Response<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)null, result);
+                        response = Response.FromValue((AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -359,14 +360,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData> response = default;
+                Response<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)null, result);
+                        response = Response.FromValue((AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -416,14 +417,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData> response = default;
+                Response<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)null, result);
+                        response = Response.FromValue((AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -477,14 +478,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData> response = default;
+                Response<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)null, result);
+                        response = Response.FromValue((AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

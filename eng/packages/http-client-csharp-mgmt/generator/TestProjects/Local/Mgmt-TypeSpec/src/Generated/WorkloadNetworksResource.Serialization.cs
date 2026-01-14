@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary></summary>
     public partial class WorkloadNetworksResource : IJsonModel<WorkloadNetworksData>
@@ -27,11 +27,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         WorkloadNetworksData IJsonModel<WorkloadNetworksData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WorkloadNetworksData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworksData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        BinaryData IPersistableModel<WorkloadNetworksData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworksData>(Data, options, AzureGeneratorMgmtTypeSpecContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadNetworksData IPersistableModel<WorkloadNetworksData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworksData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        WorkloadNetworksData IPersistableModel<WorkloadNetworksData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworksData>(data, options, AzureGeneratorMgmtTypeSpecContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WorkloadNetworksData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

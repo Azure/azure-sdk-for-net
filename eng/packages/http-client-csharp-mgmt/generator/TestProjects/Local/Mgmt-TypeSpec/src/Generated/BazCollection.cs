@@ -14,10 +14,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary>
     /// A class representing a collection of <see cref="BazResource"/> and their operations.
@@ -40,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal BazCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(BazResource.ResourceType, out string bazApiVersion);
-            _bazsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BazResource.ResourceType.Namespace, Diagnostics);
+            _bazsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec", BazResource.ResourceType.Namespace, Diagnostics);
             _bazsRestClient = new Bazs(_bazsClientDiagnostics, Pipeline, Endpoint, bazApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -93,7 +94,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _bazsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bazName, BazData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation<BazResource> operation = new TestsArmOperation<BazResource>(
+                MgmtTypeSpecArmOperation<BazResource> operation = new MgmtTypeSpecArmOperation<BazResource>(
                     new BazOperationSource(Client),
                     _bazsClientDiagnostics,
                     Pipeline,
@@ -151,7 +152,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _bazsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bazName, BazData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation<BazResource> operation = new TestsArmOperation<BazResource>(
+                MgmtTypeSpecArmOperation<BazResource> operation = new MgmtTypeSpecArmOperation<BazResource>(
                     new BazOperationSource(Client),
                     _bazsClientDiagnostics,
                     Pipeline,

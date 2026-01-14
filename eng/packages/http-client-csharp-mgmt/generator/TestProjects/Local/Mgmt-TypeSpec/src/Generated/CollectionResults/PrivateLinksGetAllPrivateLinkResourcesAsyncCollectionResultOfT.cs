@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
+using Azure.Generator.MgmtTypeSpec.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
@@ -65,7 +65,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllPrivateLinkResourcesRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetAllPrivateLinkResourcesRequest(_subscriptionId, _resourceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetAllPrivateLinkResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecResourceGroupResource.GetAllPrivateLinkResources");
             scope.Start();
             try
             {

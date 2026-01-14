@@ -13,24 +13,24 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
-    internal partial class TestsArmOperation<T> : ArmOperation<T>
+    internal partial class MgmtTypeSpecArmOperation<T> : ArmOperation<T>
     {
         private readonly OperationInternal<T> _operation;
         private readonly RehydrationToken? _completeRehydrationToken;
         private readonly NextLinkOperationImplementation _nextLinkOperation;
         private readonly string _operationId;
 
-        /// <summary> Initializes a new instance of TestsArmOperation for mocking. </summary>
-        protected TestsArmOperation()
+        /// <summary> Initializes a new instance of MgmtTypeSpecArmOperation for mocking. </summary>
+        protected MgmtTypeSpecArmOperation()
         {
         }
 
         /// <summary></summary>
         /// <param name="response"> The operation response. </param>
         /// <param name="rehydrationToken"> The token to rehydrate the operation. </param>
-        internal TestsArmOperation(Response<T> response, RehydrationToken? rehydrationToken = null)
+        internal MgmtTypeSpecArmOperation(Response<T> response, RehydrationToken? rehydrationToken = null)
         {
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
             _completeRehydrationToken = rehydrationToken;
@@ -46,7 +46,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="finalStateVia"> The finalStateVia of the operation. </param>
         /// <param name="skipApiVersionOverride"> If should skip Api version override. </param>
         /// <param name="apiVersionOverrideValue"> The Api version override value. </param>
-        internal TestsArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
+        internal MgmtTypeSpecArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             IOperation nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationImplementation)
@@ -63,7 +63,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 NextLinkOperationImplementation.Create(source, nextLinkOperation),
                 clientDiagnostics,
                 response,
-                "TestsArmOperation",
+                "MgmtTypeSpecArmOperation",
                 null,
                 new SequentialDelayStrategy());
         }

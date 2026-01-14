@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
     /// <summary> The limit object type. </summary>
     internal readonly partial struct LimitType : IEquatable<LimitType>

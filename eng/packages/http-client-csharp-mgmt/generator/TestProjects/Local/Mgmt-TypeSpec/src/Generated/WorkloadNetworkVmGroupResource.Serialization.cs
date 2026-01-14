@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary></summary>
     public partial class WorkloadNetworkVmGroupResource : IJsonModel<WorkloadNetworkVmGroupData>
@@ -27,11 +27,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         WorkloadNetworkVmGroupData IJsonModel<WorkloadNetworkVmGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WorkloadNetworkVmGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkVmGroupData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        BinaryData IPersistableModel<WorkloadNetworkVmGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkVmGroupData>(Data, options, AzureGeneratorMgmtTypeSpecContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadNetworkVmGroupData IPersistableModel<WorkloadNetworkVmGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkVmGroupData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        WorkloadNetworkVmGroupData IPersistableModel<WorkloadNetworkVmGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkVmGroupData>(data, options, AzureGeneratorMgmtTypeSpecContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WorkloadNetworkVmGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

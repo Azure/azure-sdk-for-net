@@ -14,10 +14,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary>
     /// A class representing a collection of <see cref="BestPracticeResource"/> and their operations.
@@ -40,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal BestPracticeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(BestPracticeResource.ResourceType, out string bestPracticeApiVersion);
-            _bestPracticesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BestPracticeResource.ResourceType.Namespace, Diagnostics);
+            _bestPracticesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec", BestPracticeResource.ResourceType.Namespace, Diagnostics);
             _bestPracticesRestClient = new BestPractices(_bestPracticesClientDiagnostics, Pipeline, Endpoint, bestPracticeApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -96,7 +97,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TestsArmOperation<BestPracticeResource> operation = new TestsArmOperation<BestPracticeResource>(Response.FromValue(new BestPracticeResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MgmtTypeSpecArmOperation<BestPracticeResource> operation = new MgmtTypeSpecArmOperation<BestPracticeResource>(Response.FromValue(new BestPracticeResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -151,7 +152,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TestsArmOperation<BestPracticeResource> operation = new TestsArmOperation<BestPracticeResource>(Response.FromValue(new BestPracticeResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MgmtTypeSpecArmOperation<BestPracticeResource> operation = new MgmtTypeSpecArmOperation<BestPracticeResource>(Response.FromValue(new BestPracticeResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

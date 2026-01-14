@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary></summary>
     public partial class ResourceTypeTestResource : IJsonModel<ResourceTypeTestResourceData>
@@ -27,11 +27,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         ResourceTypeTestResourceData IJsonModel<ResourceTypeTestResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceTypeTestResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceTypeTestResourceData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        BinaryData IPersistableModel<ResourceTypeTestResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceTypeTestResourceData>(Data, options, AzureGeneratorMgmtTypeSpecContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceTypeTestResourceData IPersistableModel<ResourceTypeTestResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceTypeTestResourceData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        ResourceTypeTestResourceData IPersistableModel<ResourceTypeTestResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceTypeTestResourceData>(data, options, AzureGeneratorMgmtTypeSpecContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResourceTypeTestResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

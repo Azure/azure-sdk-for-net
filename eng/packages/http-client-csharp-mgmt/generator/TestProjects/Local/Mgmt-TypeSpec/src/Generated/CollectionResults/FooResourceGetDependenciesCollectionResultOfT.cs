@@ -13,9 +13,10 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
+using Azure.Generator.MgmtTypeSpec.Models;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     internal partial class FooResourceGetDependenciesCollectionResultOfT : Pageable<FooDependency>
     {
@@ -84,7 +85,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             List<FooDependency> result = new List<FooDependency>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<FooDependency>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default));
+                result.Add(ModelReaderWriter.Read<FooDependency>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecContext.Default));
             }
             return result;
         }

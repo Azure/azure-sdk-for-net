@@ -11,10 +11,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
     /// <summary> Paged collection of ZooAddress items. </summary>
     public partial class ZooAddressListListResult : IJsonModel<ZooAddressListListResult>
@@ -117,7 +117,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default));
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecContext.Default));
                         }
                     }
                     value = array;
@@ -150,7 +150,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ZooAddressListListResult)} does not support writing '{options.Format}' format.");
             }

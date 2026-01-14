@@ -12,17 +12,17 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
+using Azure.Generator.MgmtTypeSpec.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary> A private endpoint connection resource. </summary>
-    public partial class AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData : ResourceData, IJsonModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>
+    public partial class AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData : ResourceData, IJsonModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -48,24 +48,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData IJsonModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)JsonModelCreateCore(ref reader, options);
+        AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData IJsonModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(document.RootElement, options);
+            return DeserializeAzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData DeserializeAzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,7 +108,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -125,7 +125,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(
+            return new AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
@@ -135,62 +135,62 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)PersistableModelCreateCore(data, options);
+        AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(document.RootElement, options);
+                        return DeserializeAzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="azureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData"> The <see cref="AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData azureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)
+        /// <param name="azureGeneratorMgmtTypeSpecPrivateEndpointConnectionData"> The <see cref="AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData azureGeneratorMgmtTypeSpecPrivateEndpointConnectionData)
         {
-            if (azureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData == null)
+            if (azureGeneratorMgmtTypeSpecPrivateEndpointConnectionData == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(azureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(azureGeneratorMgmtTypeSpecPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData"/> from. </param>
-        internal static AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData"/> from. </param>
+        internal static AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary></summary>
     public partial class BazResource : IJsonModel<BazData>
@@ -27,11 +27,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         BazData IJsonModel<BazData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BazData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BazData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        BinaryData IPersistableModel<BazData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BazData>(Data, options, AzureGeneratorMgmtTypeSpecContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BazData IPersistableModel<BazData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BazData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        BazData IPersistableModel<BazData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BazData>(data, options, AzureGeneratorMgmtTypeSpecContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BazData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

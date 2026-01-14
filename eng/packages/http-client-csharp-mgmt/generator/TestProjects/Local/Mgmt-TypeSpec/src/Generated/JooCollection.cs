@@ -12,10 +12,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary>
     /// A class representing a collection of <see cref="JooResource"/> and their operations.
@@ -38,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal JooCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(JooResource.ResourceType, out string jooApiVersion);
-            _joosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", JooResource.ResourceType.Namespace, Diagnostics);
+            _joosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec", JooResource.ResourceType.Namespace, Diagnostics);
             _joosRestClient = new Joos(_joosClientDiagnostics, Pipeline, Endpoint, jooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -94,7 +95,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 Response<JooData> response = Response.FromValue(JooData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TestsArmOperation<JooResource> operation = new TestsArmOperation<JooResource>(Response.FromValue(new JooResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MgmtTypeSpecArmOperation<JooResource> operation = new MgmtTypeSpecArmOperation<JooResource>(Response.FromValue(new JooResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -149,7 +150,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 Response<JooData> response = Response.FromValue(JooData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TestsArmOperation<JooResource> operation = new TestsArmOperation<JooResource>(Response.FromValue(new JooResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MgmtTypeSpecArmOperation<JooResource> operation = new MgmtTypeSpecArmOperation<JooResource>(Response.FromValue(new JooResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

@@ -1,5 +1,5 @@
 {
-  "name": "Azure.Generator.MgmtTypeSpec.Tests",
+  "name": "Azure.Generator.MgmtTypeSpec",
   "apiVersions": [
     "2024-05-01"
   ],

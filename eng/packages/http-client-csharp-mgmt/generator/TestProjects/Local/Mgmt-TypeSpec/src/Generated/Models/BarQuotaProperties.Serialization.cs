@@ -9,10 +9,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
+    /// <summary> The BarQuotaProperties. </summary>
     internal partial class BarQuotaProperties : IJsonModel<BarQuotaProperties>
     {
         /// <summary> Initializes a new instance of <see cref="BarQuotaProperties"/> for deserialization. </summary>
@@ -39,7 +40,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 throw new FormatException($"The model {nameof(BarQuotaProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("left"u8);
-            writer.WriteStringValue(Left);
+            writer.WriteNumberValue(Left);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -82,13 +83,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 return null;
             }
-            string left = default;
+            int left = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("left"u8))
                 {
-                    left = prop.Value.GetString();
+                    left = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -109,7 +110,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BarQuotaProperties)} does not support writing '{options.Format}' format.");
             }

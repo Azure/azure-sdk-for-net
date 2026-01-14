@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
     /// <summary> The updatable properties of the BestPractice. </summary>
     internal partial class BestPracticeUpdateProperties

@@ -11,32 +11,33 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Models;
 using Azure.Generator.MgmtTypeSpec.Tests;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
+namespace Azure.Generator.MgmtTypeSpec.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
-    public partial class MockableAzureGeneratorMgmtTypeSpecTestsTenantResource : ArmResource
+    public partial class MockableAzureGeneratorMgmtTypeSpecTenantResource : ArmResource
     {
         private ClientDiagnostics _networkProviderActionsClientDiagnostics;
         private NetworkProviderActions _networkProviderActionsRestClient;
 
-        /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecTestsTenantResource for mocking. </summary>
-        protected MockableAzureGeneratorMgmtTypeSpecTestsTenantResource()
+        /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecTenantResource for mocking. </summary>
+        protected MockableAzureGeneratorMgmtTypeSpecTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAzureGeneratorMgmtTypeSpecTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableAzureGeneratorMgmtTypeSpecTestsTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableAzureGeneratorMgmtTypeSpecTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics NetworkProviderActionsClientDiagnostics => _networkProviderActionsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics NetworkProviderActionsClientDiagnostics => _networkProviderActionsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private NetworkProviderActions NetworkProviderActionsRestClient => _networkProviderActionsRestClient ??= new NetworkProviderActions(NetworkProviderActionsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
@@ -131,7 +132,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetworkProviderActionsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.QueryNetworkSiblingSet");
+            using DiagnosticScope scope = NetworkProviderActionsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTenantResource.QueryNetworkSiblingSet");
             scope.Start();
             try
             {
@@ -141,7 +142,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 };
                 HttpMessage message = NetworkProviderActionsRestClient.CreateQueryNetworkSiblingSetRequest(QueryNetworkSiblingSetRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation<NetworkSiblingSet> operation = new TestsArmOperation<NetworkSiblingSet>(
+                MgmtTypeSpecArmOperation<NetworkSiblingSet> operation = new MgmtTypeSpecArmOperation<NetworkSiblingSet>(
                     new NetworkSiblingSetOperationSource(),
                     NetworkProviderActionsClientDiagnostics,
                     Pipeline,
@@ -187,7 +188,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetworkProviderActionsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.QueryNetworkSiblingSet");
+            using DiagnosticScope scope = NetworkProviderActionsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTenantResource.QueryNetworkSiblingSet");
             scope.Start();
             try
             {
@@ -197,7 +198,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 };
                 HttpMessage message = NetworkProviderActionsRestClient.CreateQueryNetworkSiblingSetRequest(QueryNetworkSiblingSetRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation<NetworkSiblingSet> operation = new TestsArmOperation<NetworkSiblingSet>(
+                MgmtTypeSpecArmOperation<NetworkSiblingSet> operation = new MgmtTypeSpecArmOperation<NetworkSiblingSet>(
                     new NetworkSiblingSetOperationSource(),
                     NetworkProviderActionsClientDiagnostics,
                     Pipeline,

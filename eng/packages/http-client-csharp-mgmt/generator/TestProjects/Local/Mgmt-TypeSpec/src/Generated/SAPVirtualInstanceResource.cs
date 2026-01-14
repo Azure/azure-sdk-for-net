@@ -13,10 +13,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary>
     /// A class representing a SAPVirtualInstance along with the instance operations that can be performed on it.
@@ -51,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal SAPVirtualInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string sapVirtualInstanceApiVersion);
-            _sapVirtualInstancesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
+            _sapVirtualInstancesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             _sapVirtualInstancesRestClient = new SAPVirtualInstances(_sapVirtualInstancesClientDiagnostics, Pipeline, Endpoint, sapVirtualInstanceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -227,7 +228,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _sapVirtualInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SAPVirtualInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation<SAPVirtualInstanceResource> operation = new TestsArmOperation<SAPVirtualInstanceResource>(
+                MgmtTypeSpecArmOperation<SAPVirtualInstanceResource> operation = new MgmtTypeSpecArmOperation<SAPVirtualInstanceResource>(
                     new SAPVirtualInstanceOperationSource(Client),
                     _sapVirtualInstancesClientDiagnostics,
                     Pipeline,
@@ -286,7 +287,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _sapVirtualInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SAPVirtualInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation<SAPVirtualInstanceResource> operation = new TestsArmOperation<SAPVirtualInstanceResource>(
+                MgmtTypeSpecArmOperation<SAPVirtualInstanceResource> operation = new MgmtTypeSpecArmOperation<SAPVirtualInstanceResource>(
                     new SAPVirtualInstanceOperationSource(Client),
                     _sapVirtualInstancesClientDiagnostics,
                     Pipeline,

@@ -1,5 +1,5 @@
 {
-  "package-name": "Azure.Generator.MgmtTypeSpec.Tests",
+  "package-name": "Azure.Generator.MgmtTypeSpec",
   "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
   "enable-wire-path-attribute": true,
   "model-namespace": true,

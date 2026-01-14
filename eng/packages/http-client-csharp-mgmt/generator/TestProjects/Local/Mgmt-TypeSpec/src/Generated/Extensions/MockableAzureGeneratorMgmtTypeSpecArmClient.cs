@@ -11,37 +11,38 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Models;
 using Azure.Generator.MgmtTypeSpec.Tests;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
+namespace Azure.Generator.MgmtTypeSpec.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
-    public partial class MockableAzureGeneratorMgmtTypeSpecTestsArmClient : ArmResource
+    public partial class MockableAzureGeneratorMgmtTypeSpecArmClient : ArmResource
     {
         private ClientDiagnostics _checkNameAvailabilityOperationGroupClientDiagnostics;
         private CheckNameAvailabilityOperationGroup _checkNameAvailabilityOperationGroupRestClient;
         private ClientDiagnostics _scheduledActionExtensionClientDiagnostics;
         private ScheduledActionExtension _scheduledActionExtensionRestClient;
 
-        /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecTestsArmClient for mocking. </summary>
-        protected MockableAzureGeneratorMgmtTypeSpecTestsArmClient()
+        /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecArmClient for mocking. </summary>
+        protected MockableAzureGeneratorMgmtTypeSpecArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAzureGeneratorMgmtTypeSpecArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableAzureGeneratorMgmtTypeSpecTestsArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableAzureGeneratorMgmtTypeSpecArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics CheckNameAvailabilityOperationGroupClientDiagnostics => _checkNameAvailabilityOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics CheckNameAvailabilityOperationGroupClientDiagnostics => _checkNameAvailabilityOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private CheckNameAvailabilityOperationGroup CheckNameAvailabilityOperationGroupRestClient => _checkNameAvailabilityOperationGroupRestClient ??= new CheckNameAvailabilityOperationGroup(CheckNameAvailabilityOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
-        private ClientDiagnostics ScheduledActionExtensionClientDiagnostics => _scheduledActionExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ScheduledActionExtensionClientDiagnostics => _scheduledActionExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
@@ -385,7 +386,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
 
-            using DiagnosticScope scope0 = CheckNameAvailabilityOperationGroupClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsArmClient.CheckNameAvailability");
+            using DiagnosticScope scope0 = CheckNameAvailabilityOperationGroupClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecArmClient.CheckNameAvailability");
             scope0.Start();
             try
             {
@@ -435,7 +436,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
 
-            using DiagnosticScope scope0 = CheckNameAvailabilityOperationGroupClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsArmClient.CheckNameAvailability");
+            using DiagnosticScope scope0 = CheckNameAvailabilityOperationGroupClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecArmClient.CheckNameAvailability");
             scope0.Start();
             try
             {

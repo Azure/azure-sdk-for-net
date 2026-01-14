@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     internal static partial class TypeFormatters
     {

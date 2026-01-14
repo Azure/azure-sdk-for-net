@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary></summary>
     public partial class BestPracticeVersionResource : IJsonModel<BestPracticeData>
@@ -27,11 +27,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         BestPracticeData IJsonModel<BestPracticeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BestPracticeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BestPracticeData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        BinaryData IPersistableModel<BestPracticeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BestPracticeData>(Data, options, AzureGeneratorMgmtTypeSpecContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BestPracticeData IPersistableModel<BestPracticeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BestPracticeData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        BestPracticeData IPersistableModel<BestPracticeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BestPracticeData>(data, options, AzureGeneratorMgmtTypeSpecContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BestPracticeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

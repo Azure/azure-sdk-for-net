@@ -14,10 +14,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary>
     /// A class representing a collection of <see cref="WorkloadNetworkVmGroupResource"/> and their operations.
@@ -42,9 +43,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal WorkloadNetworkVmGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(WorkloadNetworkVmGroupResource.ResourceType, out string workloadNetworkVmGroupApiVersion);
-            _workloadNetworkVmGroupsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", WorkloadNetworkVmGroupResource.ResourceType.Namespace, Diagnostics);
+            _workloadNetworkVmGroupsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec", WorkloadNetworkVmGroupResource.ResourceType.Namespace, Diagnostics);
             _workloadNetworkVmGroupsRestClient = new WorkloadNetworkVmGroups(_workloadNetworkVmGroupsClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
-            _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", WorkloadNetworkVmGroupResource.ResourceType.Namespace, Diagnostics);
+            _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec", WorkloadNetworkVmGroupResource.ResourceType.Namespace, Diagnostics);
             _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -97,7 +98,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation<WorkloadNetworkVmGroupResource> operation = new TestsArmOperation<WorkloadNetworkVmGroupResource>(
+                MgmtTypeSpecArmOperation<WorkloadNetworkVmGroupResource> operation = new MgmtTypeSpecArmOperation<WorkloadNetworkVmGroupResource>(
                     new WorkloadNetworkVmGroupOperationSource(Client),
                     _workloadNetworkVmGroupsClientDiagnostics,
                     Pipeline,
@@ -155,7 +156,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation<WorkloadNetworkVmGroupResource> operation = new TestsArmOperation<WorkloadNetworkVmGroupResource>(
+                MgmtTypeSpecArmOperation<WorkloadNetworkVmGroupResource> operation = new MgmtTypeSpecArmOperation<WorkloadNetworkVmGroupResource>(
                     new WorkloadNetworkVmGroupOperationSource(Client),
                     _workloadNetworkVmGroupsClientDiagnostics,
                     Pipeline,

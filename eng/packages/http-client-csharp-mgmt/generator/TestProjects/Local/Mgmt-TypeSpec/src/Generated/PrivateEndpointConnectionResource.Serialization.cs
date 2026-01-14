@@ -9,31 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary></summary>
-    public partial class PrivateEndpointConnectionResource : IJsonModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>
+    public partial class PrivateEndpointConnectionResource : IJsonModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>
     {
-        private static IJsonModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData> s_dataDeserializationInstance;
+        private static IJsonModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData> s_dataDeserializationInstance;
 
-        private static IJsonModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData();
+        private static IJsonModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>)Data).Write(writer, options);
+        void IJsonModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData IJsonModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData IJsonModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        BinaryData IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>(Data, options, AzureGeneratorMgmtTypeSpecContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>(data, options, AzureGeneratorMgmtTypeSpecContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

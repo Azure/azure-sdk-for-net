@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary></summary>
     public partial class SAPVirtualInstanceResource : IJsonModel<SAPVirtualInstanceData>
@@ -27,11 +27,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         SAPVirtualInstanceData IJsonModel<SAPVirtualInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SAPVirtualInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SAPVirtualInstanceData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        BinaryData IPersistableModel<SAPVirtualInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SAPVirtualInstanceData>(Data, options, AzureGeneratorMgmtTypeSpecContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SAPVirtualInstanceData IPersistableModel<SAPVirtualInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SAPVirtualInstanceData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        SAPVirtualInstanceData IPersistableModel<SAPVirtualInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SAPVirtualInstanceData>(data, options, AzureGeneratorMgmtTypeSpecContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SAPVirtualInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

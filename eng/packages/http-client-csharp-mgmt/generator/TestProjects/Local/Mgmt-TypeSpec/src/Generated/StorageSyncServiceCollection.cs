@@ -12,10 +12,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary>
     /// A class representing a collection of <see cref="StorageSyncServiceResource"/> and their operations.
@@ -38,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal StorageSyncServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(StorageSyncServiceResource.ResourceType, out string storageSyncServiceApiVersion);
-            _storageSyncServicesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", StorageSyncServiceResource.ResourceType.Namespace, Diagnostics);
+            _storageSyncServicesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec", StorageSyncServiceResource.ResourceType.Namespace, Diagnostics);
             _storageSyncServicesRestClient = new StorageSyncServices(_storageSyncServicesClientDiagnostics, Pipeline, Endpoint, storageSyncServiceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }

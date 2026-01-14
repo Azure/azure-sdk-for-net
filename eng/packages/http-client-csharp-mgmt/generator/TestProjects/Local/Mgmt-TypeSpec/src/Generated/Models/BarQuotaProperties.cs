@@ -7,9 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
+    /// <summary> The BarQuotaProperties. </summary>
     internal partial class BarQuotaProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -17,7 +19,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Initializes a new instance of <see cref="BarQuotaProperties"/>. </summary>
         /// <param name="left"> enabled. </param>
-        public BarQuotaProperties(string left)
+        public BarQuotaProperties(int left)
         {
             Left = left;
         }
@@ -25,10 +27,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Initializes a new instance of <see cref="BarQuotaProperties"/>. </summary>
         /// <param name="left"> enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BarQuotaProperties(string left, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BarQuotaProperties(int left, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Left = left;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> enabled. </summary>
+        [WirePath("left")]
+        public int Left { get; set; }
     }
 }

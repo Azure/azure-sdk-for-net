@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec;
 using Azure.ResourceManager.Models;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class PrivateLink : ResourceData
@@ -32,7 +32,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal PrivateLink(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
+        internal PrivateLink(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        public AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties Properties { get; }
+        public AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties Properties { get; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]

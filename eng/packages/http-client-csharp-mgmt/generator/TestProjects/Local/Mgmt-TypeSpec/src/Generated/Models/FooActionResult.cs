@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
     /// <summary> The FooActionResult. </summary>
     public partial class FooActionResult

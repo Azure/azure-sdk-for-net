@@ -10,10 +10,10 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
     /// <summary> Properties of the private endpoint connection. </summary>
     public partial class PrivateEndpointConnectionProperties : IJsonModel<PrivateEndpointConnectionProperties>
@@ -112,8 +112,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             IReadOnlyList<string> groupIds = default;
             SubResource privateEndpoint = default;
-            AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState? provisioningState = default;
+            AzureGeneratorMgmtTypeSpecPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,12 +144,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     {
                         continue;
                     }
-                    privateEndpoint = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    privateEndpoint = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState.DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState(prop.Value, options);
+                    privateLinkServiceConnectionState = AzureGeneratorMgmtTypeSpecPrivateLinkServiceConnectionState.DeserializeAzureGeneratorMgmtTypeSpecPrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -158,7 +158,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     {
                         continue;
                     }
-                    provisioningState = new AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState(prop.Value.GetString());
+                    provisioningState = new AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -179,7 +179,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PrivateEndpointConnectionProperties)} does not support writing '{options.Format}' format.");
             }

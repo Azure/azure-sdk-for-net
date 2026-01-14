@@ -7,11 +7,11 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
+using Azure.Generator.MgmtTypeSpec.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
@@ -21,9 +21,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(AllocatedToSubscription))]
     [ModelReaderWriterBuildable(typeof(ApplicationProfile))]
     [ModelReaderWriterBuildable(typeof(ArmPlan))]
-    [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData))]
-    [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties))]
-    [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData))]
+    [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(BarData))]
     [ModelReaderWriterBuildable(typeof(BarDeeplyNestedQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(BarListResult))]
@@ -164,10 +164,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(ZooListResult))]
     [ModelReaderWriterBuildable(typeof(ZooPatch))]
     [ModelReaderWriterBuildable(typeof(ZooProperties))]
-    [ModelReaderWriterBuildable(typeof(Models.ZooRecommendation))]
+    [ModelReaderWriterBuildable(typeof(ZooRecommendation))]
     [ModelReaderWriterBuildable(typeof(ZooResource))]
     [ModelReaderWriterBuildable(typeof(ZooUpdateProperties))]
-    public partial class AzureGeneratorMgmtTypeSpecTestsContext : ModelReaderWriterContext
+    public partial class AzureGeneratorMgmtTypeSpecContext : ModelReaderWriterContext
     {
     }
 }

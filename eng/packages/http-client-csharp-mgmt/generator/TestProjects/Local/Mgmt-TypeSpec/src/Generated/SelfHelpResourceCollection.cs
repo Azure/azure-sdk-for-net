@@ -11,9 +11,10 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary>
     /// A class representing a collection of <see cref="SelfHelpResource"/> and their operations.
@@ -36,7 +37,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal SelfHelpResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(SelfHelpResource.ResourceType, out string selfHelpResourceApiVersion);
-            _solutionResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", SelfHelpResource.ResourceType.Namespace, Diagnostics);
+            _solutionResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec", SelfHelpResource.ResourceType.Namespace, Diagnostics);
             _solutionResourcesRestClient = new SolutionResources(_solutionResourcesClientDiagnostics, Pipeline, Endpoint, selfHelpResourceApiVersion ?? "2024-05-01");
         }
 

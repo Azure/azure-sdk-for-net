@@ -10,14 +10,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure;
 using Azure.Core;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class MgmtTypeSpecTestsModelFactory
+    public static partial class MgmtTypeSpecModelFactory
     {
         /// <summary> The FooPreviewAction. </summary>
         /// <param name="action"> The action to be performed. </param>
@@ -36,7 +36,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.PrivateLink"/> instance for mocking. </returns>
-        public static PrivateLink PrivateLink(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties properties = default, ManagedServiceIdentity identity = default)
+        public static PrivateLink PrivateLink(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties properties = default, ManagedServiceIdentity identity = default)
         {
             return new PrivateLink(
                 id,
@@ -52,13 +52,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        /// <returns> A new <see cref="Models.AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
         {
             requiredMembers ??= new ChangeTrackingList<string>();
             requiredZoneNames ??= new ChangeTrackingList<string>();
 
-            return new AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
+            return new AzureGeneratorMgmtTypeSpecPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A private endpoint connection resource. </summary>
@@ -67,10 +67,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
-        /// <returns> A new <see cref="Tests.AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
+        /// <returns> A new <see cref="MgmtTypeSpec.AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
         {
-            return new AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(
+            return new AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
@@ -85,7 +85,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, SubResource privateEndpoint = default, AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState? provisioningState = default)
+        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, SubResource privateEndpoint = default, AzureGeneratorMgmtTypeSpecPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
             groupIds ??= new ChangeTrackingList<string>();
 
@@ -100,7 +100,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="storageSyncServiceLocation"> The storage sync service location. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Tests.StorageSyncServiceData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.StorageSyncServiceData"/> instance for mocking. </returns>
         public static StorageSyncServiceData StorageSyncServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string storageSyncServiceLocation = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -140,7 +140,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
-        /// <returns> A new <see cref="Tests.FooData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.FooData"/> instance for mocking. </returns>
         public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -242,7 +242,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Tests.FooSettingsData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.FooSettingsData"/> instance for mocking. </returns>
         public static FooSettingsData FooSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FooSettingsProperties properties = default)
         {
             return new FooSettingsData(
@@ -313,7 +313,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Tests.BarData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.BarData"/> instance for mocking. </returns>
         public static BarData BarData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BarProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -345,8 +345,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="prop2"> Gets or sets the Prop2. </param>
         /// <param name="optionalFlattenPropertyRandomCollectionProp"> Gets the RandomCollectionProp. </param>
         /// <param name="discriminatorProperty"></param>
-        /// <returns> A new <see cref="Tests.BarSettingsResourceData"/> instance for mocking. </returns>
-        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, string propertyLeft = default, string anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int? middleProp1 = default, IDictionary<string, string> middleProp2 = default, IEnumerable<string> prop1 = default, int? prop2 = default, IEnumerable<string> optionalFlattenPropertyRandomCollectionProp = default, LimitJsonObject discriminatorProperty = default)
+        /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsResourceData"/> instance for mocking. </returns>
+        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int? middleProp1 = default, IDictionary<string, string> middleProp2 = default, IEnumerable<string> prop1 = default, int? prop2 = default, IEnumerable<string> optionalFlattenPropertyRandomCollectionProp = default, LimitJsonObject discriminatorProperty = default)
         {
             stringArray ??= new ChangeTrackingList<string>();
 
@@ -358,8 +358,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 additionalBinaryDataProperties: null,
                 isEnabled is null ? default : new BarSettingsProperties(isEnabled, null),
                 stringArray.ToList(),
-                propertyLeft is null ? default : new BarQuotaProperties(propertyLeft, null),
-                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft, null),
+                propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, null),
+                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, null),
                 innerProp1 is null && innerProp2 is null && middleProp1 is null && middleProp2 is null && prop1 is null && prop2 is null ? default : new BarNestedQuotaProperties(
                     innerProp1,
                     innerProp2,
@@ -377,8 +377,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="barQuotaLeft"> enabled. </param>
-        /// <returns> A new <see cref="Tests.BarQuotaResourceData"/> instance for mocking. </returns>
-        public static BarQuotaResourceData BarQuotaResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string barQuotaLeft = default)
+        /// <returns> A new <see cref="MgmtTypeSpec.BarQuotaResourceData"/> instance for mocking. </returns>
+        public static BarQuotaResourceData BarQuotaResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? barQuotaLeft = default)
         {
             return new BarQuotaResourceData(
                 id,
@@ -386,7 +386,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft, null));
+                barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft.Value, null));
         }
 
         /// <summary> An Employee resource. </summary>
@@ -430,7 +430,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="tags"></param>
-        /// <returns> A new <see cref="Tests.BazData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.BazData"/> instance for mocking. </returns>
         public static BazData BazData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, BazProperties properties = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -454,7 +454,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="zooSomething"> something. </param>
         /// <param name="extendedLocation"></param>
-        /// <returns> A new <see cref="Tests.ZooData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.ZooData"/> instance for mocking. </returns>
         public static ZooData ZooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string zooSomething = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -497,7 +497,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="endpointProp"> Gets or sets the Prop. </param>
-        /// <returns> A new <see cref="Tests.EndpointResourceData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.EndpointResourceData"/> instance for mocking. </returns>
         public static EndpointResourceData EndpointResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string endpointProp = default)
         {
             return new EndpointResourceData(
@@ -514,7 +514,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="selfHelpId"> Gets the SelfHelpId. </param>
-        /// <returns> A new <see cref="Tests.SelfHelpResourceData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.SelfHelpResourceData"/> instance for mocking. </returns>
         public static SelfHelpResourceData SelfHelpResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string selfHelpId = default)
         {
             return new SelfHelpResourceData(
@@ -542,7 +542,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Tests.PlaywrightQuotaData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.PlaywrightQuotaData"/> instance for mocking. </returns>
         public static PlaywrightQuotaData PlaywrightQuotaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PlaywrightQuotaProperties properties = default)
         {
             return new PlaywrightQuotaData(
@@ -570,7 +570,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="jobName"> Gets or sets the JobName. </param>
-        /// <returns> A new <see cref="Tests.JobResourceData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.JobResourceData"/> instance for mocking. </returns>
         public static JobResourceData JobResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string jobName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -601,7 +601,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="hciVmInstanceSku"> Gets the Sku. </param>
-        /// <returns> A new <see cref="Tests.HciVmInstanceData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.HciVmInstanceData"/> instance for mocking. </returns>
         public static HciVmInstanceData HciVmInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string hciVmInstanceSku = default)
         {
             return new HciVmInstanceData(
@@ -619,7 +619,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Tests.GroupQuotaSubscriptionRequestStatusData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.GroupQuotaSubscriptionRequestStatusData"/> instance for mocking. </returns>
         public static GroupQuotaSubscriptionRequestStatusData GroupQuotaSubscriptionRequestStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GroupQuotaLimitProperties properties = default)
         {
             return new GroupQuotaSubscriptionRequestStatusData(
@@ -683,7 +683,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="groupQuotaLimitListNextLink"> The URL to use for getting the next set of results. </param>
-        /// <returns> A new <see cref="Tests.GroupQuotaLimitListData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.GroupQuotaLimitListData"/> instance for mocking. </returns>
         public static GroupQuotaLimitListData GroupQuotaLimitListData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupQuotaLimitListNextLink = default)
         {
             return new GroupQuotaLimitListData(
@@ -709,7 +709,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Tests.SubscriptionQuotaAllocationsListData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.SubscriptionQuotaAllocationsListData"/> instance for mocking. </returns>
         public static SubscriptionQuotaAllocationsListData SubscriptionQuotaAllocationsListData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SubscriptionQuotaAllocationsListProperties properties = default)
         {
             return new SubscriptionQuotaAllocationsListData(
@@ -784,7 +784,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Tests.JooData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.JooData"/> instance for mocking. </returns>
         public static JooData JooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, JooProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -815,7 +815,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sapVirtualInstanceName"> Gets or sets the Name. </param>
-        /// <returns> A new <see cref="Tests.SAPVirtualInstanceData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.SAPVirtualInstanceData"/> instance for mocking. </returns>
         public static SAPVirtualInstanceData SAPVirtualInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string sapVirtualInstanceName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -854,7 +854,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
-        /// <returns> A new <see cref="Tests.BestPracticeData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.BestPracticeData"/> instance for mocking. </returns>
         public static BestPracticeData BestPracticeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BestPracticeProperties properties = default, ExtendedLocation1 extendedLocation = default)
         {
             return new BestPracticeData(
@@ -884,7 +884,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Tests.ResourceTypeTestResourceData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.ResourceTypeTestResourceData"/> instance for mocking. </returns>
         public static ResourceTypeTestResourceData ResourceTypeTestResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceTypeTestProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -908,7 +908,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Tests.SampleData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.SampleData"/> instance for mocking. </returns>
         public static SampleData SampleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SampleDataProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -959,7 +959,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Tests.WorkloadNetworksData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.WorkloadNetworksData"/> instance for mocking. </returns>
         public static WorkloadNetworksData WorkloadNetworksData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkloadNetworksProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -992,7 +992,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Tests.WorkloadNetworkVmGroupData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.WorkloadNetworkVmGroupData"/> instance for mocking. </returns>
         public static WorkloadNetworkVmGroupData WorkloadNetworkVmGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkloadNetworkVmGroupProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1028,7 +1028,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Tests.WorkloadNetworkSegmentData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.WorkloadNetworkSegmentData"/> instance for mocking. </returns>
         public static WorkloadNetworkSegmentData WorkloadNetworkSegmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkloadNetworkSegmentProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();

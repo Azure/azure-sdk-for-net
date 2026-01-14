@@ -12,10 +12,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary>
     /// A class representing a collection of <see cref="GroupQuotaLimitListResource"/> and their operations.
@@ -38,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal GroupQuotaLimitListCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(GroupQuotaLimitListResource.ResourceType, out string groupQuotaLimitListApiVersion);
-            _groupQuotaLimitListsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", GroupQuotaLimitListResource.ResourceType.Namespace, Diagnostics);
+            _groupQuotaLimitListsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec", GroupQuotaLimitListResource.ResourceType.Namespace, Diagnostics);
             _groupQuotaLimitListsRestClient = new GroupQuotaLimitLists(_groupQuotaLimitListsClientDiagnostics, Pipeline, Endpoint, groupQuotaLimitListApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -93,7 +94,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _groupQuotaLimitListsRestClient.CreateCreateOrUpdateRequest(Id.Name, groupQuotaName, resourceProviderName, location, GroupQuotaLimitListData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation<GroupQuotaLimitListResource> operation = new TestsArmOperation<GroupQuotaLimitListResource>(
+                MgmtTypeSpecArmOperation<GroupQuotaLimitListResource> operation = new MgmtTypeSpecArmOperation<GroupQuotaLimitListResource>(
                     new GroupQuotaLimitListOperationSource(Client),
                     _groupQuotaLimitListsClientDiagnostics,
                     Pipeline,
@@ -153,7 +154,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _groupQuotaLimitListsRestClient.CreateCreateOrUpdateRequest(Id.Name, groupQuotaName, resourceProviderName, location, GroupQuotaLimitListData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation<GroupQuotaLimitListResource> operation = new TestsArmOperation<GroupQuotaLimitListResource>(
+                MgmtTypeSpecArmOperation<GroupQuotaLimitListResource> operation = new MgmtTypeSpecArmOperation<GroupQuotaLimitListResource>(
                     new GroupQuotaLimitListOperationSource(Client),
                     _groupQuotaLimitListsClientDiagnostics,
                     Pipeline,

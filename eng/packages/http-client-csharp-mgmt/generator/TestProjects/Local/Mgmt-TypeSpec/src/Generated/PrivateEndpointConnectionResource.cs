@@ -12,9 +12,10 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     /// <summary>
     /// A class representing a PrivateEndpointConnection along with the instance operations that can be performed on it.
@@ -25,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     {
         private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
         private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
-        private readonly AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData _data;
+        private readonly AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/storageSyncServices/privateEndpointConnections";
 
@@ -37,7 +38,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateEndpointConnectionResource(ArmClient client, AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData data) : this(client, data.Id)
+        internal PrivateEndpointConnectionResource(ArmClient client, AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -49,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal PrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string privateEndpointConnectionApiVersion);
-            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
+            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, privateEndpointConnectionApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -58,7 +59,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData Data
+        public virtual AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData Data
         {
             get
             {
@@ -125,7 +126,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData> response = Response.FromValue(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData> response = Response.FromValue(AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +174,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData> response = Response.FromValue(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData> response = Response.FromValue(AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -212,7 +213,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -224,9 +225,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation<PrivateEndpointConnectionResource> operation = new TestsArmOperation<PrivateEndpointConnectionResource>(
+                MgmtTypeSpecArmOperation<PrivateEndpointConnectionResource> operation = new MgmtTypeSpecArmOperation<PrivateEndpointConnectionResource>(
                     new PrivateEndpointConnectionOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
@@ -271,7 +272,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PrivateEndpointConnectionResource> Update(WaitUntil waitUntil, AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateEndpointConnectionResource> Update(WaitUntil waitUntil, AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -283,9 +284,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AzureGeneratorMgmtTypeSpecPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation<PrivateEndpointConnectionResource> operation = new TestsArmOperation<PrivateEndpointConnectionResource>(
+                MgmtTypeSpecArmOperation<PrivateEndpointConnectionResource> operation = new MgmtTypeSpecArmOperation<PrivateEndpointConnectionResource>(
                     new PrivateEndpointConnectionOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,

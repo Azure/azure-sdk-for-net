@@ -7,27 +7,27 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
     /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-    public partial class AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState
+    public partial class AzureGeneratorMgmtTypeSpecPrivateLinkServiceConnectionState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState"/>. </summary>
-        public AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState()
+        /// <summary> Initializes a new instance of <see cref="AzureGeneratorMgmtTypeSpecPrivateLinkServiceConnectionState"/>. </summary>
+        public AzureGeneratorMgmtTypeSpecPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureGeneratorMgmtTypeSpecPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureGeneratorMgmtTypeSpecPrivateLinkServiceConnectionState(AzureGeneratorMgmtTypeSpecPrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Description = description;
@@ -37,7 +37,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
         [WirePath("status")]
-        public AzureGeneratorMgmtTypeSpecTestsPrivateEndpointServiceConnectionStatus? Status { get; set; }
+        public AzureGeneratorMgmtTypeSpecPrivateEndpointServiceConnectionStatus? Status { get; set; }
 
         /// <summary> The reason for approval/rejection of the connection. </summary>
         [WirePath("description")]

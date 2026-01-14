@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Models
 {
     /// <summary> The GroupQuotaLimitProperties. </summary>
     public partial class GroupQuotaLimitProperties : GroupQuotaDetails

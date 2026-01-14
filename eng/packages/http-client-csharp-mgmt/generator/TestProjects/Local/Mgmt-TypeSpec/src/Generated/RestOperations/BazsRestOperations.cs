@@ -9,6 +9,7 @@ using System;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {

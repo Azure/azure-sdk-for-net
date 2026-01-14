@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec
 {
     internal enum SerializationFormat
     {
