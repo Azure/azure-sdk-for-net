@@ -1,4 +1,5 @@
 # Lint the CODEOWNERS file for a given repository and filter out baseline errors
+# Uses shallow clone (fetchDepth: 1) to avoid downloading full git history
 trigger: none
 
 pr:
