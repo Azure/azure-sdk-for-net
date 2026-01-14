@@ -4,8 +4,8 @@
 using System.Diagnostics;
 using System.Text.Json;
 using Azure.AI.AgentServer.Contracts.Generated.Responses;
-using Azure.AI.AgentServer.Core.AgentRun;
 using Azure.AI.AgentServer.Core.Tools.Runtime.User;
+using Azure.AI.AgentServer.Responses.Invocation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;

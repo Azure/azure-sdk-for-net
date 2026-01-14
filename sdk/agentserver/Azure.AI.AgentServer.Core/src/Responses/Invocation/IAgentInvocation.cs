@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
-using Azure.AI.AgentServer.Core.AgentRun;
 
 namespace Azure.AI.AgentServer.Responses.Invocation;
 
