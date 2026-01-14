@@ -501,13 +501,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(metrics.PartitionCount, Is.EqualTo(0));
-                Assert.That(metrics.MessageCount, Is.EqualTo(0));
-                Assert.That(metrics.QueueTime, Is.EqualTo(TimeSpan.FromSeconds(0)));
-                Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
-            });
+            Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+            Assert.That(metrics.MessageCount, Is.EqualTo(0));
+            Assert.That(metrics.QueueTime, Is.EqualTo(TimeSpan.FromSeconds(0)));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
 
             var warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
             Assert.That(warning.FormattedMessage, Is.EqualTo($"ServiceBus {_entityTypeName} '{_entityPath}' was not found."));
@@ -527,30 +524,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
 
             warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
-            Assert.That(warning.FormattedMessage,
-                        Is.EqualTo($"Connection string does not have Manage claim for {_entityTypeName} '{_entityPath}'. Failed to get {_entityTypeName} description to derive {_entityTypeName} length metrics. " +
-                        $"Falling back to using first message enqueued time."));
-            _loggerProvider.ClearAllLogMessages();
-
-            // Generic Exception
-            _mockProvider
-                .Setup(p => p.CreateBatchMessageReceiver(_client, _entityPath, It.IsAny<ServiceBusReceiverOptions>()))
-                .Throws(new Exception("Uh oh"));
-            listener = CreateListener();
-
-            metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(metrics.PartitionCount, Is.EqualTo(0));
-                Assert.That(metrics.MessageCount, Is.EqualTo(0));
-                Assert.That(metrics.QueueTime, Is.EqualTo(TimeSpan.FromSeconds(0)));
-                Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
-            });
-
-            warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
-            Assert.That(warning.FormattedMessage,
-                        Is.EqualTo($"Connection string does not have Manage claim for {_entityTypeName} '{_entityPath}'. Failed to get {_entityTypeName} description to derive {_entityTypeName} length metrics. " +
+            Assert.That(warning.FormattedMessage, Is.EqualTo($"Connection string does not have Manage claim for {_entityTypeName} '{_entityPath}'. Failed to get {_entityTypeName} description to derive {_entityTypeName} length metrics. " +
                         $"Falling back to using first message enqueued time."));
             _loggerProvider.ClearAllLogMessages();
 

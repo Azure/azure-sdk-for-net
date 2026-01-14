@@ -176,7 +176,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
                         Assert.That(logMessages.Where(x => x.StartsWith("Runtime scale monitoring is enabled.")), Is.Not.Empty);
                         if (!tbsEnabled)
                         {
-                            Assert.Contains("Scaling out based on votes", logMessages);
+                            Assert.That(logMessages, Does.Contain("Scaling out based on votes"));
                         }
                     }
 
