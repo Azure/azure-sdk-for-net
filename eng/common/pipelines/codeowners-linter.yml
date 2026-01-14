@@ -1,5 +1,5 @@
 # Lint the CODEOWNERS file for a given repository and filter out baseline errors
-# Uses shallow clone (fetchDepth: 1) to avoid downloading full git history
+# Uses partial clone (fetchFilter: tree:0) to avoid downloading full git history while allowing branch operations
 trigger: none
 
 pr:
@@ -39,7 +39,7 @@ stages:
 
     steps:
       - checkout: self
-        fetchDepth: 1
+        fetchFilter: tree:0
         fetchTags: false
 
       - pwsh: |
