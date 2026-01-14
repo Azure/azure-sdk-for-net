@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -667,10 +668,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // Verify custom Webhook authentication
             Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication, Is.Not.Null);
             Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.EndpointUri, Is.EqualTo(new Uri(EventSubscriptionDestinationEndpoint)));
-            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryApplicationIdOrUri.ToString(), Is.EqualTo(AzureActiveDirectoryApplicationId));
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryApplicationIdOrUri, Is.EqualTo(new Uri(AzureActiveDirectoryApplicationId)));
             Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryTenantId, Is.EqualTo(AzureActiveDirectoryTenantId));
-            Assert.That(CustomWebhookAuthenticationManagedIdentityType.UserAssigned, Is.EqualTo(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.Identity.IdentityType));
-
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.Identity.IdentityType, Is.EqualTo(CustomWebhookAuthenticationManagedIdentityType.UserAssigned));
             // Delete all namespaces
             await getNamespaceResponse.DeleteAsync(WaitUntil.Completed);
             var namespace1Exists = await NamespaceCollection.ExistsAsync(namespaceName);
@@ -710,11 +710,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_easteuap/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"), userAssignedIdentity);
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
-            Assert.Multiple(() =>
-            {
-                Assert.That(createNamespaceResponse, Is.Not.Null);
-                Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
-            });
+            Assert.That(createNamespaceResponse, Is.Not.Null);
+            Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
 
             // create namespace topics
             var namespaceTopicsCollection = createNamespaceResponse.GetNamespaceTopics();
@@ -724,11 +721,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 EventRetentionInDays = 1
             };
             var namespaceTopicsResponse1 = (await namespaceTopicsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicName, namespaceTopic)).Value;
-            Assert.Multiple(() =>
-            {
-                Assert.That(namespaceTopicsResponse1, Is.Not.Null);
-                Assert.That(NamespaceTopicProvisioningState.Succeeded, Is.EqualTo(namespaceTopicsResponse1.Data.ProvisioningState));
-            });
+            Assert.That(namespaceTopicsResponse1, Is.Not.Null);
+            Assert.That(NamespaceTopicProvisioningState.Succeeded, Is.EqualTo(namespaceTopicsResponse1.Data.ProvisioningState));
             Assert.That(namespaceTopicsResponse1.Data.EventRetentionInDays, Is.EqualTo(1));
 
             // create subscriptions
@@ -766,20 +760,14 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 ExpireOn = expirationTime,
             };
             var createEventsubscription1 = (await subscriptionsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicSubscriptionName1, subscriptionData)).Value;
-            Assert.Multiple(() =>
-            {
-                Assert.That(createEventsubscription1, Is.Not.Null);
-                Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription1.Data.ProvisioningState));
-            });
+            Assert.That(createEventsubscription1, Is.Not.Null);
+            Assert.That(SubscriptionProvisioningState.Succeeded, Is.EqualTo(createEventsubscription1.Data.ProvisioningState));
 
             // Validate get event subscription
             var getEventSubscription1 = (await subscriptionsCollection.GetAsync(namespaceTopicSubscriptionName1)).Value;
-            Assert.Multiple(() =>
-            {
-                Assert.That(getEventSubscription1, Is.Not.Null);
-                Assert.That(namespaceTopicSubscriptionName1, Is.EqualTo(getEventSubscription1.Data.Name));
-                Assert.That(DeliveryMode.Queue.ToString(), Is.EqualTo(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString()));
-            });
+            Assert.That(getEventSubscription1, Is.Not.Null);
+            Assert.That(namespaceTopicSubscriptionName1, Is.EqualTo(getEventSubscription1.Data.Name));
+            Assert.That(DeliveryMode.Queue.ToString(), Is.EqualTo(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString()));
             Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.Queue.EventTimeToLive, TimeSpan.FromDays(1));
             Assert.AreEqual(5, getEventSubscription1.Data.DeliveryConfiguration.Queue.MaxDeliveryCount);
 

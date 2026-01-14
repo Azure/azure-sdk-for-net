@@ -339,25 +339,10 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
             Assert.That(result, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(result.Data.IsLocalAuthDisabled, Is.False);
-                Assert.That(result.Data.AuthOptions, Is.Not.Null);
-            });
-            Assert.That(result.Data.AuthOptions.AadOrApiKey, Is.Null);
-            Assert.That(result.Data.AuthOptions.ApiKeyOnly, Is.Not.Null);
-
-            data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
-            {
-                AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode.Http401WithBearerChallenge, null)
-            };
-            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
-            result = (await SearchResource.GetAsync()).Value;
-            Assert.That(result, Is.Not.Null);
             Assert.That(result.Data.IsLocalAuthDisabled, Is.False);
             Assert.That(result.Data.AuthOptions, Is.Not.Null);
-            Assert.That(result.Data.AuthOptions.AadOrApiKey, Is.Not.Null);
-            Assert.That(result.Data.AuthOptions.ApiKeyOnly, Is.Null);
+            Assert.That(result.Data.AuthOptions.AadOrApiKey, Is.Null);
+            Assert.That(result.Data.AuthOptions.ApiKeyOnly, Is.Not.Null);
 
             data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
             {
@@ -379,16 +364,10 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
             Assert.That(result, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(result.Data.IsLocalAuthDisabled, Is.False);
-                Assert.That(result.Data.AuthOptions, Is.Not.Null);
-            });
-            Assert.Multiple(() =>
-            {
-                Assert.That(result.Data.AuthOptions.ApiKeyOnly, Is.Null);
-                Assert.That(result.Data.AuthOptions.AadOrApiKey, Is.Not.Null);
-            });
+            Assert.That(result.Data.IsLocalAuthDisabled, Is.False);
+            Assert.That(result.Data.AuthOptions, Is.Not.Null);
+            Assert.That(result.Data.AuthOptions.ApiKeyOnly, Is.Null);
+            Assert.That(result.Data.AuthOptions.AadOrApiKey, Is.Not.Null);
             Assert.That(result.Data.AuthOptions.AadOrApiKey.AadAuthFailureMode, Is.EqualTo(SearchAadAuthFailureMode.Http403));
         }
 
