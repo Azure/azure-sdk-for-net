@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.IotOperations.Models
     internal readonly partial struct AkriConnectorsTagDigestType : IEquatable<AkriConnectorsTagDigestType>
     {
         private readonly string _value;
+        /// <summary> Indicates that a tag should be specified. </summary>
+        private const string TagValue = "Tag";
+        /// <summary> Indicates that a digest should be specified. </summary>
+        private const string DigestValue = "Digest";
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsTagDigestType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AkriConnectorsTagDigestType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TagValue = "Tag";
-        private const string DigestValue = "Digest";
+            _value = value;
+        }
 
         /// <summary> Indicates that a tag should be specified. </summary>
         public static AkriConnectorsTagDigestType Tag { get; } = new AkriConnectorsTagDigestType(TagValue);
+
         /// <summary> Indicates that a digest should be specified. </summary>
         public static AkriConnectorsTagDigestType Digest { get; } = new AkriConnectorsTagDigestType(DigestValue);
+
         /// <summary> Determines if two <see cref="AkriConnectorsTagDigestType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AkriConnectorsTagDigestType left, AkriConnectorsTagDigestType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AkriConnectorsTagDigestType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AkriConnectorsTagDigestType left, AkriConnectorsTagDigestType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AkriConnectorsTagDigestType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AkriConnectorsTagDigestType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AkriConnectorsTagDigestType(string value) => new AkriConnectorsTagDigestType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AkriConnectorsTagDigestType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AkriConnectorsTagDigestType?(string value) => value == null ? null : new AkriConnectorsTagDigestType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AkriConnectorsTagDigestType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AkriConnectorsTagDigestType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

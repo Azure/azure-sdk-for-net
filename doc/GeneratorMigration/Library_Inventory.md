@@ -12,15 +12,15 @@
 
 ## Summary
 
-- Total libraries: 398
-- Management Plane (MPG): 226
-  - Autorest/Swagger: 156
-  - New Emitter (TypeSpec): 38
-  - Old TypeSpec: 32
-- Data Plane (DPG): 172
-  - Autorest/Swagger: 86
-  - New Emitter (TypeSpec): 20
-  - Old TypeSpec: 17
+- Total libraries: 401
+- Management Plane (MPG): 227
+  - Autorest/Swagger: 154
+  - New Emitter (TypeSpec): 55
+  - Old TypeSpec: 18
+- Data Plane (DPG): 174
+  - Autorest/Swagger: 87
+  - New Emitter (TypeSpec): 23
+  - Old TypeSpec: 15
 - No generator: 49
 
 
@@ -28,7 +28,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 20 / 37 (54.1%)
+**Migration Status**: 23 / 38 (60.5%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -37,10 +37,10 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | ai | Azure.AI.VoiceLive | ✅ |
 | anomalydetector | Azure.AI.AnomalyDetector |  |
 | appconfiguration | Azure.Data.AppConfiguration | ✅ |
-| batch | Azure.Compute.Batch |  |
+| batch | Azure.Compute.Batch | ✅ |
 | cognitivelanguage | Azure.AI.Language.Conversations |  |
 | cognitivelanguage | Azure.AI.Language.Conversations.Authoring |  |
-| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring |  |
+| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring | ✅ |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference |  |
 | cognitivelanguage | Azure.AI.Language.Text |  |
 | cognitivelanguage | Azure.AI.Language.Text.Authoring |  |
@@ -63,6 +63,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | monitor | Azure.Monitor.Query.Metrics | ✅ |
 | onlineexperimentation | Azure.Analytics.OnlineExperimentation | ✅ |
 | openai | Azure.AI.OpenAI | ✅ |
+| planetarycomputer | Azure.Analytics.PlanetaryComputer | ✅ |
 | purview | Azure.Analytics.Purview.DataMap |  |
 | schemaregistry | Azure.Data.SchemaRegistry | ✅ |
 | template | Azure.Template | ✅ |
@@ -73,7 +74,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 
 ## Data Plane Libraries (DPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 87
 
 | Service | Library |
 | ------- | ------- |
@@ -130,6 +131,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 | provisioning | Azure.Provisioning.Network |
 | provisioning | Azure.Provisioning.OperationalInsights |
 | provisioning | Azure.Provisioning.PostgreSql |
+| provisioning | Azure.Provisioning.PrivateDns |
 | provisioning | Azure.Provisioning.Redis |
 | provisioning | Azure.Provisioning.RedisEnterprise |
 | provisioning | Azure.Provisioning.Search |
@@ -169,21 +171,21 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 38 / 70 (54.3%)
+**Migration Status**: 55 / 73 (75.3%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
 | agricultureplatform | Azure.ResourceManager.AgriculturePlatform | ✅ |
 | arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | ✅ |
 | avs | Azure.ResourceManager.Avs |  |
-| azurestackhci | Azure.ResourceManager.Hci.Vm |  |
+| azurestackhci | Azure.ResourceManager.Hci.Vm | ✅ |
 | carbon | Azure.ResourceManager.CarbonOptimization | ✅ |
 | chaos | Azure.ResourceManager.Chaos |  |
 | cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
 | computefleet | Azure.ResourceManager.ComputeFleet |  |
 | computelimit | Azure.ResourceManager.ComputeLimit | ✅ |
 | computerecommender | Azure.ResourceManager.Compute.Recommender | ✅ |
-| computeschedule | Azure.ResourceManager.ComputeSchedule |  |
+| computeschedule | Azure.ResourceManager.ComputeSchedule | ✅ |
 | connectedcache | Azure.ResourceManager.ConnectedCache | ✅ |
 | containerorchestratorruntime | Azure.ResourceManager.ContainerOrchestratorRuntime | ✅ |
 | databasewatcher | Azure.ResourceManager.DatabaseWatcher | ✅ |
@@ -192,40 +194,43 @@ Libraries that provide resource management APIs for Azure services and have been
 | dependencymap | Azure.ResourceManager.DependencyMap | ✅ |
 | deviceprovisioningservices | Azure.ResourceManager.DeviceProvisioningServices |  |
 | deviceregistry | Azure.ResourceManager.DeviceRegistry | ✅ |
-| devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure |  |
-| disconnectedoperations | Azure.ResourceManager.DisconnectedOperations |  |
+| devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure | ✅ |
+| disconnectedoperations | Azure.ResourceManager.DisconnectedOperations | ✅ |
 | durabletask | Azure.ResourceManager.DurableTask | ✅ |
 | dynatrace | Azure.ResourceManager.Dynatrace | ✅ |
 | edgeactions | Azure.ResourceManager.EdgeActions | ✅ |
+| edgezones | Azure.ResourceManager.EdgeZones | ✅ |
 | elastic | Azure.ResourceManager.Elastic |  |
 | elasticsan | Azure.ResourceManager.ElasticSan |  |
-| fabric | Azure.ResourceManager.Fabric |  |
-| grafana | Azure.ResourceManager.Grafana |  |
+| fabric | Azure.ResourceManager.Fabric | ✅ |
+| fileshares | Azure.ResourceManager.FileShares | ✅ |
+| grafana | Azure.ResourceManager.Grafana | ✅ |
 | hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | ✅ |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
 | hybridconnectivity | Azure.ResourceManager.HybridConnectivity |  |
 | hybridkubernetes | Azure.ResourceManager.Kubernetes | ✅ |
 | impactreporting | Azure.ResourceManager.ImpactReporting | ✅ |
 | informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | ✅ |
-| iotoperations | Azure.ResourceManager.IotOperations |  |
+| iotoperations | Azure.ResourceManager.IotOperations | ✅ |
 | lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
-| mongocluster | Azure.ResourceManager.MongoCluster |  |
-| mongodbatlas | Azure.ResourceManager.MongoDBAtlas |  |
+| mongocluster | Azure.ResourceManager.MongoCluster | ✅ |
+| mongodbatlas | Azure.ResourceManager.MongoDBAtlas | ✅ |
 | mysql | Azure.ResourceManager.MySql |  |
 | neonpostgres | Azure.ResourceManager.NeonPostgres |  |
 | nginx | Azure.ResourceManager.Nginx | ✅ |
-| onlineexperimentation | Azure.ResourceManager.OnlineExperimentation |  |
-| oracle | Azure.ResourceManager.OracleDatabase |  |
+| onlineexperimentation | Azure.ResourceManager.OnlineExperimentation | ✅ |
+| oracle | Azure.ResourceManager.OracleDatabase | ✅ |
 | paloaltonetworks.ngfw | Azure.ResourceManager.PaloAltoNetworks.Ngfw | ✅ |
 | pineconevectordb | Azure.ResourceManager.PineconeVectorDB | ✅ |
 | planetarycomputer | Azure.ResourceManager.PlanetaryComputer | ✅ |
 | playwright | Azure.ResourceManager.Playwright | ✅ |
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | ✅ |
-| purestorageblock | Azure.ResourceManager.PureStorageBlock |  |
-| qumulo | Azure.ResourceManager.Qumulo |  |
+| purestorageblock | Azure.ResourceManager.PureStorageBlock | ✅ |
+| qumulo | Azure.ResourceManager.Qumulo | ✅ |
 | quota | Azure.ResourceManager.Quota | ✅ |
 | recoveryservices | Azure.ResourceManager.RecoveryServices |  |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication |  |
+| resourceconnector | Azure.ResourceManager.ResourceConnector | ✅ |
 | resources | Azure.ResourceManager.Resources.Bicep |  |
 | secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | ✅ |
 | selfhelp | Azure.ResourceManager.SelfHelp |  |
@@ -242,12 +247,12 @@ Libraries that provide resource management APIs for Azure services and have been
 | virtualenclaves | Azure.ResourceManager.VirtualEnclaves | ✅ |
 | weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
 | workloadorchestration | Azure.ResourceManager.WorkloadOrchestration | ✅ |
-| workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance |  |
+| workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance | ✅ |
 
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 156
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 154
 
 | Service | Library |
 | ------- | ------- |
@@ -309,7 +314,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | dns | Azure.ResourceManager.Dns |
 | dnsresolver | Azure.ResourceManager.DnsResolver |
 | edgeorder | Azure.ResourceManager.EdgeOrder |
-| edgezones | Azure.ResourceManager.EdgeZones |
 | eventgrid | Azure.ResourceManager.EventGrid |
 | eventhub | Azure.ResourceManager.EventHubs |
 | extendedlocation | Azure.ResourceManager.ExtendedLocations |
@@ -374,7 +378,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | redisenterprise | Azure.ResourceManager.RedisEnterprise |
 | relay | Azure.ResourceManager.Relay |
 | reservations | Azure.ResourceManager.Reservations |
-| resourceconnector | Azure.ResourceManager.ResourceConnector |
 | resourcegraph | Azure.ResourceManager.ResourceGraph |
 | resourcehealth | Azure.ResourceManager.ResourceHealth |
 | resourcemanager | Azure.ResourceManager |

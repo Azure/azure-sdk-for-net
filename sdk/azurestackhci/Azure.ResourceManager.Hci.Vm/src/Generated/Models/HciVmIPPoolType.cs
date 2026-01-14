@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct HciVmIPPoolType : IEquatable<HciVmIPPoolType>
     {
         private readonly string _value;
+        /// <summary> Virtual Machine IP Pool. </summary>
+        private const string VmValue = "vm";
+        /// <summary> VIP Pool. </summary>
+        private const string VipPoolValue = "vippool";
 
         /// <summary> Initializes a new instance of <see cref="HciVmIPPoolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciVmIPPoolType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string VmValue = "vm";
-        private const string VipPoolValue = "vippool";
+            _value = value;
+        }
 
         /// <summary> Virtual Machine IP Pool. </summary>
         public static HciVmIPPoolType Vm { get; } = new HciVmIPPoolType(VmValue);
+
         /// <summary> VIP Pool. </summary>
         public static HciVmIPPoolType VipPool { get; } = new HciVmIPPoolType(VipPoolValue);
+
         /// <summary> Determines if two <see cref="HciVmIPPoolType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciVmIPPoolType left, HciVmIPPoolType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HciVmIPPoolType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciVmIPPoolType left, HciVmIPPoolType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HciVmIPPoolType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HciVmIPPoolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HciVmIPPoolType(string value) => new HciVmIPPoolType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HciVmIPPoolType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HciVmIPPoolType?(string value) => value == null ? null : new HciVmIPPoolType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciVmIPPoolType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HciVmIPPoolType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
