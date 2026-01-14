@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
 using Azure.AI.AgentServer.Contracts.Generated.Responses;
-using Azure.AI.AgentServer.Core.AgentRun;
 using Azure.AI.AgentServer.Core.Telemetry;
 using Azure.AI.AgentServer.Responses.Invocation.Stream;
 

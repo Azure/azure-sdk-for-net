@@ -8,7 +8,7 @@ using Azure.AI.AgentServer.Contracts.Generated.Responses;
 using Azure.AI.AgentServer.Core.Common.Id;
 using Azure.AI.AgentServer.Core.Tools.Models;
 
-namespace Azure.AI.AgentServer.Core.AgentRun;
+namespace Azure.AI.AgentServer.Responses.Invocation;
 
 /// <summary>
 /// Provides rich context information for agent runs, including request data, user information,

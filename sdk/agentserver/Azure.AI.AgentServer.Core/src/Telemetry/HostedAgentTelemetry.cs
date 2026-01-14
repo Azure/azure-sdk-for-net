@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.AI.AgentServer.Contracts.Generated.Responses;
-using Azure.AI.AgentServer.Core.AgentRun;
 using Azure.AI.AgentServer.Core.Common;
+using Azure.AI.AgentServer.Responses.Invocation;
 using Microsoft.Extensions.Logging;
 
 namespace Azure.AI.AgentServer.Core.Telemetry;
