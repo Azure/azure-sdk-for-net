@@ -574,7 +574,7 @@ public class AgentsTests : AgentsTestBase
         );
         Assert.That(!resp.Memories.Any(), $"Unexpectedly found the result: {(resp.Memories.Any() ? resp.Memories.First().MemoryItem.Content : "")}");
         // Populate the scope and make sure, we can get the result.
-        ResponseItem userItem = ResponseItem.CreateAssistantMessageItem("My favorite animal is Plagiarus praepotens.");
+        ResponseItem userItem = ResponseItem.CreateUserMessageItem("My favorite animal is Plagiarus praepotens.");
         int pollingInterval = Mode != RecordedTestMode.Playback ? 500 : 0;
         MemoryUpdateResult updateResult = await projectClient.MemoryStores.WaitForMemoriesUpdateAsync(
             memoryStoreName: store.Name,
@@ -586,6 +586,25 @@ public class AgentsTests : AgentsTestBase
             pollingInterval: pollingInterval);
         Assert.That(updateResult.Status == MemoryStoreUpdateStatus.Completed, $"Unexpected status {updateResult.Status}");
         Assert.That(updateResult.Details.MemoryOperations.Count, Is.GreaterThan(0));
+        // Test that the attempt to create invalid item in memory store fails.
+        ResponseItem assistantItem = ResponseItem.CreateAssistantMessageItem("Should not be here.");
+        string error = default;
+        try
+        {
+            await projectClient.MemoryStores.WaitForMemoriesUpdateAsync(
+                memoryStoreName: store.Name,
+                options: new MemoryUpdateOptions(scope)
+                {
+                    Items = { assistantItem },
+                    UpdateDelay = 0,
+                },
+                pollingInterval: pollingInterval);
+        }
+        catch (InvalidOperationException e)
+        {
+            error = e.Message;
+        }
+        Assert.That(error, Is.EqualTo("Only system, user and developer messages are allowed to be used as memories."));
         resp = await projectClient.MemoryStores.SearchMemoriesAsync(
             memoryStoreName: store.Name,
             options: opts
