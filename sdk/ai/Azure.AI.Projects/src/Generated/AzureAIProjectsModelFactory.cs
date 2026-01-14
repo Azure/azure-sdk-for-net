@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.Foundations;
-using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -610,7 +609,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base class for targets with discriminator support.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AzureAIAgentTarget"/>, <see cref="Projects.AzureAIModelTarget"/>, and <see cref="Projects.AzureAIAssistantTarget"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AzureAIAgentTarget"/> and <see cref="Projects.AzureAIModelTarget"/>.
         /// </summary>
         /// <param name="type"> The type of target. </param>
         /// <returns> A new <see cref="Projects.Target"/> instance for mocking. </returns>
@@ -637,17 +636,6 @@ namespace Azure.AI.Projects
         public static ModelSamplingParams ModelSamplingParams(float temperature = default, float topP = default, int seed = default, int maxCompletionTokens = default)
         {
             return new ModelSamplingParams(temperature, topP, seed, maxCompletionTokens, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents a target specifying an Azure AI Assistant (Agent V1) endpoint, including its id. </summary>
-        /// <param name="id"> The unique identifier of the Azure AI Assistant. </param>
-        /// <param name="toolDescriptions"> The descriptions of tools available to the assistant. </param>
-        /// <returns> A new <see cref="Projects.AzureAIAssistantTarget"/> instance for mocking. </returns>
-        public static AzureAIAssistantTarget AzureAIAssistantTarget(string id = default, IEnumerable<ToolDescription> toolDescriptions = default)
-        {
-            toolDescriptions ??= new ChangeTrackingList<ToolDescription>();
-
-            return new AzureAIAssistantTarget("azure_ai_assistant", additionalBinaryDataProperties: null, id, toolDescriptions.ToList());
         }
 
         /// <summary> Taxonomy category definition. </summary>
@@ -1318,6 +1306,41 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> CodeInterpreterToolAuto. </summary>
+        /// <param name="fileIds"> An optional list of uploaded files to make available to your code. </param>
+        /// <param name="memoryLimit"></param>
+        /// <returns> A new <see cref="Projects.CodeInterpreterContainerAuto"/> instance for mocking. </returns>
+        public static CodeInterpreterContainerAuto CodeInterpreterContainerAuto(IEnumerable<string> fileIds = default, ContainerMemoryLimit? memoryLimit = default)
+        {
+            fileIds ??= new ChangeTrackingList<string>();
+
+            return new CodeInterpreterContainerAuto("auto", fileIds.ToList(), memoryLimit, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> MCP tool filter. </summary>
+        /// <param name="toolNames"> List of allowed tool names. </param>
+        /// <param name="readOnly">
+        /// Indicates whether or not a tool modifies data or is read-only. If an
+        ///   MCP server is [annotated with `readOnlyHint`](https://modelcontextprotocol.io/specification/2025-06-18/schema#toolannotations-readonlyhint),
+        ///   it will match this filter.
+        /// </param>
+        /// <returns> A new <see cref="Projects.MCPToolFilter"/> instance for mocking. </returns>
+        public static MCPToolFilter MCPToolFilter(IEnumerable<string> toolNames = default, bool? readOnly = default)
+        {
+            toolNames ??= new ChangeTrackingList<string>();
+
+            return new MCPToolFilter(toolNames.ToList(), readOnly, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The MCPToolRequireApproval. </summary>
+        /// <param name="always"></param>
+        /// <param name="never"></param>
+        /// <returns> A new <see cref="Projects.MCPToolRequireApproval"/> instance for mocking. </returns>
+        public static MCPToolRequireApproval MCPToolRequireApproval(MCPToolFilter always = default, MCPToolFilter never = default)
+        {
+            return new MCPToolRequireApproval(always, never, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Memory search options. </summary>
         /// <param name="maxMemories"> Maximum number of memory items to return. </param>
         /// <returns> A new <see cref="Projects.MemorySearchResultOptions"/> instance for mocking. </returns>
@@ -1412,6 +1435,41 @@ namespace Azure.AI.Projects
             return new DeleteMemoryStoreResponse("memory_store.deleted", name, deleted, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Input text. </summary>
+        /// <param name="text"> The text input to the model. </param>
+        /// <returns> A new <see cref="Projects.InputTextContentParam"/> instance for mocking. </returns>
+        public static InputTextContentParam InputTextContentParam(string text = default)
+        {
+            return new InputTextContentParam("input_text", text, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input image. </summary>
+        /// <param name="imageUrl"></param>
+        /// <param name="fileId"></param>
+        /// <param name="detail"></param>
+        /// <returns> A new <see cref="Projects.InputImageContentParamAutoParam"/> instance for mocking. </returns>
+        public static InputImageContentParamAutoParam InputImageContentParamAutoParam(string imageUrl = default, string fileId = default, DetailEnum? detail = default)
+        {
+            return new InputImageContentParamAutoParam("input_image", imageUrl, fileId, detail, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input file. </summary>
+        /// <param name="fileId"></param>
+        /// <param name="filename"></param>
+        /// <param name="fileData"></param>
+        /// <param name="fileUrl"></param>
+        /// <returns> A new <see cref="Projects.InputFileContentParam"/> instance for mocking. </returns>
+        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, string fileUrl = default)
+        {
+            return new InputFileContentParam(
+                "input_file",
+                fileId,
+                filename,
+                fileData,
+                fileUrl,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A retrieved memory item from memory search. </summary>
         /// <param name="memoryItem"> Retrieved memory item. </param>
         /// <returns> A new <see cref="Projects.MemorySearchItem"/> instance for mocking. </returns>
@@ -1495,7 +1553,7 @@ namespace Azure.AI.Projects
         /// <param name="outputTokensDetails"> A detailed breakdown of the output tokens. </param>
         /// <param name="totalTokens"> The total number of tokens used. </param>
         /// <returns> A new <see cref="Projects.MemoryStoreOperationUsage"/> instance for mocking. </returns>
-        public static MemoryStoreOperationUsage MemoryStoreOperationUsage(int embeddingTokens = default, int inputTokens = default, MemoryStoreOperationUsageInputTokensDetails inputTokensDetails = default, int outputTokens = default, MemoryStoreOperationUsageOutputTokensDetails outputTokensDetails = default, int totalTokens = default)
+        public static MemoryStoreOperationUsage MemoryStoreOperationUsage(int embeddingTokens = default, long inputTokens = default, ResponseUsageInputTokensDetails inputTokensDetails = default, long outputTokens = default, ResponseUsageOutputTokensDetails outputTokensDetails = default, long totalTokens = default)
         {
             return new MemoryStoreOperationUsage(
                 embeddingTokens,
@@ -1507,23 +1565,20 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The MemoryStoreOperationUsageInputTokensDetails. </summary>
-        /// <param name="cachedTokens">
-        /// The number of tokens that were retrieved from the cache.
-        /// [More on prompt caching](https://platform.openai.com/docs/guides/prompt-caching).
-        /// </param>
-        /// <returns> A new <see cref="Projects.MemoryStoreOperationUsageInputTokensDetails"/> instance for mocking. </returns>
-        public static MemoryStoreOperationUsageInputTokensDetails MemoryStoreOperationUsageInputTokensDetails(int cachedTokens = default)
+        /// <summary> The ResponseUsageInputTokensDetails. </summary>
+        /// <param name="cachedTokens"></param>
+        /// <returns> A new <see cref="Projects.ResponseUsageInputTokensDetails"/> instance for mocking. </returns>
+        public static ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens = default)
         {
-            return new MemoryStoreOperationUsageInputTokensDetails(cachedTokens, additionalBinaryDataProperties: null);
+            return new ResponseUsageInputTokensDetails(cachedTokens, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The MemoryStoreOperationUsageOutputTokensDetails. </summary>
-        /// <param name="reasoningTokens"> The number of reasoning tokens. </param>
-        /// <returns> A new <see cref="Projects.MemoryStoreOperationUsageOutputTokensDetails"/> instance for mocking. </returns>
-        public static MemoryStoreOperationUsageOutputTokensDetails MemoryStoreOperationUsageOutputTokensDetails(int reasoningTokens = default)
+        /// <summary> The ResponseUsageOutputTokensDetails. </summary>
+        /// <param name="reasoningTokens"></param>
+        /// <returns> A new <see cref="Projects.ResponseUsageOutputTokensDetails"/> instance for mocking. </returns>
+        public static ResponseUsageOutputTokensDetails ResponseUsageOutputTokensDetails(long reasoningTokens = default)
         {
-            return new MemoryStoreOperationUsageOutputTokensDetails(reasoningTokens, additionalBinaryDataProperties: null);
+            return new ResponseUsageOutputTokensDetails(reasoningTokens, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Memory update result. </summary>

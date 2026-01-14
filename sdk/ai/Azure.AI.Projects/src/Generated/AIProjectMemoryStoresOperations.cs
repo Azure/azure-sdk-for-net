@@ -92,7 +92,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(definition, nameof(definition));
 
-            InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, metadata, definition, default);
+            InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, metadata ?? new ChangeTrackingDictionary<string, string>(), definition, default);
             ClientResult result = CreateMemoryStore(spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
@@ -111,7 +111,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(definition, nameof(definition));
 
-            InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, metadata, definition, default);
+            InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, metadata ?? new ChangeTrackingDictionary<string, string>(), definition, default);
             ClientResult result = await CreateMemoryStoreAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
@@ -176,7 +176,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            UpdateMemoryStoreRequest spreadModel = new UpdateMemoryStoreRequest(description, metadata, default);
+            UpdateMemoryStoreRequest spreadModel = new UpdateMemoryStoreRequest(description, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             ClientResult result = UpdateMemoryStore(name, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
@@ -193,7 +193,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            UpdateMemoryStoreRequest spreadModel = new UpdateMemoryStoreRequest(description, metadata, default);
+            UpdateMemoryStoreRequest spreadModel = new UpdateMemoryStoreRequest(description, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
             ClientResult result = await UpdateMemoryStoreAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
