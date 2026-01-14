@@ -85,6 +85,59 @@ describe("Configuration tests", async () => {
     strictEqual(context.options["package-name"], "Test.Package");
   });
 
+  describe("Namespace template substitution", () => {
+    it("substitutes {package-name} in namespace", async () => {
+      const options: AzureEmitterOptions = {
+        "package-name": "Azure.ResourceManager.MySql",
+        namespace: "{package-name}.FlexibleServers"
+      };
+      const context = createEmitterContext(program, options);
+      await $onEmit(context);
+      strictEqual(program.diagnostics.length, 0);
+      strictEqual(
+        context.options.namespace,
+        "Azure.ResourceManager.MySql.FlexibleServers"
+      );
+      strictEqual(context.options["package-name"], "Azure.ResourceManager.MySql");
+    });
+
+    it("substitutes multiple {package-name} occurrences in namespace", async () => {
+      const options: AzureEmitterOptions = {
+        "package-name": "Test.Package",
+        namespace: "{package-name}.{package-name}.Suffix"
+      };
+      const context = createEmitterContext(program, options);
+      await $onEmit(context);
+      strictEqual(program.diagnostics.length, 0);
+      strictEqual(
+        context.options.namespace,
+        "Test.Package.Test.Package.Suffix"
+      );
+    });
+
+    it("does not substitute when package-name not set", async () => {
+      const options: AzureEmitterOptions = {
+        namespace: "{package-name}.FlexibleServers"
+      };
+      const context = createEmitterContext(program, options);
+      await $onEmit(context);
+      strictEqual(program.diagnostics.length, 0);
+      strictEqual(context.options.namespace, "{package-name}.FlexibleServers");
+      strictEqual(context.options["package-name"], "{package-name}.FlexibleServers");
+    });
+
+    it("leaves namespace unchanged when no template present", async () => {
+      const options: AzureEmitterOptions = {
+        "package-name": "Test.Package",
+        namespace: "Test.Namespace"
+      };
+      const context = createEmitterContext(program, options);
+      await $onEmit(context);
+      strictEqual(program.diagnostics.length, 0);
+      strictEqual(context.options.namespace, "Test.Namespace");
+    });
+  });
+
   describe("Additional decorators configuration", () => {
     it("adds default decorator when sdk-context-options is not set", async () => {
       const context = createEmitterContext(program);

@@ -14,6 +14,20 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
     name: "MIT License",
     company: "Microsoft Corporation"
   };
+
+  // Substitute {package-name} template in namespace option if present
+  // This must happen before package-name defaults to namespace
+  if (
+    context.options["namespace"] &&
+    context.options["namespace"].includes("{package-name}") &&
+    context.options["package-name"]
+  ) {
+    context.options["namespace"] = context.options["namespace"].replace(
+      /{package-name}/g,
+      context.options["package-name"]
+    );
+  }
+
   context.options["package-name"] ??= context.options["namespace"];
 
   // Merge additional decorators
