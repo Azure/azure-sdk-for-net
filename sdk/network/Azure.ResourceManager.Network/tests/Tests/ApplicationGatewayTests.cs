@@ -925,16 +925,15 @@ namespace Azure.ResourceManager.Network.Tests
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             ApplicationGatewayAvailableSslOptionsInfo sslOptionsInfo = await subscription.GetApplicationGatewayAvailableSslOptionsAsync();
             Assert.That(sslOptionsInfo, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(sslOptionsInfo.Name, Is.EqualTo("default"));
-                Assert.That(sslOptionsInfo.ResourceType, Is.EqualTo(sslOptionsInfo.Id.ResourceType));
-                Assert.That(ApplicationGatewaySslPolicyName.AppGwSslPolicy20220101, Is.EqualTo(sslOptionsInfo.DefaultPolicy));
-                Assert.That(sslOptionsInfo.PredefinedPolicies, Has.Count.EqualTo(5));
-            });
+
+            Assert.That(sslOptionsInfo.Name, Is.EqualTo("default"));
+            Assert.That(sslOptionsInfo.ResourceType, Is.EqualTo(sslOptionsInfo.Id.ResourceType));
+            Assert.That(ApplicationGatewaySslPolicyName.AppGwSslPolicy20220101, Is.EqualTo(sslOptionsInfo.DefaultPolicy));
+            Assert.That(sslOptionsInfo.PredefinedPolicies, Has.Count.EqualTo(5));
+
             foreach (var predefinedPolicy in sslOptionsInfo.PredefinedPolicies)
             {
-                Assert.That(predefinedPolicy.Id.ResourceType, Is.EqualTo("Microsoft.Network/ApplicationGatewayAvailableSslOptions/ApplicationGatewaySslPredefinedPolicy"));
+                Assert.That(predefinedPolicy.Id.ResourceType.ToString(), Is.EqualTo("Microsoft.Network/ApplicationGatewayAvailableSslOptions/ApplicationGatewaySslPredefinedPolicy"));
             }
         }
 

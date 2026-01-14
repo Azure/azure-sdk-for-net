@@ -617,11 +617,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
             );
 
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
-            Assert.Multiple(() =>
-            {
-                Assert.That(createNamespaceResponse, Is.Not.Null);
-                Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
-            });
+            Assert.That(createNamespaceResponse, Is.Not.Null);
+            Assert.That(namespaceName, Is.EqualTo(createNamespaceResponse.Data.Name));
 
             // Get the created namespace
             var getNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
@@ -658,29 +655,21 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var updateNamespaceResponse = (await getNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
-            Assert.Multiple(() =>
-            {
-                Assert.That(updateNamespaceResponse, Is.Not.Null);
-                Assert.That(namespaceName, Is.EqualTo(updateNamespaceResponse.Data.Name));
-            });
+            Assert.That(updateNamespaceResponse, Is.Not.Null);
+            Assert.That(namespaceName, Is.EqualTo(updateNamespaceResponse.Data.Name));
 
             // Get the updated namespace
             var getUpdatedNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
             Assert.That(getUpdatedNamespaceResponse, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
+
                 Assert.That(getUpdatedNamespaceResponse.Data.ProvisioningState, Is.EqualTo(NamespaceProvisioningState.Succeeded));
 
-                // Verify custom Webhook authentication
-                Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication, Is.Not.Null);
-            });
-            Assert.Multiple(() =>
-            {
-                Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.EndpointUri.ToString(), Is.EqualTo(EventSubscriptionDestinationEndpoint));
-                Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryApplicationIdOrUri.ToString(), Is.EqualTo(AzureActiveDirectoryApplicationId));
-                Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryTenantId, Is.EqualTo(AzureActiveDirectoryTenantId));
-                Assert.That(CustomWebhookAuthenticationManagedIdentityType.UserAssigned, Is.EqualTo(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.Identity.IdentityType));
-            });
+            // Verify custom Webhook authentication
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication, Is.Not.Null);
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.EndpointUri.ToString(), Is.EqualTo(EventSubscriptionDestinationEndpoint));
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryApplicationIdOrUri.ToString(), Is.EqualTo(AzureActiveDirectoryApplicationId));
+            Assert.That(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryTenantId, Is.EqualTo(AzureActiveDirectoryTenantId));
+            Assert.That(CustomWebhookAuthenticationManagedIdentityType.UserAssigned, Is.EqualTo(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.Identity.IdentityType));
 
             // Delete all namespaces
             await getNamespaceResponse.DeleteAsync(WaitUntil.Completed);

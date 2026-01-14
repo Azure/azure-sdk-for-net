@@ -298,7 +298,7 @@ namespace Azure.AI.Inference.Tests
                     Assert.That(e.Message, Does.Contain("Extra inputs are not permitted"));
                     Assert.That(captureRequestPayloadPolicy._requestContent, Does.Contain("foo"));
                     Assert.That(captureRequestPayloadPolicy._requestHeaders.ContainsKey("extra-parameters"), Is.True);
-                    Assert.That(captureRequestPayloadPolicy._requestHeaders["extra-parameters"], Is.EqualTo(ExtraParameters.PassThrough));
+                    Assert.That(captureRequestPayloadPolicy._requestHeaders["extra-parameters"], Is.EqualTo(ExtraParameters.PassThrough.ToString()));
                 });
             }
             Assert.That(exceptionThrown, Is.True);

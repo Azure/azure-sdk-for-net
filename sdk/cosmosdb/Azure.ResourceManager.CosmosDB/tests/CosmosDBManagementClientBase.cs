@@ -141,6 +141,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (Mode == RecordedTestMode.Playback && !RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
+                Console.Error.WriteLine("Ignoring test in non-windows playback agent.");
                 Assert.Ignore();
             }
         }

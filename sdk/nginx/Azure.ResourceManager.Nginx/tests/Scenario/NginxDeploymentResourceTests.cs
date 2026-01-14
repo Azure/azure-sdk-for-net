@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             Assert.Multiple(() =>
             {
                 Assert.That(nginxResourceIdentifier.ResourceType, Is.EqualTo(NginxDeploymentResource.ResourceType));
-                Assert.That(nginxResourceIdentifier, Is.EqualTo($"{ResGroup.Id}/providers/{NginxDeploymentResource.ResourceType}/{nginxDeploymentName}"));
+                Assert.That(nginxResourceIdentifier.ToString(), Is.EqualTo($"{ResGroup.Id}/providers/{NginxDeploymentResource.ResourceType}/{nginxDeploymentName}"));
             });
         }
 

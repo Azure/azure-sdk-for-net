@@ -17,7 +17,7 @@ namespace Azure.Data.Tables.Tests
             string nonMatchingString = "TableNotFound";
 
             // Act & Assert
-            Assert.That(errorCode, Is.EqualTo(matchingString));
+            Assert.That(errorCode.ToString(), Is.EqualTo(matchingString));
             Assert.That(errorCode == nonMatchingString, Is.False);
         }
 
@@ -41,7 +41,7 @@ namespace Azure.Data.Tables.Tests
             string nonMatchingString = "TableNotFound";
 
             // Act & Assert
-            Assert.That(errorCode, Is.EqualTo(matchingString));
+            Assert.That(errorCode.ToString(), Is.EqualTo(matchingString));
             Assert.That(errorCode != nonMatchingString, Is.True);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.Data.Tables.Tests
             Assert.Multiple(() =>
             {
                 // Act & Assert
-                Assert.That(matchingString, Is.EqualTo(errorCode));
+                Assert.That(matchingString, Is.EqualTo(errorCode.ToString()));
                 Assert.That(nonMatchingString == errorCode, Is.False);
             });
         }
@@ -94,7 +94,7 @@ namespace Azure.Data.Tables.Tests
             Assert.Multiple(() =>
             {
                 // Act & Assert
-                Assert.That(matchingString, Is.EqualTo(errorCode));
+                Assert.That(matchingString, Is.EqualTo(errorCode.ToString()));
                 Assert.That(nonMatchingString != errorCode, Is.True);
             });
         }
@@ -116,12 +116,12 @@ namespace Azure.Data.Tables.Tests
             Assert.Multiple(() =>
             {
                 // Arrange & Act & Assert
-                Assert.That(TableErrorCode.TableAlreadyExists, Is.EqualTo("TableAlreadyExists"));
-                Assert.That("TableAlreadyExists", Is.EqualTo(TableErrorCode.TableAlreadyExists));
-                Assert.That(TableErrorCode.OperationTimedOut, Is.EqualTo("OperationTimedOut"));
-                Assert.That("OperationTimedOut", Is.EqualTo(TableErrorCode.OperationTimedOut));
-                Assert.That(TableErrorCode.Forbidden, Is.EqualTo("Forbidden"));
-                Assert.That("Forbidden", Is.EqualTo(TableErrorCode.Forbidden));
+                Assert.That(TableErrorCode.TableAlreadyExists.ToString(), Is.EqualTo("TableAlreadyExists"));
+                Assert.That("TableAlreadyExists", Is.EqualTo(TableErrorCode.TableAlreadyExists.ToString()));
+                Assert.That(TableErrorCode.OperationTimedOut.ToString(), Is.EqualTo("OperationTimedOut"));
+                Assert.That("OperationTimedOut", Is.EqualTo(TableErrorCode.OperationTimedOut.ToString()));
+                Assert.That(TableErrorCode.Forbidden.ToString(), Is.EqualTo("Forbidden"));
+                Assert.That("Forbidden", Is.EqualTo(TableErrorCode.Forbidden.ToString()));
             });
             Assert.That(TableErrorCode.TableAlreadyExists == "EntityNotFound", Is.False);
             Assert.That("EntityNotFound" == TableErrorCode.TableAlreadyExists, Is.False);
@@ -133,10 +133,10 @@ namespace Azure.Data.Tables.Tests
             Assert.Multiple(() =>
             {
                 // Arrange & Act & Assert
-                Assert.That(TableErrorCode.TableAlreadyExists, Is.EqualTo("TableAlreadyExists"));
-                Assert.That("TableAlreadyExists", Is.EqualTo(TableErrorCode.TableAlreadyExists));
-                Assert.That(TableErrorCode.OperationTimedOut, Is.EqualTo("OperationTimedOut"));
-                Assert.That("OperationTimedOut", Is.EqualTo(TableErrorCode.OperationTimedOut));
+                Assert.That(TableErrorCode.TableAlreadyExists.ToString(), Is.EqualTo("TableAlreadyExists"));
+                Assert.That("TableAlreadyExists", Is.EqualTo(TableErrorCode.TableAlreadyExists.ToString()));
+                Assert.That(TableErrorCode.OperationTimedOut.ToString(), Is.EqualTo("OperationTimedOut"));
+                Assert.That("OperationTimedOut", Is.EqualTo(TableErrorCode.OperationTimedOut.ToString()));
             });
             Assert.That(TableErrorCode.TableAlreadyExists != "EntityNotFound", Is.True);
             Assert.That("EntityNotFound" != TableErrorCode.TableAlreadyExists, Is.True);

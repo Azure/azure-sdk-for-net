@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             {
                 Assert.That(result.Data.Properties.ProvisioningState, Is.EqualTo(Models.QuotaRequestStatus.Succeeded));
                 Assert.That(result.Data.Properties.EnforcementEnabled, Is.EqualTo(EnforcementState.Enabled));
-                Assert.That(result.Data.Name, Is.EqualTo(location));
+                Assert.That(result.Data.Name, Is.EqualTo(location.Name));
             });
 
             // The enforced group name is always of the form: <groupquotaname>-<location>.

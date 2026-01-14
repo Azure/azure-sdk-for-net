@@ -356,11 +356,8 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Data.IsLocalAuthDisabled, Is.False);
             Assert.That(result.Data.AuthOptions, Is.Not.Null);
-            Assert.Multiple(() =>
-            {
-                Assert.That(result.Data.AuthOptions.AadOrApiKey, Is.Null);
-                Assert.That(result.Data.AuthOptions.ApiKeyOnly, Is.Not.Null);
-            });
+            Assert.That(result.Data.AuthOptions.AadOrApiKey, Is.Not.Null);
+            Assert.That(result.Data.AuthOptions.ApiKeyOnly, Is.Null);
 
             data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
             {

@@ -42,7 +42,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 ValidateName(systemEvent.Name);
                 Assert.That(SystemEventExtensions.AsSystemEventData(systemEvent.Name, JsonDocument.Parse("{}").RootElement), Is.Not.Null);
             }
-            Assert.That(SystemEventExtensions.AsSystemEventData("DoesNotExist", JsonDocument.Parse("{}").RootElement), Is.Not.Null);
+            Assert.That(SystemEventExtensions.AsSystemEventData("DoesNotExist", JsonDocument.Parse("{}").RootElement), Is.Null);
         }
 
         [Test]

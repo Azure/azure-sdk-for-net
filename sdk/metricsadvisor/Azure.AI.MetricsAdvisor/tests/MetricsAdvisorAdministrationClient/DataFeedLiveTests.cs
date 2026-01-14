@@ -1246,7 +1246,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 Assert.That(dataFeed.Administrators, Is.Not.Null);
             });
-            Assert.That(dataFeed.Administrators, Has.Count.EqualTo(1).Or.EqualTo(2));
+            Assert.That(dataFeed.Administrators.Count, Is.EqualTo(1).Or.EqualTo(2));
             Assert.That(dataFeed.Administrators, Contains.Item(dataFeed.Creator));
 
             if (dataFeed.Administrators.Count == 2)
