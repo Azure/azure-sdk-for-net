@@ -17,287 +17,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMachineLearningModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningError"/>. </summary>
-        /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.MachineLearningError"/> instance for mocking. </returns>
-        public static MachineLearningError MachineLearningError(ResponseError error = null)
-        {
-            return new MachineLearningError(error, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningWorkspaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="kind"></param>
-        /// <param name="sku"> The sku of the workspace. </param>
-        /// <param name="workspaceId"> The immutable id associated with this workspace. </param>
-        /// <param name="description"> The description of this workspace. </param>
-        /// <param name="friendlyName"> The friendly name for this workspace. This name in mutable. </param>
-        /// <param name="keyVault"> ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created. </param>
-        /// <param name="applicationInsights"> ARM id of the application insights associated with this workspace. </param>
-        /// <param name="containerRegistry"> ARM id of the container registry associated with this workspace. </param>
-        /// <param name="storageAccount"> ARM id of the storage account associated with this workspace. This cannot be changed once the workspace has been created. </param>
-        /// <param name="discoveryUri"> Url for the discovery service to identify regional endpoints for machine learning experimentation services. </param>
-        /// <param name="provisioningState"> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </param>
-        /// <param name="encryption"> The encryption settings of Azure ML workspace. </param>
-        /// <param name="isHbiWorkspace"> The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service. </param>
-        /// <param name="serviceProvisionedResourceGroup"> The name of the managed resource group created by workspace RP in customer subscription if the workspace is CMK workspace. </param>
-        /// <param name="privateLinkCount"> Count of private connections in the workspace. </param>
-        /// <param name="imageBuildCompute"> The compute name for image build. </param>
-        /// <param name="allowPublicAccessWhenBehindVnet"> The flag to indicate whether to allow public access when behind VNet. </param>
-        /// <param name="publicNetworkAccessType"> Whether requests from Public Network are allowed. </param>
-        /// <param name="privateEndpointConnections"> The list of private endpoint connections in the workspace. </param>
-        /// <param name="serverlessComputeSettings"> Settings for serverless compute created in the workspace. </param>
-        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources in this workspace. </param>
-        /// <param name="notebookInfo"> The notebook info of Azure ML workspace. </param>
-        /// <param name="cosmosDbCollectionsThroughput"> The service managed resource settings. </param>
-        /// <param name="primaryUserAssignedIdentity"> The user assigned identity resource id that represents the workspace identity. </param>
-        /// <param name="tenantId"> The tenant id associated with this workspace. </param>
-        /// <param name="isStorageHnsEnabled"> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </param>
-        /// <param name="mlFlowTrackingUri"> The URI associated with this workspace that machine learning flow must point at to set up tracking. </param>
-        /// <param name="isV1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
-        /// <param name="managedNetwork"> Managed Network settings for a machine learning workspace. </param>
-        /// <param name="featureStoreSettings"> Settings for feature store type workspace. </param>
-        /// <param name="associatedWorkspaces"></param>
-        /// <param name="enableDataIsolation"></param>
-        /// <param name="hubResourceId"></param>
-        /// <param name="workspaceHubConfig"> WorkspaceHub's configuration object. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningWorkspaceData"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceData MachineLearningWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, MachineLearningSku sku = null, string workspaceId = null, string description = null, string friendlyName = null, string keyVault = null, string applicationInsights = null, string containerRegistry = null, string storageAccount = null, Uri discoveryUri = null, MachineLearningProvisioningState? provisioningState = null, MachineLearningEncryptionSetting encryption = null, bool? isHbiWorkspace = null, string serviceProvisionedResourceGroup = null, int? privateLinkCount = null, string imageBuildCompute = null, bool? allowPublicAccessWhenBehindVnet = null, PublicNetworkAccess? publicNetworkAccessType = null, IEnumerable<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = null, ServerlessComputeSettings serverlessComputeSettings = null, IEnumerable<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = null, MachineLearningNotebookResourceInfo notebookInfo = null, int? cosmosDbCollectionsThroughput = null, string primaryUserAssignedIdentity = null, Guid? tenantId = null, bool? isStorageHnsEnabled = null, Uri mlFlowTrackingUri = null, bool? isV1LegacyMode = null, ManagedNetworkSettings managedNetwork = null, FeatureStoreSettings featureStoreSettings = null, IEnumerable<string> associatedWorkspaces = null, bool? enableDataIsolation = null, ResourceIdentifier hubResourceId = null, WorkspaceHubConfig workspaceHubConfig = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            privateEndpointConnections ??= new List<MachineLearningPrivateEndpointConnectionData>();
-            sharedPrivateLinkResources ??= new List<MachineLearningSharedPrivateLinkResource>();
-            associatedWorkspaces ??= new List<string>();
-
-            return new MachineLearningWorkspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                identity,
-                kind,
-                sku,
-                workspaceId,
-                description,
-                friendlyName,
-                keyVault,
-                applicationInsights,
-                containerRegistry,
-                storageAccount,
-                discoveryUri,
-                provisioningState,
-                encryption,
-                isHbiWorkspace,
-                serviceProvisionedResourceGroup,
-                privateLinkCount,
-                imageBuildCompute,
-                allowPublicAccessWhenBehindVnet,
-                publicNetworkAccessType,
-                privateEndpointConnections?.ToList(),
-                serverlessComputeSettings,
-                sharedPrivateLinkResources?.ToList(),
-                notebookInfo,
-                cosmosDbCollectionsThroughput != null ? new ServiceManagedResourcesSettings(new CosmosDbSettings(cosmosDbCollectionsThroughput, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
-                primaryUserAssignedIdentity,
-                tenantId,
-                isStorageHnsEnabled,
-                mlFlowTrackingUri,
-                isV1LegacyMode,
-                managedNetwork,
-                featureStoreSettings,
-                associatedWorkspaces?.ToList(),
-                enableDataIsolation,
-                hubResourceId,
-                workspaceHubConfig,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="sku"> The sku of the workspace. </param>
-        /// <param name="subResourceId"> The resource of private end point. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static MachineLearningPrivateEndpointConnectionData MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null, ResourceIdentifier subResourceId = null, MachineLearningPrivateLinkServiceConnectionState connectionState = null, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new MachineLearningPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                identity,
-                sku,
-                subResourceId != null ? ResourceManagerModelFactory.SubResource(subResourceId) : null,
-                connectionState,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointBase"/>. </summary>
-        /// <param name="id"> The ARM identifier for Private Endpoint. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointBase"/> instance for mocking. </returns>
-        public static PrivateEndpointBase PrivateEndpointBase(ResourceIdentifier id = null)
-        {
-            return new PrivateEndpointBase(id, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningNotebookResourceInfo"/>. </summary>
-        /// <param name="fqdn"></param>
-        /// <param name="resourceId"> the data plane resourceId that used to initialize notebook component. </param>
-        /// <param name="notebookPreparationError"> The error that occurs when preparing notebook. </param>
-        /// <returns> A new <see cref="Models.MachineLearningNotebookResourceInfo"/> instance for mocking. </returns>
-        public static MachineLearningNotebookResourceInfo MachineLearningNotebookResourceInfo(string fqdn = null, string resourceId = null, MachineLearningNotebookPreparationError notebookPreparationError = null)
-        {
-            return new MachineLearningNotebookResourceInfo(fqdn, resourceId, notebookPreparationError, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningNotebookPreparationError"/>. </summary>
-        /// <param name="errorMessage"></param>
-        /// <param name="statusCode"></param>
-        /// <returns> A new <see cref="Models.MachineLearningNotebookPreparationError"/> instance for mocking. </returns>
-        public static MachineLearningNotebookPreparationError MachineLearningNotebookPreparationError(string errorMessage = null, int? statusCode = null)
-        {
-            return new MachineLearningNotebookPreparationError(errorMessage, statusCode, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedNetworkSettings"/>. </summary>
-        /// <param name="isolationMode"> Isolation mode for the managed network of a machine learning workspace. </param>
-        /// <param name="networkId"></param>
-        /// <param name="outboundRules">
-        /// Dictionary of &lt;OutboundRule&gt;
-        /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
-        /// </param>
-        /// <param name="status"> Status of the Provisioning for the managed network of a machine learning workspace. </param>
-        /// <returns> A new <see cref="Models.ManagedNetworkSettings"/> instance for mocking. </returns>
-        public static ManagedNetworkSettings ManagedNetworkSettings(IsolationMode? isolationMode = null, string networkId = null, IDictionary<string, MachineLearningOutboundRule> outboundRules = null, ManagedNetworkProvisionStatus status = null)
-        {
-            outboundRules ??= new Dictionary<string, MachineLearningOutboundRule>();
-
-            return new ManagedNetworkSettings(isolationMode, networkId, outboundRules, status, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceDiagnoseResult"/>. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Models.MachineLearningWorkspaceDiagnoseResult"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceDiagnoseResult MachineLearningWorkspaceDiagnoseResult(MachineLearningDiagnoseResultValue value = null)
-        {
-            return new MachineLearningWorkspaceDiagnoseResult(value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningDiagnoseResultValue"/>. </summary>
-        /// <param name="userDefinedRouteResults"></param>
-        /// <param name="networkSecurityRuleResults"></param>
-        /// <param name="resourceLockResults"></param>
-        /// <param name="dnsResolutionResults"></param>
-        /// <param name="storageAccountResults"></param>
-        /// <param name="keyVaultResults"></param>
-        /// <param name="containerRegistryResults"></param>
-        /// <param name="applicationInsightsResults"></param>
-        /// <param name="otherResults"></param>
-        /// <returns> A new <see cref="Models.MachineLearningDiagnoseResultValue"/> instance for mocking. </returns>
-        public static MachineLearningDiagnoseResultValue MachineLearningDiagnoseResultValue(IEnumerable<MachineLearningDiagnoseResult> userDefinedRouteResults = null, IEnumerable<MachineLearningDiagnoseResult> networkSecurityRuleResults = null, IEnumerable<MachineLearningDiagnoseResult> resourceLockResults = null, IEnumerable<MachineLearningDiagnoseResult> dnsResolutionResults = null, IEnumerable<MachineLearningDiagnoseResult> storageAccountResults = null, IEnumerable<MachineLearningDiagnoseResult> keyVaultResults = null, IEnumerable<MachineLearningDiagnoseResult> containerRegistryResults = null, IEnumerable<MachineLearningDiagnoseResult> applicationInsightsResults = null, IEnumerable<MachineLearningDiagnoseResult> otherResults = null)
-        {
-            userDefinedRouteResults ??= new List<MachineLearningDiagnoseResult>();
-            networkSecurityRuleResults ??= new List<MachineLearningDiagnoseResult>();
-            resourceLockResults ??= new List<MachineLearningDiagnoseResult>();
-            dnsResolutionResults ??= new List<MachineLearningDiagnoseResult>();
-            storageAccountResults ??= new List<MachineLearningDiagnoseResult>();
-            keyVaultResults ??= new List<MachineLearningDiagnoseResult>();
-            containerRegistryResults ??= new List<MachineLearningDiagnoseResult>();
-            applicationInsightsResults ??= new List<MachineLearningDiagnoseResult>();
-            otherResults ??= new List<MachineLearningDiagnoseResult>();
-
-            return new MachineLearningDiagnoseResultValue(
-                userDefinedRouteResults?.ToList(),
-                networkSecurityRuleResults?.ToList(),
-                resourceLockResults?.ToList(),
-                dnsResolutionResults?.ToList(),
-                storageAccountResults?.ToList(),
-                keyVaultResults?.ToList(),
-                containerRegistryResults?.ToList(),
-                applicationInsightsResults?.ToList(),
-                otherResults?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningDiagnoseResult"/>. </summary>
-        /// <param name="code"> Code for workspace setup error. </param>
-        /// <param name="level"> Level of workspace setup error. </param>
-        /// <param name="message"> Message of workspace setup error. </param>
-        /// <returns> A new <see cref="Models.MachineLearningDiagnoseResult"/> instance for mocking. </returns>
-        public static MachineLearningDiagnoseResult MachineLearningDiagnoseResult(string code = null, MachineLearningDiagnoseResultLevel? level = null, string message = null)
-        {
-            return new MachineLearningDiagnoseResult(code, level, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceGetKeysResult"/>. </summary>
-        /// <param name="userStorageKey"></param>
-        /// <param name="userStorageResourceId"></param>
-        /// <param name="appInsightsInstrumentationKey"></param>
-        /// <param name="containerRegistryCredentials"></param>
-        /// <param name="notebookAccessKeys"></param>
-        /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetKeysResult"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceGetKeysResult MachineLearningWorkspaceGetKeysResult(string userStorageKey = null, string userStorageResourceId = null, string appInsightsInstrumentationKey = null, MachineLearningContainerRegistryCredentials containerRegistryCredentials = null, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys = null)
-        {
-            return new MachineLearningWorkspaceGetKeysResult(
-                userStorageKey,
-                userStorageResourceId,
-                appInsightsInstrumentationKey,
-                containerRegistryCredentials,
-                notebookAccessKeys,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningContainerRegistryCredentials"/>. </summary>
-        /// <param name="location"></param>
-        /// <param name="username"></param>
-        /// <param name="passwords"></param>
-        /// <returns> A new <see cref="Models.MachineLearningContainerRegistryCredentials"/> instance for mocking. </returns>
-        public static MachineLearningContainerRegistryCredentials MachineLearningContainerRegistryCredentials(AzureLocation? location = null, string username = null, IEnumerable<MachineLearningPasswordDetail> passwords = null)
-        {
-            passwords ??= new List<MachineLearningPasswordDetail>();
-
-            return new MachineLearningContainerRegistryCredentials(location, username, passwords?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningPasswordDetail"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Models.MachineLearningPasswordDetail"/> instance for mocking. </returns>
-        public static MachineLearningPasswordDetail MachineLearningPasswordDetail(string name = null, string value = null)
-        {
-            return new MachineLearningPasswordDetail(name, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceGetNotebookKeysResult"/>. </summary>
-        /// <param name="primaryAccessKey"></param>
-        /// <param name="secondaryAccessKey"></param>
-        /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetNotebookKeysResult"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceGetNotebookKeysResult MachineLearningWorkspaceGetNotebookKeysResult(string primaryAccessKey = null, string secondaryAccessKey = null)
-        {
-            return new MachineLearningWorkspaceGetNotebookKeysResult(primaryAccessKey, secondaryAccessKey, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningUsage"/>. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="amlWorkspaceLocation"> Region of the AML workspace in the id. </param>
@@ -327,6 +46,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningUsageName MachineLearningUsageName(string value = null, string localizedValue = null)
         {
             return new MachineLearningUsageName(value, localizedValue, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningError"/>. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <returns> A new <see cref="Models.MachineLearningError"/> instance for mocking. </returns>
+        public static MachineLearningError MachineLearningError(ResponseError error = null)
+        {
+            return new MachineLearningError(error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningVmSize"/>. </summary>
@@ -509,186 +236,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 port,
                 nodeState,
                 runId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceNotebookAccessTokenResult"/>. </summary>
-        /// <param name="notebookResourceId"></param>
-        /// <param name="hostName"></param>
-        /// <param name="publicDns"></param>
-        /// <param name="accessToken"></param>
-        /// <param name="tokenType"></param>
-        /// <param name="expiresIn"></param>
-        /// <param name="refreshToken"></param>
-        /// <param name="scope"></param>
-        /// <returns> A new <see cref="Models.MachineLearningWorkspaceNotebookAccessTokenResult"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceNotebookAccessTokenResult MachineLearningWorkspaceNotebookAccessTokenResult(string notebookResourceId = null, string hostName = null, string publicDns = null, string accessToken = null, string tokenType = null, int? expiresIn = null, string refreshToken = null, string scope = null)
-        {
-            return new MachineLearningWorkspaceNotebookAccessTokenResult(
-                notebookResourceId,
-                hostName,
-                publicDns,
-                accessToken,
-                tokenType,
-                expiresIn,
-                refreshToken,
-                scope,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningPrivateLinkResource"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="sku"> The sku of the workspace. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.MachineLearningPrivateLinkResource"/> instance for mocking. </returns>
-        public static MachineLearningPrivateLinkResource MachineLearningPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            requiredMembers ??= new List<string>();
-            requiredZoneNames ??= new List<string>();
-
-            return new MachineLearningPrivateLinkResource(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                identity,
-                sku,
-                groupId,
-                requiredMembers?.ToList(),
-                requiredZoneNames?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceGetStorageAccountKeysResult"/>. </summary>
-        /// <param name="userStorageKey"></param>
-        /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetStorageAccountKeysResult"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceGetStorageAccountKeysResult MachineLearningWorkspaceGetStorageAccountKeysResult(string userStorageKey = null)
-        {
-            return new MachineLearningWorkspaceGetStorageAccountKeysResult(userStorageKey, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningWorkspaceConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Please note <see cref="Models.MachineLearningWorkspaceConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AadAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.AccountKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="Models.CustomKeysWorkspaceConnectionProperties"/>, <see cref="Models.MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="Models.MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="Models.OAuth2AuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="Models.MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="Models.ServicePrincipalAuthTypeWorkspaceConnectionProperties"/> and <see cref="Models.MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
-        /// </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningWorkspaceConnectionData"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceConnectionData MachineLearningWorkspaceConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningWorkspaceConnectionProperties properties = null)
-        {
-            return new MachineLearningWorkspaceConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceConnectionProperties"/>. </summary>
-        /// <param name="authType"> Authentication type of the connection target. </param>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="target"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <returns> A new <see cref="Models.MachineLearningWorkspaceConnectionProperties"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceConnectionProperties MachineLearningWorkspaceConnectionProperties(string authType = null, MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new UnknownWorkspaceConnectionPropertiesV2(
-                authType == null ? default : new MachineLearningConnectionAuthType(authType),
-                category,
-                createdByWorkspaceArmId,
-                expiryOn,
-                group,
-                isSharedToAll,
-                target,
-                metadata,
-                sharedUserList?.ToList(),
-                value,
-                valueFormat,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningFqdnEndpoints"/>. </summary>
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpoints"/> instance for mocking. </returns>
-        public static MachineLearningFqdnEndpoints MachineLearningFqdnEndpoints(MachineLearningFqdnEndpointsProperties properties = null)
-        {
-            return new MachineLearningFqdnEndpoints(properties, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningFqdnEndpointsProperties"/>. </summary>
-        /// <param name="category"></param>
-        /// <param name="endpoints"></param>
-        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpointsProperties"/> instance for mocking. </returns>
-        public static MachineLearningFqdnEndpointsProperties MachineLearningFqdnEndpointsProperties(string category = null, IEnumerable<MachineLearningFqdnEndpoint> endpoints = null)
-        {
-            endpoints ??= new List<MachineLearningFqdnEndpoint>();
-
-            return new MachineLearningFqdnEndpointsProperties(category, endpoints?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningFqdnEndpoint"/>. </summary>
-        /// <param name="domainName"></param>
-        /// <param name="endpointDetails"></param>
-        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpoint"/> instance for mocking. </returns>
-        public static MachineLearningFqdnEndpoint MachineLearningFqdnEndpoint(string domainName = null, IEnumerable<MachineLearningFqdnEndpointDetail> endpointDetails = null)
-        {
-            endpointDetails ??= new List<MachineLearningFqdnEndpointDetail>();
-
-            return new MachineLearningFqdnEndpoint(domainName, endpointDetails?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningFqdnEndpointDetail"/>. </summary>
-        /// <param name="port"></param>
-        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpointDetail"/> instance for mocking. </returns>
-        public static MachineLearningFqdnEndpointDetail MachineLearningFqdnEndpointDetail(int? port = null)
-        {
-            return new MachineLearningFqdnEndpointDetail(port, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningOutboundRuleBasicData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Outbound Rule for the managed network of a machine learning workspace.
-        /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
-        /// </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningOutboundRuleBasicData"/> instance for mocking. </returns>
-        public static MachineLearningOutboundRuleBasicData MachineLearningOutboundRuleBasicData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningOutboundRule properties = null)
-        {
-            return new MachineLearningOutboundRuleBasicData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
                 serializedAdditionalRawData: null);
         }
 
@@ -2172,6 +1719,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new RegistryPrivateEndpoint(id, serializedAdditionalRawData: null, subnetArmId);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointBase"/>. </summary>
+        /// <param name="id"> The ARM identifier for Private Endpoint. </param>
+        /// <returns> A new <see cref="Models.PrivateEndpointBase"/> instance for mocking. </returns>
+        public static PrivateEndpointBase PrivateEndpointBase(ResourceIdentifier id = null)
+        {
+            return new PrivateEndpointBase(id, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningUserFeature"/>. </summary>
         /// <param name="id"> Specifies the feature ID. </param>
         /// <param name="displayName"> Specifies the feature name. </param>
@@ -2180,6 +1735,451 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningUserFeature MachineLearningUserFeature(string id = null, string displayName = null, string description = null)
         {
             return new MachineLearningUserFeature(id, displayName, description, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningWorkspaceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="kind"></param>
+        /// <param name="sku"> The sku of the workspace. </param>
+        /// <param name="workspaceId"> The immutable id associated with this workspace. </param>
+        /// <param name="description"> The description of this workspace. </param>
+        /// <param name="friendlyName"> The friendly name for this workspace. This name in mutable. </param>
+        /// <param name="keyVault"> ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created. </param>
+        /// <param name="applicationInsights"> ARM id of the application insights associated with this workspace. </param>
+        /// <param name="containerRegistry"> ARM id of the container registry associated with this workspace. </param>
+        /// <param name="storageAccount"> ARM id of the storage account associated with this workspace. This cannot be changed once the workspace has been created. </param>
+        /// <param name="discoveryUri"> Url for the discovery service to identify regional endpoints for machine learning experimentation services. </param>
+        /// <param name="provisioningState"> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </param>
+        /// <param name="encryption"> The encryption settings of Azure ML workspace. </param>
+        /// <param name="isHbiWorkspace"> The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service. </param>
+        /// <param name="serviceProvisionedResourceGroup"> The name of the managed resource group created by workspace RP in customer subscription if the workspace is CMK workspace. </param>
+        /// <param name="privateLinkCount"> Count of private connections in the workspace. </param>
+        /// <param name="imageBuildCompute"> The compute name for image build. </param>
+        /// <param name="allowPublicAccessWhenBehindVnet"> The flag to indicate whether to allow public access when behind VNet. </param>
+        /// <param name="publicNetworkAccessType"> Whether requests from Public Network are allowed. </param>
+        /// <param name="privateEndpointConnections"> The list of private endpoint connections in the workspace. </param>
+        /// <param name="serverlessComputeSettings"> Settings for serverless compute created in the workspace. </param>
+        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources in this workspace. </param>
+        /// <param name="notebookInfo"> The notebook info of Azure ML workspace. </param>
+        /// <param name="cosmosDbCollectionsThroughput"> The service managed resource settings. </param>
+        /// <param name="primaryUserAssignedIdentity"> The user assigned identity resource id that represents the workspace identity. </param>
+        /// <param name="tenantId"> The tenant id associated with this workspace. </param>
+        /// <param name="isStorageHnsEnabled"> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </param>
+        /// <param name="mlFlowTrackingUri"> The URI associated with this workspace that machine learning flow must point at to set up tracking. </param>
+        /// <param name="isV1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
+        /// <param name="managedNetwork"> Managed Network settings for a machine learning workspace. </param>
+        /// <param name="featureStoreSettings"> Settings for feature store type workspace. </param>
+        /// <param name="associatedWorkspaces"></param>
+        /// <param name="enableDataIsolation"></param>
+        /// <param name="hubResourceId"></param>
+        /// <param name="workspaceHubConfig"> WorkspaceHub's configuration object. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningWorkspaceData"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceData MachineLearningWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, MachineLearningSku sku = null, string workspaceId = null, string description = null, string friendlyName = null, string keyVault = null, string applicationInsights = null, string containerRegistry = null, string storageAccount = null, Uri discoveryUri = null, MachineLearningProvisioningState? provisioningState = null, MachineLearningEncryptionSetting encryption = null, bool? isHbiWorkspace = null, string serviceProvisionedResourceGroup = null, int? privateLinkCount = null, string imageBuildCompute = null, bool? allowPublicAccessWhenBehindVnet = null, PublicNetworkAccess? publicNetworkAccessType = null, IEnumerable<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = null, ServerlessComputeSettings serverlessComputeSettings = null, IEnumerable<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = null, MachineLearningNotebookResourceInfo notebookInfo = null, int? cosmosDbCollectionsThroughput = null, string primaryUserAssignedIdentity = null, Guid? tenantId = null, bool? isStorageHnsEnabled = null, Uri mlFlowTrackingUri = null, bool? isV1LegacyMode = null, ManagedNetworkSettings managedNetwork = null, FeatureStoreSettings featureStoreSettings = null, IEnumerable<string> associatedWorkspaces = null, bool? enableDataIsolation = null, ResourceIdentifier hubResourceId = null, WorkspaceHubConfig workspaceHubConfig = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            privateEndpointConnections ??= new List<MachineLearningPrivateEndpointConnectionData>();
+            sharedPrivateLinkResources ??= new List<MachineLearningSharedPrivateLinkResource>();
+            associatedWorkspaces ??= new List<string>();
+
+            return new MachineLearningWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                kind,
+                sku,
+                workspaceId,
+                description,
+                friendlyName,
+                keyVault,
+                applicationInsights,
+                containerRegistry,
+                storageAccount,
+                discoveryUri,
+                provisioningState,
+                encryption,
+                isHbiWorkspace,
+                serviceProvisionedResourceGroup,
+                privateLinkCount,
+                imageBuildCompute,
+                allowPublicAccessWhenBehindVnet,
+                publicNetworkAccessType,
+                privateEndpointConnections?.ToList(),
+                serverlessComputeSettings,
+                sharedPrivateLinkResources?.ToList(),
+                notebookInfo,
+                cosmosDbCollectionsThroughput != null ? new ServiceManagedResourcesSettings(new CosmosDbSettings(cosmosDbCollectionsThroughput, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                primaryUserAssignedIdentity,
+                tenantId,
+                isStorageHnsEnabled,
+                mlFlowTrackingUri,
+                isV1LegacyMode,
+                managedNetwork,
+                featureStoreSettings,
+                associatedWorkspaces?.ToList(),
+                enableDataIsolation,
+                hubResourceId,
+                workspaceHubConfig,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningPrivateEndpointConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="sku"> The sku of the workspace. </param>
+        /// <param name="subResourceId"> The resource of private end point. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static MachineLearningPrivateEndpointConnectionData MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null, ResourceIdentifier subResourceId = null, MachineLearningPrivateLinkServiceConnectionState connectionState = null, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new MachineLearningPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                sku,
+                subResourceId != null ? ResourceManagerModelFactory.SubResource(subResourceId) : null,
+                connectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningNotebookResourceInfo"/>. </summary>
+        /// <param name="fqdn"></param>
+        /// <param name="resourceId"> the data plane resourceId that used to initialize notebook component. </param>
+        /// <param name="notebookPreparationError"> The error that occurs when preparing notebook. </param>
+        /// <returns> A new <see cref="Models.MachineLearningNotebookResourceInfo"/> instance for mocking. </returns>
+        public static MachineLearningNotebookResourceInfo MachineLearningNotebookResourceInfo(string fqdn = null, string resourceId = null, MachineLearningNotebookPreparationError notebookPreparationError = null)
+        {
+            return new MachineLearningNotebookResourceInfo(fqdn, resourceId, notebookPreparationError, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningNotebookPreparationError"/>. </summary>
+        /// <param name="errorMessage"></param>
+        /// <param name="statusCode"></param>
+        /// <returns> A new <see cref="Models.MachineLearningNotebookPreparationError"/> instance for mocking. </returns>
+        public static MachineLearningNotebookPreparationError MachineLearningNotebookPreparationError(string errorMessage = null, int? statusCode = null)
+        {
+            return new MachineLearningNotebookPreparationError(errorMessage, statusCode, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedNetworkSettings"/>. </summary>
+        /// <param name="isolationMode"> Isolation mode for the managed network of a machine learning workspace. </param>
+        /// <param name="networkId"></param>
+        /// <param name="outboundRules">
+        /// Dictionary of &lt;OutboundRule&gt;
+        /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
+        /// </param>
+        /// <param name="status"> Status of the Provisioning for the managed network of a machine learning workspace. </param>
+        /// <returns> A new <see cref="Models.ManagedNetworkSettings"/> instance for mocking. </returns>
+        public static ManagedNetworkSettings ManagedNetworkSettings(IsolationMode? isolationMode = null, string networkId = null, IDictionary<string, MachineLearningOutboundRule> outboundRules = null, ManagedNetworkProvisionStatus status = null)
+        {
+            outboundRules ??= new Dictionary<string, MachineLearningOutboundRule>();
+
+            return new ManagedNetworkSettings(isolationMode, networkId, outboundRules, status, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceDiagnoseResult"/>. </summary>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="Models.MachineLearningWorkspaceDiagnoseResult"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceDiagnoseResult MachineLearningWorkspaceDiagnoseResult(MachineLearningDiagnoseResultValue value = null)
+        {
+            return new MachineLearningWorkspaceDiagnoseResult(value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningDiagnoseResultValue"/>. </summary>
+        /// <param name="userDefinedRouteResults"></param>
+        /// <param name="networkSecurityRuleResults"></param>
+        /// <param name="resourceLockResults"></param>
+        /// <param name="dnsResolutionResults"></param>
+        /// <param name="storageAccountResults"></param>
+        /// <param name="keyVaultResults"></param>
+        /// <param name="containerRegistryResults"></param>
+        /// <param name="applicationInsightsResults"></param>
+        /// <param name="otherResults"></param>
+        /// <returns> A new <see cref="Models.MachineLearningDiagnoseResultValue"/> instance for mocking. </returns>
+        public static MachineLearningDiagnoseResultValue MachineLearningDiagnoseResultValue(IEnumerable<MachineLearningDiagnoseResult> userDefinedRouteResults = null, IEnumerable<MachineLearningDiagnoseResult> networkSecurityRuleResults = null, IEnumerable<MachineLearningDiagnoseResult> resourceLockResults = null, IEnumerable<MachineLearningDiagnoseResult> dnsResolutionResults = null, IEnumerable<MachineLearningDiagnoseResult> storageAccountResults = null, IEnumerable<MachineLearningDiagnoseResult> keyVaultResults = null, IEnumerable<MachineLearningDiagnoseResult> containerRegistryResults = null, IEnumerable<MachineLearningDiagnoseResult> applicationInsightsResults = null, IEnumerable<MachineLearningDiagnoseResult> otherResults = null)
+        {
+            userDefinedRouteResults ??= new List<MachineLearningDiagnoseResult>();
+            networkSecurityRuleResults ??= new List<MachineLearningDiagnoseResult>();
+            resourceLockResults ??= new List<MachineLearningDiagnoseResult>();
+            dnsResolutionResults ??= new List<MachineLearningDiagnoseResult>();
+            storageAccountResults ??= new List<MachineLearningDiagnoseResult>();
+            keyVaultResults ??= new List<MachineLearningDiagnoseResult>();
+            containerRegistryResults ??= new List<MachineLearningDiagnoseResult>();
+            applicationInsightsResults ??= new List<MachineLearningDiagnoseResult>();
+            otherResults ??= new List<MachineLearningDiagnoseResult>();
+
+            return new MachineLearningDiagnoseResultValue(
+                userDefinedRouteResults?.ToList(),
+                networkSecurityRuleResults?.ToList(),
+                resourceLockResults?.ToList(),
+                dnsResolutionResults?.ToList(),
+                storageAccountResults?.ToList(),
+                keyVaultResults?.ToList(),
+                containerRegistryResults?.ToList(),
+                applicationInsightsResults?.ToList(),
+                otherResults?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningDiagnoseResult"/>. </summary>
+        /// <param name="code"> Code for workspace setup error. </param>
+        /// <param name="level"> Level of workspace setup error. </param>
+        /// <param name="message"> Message of workspace setup error. </param>
+        /// <returns> A new <see cref="Models.MachineLearningDiagnoseResult"/> instance for mocking. </returns>
+        public static MachineLearningDiagnoseResult MachineLearningDiagnoseResult(string code = null, MachineLearningDiagnoseResultLevel? level = null, string message = null)
+        {
+            return new MachineLearningDiagnoseResult(code, level, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceGetKeysResult"/>. </summary>
+        /// <param name="userStorageKey"></param>
+        /// <param name="userStorageResourceId"></param>
+        /// <param name="appInsightsInstrumentationKey"></param>
+        /// <param name="containerRegistryCredentials"></param>
+        /// <param name="notebookAccessKeys"></param>
+        /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetKeysResult"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceGetKeysResult MachineLearningWorkspaceGetKeysResult(string userStorageKey = null, string userStorageResourceId = null, string appInsightsInstrumentationKey = null, MachineLearningContainerRegistryCredentials containerRegistryCredentials = null, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys = null)
+        {
+            return new MachineLearningWorkspaceGetKeysResult(
+                userStorageKey,
+                userStorageResourceId,
+                appInsightsInstrumentationKey,
+                containerRegistryCredentials,
+                notebookAccessKeys,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningContainerRegistryCredentials"/>. </summary>
+        /// <param name="location"></param>
+        /// <param name="username"></param>
+        /// <param name="passwords"></param>
+        /// <returns> A new <see cref="Models.MachineLearningContainerRegistryCredentials"/> instance for mocking. </returns>
+        public static MachineLearningContainerRegistryCredentials MachineLearningContainerRegistryCredentials(AzureLocation? location = null, string username = null, IEnumerable<MachineLearningPasswordDetail> passwords = null)
+        {
+            passwords ??= new List<MachineLearningPasswordDetail>();
+
+            return new MachineLearningContainerRegistryCredentials(location, username, passwords?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningPasswordDetail"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="Models.MachineLearningPasswordDetail"/> instance for mocking. </returns>
+        public static MachineLearningPasswordDetail MachineLearningPasswordDetail(string name = null, string value = null)
+        {
+            return new MachineLearningPasswordDetail(name, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceGetNotebookKeysResult"/>. </summary>
+        /// <param name="primaryAccessKey"></param>
+        /// <param name="secondaryAccessKey"></param>
+        /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetNotebookKeysResult"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceGetNotebookKeysResult MachineLearningWorkspaceGetNotebookKeysResult(string primaryAccessKey = null, string secondaryAccessKey = null)
+        {
+            return new MachineLearningWorkspaceGetNotebookKeysResult(primaryAccessKey, secondaryAccessKey, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceNotebookAccessTokenResult"/>. </summary>
+        /// <param name="notebookResourceId"></param>
+        /// <param name="hostName"></param>
+        /// <param name="publicDns"></param>
+        /// <param name="accessToken"></param>
+        /// <param name="tokenType"></param>
+        /// <param name="expiresIn"></param>
+        /// <param name="refreshToken"></param>
+        /// <param name="scope"></param>
+        /// <returns> A new <see cref="Models.MachineLearningWorkspaceNotebookAccessTokenResult"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceNotebookAccessTokenResult MachineLearningWorkspaceNotebookAccessTokenResult(string notebookResourceId = null, string hostName = null, string publicDns = null, string accessToken = null, string tokenType = null, int? expiresIn = null, string refreshToken = null, string scope = null)
+        {
+            return new MachineLearningWorkspaceNotebookAccessTokenResult(
+                notebookResourceId,
+                hostName,
+                publicDns,
+                accessToken,
+                tokenType,
+                expiresIn,
+                refreshToken,
+                scope,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningPrivateLinkResource"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="sku"> The sku of the workspace. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
+        /// <returns> A new <see cref="Models.MachineLearningPrivateLinkResource"/> instance for mocking. </returns>
+        public static MachineLearningPrivateLinkResource MachineLearningPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            requiredMembers ??= new List<string>();
+            requiredZoneNames ??= new List<string>();
+
+            return new MachineLearningPrivateLinkResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                sku,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceGetStorageAccountKeysResult"/>. </summary>
+        /// <param name="userStorageKey"></param>
+        /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetStorageAccountKeysResult"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceGetStorageAccountKeysResult MachineLearningWorkspaceGetStorageAccountKeysResult(string userStorageKey = null)
+        {
+            return new MachineLearningWorkspaceGetStorageAccountKeysResult(userStorageKey, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningWorkspaceConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties">
+        /// Please note <see cref="Models.MachineLearningWorkspaceConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.AadAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.AccountKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="Models.CustomKeysWorkspaceConnectionProperties"/>, <see cref="Models.MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="Models.MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="Models.OAuth2AuthTypeWorkspaceConnectionProperties"/>, <see cref="Models.MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="Models.MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="Models.ServicePrincipalAuthTypeWorkspaceConnectionProperties"/> and <see cref="Models.MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
+        /// </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningWorkspaceConnectionData"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceConnectionData MachineLearningWorkspaceConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningWorkspaceConnectionProperties properties = null)
+        {
+            return new MachineLearningWorkspaceConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceConnectionProperties"/>. </summary>
+        /// <param name="authType"> Authentication type of the connection target. </param>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <returns> A new <see cref="Models.MachineLearningWorkspaceConnectionProperties"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceConnectionProperties MachineLearningWorkspaceConnectionProperties(string authType = null, MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+            sharedUserList ??= new List<string>();
+
+            return new UnknownWorkspaceConnectionPropertiesV2(
+                authType == null ? default : new MachineLearningConnectionAuthType(authType),
+                category,
+                createdByWorkspaceArmId,
+                expiryOn,
+                group,
+                isSharedToAll,
+                target,
+                metadata,
+                sharedUserList?.ToList(),
+                value,
+                valueFormat,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningFqdnEndpoints"/>. </summary>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpoints"/> instance for mocking. </returns>
+        public static MachineLearningFqdnEndpoints MachineLearningFqdnEndpoints(MachineLearningFqdnEndpointsProperties properties = null)
+        {
+            return new MachineLearningFqdnEndpoints(properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningFqdnEndpointsProperties"/>. </summary>
+        /// <param name="category"></param>
+        /// <param name="endpoints"></param>
+        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpointsProperties"/> instance for mocking. </returns>
+        public static MachineLearningFqdnEndpointsProperties MachineLearningFqdnEndpointsProperties(string category = null, IEnumerable<MachineLearningFqdnEndpoint> endpoints = null)
+        {
+            endpoints ??= new List<MachineLearningFqdnEndpoint>();
+
+            return new MachineLearningFqdnEndpointsProperties(category, endpoints?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningFqdnEndpoint"/>. </summary>
+        /// <param name="domainName"></param>
+        /// <param name="endpointDetails"></param>
+        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpoint"/> instance for mocking. </returns>
+        public static MachineLearningFqdnEndpoint MachineLearningFqdnEndpoint(string domainName = null, IEnumerable<MachineLearningFqdnEndpointDetail> endpointDetails = null)
+        {
+            endpointDetails ??= new List<MachineLearningFqdnEndpointDetail>();
+
+            return new MachineLearningFqdnEndpoint(domainName, endpointDetails?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningFqdnEndpointDetail"/>. </summary>
+        /// <param name="port"></param>
+        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpointDetail"/> instance for mocking. </returns>
+        public static MachineLearningFqdnEndpointDetail MachineLearningFqdnEndpointDetail(int? port = null)
+        {
+            return new MachineLearningFqdnEndpointDetail(port, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningOutboundRuleBasicData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties">
+        /// Outbound Rule for the managed network of a machine learning workspace.
+        /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
+        /// </param>
+        /// <returns> A new <see cref="MachineLearning.MachineLearningOutboundRuleBasicData"/> instance for mocking. </returns>
+        public static MachineLearningOutboundRuleBasicData MachineLearningOutboundRuleBasicData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningOutboundRule properties = null)
+        {
+            return new MachineLearningOutboundRuleBasicData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningAksCompute"/>. </summary>
@@ -2768,434 +2768,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningDatabricksComputeSecrets MachineLearningDatabricksComputeSecrets(string databricksAccessToken = null)
         {
             return new MachineLearningDatabricksComputeSecrets(ComputeType.Databricks, serializedAdditionalRawData: null, databricksAccessToken);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceTagDestination"/>. </summary>
-        /// <param name="action"> The action enum for networking rule. </param>
-        /// <param name="addressPrefixes"> Optional, if provided, the ServiceTag property will be ignored. </param>
-        /// <param name="portRanges"></param>
-        /// <param name="protocol"></param>
-        /// <param name="serviceTag"></param>
-        /// <returns> A new <see cref="Models.ServiceTagDestination"/> instance for mocking. </returns>
-        public static ServiceTagDestination ServiceTagDestination(NetworkingRuleAction? action = null, IEnumerable<string> addressPrefixes = null, string portRanges = null, string protocol = null, string serviceTag = null)
-        {
-            addressPrefixes ??= new List<string>();
-
-            return new ServiceTagDestination(
-                action,
-                addressPrefixes?.ToList(),
-                portRanges,
-                protocol,
-                serviceTag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningPatAuthTypeWorkspaceConnection"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="target"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <param name="credentialsPat"></param>
-        /// <returns> A new <see cref="Models.MachineLearningPatAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
-        public static MachineLearningPatAuthTypeWorkspaceConnection MachineLearningPatAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsPat = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new MachineLearningPatAuthTypeWorkspaceConnection(
-                MachineLearningConnectionAuthType.Pat,
-                category,
-                createdByWorkspaceArmId,
-                expiryOn,
-                group,
-                isSharedToAll,
-                target,
-                metadata,
-                sharedUserList?.ToList(),
-                value,
-                valueFormat,
-                serializedAdditionalRawData: null,
-                credentialsPat != null ? new WorkspaceConnectionPersonalAccessToken(credentialsPat, serializedAdditionalRawData: null) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningSasAuthTypeWorkspaceConnection"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="target"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <param name="credentialsSas"></param>
-        /// <returns> A new <see cref="Models.MachineLearningSasAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
-        public static MachineLearningSasAuthTypeWorkspaceConnection MachineLearningSasAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsSas = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new MachineLearningSasAuthTypeWorkspaceConnection(
-                MachineLearningConnectionAuthType.Sas,
-                category,
-                createdByWorkspaceArmId,
-                expiryOn,
-                group,
-                isSharedToAll,
-                target,
-                metadata,
-                sharedUserList?.ToList(),
-                value,
-                valueFormat,
-                serializedAdditionalRawData: null,
-                credentialsSas != null ? new WorkspaceConnectionSharedAccessSignature(credentialsSas, serializedAdditionalRawData: null) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="target"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <param name="credentials"></param>
-        /// <returns> A new <see cref="Models.MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
-        public static MachineLearningUsernamePasswordAuthTypeWorkspaceConnection MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, MachineLearningWorkspaceConnectionUsernamePassword credentials = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(
-                MachineLearningConnectionAuthType.UsernamePassword,
-                category,
-                createdByWorkspaceArmId,
-                expiryOn,
-                group,
-                isSharedToAll,
-                target,
-                metadata,
-                sharedUserList?.ToList(),
-                value,
-                valueFormat,
-                serializedAdditionalRawData: null,
-                credentials);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningNoneAuthTypeWorkspaceConnection"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="target"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <returns> A new <see cref="Models.MachineLearningNoneAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
-        public static MachineLearningNoneAuthTypeWorkspaceConnection MachineLearningNoneAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new MachineLearningNoneAuthTypeWorkspaceConnection(
-                MachineLearningConnectionAuthType.None,
-                category,
-                createdByWorkspaceArmId,
-                expiryOn,
-                group,
-                isSharedToAll,
-                target,
-                metadata,
-                sharedUserList?.ToList(),
-                value,
-                valueFormat,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="target"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <param name="credentials"></param>
-        /// <returns> A new <see cref="Models.MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
-        public static MachineLearningManagedIdentityAuthTypeWorkspaceConnection MachineLearningManagedIdentityAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, MachineLearningWorkspaceConnectionManagedIdentity credentials = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new MachineLearningManagedIdentityAuthTypeWorkspaceConnection(
-                MachineLearningConnectionAuthType.ManagedIdentity,
-                category,
-                createdByWorkspaceArmId,
-                expiryOn,
-                group,
-                isSharedToAll,
-                target,
-                metadata,
-                sharedUserList?.ToList(),
-                value,
-                valueFormat,
-                serializedAdditionalRawData: null,
-                credentials);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AadAuthTypeWorkspaceConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="target"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <returns> A new <see cref="Models.AadAuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
-        public static AadAuthTypeWorkspaceConnectionProperties AadAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new AadAuthTypeWorkspaceConnectionProperties(
-                MachineLearningConnectionAuthType.Aad,
-                category,
-                createdByWorkspaceArmId,
-                expiryOn,
-                group,
-                isSharedToAll,
-                target,
-                metadata,
-                sharedUserList?.ToList(),
-                value,
-                valueFormat,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccessKeyAuthTypeWorkspaceConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="target"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <param name="credentials"></param>
-        /// <returns> A new <see cref="Models.AccessKeyAuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
-        public static AccessKeyAuthTypeWorkspaceConnectionProperties AccessKeyAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, WorkspaceConnectionAccessKey credentials = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new AccessKeyAuthTypeWorkspaceConnectionProperties(
-                MachineLearningConnectionAuthType.AccessKey,
-                category,
-                createdByWorkspaceArmId,
-                expiryOn,
-                group,
-                isSharedToAll,
-                target,
-                metadata,
-                sharedUserList?.ToList(),
-                value,
-                valueFormat,
-                serializedAdditionalRawData: null,
-                credentials);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccountKeyAuthTypeWorkspaceConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="target"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <param name="credentialsKey"></param>
-        /// <returns> A new <see cref="Models.AccountKeyAuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
-        public static AccountKeyAuthTypeWorkspaceConnectionProperties AccountKeyAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsKey = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new AccountKeyAuthTypeWorkspaceConnectionProperties(
-                MachineLearningConnectionAuthType.AccountKey,
-                category,
-                createdByWorkspaceArmId,
-                expiryOn,
-                group,
-                isSharedToAll,
-                target,
-                metadata,
-                sharedUserList?.ToList(),
-                value,
-                valueFormat,
-                serializedAdditionalRawData: null,
-                credentialsKey != null ? new WorkspaceConnectionAccountKey(credentialsKey, serializedAdditionalRawData: null) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApiKeyAuthWorkspaceConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="target"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <param name="credentialsKey"> Api key object for workspace connection credential. </param>
-        /// <returns> A new <see cref="Models.ApiKeyAuthWorkspaceConnectionProperties"/> instance for mocking. </returns>
-        public static ApiKeyAuthWorkspaceConnectionProperties ApiKeyAuthWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsKey = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new ApiKeyAuthWorkspaceConnectionProperties(
-                MachineLearningConnectionAuthType.ApiKey,
-                category,
-                createdByWorkspaceArmId,
-                expiryOn,
-                group,
-                isSharedToAll,
-                target,
-                metadata,
-                sharedUserList?.ToList(),
-                value,
-                valueFormat,
-                serializedAdditionalRawData: null,
-                credentialsKey != null ? new WorkspaceConnectionApiKey(credentialsKey, serializedAdditionalRawData: null) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CustomKeysWorkspaceConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="target"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <param name="credentialsKeys"> Custom Keys credential object. </param>
-        /// <returns> A new <see cref="Models.CustomKeysWorkspaceConnectionProperties"/> instance for mocking. </returns>
-        public static CustomKeysWorkspaceConnectionProperties CustomKeysWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, IDictionary<string, string> credentialsKeys = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-            credentialsKeys ??= new Dictionary<string, string>();
-
-            return new CustomKeysWorkspaceConnectionProperties(
-                MachineLearningConnectionAuthType.CustomKeys,
-                category,
-                createdByWorkspaceArmId,
-                expiryOn,
-                group,
-                isSharedToAll,
-                target,
-                metadata,
-                sharedUserList?.ToList(),
-                value,
-                valueFormat,
-                serializedAdditionalRawData: null,
-                credentialsKeys != null ? new CustomKeys(credentialsKeys, serializedAdditionalRawData: null) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OAuth2AuthTypeWorkspaceConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="target"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <param name="credentials">
-        /// ClientId and ClientSecret are required. Other properties are optional
-        /// depending on each OAuth2 provider's implementation.
-        /// </param>
-        /// <returns> A new <see cref="Models.OAuth2AuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
-        public static OAuth2AuthTypeWorkspaceConnectionProperties OAuth2AuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, WorkspaceConnectionOAuth2 credentials = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new OAuth2AuthTypeWorkspaceConnectionProperties(
-                MachineLearningConnectionAuthType.OAuth2,
-                category,
-                createdByWorkspaceArmId,
-                expiryOn,
-                group,
-                isSharedToAll,
-                target,
-                metadata,
-                sharedUserList?.ToList(),
-                value,
-                valueFormat,
-                serializedAdditionalRawData: null,
-                credentials);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServicePrincipalAuthTypeWorkspaceConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="target"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <param name="credentials"></param>
-        /// <returns> A new <see cref="Models.ServicePrincipalAuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
-        public static ServicePrincipalAuthTypeWorkspaceConnectionProperties ServicePrincipalAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, WorkspaceConnectionServicePrincipal credentials = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new ServicePrincipalAuthTypeWorkspaceConnectionProperties(
-                MachineLearningConnectionAuthType.ServicePrincipal,
-                category,
-                createdByWorkspaceArmId,
-                expiryOn,
-                group,
-                isSharedToAll,
-                target,
-                metadata,
-                sharedUserList?.ToList(),
-                value,
-                valueFormat,
-                serializedAdditionalRawData: null,
-                credentials);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutoMLJob"/>. </summary>
@@ -3986,6 +3558,434 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 limitSettings,
                 featurizationDatasetLanguage != null ? new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage, serializedAdditionalRawData: null) : null,
                 validationData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceTagDestination"/>. </summary>
+        /// <param name="action"> The action enum for networking rule. </param>
+        /// <param name="addressPrefixes"> Optional, if provided, the ServiceTag property will be ignored. </param>
+        /// <param name="portRanges"></param>
+        /// <param name="protocol"></param>
+        /// <param name="serviceTag"></param>
+        /// <returns> A new <see cref="Models.ServiceTagDestination"/> instance for mocking. </returns>
+        public static ServiceTagDestination ServiceTagDestination(NetworkingRuleAction? action = null, IEnumerable<string> addressPrefixes = null, string portRanges = null, string protocol = null, string serviceTag = null)
+        {
+            addressPrefixes ??= new List<string>();
+
+            return new ServiceTagDestination(
+                action,
+                addressPrefixes?.ToList(),
+                portRanges,
+                protocol,
+                serviceTag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningPatAuthTypeWorkspaceConnection"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <param name="credentialsPat"></param>
+        /// <returns> A new <see cref="Models.MachineLearningPatAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
+        public static MachineLearningPatAuthTypeWorkspaceConnection MachineLearningPatAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsPat = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+            sharedUserList ??= new List<string>();
+
+            return new MachineLearningPatAuthTypeWorkspaceConnection(
+                MachineLearningConnectionAuthType.Pat,
+                category,
+                createdByWorkspaceArmId,
+                expiryOn,
+                group,
+                isSharedToAll,
+                target,
+                metadata,
+                sharedUserList?.ToList(),
+                value,
+                valueFormat,
+                serializedAdditionalRawData: null,
+                credentialsPat != null ? new WorkspaceConnectionPersonalAccessToken(credentialsPat, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningSasAuthTypeWorkspaceConnection"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <param name="credentialsSas"></param>
+        /// <returns> A new <see cref="Models.MachineLearningSasAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
+        public static MachineLearningSasAuthTypeWorkspaceConnection MachineLearningSasAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsSas = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+            sharedUserList ??= new List<string>();
+
+            return new MachineLearningSasAuthTypeWorkspaceConnection(
+                MachineLearningConnectionAuthType.Sas,
+                category,
+                createdByWorkspaceArmId,
+                expiryOn,
+                group,
+                isSharedToAll,
+                target,
+                metadata,
+                sharedUserList?.ToList(),
+                value,
+                valueFormat,
+                serializedAdditionalRawData: null,
+                credentialsSas != null ? new WorkspaceConnectionSharedAccessSignature(credentialsSas, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <param name="credentials"></param>
+        /// <returns> A new <see cref="Models.MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
+        public static MachineLearningUsernamePasswordAuthTypeWorkspaceConnection MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, MachineLearningWorkspaceConnectionUsernamePassword credentials = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+            sharedUserList ??= new List<string>();
+
+            return new MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(
+                MachineLearningConnectionAuthType.UsernamePassword,
+                category,
+                createdByWorkspaceArmId,
+                expiryOn,
+                group,
+                isSharedToAll,
+                target,
+                metadata,
+                sharedUserList?.ToList(),
+                value,
+                valueFormat,
+                serializedAdditionalRawData: null,
+                credentials);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningNoneAuthTypeWorkspaceConnection"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <returns> A new <see cref="Models.MachineLearningNoneAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
+        public static MachineLearningNoneAuthTypeWorkspaceConnection MachineLearningNoneAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+            sharedUserList ??= new List<string>();
+
+            return new MachineLearningNoneAuthTypeWorkspaceConnection(
+                MachineLearningConnectionAuthType.None,
+                category,
+                createdByWorkspaceArmId,
+                expiryOn,
+                group,
+                isSharedToAll,
+                target,
+                metadata,
+                sharedUserList?.ToList(),
+                value,
+                valueFormat,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <param name="credentials"></param>
+        /// <returns> A new <see cref="Models.MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
+        public static MachineLearningManagedIdentityAuthTypeWorkspaceConnection MachineLearningManagedIdentityAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, MachineLearningWorkspaceConnectionManagedIdentity credentials = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+            sharedUserList ??= new List<string>();
+
+            return new MachineLearningManagedIdentityAuthTypeWorkspaceConnection(
+                MachineLearningConnectionAuthType.ManagedIdentity,
+                category,
+                createdByWorkspaceArmId,
+                expiryOn,
+                group,
+                isSharedToAll,
+                target,
+                metadata,
+                sharedUserList?.ToList(),
+                value,
+                valueFormat,
+                serializedAdditionalRawData: null,
+                credentials);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AadAuthTypeWorkspaceConnectionProperties"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <returns> A new <see cref="Models.AadAuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
+        public static AadAuthTypeWorkspaceConnectionProperties AadAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+            sharedUserList ??= new List<string>();
+
+            return new AadAuthTypeWorkspaceConnectionProperties(
+                MachineLearningConnectionAuthType.Aad,
+                category,
+                createdByWorkspaceArmId,
+                expiryOn,
+                group,
+                isSharedToAll,
+                target,
+                metadata,
+                sharedUserList?.ToList(),
+                value,
+                valueFormat,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AccessKeyAuthTypeWorkspaceConnectionProperties"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <param name="credentials"></param>
+        /// <returns> A new <see cref="Models.AccessKeyAuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
+        public static AccessKeyAuthTypeWorkspaceConnectionProperties AccessKeyAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, WorkspaceConnectionAccessKey credentials = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+            sharedUserList ??= new List<string>();
+
+            return new AccessKeyAuthTypeWorkspaceConnectionProperties(
+                MachineLearningConnectionAuthType.AccessKey,
+                category,
+                createdByWorkspaceArmId,
+                expiryOn,
+                group,
+                isSharedToAll,
+                target,
+                metadata,
+                sharedUserList?.ToList(),
+                value,
+                valueFormat,
+                serializedAdditionalRawData: null,
+                credentials);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AccountKeyAuthTypeWorkspaceConnectionProperties"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <param name="credentialsKey"></param>
+        /// <returns> A new <see cref="Models.AccountKeyAuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
+        public static AccountKeyAuthTypeWorkspaceConnectionProperties AccountKeyAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsKey = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+            sharedUserList ??= new List<string>();
+
+            return new AccountKeyAuthTypeWorkspaceConnectionProperties(
+                MachineLearningConnectionAuthType.AccountKey,
+                category,
+                createdByWorkspaceArmId,
+                expiryOn,
+                group,
+                isSharedToAll,
+                target,
+                metadata,
+                sharedUserList?.ToList(),
+                value,
+                valueFormat,
+                serializedAdditionalRawData: null,
+                credentialsKey != null ? new WorkspaceConnectionAccountKey(credentialsKey, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApiKeyAuthWorkspaceConnectionProperties"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <param name="credentialsKey"> Api key object for workspace connection credential. </param>
+        /// <returns> A new <see cref="Models.ApiKeyAuthWorkspaceConnectionProperties"/> instance for mocking. </returns>
+        public static ApiKeyAuthWorkspaceConnectionProperties ApiKeyAuthWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsKey = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+            sharedUserList ??= new List<string>();
+
+            return new ApiKeyAuthWorkspaceConnectionProperties(
+                MachineLearningConnectionAuthType.ApiKey,
+                category,
+                createdByWorkspaceArmId,
+                expiryOn,
+                group,
+                isSharedToAll,
+                target,
+                metadata,
+                sharedUserList?.ToList(),
+                value,
+                valueFormat,
+                serializedAdditionalRawData: null,
+                credentialsKey != null ? new WorkspaceConnectionApiKey(credentialsKey, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CustomKeysWorkspaceConnectionProperties"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <param name="credentialsKeys"> Custom Keys credential object. </param>
+        /// <returns> A new <see cref="Models.CustomKeysWorkspaceConnectionProperties"/> instance for mocking. </returns>
+        public static CustomKeysWorkspaceConnectionProperties CustomKeysWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, IDictionary<string, string> credentialsKeys = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+            sharedUserList ??= new List<string>();
+            credentialsKeys ??= new Dictionary<string, string>();
+
+            return new CustomKeysWorkspaceConnectionProperties(
+                MachineLearningConnectionAuthType.CustomKeys,
+                category,
+                createdByWorkspaceArmId,
+                expiryOn,
+                group,
+                isSharedToAll,
+                target,
+                metadata,
+                sharedUserList?.ToList(),
+                value,
+                valueFormat,
+                serializedAdditionalRawData: null,
+                credentialsKeys != null ? new CustomKeys(credentialsKeys, serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OAuth2AuthTypeWorkspaceConnectionProperties"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <param name="credentials">
+        /// ClientId and ClientSecret are required. Other properties are optional
+        /// depending on each OAuth2 provider's implementation.
+        /// </param>
+        /// <returns> A new <see cref="Models.OAuth2AuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
+        public static OAuth2AuthTypeWorkspaceConnectionProperties OAuth2AuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, WorkspaceConnectionOAuth2 credentials = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+            sharedUserList ??= new List<string>();
+
+            return new OAuth2AuthTypeWorkspaceConnectionProperties(
+                MachineLearningConnectionAuthType.OAuth2,
+                category,
+                createdByWorkspaceArmId,
+                expiryOn,
+                group,
+                isSharedToAll,
+                target,
+                metadata,
+                sharedUserList?.ToList(),
+                value,
+                valueFormat,
+                serializedAdditionalRawData: null,
+                credentials);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServicePrincipalAuthTypeWorkspaceConnectionProperties"/>. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <param name="credentials"></param>
+        /// <returns> A new <see cref="Models.ServicePrincipalAuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
+        public static ServicePrincipalAuthTypeWorkspaceConnectionProperties ServicePrincipalAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, DateTimeOffset? expiryOn = null, WorkspaceConnectionGroup? group = null, bool? isSharedToAll = null, string target = null, IDictionary<string, string> metadata = null, IEnumerable<string> sharedUserList = null, string value = null, MachineLearningValueFormat? valueFormat = null, WorkspaceConnectionServicePrincipal credentials = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+            sharedUserList ??= new List<string>();
+
+            return new ServicePrincipalAuthTypeWorkspaceConnectionProperties(
+                MachineLearningConnectionAuthType.ServicePrincipal,
+                category,
+                createdByWorkspaceArmId,
+                expiryOn,
+                group,
+                isSharedToAll,
+                target,
+                metadata,
+                sharedUserList?.ToList(),
+                value,
+                valueFormat,
+                serializedAdditionalRawData: null,
+                credentials);
         }
     }
 }

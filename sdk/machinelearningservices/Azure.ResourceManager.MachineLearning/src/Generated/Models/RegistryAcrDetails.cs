@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -53,34 +52,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="RegistryAcrDetails"/>. </summary>
         /// <param name="systemCreatedAcrAccount"> Details of system created ACR account to be used for the Registry. </param>
-        /// <param name="userCreatedAcrAccount"> Details of user created ACR account to be used for the Registry. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RegistryAcrDetails(SystemCreatedAcrAccount systemCreatedAcrAccount, UserCreatedAcrAccount userCreatedAcrAccount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RegistryAcrDetails(SystemCreatedAcrAccount systemCreatedAcrAccount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SystemCreatedAcrAccount = systemCreatedAcrAccount;
-            UserCreatedAcrAccount = userCreatedAcrAccount;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Details of system created ACR account to be used for the Registry. </summary>
         [WirePath("systemCreatedAcrAccount")]
         public SystemCreatedAcrAccount SystemCreatedAcrAccount { get; set; }
-        /// <summary> Details of user created ACR account to be used for the Registry. </summary>
-        internal UserCreatedAcrAccount UserCreatedAcrAccount { get; set; }
-        /// <summary>
-        /// Arm ResourceId is in the format "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}"
-        /// or "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{AcrName}"
-        /// </summary>
-        [WirePath("userCreatedAcrAccount.armResourceId.resourceId")]
-        public ResourceIdentifier ArmResourceId
-        {
-            get => UserCreatedAcrAccount is null ? default : UserCreatedAcrAccount.ArmResourceId;
-            set
-            {
-                if (UserCreatedAcrAccount is null)
-                    UserCreatedAcrAccount = new UserCreatedAcrAccount();
-                UserCreatedAcrAccount.ArmResourceId = value;
-            }
-        }
     }
 }
