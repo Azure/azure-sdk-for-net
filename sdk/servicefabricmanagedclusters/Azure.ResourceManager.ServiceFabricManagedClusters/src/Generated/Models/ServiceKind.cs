@@ -12,7 +12,7 @@ using Azure.ResourceManager.ServiceFabricManagedClusters;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> The kind of service (Stateless or Stateful). </summary>
-    internal readonly partial struct ServiceKind : IEquatable<ServiceKind>
+    public readonly partial struct ServiceKind : IEquatable<ServiceKind>
     {
         private readonly string _value;
         /// <summary> Does not use Service Fabric to make its state highly available or reliable. The value is 0. </summary>

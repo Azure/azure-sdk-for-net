@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ResourceConnector;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     public readonly partial struct ResourceConnectorDistro : IEquatable<ResourceConnectorDistro>
     {
         private readonly string _value;
+        private const string AksEdgeValue = "AKSEdge";
 
         /// <summary> Initializes a new instance of <see cref="ResourceConnectorDistro"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourceConnectorDistro(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AksEdgeValue = "AKSEdge";
-
-        /// <summary> AKSEdge. </summary>
+        /// <summary> Gets the AksEdge. </summary>
         public static ResourceConnectorDistro AksEdge { get; } = new ResourceConnectorDistro(AksEdgeValue);
+
         /// <summary> Determines if two <see cref="ResourceConnectorDistro"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceConnectorDistro left, ResourceConnectorDistro right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceConnectorDistro"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceConnectorDistro left, ResourceConnectorDistro right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceConnectorDistro"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceConnectorDistro"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceConnectorDistro(string value) => new ResourceConnectorDistro(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceConnectorDistro"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceConnectorDistro?(string value) => value == null ? null : new ResourceConnectorDistro(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceConnectorDistro other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceConnectorDistro other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -12,12 +12,8 @@ using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary>
-    /// The service resource properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StatefulServiceProperties"/> and <see cref="StatelessServiceProperties"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownManagedServiceProperties))]
-    public abstract partial class ManagedServiceProperties : ManagedServiceBaseProperties, IJsonModel<ManagedServiceProperties>
+    /// <summary> The service resource properties. </summary>
+    public partial class ManagedServiceProperties : ManagedServiceBaseProperties, IJsonModel<ManagedServiceProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ManagedServiceProperties"/> for deserialization. </summary>
         internal ManagedServiceProperties()

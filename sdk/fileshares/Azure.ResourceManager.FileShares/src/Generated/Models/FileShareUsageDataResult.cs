@@ -33,6 +33,15 @@ namespace Azure.ResourceManager.FileShares.Models
         }
 
         /// <summary> The properties of the file share usage data. </summary>
-        public FileShareUsageDataProperties Properties { get; }
+        internal FileShareUsageDataProperties Properties { get; }
+
+        /// <summary> The number of active file shares. </summary>
+        public int? LiveSharesFileShareCount
+        {
+            get
+            {
+                return Properties.LiveSharesFileShareCount;
+            }
+        }
     }
 }

@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.FileShares
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetFileShareSnapshots().GetFileShareSnapshotAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetFileShareSnapshots().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a FileShareSnapshot. </summary>
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.FileShares
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetFileShareSnapshots().GetFileShareSnapshot(name, cancellationToken);
+            return GetFileShareSnapshots().Get(name, cancellationToken);
         }
     }
 }

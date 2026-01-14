@@ -2,19 +2,6 @@
 
 trigger: none
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/mongodbatlas/ci.mgmt.yml
-    - sdk/mongodbatlas/Azure.ResourceManager.MongoDBAtlas/
-
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

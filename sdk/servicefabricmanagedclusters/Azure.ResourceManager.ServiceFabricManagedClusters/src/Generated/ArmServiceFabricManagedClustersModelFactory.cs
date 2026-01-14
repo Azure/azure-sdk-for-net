@@ -213,10 +213,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ServiceFabricManagedApplicationTypeVersionPatch(tags, additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// The service resource properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.StatefulServiceProperties"/> and <see cref="Models.StatelessServiceProperties"/>.
-        /// </summary>
+        /// <summary> The service resource properties. </summary>
         /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </param>
         /// <param name="correlationScheme"> A list that describes the correlation of the service with other services. </param>
         /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetric objects. </param>
@@ -241,7 +238,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             servicePlacementPolicies ??= new ChangeTrackingList<ManagedServicePlacementPolicy>();
             scalingPolicies ??= new ChangeTrackingList<ManagedServiceScalingPolicy>();
 
-            return new UnknownManagedServiceProperties(
+            return new ManagedServiceProperties(
                 placementConstraints,
                 correlationScheme.ToList(),
                 serviceLoadMetrics.ToList(),

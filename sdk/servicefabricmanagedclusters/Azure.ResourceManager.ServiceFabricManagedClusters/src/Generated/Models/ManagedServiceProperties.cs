@@ -7,21 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary>
-    /// The service resource properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StatefulServiceProperties"/> and <see cref="StatelessServiceProperties"/>.
-    /// </summary>
-    public abstract partial class ManagedServiceProperties : ManagedServiceBaseProperties
+    /// <summary> The service resource properties. </summary>
+    public partial class ManagedServiceProperties : ManagedServiceBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="ManagedServiceProperties"/>. </summary>
         /// <param name="serviceKind"> The kind of service (Stateless or Stateful). </param>
         /// <param name="serviceTypeName"> The name of the service type. </param>
         /// <param name="partitionDescription"> Describes how the service is partitioned. </param>
-        private protected ManagedServiceProperties(ServiceKind serviceKind, string serviceTypeName, ManagedServicePartitionScheme partitionDescription)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceTypeName"/> or <paramref name="partitionDescription"/> is null. </exception>
+        public ManagedServiceProperties(ServiceKind serviceKind, string serviceTypeName, ManagedServicePartitionScheme partitionDescription)
         {
+            Argument.AssertNotNull(serviceTypeName, nameof(serviceTypeName));
+            Argument.AssertNotNull(partitionDescription, nameof(partitionDescription));
+
             ServiceKind = serviceKind;
             ServiceTypeName = serviceTypeName;
             PartitionDescription = partitionDescription;
