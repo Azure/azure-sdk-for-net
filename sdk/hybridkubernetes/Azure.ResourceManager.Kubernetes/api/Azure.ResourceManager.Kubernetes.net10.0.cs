@@ -190,9 +190,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static Azure.ResourceManager.Kubernetes.Models.AuthenticationMethod AAD { get { throw null; } }
         public static Azure.ResourceManager.Kubernetes.Models.AuthenticationMethod Token { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kubernetes.Models.AuthenticationMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kubernetes.Models.AuthenticationMethod left, Azure.ResourceManager.Kubernetes.Models.AuthenticationMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kubernetes.Models.AuthenticationMethod (string value) { throw null; }
@@ -209,9 +207,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static Azure.ResourceManager.Kubernetes.Models.AutoUpgradeOptions Disabled { get { throw null; } }
         public static Azure.ResourceManager.Kubernetes.Models.AutoUpgradeOptions Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kubernetes.Models.AutoUpgradeOptions other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kubernetes.Models.AutoUpgradeOptions left, Azure.ResourceManager.Kubernetes.Models.AutoUpgradeOptions right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kubernetes.Models.AutoUpgradeOptions (string value) { throw null; }
@@ -229,9 +225,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static Azure.ResourceManager.Kubernetes.Models.AzureHybridBenefit NotApplicable { get { throw null; } }
         public static Azure.ResourceManager.Kubernetes.Models.AzureHybridBenefit True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kubernetes.Models.AzureHybridBenefit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kubernetes.Models.AzureHybridBenefit left, Azure.ResourceManager.Kubernetes.Models.AzureHybridBenefit right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kubernetes.Models.AzureHybridBenefit (string value) { throw null; }
@@ -249,9 +243,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static Azure.ResourceManager.Kubernetes.Models.ConnectedClusterKind GCP { get { throw null; } }
         public static Azure.ResourceManager.Kubernetes.Models.ConnectedClusterKind ProvisionedCluster { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kubernetes.Models.ConnectedClusterKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kubernetes.Models.ConnectedClusterKind left, Azure.ResourceManager.Kubernetes.Models.ConnectedClusterKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kubernetes.Models.ConnectedClusterKind (string value) { throw null; }
@@ -339,9 +331,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static Azure.ResourceManager.Kubernetes.Models.ConnectivityStatus Expired { get { throw null; } }
         public static Azure.ResourceManager.Kubernetes.Models.ConnectivityStatus Offline { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kubernetes.Models.ConnectivityStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kubernetes.Models.ConnectivityStatus left, Azure.ResourceManager.Kubernetes.Models.ConnectivityStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kubernetes.Models.ConnectivityStatus (string value) { throw null; }
@@ -438,9 +428,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static Azure.ResourceManager.Kubernetes.Models.PrivateLinkState Disabled { get { throw null; } }
         public static Azure.ResourceManager.Kubernetes.Models.PrivateLinkState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kubernetes.Models.PrivateLinkState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kubernetes.Models.PrivateLinkState left, Azure.ResourceManager.Kubernetes.Models.PrivateLinkState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kubernetes.Models.PrivateLinkState (string value) { throw null; }
@@ -462,9 +450,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static Azure.ResourceManager.Kubernetes.Models.ProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Kubernetes.Models.ProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kubernetes.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kubernetes.Models.ProvisioningState left, Azure.ResourceManager.Kubernetes.Models.ProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kubernetes.Models.ProvisioningState (string value) { throw null; }

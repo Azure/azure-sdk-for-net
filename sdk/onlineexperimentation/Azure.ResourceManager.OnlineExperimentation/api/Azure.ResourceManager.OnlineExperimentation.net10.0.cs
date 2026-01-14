@@ -252,9 +252,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         public static Azure.ResourceManager.OnlineExperimentation.Models.KeyEncryptionKeyIdentityType SystemAssignedIdentity { get { throw null; } }
         public static Azure.ResourceManager.OnlineExperimentation.Models.KeyEncryptionKeyIdentityType UserAssignedIdentity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OnlineExperimentation.Models.KeyEncryptionKeyIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OnlineExperimentation.Models.KeyEncryptionKeyIdentityType left, Azure.ResourceManager.OnlineExperimentation.Models.KeyEncryptionKeyIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.OnlineExperimentation.Models.KeyEncryptionKeyIdentityType (string value) { throw null; }
@@ -273,9 +271,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         public static Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationPrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -293,9 +289,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         public static Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationPrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationPrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationPrivateEndpointServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationPrivateEndpointServiceConnectionStatus (string value) { throw null; }
@@ -345,9 +339,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         public static Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState left, Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState (string value) { throw null; }
@@ -437,9 +429,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         public static Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuName P0 { get { throw null; } }
         public static Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuName S0 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuName left, Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuName (string value) { throw null; }
@@ -458,9 +448,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         public static Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuTier Premium { get { throw null; } }
         public static Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuTier left, Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuTier (string value) { throw null; }
@@ -494,9 +482,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         public static Azure.ResourceManager.OnlineExperimentation.Models.PublicNetworkAccessType Disabled { get { throw null; } }
         public static Azure.ResourceManager.OnlineExperimentation.Models.PublicNetworkAccessType Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OnlineExperimentation.Models.PublicNetworkAccessType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OnlineExperimentation.Models.PublicNetworkAccessType left, Azure.ResourceManager.OnlineExperimentation.Models.PublicNetworkAccessType right) { throw null; }
         public static implicit operator Azure.ResourceManager.OnlineExperimentation.Models.PublicNetworkAccessType (string value) { throw null; }

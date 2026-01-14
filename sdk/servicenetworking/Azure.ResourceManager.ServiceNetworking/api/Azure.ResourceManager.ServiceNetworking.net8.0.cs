@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.ServiceNetworking
         public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyResource> Update(Azure.ResourceManager.ServiceNetworking.Models.ApplicationGatewayForContainersSecurityPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyResource>> UpdateAsync(Azure.ResourceManager.ServiceNetworking.Models.ApplicationGatewayForContainersSecurityPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is now deprecated. Please use the new class `TrafficControllerAssociationCollection` moving forward.")]
     public partial class AssociationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceNetworking.AssociationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceNetworking.AssociationResource>, System.Collections.IEnumerable
     {
@@ -78,7 +77,6 @@ namespace Azure.ResourceManager.ServiceNetworking
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceNetworking.AssociationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceNetworking.AssociationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is now deprecated. Please use the new class `TrafficControllerAssociationData` moving forward.")]
     public partial class AssociationData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.AssociationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.AssociationData>
     {
@@ -93,7 +91,6 @@ namespace Azure.ResourceManager.ServiceNetworking
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.AssociationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.AssociationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is now deprecated. Please use the new class `TrafficControllerAssociationResource` moving forward.")]
     public partial class AssociationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.AssociationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.AssociationData>
     {
@@ -126,7 +123,6 @@ namespace Azure.ResourceManager.ServiceNetworking
         public static Azure.ResourceManager.ServiceNetworking.AzureResourceManagerServiceNetworkingContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is now deprecated. Please use the new class `TrafficControllerFrontendCollection` moving forward.")]
     public partial class FrontendCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceNetworking.FrontendResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceNetworking.FrontendResource>, System.Collections.IEnumerable
     {
@@ -145,7 +141,6 @@ namespace Azure.ResourceManager.ServiceNetworking
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceNetworking.FrontendResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceNetworking.FrontendResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is now deprecated. Please use the new class `TrafficControllerFrontendData` moving forward.")]
     public partial class FrontendData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.FrontendData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.FrontendData>
     {
@@ -159,7 +154,6 @@ namespace Azure.ResourceManager.ServiceNetworking
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.FrontendData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.FrontendData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is now deprecated. Please use the new class `TrafficControllerFrontendResource` moving forward.")]
     public partial class FrontendResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.FrontendData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.FrontendData>
     {
@@ -189,10 +183,8 @@ namespace Azure.ResourceManager.ServiceNetworking
     public static partial class ServiceNetworkingExtensions
     {
         public static Azure.ResourceManager.ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyResource GetApplicationGatewayForContainersSecurityPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is now deprecated. Please use `GetTrafficControllerAssociationResource` moving forward.")]
         public static Azure.ResourceManager.ServiceNetworking.AssociationResource GetAssociationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is now deprecated. Please use `GetTrafficControllerFrontendResource` moving forward.")]
         public static Azure.ResourceManager.ServiceNetworking.FrontendResource GetFrontendResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> GetTrafficController(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string trafficControllerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -285,13 +277,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Associations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ConfigurationEndpoints { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Frontends { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is now deprecated. Please use `TrafficControllerProvisioningState` moving forward.")]
         public Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> SecurityPolicies { get { throw null; } }
         public Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyConfigurations SecurityPolicyConfigurations { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState? TrafficControllerProvisioningState { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier WafSecurityPolicyId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -376,23 +366,17 @@ namespace Azure.ResourceManager.ServiceNetworking
         public virtual Azure.ResourceManager.ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyCollection GetApplicationGatewayForContainersSecurityPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyResource> GetApplicationGatewayForContainersSecurityPolicy(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyResource>> GetApplicationGatewayForContainersSecurityPolicyAsync(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is now deprecated. Please use `GetTrafficControllerAssociation` moving forward.")]
         public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.AssociationResource> GetAssociation(string associationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is now deprecated. Please use `GetTrafficControllerAssociationAsync` moving forward.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.AssociationResource>> GetAssociationAsync(string associationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is now deprecated. Please use `GetTrafficControllerAssociations` moving forward.")]
         public virtual Azure.ResourceManager.ServiceNetworking.AssociationCollection GetAssociations() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is now deprecated. Please use `GetTrafficControllerFrontend` moving forward.")]
         public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.FrontendResource> GetFrontend(string frontendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is now deprecated. Please use `GetTrafficControllerFrontendAsync` moving forward.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.FrontendResource>> GetFrontendAsync(string frontendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is now deprecated. Please use `GetTrafficControllerFrontends` moving forward.")]
         public virtual Azure.ResourceManager.ServiceNetworking.FrontendCollection GetFrontends() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerAssociationResource> GetTrafficControllerAssociation(string associationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -420,10 +404,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
     {
         protected MockableServiceNetworkingArmClient() { }
         public virtual Azure.ResourceManager.ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyResource GetApplicationGatewayForContainersSecurityPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is now deprecated. Please use `GetTrafficControllerAssociationResource` moving forward.")]
         public virtual Azure.ResourceManager.ServiceNetworking.AssociationResource GetAssociationResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is now deprecated. Please use `GetTrafficControllerFrontendResource` moving forward.")]
         public virtual Azure.ResourceManager.ServiceNetworking.FrontendResource GetFrontendResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ServiceNetworking.TrafficControllerAssociationResource GetTrafficControllerAssociationResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -451,7 +433,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public ApplicationGatewayForContainersSecurityPolicyPatch() { }
         public Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier WafPolicyId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ServiceNetworking.Models.ApplicationGatewayForContainersSecurityPolicyPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -472,9 +453,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public static Azure.ResourceManager.ServiceNetworking.Models.ApplicationGatewayForContainersSecurityPolicyType IPAccessRules { get { throw null; } }
         public static Azure.ResourceManager.ServiceNetworking.Models.ApplicationGatewayForContainersSecurityPolicyType WAF { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceNetworking.Models.ApplicationGatewayForContainersSecurityPolicyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceNetworking.Models.ApplicationGatewayForContainersSecurityPolicyType left, Azure.ResourceManager.ServiceNetworking.Models.ApplicationGatewayForContainersSecurityPolicyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceNetworking.Models.ApplicationGatewayForContainersSecurityPolicyType (string value) { throw null; }
@@ -484,31 +463,24 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     }
     public static partial class ArmServiceNetworkingModelFactory
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyData ApplicationGatewayForContainersSecurityPolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.ServiceNetworking.Models.ApplicationGatewayForContainersSecurityPolicyType? policyType, Azure.Core.ResourceIdentifier wafPolicyId, Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyData ApplicationGatewayForContainersSecurityPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ServiceNetworking.Models.ApplicationGatewayForContainersSecurityPolicyType? policyType = default(Azure.ResourceManager.ServiceNetworking.Models.ApplicationGatewayForContainersSecurityPolicyType?), Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState?), Azure.Core.ResourceIdentifier wafPolicyId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingIPAccessRule> rules = null) { throw null; }
         public static Azure.ResourceManager.ServiceNetworking.Models.ApplicationGatewayForContainersSecurityPolicyPatch ApplicationGatewayForContainersSecurityPolicyPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyUpdateProperties properties = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is now deprecated. Please use `TrafficControllerAssociationData` moving forward.")]
         public static Azure.ResourceManager.ServiceNetworking.AssociationData AssociationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.ServiceNetworking.Models.AssociationType? associationType, Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? provisioningState) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is now deprecated. Please use `TrafficControllerFrontedData` moving forward.")]
         public static Azure.ResourceManager.ServiceNetworking.FrontendData FrontendData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string fqdn, Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingIPAccessRule ServiceNetworkingIPAccessRule(string name = null, int priority = 0, System.Collections.Generic.IEnumerable<string> sourceAddressPrefixes = null, Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingIPAccessRuleAction action = default(Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingIPAccessRuleAction)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ServiceNetworking.TrafficControllerAssociationData TrafficControllerAssociationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerAssociationType? associationType = default(Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerAssociationType?), Azure.Core.ResourceIdentifier subnetId = null, Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerAssociationPatch TrafficControllerAssociationPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerAssociationType? associationType = default(Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerAssociationType?), Azure.Core.ResourceIdentifier subnetId = null) { throw null; }
         public static Azure.ResourceManager.ServiceNetworking.TrafficControllerData TrafficControllerData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<string> configurationEndpoints, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> frontends, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> associations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> securityPolicies, Azure.Core.ResourceIdentifier wafSecurityPolicyId, Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState? trafficControllerProvisioningState = default(Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ServiceNetworking.TrafficControllerData TrafficControllerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> configurationEndpoints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> frontends = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> associations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> securityPolicies = null, Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyConfigurations securityPolicyConfigurations = null, Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState? trafficControllerProvisioningState = default(Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ServiceNetworking.TrafficControllerData TrafficControllerData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<string> configurationEndpoints, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> frontends, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> associations, Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.ServiceNetworking.TrafficControllerFrontendData TrafficControllerFrontendData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string fqdn = null, Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyConfigurations securityPolicyConfigurations = null, Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ServiceNetworking.TrafficControllerFrontendData TrafficControllerFrontendData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string fqdn, Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerFrontendPatch TrafficControllerFrontendPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyConfigurations frontendUpdateSecurityPolicyConfigurations = null) { throw null; }
         public static Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerPatch TrafficControllerPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyConfigurations trafficControllerUpdateSecurityPolicyConfigurations = null) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is now deprecated. Please use the new class `TrafficControllerAssociationPatch` moving forward.")]
     public partial class AssociationPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.Models.AssociationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.Models.AssociationPatch>
     {
@@ -523,7 +495,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.Models.AssociationPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.Models.AssociationPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is now deprecated. Please use the new class `TrafficControllerAssociationType` moving forward.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AssociationType : System.IEquatable<Azure.ResourceManager.ServiceNetworking.Models.AssociationType>
@@ -533,16 +504,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public AssociationType(string value) { throw null; }
         public static Azure.ResourceManager.ServiceNetworking.Models.AssociationType Subnets { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceNetworking.Models.AssociationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceNetworking.Models.AssociationType left, Azure.ResourceManager.ServiceNetworking.Models.AssociationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceNetworking.Models.AssociationType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ServiceNetworking.Models.AssociationType left, Azure.ResourceManager.ServiceNetworking.Models.AssociationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is now deprecated. Please use the new class `TrafficControllerFrontendPatch` moving forward.")]
     public partial class FrontendPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.Models.FrontendPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.Models.FrontendPatch>
     {
@@ -555,7 +523,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.Models.FrontendPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.Models.FrontendPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is now deprecated. Please use the new class `ServiceNetworkingProvisioningState` moving forward.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState>
@@ -571,9 +538,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public static Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState left, Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState (string value) { throw null; }
@@ -636,9 +601,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public static Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingIPAccessRuleAction Allow { get { throw null; } }
         public static Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingIPAccessRuleAction Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingIPAccessRuleAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingIPAccessRuleAction left, Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingIPAccessRuleAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingIPAccessRuleAction (string value) { throw null; }
@@ -660,9 +623,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public static Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState left, Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceNetworking.Models.ServiceNetworkingProvisioningState (string value) { throw null; }
@@ -694,9 +655,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public TrafficControllerAssociationType(string value) { throw null; }
         public static Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerAssociationType Subnets { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerAssociationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerAssociationType left, Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerAssociationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerAssociationType (string value) { throw null; }
@@ -724,7 +683,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public TrafficControllerPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyConfigurations TrafficControllerUpdateSecurityPolicyConfigurations { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier WafSecurityPolicyId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
