@@ -12,7 +12,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The BarMiddleNestedQuotaProperties. </summary>
-    public partial class BarMiddleNestedQuotaProperties : BarDeeplyNestedQuotaProperties
+    internal partial class BarMiddleNestedQuotaProperties : BarDeeplyNestedQuotaProperties
     {
         /// <summary> Initializes a new instance of <see cref="BarMiddleNestedQuotaProperties"/>. </summary>
         /// <param name="innerProp2"></param>

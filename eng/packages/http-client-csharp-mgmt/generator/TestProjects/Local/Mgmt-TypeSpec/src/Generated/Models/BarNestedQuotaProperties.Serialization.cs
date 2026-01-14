@@ -14,7 +14,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The BarNestedQuotaProperties. </summary>
-    public partial class BarNestedQuotaProperties : BarMiddleNestedQuotaProperties, IJsonModel<BarNestedQuotaProperties>
+    internal partial class BarNestedQuotaProperties : BarMiddleNestedQuotaProperties, IJsonModel<BarNestedQuotaProperties>
     {
         /// <summary> Initializes a new instance of <see cref="BarNestedQuotaProperties"/> for deserialization. </summary>
         internal BarNestedQuotaProperties()

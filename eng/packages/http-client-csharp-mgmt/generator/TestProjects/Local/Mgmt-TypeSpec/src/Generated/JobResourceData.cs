@@ -22,11 +22,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Initializes a new instance of <see cref="JobResourceData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="jobName"> Gets or sets the JobName. </param>
-        internal JobResourceData(AzureLocation location, JobProperties properties, string jobName) : base(location)
+        internal JobResourceData(AzureLocation location, JobProperties properties) : base(location)
         {
             Properties = properties;
-            JobName = jobName;
         }
 
         /// <summary> Initializes a new instance of <see cref="JobResourceData"/>. </summary>
