@@ -3,10 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -1586,8 +1588,7 @@ namespace Azure.Data.AppConfiguration
                 int nextLinkEndIndex = linkHeader.IndexOf('>');
                 nextLink = linkHeader.Substring(1, nextLinkEndIndex - 1);
 
-                var uriBuilder = new UriBuilder("https://example.com" + nextLink);
-                var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
+                NameValueCollection query = HttpUtility.ParseQueryString(nextLink);
                 after = query["after"];
             }
 
