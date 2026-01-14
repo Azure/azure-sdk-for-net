@@ -139,26 +139,41 @@ if (-not (Test-Path $toolInstallDirectory)) {
 $exeName = Split-Path $tempExe -Leaf
 $exeDestination = Join-Path $toolInstallDirectory $exeName
 
-# On Windows, if the exe is already running, we can't overwrite it.
-# In that case, fall back to running from the temp directory where it was installed.
-$exeToRun = $exeDestination
+# Try to copy the new version
+$updateSucceeded = $false
 try {
     Copy-Item -Path $tempExe -Destination $exeDestination -Force
+    $updateSucceeded = $true
 }
 catch {
     # Detect a file-in-use error in a locale-independent way.
     # ERROR_SHARING_VIOLATION => 0x80070020 => -2147024864
     if (($_.Exception -is [System.IO.IOException]) -and ($_.Exception.HResult -eq -2147024864)) {
-        log -warn "Could not override '$exeDestination' because it is currently running."
-        log -warn "Running it from the temp directory where it was installed instead."
-        $exeToRun = $tempExe
+        if ($Run) {
+            # In MCP mode, warn and fall back to the existing installed version
+            log -warn "Could not update '$exeDestination' because it is currently running."
+            log -warn "Falling back to the currently installed version."
+        }
+        else {
+            # In update-only mode, exit with error
+            log -err "Could not update '$exeDestination' because it is currently running."
+            log -err "Please close any running instances of '$exeName' and try again."
+            exit 1
+        }
     }
     else {
         throw
     }
 }
 
-log "Package $package is installed at $exeToRun"
+# Clean up temp directory
+if (Test-Path $tempInstallDirectory) {
+    Remove-Item -Path $tempInstallDirectory -Recurse -Force -ErrorAction SilentlyContinue
+}
+
+if ($updateSucceeded) {
+    log "Package $package is installed at $exeDestination"
+}
 if (!$UpdatePathInProfile) {
     log -warn "To add the tool to PATH for new shell sessions, re-run with -UpdatePathInProfile to modify the shell profile file."
 }
@@ -168,5 +183,5 @@ else {
 }
 
 if ($Run) {
-    Start-Process -WorkingDirectory $RunDirectory -FilePath $exeToRun -ArgumentList 'start' -NoNewWindow -Wait
+    Start-Process -WorkingDirectory $RunDirectory -FilePath $exeDestination -ArgumentList 'start' -NoNewWindow -Wait
 }
