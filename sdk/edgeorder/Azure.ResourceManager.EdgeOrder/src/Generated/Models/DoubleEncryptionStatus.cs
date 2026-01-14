@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public readonly partial struct DoubleEncryptionStatus : IEquatable<DoubleEncryptionStatus>
     {
         private readonly string _value;
+        /// <summary> Double encryption is disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Double encryption is enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="DoubleEncryptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DoubleEncryptionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+            _value = value;
+        }
 
         /// <summary> Double encryption is disabled. </summary>
         public static DoubleEncryptionStatus Disabled { get; } = new DoubleEncryptionStatus(DisabledValue);
+
         /// <summary> Double encryption is enabled. </summary>
         public static DoubleEncryptionStatus Enabled { get; } = new DoubleEncryptionStatus(EnabledValue);
+
         /// <summary> Determines if two <see cref="DoubleEncryptionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DoubleEncryptionStatus left, DoubleEncryptionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DoubleEncryptionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DoubleEncryptionStatus left, DoubleEncryptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DoubleEncryptionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DoubleEncryptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DoubleEncryptionStatus(string value) => new DoubleEncryptionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DoubleEncryptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DoubleEncryptionStatus?(string value) => value == null ? null : new DoubleEncryptionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DoubleEncryptionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DoubleEncryptionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

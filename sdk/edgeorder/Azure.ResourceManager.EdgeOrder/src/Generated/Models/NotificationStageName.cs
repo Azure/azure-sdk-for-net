@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public readonly partial struct NotificationStageName : IEquatable<NotificationStageName>
     {
         private readonly string _value;
+        /// <summary> Notification at order item shipped from microsoft datacenter. </summary>
+        private const string ShippedValue = "Shipped";
+        /// <summary> Notification at order item delivered to customer. </summary>
+        private const string DeliveredValue = "Delivered";
 
         /// <summary> Initializes a new instance of <see cref="NotificationStageName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NotificationStageName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ShippedValue = "Shipped";
-        private const string DeliveredValue = "Delivered";
+            _value = value;
+        }
 
         /// <summary> Notification at order item shipped from microsoft datacenter. </summary>
         public static NotificationStageName Shipped { get; } = new NotificationStageName(ShippedValue);
+
         /// <summary> Notification at order item delivered to customer. </summary>
         public static NotificationStageName Delivered { get; } = new NotificationStageName(DeliveredValue);
+
         /// <summary> Determines if two <see cref="NotificationStageName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NotificationStageName left, NotificationStageName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NotificationStageName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NotificationStageName left, NotificationStageName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationStageName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NotificationStageName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NotificationStageName(string value) => new NotificationStageName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NotificationStageName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NotificationStageName?(string value) => value == null ? null : new NotificationStageName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NotificationStageName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NotificationStageName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

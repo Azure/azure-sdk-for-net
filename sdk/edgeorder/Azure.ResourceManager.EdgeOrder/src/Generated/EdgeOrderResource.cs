@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
     /// <summary>
-    /// A Class representing an EdgeOrder along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EdgeOrderResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetEdgeOrderResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEdgeOrder method.
+    /// A class representing a EdgeOrder along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EdgeOrderResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEdgeOrders method.
     /// </summary>
     public partial class EdgeOrderResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="EdgeOrderResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="orderName"> The orderName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/locations/{location}/orders/{orderName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _edgeOrderClientDiagnostics;
-        private readonly EdgeOrderManagementRestOperations _edgeOrderRestClient;
+        private readonly ClientDiagnostics _orderResourcesClientDiagnostics;
+        private readonly OrderResources _orderResourcesRestClient;
         private readonly EdgeOrderData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.EdgeOrder/locations/orders";
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeOrderResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EdgeOrderResource for mocking. </summary>
         protected EdgeOrderResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeOrderResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EdgeOrderResource(ArmClient client, EdgeOrderData data) : this(client, data.Id)
@@ -55,71 +44,93 @@ namespace Azure.ResourceManager.EdgeOrder
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeOrderResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeOrderResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeOrderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string edgeOrderApiVersion);
-            _edgeOrderRestClient = new EdgeOrderManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeOrderApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _orderResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, Diagnostics);
+            _orderResourcesRestClient = new OrderResources(_orderResourcesClientDiagnostics, Pipeline, Endpoint, edgeOrderApiVersion ?? "2024-02-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual EdgeOrderData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="orderName"> The orderName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/locations/{location}/orders/{orderName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
-        /// Gets an order.
+        /// Get an order.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/locations/{location}/orders/{orderName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/locations/{location}/orders/{orderName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetOrderByName</description>
+        /// <term> Operation Id. </term>
+        /// <description> OrderResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeOrderResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EdgeOrderResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeOrderClientDiagnostics.CreateScope("EdgeOrderResource.Get");
+            using DiagnosticScope scope = _orderResourcesClientDiagnostics.CreateScope("EdgeOrderResource.Get");
             scope.Start();
             try
             {
-                var response = await _edgeOrderRestClient.GetOrderByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _orderResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeOrderData> response = Response.FromValue(EdgeOrderData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeOrderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,36 +141,44 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// Gets an order.
+        /// Get an order.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/locations/{location}/orders/{orderName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/locations/{location}/orders/{orderName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetOrderByName</description>
+        /// <term> Operation Id. </term>
+        /// <description> OrderResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeOrderResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EdgeOrderResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeOrderClientDiagnostics.CreateScope("EdgeOrderResource.Get");
+            using DiagnosticScope scope = _orderResourcesClientDiagnostics.CreateScope("EdgeOrderResource.Get");
             scope.Start();
             try
             {
-                var response = _edgeOrderRestClient.GetOrderByName(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _orderResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeOrderData> response = Response.FromValue(EdgeOrderData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeOrderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

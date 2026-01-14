@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public readonly partial struct EdgeOrderProductMeteringType : IEquatable<EdgeOrderProductMeteringType>
     {
         private readonly string _value;
+        /// <summary> One time billing. </summary>
+        private const string OneTimeValue = "OneTime";
+        /// <summary> Recurring billing. </summary>
+        private const string RecurringValue = "Recurring";
+        /// <summary> Adhoc billing. </summary>
+        private const string AdhocValue = "Adhoc";
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderProductMeteringType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EdgeOrderProductMeteringType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OneTimeValue = "OneTime";
-        private const string RecurringValue = "Recurring";
-        private const string AdhocValue = "Adhoc";
+            _value = value;
+        }
 
         /// <summary> One time billing. </summary>
         public static EdgeOrderProductMeteringType OneTime { get; } = new EdgeOrderProductMeteringType(OneTimeValue);
+
         /// <summary> Recurring billing. </summary>
         public static EdgeOrderProductMeteringType Recurring { get; } = new EdgeOrderProductMeteringType(RecurringValue);
+
         /// <summary> Adhoc billing. </summary>
         public static EdgeOrderProductMeteringType Adhoc { get; } = new EdgeOrderProductMeteringType(AdhocValue);
+
         /// <summary> Determines if two <see cref="EdgeOrderProductMeteringType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeOrderProductMeteringType left, EdgeOrderProductMeteringType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EdgeOrderProductMeteringType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeOrderProductMeteringType left, EdgeOrderProductMeteringType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeOrderProductMeteringType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EdgeOrderProductMeteringType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EdgeOrderProductMeteringType(string value) => new EdgeOrderProductMeteringType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EdgeOrderProductMeteringType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeOrderProductMeteringType?(string value) => value == null ? null : new EdgeOrderProductMeteringType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeOrderProductMeteringType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EdgeOrderProductMeteringType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

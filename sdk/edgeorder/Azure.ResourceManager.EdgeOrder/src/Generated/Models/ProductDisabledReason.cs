@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public readonly partial struct ProductDisabledReason : IEquatable<ProductDisabledReason>
     {
         private readonly string _value;
+        /// <summary> Not disabled. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Not available in the requested country. </summary>
+        private const string CountryValue = "Country";
+        /// <summary> Not available to push data to the requested Azure region. </summary>
+        private const string RegionValue = "Region";
+        /// <summary> Required features are not enabled. </summary>
+        private const string FeatureValue = "Feature";
+        /// <summary> Subscription does not have required offer types. </summary>
+        private const string OfferTypeValue = "OfferType";
+        /// <summary> Subscription has not registered to Microsoft.DataBox and Service does not have the subscription notification. </summary>
+        private const string NoSubscriptionInfoValue = "NoSubscriptionInfo";
+        /// <summary> The product is not yet available. </summary>
+        private const string NotAvailableValue = "NotAvailable";
+        /// <summary> The product is out of stock. </summary>
+        private const string OutOfStockValue = "OutOfStock";
 
         /// <summary> Initializes a new instance of <see cref="ProductDisabledReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProductDisabledReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string CountryValue = "Country";
-        private const string RegionValue = "Region";
-        private const string FeatureValue = "Feature";
-        private const string OfferTypeValue = "OfferType";
-        private const string NoSubscriptionInfoValue = "NoSubscriptionInfo";
-        private const string NotAvailableValue = "NotAvailable";
-        private const string OutOfStockValue = "OutOfStock";
+            _value = value;
+        }
 
         /// <summary> Not disabled. </summary>
         public static ProductDisabledReason None { get; } = new ProductDisabledReason(NoneValue);
+
         /// <summary> Not available in the requested country. </summary>
         public static ProductDisabledReason Country { get; } = new ProductDisabledReason(CountryValue);
+
         /// <summary> Not available to push data to the requested Azure region. </summary>
         public static ProductDisabledReason Region { get; } = new ProductDisabledReason(RegionValue);
+
         /// <summary> Required features are not enabled. </summary>
         public static ProductDisabledReason Feature { get; } = new ProductDisabledReason(FeatureValue);
+
         /// <summary> Subscription does not have required offer types. </summary>
         public static ProductDisabledReason OfferType { get; } = new ProductDisabledReason(OfferTypeValue);
+
         /// <summary> Subscription has not registered to Microsoft.DataBox and Service does not have the subscription notification. </summary>
         public static ProductDisabledReason NoSubscriptionInfo { get; } = new ProductDisabledReason(NoSubscriptionInfoValue);
+
         /// <summary> The product is not yet available. </summary>
         public static ProductDisabledReason NotAvailable { get; } = new ProductDisabledReason(NotAvailableValue);
+
         /// <summary> The product is out of stock. </summary>
         public static ProductDisabledReason OutOfStock { get; } = new ProductDisabledReason(OutOfStockValue);
+
         /// <summary> Determines if two <see cref="ProductDisabledReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProductDisabledReason left, ProductDisabledReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProductDisabledReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProductDisabledReason left, ProductDisabledReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProductDisabledReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProductDisabledReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProductDisabledReason(string value) => new ProductDisabledReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProductDisabledReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProductDisabledReason?(string value) => value == null ? null : new ProductDisabledReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProductDisabledReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProductDisabledReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

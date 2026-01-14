@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,13 +14,24 @@ namespace Azure.ResourceManager.EdgeOrder
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AdditionalConfiguration))]
     [ModelReaderWriterBuildable(typeof(AddressResourceList))]
+    [ModelReaderWriterBuildable(typeof(AddressUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(BasicInformation))]
+    [ModelReaderWriterBuildable(typeof(CategoryInformation))]
+    [ModelReaderWriterBuildable(typeof(ChildConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ChildConfigurationFilter))]
+    [ModelReaderWriterBuildable(typeof(ChildConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(CommonProperties))]
+    [ModelReaderWriterBuildable(typeof(ConfigurationDeviceDetails))]
     [ModelReaderWriterBuildable(typeof(ConfigurationFilters))]
+    [ModelReaderWriterBuildable(typeof(ConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(ConfigurationsContent))]
     [ModelReaderWriterBuildable(typeof(CustomerSubscriptionDetails))]
     [ModelReaderWriterBuildable(typeof(CustomerSubscriptionRegisteredFeatures))]
+    [ModelReaderWriterBuildable(typeof(DevicePresenceVerificationDetails))]
     [ModelReaderWriterBuildable(typeof(EdgeOrderAddressContactDetails))]
     [ModelReaderWriterBuildable(typeof(EdgeOrderAddressData))]
     [ModelReaderWriterBuildable(typeof(EdgeOrderAddressPatch))]
@@ -30,6 +42,7 @@ namespace Azure.ResourceManager.EdgeOrder
     [ModelReaderWriterBuildable(typeof(EdgeOrderItemCancellationReason))]
     [ModelReaderWriterBuildable(typeof(EdgeOrderItemData))]
     [ModelReaderWriterBuildable(typeof(EdgeOrderItemDetails))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderItemDetailsPatch))]
     [ModelReaderWriterBuildable(typeof(EdgeOrderItemPatch))]
     [ModelReaderWriterBuildable(typeof(EdgeOrderItemResource))]
     [ModelReaderWriterBuildable(typeof(EdgeOrderItemReturnContent))]
@@ -45,11 +58,15 @@ namespace Azure.ResourceManager.EdgeOrder
     [ModelReaderWriterBuildable(typeof(EncryptionPreferences))]
     [ModelReaderWriterBuildable(typeof(FilterableProperty))]
     [ModelReaderWriterBuildable(typeof(ForwardShippingDetails))]
+    [ModelReaderWriterBuildable(typeof(GroupedChildConfigurations))]
     [ModelReaderWriterBuildable(typeof(HierarchyInformation))]
     [ModelReaderWriterBuildable(typeof(ManagementResourcePreferences))]
     [ModelReaderWriterBuildable(typeof(NotificationPreference))]
     [ModelReaderWriterBuildable(typeof(OrderItemPreferences))]
+    [ModelReaderWriterBuildable(typeof(OrderItemProperties))]
     [ModelReaderWriterBuildable(typeof(OrderItemResourceList))]
+    [ModelReaderWriterBuildable(typeof(OrderItemUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(OrderProperties))]
     [ModelReaderWriterBuildable(typeof(OrderResourceList))]
     [ModelReaderWriterBuildable(typeof(Pav2MeterDetails))]
     [ModelReaderWriterBuildable(typeof(ProductAvailabilityInformation))]
@@ -57,6 +74,7 @@ namespace Azure.ResourceManager.EdgeOrder
     [ModelReaderWriterBuildable(typeof(ProductConfigurations))]
     [ModelReaderWriterBuildable(typeof(ProductDescription))]
     [ModelReaderWriterBuildable(typeof(ProductDetails))]
+    [ModelReaderWriterBuildable(typeof(ProductDetailsUpdateParameter))]
     [ModelReaderWriterBuildable(typeof(ProductDimensions))]
     [ModelReaderWriterBuildable(typeof(ProductDisplayInfo))]
     [ModelReaderWriterBuildable(typeof(ProductFamilies))]
@@ -64,16 +82,26 @@ namespace Azure.ResourceManager.EdgeOrder
     [ModelReaderWriterBuildable(typeof(ProductFamiliesMetadata))]
     [ModelReaderWriterBuildable(typeof(ProductFamiliesMetadataListResult))]
     [ModelReaderWriterBuildable(typeof(ProductFamily))]
+    [ModelReaderWriterBuildable(typeof(ProductFamilyProperties))]
     [ModelReaderWriterBuildable(typeof(ProductLine))]
+    [ModelReaderWriterBuildable(typeof(ProductLineProperties))]
     [ModelReaderWriterBuildable(typeof(ProductLink))]
+    [ModelReaderWriterBuildable(typeof(ProductProperties))]
     [ModelReaderWriterBuildable(typeof(ProductSpecification))]
+    [ModelReaderWriterBuildable(typeof(ProvisioningDetails))]
     [ModelReaderWriterBuildable(typeof(PurchaseMeterDetails))]
+    [ModelReaderWriterBuildable(typeof(ResourceIdentity))]
     [ModelReaderWriterBuildable(typeof(ResourceProviderDetails))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ReverseShippingDetails))]
+    [ModelReaderWriterBuildable(typeof(SiteDetails))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TermCommitmentInformation))]
+    [ModelReaderWriterBuildable(typeof(TermCommitmentPreferences))]
+    [ModelReaderWriterBuildable(typeof(TermTypeDetails))]
     [ModelReaderWriterBuildable(typeof(TransportPreferences))]
-    [ModelReaderWriterBuildable(typeof(UnknownMeterDetails))]
+    [ModelReaderWriterBuildable(typeof(UnknownEdgeOrderProductMeterDetails))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerEdgeOrderContext : ModelReaderWriterContext
     {
     }
