@@ -15,8 +15,8 @@
 - Total libraries: 401
 - Management Plane (MPG): 227
   - Autorest/Swagger: 154
-  - New Emitter (TypeSpec): 55
-  - Old TypeSpec: 18
+  - New Emitter (TypeSpec): 57
+  - Old TypeSpec: 16
 - Data Plane (DPG): 174
   - Autorest/Swagger: 87
   - New Emitter (TypeSpec): 23
@@ -171,7 +171,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 87
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 55 / 73 (75.3%)
+**Migration Status**: 57 / 73 (78.1%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -234,8 +234,8 @@ Libraries that provide resource management APIs for Azure services and have been
 | resources | Azure.ResourceManager.Resources.Bicep |  |
 | secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | ✅ |
 | selfhelp | Azure.ResourceManager.SelfHelp |  |
-| servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters |  |
-| servicenetworking | Azure.ResourceManager.ServiceNetworking |  |
+| servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters | ✅ |
+| servicenetworking | Azure.ResourceManager.ServiceNetworking | ✅ |
 | sitemanager | Azure.ResourceManager.SiteManager |  |
 | standbypool | Azure.ResourceManager.StandbyPool |  |
 | storageactions | Azure.ResourceManager.StorageActions | ✅ |
