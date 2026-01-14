@@ -8,10 +8,10 @@
 using Azure;
 using Azure.Core;
 
-namespace Service.MultiService.ServiceB
+namespace Service.MultiService.ServiceA
 {
     /// <summary></summary>
-    public partial class Bar
+    public partial class FooClient
     {
         private static ResponseClassifier _pipelineMessageClassifier204;
 
@@ -21,7 +21,7 @@ namespace Service.MultiService.ServiceB
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/service/multi-service/service-b/bar/test", false);
+            uri.AppendPath("/service/multi-service/service-a/foo/test", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
