@@ -113,9 +113,7 @@ public class ResourceExtensionsTests
     public void SetsSdkVersionPrefixFromResource()
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.VersionType;
-        var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
         var testAttributes = new Dictionary<string, object>
         {
             { "ai.sdk.prefix", "pre_" }
@@ -127,17 +125,14 @@ public class ResourceExtensionsTests
         Assert.StartsWith("pre_", SdkVersionUtils.s_sdkVersion);
 
         // Clean up
-        SdkVersionUtils.VersionType = sdkVersionType;
-        SdkVersionUtils.SdkVersionPrefix = sdkPrefix;
+        restoreSdkVersion();
     }
 
     [Fact]
     public void SetsSdkDistroLabelFromResource()
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.VersionType;
-        var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
         var testAttributes = new Dictionary<string, object>
         {
             { "telemetry.distro.name", "Azure.Monitor.OpenTelemetry.AspNetCore" }
@@ -150,17 +145,14 @@ public class ResourceExtensionsTests
         Assert.Equal(SdkVersionType.Distro, SdkVersionUtils.s_sdkVersionType);
 
         // Clean up
-        SdkVersionUtils.VersionType = sdkVersionType;
-        SdkVersionUtils.SdkVersionPrefix = sdkPrefix;
+        restoreSdkVersion();
     }
 
     [Fact]
     public void DoesNotSetSdkDistroLabelForWrongValueFromResource()
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.VersionType;
-        var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
 
         // Reset to default state before test
         SdkVersionUtils.VersionType = SdkVersionType.Exporter;
@@ -179,8 +171,7 @@ public class ResourceExtensionsTests
         Assert.Equal(SdkVersionType.Exporter, SdkVersionUtils.s_sdkVersionType);
 
         // Clean up
-        SdkVersionUtils.VersionType = sdkVersionType;
-        SdkVersionUtils.SdkVersionPrefix = sdkPrefix;
+        restoreSdkVersion();
     }
 
     [Theory]
@@ -191,9 +182,7 @@ public class ResourceExtensionsTests
     internal void SetsSdkShimLabelForAllShimPackages(string distroName, string expectedLabel, SdkVersionType expectedType)
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.VersionType;
-        var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
         var testAttributes = new Dictionary<string, object>
         {
             { "telemetry.distro.name", distroName }
@@ -208,8 +197,7 @@ public class ResourceExtensionsTests
         Assert.Equal(expectedType, SdkVersionUtils.s_sdkVersionType);
 
         // Clean up
-        SdkVersionUtils.VersionType = sdkVersionType;
-        SdkVersionUtils.SdkVersionPrefix = sdkPrefix;
+        restoreSdkVersion();
     }
 
     [Theory]
@@ -220,9 +208,7 @@ public class ResourceExtensionsTests
     public void SetsSdkPrefixWithShimLabel(string distroName, string expectedLabel)
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.VersionType;
-        var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
         var testAttributes = new Dictionary<string, object>
         {
             { "ai.sdk.prefix", "testprefix" },
@@ -238,17 +224,14 @@ public class ResourceExtensionsTests
         Assert.DoesNotContain(":dst", SdkVersionUtils.s_sdkVersion);
 
         // Clean up
-        SdkVersionUtils.VersionType = sdkVersionType;
-        SdkVersionUtils.SdkVersionPrefix = sdkPrefix;
+        restoreSdkVersion();
     }
 
     [Fact]
     public void SetsSdkPrefixWithDistroLabel()
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.VersionType;
-        var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
         var testAttributes = new Dictionary<string, object>
         {
             { "ai.sdk.prefix", "distroprefix" },
@@ -264,17 +247,14 @@ public class ResourceExtensionsTests
         Assert.Equal(SdkVersionType.Distro, SdkVersionUtils.s_sdkVersionType);
 
         // Clean up
-        SdkVersionUtils.VersionType = sdkVersionType;
-        SdkVersionUtils.SdkVersionPrefix = sdkPrefix;
+        restoreSdkVersion();
     }
 
     [Fact]
     public void MissingPrefixResourceDoesNotSetSdkPrefix()
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.VersionType;
-        var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
 
         var resource = ResourceBuilder.CreateDefault().Build();
         _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
@@ -283,17 +263,14 @@ public class ResourceExtensionsTests
         Assert.DoesNotContain("_", SdkVersionUtils.s_sdkVersion);
 
         // Clean up
-        SdkVersionUtils.VersionType = sdkVersionType;
-        SdkVersionUtils.SdkVersionPrefix = sdkPrefix;
+        restoreSdkVersion();
     }
 
     [Fact]
     public void EmptyPrefixResourceDoesNotSetSdkPrefix()
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.VersionType;
-        var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
 
         var testAttributes = new Dictionary<string, object>
         {
@@ -307,17 +284,14 @@ public class ResourceExtensionsTests
         Assert.DoesNotContain("_", SdkVersionUtils.s_sdkVersion);
 
         // Clean up
-        SdkVersionUtils.VersionType = sdkVersionType;
-        SdkVersionUtils.SdkVersionPrefix = sdkPrefix;
+        restoreSdkVersion();
     }
 
     [Fact]
     public void SdkPrefixIsNotInResourceMetrics()
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.VersionType;
-        var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
         var testAttributes = new Dictionary<string, object>
             {
                 {"foo", "bar" },
@@ -335,18 +309,14 @@ public class ResourceExtensionsTests
         Assert.False(metricsData?.Properties.ContainsKey("ai.sdk.prefix"));
 
         // Clean up
-        SdkVersionUtils.s_sdkVersion = sdkVersion;
-        SdkVersionUtils.VersionType = sdkVersionType;
-        SdkVersionUtils.SdkVersionPrefix = sdkPrefix;
+        restoreSdkVersion();
     }
 
     [Fact]
     public void SdkDistroVersionNotEmittedForCustomerNamespaces()
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.VersionType;
-        var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
         var testAttributes = new Dictionary<string, object>
             {
                 { "telemetry.distro.name", "Customer.App.Namespace" },
@@ -363,18 +333,14 @@ public class ResourceExtensionsTests
         Assert.DoesNotContain("do-not-use", SdkVersionUtils.GetVersion());
 
         // Clean up
-        SdkVersionUtils.s_sdkVersion = sdkVersion;
-        SdkVersionUtils.VersionType = sdkVersionType;
-        SdkVersionUtils.SdkVersionPrefix = sdkPrefix;
+        restoreSdkVersion();
     }
 
     [Fact]
     public void SdkDistroVersionNotEmittedForUnknownNamespaces()
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.VersionType;
-        var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
         var testAttributes = new Dictionary<string, object>
             {
                 // telemetry.distro.name not present
@@ -391,18 +357,14 @@ public class ResourceExtensionsTests
         Assert.DoesNotContain("do-not-use", SdkVersionUtils.GetVersion());
 
         // Clean up
-        SdkVersionUtils.s_sdkVersion = sdkVersion;
-        SdkVersionUtils.VersionType = sdkVersionType;
-        SdkVersionUtils.SdkVersionPrefix = sdkPrefix;
+        restoreSdkVersion();
     }
 
     [Fact]
     public void SdkDistroVersionEmitted()
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
-        var sdkVersionType = SdkVersionUtils.VersionType;
-        var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
         var testAttributes = new Dictionary<string, object>
             {
                 { "telemetry.distro.name", "Microsoft.ApplicationInsights.AspNetCore" },
@@ -418,9 +380,7 @@ public class ResourceExtensionsTests
         Assert.Equal("shcabc-123", SdkVersionUtils.GetVersion());
 
         // Clean up
-        SdkVersionUtils.s_sdkVersion = sdkVersion;
-        SdkVersionUtils.VersionType = sdkVersionType;
-        SdkVersionUtils.SdkVersionPrefix = sdkPrefix;
+        restoreSdkVersion();
     }
 
     [Theory]
@@ -568,5 +528,24 @@ public class ResourceExtensionsTests
             testAttributes.Add(SemanticConventions.AttributeServiceInstance, serviceInstance);
 
         return ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
+    }
+
+    /// <summary>
+    /// Preserves the values hidden in SdkVersionUtils for later cleanup.
+    /// </summary>
+    /// <returns>an Action that reverts any changes made since this method was called</returns>
+    private static Action SaveSdkVersionUtilsState()
+    {
+        var sdkVersion = SdkVersionUtils.s_sdkVersion;
+        var sdkVersionType = SdkVersionUtils.VersionType;
+        var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
+
+        return () =>
+        {
+            SdkVersionUtils.s_sdkVersion = sdkVersion;
+            SdkVersionUtils.VersionType = sdkVersionType;
+            SdkVersionUtils.ExtensionVersion = null;
+            SdkVersionUtils.SdkVersionPrefix = sdkPrefix;
+        };
     }
 }
