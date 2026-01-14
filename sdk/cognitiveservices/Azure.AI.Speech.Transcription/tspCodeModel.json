@@ -180,7 +180,7 @@
         {
           "$id": "17",
           "kind": "property",
-          "name": "definition",
+          "name": "options",
           "serializedName": "definition",
           "doc": "Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscriptionOptions`.",
           "type": {

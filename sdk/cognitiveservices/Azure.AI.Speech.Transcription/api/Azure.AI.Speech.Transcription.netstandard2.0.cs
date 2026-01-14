@@ -16,7 +16,7 @@ namespace Azure.AI.Speech.Transcription
         public static Azure.AI.Speech.Transcription.PhraseListProperties PhraseListProperties(System.Collections.Generic.IEnumerable<string> phrases = null, float? biasingWeight = default(float?)) { throw null; }
         public static Azure.AI.Speech.Transcription.TranscribedPhrase TranscribedPhrase(int? channel = default(int?), int? speaker = default(int?), int offsetMilliseconds = 0, int durationMilliseconds = 0, string text = null, System.Collections.Generic.IEnumerable<Azure.AI.Speech.Transcription.TranscribedWord> words = null, string locale = null, float confidence = 0f) { throw null; }
         public static Azure.AI.Speech.Transcription.TranscribedWord TranscribedWord(string text = null, int offsetMilliseconds = 0, int durationMilliseconds = 0) { throw null; }
-        public static Azure.AI.Speech.Transcription.TranscriptionContent TranscriptionContent(Azure.AI.Speech.Transcription.TranscriptionOptions definition = null, System.BinaryData audio = null) { throw null; }
+        public static Azure.AI.Speech.Transcription.TranscriptionContent TranscriptionContent(Azure.AI.Speech.Transcription.TranscriptionOptions options = null, System.BinaryData audio = null) { throw null; }
         public static Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions TranscriptionDiarizationOptions(bool? enabled = default(bool?), int? maxSpeakers = default(int?)) { throw null; }
         public static Azure.AI.Speech.Transcription.TranscriptionOptions TranscriptionOptions(System.Uri audioUri = null, System.Collections.Generic.IEnumerable<string> locales = null, System.Collections.Generic.IDictionary<string, System.Uri> models = null, Azure.AI.Speech.Transcription.ProfanityFilterMode? profanityFilterMode = default(Azure.AI.Speech.Transcription.ProfanityFilterMode?), Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions diarizationOptions = null, System.Collections.Generic.IEnumerable<int> activeChannels = null, Azure.AI.Speech.Transcription.EnhancedModeProperties enhancedMode = null, Azure.AI.Speech.Transcription.PhraseListProperties phraseList = null) { throw null; }
         public static Azure.AI.Speech.Transcription.TranscriptionResult TranscriptionResult(int durationMilliseconds = 0, System.Collections.Generic.IEnumerable<Azure.AI.Speech.Transcription.ChannelCombinedPhrases> combinedPhrases = null, System.Collections.Generic.IEnumerable<Azure.AI.Speech.Transcription.TranscribedPhrase> phrases = null) { throw null; }
@@ -78,9 +78,7 @@ namespace Azure.AI.Speech.Transcription
         public static Azure.AI.Speech.Transcription.ProfanityFilterMode Removed { get { throw null; } }
         public static Azure.AI.Speech.Transcription.ProfanityFilterMode Tags { get { throw null; } }
         public bool Equals(Azure.AI.Speech.Transcription.ProfanityFilterMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Speech.Transcription.ProfanityFilterMode left, Azure.AI.Speech.Transcription.ProfanityFilterMode right) { throw null; }
         public static implicit operator Azure.AI.Speech.Transcription.ProfanityFilterMode (string value) { throw null; }
@@ -152,9 +150,9 @@ namespace Azure.AI.Speech.Transcription
     }
     public partial class TranscriptionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.TranscriptionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscriptionContent>
     {
-        public TranscriptionContent(Azure.AI.Speech.Transcription.TranscriptionOptions definition) { }
+        public TranscriptionContent(Azure.AI.Speech.Transcription.TranscriptionOptions options) { }
         public System.BinaryData Audio { get { throw null; } set { } }
-        public Azure.AI.Speech.Transcription.TranscriptionOptions Definition { get { throw null; } }
+        public Azure.AI.Speech.Transcription.TranscriptionOptions Options { get { throw null; } }
         protected virtual Azure.AI.Speech.Transcription.TranscriptionContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static implicit operator System.ClientModel.BinaryContent (Azure.AI.Speech.Transcription.TranscriptionContent transcriptionContent) { throw null; }

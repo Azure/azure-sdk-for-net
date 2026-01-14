@@ -31,7 +31,7 @@ namespace Azure.AI.Speech.Transcription
                 throw new FormatException($"The model {nameof(TranscriptionContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Definition, options);
+            writer.WriteObjectValue(Options, options);
             if (Optional.IsDefined(Audio))
             {
                 writer.WritePropertyName("audio"u8);
@@ -73,14 +73,14 @@ namespace Azure.AI.Speech.Transcription
             {
                 return null;
             }
-            TranscriptionOptions definition = default;
+            TranscriptionOptions options0 = default;
             BinaryData audio = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("definition"u8))
                 {
-                    definition = TranscriptionOptions.DeserializeTranscriptionOptions(prop.Value, options);
+                    options0 = TranscriptionOptions.DeserializeTranscriptionOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("audio"u8))
@@ -97,7 +97,7 @@ namespace Azure.AI.Speech.Transcription
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TranscriptionContent(definition, audio, additionalBinaryDataProperties);
+            return new TranscriptionContent(options0, audio, additionalBinaryDataProperties);
         }
 
         BinaryData IPersistableModel<TranscriptionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
