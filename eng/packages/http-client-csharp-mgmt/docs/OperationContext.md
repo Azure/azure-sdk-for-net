@@ -2,7 +2,7 @@
 
 ## Overview
 
-The **Operation Context** system is a core component of the Azure Management SDK generator that determines which parameters for a resource operation can be derived contextually from the resource identifier (Id) and which must be supplied by the caller.
+The **Operation Context** system is a core component of the Azure Management SDK generator that determines which parameters for an operation can be derived contextually from the identifier (Id) of the operation's carrier (resource, resource collection, or provider) and which must be supplied by the caller.
 
 When generating methods for Azure management operations, the generator needs to understand:
 - Which parameters can be extracted from the resource's `Id` property (e.g., `subscriptionId`, `resourceGroupName`, parent resource names)
@@ -52,31 +52,6 @@ A **parameter context mapping** links an operation parameter name to its context
 - If the parameter has a contextual source, the mapping points to the `ContextualParameter`
 - If the parameter has no contextual source, the mapping's `ContextualParameter` is null (indicating a pass-through parameter)
 
-## The Problem This Solves
-
-### Scenario: Parameter Name Mismatch
-
-Consider a resource operation where the operation path uses a different parameter name than the contextual path:
-
-**Contextual Path (Resource):**
-```
-/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Example/resources/{resourceName}
-```
-
-**Operation Path (List Child Resources):**
-```
-/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Example/resources/{name}/childResources
-```
-
-**The Challenge:**
-The operation path uses `{name}` for the resource parameter, while the contextual path uses `{resourceName}`. A naive name-based matching would fail to recognize these as the same parameter.
-
-**The Solution:**
-The system matches parameters by their **position in the path** rather than by name. When the shared portion of both paths is analyzed:
-- Both paths share the first several segments (up to and including the resource name parameter)
-- The parameter at the same position in both paths represents the same logical value (the resource name)
-- Therefore, `{name}` in the operation path maps to the contextual parameter for `{resourceName}`
-
 ## How It Works
 
 ### Step 1: Building Contextual Parameters
@@ -102,12 +77,28 @@ An `OperationContext` is created for each resource or resource collection. It en
 
 ### Step 3: Building Parameter Mapping
 
-When generating a method for an operation, the system calls `BuildParameterMapping(operationPath)` to create a `ParameterContextRegistry`. This process:
+When generating a method for an operation, the system calls `BuildParameterMapping(operationPath)` to create a `ParameterContextRegistry`. 
+
+**Common Scenario - Parameter Name Mismatch:**
+
+A common use case is when the operation path uses a different parameter name than the contextual path for the same logical parameter.
+
+For example:
+- **Contextual Path:** `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Example/resources/{resourceName}`
+- **Operation Path:** `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Example/resources/{name}/childResources`
+
+The operation path uses `{name}` while the contextual path uses `{resourceName}`. A naive name-based matching would fail to recognize these as the same parameter.
+
+**The Solution:**
+
+The parameter mapping process:
 
 1. **Finds the shared segments** between the contextual path and operation path
 2. **Walks the operation path** and for each variable segment:
-   - If within the shared area, maps it to the corresponding contextual parameter by position
+   - If within the shared area, maps it to the corresponding contextual parameter by position (not by name)
    - If beyond the shared area, marks it as a pass-through parameter (no contextual source)
+
+This position-based matching correctly identifies that `{name}` at the same position as `{resourceName}` represents the same logical parameter.
 
 **Example:**
 
@@ -161,8 +152,8 @@ Some resource collections require multiple parameters from their parent context.
 
 In these cases:
 - The **primary contextual path** represents the resource collection's parent
-- The **secondary contextual path** represents the full path to an individual resource
-- Additional parameters from the secondary path are stored as private fields in the collection class
+- The **secondary contextual path** represents the full path to list resources in the collection (typically from a `GetAll`/list operation)
+- Additional parameters from the secondary path beyond the primary path are stored as private fields in the collection class
 
 The `OperationContext` handles this by building two sets of contextual parameters and merging them appropriately when mapping operation parameters.
 
