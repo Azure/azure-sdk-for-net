@@ -2,7 +2,7 @@
 
 ## Overview
 
-The **Operation Context** system is a core component of the Azure Management SDK generator that determines which parameters for an operation can be derived contextually from the identifier (Id) of the operation's carrier (resource, resource collection, or provider) and which must be supplied by the caller.
+The **Operation Context** system is a core component of the Azure Management SDK generator that determines which parameters for an operation can be derived contextually from the identifier (Id) of the operation's carrier (resource, resource collection, or mockable resource) and which must be supplied by the caller.
 
 When generating methods for Azure management operations, the generator needs to understand:
 - Which parameters can be extracted from the resource's `Id` property (e.g., `subscriptionId`, `resourceGroupName`, parent resource names)
