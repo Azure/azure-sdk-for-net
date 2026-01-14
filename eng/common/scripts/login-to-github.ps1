@@ -89,6 +89,14 @@ function New-GitHubAppJwt {
       --algorithm RS256 `
       --digest $Base64Value | ConvertFrom-Json
 
+  if ($LASTEXITCODE -ne 0) {
+    throw "Failed to sign JWT with Azure Key Vault. Error: $SignResult"
+  }
+
+  if (!$SignResultJson.signature) {
+    throw "Azure Key Vault response does not contain a signature. Response: $($SignResultJson | ConvertTo-Json -Compress)"
+  }
+
   $Signature = $SignResultJson.signature
   return "$UnsignedToken.$Signature"
 }
@@ -104,7 +112,7 @@ function Get-GitHubInstallationId {
     $headers = Get-Headers -Jwt $Jwt -ApiVersion $ApiVersion
 
     $uri = "$ApiBase/app/installations"
-    $resp = Invoke-RestMethod -Method Get -Headers $headers -Uri $uri -TimeoutSec 30
+    $resp = Invoke-RestMethod -Method Get -Headers $headers -Uri $uri -TimeoutSec 30 -MaximumRetryCount 3
 
     $resp | Foreach-Object { Write-Host "  $($_.id): $($_.account.login) [$($_.target_type)]" }
 
@@ -122,7 +130,7 @@ function New-GitHubInstallationToken {
   )
   $headers = Get-Headers -Jwt $Jwt -ApiVersion $ApiVersion
   $uri = "$ApiBase/app/installations/$InstallationId/access_tokens"
-  $resp = Invoke-RestMethod -Method Post -Headers $headers -Uri $uri -TimeoutSec 30
+  $resp = Invoke-RestMethod -Method Post -Headers $headers -Uri $uri -TimeoutSec 30 -MaximumRetryCount 3
   if (!$resp.token) { throw "Failed to obtain installation access token for installation $InstallationId." }
   return $resp.token
 }
