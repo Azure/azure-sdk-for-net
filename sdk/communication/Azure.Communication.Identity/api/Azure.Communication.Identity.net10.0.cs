@@ -56,9 +56,7 @@ namespace Azure.Communication.Identity
         public static Azure.Communication.Identity.CommunicationTokenScope VoIP { get { throw null; } }
         public static Azure.Communication.Identity.CommunicationTokenScope VoIPJoin { get { throw null; } }
         public bool Equals(Azure.Communication.Identity.CommunicationTokenScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.Identity.CommunicationTokenScope left, Azure.Communication.Identity.CommunicationTokenScope right) { throw null; }
         public static implicit operator Azure.Communication.Identity.CommunicationTokenScope (string value) { throw null; }
@@ -70,7 +68,6 @@ namespace Azure.Communication.Identity
         internal CommunicationUserIdentifierAndToken() { }
         public Azure.Core.AccessToken AccessToken { get { throw null; } }
         public Azure.Communication.CommunicationUserIdentifier User { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Deconstruct(out Azure.Communication.CommunicationUserIdentifier user, out Azure.Core.AccessToken accessToken) { throw null; }
     }
     public partial class GetTokenForTeamsUserOptions

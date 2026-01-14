@@ -6,18 +6,19 @@ This guide assists in migrating querying metrics operations in `Azure.Monitor.Qu
 
 - [Migration benefits](#migration-benefits)
 - [Important changes](#important-changes)
-    - [Package names](#package-names)
-    - [Client differences](#client-differences)
-    - [API changes](#api-changes)
-    - [Query metrics from workspace](#query-metrics-from-workspace)
-    - [Query resource metrics](#query-resource-metrics)
+  - [Package names](#package-names)
+  - [Namespaces](#namespaces)
+  - [Client differences](#client-differences)
+  - [API changes](#api-changes)
+  - [Query metrics for multiple resources](#query-metrics-for-multiple-resources)
+  - [Query metrics with options](#query-metrics-with-options)
 - [Additional samples](#additional-samples)
 
 ## Migration benefits
 
 The Azure Monitor Query library for .NET has been modularized to provide more focused functionality. The operations for querying metrics have been moved from the combined `Azure.Monitor.Query` package which also included querying logs to a dedicated `Azure.Monitor.Query.Metrics` package. This separation offers several advantages:
 
-- Smaller dependency footprint for applications that only need to query metrics 
+- Smaller dependency footprint for applications that only need to query metrics
 - More focused API design specific to metrics query operations
 - Independent versioning allowing metrics functionality to evolve separately
 - Clearer separation of concerns between logs and metrics operations
@@ -54,11 +55,11 @@ string resourceId =
 var client = new MetricsClient(
     new Uri("https://<region>.metrics.monitor.azure.com"),
     new DefaultAzureCredential());
-    
+
 var timeRange = new QueryTimeRange(
     start: Recording.UtcNow.Subtract(TimeSpan.FromHours(4)),
     duration: TimeSpan.FromHours(4));
-    
+
 var options = new MetricsQueryResourcesOptions
 {
     TimeRange = timeRange,

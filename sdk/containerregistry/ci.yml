@@ -12,19 +12,6 @@ trigger:
     - sdk/containerregistry/service.projects
     - sdk/containerregistry/Azure.Containers.ContainerRegistry
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/containerregistry/ci.yml
-    - sdk/containerregistry/service.projects
-    - sdk/containerregistry/Azure.Containers.ContainerRegistry
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

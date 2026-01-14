@@ -1352,4 +1352,83 @@ interface BestPracticeVersions {
       normalizeSchemaForComparison(armProviderSchemaResult)
     );
   });
+
+  it("resource without get operation should be filtered", async () => {
+    const program = await typeSpecCompile(
+      `
+/** A parent resource */
+model Parent is TrackedResource<ParentProperties> {
+  ...ResourceNameParameter<Parent>;
+}
+
+/** Parent properties */
+model ParentProperties {
+  /** Description */
+  description?: string;
+}
+
+/** A resource without Get operation */
+@parentResource(Parent)
+model NoGetResource is TrackedResource<NoGetResourceProperties> {
+  ...ResourceNameParameter<NoGetResource>;
+}
+
+/** NoGetResource properties */
+model NoGetResourceProperties {
+  /** Description */
+  description?: string;
+}
+
+@armResourceOperations
+interface Parents {
+  get is ArmResourceRead<Parent>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Parent>;
+  delete is ArmResourceDeleteWithoutOkAsync<Parent>;
+  listByResourceGroup is ArmResourceListByParent<Parent>;
+}
+
+@armResourceOperations
+interface NoGetResources {
+  // Note: No Get operation
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<NoGetResource>;
+  delete is ArmResourceDeleteWithoutOkAsync<NoGetResource>;
+  listByResourceGroup is ArmResourceListByParent<NoGetResource>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    // Build ARM provider schema and verify its structure
+    // This uses the legacy buildArmProviderSchema which properly filters resources without Get
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+    
+    // Should only have Parent resource, NoGetResource should be filtered out
+    strictEqual(armProviderSchema.resources.length, 1);
+    
+    // Verify Parent resource exists
+    const parentResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/parents"
+    );
+    ok(parentResource);
+    strictEqual(parentResource.metadata.resourceName, "Parent");
+    
+    // Verify NoGetResource is NOT in resources
+    const noGetResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceName === "NoGetResource"
+    );
+    strictEqual(noGetResource, undefined);
+    
+    // Verify NoGetResource operations are in non-resource methods
+    ok(armProviderSchema.nonResourceMethods);
+    const noGetMethods = armProviderSchema.nonResourceMethods.filter(
+      (m) => m.operationPath.includes("noGetResources")
+    );
+    // Should have createOrUpdate, delete, and list operations
+    strictEqual(noGetMethods.length, 3);
+  });
 });

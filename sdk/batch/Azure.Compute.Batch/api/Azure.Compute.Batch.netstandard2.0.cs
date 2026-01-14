@@ -15,9 +15,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.AllocationState Steady { get { throw null; } }
         public static Azure.Compute.Batch.AllocationState Stopping { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.AllocationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.AllocationState left, Azure.Compute.Batch.AllocationState right) { throw null; }
         public static implicit operator Azure.Compute.Batch.AllocationState (string value) { throw null; }
@@ -98,9 +96,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.AutoUserScope Pool { get { throw null; } }
         public static Azure.Compute.Batch.AutoUserScope Task { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.AutoUserScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.AutoUserScope left, Azure.Compute.Batch.AutoUserScope right) { throw null; }
         public static implicit operator Azure.Compute.Batch.AutoUserScope (string value) { throw null; }
@@ -175,9 +171,7 @@ namespace Azure.Compute.Batch
         public BatchAccessScope(string value) { throw null; }
         public static Azure.Compute.Batch.BatchAccessScope Job { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchAccessScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchAccessScope left, Azure.Compute.Batch.BatchAccessScope right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchAccessScope (string value) { throw null; }
@@ -208,9 +202,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchAllTasksCompleteMode NoAction { get { throw null; } }
         public static Azure.Compute.Batch.BatchAllTasksCompleteMode TerminateJob { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchAllTasksCompleteMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchAllTasksCompleteMode left, Azure.Compute.Batch.BatchAllTasksCompleteMode right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchAllTasksCompleteMode (string value) { throw null; }
@@ -722,9 +714,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchErrorCode UnsupportedQueryParameter { get { throw null; } }
         public static Azure.Compute.Batch.BatchErrorCode UnsupportedRequestVersion { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchErrorCode left, Azure.Compute.Batch.BatchErrorCode right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchErrorCode (string value) { throw null; }
@@ -770,9 +760,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchErrorSourceCategory ServerError { get { throw null; } }
         public static Azure.Compute.Batch.BatchErrorSourceCategory UserError { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchErrorSourceCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchErrorSourceCategory left, Azure.Compute.Batch.BatchErrorSourceCategory right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchErrorSourceCategory (string value) { throw null; }
@@ -864,9 +852,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchJobActionKind None { get { throw null; } }
         public static Azure.Compute.Batch.BatchJobActionKind Terminate { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchJobActionKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchJobActionKind left, Azure.Compute.Batch.BatchJobActionKind right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchJobActionKind (string value) { throw null; }
@@ -928,9 +914,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchJobDefaultOrder CreationTime { get { throw null; } }
         public static Azure.Compute.Batch.BatchJobDefaultOrder None { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchJobDefaultOrder other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchJobDefaultOrder left, Azure.Compute.Batch.BatchJobDefaultOrder right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchJobDefaultOrder (string value) { throw null; }
@@ -1087,9 +1071,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchJobPreparationTaskState Completed { get { throw null; } }
         public static Azure.Compute.Batch.BatchJobPreparationTaskState Running { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchJobPreparationTaskState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchJobPreparationTaskState left, Azure.Compute.Batch.BatchJobPreparationTaskState right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchJobPreparationTaskState (string value) { throw null; }
@@ -1149,9 +1131,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchJobReleaseTaskState Completed { get { throw null; } }
         public static Azure.Compute.Batch.BatchJobReleaseTaskState Running { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchJobReleaseTaskState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchJobReleaseTaskState left, Azure.Compute.Batch.BatchJobReleaseTaskState right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchJobReleaseTaskState (string value) { throw null; }
@@ -1253,9 +1233,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchJobScheduleState Disabled { get { throw null; } }
         public static Azure.Compute.Batch.BatchJobScheduleState Terminating { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchJobScheduleState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchJobScheduleState left, Azure.Compute.Batch.BatchJobScheduleState right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchJobScheduleState (string value) { throw null; }
@@ -1366,9 +1344,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchJobState Enabling { get { throw null; } }
         public static Azure.Compute.Batch.BatchJobState Terminating { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchJobState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchJobState left, Azure.Compute.Batch.BatchJobState right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchJobState (string value) { throw null; }
@@ -1548,9 +1524,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchNodeDeallocateOption TaskCompletion { get { throw null; } }
         public static Azure.Compute.Batch.BatchNodeDeallocateOption Terminate { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchNodeDeallocateOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchNodeDeallocateOption left, Azure.Compute.Batch.BatchNodeDeallocateOption right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchNodeDeallocateOption (string value) { throw null; }
@@ -1584,9 +1558,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchNodeDeallocationOption TaskCompletion { get { throw null; } }
         public static Azure.Compute.Batch.BatchNodeDeallocationOption Terminate { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchNodeDeallocationOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchNodeDeallocationOption left, Azure.Compute.Batch.BatchNodeDeallocationOption right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchNodeDeallocationOption (string value) { throw null; }
@@ -1604,9 +1576,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchNodeDisableSchedulingOption TaskCompletion { get { throw null; } }
         public static Azure.Compute.Batch.BatchNodeDisableSchedulingOption Terminate { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchNodeDisableSchedulingOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchNodeDisableSchedulingOption left, Azure.Compute.Batch.BatchNodeDisableSchedulingOption right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchNodeDisableSchedulingOption (string value) { throw null; }
@@ -1685,9 +1655,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchNodeFillType Pack { get { throw null; } }
         public static Azure.Compute.Batch.BatchNodeFillType Spread { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchNodeFillType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchNodeFillType left, Azure.Compute.Batch.BatchNodeFillType right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchNodeFillType (string value) { throw null; }
@@ -1751,9 +1719,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchNodePlacementPolicyType Regional { get { throw null; } }
         public static Azure.Compute.Batch.BatchNodePlacementPolicyType Zonal { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchNodePlacementPolicyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchNodePlacementPolicyType left, Azure.Compute.Batch.BatchNodePlacementPolicyType right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchNodePlacementPolicyType (string value) { throw null; }
@@ -1772,9 +1738,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchNodeRebootKind TaskCompletion { get { throw null; } }
         public static Azure.Compute.Batch.BatchNodeRebootKind Terminate { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchNodeRebootKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchNodeRebootKind left, Azure.Compute.Batch.BatchNodeRebootKind right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchNodeRebootKind (string value) { throw null; }
@@ -1808,9 +1772,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchNodeReimageOption TaskCompletion { get { throw null; } }
         public static Azure.Compute.Batch.BatchNodeReimageOption Terminate { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchNodeReimageOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchNodeReimageOption left, Azure.Compute.Batch.BatchNodeReimageOption right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchNodeReimageOption (string value) { throw null; }
@@ -1891,9 +1853,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchNodeState UpgradingOS { get { throw null; } }
         public static Azure.Compute.Batch.BatchNodeState WaitingForStartTask { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchNodeState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchNodeState left, Azure.Compute.Batch.BatchNodeState right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchNodeState (string value) { throw null; }
@@ -2137,9 +2097,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchPoolIdentityType None { get { throw null; } }
         public static Azure.Compute.Batch.BatchPoolIdentityType UserAssigned { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchPoolIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchPoolIdentityType left, Azure.Compute.Batch.BatchPoolIdentityType right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchPoolIdentityType (string value) { throw null; }
@@ -2171,9 +2129,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchPoolLifetimeOption Job { get { throw null; } }
         public static Azure.Compute.Batch.BatchPoolLifetimeOption JobSchedule { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchPoolLifetimeOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchPoolLifetimeOption left, Azure.Compute.Batch.BatchPoolLifetimeOption right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchPoolLifetimeOption (string value) { throw null; }
@@ -2299,9 +2255,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchPoolState Active { get { throw null; } }
         public static Azure.Compute.Batch.BatchPoolState Deleting { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchPoolState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchPoolState left, Azure.Compute.Batch.BatchPoolState right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchPoolState (string value) { throw null; }
@@ -2456,9 +2410,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchStartTaskState Completed { get { throw null; } }
         public static Azure.Compute.Batch.BatchStartTaskState Running { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchStartTaskState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchStartTaskState left, Azure.Compute.Batch.BatchStartTaskState right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchStartTaskState (string value) { throw null; }
@@ -2501,9 +2453,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchSubtaskState Preparing { get { throw null; } }
         public static Azure.Compute.Batch.BatchSubtaskState Running { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchSubtaskState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchSubtaskState left, Azure.Compute.Batch.BatchSubtaskState right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchSubtaskState (string value) { throw null; }
@@ -2582,9 +2532,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchTaskAddStatus ServerError { get { throw null; } }
         public static Azure.Compute.Batch.BatchTaskAddStatus Success { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchTaskAddStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchTaskAddStatus left, Azure.Compute.Batch.BatchTaskAddStatus right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchTaskAddStatus (string value) { throw null; }
@@ -2772,9 +2720,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchTaskExecutionResult Failure { get { throw null; } }
         public static Azure.Compute.Batch.BatchTaskExecutionResult Success { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchTaskExecutionResult other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchTaskExecutionResult left, Azure.Compute.Batch.BatchTaskExecutionResult right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchTaskExecutionResult (string value) { throw null; }
@@ -2808,9 +2754,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchTaskFailureMode NoAction { get { throw null; } }
         public static Azure.Compute.Batch.BatchTaskFailureMode PerformExitOptionsJobAction { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchTaskFailureMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchTaskFailureMode left, Azure.Compute.Batch.BatchTaskFailureMode right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchTaskFailureMode (string value) { throw null; }
@@ -2911,9 +2855,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchTaskState Preparing { get { throw null; } }
         public static Azure.Compute.Batch.BatchTaskState Running { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.BatchTaskState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.BatchTaskState left, Azure.Compute.Batch.BatchTaskState right) { throw null; }
         public static implicit operator Azure.Compute.Batch.BatchTaskState (string value) { throw null; }
@@ -3021,9 +2963,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.CachingType ReadOnly { get { throw null; } }
         public static Azure.Compute.Batch.CachingType ReadWrite { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.CachingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.CachingType left, Azure.Compute.Batch.CachingType right) { throw null; }
         public static implicit operator Azure.Compute.Batch.CachingType (string value) { throw null; }
@@ -3232,9 +3172,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.ContainerHostDataPath Task { get { throw null; } }
         public static Azure.Compute.Batch.ContainerHostDataPath VfsMounts { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.ContainerHostDataPath other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.ContainerHostDataPath left, Azure.Compute.Batch.ContainerHostDataPath right) { throw null; }
         public static implicit operator Azure.Compute.Batch.ContainerHostDataPath (string value) { throw null; }
@@ -3268,9 +3206,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.ContainerType CriCompatible { get { throw null; } }
         public static Azure.Compute.Batch.ContainerType DockerCompatible { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.ContainerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.ContainerType left, Azure.Compute.Batch.ContainerType right) { throw null; }
         public static implicit operator Azure.Compute.Batch.ContainerType (string value) { throw null; }
@@ -3287,9 +3223,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.ContainerWorkingDirectory ContainerImageDefault { get { throw null; } }
         public static Azure.Compute.Batch.ContainerWorkingDirectory TaskWorkingDirectory { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.ContainerWorkingDirectory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.ContainerWorkingDirectory left, Azure.Compute.Batch.ContainerWorkingDirectory right) { throw null; }
         public static implicit operator Azure.Compute.Batch.ContainerWorkingDirectory (string value) { throw null; }
@@ -3408,9 +3342,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.DependencyAction Block { get { throw null; } }
         public static Azure.Compute.Batch.DependencyAction Satisfy { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.DependencyAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.DependencyAction left, Azure.Compute.Batch.DependencyAction right) { throw null; }
         public static implicit operator Azure.Compute.Batch.DependencyAction (string value) { throw null; }
@@ -3426,9 +3358,7 @@ namespace Azure.Compute.Batch
         public DiffDiskPlacement(string value) { throw null; }
         public static Azure.Compute.Batch.DiffDiskPlacement CacheDisk { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.DiffDiskPlacement other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.DiffDiskPlacement left, Azure.Compute.Batch.DiffDiskPlacement right) { throw null; }
         public static implicit operator Azure.Compute.Batch.DiffDiskPlacement (string value) { throw null; }
@@ -3446,9 +3376,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.DisableBatchJobOption Terminate { get { throw null; } }
         public static Azure.Compute.Batch.DisableBatchJobOption Wait { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.DisableBatchJobOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.DisableBatchJobOption left, Azure.Compute.Batch.DisableBatchJobOption right) { throw null; }
         public static implicit operator Azure.Compute.Batch.DisableBatchJobOption (string value) { throw null; }
@@ -3522,9 +3450,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.DiskEncryptionTarget OsDisk { get { throw null; } }
         public static Azure.Compute.Batch.DiskEncryptionTarget TemporaryDisk { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.DiskEncryptionTarget other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.DiskEncryptionTarget left, Azure.Compute.Batch.DiskEncryptionTarget right) { throw null; }
         public static implicit operator Azure.Compute.Batch.DiskEncryptionTarget (string value) { throw null; }
@@ -3541,9 +3467,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.DynamicVNetAssignmentScope Job { get { throw null; } }
         public static Azure.Compute.Batch.DynamicVNetAssignmentScope None { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.DynamicVNetAssignmentScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.DynamicVNetAssignmentScope left, Azure.Compute.Batch.DynamicVNetAssignmentScope right) { throw null; }
         public static implicit operator Azure.Compute.Batch.DynamicVNetAssignmentScope (string value) { throw null; }
@@ -3560,9 +3484,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.ElevationLevel Admin { get { throw null; } }
         public static Azure.Compute.Batch.ElevationLevel NonAdmin { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.ElevationLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.ElevationLevel left, Azure.Compute.Batch.ElevationLevel right) { throw null; }
         public static implicit operator Azure.Compute.Batch.ElevationLevel (string value) { throw null; }
@@ -3703,9 +3625,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.HostEndpointSettingsModeTypes Audit { get { throw null; } }
         public static Azure.Compute.Batch.HostEndpointSettingsModeTypes Enforce { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.HostEndpointSettingsModeTypes other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.HostEndpointSettingsModeTypes left, Azure.Compute.Batch.HostEndpointSettingsModeTypes right) { throw null; }
         public static implicit operator Azure.Compute.Batch.HostEndpointSettingsModeTypes (string value) { throw null; }
@@ -3722,9 +3642,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.ImageVerificationType Unverified { get { throw null; } }
         public static Azure.Compute.Batch.ImageVerificationType Verified { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.ImageVerificationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.ImageVerificationType left, Azure.Compute.Batch.ImageVerificationType right) { throw null; }
         public static implicit operator Azure.Compute.Batch.ImageVerificationType (string value) { throw null; }
@@ -3760,9 +3678,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.InboundEndpointProtocol Tcp { get { throw null; } }
         public static Azure.Compute.Batch.InboundEndpointProtocol Udp { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.InboundEndpointProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.InboundEndpointProtocol left, Azure.Compute.Batch.InboundEndpointProtocol right) { throw null; }
         public static implicit operator Azure.Compute.Batch.InboundEndpointProtocol (string value) { throw null; }
@@ -3798,9 +3714,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.IpAddressProvisioningType NoPublicIpAddresses { get { throw null; } }
         public static Azure.Compute.Batch.IpAddressProvisioningType UserManaged { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.IpAddressProvisioningType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.IpAddressProvisioningType left, Azure.Compute.Batch.IpAddressProvisioningType right) { throw null; }
         public static implicit operator Azure.Compute.Batch.IpAddressProvisioningType (string value) { throw null; }
@@ -3817,9 +3731,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.IPFamily IPv4 { get { throw null; } }
         public static Azure.Compute.Batch.IPFamily IPv6 { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.IPFamily other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.IPFamily left, Azure.Compute.Batch.IPFamily right) { throw null; }
         public static implicit operator Azure.Compute.Batch.IPFamily (string value) { throw null; }
@@ -3867,9 +3779,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.LoginMode Batch { get { throw null; } }
         public static Azure.Compute.Batch.LoginMode Interactive { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.LoginMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.LoginMode left, Azure.Compute.Batch.LoginMode right) { throw null; }
         public static implicit operator Azure.Compute.Batch.LoginMode (string value) { throw null; }
@@ -3985,9 +3895,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.NetworkSecurityGroupRuleAccess Allow { get { throw null; } }
         public static Azure.Compute.Batch.NetworkSecurityGroupRuleAccess Deny { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.NetworkSecurityGroupRuleAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.NetworkSecurityGroupRuleAccess left, Azure.Compute.Batch.NetworkSecurityGroupRuleAccess right) { throw null; }
         public static implicit operator Azure.Compute.Batch.NetworkSecurityGroupRuleAccess (string value) { throw null; }
@@ -4020,9 +3928,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.OSType Linux { get { throw null; } }
         public static Azure.Compute.Batch.OSType Windows { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.OSType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.OSType left, Azure.Compute.Batch.OSType right) { throw null; }
         public static implicit operator Azure.Compute.Batch.OSType (string value) { throw null; }
@@ -4087,9 +3993,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.OutputFileUploadCondition TaskFailure { get { throw null; } }
         public static Azure.Compute.Batch.OutputFileUploadCondition TaskSuccess { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.OutputFileUploadCondition other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.OutputFileUploadCondition left, Azure.Compute.Batch.OutputFileUploadCondition right) { throw null; }
         public static implicit operator Azure.Compute.Batch.OutputFileUploadCondition (string value) { throw null; }
@@ -4285,9 +4189,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.SchedulingState Disabled { get { throw null; } }
         public static Azure.Compute.Batch.SchedulingState Enabled { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.SchedulingState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.SchedulingState left, Azure.Compute.Batch.SchedulingState right) { throw null; }
         public static implicit operator Azure.Compute.Batch.SchedulingState (string value) { throw null; }
@@ -4305,9 +4207,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.SecurityEncryptionTypes NonPersistedTPM { get { throw null; } }
         public static Azure.Compute.Batch.SecurityEncryptionTypes VMGuestStateOnly { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.SecurityEncryptionTypes other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.SecurityEncryptionTypes left, Azure.Compute.Batch.SecurityEncryptionTypes right) { throw null; }
         public static implicit operator Azure.Compute.Batch.SecurityEncryptionTypes (string value) { throw null; }
@@ -4341,9 +4241,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.SecurityTypes ConfidentialVM { get { throw null; } }
         public static Azure.Compute.Batch.SecurityTypes TrustedLaunch { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.SecurityTypes other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.SecurityTypes left, Azure.Compute.Batch.SecurityTypes right) { throw null; }
         public static implicit operator Azure.Compute.Batch.SecurityTypes (string value) { throw null; }
@@ -4387,9 +4285,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.StatusLevelTypes Info { get { throw null; } }
         public static Azure.Compute.Batch.StatusLevelTypes Warning { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.StatusLevelTypes other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.StatusLevelTypes left, Azure.Compute.Batch.StatusLevelTypes right) { throw null; }
         public static implicit operator Azure.Compute.Batch.StatusLevelTypes (string value) { throw null; }
@@ -4419,9 +4315,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.StorageAccountType StandardLRS { get { throw null; } }
         public static Azure.Compute.Batch.StorageAccountType StandardSSDLRS { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.StorageAccountType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.StorageAccountType left, Azure.Compute.Batch.StorageAccountType right) { throw null; }
         public static implicit operator Azure.Compute.Batch.StorageAccountType (string value) { throw null; }
@@ -4468,9 +4362,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.UpgradeMode Manual { get { throw null; } }
         public static Azure.Compute.Batch.UpgradeMode Rolling { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.UpgradeMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Compute.Batch.UpgradeMode left, Azure.Compute.Batch.UpgradeMode right) { throw null; }
         public static implicit operator Azure.Compute.Batch.UpgradeMode (string value) { throw null; }
