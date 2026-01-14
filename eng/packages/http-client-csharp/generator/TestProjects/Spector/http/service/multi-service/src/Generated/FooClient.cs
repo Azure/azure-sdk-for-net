@@ -13,30 +13,40 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Service.MultiService.Combined;
 
-namespace Service.MultiService.ServiceB
+namespace Service.MultiService.ServiceA
 {
-    /// <summary> The Bar sub-client. </summary>
-    public partial class Bar
+    /// <summary> The FooClient service client. </summary>
+    public partial class FooClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of Bar for mocking. </summary>
-        protected Bar()
+        /// <summary> Initializes a new instance of FooClient for mocking. </summary>
+        protected FooClient()
         {
         }
 
-        /// <summary> Initializes a new instance of Bar. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <summary> Initializes a new instance of FooClient. </summary>
         /// <param name="endpoint"> Service host. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Bar(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public FooClient(Uri endpoint) : this(endpoint, new FooClientOptions())
         {
-            ClientDiagnostics = clientDiagnostics;
+        }
+
+        /// <summary> Initializes a new instance of FooClient. </summary>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public FooClient(Uri endpoint, FooClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new FooClientOptions();
+
             _endpoint = endpoint;
-            _apiVersion = apiVersion;
-            Pipeline = pipeline;
+            _apiVersion = options.Version;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -58,7 +68,7 @@ namespace Service.MultiService.ServiceB
         /// <returns> The response returned from the service. </returns>
         public virtual Response Test(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Bar.Test");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FooClient.Test");
             scope.Start();
             try
             {
@@ -85,7 +95,7 @@ namespace Service.MultiService.ServiceB
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> TestAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Bar.Test");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FooClient.Test");
             scope.Start();
             try
             {
@@ -102,19 +112,19 @@ namespace Service.MultiService.ServiceB
         /// <summary> Test. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BarModel> Test(CancellationToken cancellationToken = default)
+        public virtual Response<FooModel> Test(CancellationToken cancellationToken = default)
         {
             Response result = Test(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((BarModel)result, result);
+            return Response.FromValue((FooModel)result, result);
         }
 
         /// <summary> Test. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BarModel>> TestAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FooModel>> TestAsync(CancellationToken cancellationToken = default)
         {
             Response result = await TestAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((BarModel)result, result);
+            return Response.FromValue((FooModel)result, result);
         }
     }
 }
