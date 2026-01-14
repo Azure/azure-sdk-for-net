@@ -15,15 +15,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Analytics.PlanetaryComputer
+namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
-    internal partial class MultiPartFormDataBinaryContent : RequestContent
+    internal partial class MultiPartFormDataRequestContent : RequestContent
     {
         private readonly MultipartFormDataContent _multipartContent;
         private static readonly Random _random = new Random();
         private static readonly char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
-        public MultiPartFormDataBinaryContent()
+        public MultiPartFormDataRequestContent()
         {
             _multipartContent = new MultipartFormDataContent(CreateBoundary());
         }
