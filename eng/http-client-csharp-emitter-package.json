@@ -9,6 +9,7 @@
     "@typespec/compiler": "1.7.0",
     "@typespec/http": "1.7.0",
     "@typespec/openapi": "1.7.0",
+    "@typespec/openapi3": "1.7.0",
     "@typespec/rest": "0.77.0",
     "@typespec/streams": "0.77.0",
     "@typespec/versioning": "0.77.0",

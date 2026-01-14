@@ -5,6 +5,8 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
@@ -207,6 +209,160 @@ namespace Azure.AI.Projects
                 after,
                 before,
                 options);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Container log entry streamed from the container as text chunks.
+        /// Each chunk is a UTF-8 string that may be either a plain text log line
+        /// or a JSON-formatted log entry, depending on the type of container log being streamed.
+        /// Clients should treat each chunk as opaque text and, if needed, attempt
+        /// to parse it as JSON based on their logging requirements.
+        /// 
+        /// For system logs, the format is JSON with the following structure:
+        /// {"TimeStamp":"2025-12-15T16:51:33Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Connecting to the events collector...","Reason":"StartingGettingEvents","EventSource":"ContainerAppController","Count":1}
+        /// {"TimeStamp":"2025-12-15T16:51:34Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Successfully connected to events server","Reason":"ConnectedToEventsServer","EventSource":"ContainerAppController","Count":1}
+        /// 
+        /// For console logs, the format is plain text as emitted by the container's stdout/stderr.
+        /// 2025-12-15T08:43:48.72656  Connecting to the container 'agent-container'...
+        /// 2025-12-15T08:43:48.75451  Successfully Connected to container: 'agent-container' [Revision: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b', Replica: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b-6898b9c89f-mpkjc']
+        /// 2025-12-15T08:33:59.0671054Z stdout F INFO:     127.0.0.1:42588 - "GET /readiness HTTP/1.1" 200 OK
+        /// 2025-12-15T08:34:29.0649033Z stdout F INFO:     127.0.0.1:60246 - "GET /readiness HTTP/1.1" 200 OK
+        /// 2025-12-15T08:34:59.0644467Z stdout F INFO:     127.0.0.1:43994 - "GET /readiness HTTP/1.1" 200 OK
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="agentVersion"> The version of the agent. </param>
+        /// <param name="kind"> console returns container stdout/stderr, system returns container app event stream. defaults to console. </param>
+        /// <param name="replicaName"> When omitted, the server chooses the first replica for console logs. Required to target a specific replica. </param>
+        /// <param name="tail"> Number of trailing lines returned. Enforced to 1-300. Defaults to 20. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult StreamAgentContainerLogs(string agentName, string agentVersion, string kind, string replicaName, int? tail, RequestOptions options)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
+
+            using PipelineMessage message = CreateStreamAgentContainerLogsRequest(agentName, agentVersion, kind, replicaName, tail, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Container log entry streamed from the container as text chunks.
+        /// Each chunk is a UTF-8 string that may be either a plain text log line
+        /// or a JSON-formatted log entry, depending on the type of container log being streamed.
+        /// Clients should treat each chunk as opaque text and, if needed, attempt
+        /// to parse it as JSON based on their logging requirements.
+        /// 
+        /// For system logs, the format is JSON with the following structure:
+        /// {"TimeStamp":"2025-12-15T16:51:33Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Connecting to the events collector...","Reason":"StartingGettingEvents","EventSource":"ContainerAppController","Count":1}
+        /// {"TimeStamp":"2025-12-15T16:51:34Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Successfully connected to events server","Reason":"ConnectedToEventsServer","EventSource":"ContainerAppController","Count":1}
+        /// 
+        /// For console logs, the format is plain text as emitted by the container's stdout/stderr.
+        /// 2025-12-15T08:43:48.72656  Connecting to the container 'agent-container'...
+        /// 2025-12-15T08:43:48.75451  Successfully Connected to container: 'agent-container' [Revision: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b', Replica: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b-6898b9c89f-mpkjc']
+        /// 2025-12-15T08:33:59.0671054Z stdout F INFO:     127.0.0.1:42588 - "GET /readiness HTTP/1.1" 200 OK
+        /// 2025-12-15T08:34:29.0649033Z stdout F INFO:     127.0.0.1:60246 - "GET /readiness HTTP/1.1" 200 OK
+        /// 2025-12-15T08:34:59.0644467Z stdout F INFO:     127.0.0.1:43994 - "GET /readiness HTTP/1.1" 200 OK
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="agentVersion"> The version of the agent. </param>
+        /// <param name="kind"> console returns container stdout/stderr, system returns container app event stream. defaults to console. </param>
+        /// <param name="replicaName"> When omitted, the server chooses the first replica for console logs. Required to target a specific replica. </param>
+        /// <param name="tail"> Number of trailing lines returned. Enforced to 1-300. Defaults to 20. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> StreamAgentContainerLogsAsync(string agentName, string agentVersion, string kind, string replicaName, int? tail, RequestOptions options)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
+
+            using PipelineMessage message = CreateStreamAgentContainerLogsRequest(agentName, agentVersion, kind, replicaName, tail, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary>
+        /// Container log entry streamed from the container as text chunks.
+        /// Each chunk is a UTF-8 string that may be either a plain text log line
+        /// or a JSON-formatted log entry, depending on the type of container log being streamed.
+        /// Clients should treat each chunk as opaque text and, if needed, attempt
+        /// to parse it as JSON based on their logging requirements.
+        /// 
+        /// For system logs, the format is JSON with the following structure:
+        /// {"TimeStamp":"2025-12-15T16:51:33Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Connecting to the events collector...","Reason":"StartingGettingEvents","EventSource":"ContainerAppController","Count":1}
+        /// {"TimeStamp":"2025-12-15T16:51:34Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Successfully connected to events server","Reason":"ConnectedToEventsServer","EventSource":"ContainerAppController","Count":1}
+        /// 
+        /// For console logs, the format is plain text as emitted by the container's stdout/stderr.
+        /// 2025-12-15T08:43:48.72656  Connecting to the container 'agent-container'...
+        /// 2025-12-15T08:43:48.75451  Successfully Connected to container: 'agent-container' [Revision: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b', Replica: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b-6898b9c89f-mpkjc']
+        /// 2025-12-15T08:33:59.0671054Z stdout F INFO:     127.0.0.1:42588 - "GET /readiness HTTP/1.1" 200 OK
+        /// 2025-12-15T08:34:29.0649033Z stdout F INFO:     127.0.0.1:60246 - "GET /readiness HTTP/1.1" 200 OK
+        /// 2025-12-15T08:34:59.0644467Z stdout F INFO:     127.0.0.1:43994 - "GET /readiness HTTP/1.1" 200 OK
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="agentVersion"> The version of the agent. </param>
+        /// <param name="kind"> console returns container stdout/stderr, system returns container app event stream. defaults to console. </param>
+        /// <param name="replicaName"> When omitted, the server chooses the first replica for console logs. Required to target a specific replica. </param>
+        /// <param name="tail"> Number of trailing lines returned. Enforced to 1-300. Defaults to 20. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult StreamAgentContainerLogs(string agentName, string agentVersion, ContainerLogKind? kind = default, string replicaName = default, int? tail = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
+
+            return StreamAgentContainerLogs(agentName, agentVersion, kind?.ToSerialString(), replicaName, tail, cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary>
+        /// Container log entry streamed from the container as text chunks.
+        /// Each chunk is a UTF-8 string that may be either a plain text log line
+        /// or a JSON-formatted log entry, depending on the type of container log being streamed.
+        /// Clients should treat each chunk as opaque text and, if needed, attempt
+        /// to parse it as JSON based on their logging requirements.
+        /// 
+        /// For system logs, the format is JSON with the following structure:
+        /// {"TimeStamp":"2025-12-15T16:51:33Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Connecting to the events collector...","Reason":"StartingGettingEvents","EventSource":"ContainerAppController","Count":1}
+        /// {"TimeStamp":"2025-12-15T16:51:34Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Successfully connected to events server","Reason":"ConnectedToEventsServer","EventSource":"ContainerAppController","Count":1}
+        /// 
+        /// For console logs, the format is plain text as emitted by the container's stdout/stderr.
+        /// 2025-12-15T08:43:48.72656  Connecting to the container 'agent-container'...
+        /// 2025-12-15T08:43:48.75451  Successfully Connected to container: 'agent-container' [Revision: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b', Replica: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b-6898b9c89f-mpkjc']
+        /// 2025-12-15T08:33:59.0671054Z stdout F INFO:     127.0.0.1:42588 - "GET /readiness HTTP/1.1" 200 OK
+        /// 2025-12-15T08:34:29.0649033Z stdout F INFO:     127.0.0.1:60246 - "GET /readiness HTTP/1.1" 200 OK
+        /// 2025-12-15T08:34:59.0644467Z stdout F INFO:     127.0.0.1:43994 - "GET /readiness HTTP/1.1" 200 OK
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="agentVersion"> The version of the agent. </param>
+        /// <param name="kind"> console returns container stdout/stderr, system returns container app event stream. defaults to console. </param>
+        /// <param name="replicaName"> When omitted, the server chooses the first replica for console logs. Required to target a specific replica. </param>
+        /// <param name="tail"> Number of trailing lines returned. Enforced to 1-300. Defaults to 20. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult> StreamAgentContainerLogsAsync(string agentName, string agentVersion, ContainerLogKind? kind = default, string replicaName = default, int? tail = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
+
+            return await StreamAgentContainerLogsAsync(agentName, agentVersion, kind?.ToSerialString(), replicaName, tail, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
     }
 }
