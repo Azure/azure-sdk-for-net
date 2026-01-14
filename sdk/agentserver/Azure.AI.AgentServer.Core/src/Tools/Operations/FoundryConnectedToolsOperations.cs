@@ -180,7 +180,7 @@ internal class FoundryConnectedToolsOperations
             return Array.Empty<ResolvedFoundryTool>();
         }
 
-        var enrichedTools = ParseEnrichedTools(toolsElement, _options.ToolConfig.ConnectedTools);
+        var enrichedTools = ConnectedToolsMetadataBuilder.ParseEnrichedTools(toolsElement, _options.ToolConfig.ConnectedTools);
 
         return ToolDescriptorBuilder.BuildDescriptors(enrichedTools, FoundryToolSource.CONNECTED);
     }
@@ -206,7 +206,7 @@ internal class FoundryConnectedToolsOperations
             return Array.Empty<ResolvedFoundryTool>();
         }
 
-        var enrichedTools = ParseEnrichedTools(toolsElement, _options.ToolConfig.ConnectedTools);
+        var enrichedTools = ConnectedToolsMetadataBuilder.ParseEnrichedTools(toolsElement, _options.ToolConfig.ConnectedTools);
 
         return ToolDescriptorBuilder.BuildDescriptors(enrichedTools, FoundryToolSource.CONNECTED);
     }
@@ -273,55 +273,5 @@ internal class FoundryConnectedToolsOperations
 
             throw new OAuthConsentRequiredException(message ?? "OAuth consent required", consentUrl);
         }
-    }
-
-    private List<Dictionary<string, object?>> ParseEnrichedTools(
-        JsonElement toolsElement,
-        IReadOnlyList<FoundryConnectedTool> foundryTools)
-    {
-        var enrichedTools = new List<Dictionary<string, object?>>();
-
-        foreach (var toolEntry in toolsElement.EnumerateArray())
-        {
-            if (!toolEntry.TryGetProperty("remoteServer", out var remoteServer))
-            {
-                continue;
-            }
-
-            var projectConnectionId = remoteServer.GetProperty("projectConnectionId").GetString();
-            var protocol = remoteServer.GetProperty("protocol").GetString();
-
-            var foundryTool = foundryTools.FirstOrDefault(td =>
-                string.Equals(td.Type, protocol, StringComparison.OrdinalIgnoreCase) &&
-                string.Equals(td.ProjectConnectionId, projectConnectionId, StringComparison.OrdinalIgnoreCase));
-
-            if (!toolEntry.TryGetProperty("manifest", out var manifestArray))
-            {
-                continue;
-            }
-
-            foreach (var manifest in manifestArray.EnumerateArray())
-            {
-                var enrichedTool = new Dictionary<string, object?>
-                {
-                    ["name"] = manifest.TryGetProperty("name", out var nameEl) ? nameEl.GetString() : null,
-                    ["description"] = manifest.TryGetProperty("description", out var descEl) ? descEl.GetString() : null,
-                    ["foundry_tool"] = foundryTool,
-                    ["projectConnectionId"] = projectConnectionId,
-                    ["protocol"] = protocol
-                };
-
-                if (manifest.TryGetProperty("parameters", out var parametersEl))
-                {
-                    enrichedTool["inputSchema"] = JsonSerializer.Deserialize<Dictionary<string, object?>>(
-                        parametersEl.GetRawText(),
-                        JsonExtensions.DefaultJsonSerializerOptions);
-                }
-
-                enrichedTools.Add(enrichedTool);
-            }
-        }
-
-        return enrichedTools;
     }
 }

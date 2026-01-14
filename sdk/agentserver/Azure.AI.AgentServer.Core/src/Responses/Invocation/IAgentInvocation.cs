@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
-using Azure.AI.AgentServer.Contracts.Generated.Responses;
+using Azure.AI.AgentServer.Core.AgentRun;
 
 namespace Azure.AI.AgentServer.Responses.Invocation;
 
@@ -14,22 +14,24 @@ public interface IAgentInvocation
     /// <summary>
     /// Invokes the agent asynchronously and returns a complete response.
     /// </summary>
-    /// <param name="request">The create response request.</param>
-    /// <param name="context">The agent invocation context.</param>
+    /// <param name="context">
+    /// The agent run context containing the request, user information, tools, and ID generation.
+    /// </param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The response from the agent.</returns>
-    Task<Contracts.Generated.Responses.Response> InvokeAsync(CreateResponseRequest request,
-        AgentInvocationContext context,
+    Task<Contracts.Generated.Responses.Response> InvokeAsync(
+        AgentRunContext context,
         CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Invokes the agent asynchronously with streaming support.
     /// </summary>
-    /// <param name="request">The create response request.</param>
-    /// <param name="context">The agent invocation context.</param>
+    /// <param name="context">
+    /// The agent run context containing the request, user information, tools, and ID generation.
+    /// </param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>An async enumerable of response stream events.</returns>
-    IAsyncEnumerable<ResponseStreamEvent> InvokeStreamAsync(CreateResponseRequest request,
-        AgentInvocationContext context,
+    IAsyncEnumerable<ResponseStreamEvent> InvokeStreamAsync(
+        AgentRunContext context,
         CancellationToken cancellationToken = default);
 }

@@ -190,7 +190,7 @@ internal class FoundryMcpToolsOperations
             toolsElement.GetRawText(),
             JsonExtensions.DefaultJsonSerializerOptions) ?? new List<Dictionary<string, object?>>();
 
-        EnrichWithHostedToolDefinitions(rawTools);
+        McpToolsMetadataBuilder.EnrichWithHostedToolDefinitions(rawTools, _options.ToolConfig.HostedMcpTools);
 
         return ToolDescriptorBuilder.BuildDescriptors(rawTools, FoundryToolSource.HOSTED_MCP);
     }
@@ -218,7 +218,7 @@ internal class FoundryMcpToolsOperations
             toolsElement.GetRawText(),
             JsonExtensions.DefaultJsonSerializerOptions) ?? new List<Dictionary<string, object?>>();
 
-        EnrichWithHostedToolDefinitions(rawTools);
+        McpToolsMetadataBuilder.EnrichWithHostedToolDefinitions(rawTools, _options.ToolConfig.HostedMcpTools);
 
         return ToolDescriptorBuilder.BuildDescriptors(rawTools, FoundryToolSource.HOSTED_MCP);
     }
@@ -262,35 +262,5 @@ internal class FoundryMcpToolsOperations
         return JsonSerializer.Deserialize<object>(
             resultElement.GetRawText(),
             JsonExtensions.DefaultJsonSerializerOptions);
-    }
-
-    private void EnrichWithHostedToolDefinitions(List<Dictionary<string, object?>> rawTools)
-    {
-        if (rawTools.Count == 0 || _options.ToolConfig.HostedMcpTools.Count == 0)
-        {
-            return;
-        }
-
-        var toolsByName = _options.ToolConfig.HostedMcpTools
-            .GroupBy(tool => tool.Name, StringComparer.OrdinalIgnoreCase)
-            .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
-
-        var filteredTools = new List<Dictionary<string, object?>>(rawTools.Count);
-
-        foreach (var raw in rawTools)
-        {
-            var (toolName, _) = ToolMetadataExtractor.ExtractNameDescription(raw);
-            if (string.IsNullOrWhiteSpace(toolName) ||
-                !toolsByName.TryGetValue(toolName, out var foundryTool))
-            {
-                continue;
-            }
-
-            raw["foundry_tool"] = foundryTool;
-            filteredTools.Add(raw);
-        }
-
-        rawTools.Clear();
-        rawTools.AddRange(filteredTools);
     }
 }

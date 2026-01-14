@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.AI.AgentServer.Contracts.Generated.Responses;
+using Azure.AI.AgentServer.Core.AgentRun;
 using Azure.AI.AgentServer.Core.Common;
-using Azure.AI.AgentServer.Responses.Invocation;
 using Microsoft.Extensions.Logging;
 
 namespace Azure.AI.AgentServer.Core.Telemetry;
@@ -21,14 +21,14 @@ public static class HostedAgentTelemetry
     /// </summary>
     public static readonly ActivitySource Source = new("Azure.AI.AgentServer");
 
-    internal static IDisposable StartActivity(this AgentInvocationContext context, ILogger logger,
+    internal static IDisposable StartActivity(this AgentRunContext context, ILogger logger,
         CreateResponseRequest request)
     {
         var logging = logger.BeginScope(new Dictionary<string, object?>
         {
             ["ResponseId"] = context.ResponseId,
             ["ConversationId"] = context.ConversationId,
-            ["Streaming"] = request.Stream ?? false,
+            ["Streaming"] = context.Stream,
         });
 
         var span = Source.StartActivity($"HostedAgents-{context.ResponseId}",
@@ -41,7 +41,7 @@ public static class HostedAgentTelemetry
             .SetTag("gen_ai.response.id", context.ResponseId)
             .SetResponsesTag("response_id", context.ResponseId)
             .SetResponsesTag("conversation_id", context.ConversationId)
-            .SetResponsesTag("streaming", request.Stream ?? false);
+            .SetResponsesTag("streaming", context.Stream);
 
         return new CompositeDisposable(logging, span);
     }
