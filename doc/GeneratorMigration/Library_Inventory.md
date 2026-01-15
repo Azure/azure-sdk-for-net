@@ -19,8 +19,8 @@
   - Old TypeSpec: 18
 - Data Plane (DPG): 174
   - Autorest/Swagger: 87
-  - New Emitter (TypeSpec): 24
-  - Old TypeSpec: 14
+  - New Emitter (TypeSpec): 25
+  - Old TypeSpec: 13
 - No generator: 49
 
 
@@ -28,7 +28,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 24 / 38 (63.2%)
+**Migration Status**: 25 / 38 (65.8%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
