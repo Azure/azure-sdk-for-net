@@ -222,9 +222,7 @@ namespace Azure.ResourceManager.Playwright.Models
         public static Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus left, Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus (string value) { throw null; }
@@ -257,9 +255,7 @@ namespace Azure.ResourceManager.Playwright.Models
         public static Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialState Expired { get { throw null; } }
         public static Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialState NotApplicable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialState left, Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialState (string value) { throw null; }
@@ -307,9 +303,7 @@ namespace Azure.ResourceManager.Playwright.Models
         public static Azure.ResourceManager.Playwright.Models.PlaywrightNameUnavailableReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.Playwright.Models.PlaywrightNameUnavailableReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Playwright.Models.PlaywrightNameUnavailableReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Playwright.Models.PlaywrightNameUnavailableReason left, Azure.ResourceManager.Playwright.Models.PlaywrightNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.Playwright.Models.PlaywrightNameUnavailableReason (string value) { throw null; }
@@ -330,9 +324,7 @@ namespace Azure.ResourceManager.Playwright.Models
         public static Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState left, Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState (string value) { throw null; }
@@ -348,9 +340,7 @@ namespace Azure.ResourceManager.Playwright.Models
         public PlaywrightQuotaName(string value) { throw null; }
         public static Azure.ResourceManager.Playwright.Models.PlaywrightQuotaName ExecutionMinutes { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Playwright.Models.PlaywrightQuotaName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Playwright.Models.PlaywrightQuotaName left, Azure.ResourceManager.Playwright.Models.PlaywrightQuotaName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Playwright.Models.PlaywrightQuotaName (string value) { throw null; }
