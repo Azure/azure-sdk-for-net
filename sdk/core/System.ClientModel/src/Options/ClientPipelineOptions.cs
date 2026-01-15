@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 
 namespace System.ClientModel.Primitives;
@@ -38,6 +39,7 @@ public class ClientPipelineOptions
     /// Initializes a new instance of <see cref="ClientPipelineOptions"/> from configuration.
     /// </summary>
     /// <param name="section">The configuration section to bind from.</param>
+    [Experimental("SCME0002")]
     protected ClientPipelineOptions(IConfigurationSection section)
     {
         if (section is null)

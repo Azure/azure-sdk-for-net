@@ -42,6 +42,7 @@ The Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInject
 - `System.ClientModel.Primitives.ConfigurationExtensions`
 - `System.ClientModel.Primitives.CredentialSettings`
 - `System.ClientModel.Primitives.AuthenticationPolicy.Create` method
+- `System.ClientModel.Primitives.ClientPipelineOptions` constructor that accepts `IConfigurationSection`
 
 ### Suppression
 
