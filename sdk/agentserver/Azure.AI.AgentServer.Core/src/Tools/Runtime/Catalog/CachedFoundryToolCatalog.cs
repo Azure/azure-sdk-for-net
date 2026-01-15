@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Concurrent;
 using Azure.AI.AgentServer.Core.Tools.Models;
 using Azure.AI.AgentServer.Core.Tools.Runtime.Facade;
 using Microsoft.Extensions.Caching.Memory;
@@ -15,6 +16,7 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
 {
     private readonly IMemoryCache _cache;
     private readonly TimeSpan _cacheTtl;
+    private readonly ConcurrentDictionary<object, SemaphoreSlim> _fetchLocks;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CachedFoundryToolCatalog"/> class.
@@ -34,6 +36,7 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
         {
             SizeLimit = maxCacheEntries
         });
+        _fetchLocks = new ConcurrentDictionary<object, SemaphoreSlim>();
     }
 
     /// <summary>
@@ -109,6 +112,7 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
 
     /// <summary>
     /// Fetches tools from the underlying source and caches the results.
+    /// Uses per-tool locking to prevent concurrent fetches of the same tool.
     /// </summary>
     private async Task<Dictionary<FoundryTool, ResolvedFoundryTool>> FetchAndCacheToolsAsync(
         IReadOnlyList<FoundryTool> tools,
@@ -117,30 +121,50 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
     {
         var results = new Dictionary<FoundryTool, ResolvedFoundryTool>();
 
+        // Group tools by whether they need locking (to prevent duplicate fetches)
         foreach (var tool in tools)
         {
             var cacheKey = GetCacheKey(userInfo, tool);
+            var lockKey = cacheKey;
 
-            if (_cache.TryGetValue<ResolvedFoundryTool>(cacheKey, out var cachedTool) && cachedTool != null)
+            // Get or create a semaphore for this cache key
+            var semaphore = _fetchLocks.GetOrAdd(lockKey, _ => new SemaphoreSlim(1, 1));
+
+            await semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+            try
             {
-                results[tool] = cachedTool;
-                continue;
-            }
-
-            // Fetch from underlying source (batch fetch for efficiency)
-            var fetchedTools = await FetchToolsAsync(new[] { tool }, userInfo, cancellationToken)
-                .ConfigureAwait(false);
-
-            if (fetchedTools.TryGetValue(tool, out var resolvedTool) && resolvedTool != null)
-            {
-                // Cache the result
-                _cache.Set(cacheKey, resolvedTool, new MemoryCacheEntryOptions
+                // Double-check cache after acquiring lock
+                if (_cache.TryGetValue<ResolvedFoundryTool>(cacheKey, out var cachedTool) && cachedTool != null)
                 {
-                    AbsoluteExpirationRelativeToNow = _cacheTtl,
-                    Size = 1
-                });
+                    results[tool] = cachedTool;
+                    continue;
+                }
 
-                results[tool] = resolvedTool;
+                // Fetch from underlying source (batch fetch for efficiency)
+                var fetchedTools = await FetchToolsAsync(new[] { tool }, userInfo, cancellationToken)
+                    .ConfigureAwait(false);
+
+                if (fetchedTools.TryGetValue(tool, out var resolvedTool) && resolvedTool != null)
+                {
+                    // Cache the result
+                    _cache.Set(cacheKey, resolvedTool, new MemoryCacheEntryOptions
+                    {
+                        AbsoluteExpirationRelativeToNow = _cacheTtl,
+                        Size = 1
+                    });
+
+                    results[tool] = resolvedTool;
+                }
+            }
+            finally
+            {
+                semaphore.Release();
+
+                // Clean up semaphore if no longer needed
+                if (semaphore.CurrentCount == 1)
+                {
+                    _fetchLocks.TryRemove(lockKey, out _);
+                }
             }
         }
 
@@ -214,6 +238,13 @@ public abstract class CachedFoundryToolCatalog : IFoundryToolCatalog, IDisposabl
         if (disposing)
         {
             _cache?.Dispose();
+
+            foreach (var semaphore in _fetchLocks.Values)
+            {
+                semaphore?.Dispose();
+            }
+
+            _fetchLocks.Clear();
         }
     }
 }
