@@ -19,7 +19,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// question.
         /// </param>
         /// <param name="question"> User question to query against the knowledge base. </param>
-        /// <param name="top"> Max number of answers to be returned for the question. </param>
+        /// <param name="size"> Max number of answers to be returned for the question. </param>
         /// <param name="userId"> Unique identifier for the user. </param>
         /// <param name="confidenceThreshold"> Minimum threshold score for answers, value ranges from 0 to 1. </param>
         /// <param name="answerContext"> Context object with previous QnA's information. </param>
@@ -29,12 +29,12 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="includeUnstructuredSources"> (Optional) Flag to enable Query over Unstructured Sources. </param>
         /// <param name="queryPreferences"> To fine tune query results. </param>
         /// <returns> A new <see cref="Inference.AnswersOptions"/> instance for mocking. </returns>
-        public static AnswersOptions AnswersOptions(int? qnaId = default, string question = default, int? top = default, string userId = default, double? confidenceThreshold = default, KnowledgeBaseAnswerContext answerContext = default, RankerKind? rankerKind = default, QueryFilters filters = default, ShortAnswerOptions shortAnswerOptions = default, bool? includeUnstructuredSources = default, QueryPreferences queryPreferences = default)
+        public static AnswersOptions AnswersOptions(int? qnaId = default, string question = default, int? size = default, string userId = default, double? confidenceThreshold = default, KnowledgeBaseAnswerContext answerContext = default, RankerKind? rankerKind = default, QueryFilters filters = default, ShortAnswerOptions shortAnswerOptions = default, bool? includeUnstructuredSources = default, QueryPreferences queryPreferences = default)
         {
             return new AnswersOptions(
                 qnaId,
                 question,
-                top,
+                size,
                 userId,
                 confidenceThreshold,
                 answerContext,
@@ -71,14 +71,14 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         }
 
         /// <summary> Find QnAs that are associated with the given list of metadata. </summary>
-        /// <param name="metadataRecords"> Dictionary of string. </param>
+        /// <param name="metadata"> Dictionary of string. </param>
         /// <param name="logicalOperation"> Operation used to join metadata filters. </param>
         /// <returns> A new <see cref="Inference.MetadataFilter"/> instance for mocking. </returns>
-        public static MetadataFilter MetadataFilter(IEnumerable<MetadataRecord> metadataRecords = default, LogicalOperationKind? logicalOperation = default)
+        public static MetadataFilter MetadataFilter(IEnumerable<MetadataRecord> metadata = default, LogicalOperationKind? logicalOperation = default)
         {
-            metadataRecords ??= new ChangeTrackingList<MetadataRecord>();
+            metadata ??= new ChangeTrackingList<MetadataRecord>();
 
-            return new MetadataFilter(metadataRecords.ToList(), logicalOperation, additionalBinaryDataProperties: null);
+            return new MetadataFilter(metadata.ToList(), logicalOperation, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Object to provide the key value pair for each metadata. </summary>
@@ -91,16 +91,16 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         }
 
         /// <summary> To configure Answer span prediction feature. </summary>
-        /// <param name="isEnabled"> Enable or disable Answer Span prediction. </param>
+        /// <param name="enable"> Enable or disable Answer Span prediction. </param>
         /// <param name="confidenceThreshold">
         /// Minimum threshold score required to include an answer span, value ranges from 0
         /// to 1.
         /// </param>
-        /// <param name="top"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
+        /// <param name="size"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
         /// <returns> A new <see cref="Inference.ShortAnswerOptions"/> instance for mocking. </returns>
-        public static ShortAnswerOptions ShortAnswerOptions(bool isEnabled = default, double? confidenceThreshold = default, int? top = default)
+        public static ShortAnswerOptions ShortAnswerOptions(bool enable = default, double? confidenceThreshold = default, int? size = default)
         {
-            return new ShortAnswerOptions(isEnabled, confidenceThreshold, top, additionalBinaryDataProperties: null);
+            return new ShortAnswerOptions(enable, confidenceThreshold, size, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Additional properties to fine tune query results. </summary>
@@ -125,13 +125,13 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
         /// <summary> Represents fields for Prebuilt query matching. Prebuilt weights will be used for giving preference to question and answer columns when quering AI search. </summary>
         /// <param name="fields"> List of fields to filter during query. For ex if only "questions" is used then query will be filtered on that column. </param>
-        /// <param name="isFullMatchingDisabled"> Disabling full match on query. Enabling this will give preference to qna pairs that have exact match. </param>
+        /// <param name="disableFullMatch"> Disabling full match on query. Enabling this will give preference to qna pairs that have exact match. </param>
         /// <returns> A new <see cref="Inference.PrebuiltQueryMatchingPolicy"/> instance for mocking. </returns>
-        public static PrebuiltQueryMatchingPolicy PrebuiltQueryMatchingPolicy(IEnumerable<MatchingPolicyFieldsType> fields = default, bool? isFullMatchingDisabled = default)
+        public static PrebuiltQueryMatchingPolicy PrebuiltQueryMatchingPolicy(IEnumerable<MatchingPolicyFieldsType> fields = default, bool? disableFullMatch = default)
         {
             fields ??= new ChangeTrackingList<MatchingPolicyFieldsType>();
 
-            return new PrebuiltQueryMatchingPolicy(MatchingPolicyKind.Prebuilt, additionalBinaryDataProperties: null, fields.ToList(), isFullMatchingDisabled);
+            return new PrebuiltQueryMatchingPolicy(MatchingPolicyKind.Prebuilt, additionalBinaryDataProperties: null, fields.ToList(), disableFullMatch);
         }
 
         /// <summary> Represents List of Question Answers. </summary>
@@ -191,12 +191,12 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
         /// <summary> Prompt for an answer. </summary>
         /// <param name="displayOrder"> Index of the prompt - used in ordering of the prompts. </param>
-        /// <param name="id"> QnA ID corresponding to the prompt. </param>
+        /// <param name="qnaId"> QnA ID corresponding to the prompt. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
         /// <returns> A new <see cref="Inference.KnowledgeBaseAnswerPrompt"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = default, int? id = default, string displayText = default)
+        public static KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = default, int? qnaId = default, string displayText = default)
         {
-            return new KnowledgeBaseAnswerPrompt(displayOrder, id, displayText, additionalBinaryDataProperties: null);
+            return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Answer span object of QnA. </summary>

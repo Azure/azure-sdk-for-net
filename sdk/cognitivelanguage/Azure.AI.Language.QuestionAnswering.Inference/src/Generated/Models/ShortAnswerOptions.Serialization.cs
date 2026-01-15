@@ -39,16 +39,16 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 throw new FormatException($"The model {nameof(ShortAnswerOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("enable"u8);
-            writer.WriteBooleanValue(IsEnabled);
+            writer.WriteBooleanValue(Enable);
             if (Optional.IsDefined(ConfidenceThreshold))
             {
                 writer.WritePropertyName("confidenceScoreThreshold"u8);
                 writer.WriteNumberValue(ConfidenceThreshold.Value);
             }
-            if (Optional.IsDefined(Top))
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("topAnswersWithSpan"u8);
-                writer.WriteNumberValue(Top.Value);
+                writer.WriteNumberValue(Size.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -92,15 +92,15 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             {
                 return null;
             }
-            bool isEnabled = default;
+            bool enable = default;
             double? confidenceThreshold = default;
-            int? top = default;
+            int? size = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("enable"u8))
                 {
-                    isEnabled = prop.Value.GetBoolean();
+                    enable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("confidenceScoreThreshold"u8))
@@ -118,7 +118,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                     {
                         continue;
                     }
-                    top = prop.Value.GetInt32();
+                    size = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ShortAnswerOptions(isEnabled, confidenceThreshold, top, additionalBinaryDataProperties);
+            return new ShortAnswerOptions(enable, confidenceThreshold, size, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

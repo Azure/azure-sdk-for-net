@@ -33,11 +33,11 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             {
                 throw new FormatException($"The model {nameof(MetadataFilter)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(MetadataRecords))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
-                foreach (MetadataRecord item in MetadataRecords)
+                foreach (MetadataRecord item in Metadata)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -90,7 +90,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             {
                 return null;
             }
-            IList<MetadataRecord> metadataRecords = default;
+            IList<MetadataRecord> metadata = default;
             LogicalOperationKind? logicalOperation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                     {
                         array.Add(MetadataRecord.DeserializeMetadataRecord(item, options));
                     }
-                    metadataRecords = array;
+                    metadata = array;
                     continue;
                 }
                 if (prop.NameEquals("logicalOperation"u8))
@@ -123,7 +123,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MetadataFilter(metadataRecords ?? new ChangeTrackingList<MetadataRecord>(), logicalOperation, additionalBinaryDataProperties);
+            return new MetadataFilter(metadata ?? new ChangeTrackingList<MetadataRecord>(), logicalOperation, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

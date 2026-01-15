@@ -44,10 +44,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsFullMatchingDisabled))
+            if (Optional.IsDefined(DisableFullMatch))
             {
                 writer.WritePropertyName("disableFullMatch"u8);
-                writer.WriteBooleanValue(IsFullMatchingDisabled.Value);
+                writer.WriteBooleanValue(DisableFullMatch.Value);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             MatchingPolicyKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<MatchingPolicyFieldsType> fields = default;
-            bool? isFullMatchingDisabled = default;
+            bool? disableFullMatch = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -107,7 +107,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                     {
                         continue;
                     }
-                    isFullMatchingDisabled = prop.Value.GetBoolean();
+                    disableFullMatch = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +115,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrebuiltQueryMatchingPolicy(kind, additionalBinaryDataProperties, fields ?? new ChangeTrackingList<MatchingPolicyFieldsType>(), isFullMatchingDisabled);
+            return new PrebuiltQueryMatchingPolicy(kind, additionalBinaryDataProperties, fields ?? new ChangeTrackingList<MatchingPolicyFieldsType>(), disableFullMatch);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -44,10 +44,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 writer.WritePropertyName("question"u8);
                 writer.WriteStringValue(Question);
             }
-            if (Optional.IsDefined(Top))
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("top"u8);
-                writer.WriteNumberValue(Top.Value);
+                writer.WriteNumberValue(Size.Value);
             }
             if (Optional.IsDefined(UserId))
             {
@@ -133,7 +133,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             }
             int? qnaId = default;
             string question = default;
-            int? top = default;
+            int? size = default;
             string userId = default;
             double? confidenceThreshold = default;
             KnowledgeBaseAnswerContext answerContext = default;
@@ -165,7 +165,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                     {
                         continue;
                     }
-                    top = prop.Value.GetInt32();
+                    size = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("userId"u8))
@@ -244,7 +244,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             return new AnswersOptions(
                 qnaId,
                 question,
-                top,
+                size,
                 userId,
                 confidenceThreshold,
                 answerContext,

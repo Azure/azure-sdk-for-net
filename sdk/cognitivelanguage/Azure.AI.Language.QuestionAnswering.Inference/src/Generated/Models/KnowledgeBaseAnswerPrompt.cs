@@ -23,13 +23,13 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswerPrompt"/>. </summary>
         /// <param name="displayOrder"> Index of the prompt - used in ordering of the prompts. </param>
-        /// <param name="id"> QnA ID corresponding to the prompt. </param>
+        /// <param name="qnaId"> QnA ID corresponding to the prompt. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseAnswerPrompt(int? displayOrder, int? id, string displayText, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseAnswerPrompt(int? displayOrder, int? qnaId, string displayText, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayOrder = displayOrder;
-            Id = id;
+            QnaId = qnaId;
             DisplayText = displayText;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -38,7 +38,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public int? DisplayOrder { get; }
 
         /// <summary> QnA ID corresponding to the prompt. </summary>
-        public int? Id { get; }
+        public int? QnaId { get; }
 
         /// <summary> Text displayed to represent a follow up question prompt. </summary>
         public string DisplayText { get; }

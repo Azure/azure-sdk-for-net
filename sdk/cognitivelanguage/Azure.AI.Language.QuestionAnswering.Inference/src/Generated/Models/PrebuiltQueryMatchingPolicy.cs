@@ -23,17 +23,17 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="kind"> Kind of matching policy to be applied. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fields"> List of fields to filter during query. For ex if only "questions" is used then query will be filtered on that column. </param>
-        /// <param name="isFullMatchingDisabled"> Disabling full match on query. Enabling this will give preference to qna pairs that have exact match. </param>
-        internal PrebuiltQueryMatchingPolicy(MatchingPolicyKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<MatchingPolicyFieldsType> fields, bool? isFullMatchingDisabled) : base(kind, additionalBinaryDataProperties)
+        /// <param name="disableFullMatch"> Disabling full match on query. Enabling this will give preference to qna pairs that have exact match. </param>
+        internal PrebuiltQueryMatchingPolicy(MatchingPolicyKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<MatchingPolicyFieldsType> fields, bool? disableFullMatch) : base(kind, additionalBinaryDataProperties)
         {
             Fields = fields;
-            IsFullMatchingDisabled = isFullMatchingDisabled;
+            DisableFullMatch = disableFullMatch;
         }
 
         /// <summary> List of fields to filter during query. For ex if only "questions" is used then query will be filtered on that column. </summary>
         public IList<MatchingPolicyFieldsType> Fields { get; }
 
         /// <summary> Disabling full match on query. Enabling this will give preference to qna pairs that have exact match. </summary>
-        public bool? IsFullMatchingDisabled { get; set; }
+        public bool? DisableFullMatch { get; set; }
     }
 }

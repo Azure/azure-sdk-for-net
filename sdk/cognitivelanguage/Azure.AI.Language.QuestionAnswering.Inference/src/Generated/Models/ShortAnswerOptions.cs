@@ -17,38 +17,35 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ShortAnswerOptions"/>. </summary>
-        /// <param name="isEnabled"> Enable or disable Answer Span prediction. </param>
-        public ShortAnswerOptions(bool isEnabled)
+        /// <param name="enable"> Enable or disable Answer Span prediction. </param>
+        public ShortAnswerOptions(bool enable)
         {
-            IsEnabled = isEnabled;
+            Enable = enable;
         }
 
         /// <summary> Initializes a new instance of <see cref="ShortAnswerOptions"/>. </summary>
-        /// <param name="isEnabled"> Enable or disable Answer Span prediction. </param>
+        /// <param name="enable"> Enable or disable Answer Span prediction. </param>
         /// <param name="confidenceThreshold">
         /// Minimum threshold score required to include an answer span, value ranges from 0
         /// to 1.
         /// </param>
-        /// <param name="top"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
+        /// <param name="size"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ShortAnswerOptions(bool isEnabled, double? confidenceThreshold, int? top, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ShortAnswerOptions(bool enable, double? confidenceThreshold, int? size, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsEnabled = isEnabled;
+            Enable = enable;
             ConfidenceThreshold = confidenceThreshold;
-            Top = top;
+            Size = size;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enable or disable Answer Span prediction. </summary>
-        public bool IsEnabled { get; }
+        public bool Enable { get; }
 
         /// <summary>
         /// Minimum threshold score required to include an answer span, value ranges from 0
         /// to 1.
         /// </summary>
         public double? ConfidenceThreshold { get; set; }
-
-        /// <summary> Number of Top answers to be considered for span prediction from 1 to 10. </summary>
-        public int? Top { get; set; }
     }
 }

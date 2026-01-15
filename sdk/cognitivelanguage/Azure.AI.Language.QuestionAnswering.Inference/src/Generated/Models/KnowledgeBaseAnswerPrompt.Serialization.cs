@@ -38,10 +38,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 writer.WritePropertyName("displayOrder"u8);
                 writer.WriteNumberValue(DisplayOrder.Value);
             }
-            if (Optional.IsDefined(Id))
+            if (Optional.IsDefined(QnaId))
             {
                 writer.WritePropertyName("qnaId"u8);
-                writer.WriteNumberValue(Id.Value);
+                writer.WriteNumberValue(QnaId.Value);
             }
             if (Optional.IsDefined(DisplayText))
             {
@@ -91,7 +91,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 return null;
             }
             int? displayOrder = default;
-            int? id = default;
+            int? qnaId = default;
             string displayText = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                     {
                         continue;
                     }
-                    id = prop.Value.GetInt32();
+                    qnaId = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("displayText"u8))
@@ -124,7 +124,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KnowledgeBaseAnswerPrompt(displayOrder, id, displayText, additionalBinaryDataProperties);
+            return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
