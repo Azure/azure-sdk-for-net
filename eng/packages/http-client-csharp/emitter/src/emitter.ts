@@ -82,10 +82,11 @@ async function generateMetadataFile(context: EmitContext<AzureEmitterOptions>): 
     };
     metadataJson = JSON.stringify(fallbackMetadata, null, 2);
     // Log the error for debugging purposes
+    const errorMessage = error instanceof Error ? error.message : String(error);
     context.program.reportDiagnostic({
       code: "metadata-stringify-error",
       severity: "warning",
-      message: `Failed to stringify metadata object, using fallback: ${error}`,
+      message: `Failed to stringify metadata object (${errorMessage}). Using fallback with only apiVersion property.`,
       target: NoTarget
     });
   }
