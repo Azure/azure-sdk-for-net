@@ -14,8 +14,8 @@
 
 - Total libraries: 401
 - Management Plane (MPG): 227
-  - Autorest/Swagger: 154
-  - New Emitter (TypeSpec): 55
+  - Autorest/Swagger: 153
+  - New Emitter (TypeSpec): 56
   - Old TypeSpec: 18
 - Data Plane (DPG): 174
   - Autorest/Swagger: 87
@@ -171,7 +171,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 87
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 55 / 73 (75.3%)
+**Migration Status**: 56 / 74 (75.7%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -206,6 +206,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | fileshares | Azure.ResourceManager.FileShares | ✅ |
 | grafana | Azure.ResourceManager.Grafana | ✅ |
 | hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | ✅ |
+| healthbot | Azure.ResourceManager.HealthBot | ✅ |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
 | hybridconnectivity | Azure.ResourceManager.HybridConnectivity |  |
 | hybridkubernetes | Azure.ResourceManager.Kubernetes | ✅ |
@@ -252,7 +253,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 154
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 153
 
 | Service | Library |
 | ------- | ------- |
@@ -323,7 +324,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | graphservices | Azure.ResourceManager.GraphServices |
 | guestconfiguration | Azure.ResourceManager.GuestConfiguration |
 | hdinsight | Azure.ResourceManager.HDInsight |
-| healthbot | Azure.ResourceManager.HealthBot |
 | healthcareapis | Azure.ResourceManager.HealthcareApis |
 | hybridaks | Azure.ResourceManager.HybridContainerService |
 | hybridcompute | Azure.ResourceManager.HybridCompute |
