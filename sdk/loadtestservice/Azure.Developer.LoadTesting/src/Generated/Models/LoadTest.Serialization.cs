@@ -166,6 +166,11 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("estimatedVirtualUserHours"u8);
                 writer.WriteNumberValue(EstimatedVirtualUserHours.Value);
             }
+            if (Optional.IsDefined(Preferences))
+            {
+                writer.WritePropertyName("preferences"u8);
+                writer.WriteObjectValue(Preferences, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(CreatedDateTime))
             {
                 writer.WritePropertyName("createdDateTime"u8);
@@ -249,6 +254,7 @@ namespace Azure.Developer.LoadTesting
             LoadTestingManagedIdentityType? engineBuiltInIdentityType = default;
             IList<string> engineBuiltInIdentityIds = default;
             double? estimatedVirtualUserHours = default;
+            TestPreferences preferences = default;
             DateTimeOffset? createdDateTime = default;
             string createdBy = default;
             DateTimeOffset? lastModifiedDateTime = default;
@@ -442,6 +448,15 @@ namespace Azure.Developer.LoadTesting
                     estimatedVirtualUserHours = prop.Value.GetDouble();
                     continue;
                 }
+                if (prop.NameEquals("preferences"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    preferences = TestPreferences.DeserializeTestPreferences(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("createdDateTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -497,6 +512,7 @@ namespace Azure.Developer.LoadTesting
                 engineBuiltInIdentityType,
                 engineBuiltInIdentityIds ?? new ChangeTrackingList<string>(),
                 estimatedVirtualUserHours,
+                preferences,
                 createdDateTime,
                 createdBy,
                 lastModifiedDateTime,
