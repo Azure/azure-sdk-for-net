@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ResourceConnector
             return message;
         }
 
-        internal HttpMessage CreateGetTelemetryConfigRequest(string subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetApplianceTelemetryConfigRequest(string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

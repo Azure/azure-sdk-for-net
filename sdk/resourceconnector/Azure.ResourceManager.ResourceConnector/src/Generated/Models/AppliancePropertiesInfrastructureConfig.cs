@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <summary> Initializes a new instance of <see cref="AppliancePropertiesInfrastructureConfig"/>. </summary>
         /// <param name="provider"> Information about the connected appliance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppliancePropertiesInfrastructureConfig(Provider? provider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppliancePropertiesInfrastructureConfig(ApplianceProvider? provider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provider = provider;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Information about the connected appliance. </summary>
-        public Provider? Provider { get; set; }
+        public ApplianceProvider? Provider { get; set; }
     }
 }

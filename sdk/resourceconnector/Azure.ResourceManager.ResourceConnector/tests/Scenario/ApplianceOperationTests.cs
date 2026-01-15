@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.ResourceConnector;
 using Azure.ResourceManager.ResourceConnector.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -21,12 +20,12 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
 
         private ResourceGroupResource ResourceGroup { get; set; }
 
-        private ApplianceCollection LocationCollection { get; set; }
+        private ResourceConnectorApplianceCollection LocationCollection { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            LocationCollection = ResourceGroup.GetAppliances();
+            LocationCollection = ResourceGroup.GetResourceConnectorAppliances();
         }
 
         [RecordedTest]
@@ -37,24 +36,24 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
 
             // CREATE APPLIANCE RESOURCE
             var resourceName = Recording.GenerateAssetName("appliancetest-");
-            var parameters = new ApplianceData(DefaultLocation)
+            var parameters = new ResourceConnectorApplianceData(DefaultLocation)
             {
-                Identity = new Azure.ResourceManager.ResourceConnector.Models.Identity { Type = Azure.ResourceManager.ResourceConnector.Models.ResourceIdentityType.SystemAssigned },
-                Distro = Distro.AKSEdge,
-                InfrastructureConfigProvider = Provider.VMWare
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
+                Distro = ApplianceDistro.AksEdge,
+                InfrastructureConfigProvider = ApplianceProvider.VMware
             };
             var appliance = (await LocationCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, parameters)).Value;
 
             Assert.AreEqual(appliance.Data.Name, resourceName);
             Assert.AreEqual(appliance.Data.ProvisioningState, "Succeeded");
-            Assert.IsFalse(string.IsNullOrEmpty(appliance.Data.Identity.PrincipalId));
-            Assert.AreEqual(Azure.ResourceManager.ResourceConnector.Models.ResourceIdentityType.SystemAssigned, appliance.Data.Identity.Type);
+            Assert.IsFalse(String.IsNullOrEmpty(appliance.Data.Identity.PrincipalId.ToString()));
+            Assert.AreEqual(appliance.Data.Identity.ManagedServiceIdentityType, ManagedServiceIdentityType.SystemAssigned);
 
             // GET ON CREATED APPLIANCE
             appliance = await LocationCollection.GetAsync(resourceName);
 
             // PATCH APPLIANCE
-            var patchData = new AppliancePatch()
+            var patchData = new ResourceConnectorAppliancePatch()
             {
                 Tags = { { "newkey", "newvalue" } }
             };
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
             // // LIST BY RESOURCE GROUP
             var listResult = await LocationCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(listResult.Count, 1);
-            foreach (ApplianceResource item in listResult)
+            foreach (ResourceConnectorApplianceResource item in listResult)
             {
                 Assert.AreEqual(item.Data.Name, resourceName);
             }

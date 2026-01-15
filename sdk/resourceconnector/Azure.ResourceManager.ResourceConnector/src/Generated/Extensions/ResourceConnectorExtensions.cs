@@ -39,45 +39,45 @@ namespace Azure.ResourceManager.ResourceConnector
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ApplianceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ResourceConnectorApplianceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorArmClient.GetApplianceResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorArmClient.GetResourceConnectorApplianceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApplianceResource"/> object. </returns>
-        public static ApplianceResource GetApplianceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceConnectorApplianceResource"/> object. </returns>
+        public static ResourceConnectorApplianceResource GetResourceConnectorApplianceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResourceConnectorArmClient(client).GetApplianceResource(id);
+            return GetMockableResourceConnectorArmClient(client).GetResourceConnectorApplianceResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of Appliances in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ResourceConnectorAppliances in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorResourceGroupResource.GetAppliances()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorResourceGroupResource.GetResourceConnectorAppliances()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Appliances and their operations over a ApplianceResource. </returns>
-        public static ApplianceCollection GetAppliances(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ResourceConnectorAppliances and their operations over a ResourceConnectorApplianceResource. </returns>
+        public static ResourceConnectorApplianceCollection GetResourceConnectorAppliances(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetAppliances();
+            return GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetResourceConnectorAppliances();
         }
 
         /// <summary>
         /// Gets the details of an Appliance with a specified resource group and name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorResourceGroupResource.GetApplianceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorResourceGroupResource.GetResourceConnectorApplianceAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -85,18 +85,18 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ApplianceResource>> GetApplianceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceConnectorApplianceResource>> GetResourceConnectorApplianceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetApplianceAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetResourceConnectorApplianceAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the details of an Appliance with a specified resource group and name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorResourceGroupResource.GetAppliance(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorResourceGroupResource.GetResourceConnectorAppliance(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -104,81 +104,81 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ApplianceResource> GetAppliance(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static Response<ResourceConnectorApplianceResource> GetResourceConnectorAppliance(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetAppliance(resourceName, cancellationToken);
+            return GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetResourceConnectorAppliance(resourceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of Appliances in the specified subscription. The operation returns properties of each Appliance
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorSubscriptionResource.GetAppliancesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorSubscriptionResource.GetResourceConnectorAppliancesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ApplianceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplianceResource> GetAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetAppliancesAsync(cancellationToken);
+            return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetResourceConnectorAppliancesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of Appliances in the specified subscription. The operation returns properties of each Appliance
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorSubscriptionResource.GetAppliances(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorSubscriptionResource.GetResourceConnectorAppliances(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ApplianceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplianceResource> GetAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetAppliances(cancellationToken);
+            return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetResourceConnectorAppliances(cancellationToken);
         }
 
         /// <summary>
         /// Gets the telemetry config.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorSubscriptionResource.GetTelemetryConfigAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorSubscriptionResource.GetApplianceTelemetryConfigAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ApplianceGetTelemetryConfigResult>> GetTelemetryConfigAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApplianceTelemetryConfigResult>> GetApplianceTelemetryConfigAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetTelemetryConfigAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetApplianceTelemetryConfigAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the telemetry config.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorSubscriptionResource.GetTelemetryConfig(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceConnectorSubscriptionResource.GetApplianceTelemetryConfig(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ApplianceGetTelemetryConfigResult> GetTelemetryConfig(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<ApplianceTelemetryConfigResult> GetApplianceTelemetryConfig(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetTelemetryConfig(cancellationToken);
+            return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetApplianceTelemetryConfig(cancellationToken);
         }
     }
 }

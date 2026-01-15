@@ -13,12 +13,12 @@ using Azure.ResourceManager.ResourceConnector;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
-    /// <summary> Contains infrastructure information about the Appliance. </summary>
-    internal partial class AppliancePropertiesInfrastructureConfig : IJsonModel<AppliancePropertiesInfrastructureConfig>
+    /// <summary> Appliance ArtifactProfile definition. </summary>
+    public partial class ApplianceArtifactProfile : IJsonModel<ApplianceArtifactProfile>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AppliancePropertiesInfrastructureConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApplianceArtifactProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppliancePropertiesInfrastructureConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppliancePropertiesInfrastructureConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceArtifactProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Provider))
+            if (options.Format != "W" && Optional.IsDefined(Endpoint))
             {
-                writer.WritePropertyName("provider"u8);
-                writer.WriteStringValue(Provider.Value.ToString());
+                writer.WritePropertyName("endpoint"u8);
+                writer.WriteStringValue(Endpoint);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -58,40 +58,36 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppliancePropertiesInfrastructureConfig IJsonModel<AppliancePropertiesInfrastructureConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ApplianceArtifactProfile IJsonModel<ApplianceArtifactProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppliancePropertiesInfrastructureConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ApplianceArtifactProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppliancePropertiesInfrastructureConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppliancePropertiesInfrastructureConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceArtifactProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppliancePropertiesInfrastructureConfig(document.RootElement, options);
+            return DeserializeApplianceArtifactProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AppliancePropertiesInfrastructureConfig DeserializeAppliancePropertiesInfrastructureConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static ApplianceArtifactProfile DeserializeApplianceArtifactProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ApplianceProvider? provider = default;
+            string endpoint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("provider"u8))
+                if (prop.NameEquals("endpoint"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provider = new ApplianceProvider(prop.Value.GetString());
+                    endpoint = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -99,47 +95,47 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AppliancePropertiesInfrastructureConfig(provider, additionalBinaryDataProperties);
+            return new ApplianceArtifactProfile(endpoint, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AppliancePropertiesInfrastructureConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ApplianceArtifactProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppliancePropertiesInfrastructureConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceConnectorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AppliancePropertiesInfrastructureConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceArtifactProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppliancePropertiesInfrastructureConfig IPersistableModel<AppliancePropertiesInfrastructureConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ApplianceArtifactProfile IPersistableModel<ApplianceArtifactProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppliancePropertiesInfrastructureConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ApplianceArtifactProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppliancePropertiesInfrastructureConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAppliancePropertiesInfrastructureConfig(document.RootElement, options);
+                        return DeserializeApplianceArtifactProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppliancePropertiesInfrastructureConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceArtifactProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppliancePropertiesInfrastructureConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApplianceArtifactProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

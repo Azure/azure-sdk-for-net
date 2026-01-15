@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         {
         }
 
-        /// <summary> Gets a collection of Appliances in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Appliances and their operations over a ApplianceResource. </returns>
-        public virtual ApplianceCollection GetAppliances()
+        /// <summary> Gets a collection of ResourceConnectorAppliances in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ResourceConnectorAppliances and their operations over a ResourceConnectorApplianceResource. </returns>
+        public virtual ResourceConnectorApplianceCollection GetResourceConnectorAppliances()
         {
-            return GetCachedClient(client => new ApplianceCollection(client, Id));
+            return GetCachedClient(client => new ResourceConnectorApplianceCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApplianceResource>> GetApplianceAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceConnectorApplianceResource>> GetResourceConnectorApplianceAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return await GetAppliances().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetResourceConnectorAppliances().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApplianceResource> GetAppliance(string resourceName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceConnectorApplianceResource> GetResourceConnectorAppliance(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetAppliances().Get(resourceName, cancellationToken);
+            return GetResourceConnectorAppliances().Get(resourceName, cancellationToken);
         }
     }
 }

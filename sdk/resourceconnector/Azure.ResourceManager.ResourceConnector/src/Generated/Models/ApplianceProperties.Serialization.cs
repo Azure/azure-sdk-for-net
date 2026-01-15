@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
-                foreach (Event item in Events)
+                foreach (ApplianceEvent item in Events)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Distro? distro = default;
+            ApplianceDistro? distro = default;
             AppliancePropertiesInfrastructureConfig infrastructureConfig = default;
             string provisioningState = default;
             string publicKey = default;
-            Status? status = default;
+            ApplianceStatus? status = default;
             string version = default;
-            IReadOnlyList<Event> events = default;
-            NetworkProfile networkProfile = default;
+            IReadOnlyList<ApplianceEvent> events = default;
+            ApplianceNetworkProfile networkProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    distro = new Distro(prop.Value.GetString());
+                    distro = new ApplianceDistro(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("infrastructureConfig"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    status = new Status(prop.Value.GetString());
+                    status = new ApplianceStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    List<Event> array = new List<Event>();
+                    List<ApplianceEvent> array = new List<ApplianceEvent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Event.DeserializeEvent(item, options));
+                        array.Add(ApplianceEvent.DeserializeApplianceEvent(item, options));
                     }
                     events = array;
                     continue;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    networkProfile = NetworkProfile.DeserializeNetworkProfile(prop.Value, options);
+                    networkProfile = ApplianceNetworkProfile.DeserializeApplianceNetworkProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 publicKey,
                 status,
                 version,
-                events ?? new ChangeTrackingList<Event>(),
+                events ?? new ChangeTrackingList<ApplianceEvent>(),
                 networkProfile,
                 additionalBinaryDataProperties);
         }

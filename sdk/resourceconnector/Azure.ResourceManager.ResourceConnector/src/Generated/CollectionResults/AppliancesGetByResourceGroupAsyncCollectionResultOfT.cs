@@ -15,7 +15,7 @@ using Azure.ResourceManager.ResourceConnector.Models;
 
 namespace Azure.ResourceManager.ResourceConnector
 {
-    internal partial class AppliancesGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<ApplianceData>
+    internal partial class AppliancesGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<ResourceConnectorApplianceData>
     {
         private readonly Appliances _client;
         private readonly string _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AppliancesGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ApplianceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ResourceConnectorApplianceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceConnector
                     yield break;
                 }
                 ApplianceListResult result = ApplianceListResult.FromResponse(response);
-                yield return Page<ApplianceData>.FromValues(result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ResourceConnectorApplianceData>.FromValues(result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceConnector
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ApplianceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.GetAll");
             scope.Start();
             try
             {

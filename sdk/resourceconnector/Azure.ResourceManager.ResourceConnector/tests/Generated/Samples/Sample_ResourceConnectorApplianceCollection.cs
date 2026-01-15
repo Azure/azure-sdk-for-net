@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.ResourceConnector;
 using Azure.ResourceManager.ResourceConnector.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -37,22 +36,22 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ApplianceResource
-            ApplianceCollection collection = resourceGroupResource.GetAppliances();
+            // get the collection of this ResourceConnectorApplianceResource
+            ResourceConnectorApplianceCollection collection = resourceGroupResource.GetResourceConnectorAppliances();
 
             // invoke the operation
             string resourceName = "appliance01";
-            ApplianceData data = new ApplianceData(new AzureLocation("West US"))
+            ResourceConnectorApplianceData data = new ResourceConnectorApplianceData(new AzureLocation("West US"))
             {
-                Distro = Distro.AKSEdge,
-                InfrastructureConfigProvider = Provider.VMWare,
+                Distro = ApplianceDistro.AksEdge,
+                InfrastructureConfigProvider = ApplianceProvider.VMware,
             };
-            ArmOperation<ApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
-            ApplianceResource result = lro.Value;
+            ArmOperation<ResourceConnectorApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
+            ResourceConnectorApplianceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApplianceData resourceData = result.Data;
+            ResourceConnectorApplianceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -76,16 +75,16 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ApplianceResource
-            ApplianceCollection collection = resourceGroupResource.GetAppliances();
+            // get the collection of this ResourceConnectorApplianceResource
+            ResourceConnectorApplianceCollection collection = resourceGroupResource.GetResourceConnectorAppliances();
 
             // invoke the operation
             string resourceName = "appliance01";
-            ApplianceResource result = await collection.GetAsync(resourceName);
+            ResourceConnectorApplianceResource result = await collection.GetAsync(resourceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApplianceData resourceData = result.Data;
+            ResourceConnectorApplianceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -109,15 +108,15 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ApplianceResource
-            ApplianceCollection collection = resourceGroupResource.GetAppliances();
+            // get the collection of this ResourceConnectorApplianceResource
+            ResourceConnectorApplianceCollection collection = resourceGroupResource.GetResourceConnectorAppliances();
 
             // invoke the operation and iterate over the result
-            await foreach (ApplianceResource item in collection.GetAllAsync())
+            await foreach (ResourceConnectorApplianceResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApplianceData resourceData = item.Data;
+                ResourceConnectorApplianceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -144,8 +143,8 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ApplianceResource
-            ApplianceCollection collection = resourceGroupResource.GetAppliances();
+            // get the collection of this ResourceConnectorApplianceResource
+            ResourceConnectorApplianceCollection collection = resourceGroupResource.GetResourceConnectorAppliances();
 
             // invoke the operation
             string resourceName = "appliance01";
@@ -173,13 +172,13 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ApplianceResource
-            ApplianceCollection collection = resourceGroupResource.GetAppliances();
+            // get the collection of this ResourceConnectorApplianceResource
+            ResourceConnectorApplianceCollection collection = resourceGroupResource.GetResourceConnectorAppliances();
 
             // invoke the operation
             string resourceName = "appliance01";
-            NullableResponse<ApplianceResource> response = await collection.GetIfExistsAsync(resourceName);
-            ApplianceResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ResourceConnectorApplianceResource> response = await collection.GetIfExistsAsync(resourceName);
+            ResourceConnectorApplianceResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApplianceData resourceData = result.Data;
+                ResourceConnectorApplianceData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

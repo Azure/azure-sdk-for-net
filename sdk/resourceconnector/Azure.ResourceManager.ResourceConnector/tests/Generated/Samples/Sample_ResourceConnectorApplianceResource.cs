@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.ResourceConnector;
 using Azure.ResourceManager.ResourceConnector.Models;
 using NUnit.Framework;
 
@@ -29,20 +28,20 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApplianceResource created on azure
-            // for more information of creating ApplianceResource, please refer to the document of ApplianceResource
+            // this example assumes you already have this ResourceConnectorApplianceResource created on azure
+            // for more information of creating ResourceConnectorApplianceResource, please refer to the document of ResourceConnectorApplianceResource
             string subscriptionId = "11111111-2222-3333-4444-555555555555";
             string resourceGroupName = "testresourcegroup";
             string resourceName = "appliance01";
-            ResourceIdentifier applianceResourceId = ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
+            ResourceIdentifier resourceConnectorApplianceResourceId = ResourceConnectorApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ResourceConnectorApplianceResource resourceConnectorAppliance = client.GetResourceConnectorApplianceResource(resourceConnectorApplianceResourceId);
 
             // invoke the operation
-            ApplianceResource result = await appliance.GetAsync();
+            ResourceConnectorApplianceResource result = await resourceConnectorAppliance.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApplianceData resourceData = result.Data;
+            ResourceConnectorApplianceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,16 +58,16 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApplianceResource created on azure
-            // for more information of creating ApplianceResource, please refer to the document of ApplianceResource
+            // this example assumes you already have this ResourceConnectorApplianceResource created on azure
+            // for more information of creating ResourceConnectorApplianceResource, please refer to the document of ResourceConnectorApplianceResource
             string subscriptionId = "11111111-2222-3333-4444-555555555555";
             string resourceGroupName = "testresourcegroup";
             string resourceName = "appliance01";
-            ResourceIdentifier applianceResourceId = ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
+            ResourceIdentifier resourceConnectorApplianceResourceId = ResourceConnectorApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ResourceConnectorApplianceResource resourceConnectorAppliance = client.GetResourceConnectorApplianceResource(resourceConnectorApplianceResourceId);
 
             // invoke the operation
-            await appliance.DeleteAsync(WaitUntil.Completed);
+            await resourceConnectorAppliance.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -85,27 +84,27 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApplianceResource created on azure
-            // for more information of creating ApplianceResource, please refer to the document of ApplianceResource
+            // this example assumes you already have this ResourceConnectorApplianceResource created on azure
+            // for more information of creating ResourceConnectorApplianceResource, please refer to the document of ResourceConnectorApplianceResource
             string subscriptionId = "11111111-2222-3333-4444-555555555555";
             string resourceGroupName = "testresourcegroup";
             string resourceName = "appliance01";
-            ResourceIdentifier applianceResourceId = ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
+            ResourceIdentifier resourceConnectorApplianceResourceId = ResourceConnectorApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ResourceConnectorApplianceResource resourceConnectorAppliance = client.GetResourceConnectorApplianceResource(resourceConnectorApplianceResourceId);
 
             // invoke the operation
-            AppliancePatch patch = new AppliancePatch
+            ResourceConnectorAppliancePatch patch = new ResourceConnectorAppliancePatch
             {
                 Tags =
 {
 ["key"] = "value"
 },
             };
-            ApplianceResource result = await appliance.UpdateAsync(patch);
+            ResourceConnectorApplianceResource result = await resourceConnectorAppliance.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApplianceData resourceData = result.Data;
+            ResourceConnectorApplianceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -122,16 +121,16 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApplianceResource created on azure
-            // for more information of creating ApplianceResource, please refer to the document of ApplianceResource
+            // this example assumes you already have this ResourceConnectorApplianceResource created on azure
+            // for more information of creating ResourceConnectorApplianceResource, please refer to the document of ResourceConnectorApplianceResource
             string subscriptionId = "11111111-2222-3333-4444-555555555555";
             string resourceGroupName = "testresourcegroup";
             string resourceName = "appliance01";
-            ResourceIdentifier applianceResourceId = ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
+            ResourceIdentifier resourceConnectorApplianceResourceId = ResourceConnectorApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ResourceConnectorApplianceResource resourceConnectorAppliance = client.GetResourceConnectorApplianceResource(resourceConnectorApplianceResourceId);
 
             // invoke the operation
-            ApplianceListCredentialResults result = await appliance.GetClusterUserCredentialAsync();
+            ApplianceListCredentialResult result = await resourceConnectorAppliance.GetClusterUserCredentialAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -148,16 +147,16 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApplianceResource created on azure
-            // for more information of creating ApplianceResource, please refer to the document of ApplianceResource
+            // this example assumes you already have this ResourceConnectorApplianceResource created on azure
+            // for more information of creating ResourceConnectorApplianceResource, please refer to the document of ResourceConnectorApplianceResource
             string subscriptionId = "11111111-2222-3333-4444-555555555555";
             string resourceGroupName = "testresourcegroup";
             string resourceName = "appliance01";
-            ResourceIdentifier applianceResourceId = ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
+            ResourceIdentifier resourceConnectorApplianceResourceId = ResourceConnectorApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ResourceConnectorApplianceResource resourceConnectorAppliance = client.GetResourceConnectorApplianceResource(resourceConnectorApplianceResourceId);
 
             // invoke the operation
-            ApplianceListKeysResults result = await appliance.GetKeysAsync();
+            ApplianceListKeysResult result = await resourceConnectorAppliance.GetKeysAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -174,17 +173,17 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApplianceResource created on azure
-            // for more information of creating ApplianceResource, please refer to the document of ApplianceResource
+            // this example assumes you already have this ResourceConnectorApplianceResource created on azure
+            // for more information of creating ResourceConnectorApplianceResource, please refer to the document of ResourceConnectorApplianceResource
             string subscriptionId = "11111111-2222-3333-4444-555555555555";
             string resourceGroupName = "testresourcegroup";
             string resourceName = "appliance01";
-            ResourceIdentifier applianceResourceId = ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
+            ResourceIdentifier resourceConnectorApplianceResourceId = ResourceConnectorApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ResourceConnectorApplianceResource resourceConnectorAppliance = client.GetResourceConnectorApplianceResource(resourceConnectorApplianceResourceId);
 
             // invoke the operation
             string upgradeGraph = "stable";
-            UpgradeGraph result = await appliance.GetUpgradeGraphAsync(upgradeGraph);
+            ApplianceUpgradeGraph result = await resourceConnectorAppliance.GetUpgradeGraphAsync(upgradeGraph);
 
             Console.WriteLine($"Succeeded: {result}");
         }

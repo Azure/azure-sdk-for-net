@@ -14,12 +14,12 @@ using Azure.ResourceManager.ResourceConnector;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
-    /// <summary> Paged collection of Appliance items. </summary>
-    internal partial class ApplianceListResult : IJsonModel<ApplianceListResult>
+    /// <summary> The Upgrade Graph for appliance. </summary>
+    public partial class ApplianceUpgradeGraph : IJsonModel<ApplianceUpgradeGraph>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApplianceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApplianceUpgradeGraph>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,25 +30,25 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplianceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraph>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceUpgradeGraph)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (ResourceConnectorApplianceData item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(NextLink))
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink.AbsoluteUri);
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -69,51 +69,52 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplianceListResult IJsonModel<ApplianceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ApplianceUpgradeGraph IJsonModel<ApplianceUpgradeGraph>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApplianceListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ApplianceUpgradeGraph JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplianceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraph>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceUpgradeGraph)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApplianceListResult(document.RootElement, options);
+            return DeserializeApplianceUpgradeGraph(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApplianceListResult DeserializeApplianceListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static ApplianceUpgradeGraph DeserializeApplianceUpgradeGraph(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<ResourceConnectorApplianceData> value = default;
-            Uri nextLink = default;
+            string id = default;
+            string name = default;
+            ApplianceUpgradeGraphProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("value"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    List<ResourceConnectorApplianceData> array = new List<ResourceConnectorApplianceData>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(item, options));
-                    }
-                    value = array;
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("nextLink"u8))
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    properties = ApplianceUpgradeGraphProperties.DeserializeApplianceUpgradeGraphProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -121,54 +122,54 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplianceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ApplianceUpgradeGraph(id, name, properties, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApplianceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ApplianceUpgradeGraph>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplianceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraph>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceConnectorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceUpgradeGraph)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplianceListResult IPersistableModel<ApplianceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ApplianceUpgradeGraph IPersistableModel<ApplianceUpgradeGraph>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApplianceListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ApplianceUpgradeGraph PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplianceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraph>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApplianceListResult(document.RootElement, options);
+                        return DeserializeApplianceUpgradeGraph(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceUpgradeGraph)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApplianceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApplianceUpgradeGraph>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApplianceListResult"/> from. </param>
-        internal static ApplianceListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApplianceUpgradeGraph"/> from. </param>
+        internal static ApplianceUpgradeGraph FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeApplianceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeApplianceUpgradeGraph(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

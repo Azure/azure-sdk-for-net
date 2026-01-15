@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="ApplianceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ResourceConnectorApplianceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplianceResource"/> object. </returns>
-        public virtual ApplianceResource GetApplianceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceConnectorApplianceResource"/> object. </returns>
+        public virtual ResourceConnectorApplianceResource GetResourceConnectorApplianceResource(ResourceIdentifier id)
         {
-            ApplianceResource.ValidateResourceId(id);
-            return new ApplianceResource(Client, id);
+            ResourceConnectorApplianceResource.ValidateResourceId(id);
+            return new ResourceConnectorApplianceResource(Client, id);
         }
     }
 }

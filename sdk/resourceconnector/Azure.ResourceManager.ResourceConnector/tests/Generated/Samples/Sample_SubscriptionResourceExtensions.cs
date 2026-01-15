@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.ResourceConnector;
 using Azure.ResourceManager.ResourceConnector.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -37,11 +36,11 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ApplianceResource item in subscriptionResource.GetAppliancesAsync())
+            await foreach (ResourceConnectorApplianceResource item in subscriptionResource.GetResourceConnectorAppliancesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApplianceData resourceData = item.Data;
+                ResourceConnectorApplianceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            ApplianceGetTelemetryConfigResult result = await subscriptionResource.GetTelemetryConfigAsync();
+            ApplianceTelemetryConfigResult result = await subscriptionResource.GetApplianceTelemetryConfigAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

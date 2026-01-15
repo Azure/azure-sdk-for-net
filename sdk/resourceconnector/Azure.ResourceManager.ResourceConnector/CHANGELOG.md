@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Upgraded to API version `2025-03-01-preview` which mainly added new `ApplianceData` properties.
+- Upgraded to API version `2025-03-01-preview` which mainly added new `ResourceConnectorApplianceData` properties.
 
 ### Breaking Changes
 

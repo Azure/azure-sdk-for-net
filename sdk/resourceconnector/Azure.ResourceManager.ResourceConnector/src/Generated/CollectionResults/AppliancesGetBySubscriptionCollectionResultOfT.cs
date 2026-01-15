@@ -14,7 +14,7 @@ using Azure.ResourceManager.ResourceConnector.Models;
 
 namespace Azure.ResourceManager.ResourceConnector
 {
-    internal partial class AppliancesGetBySubscriptionCollectionResultOfT : Pageable<ApplianceData>
+    internal partial class AppliancesGetBySubscriptionCollectionResultOfT : Pageable<ResourceConnectorApplianceData>
     {
         private readonly Appliances _client;
         private readonly string _subscriptionId;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AppliancesGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ApplianceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ResourceConnectorApplianceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResourceConnector
                     yield break;
                 }
                 ApplianceListResult result = ApplianceListResult.FromResponse(response);
-                yield return Page<ApplianceData>.FromValues(result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ResourceConnectorApplianceData>.FromValues(result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ResourceConnector
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableResourceConnectorSubscriptionResource.GetAppliances");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableResourceConnectorSubscriptionResource.GetResourceConnectorAppliances");
             scope.Start();
             try
             {
