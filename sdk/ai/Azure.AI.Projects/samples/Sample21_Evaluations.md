@@ -37,7 +37,7 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
 ```
 
-4. Define the evaluation criteria and the data source config. Testing criteria lists all the evaluators and data mappings for them. In this example we will use three built in evaluators: "violence", "fluency" and "task_adherence". We will use Agent's string and structured JSON outputs, named `sample.output_text` and `sample.output_items` respectively as response parameter for the evaluation and take query property from the data set, using `item.query` placeholder.
+3. Define the evaluation criteria and the data source config. Testing criteria lists all the evaluators and data mappings for them. In this example we will use three built in evaluators: "violence", "fluency" and "task_adherence". We will use Agent's string and structured JSON outputs, named `sample.output_text` and `sample.output_items` respectively as response parameter for the evaluation and take query property from the data set, using `item.query` placeholder.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateData_Evaluations
@@ -89,7 +89,7 @@ BinaryData evaluationData = BinaryData.FromObjectAsJson(
 );
 ```
 
-5. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. On of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use this method to get evaluation name and ID.
+4. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. On of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use this method to get evaluation name and ID.
 
 ```C# Snippet:Sampple_GetStringValues_Evaluations
 private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
@@ -125,7 +125,7 @@ private static Dictionary<string, string> ParseClientResult(ClientResult result,
 }
 ```
 
-6. Use `EvaluationClient` to create the evaluation with provided parameters.
+5. Use `EvaluationClient` to create the evaluation with provided parameters.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateEvaluationObject_Evaluations_Sync
@@ -147,7 +147,7 @@ string evaluationId = fields["id"];
 Console.WriteLine($"Evaluation created (id: {evaluationId}, name: {evaluationName})");
 ```
 
-7. Create the data source. It contains name, the ID of the evaluation we have created above, and data source, consisting of target agent name and version, two queries for an agent and the template, mapping these questions to the text field of the user messages, which will be sent to Agent.
+6. Create the data source. It contains name, the ID of the evaluation we have created above, and data source, consisting of target agent name and version, two queries for an agent and the template, mapping these questions to the text field of the user messages, which will be sent to Agent.
 
 
 ```C# Snippet:Sample_CreateDataSource_Evaluations
@@ -192,7 +192,7 @@ BinaryData runData = BinaryData.FromObjectAsJson(
 using BinaryContent runDataContent = BinaryContent.Create(runData);
 ```
 
-8. Create the evaluation run and extract its ID and status.
+7. Create the evaluation run and extract its ID and status.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateRun_Evaluations_Sync
@@ -212,7 +212,7 @@ string runStatus = fields["status"];
 Console.WriteLine($"Evaluation run created (id: {runId})");
 ```
 
-9. Wait for evaluation run to arrive at the terminal state.
+8. Wait for evaluation run to arrive at the terminal state.
 
 Synchronous sample:
 ```C# Snippet:Sample_WaitForRun_Evaluations_Sync
@@ -242,7 +242,7 @@ if (runStatus == "failed")
 }
 ```
 
-10. Like the `ParseClientResult` we will define the method, getting the result counts `GetResultsCounts`, which formats the `result_counts` property of the output JSON.
+9. Like the `ParseClientResult` we will define the method, getting the result counts `GetResultsCounts`, which formats the `result_counts` property of the output JSON.
 
 ```C# Snippet:Sampple_GetResultCounts_Evaluations
 private static string GetResultsCounts(ClientResult result)
@@ -272,7 +272,7 @@ private static string GetResultsCounts(ClientResult result)
 }
 ```
 
-11. To get the results JSON we will define two methods `GetResultsList` and `GetResultsListAsync`, which are iterating over the pages containing results.
+10. To get the results JSON we will define two methods `GetResultsList` and `GetResultsListAsync`, which are iterating over the pages containing results.
 
 Synchronous sample:
 ```C# Snippet:Sampple_GetResultsList_Evaluations_Sync
@@ -343,7 +343,7 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
 }
 ```
 
-12. Output the results.
+11. Output the results.
 
 Synchronous sample:
 ```C# Snippet:Sample_ParseEvaluations_Evaluations_Sync
@@ -373,7 +373,7 @@ foreach (string result in evaluationResults)
 Console.WriteLine($"------------------------------------------------------------");
 ```
 
-13. Finally, delete evaluation and Agent used in this sample.
+12. Finally, delete evaluation and Agent used in this sample.
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_Evaluations_Sync

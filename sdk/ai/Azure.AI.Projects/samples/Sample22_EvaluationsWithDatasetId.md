@@ -12,7 +12,7 @@ AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredentia
 EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
 ```
 
-4. Define the evaluation criteria and the data source config. Testing criteria lists all the evaluators and data mappings for them. In this example we will use three built in evaluators: "violence", "f1" and "coherence". For violence and coherence evaluators we will map input data set "query" and "response" fields to query and response respectively.
+2. Define the evaluation criteria and the data source config. Testing criteria lists all the evaluators and data mappings for them. In this example we will use three built in evaluators: "violence", "f1" and "coherence". For violence and coherence evaluators we will map input data set "query" and "response" fields to query and response respectively.
 
 ```C# Snippet:Sample_CreateData_EvaluationsWithDataSetID
 object[] testingCriteria = [
@@ -62,7 +62,7 @@ BinaryData evaluationData = BinaryData.FromObjectAsJson(
 );
 ```
 
-5. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. On of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use this method to get evaluation name and ID.
+3. The `EvaluationClient` uses protocol methods i.e. they take in JSON in the form of `BinaryData` and return `ClientResult`, containing binary encoded JSON response, which can be retrieved using `GetRawResponse()` method. To simplify parsing JSON we will create helper methods. On of the methods is named `ParseClientResult`. It gets string values of the top-level JSON properties. In the next section we will use this method to get evaluation name and ID.
 
 ```C# Snippet:Sampple_GetStringValues_EvaluationsWithDataSetID
 private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
@@ -98,7 +98,7 @@ private static Dictionary<string, string> ParseClientResult(ClientResult result,
 }
 ```
 
-6. Use `EvaluationClient` to create the evaluation with provided parameters.
+4. Use `EvaluationClient` to create the evaluation with provided parameters.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateEvaluationObject_EvaluationsWithDataSetID_Sync
@@ -120,7 +120,7 @@ string evaluationId = fields["id"];
 Console.WriteLine($"Evaluation created (id: {evaluationId}, name: {evaluationName})");
 ```
 
-7. We will defile a helper method `GetFile` to get the file from the source code location.
+5. We will defile a helper method `GetFile` to get the file from the source code location.
 
 ```C# Snippet:Sampple_GetFile_EvaluationsWithDataSetID
 private static string GetFile([CallerFilePath] string pth = "")
@@ -130,7 +130,7 @@ private static string GetFile([CallerFilePath] string pth = "")
 }
 ```
 
-8. Upload the file data set to be used as a data source.
+6. Upload the file data set to be used as a data source.
 
 Synchronous sample:
 ```C# Snippet:Sample_UploadDataset_EvaluationsWithDataSetID_Sync
@@ -154,7 +154,7 @@ FileDataset fileDataset = await projectClient.Datasets.UploadFileAsync(
 Console.WriteLine($"Uploaded new dataset {fileDataset.Name} version {fileDataset.Version}");
 ```
 
-9. Create the data source, containing uploaded dataset ID.
+7. Create the data source, containing uploaded dataset ID.
 
 
 ```C# Snippet:Sample_CreateDataSource_EvaluationsWithDataSetID
@@ -184,7 +184,7 @@ BinaryData runData = BinaryData.FromObjectAsJson(
 using BinaryContent runDataContent = BinaryContent.Create(runData);
 ```
 
-10. Create the evaluation run and extract its ID and status.
+8. Create the evaluation run and extract its ID and status.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateRun_EvaluationsWithDataSetID_Sync
@@ -204,7 +204,7 @@ string runStatus = fields["status"];
 Console.WriteLine($"Evaluation run created (id: {runId})");
 ```
 
-11. Wait for evaluation run to arrive at the terminal state.
+9. Wait for evaluation run to arrive at the terminal state.
 
 Synchronous sample:
 ```C# Snippet:Sample_WaitForRun_EvaluationsWithDataSetID_Sync
@@ -234,7 +234,7 @@ if (runStatus == "failed")
 }
 ```
 
-12. Like the `ParseClientResult` we will define the method, getting the result counts `GetResultsCounts`, which formats the `result_counts` property of the output JSON.
+10. Like the `ParseClientResult` we will define the method, getting the result counts `GetResultsCounts`, which formats the `result_counts` property of the output JSON.
 
 ```C# Snippet:Sampple_GetResultCounts_EvaluationsWithDataSetID
 private static string GetResultsCounts(ClientResult result)
@@ -264,7 +264,7 @@ private static string GetResultsCounts(ClientResult result)
 }
 ```
 
-13. To get the results JSON we will define two methods `GetResultsList` and `GetResultsListAsync`, which are iterating over the pages containing results.
+11. To get the results JSON we will define two methods `GetResultsList` and `GetResultsListAsync`, which are iterating over the pages containing results.
 
 Synchronous sample:
 ```C# Snippet:Sampple_GetResultsList_EvaluationsWithDataSetID_Sync
@@ -335,7 +335,7 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
 }
 ```
 
-14. Output the results.
+12. Output the results.
 
 Synchronous sample:
 ```C# Snippet:Sample_ParseEvaluations_EvaluationsWithDataSetID_Sync
@@ -365,7 +365,7 @@ foreach (string result in evaluationResults)
 Console.WriteLine($"------------------------------------------------------------");
 ```
 
-15. Finally, delete evaluation and Agent used in this sample.
+13. Finally, delete evaluation and Agent used in this sample.
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_EvaluationsWithDataSetID_Sync
