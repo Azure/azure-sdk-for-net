@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <!-- Several types and methods we need are implemented in net47 or above, so test our light-up features against at least net47 to make sure they work or fall back as expected. -->
@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <PackageReference Include="NUnit" />
-    <PackageReference Include="NUnit.Analyzers" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
