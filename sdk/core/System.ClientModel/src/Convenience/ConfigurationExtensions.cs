@@ -3,11 +3,10 @@
 
 #pragma warning disable SCME0002 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 
-namespace System.ClientModel;
+namespace System.ClientModel.Primitives;
 
 /// <summary>
 /// Static class containing extension methods for IConfiguration to get ClientSettings.

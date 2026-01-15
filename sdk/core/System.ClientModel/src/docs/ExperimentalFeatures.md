@@ -39,8 +39,8 @@ The Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInject
 - `System.ClientModel.Primitives.ClientSettings`
 - `System.ClientModel.Primitives.IClientBuilder`
 - `System.ClientModel.Primitives.HostBuilderExtensions`
-- `System.ClientModel.ConfigurationExtensions`
-- `System.ClientModel.CredentialSettings`
+- `System.ClientModel.Primitives.ConfigurationExtensions`
+- `System.ClientModel.Primitives.CredentialSettings`
 - `System.ClientModel.Primitives.AuthenticationPolicy.Create` method
 
 ### Suppression
@@ -63,7 +63,6 @@ Or in your project file:
 
 ```csharp
 #pragma warning disable SCME0002
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;

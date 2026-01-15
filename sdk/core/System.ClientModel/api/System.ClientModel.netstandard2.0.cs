@@ -63,22 +63,12 @@ namespace System.ClientModel
         protected abstract System.Collections.Generic.IEnumerable<T> GetValuesFromPage(System.ClientModel.ClientResult page);
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public static partial class ConfigurationExtensions
-    {
-        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-    }
     public partial class ContinuationToken
     {
         protected ContinuationToken() { }
         protected ContinuationToken(System.BinaryData bytes) { }
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
-    }
-    public sealed partial class CredentialSettings
-    {
-        public CredentialSettings(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
-        public string? CredentialSource { get { throw null; } set { } }
-        public string? Key { get { throw null; } set { } }
     }
 }
 namespace System.ClientModel.Primitives
@@ -220,7 +210,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class ClientSettings
     {
         protected ClientSettings() { }
-        public System.ClientModel.CredentialSettings? Credential { get { throw null; } set { } }
+        public System.ClientModel.Primitives.CredentialSettings? Credential { get { throw null; } set { } }
         public System.ClientModel.AuthenticationTokenProvider? CredentialObject { get { throw null; } set { } }
         public void Bind(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         protected abstract void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section);
@@ -231,11 +221,21 @@ namespace System.ClientModel.Primitives
         public abstract System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page);
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult> GetRawPages();
     }
+    public static partial class ConfigurationExtensions
+    {
+        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+    }
     public enum CredentialKind
     {
         None = 0,
         ApiKeyString = 1,
         TokenCredential = 2,
+    }
+    public sealed partial class CredentialSettings
+    {
+        public CredentialSettings(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+        public string? CredentialSource { get { throw null; } set { } }
+        public string? Key { get { throw null; } set { } }
     }
     public partial class GetTokenOptions
     {

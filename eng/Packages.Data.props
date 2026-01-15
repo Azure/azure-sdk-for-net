@@ -130,7 +130,7 @@
       or '$(IsStressProject)' == 'true'">
 
     <!-- BCL packages -->
-    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="10.0.1" />
+    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="10.0.2" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.2" />
     <PackageReference Update="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.2" />
