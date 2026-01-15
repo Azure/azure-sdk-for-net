@@ -12,6 +12,7 @@ using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.EdgeOrder;
+using Azure.ResourceManager.EdgeOrder.Custom.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
@@ -724,7 +725,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <returns> A new <see cref="Models.EdgeOrderProductMeterDetails"/> instance for mocking. </returns>
         public static EdgeOrderProductMeterDetails EdgeOrderProductMeterDetails(string billingType = default, double? multiplier = default, EdgeOrderProductChargingType? chargingType = default)
         {
-            return new UnknownEdgeOrderProductMeterDetails(new BillingType(billingType), multiplier, chargingType, additionalBinaryDataProperties: null);
+            return new UnknownMeterDetails(new BillingType(billingType), multiplier, chargingType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Billing type PAV2 meter details. </summary>

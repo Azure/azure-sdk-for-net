@@ -40,10 +40,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<EdgeOrderItemResource>> UpdateAsync(WaitUntil waitUntil, EdgeOrderItemPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EdgeOrderItemResource>> UpdateAsync(WaitUntil waitUntil, EdgeOrderItemPatch patch, string ifMatch, CancellationToken cancellationToken = default)
         {
-            //return await UpdateAsync(waitUntil, patch, new ETag(ifMatch), cancellationToken).ConfigureAwait(false);
-            throw new NotImplementedException();
+            return await UpdateAsync(waitUntil, patch, new ETag(ifMatch), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -73,10 +72,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<EdgeOrderItemResource> Update(WaitUntil waitUntil, EdgeOrderItemPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EdgeOrderItemResource> Update(WaitUntil waitUntil, EdgeOrderItemPatch patch, string ifMatch, CancellationToken cancellationToken = default)
         {
-            //return Update(waitUntil, patch, new ETag(ifMatch), cancellationToken);
-            throw new NotImplementedException();
+            return Update(waitUntil, patch, new ETag(ifMatch), cancellationToken);
         }
     }
 }

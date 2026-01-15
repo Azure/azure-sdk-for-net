@@ -10,13 +10,14 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.EdgeOrder;
+using Azure.ResourceManager.EdgeOrder.Models;
 
-namespace Azure.ResourceManager.EdgeOrder.Models
+namespace Azure.ResourceManager.EdgeOrder.Custom.Models
 {
-    internal partial class UnknownEdgeOrderProductMeterDetails : EdgeOrderProductMeterDetails, IJsonModel<EdgeOrderProductMeterDetails>
+    internal partial class UnknownMeterDetails : EdgeOrderProductMeterDetails, IJsonModel<EdgeOrderProductMeterDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownEdgeOrderProductMeterDetails"/> for deserialization. </summary>
-        internal UnknownEdgeOrderProductMeterDetails()
+        /// <summary> Initializes a new instance of <see cref="UnknownMeterDetails"/> for deserialization. </summary>
+        internal UnknownMeterDetails()
         {
         }
 
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownEdgeOrderProductMeterDetails DeserializeUnknownEdgeOrderProductMeterDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownMeterDetails DeserializeUnknownMeterDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownEdgeOrderProductMeterDetails(billingType, multiplier, chargingType, additionalBinaryDataProperties);
+            return new UnknownMeterDetails(billingType, multiplier, chargingType, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

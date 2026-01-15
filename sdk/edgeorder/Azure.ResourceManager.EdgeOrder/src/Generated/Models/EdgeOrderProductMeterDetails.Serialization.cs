@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.ResourceManager.EdgeOrder;
+using Azure.ResourceManager.EdgeOrder.Custom.Models;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// Holds details about billing type and its meter guids.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Pav2MeterDetails"/> and <see cref="PurchaseMeterDetails"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownEdgeOrderProductMeterDetails))]
+    [PersistableModelProxy(typeof(UnknownMeterDetails))]
     public abstract partial class EdgeOrderProductMeterDetails : IJsonModel<EdgeOrderProductMeterDetails>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return PurchaseMeterDetails.DeserializePurchaseMeterDetails(element, options);
                 }
             }
-            return UnknownEdgeOrderProductMeterDetails.DeserializeUnknownEdgeOrderProductMeterDetails(element, options);
+            return UnknownMeterDetails.DeserializeUnknownMeterDetails(element, options);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
