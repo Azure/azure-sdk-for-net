@@ -64,6 +64,7 @@ namespace System.ClientModel
         protected abstract System.Collections.Generic.IEnumerable<T> GetValuesFromPage(System.ClientModel.ClientResult page);
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public static partial class ConfigurationExtensions
     {
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
@@ -75,6 +76,7 @@ namespace System.ClientModel
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public sealed partial class CredentialSettings
     {
         public CredentialSettings(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
@@ -107,6 +109,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class AuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         protected AuthenticationPolicy() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
         public static System.ClientModel.Primitives.AuthenticationPolicy Create(System.ClientModel.Primitives.ClientSettings settings, string scope) { throw null; }
     }
     public partial class AuthenticationToken
@@ -218,6 +221,7 @@ namespace System.ClientModel.Primitives
         protected virtual void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public abstract partial class ClientSettings
     {
         protected ClientSettings() { }
@@ -247,6 +251,7 @@ namespace System.ClientModel.Primitives
         public GetTokenOptions(System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> Properties { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public static partial class HostBuilderExtensions
     {
         public static System.ClientModel.Primitives.IClientBuilder AddClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
@@ -268,6 +273,7 @@ namespace System.ClientModel.Primitives
         protected sealed override void ProcessCore(System.ClientModel.Primitives.PipelineMessage message) { }
         protected sealed override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public partial interface IClientBuilder : Microsoft.Extensions.Hosting.IHostApplicationBuilder
     {
         Microsoft.Extensions.Hosting.IHostApplicationBuilder WithCredential(System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider>? factory = null);

@@ -58,10 +58,10 @@ internal readonly struct ReferenceConfigurationSection : IConfigurationSection
             return section;
 
         string? value = section.Value;
-        if (value == null)
+        if (string.IsNullOrEmpty(value))
             return section;
 
-        if (!value.AsSpan().StartsWith("$") || value.Length < 2)
+        if (value![0] != '$' || value.Length < 2)
             return section;
 
         IConfigurationSection dereferencedSection = _config.GetSection(value.Substring(1));
@@ -71,10 +71,10 @@ internal readonly struct ReferenceConfigurationSection : IConfigurationSection
 
     private string? DereferenceValue(string? value)
     {
-        if (value == null)
+        if (string.IsNullOrEmpty(value))
             return null;
 
-        if (!value.AsSpan().StartsWith("$") || value.Length < 2)
+        if (value![0] != '$' || value.Length < 2)
             return value;
 
         IConfigurationSection section = _config.GetSection(value.Substring(1));

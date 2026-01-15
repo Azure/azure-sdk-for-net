@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 
 namespace System.ClientModel.Primitives;
@@ -8,6 +9,7 @@ namespace System.ClientModel.Primitives;
 /// <summary>
 /// Represents the settings used to configure a client that can be loaded from an <see cref="IConfigurationSection"/>.
 /// </summary>
+[Experimental("SCME0002")]
 public abstract class ClientSettings
 {
     /// <summary>

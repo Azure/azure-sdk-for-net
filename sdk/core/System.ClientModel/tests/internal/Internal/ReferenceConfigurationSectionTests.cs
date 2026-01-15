@@ -149,6 +149,21 @@ public class ReferenceConfigurationSectionTests
     }
 
     [Test]
+    public void ExplicitNullValueReturnsNull()
+    {
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>()
+            {
+                ["Section"] = null
+            })
+            .Build();
+
+        ReferenceConfigurationSection section = new(config, "Section");
+
+        Assert.IsNull(section.Value);
+    }
+
+    [Test]
     public void GetSectionReturnsReferencedSection()
     {
         IConfigurationRoot config = new ConfigurationBuilder()

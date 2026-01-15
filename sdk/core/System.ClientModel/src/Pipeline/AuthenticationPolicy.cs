@@ -1,6 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable SCME0002 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+using System.Diagnostics.CodeAnalysis;
+
 namespace System.ClientModel.Primitives;
 
 /// <summary>
@@ -13,6 +17,7 @@ public abstract class AuthenticationPolicy : PipelinePolicy
     /// </summary>
     /// <param name="settings">The <see cref="ClientSettings"/> to use.</param>
     /// <param name="scope">The scope of the authentication token.</param>
+    [Experimental("SCME0002")]
     public static AuthenticationPolicy Create(ClientSettings settings, string scope)
     {
         if (settings is null)
