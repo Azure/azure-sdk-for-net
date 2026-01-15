@@ -17,10 +17,10 @@ namespace Azure.Developer.LoadTesting
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TestRunInsights"/>. </summary>
-        internal TestRunInsights()
+        public TestRunInsights()
         {
             Columns = new ChangeTrackingList<TestRunInsightColumn>();
-            Rows = new ChangeTrackingList<IDictionary<string, string>>();
+            Rows = new ChangeTrackingDictionary<string, IDictionary<string, string>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TestRunInsights"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="version"> The version of the insights. </param>
         /// <param name="status"> The status of the insights. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunInsights(IReadOnlyList<TestRunInsightColumn> columns, IReadOnlyList<IDictionary<string, string>> rows, long? version, OperationState? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestRunInsights(IReadOnlyList<TestRunInsightColumn> columns, IDictionary<string, IDictionary<string, string>> rows, long? version, OperationState? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Columns = columns;
             Rows = rows;
@@ -42,7 +42,7 @@ namespace Azure.Developer.LoadTesting
         public IReadOnlyList<TestRunInsightColumn> Columns { get; }
 
         /// <summary> The rows of the insights. </summary>
-        public IReadOnlyList<IDictionary<string, string>> Rows { get; }
+        public IDictionary<string, IDictionary<string, string>> Rows { get; }
 
         /// <summary> The version of the insights. </summary>
         public long? Version { get; }
