@@ -7,9 +7,9 @@
 
 using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient;
 
-namespace Specs.Azure.CGC.ClientLoc.Param
+namespace Specs.Azure.Tcgc.ClientLoc.Param
 {
-    public static partial class SpecsAzureCGCClientLocParamModelFactory
+    public static partial class SpecsAzureTcgcClientLocParamModelFactory
     {
         public static Blob Blob(string id = default, string name = default, int size = default, string path = default) => throw null;
     }

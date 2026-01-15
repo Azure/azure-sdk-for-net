@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Specs.Azure.CGC.ClientLoc.NewSub client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>SDK Code Generation Specs.Azure.CGC.ClientLoc.NewSub</AssemblyTitle>
+    <Description>This is the Specs.Azure.Tcgc.ClientLoc.Root client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Specs.Azure.Tcgc.ClientLoc.Root</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>Specs.Azure.CGC.ClientLoc.NewSub</PackageTags>
+    <PackageTags>Specs.Azure.Tcgc.ClientLoc.Root</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
