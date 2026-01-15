@@ -20,7 +20,7 @@ TypeSpec recently [added support](https://azure.github.io/typespec-azure/docs/ho
 The multi-service SDK generation follows these principles:
 
 1. **Independent Top-Level Clients**: Each service gets its own top-level client with public constructors.
-2. **Per-Client Options**: Each service client has its own `ClientOptions` subclass with its service version enum
+2. **Per-Client Options**: Each service client has its own `ClientOptions` type with its service version enum
 3. **Independent Versioning**: Each service client maintains its own API version, configured via its respective client options
 
 Per the TypeSpec guidelines, all services being merged must share the same endpoint and authentication method.
@@ -187,7 +187,7 @@ namespace Service.MultiService.ServiceB {
 
 **Key API Patterns:**
 - Each service has its own top-level client (`FooClient`, `BarClient`) with public constructors
-- Each client has its own `ClientOptions` subclass with a `ServiceVersion` enum
+- Each client has its own `ClientOptions` type with a `ServiceVersion` enum
 - Clients are independently constructible without requiring a parent client
 
 ## Usage Examples
