@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
@@ -28,11 +29,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private static string? s_runtimeVersion => SdkVersionUtils.GetVersion(typeof(object));
 
-        private static bool s_hasSdkPrefix => SdkVersionUtils.SdkVersionPrefix != null;
+        private static string s_attachMode => SdkVersionUtils.SdkVersionPrefix != null ? "IntegratedAuto" : "Manual";
 
-        private static string? s_operatingSystem;
+        private string _operatingSystem;
 
-        private readonly string? _customer_Ikey;
+        private readonly string _customer_Ikey;
 
         private readonly IPlatform _platform;
 
@@ -44,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         {
             _platform = platform;
 
-            s_operatingSystem = platform.GetOSPlatformName();
+            _operatingSystem = platform.GetOSPlatformName();
 
             _statsbeat_ConnectionString = GetStatsbeatConnectionString(connectionStringVars.IngestionEndpoint);
 
@@ -54,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 throw new InvalidOperationException("Could not find a matching endpoint to initialize Statsbeat.");
             }
 
-            _customer_Ikey = connectionStringVars?.InstrumentationKey;
+            _customer_Ikey = connectionStringVars.InstrumentationKey;
 
             s_myMeter.CreateObservableGauge(StatsbeatConstants.AttachStatsbeatMetricName, () => GetAttachStatsbeat());
 
@@ -124,19 +125,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     new Measurement<int>(1,
                         new("rp", _resourceProvider),
                         new("rpId", _resourceProviderId),
-                        new("attach", s_hasSdkPrefix ? "IntegratedAuto" : "Manual"),
+                        new("attach", s_attachMode),
                         new("cikey", _customer_Ikey),
                         new("runtimeVersion", s_runtimeVersion),
                         new("language", "dotnet"),
                         // We don't memoize this version because it can be updated up to a minute into the application startup
                         new("version", SdkVersionUtils.GetVersion()),
-                        new("os", s_operatingSystem));
+                        new("os", _operatingSystem));
             }
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.StatsbeatFailed(ex);
                 return new Measurement<int>();
             }
+        }
+
+        internal FeatureMetricEmissionHelper GetFeatureMetricEmissionHelper()
+        {
+            if (_resourceProvider == null)
+            {
+                SetResourceProviderDetails(_platform);
+            }
+
+            return FeatureMetricEmissionHelper.GetOrCreateHelper(this._resourceProvider ?? "unknown", s_attachMode, this._customer_Ikey, this._operatingSystem);
         }
 
         internal static VmMetadataResponse? GetVmMetadataResponse()
@@ -210,7 +221,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 _resourceProviderId = _resourceProviderId = vmMetadata.vmId + "/" + vmMetadata.subscriptionId;
 
                 // osType takes precedence.
-                s_operatingSystem = vmMetadata.osType?.ToLower(CultureInfo.InvariantCulture);
+                _operatingSystem = vmMetadata.osType?.ToLower(CultureInfo.InvariantCulture) ?? "unknown";
 
                 return;
             }
