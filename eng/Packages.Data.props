@@ -132,10 +132,12 @@
     <!-- BCL packages -->
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="10.0.1" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="10.0.1" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.2" />
+    <PackageReference Update="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.2" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" />
     <PackageReference Update="System.Buffers" Version="4.5.1" />
     <PackageReference Update="System.ClientModel" Version="1.8.1" />
-    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="10.0.1" />
+    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="10.0.2" />
     <PackageReference Update="System.IO.Hashing" Version="10.0.1" />
     <PackageReference Update="System.Memory" Version="4.6.3" />
     <PackageReference Update="System.Memory.Data" Version="10.0.1" />
@@ -461,7 +463,7 @@
     <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="10.0.1" />
     <PackageReference Update="Microsoft.Extensions.Logging.Console" Version="10.0.1"/>
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Primitives" Version="10.0.1"/>
+    <PackageReference Update="Microsoft.Extensions.Primitives" Version="10.0.2"/>
     <PackageReference Update="Microsoft.Graph" Version="5.100.0" />
     <PackageReference Update="Microsoft.Spatial" Version="$(MicrosoftSpatialVersion)" />
     <PackageReference Update="Mono.Posix" Version="7.0.0-alpha8.21302.6" />
