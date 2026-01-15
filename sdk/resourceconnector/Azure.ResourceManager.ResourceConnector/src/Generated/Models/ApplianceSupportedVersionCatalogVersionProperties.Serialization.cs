@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ResourceConnector;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
-    public partial class ApplianceSupportedVersionCatalogVersionProperties : IUtf8JsonSerializable, IJsonModel<ApplianceSupportedVersionCatalogVersionProperties>
+    /// <summary> The SupportedVersionCatalogVersionData object for appliance. </summary>
+    public partial class ApplianceSupportedVersionCatalogVersionProperties : IJsonModel<ApplianceSupportedVersionCatalogVersionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplianceSupportedVersionCatalogVersionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplianceSupportedVersionCatalogVersionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplianceSupportedVersionCatalogVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceSupportedVersionCatalogVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplianceSupportedVersionCatalogVersionProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Audience))
             {
                 writer.WritePropertyName("audience"u8);
@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,22 +71,27 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
         }
 
-        ApplianceSupportedVersionCatalogVersionProperties IJsonModel<ApplianceSupportedVersionCatalogVersionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplianceSupportedVersionCatalogVersionProperties IJsonModel<ApplianceSupportedVersionCatalogVersionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplianceSupportedVersionCatalogVersionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplianceSupportedVersionCatalogVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceSupportedVersionCatalogVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplianceSupportedVersionCatalogVersionProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApplianceSupportedVersionCatalogVersionProperties(document.RootElement, options);
         }
 
-        internal static ApplianceSupportedVersionCatalogVersionProperties DeserializeApplianceSupportedVersionCatalogVersionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApplianceSupportedVersionCatalogVersionProperties DeserializeApplianceSupportedVersionCatalogVersionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,43 +100,44 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             string catalog = default;
             string offer = default;
             string version = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("audience"u8))
+                if (prop.NameEquals("audience"u8))
                 {
-                    audience = property.Value.GetString();
+                    audience = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("catalog"u8))
+                if (prop.NameEquals("catalog"u8))
                 {
-                    catalog = property.Value.GetString();
+                    catalog = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offer"u8))
+                if (prop.NameEquals("offer"u8))
                 {
-                    offer = property.Value.GetString();
+                    offer = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    version = property.Value.GetString();
+                    version = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ApplianceSupportedVersionCatalogVersionProperties(audience, catalog, offer, version, serializedAdditionalRawData);
+            return new ApplianceSupportedVersionCatalogVersionProperties(audience, catalog, offer, version, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ApplianceSupportedVersionCatalogVersionProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplianceSupportedVersionCatalogVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApplianceSupportedVersionCatalogVersionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceSupportedVersionCatalogVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -141,15 +147,20 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
         }
 
-        ApplianceSupportedVersionCatalogVersionProperties IPersistableModel<ApplianceSupportedVersionCatalogVersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplianceSupportedVersionCatalogVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplianceSupportedVersionCatalogVersionProperties IPersistableModel<ApplianceSupportedVersionCatalogVersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplianceSupportedVersionCatalogVersionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceSupportedVersionCatalogVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApplianceSupportedVersionCatalogVersionProperties(document.RootElement, options);
                     }
                 default:
@@ -157,6 +168,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ApplianceSupportedVersionCatalogVersionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

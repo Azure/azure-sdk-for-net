@@ -12,15 +12,15 @@
 
 ## Summary
 
-- Total libraries: 400
+- Total libraries: 401
 - Management Plane (MPG): 227
-  - Autorest/Swagger: 156
-  - New Emitter (TypeSpec): 53
+  - Autorest/Swagger: 153
+  - New Emitter (TypeSpec): 56
   - Old TypeSpec: 18
-- Data Plane (DPG): 173
-  - Autorest/Swagger: 86
-  - New Emitter (TypeSpec): 22
-  - Old TypeSpec: 16
+- Data Plane (DPG): 174
+  - Autorest/Swagger: 87
+  - New Emitter (TypeSpec): 23
+  - Old TypeSpec: 15
 - No generator: 49
 
 
@@ -28,7 +28,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 22 / 38 (57.9%)
+**Migration Status**: 23 / 38 (60.5%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -40,7 +40,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | batch | Azure.Compute.Batch | ✅ |
 | cognitivelanguage | Azure.AI.Language.Conversations |  |
 | cognitivelanguage | Azure.AI.Language.Conversations.Authoring |  |
-| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring |  |
+| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring | ✅ |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference |  |
 | cognitivelanguage | Azure.AI.Language.Text |  |
 | cognitivelanguage | Azure.AI.Language.Text.Authoring |  |
@@ -74,7 +74,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 
 ## Data Plane Libraries (DPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 87
 
 | Service | Library |
 | ------- | ------- |
@@ -131,6 +131,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 | provisioning | Azure.Provisioning.Network |
 | provisioning | Azure.Provisioning.OperationalInsights |
 | provisioning | Azure.Provisioning.PostgreSql |
+| provisioning | Azure.Provisioning.PrivateDns |
 | provisioning | Azure.Provisioning.Redis |
 | provisioning | Azure.Provisioning.RedisEnterprise |
 | provisioning | Azure.Provisioning.Search |
@@ -170,7 +171,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 53 / 71 (74.6%)
+**Migration Status**: 56 / 74 (75.7%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -198,12 +199,14 @@ Libraries that provide resource management APIs for Azure services and have been
 | durabletask | Azure.ResourceManager.DurableTask | ✅ |
 | dynatrace | Azure.ResourceManager.Dynatrace | ✅ |
 | edgeactions | Azure.ResourceManager.EdgeActions | ✅ |
+| edgezones | Azure.ResourceManager.EdgeZones | ✅ |
 | elastic | Azure.ResourceManager.Elastic |  |
 | elasticsan | Azure.ResourceManager.ElasticSan |  |
 | fabric | Azure.ResourceManager.Fabric | ✅ |
 | fileshares | Azure.ResourceManager.FileShares | ✅ |
 | grafana | Azure.ResourceManager.Grafana | ✅ |
 | hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | ✅ |
+| healthbot | Azure.ResourceManager.HealthBot | ✅ |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
 | hybridconnectivity | Azure.ResourceManager.HybridConnectivity |  |
 | hybridkubernetes | Azure.ResourceManager.Kubernetes | ✅ |
@@ -228,6 +231,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | quota | Azure.ResourceManager.Quota | ✅ |
 | recoveryservices | Azure.ResourceManager.RecoveryServices |  |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication |  |
+| resourceconnector | Azure.ResourceManager.ResourceConnector | ✅ |
 | resources | Azure.ResourceManager.Resources.Bicep |  |
 | secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | ✅ |
 | selfhelp | Azure.ResourceManager.SelfHelp |  |
@@ -249,7 +253,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 156
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 153
 
 | Service | Library |
 | ------- | ------- |
@@ -311,7 +315,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | dns | Azure.ResourceManager.Dns |
 | dnsresolver | Azure.ResourceManager.DnsResolver |
 | edgeorder | Azure.ResourceManager.EdgeOrder |
-| edgezones | Azure.ResourceManager.EdgeZones |
 | eventgrid | Azure.ResourceManager.EventGrid |
 | eventhub | Azure.ResourceManager.EventHubs |
 | extendedlocation | Azure.ResourceManager.ExtendedLocations |
@@ -321,7 +324,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | graphservices | Azure.ResourceManager.GraphServices |
 | guestconfiguration | Azure.ResourceManager.GuestConfiguration |
 | hdinsight | Azure.ResourceManager.HDInsight |
-| healthbot | Azure.ResourceManager.HealthBot |
 | healthcareapis | Azure.ResourceManager.HealthcareApis |
 | hybridaks | Azure.ResourceManager.HybridContainerService |
 | hybridcompute | Azure.ResourceManager.HybridCompute |
@@ -376,7 +378,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | redisenterprise | Azure.ResourceManager.RedisEnterprise |
 | relay | Azure.ResourceManager.Relay |
 | reservations | Azure.ResourceManager.Reservations |
-| resourceconnector | Azure.ResourceManager.ResourceConnector |
 | resourcegraph | Azure.ResourceManager.ResourceGraph |
 | resourcehealth | Azure.ResourceManager.ResourceHealth |
 | resourcemanager | Azure.ResourceManager |
