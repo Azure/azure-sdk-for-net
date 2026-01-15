@@ -11,21 +11,21 @@ namespace Azure.AI.Speech.Transcription
     {
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public TranscriptionContent(TranscriptionOptions definition)
+        public TranscriptionContent(TranscriptionOptions options)
         {
-            Argument.AssertNotNull(definition, nameof(definition));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Definition = definition;
+            Options = options;
         }
 
-        internal TranscriptionContent(TranscriptionOptions definition, BinaryData audio, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranscriptionContent(TranscriptionOptions options, BinaryData audio, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Definition = definition;
+            Options = options;
             Audio = audio;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        public TranscriptionOptions Definition { get; }
+        public TranscriptionOptions Options { get; }
 
         public BinaryData Audio { get; set; }
     }

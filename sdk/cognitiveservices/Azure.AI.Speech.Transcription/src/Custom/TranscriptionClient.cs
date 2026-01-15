@@ -51,17 +51,17 @@ namespace Azure.AI.Speech.Transcription
             if (options.AudioStream != null)
             {
                 // Closest equivalent to the old emitter's behavior:
-                // send the definition and raw audio stream as multipart/form-data.
+                // send the options and raw audio stream as multipart/form-data.
                 MultiPartFormDataBinaryContent multipart = new MultiPartFormDataBinaryContent();
 
-                BinaryData definitionJson = ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAISpeechTranscriptionContext.Default);
-                multipart.Add(definitionJson.ToString(), DefinitionPartName, contentType: MultipartDefinitionPartContentType);
+                BinaryData optionsJson = ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAISpeechTranscriptionContext.Default);
+                multipart.Add(optionsJson.ToString(), DefinitionPartName, contentType: MultipartDefinitionPartContentType);
                 multipart.Add(options.AudioStream, AudioPartName, filename: DefaultAudioFileName);
 
                 return (multipart, multipart.ContentType);
             }
 
-            // AudioUri-only (or definition-only) scenario: send JSON body.
+            // AudioUri-only (or options-only) scenario: send JSON body.
             TranscriptionContent body = new TranscriptionContent(options);
             return (body, JsonContentType);
         }
