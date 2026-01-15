@@ -1167,14 +1167,6 @@
         "remediations"
       ]
     },
-        {
-      "filename": "**/sdk/postgresql/**/*.cs",
-      "words": [
-        "Apsara",
-        "DBRDS",
-        "SSDLRS"
-      ]
-    },
     {
       "filename": "**/sdk/powerbidedicated/**/*.cs",
       "words": [
