@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 import { EmitContext, NoTarget, resolvePath } from "@typespec/compiler";
+import { createSdkContext } from "@azure-tools/typespec-client-generator-core";
 
 import { $onEmit as $onMTGEmit } from "@typespec/http-client-csharp";
 import { AzureEmitterOptions } from "./options.js";
@@ -57,7 +58,14 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
  * If no API version is specified, the value will be "not-specified".
  */
 async function generateMetadataFile(context: EmitContext<AzureEmitterOptions>): Promise<void> {
-  const apiVersion = context.options["api-version"];
+  // Create SDK context to access the API version from the TypeSpec service definition
+  const sdkContext = await createSdkContext(
+    context,
+    "@azure-typespec/http-client-csharp",
+    context.options["sdk-context-options"] ?? {}
+  );
+  
+  const apiVersion = sdkContext.sdkPackage.metadata.apiVersion;
   
   const metadata = {
     "api-version": apiVersion || "not-specified"
