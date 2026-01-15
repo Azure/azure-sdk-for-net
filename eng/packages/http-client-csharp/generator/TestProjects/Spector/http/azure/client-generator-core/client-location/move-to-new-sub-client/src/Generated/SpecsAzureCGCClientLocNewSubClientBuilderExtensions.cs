@@ -8,18 +8,18 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToRootClient;
+using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToNewSubClient;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class SpecsAzureClientGeneratorCoreClientLocRootClientClientBuilderExtensions
+    public static partial class SpecsAzureCGCClientLocNewSubClientBuilderExtensions
     {
-        public static IAzureClientBuilder<MoveToRootClient, MoveToRootClientOptions> AddMoveToRootClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<MoveToNewSubClient, MoveToNewSubClientOptions> AddMoveToNewSubClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<MoveToRootClient, MoveToRootClientOptions> AddMoveToRootClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<MoveToNewSubClient, MoveToNewSubClientOptions> AddMoveToNewSubClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

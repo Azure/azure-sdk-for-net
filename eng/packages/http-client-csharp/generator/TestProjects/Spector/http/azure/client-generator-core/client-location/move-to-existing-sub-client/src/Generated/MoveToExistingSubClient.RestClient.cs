@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToExistingSubClient
 {
-    /// <summary> Client options for <see cref="MoveToExistingSubClient"/>. </summary>
-    public partial class MoveToExistingSubClientOptions : ClientOptions
+    /// <summary></summary>
+    public partial class MoveToExistingSubClient
     {
     }
 }

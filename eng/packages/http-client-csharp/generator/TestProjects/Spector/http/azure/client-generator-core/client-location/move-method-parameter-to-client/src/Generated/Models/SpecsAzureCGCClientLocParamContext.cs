@@ -8,10 +8,10 @@
 using System.ClientModel.Primitives;
 using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient;
 
-namespace Specs.Azure.ClientGenerator.Core.ClientLoc.Param
+namespace Specs.Azure.CGC.ClientLoc.Param
 {
     [ModelReaderWriterBuildable(typeof(Blob))]
-    public partial class SpecsAzureClientGeneratorCoreClientLocParamContext : ModelReaderWriterContext
+    public partial class SpecsAzureCGCClientLocParamContext : ModelReaderWriterContext
     {
     }
 }

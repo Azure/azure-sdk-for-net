@@ -12,7 +12,7 @@ using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClie
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class SpecsAzureClientGeneratorCoreClientLocParamClientBuilderExtensions
+    public static partial class SpecsAzureCGCClientLocParamClientBuilderExtensions
     {
         public static IAzureClientBuilder<MoveMethodParameterToClient, MoveMethodParameterToClientOptions> AddMoveMethodParameterToClient<TBuilder>(this TBuilder builder, string storageAccount)
             where TBuilder : IAzureClientFactoryBuilder => throw null;

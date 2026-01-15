@@ -1,3 +1,3 @@
 options:
   "@azure-typespec/http-client-csharp":
-    package-name: Specs.Azure.ClientGenerator.Core.ClientLoc.Param
+    package-name: Specs.Azure.CGC.ClientLoc.Param

@@ -7,9 +7,9 @@
 
 using System.ClientModel.Primitives;
 
-namespace Specs.Azure.ClientGenerator.Core.ClientLoc.NewSubClient
+namespace Specs.Azure.CGC.ClientLoc.Root
 {
-    public partial class SpecsAzureClientGeneratorCoreClientLocNewSubClientContext : ModelReaderWriterContext
+    public partial class SpecsAzureCGCClientLocRootContext : ModelReaderWriterContext
     {
     }
 }

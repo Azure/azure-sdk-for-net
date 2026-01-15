@@ -6,20 +6,55 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using Azure.Core.Pipeline;
+using Specs.Azure.CGC.ClientLoc.Sub;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToExistingSubClient
 {
+    /// <summary> Test for @clientLocation decorator - moving operations between clients. </summary>
     public partial class MoveToExistingSubClient
     {
-        public MoveToExistingSubClient() : this(new Uri("http://localhost:3000"), new MoveToExistingSubClientOptions()) => throw null;
+        private readonly Uri _endpoint;
+        private AdminOperations _cachedAdminOperations;
+        private UserOperations _cachedUserOperations;
 
-        public MoveToExistingSubClient(Uri endpoint, MoveToExistingSubClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of MoveToExistingSubClient. </summary>
+        public MoveToExistingSubClient() : this(new Uri("http://localhost:3000"), new MoveToExistingSubClientOptions())
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of MoveToExistingSubClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public MoveToExistingSubClient(Uri endpoint, MoveToExistingSubClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-        public virtual AdminOperations GetAdminOperationsClient() => throw null;
+            options ??= new MoveToExistingSubClientOptions();
 
-        public virtual UserOperations GetUserOperationsClient() => throw null;
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> Initializes a new instance of AdminOperations. </summary>
+        public virtual AdminOperations GetAdminOperationsClient()
+        {
+            return Volatile.Read(ref _cachedAdminOperations) ?? Interlocked.CompareExchange(ref _cachedAdminOperations, new AdminOperations(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedAdminOperations;
+        }
+
+        /// <summary> Initializes a new instance of UserOperations. </summary>
+        public virtual UserOperations GetUserOperationsClient()
+        {
+            return Volatile.Read(ref _cachedUserOperations) ?? Interlocked.CompareExchange(ref _cachedUserOperations, new UserOperations(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedUserOperations;
+        }
     }
 }

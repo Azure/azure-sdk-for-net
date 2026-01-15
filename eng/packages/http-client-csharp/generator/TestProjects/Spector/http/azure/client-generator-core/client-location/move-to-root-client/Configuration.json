@@ -1,5 +1,5 @@
 {
-  "package-name": "Specs.Azure.ClientGenerator.Core.ClientLoc.RootClient",
+  "package-name": "Specs.Azure.CGC.ClientLoc.Root",
   "license": {
     "name": "MIT License",
     "company": "Microsoft Corporation",
