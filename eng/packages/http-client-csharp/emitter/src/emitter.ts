@@ -65,31 +65,16 @@ async function generateMetadataFile(context: EmitContext<AzureEmitterOptions>): 
     context.options["sdk-context-options"] ?? {}
   );
   
+  const apiVersion = sdkContext.sdkPackage.metadata.apiVersion;
+  
+  // Define the metadata schema we want to output
+  const metadata = {
+    apiVersion: apiVersion || "not-specified"
+  };
+
   const generatedDir = resolvePath(context.emitterOutputDir, "Generated");
   await context.program.host.mkdirp(generatedDir);
   
   const outputPath = resolvePath(generatedDir, "metadata.json");
-  
-  // Stringify the entire metadata object from the SDK package
-  // If stringification fails or metadata is invalid, fallback to just the apiVersion property
-  let metadataJson: string;
-  try {
-    metadataJson = JSON.stringify(sdkContext.sdkPackage.metadata, null, 2);
-  } catch (error) {
-    // Fallback to just the apiVersion if metadata object is too complex or invalid
-    const fallbackMetadata = {
-      apiVersion: sdkContext.sdkPackage.metadata?.apiVersion || "not-specified"
-    };
-    metadataJson = JSON.stringify(fallbackMetadata, null, 2);
-    // Log the error for debugging purposes
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    context.program.reportDiagnostic({
-      code: "metadata-stringify-error",
-      severity: "warning",
-      message: `Failed to stringify metadata object (${errorMessage}). Using fallback with only apiVersion property.`,
-      target: NoTarget
-    });
-  }
-  
-  await context.program.host.writeFile(outputPath, metadataJson);
+  await context.program.host.writeFile(outputPath, JSON.stringify(metadata, null, 2));
 }

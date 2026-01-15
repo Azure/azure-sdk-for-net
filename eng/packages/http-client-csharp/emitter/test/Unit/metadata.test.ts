@@ -108,7 +108,7 @@ describe("Metadata generation tests", async () => {
     
     await $onEmit(context);
     
-    // Check that metadata file was written
+    // Check that metadata file was written with default value
     const metadataCalls = writeFileMock.mock.calls.filter((call: any) => 
       call[0].includes("metadata.json")
     );
@@ -116,8 +116,7 @@ describe("Metadata generation tests", async () => {
     
     const content = metadataCalls[0][1];
     const parsed = JSON.parse(content);
-    // When no versioning is specified, apiVersion will be undefined in metadata
-    ok(parsed.apiVersion === undefined || parsed.apiVersion === "not-specified");
+    strictEqual(parsed.apiVersion, "not-specified");
     
     strictEqual(program.diagnostics.length, 0);
   });
