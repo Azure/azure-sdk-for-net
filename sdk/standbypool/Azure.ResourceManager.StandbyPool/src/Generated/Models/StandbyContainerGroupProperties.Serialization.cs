@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
                 if (prop.NameEquals("subnetIds"u8))
                 {
-                    SubnetIdsDeserial(prop, ref subnetIds);
+                    DeserializeSubnetIds(prop, ref subnetIds);
                     continue;
                 }
                 if (options.Format != "W")
