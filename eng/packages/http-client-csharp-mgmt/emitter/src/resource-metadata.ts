@@ -5,8 +5,6 @@ const ResourceGroupScopePrefix =
   "/subscriptions/{subscriptionId}/resourceGroups";
 const SubscriptionScopePrefix = "/subscriptions";
 const TenantScopePrefix = "/tenants";
-const ManagementGroupScopePrefix =
-  "/providers/Microsoft.Management/managementGroups";
 const Providers = "/providers";
 
 export function calculateResourceTypeFromPath(path: string): string {
@@ -18,8 +16,6 @@ export function calculateResourceTypeFromPath(path: string): string {
       return "Microsoft.Resources/subscriptions";
     } else if (path.startsWith(TenantScopePrefix)) {
       return "Microsoft.Resources/tenants";
-    } else if (path.startsWith(ManagementGroupScopePrefix)) {
-      return "Microsoft.Resources/managementGroups";
     }
     throw `Path ${path} doesn't have resource type`;
   }

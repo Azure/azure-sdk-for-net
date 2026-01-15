@@ -44,6 +44,7 @@ import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import {
   getCrossLanguageDefinitionId
 } from "@azure-tools/typespec-client-generator-core";
+import { isVariableSegment } from "./utils.js";
 
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
@@ -457,7 +458,7 @@ function extractSingletonName(path: string): string | undefined {
   const lastSegment = segments[segments.length - 1];
 
   // If the last segment is not a parameter (doesn't start with {), it's a singleton
-  if (lastSegment && !lastSegment.startsWith("{")) {
+  if (lastSegment && !isVariableSegment(lastSegment)) {
     return lastSegment;
   }
 
@@ -471,11 +472,11 @@ function canBeListResourceScope(listPathSegments: string[], resourceInstancePath
   }
   for (let i = 0; i < resourceInstancePathSegments.length; i++) {
     // if both segments are variables, we consider it as a match
-    if (listPathSegments[i].startsWith("{") && resourceInstancePathSegments[i].startsWith("{")) {
+    if (isVariableSegment(listPathSegments[i]) && isVariableSegment(resourceInstancePathSegments[i])) {
       continue;
     }
     // if one of them is a variable, the other is not, we consider it as not a match
-    if (listPathSegments[i].startsWith("{") || resourceInstancePathSegments[i].startsWith("{")) {
+    if (isVariableSegment(listPathSegments[i]) || isVariableSegment(resourceInstancePathSegments[i])) {
       return false;
     }
     // both are fixed strings, they must match

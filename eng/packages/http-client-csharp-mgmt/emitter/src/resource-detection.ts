@@ -58,6 +58,7 @@ import {
   getOperationScopeFromPath
 } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
+import { isPrefix } from "./utils.js";
 
 export async function updateClients(
   codeModel: CodeModel,
@@ -164,7 +165,7 @@ export function buildArmProviderSchema(
             // But only if we haven't found a better match yet
             if (!resourcePath) {
               const existingParentPath = existingPath.substring(0, existingPath.lastIndexOf('/'));
-              if (operationPath.startsWith(existingParentPath)) {
+              if (isPrefix(existingParentPath, operationPath)) {
                 // Store this as a potential match, but continue looking for exact matches
                 resourcePath = existingPath;
               }
@@ -302,7 +303,7 @@ export function buildArmProviderSchema(
           const potentialParentPath = otherMetadata.resourceIdPattern;
 
           // The child path should start with the parent path followed by a "/"
-          if (thisPath.startsWith(potentialParentPath + "/") && thisPath.length > potentialParentPath.length + 1) {
+          if (isPrefix(potentialParentPath, thisPath) && !isPrefix(thisPath, potentialParentPath)) {
             metadata.parentResourceId = potentialParentPath;
             // Note: we don't set parentResourceModelId here since they share the same model
             break;
@@ -807,7 +808,7 @@ function getResourceScopeOfMethod(
   for (const otherMetadata of resources) {
     if (
       otherMetadata.resourceIdPattern &&
-      path.startsWith(otherMetadata.resourceIdPattern)
+      isPrefix(otherMetadata.resourceIdPattern, path)
     ) {
       candidates.push(otherMetadata.resourceIdPattern);
     }
