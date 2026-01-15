@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Upgraded to API version `2025-03-01-preview` which mainly added new `ApplianceData` properties.
+
 ### Breaking Changes
+
+- Regenerated the SDK using the latest TypeSpec definition and SDK generator.
+  This resulted in renamed types and members, as well as changes to method signatures.
 
 ### Bugs Fixed
 
