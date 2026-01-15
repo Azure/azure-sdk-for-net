@@ -283,8 +283,10 @@ namespace Azure.ResourceManager.StandbyPool.Models
             return new StandbyContainerGroupPoolPrediction(forecastValuesInstancesRequestedCount is null ? default : new StandbyContainerGroupPoolForecastValues((forecastValuesInstancesRequestedCount ?? new ChangeTrackingList<long>()).ToList(), null), forecastStartOn, forecastInfo, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="zone"></param>
-        /// <param name="standbyVirtualMachineInstanceCountsByState"></param>
+        /// <summary> Initializes a new instance of <see cref="Models.StandbyVirtualMachineInstanceCountSummary"/>. </summary>
+        /// <param name="zone"> The zone that the provided counts are in. It will not have a value if zones are not enabled on the attached VMSS. </param>
+        /// <param name="standbyVirtualMachineInstanceCountsByState"> The count of pooled virtual machines in each state for the given zone. </param>
+        /// <returns> A new <see cref="Models.StandbyVirtualMachineInstanceCountSummary"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StandbyVirtualMachineInstanceCountSummary StandbyVirtualMachineInstanceCountSummary(long? zone, IEnumerable<PoolVirtualMachineStateCount> standbyVirtualMachineInstanceCountsByState)
         {
@@ -293,25 +295,36 @@ namespace Azure.ResourceManager.StandbyPool.Models
             return new StandbyVirtualMachineInstanceCountSummary(zone, default, serializedAdditionalRawData: null);
         }
 
-        /// <param name="instanceCountSummary"></param>
-        /// <param name="provisioningState"></param>
+        /// <summary> Initializes a new instance of <see cref="Models.StandbyContainerGroupPoolRuntimeViewProperties"/>. </summary>
+        /// <param name="instanceCountSummary"> A list containing the counts of container groups in each possible state, as known by the StandbyPool resource provider. </param>
+        /// <param name="provisioningState"> Displays the provisioning state of the standby pool. </param>
+        /// <returns> A new <see cref="Models.StandbyContainerGroupPoolRuntimeViewProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StandbyContainerGroupPoolRuntimeViewProperties StandbyContainerGroupPoolRuntimeViewProperties(IEnumerable<ContainerGroupInstanceCountSummary> instanceCountSummary, StandbyProvisioningState? provisioningState)
         {
             return StandbyContainerGroupPoolRuntimeViewProperties(instanceCountSummary, status: default, provisioningState, prediction: default);
         }
 
-        /// <param name="elasticityProfile"></param>
-        /// <param name="containerGroupProperties"></param>
-        /// <param name="provisioningState"></param>
+        /// <summary> Initializes a new instance of <see cref="Models.StandbyContainerGroupPoolProperties"/>. </summary>
+        /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
+        /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.StandbyContainerGroupPoolProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StandbyContainerGroupPoolProperties StandbyContainerGroupPoolProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties, StandbyProvisioningState? provisioningState)
         {
             return StandbyContainerGroupPoolProperties(elasticityProfile, containerGroupProperties, zones: default, provisioningState);
         }
 
-        /// <param name="instanceCountSummary"></param>
-        /// <param name="provisioningState"></param>
+        /// <summary> Initializes a new instance of <see cref="Models.StandbyVirtualMachinePoolRuntimeViewProperties"/>. </summary>
+        /// <param name="instanceCountSummary">
+        /// A list containing the counts of virtual machines in each possible power state for each zone if enabled, as known by the StandbyPool resource provider.
+        ///             If zones are not enabled on the attached VMSS, the list will contain a single entry with null zone values.
+        ///             Note: any updates to pool resources outside of StandbyPoolRP (i.e deleting a VM through portal) are not reflected here.
+        ///             Note: any resources in the Running state may still be installing extensions / not fully provisioned.
+        /// </param>
+        /// <param name="provisioningState"> Displays the provisioning state of the standby pool. </param>
+        /// <returns> A new <see cref="Models.StandbyVirtualMachinePoolRuntimeViewProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StandbyVirtualMachinePoolRuntimeViewProperties StandbyVirtualMachinePoolRuntimeViewProperties(IEnumerable<StandbyVirtualMachineInstanceCountSummary> instanceCountSummary, StandbyProvisioningState? provisioningState)
         {
