@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 throw new FormatException($"The model {nameof(ResourceTypeEndpoint)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
@@ -89,6 +94,51 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
+            if (Optional.IsDefined(EndpointType))
+            {
+                writer.WritePropertyName("endpointType"u8);
+                writer.WriteStringValue(EndpointType.Value.ToString());
+            }
+            if (Optional.IsDefined(TokenAuthConfiguration))
+            {
+                writer.WritePropertyName("tokenAuthConfiguration"u8);
+                writer.WriteObjectValue(TokenAuthConfiguration, options);
+            }
+            if (Optional.IsDefined(SkuLink))
+            {
+                writer.WritePropertyName("skuLink"u8);
+                writer.WriteStringValue(SkuLink);
+            }
+            if (Optional.IsDefined(EndpointUri))
+            {
+                writer.WritePropertyName("endpointUri"u8);
+                writer.WriteStringValue(EndpointUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(ApiVersion))
+            {
+                writer.WritePropertyName("apiVersion"u8);
+                writer.WriteStringValue(ApiVersion);
+            }
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                writer.WritePropertyName("zones"u8);
+                writer.WriteStartArray();
+                foreach (var item in Zones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DstsConfiguration))
+            {
+                writer.WritePropertyName("dstsConfiguration"u8);
+                writer.WriteObjectValue(DstsConfiguration, options);
+            }
+            if (Optional.IsDefined(DataBoundary))
+            {
+                writer.WritePropertyName("dataBoundary"u8);
+                writer.WriteStringValue(DataBoundary.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -126,17 +176,35 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
+            ResourceTypeEndpointKind? kind = default;
             bool? enabled = default;
             IList<string> apiVersions = default;
             IList<AzureLocation> locations = default;
             IList<string> requiredFeatures = default;
-            FeaturesRule featuresRule = default;
+            ProviderFeaturesRule featuresRule = default;
             IList<ResourceTypeExtension> extensions = default;
             TimeSpan? timeout = default;
+            ProviderEndpointTypeResourceType? endpointType = default;
+            TokenAuthConfiguration tokenAuthConfiguration = default;
+            string skuLink = default;
+            Uri endpointUri = default;
+            string apiVersion = default;
+            IList<string> zones = default;
+            ProviderDstsConfiguration dstsConfiguration = default;
+            ResourceTypeDataBoundary? dataBoundary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new ResourceTypeEndpointKind(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -194,7 +262,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value, options);
+                    featuresRule = ProviderFeaturesRule.DeserializeProviderFeaturesRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extensions"u8))
@@ -220,6 +288,75 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (property.NameEquals("endpointType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpointType = new ProviderEndpointTypeResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tokenAuthConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tokenAuthConfiguration = TokenAuthConfiguration.DeserializeTokenAuthConfiguration(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("skuLink"u8))
+                {
+                    skuLink = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("endpointUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpointUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("apiVersion"u8))
+                {
+                    apiVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("zones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    zones = array;
+                    continue;
+                }
+                if (property.NameEquals("dstsConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("dataBoundary"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataBoundary = new ResourceTypeDataBoundary(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -227,6 +364,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new ResourceTypeEndpoint(
+                kind,
                 enabled,
                 apiVersions ?? new ChangeTrackingList<string>(),
                 locations ?? new ChangeTrackingList<AzureLocation>(),
@@ -234,6 +372,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 featuresRule,
                 extensions ?? new ChangeTrackingList<ResourceTypeExtension>(),
                 timeout,
+                endpointType,
+                tokenAuthConfiguration,
+                skuLink,
+                endpointUri,
+                apiVersion,
+                zones ?? new ChangeTrackingList<string>(),
+                dstsConfiguration,
+                dataBoundary,
                 serializedAdditionalRawData);
         }
 

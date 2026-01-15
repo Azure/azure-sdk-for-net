@@ -33,6 +33,9 @@
 		<PackageReference Include="Microsoft.Azure.Management.Batch" />
 		<PackageReference Include="Microsoft.Identity.Client" VersionOverride="4.61.3" />
 		<PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" VersionOverride="[3.14.2, 4.0.0)" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="xunit" />
+		<PackageReference Include="xunit.runner.visualstudio" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -48,7 +51,7 @@
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\..\src\Microsoft.Azure.Batch.csproj" />
     <ProjectReference Include="..\TestCommon\Microsoft.Azure.Batch.Common.csproj" />

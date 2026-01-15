@@ -2428,7 +2428,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await destinationResource.CreateAsync(
                 overwrite: false,
                 maxSize: length,
-                properties: properties,
+                sourceProperties: properties,
                 cancellationToken: CancellationToken.None);
 
             mockDestination.Verify(b => b.CreateAsync(
@@ -2510,7 +2510,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await destinationResource.CreateAsync(
                 overwrite: false,
                 maxSize: length,
-                properties: properties,
+                sourceProperties: properties,
                 cancellationToken: CancellationToken.None);
 
             mockDestination.Verify(b => b.CreateAsync(
@@ -2551,13 +2551,17 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         eTag: new ETag("eTag"),
                         lastModified: DateTimeOffset.UtcNow,
                         isServerEncrypted: false,
+                        filePermissionKey: "",
+                        fileAttributes: "Archive|ReadOnly",
                         fileCreationTime: DateTimeOffset.UtcNow,
                         fileLastWriteTime: DateTimeOffset.UtcNow,
+                        fileChangeTime: DateTimeOffset.UtcNow,
+                        fileId: "48903841",
+                        fileParentId: "93024923",
+                        nfsFileMode: DefaultSourceFileMode,
                         owner: DefaultSourceOwner,
                         group: DefaultSourceGroup,
-                        nfsFileMode: DefaultSourceFileMode,
-                        fileId: "48903841",
-                        fileParentId: "93024923"),
+                        nfsFileType: NfsFileType.Regular),
                     new MockResponse(200))));
             ShareFileStorageResource destinationResource = new ShareFileStorageResource(
                 mockDestination.Object,
@@ -2595,7 +2599,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await destinationResource.CreateAsync(
                 overwrite: false,
                 maxSize: length,
-                properties: properties,
+                sourceProperties: properties,
                 cancellationToken: CancellationToken.None);
 
             mockDestination.Verify(b => b.CreateAsync(

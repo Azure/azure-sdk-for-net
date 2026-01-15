@@ -2,10 +2,11 @@
   <PropertyGroup>
     <Description>This is the Authoring client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation Authoring for Azure Data Plane</AssemblyTitle>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0-beta.3</Version>
     <PackageTags>Azure Authoring</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->

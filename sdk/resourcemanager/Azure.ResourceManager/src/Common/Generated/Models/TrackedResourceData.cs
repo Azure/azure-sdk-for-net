@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TrackedResourceData"/> for deserialization. </summary>
-        protected TrackedResourceData()
+        internal protected TrackedResourceData()
         {
         }
 

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using Azure;
 using Azure.Core.Pipeline;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
@@ -31,12 +33,11 @@ namespace Azure.Generator.Tests.Visitors
         {
             // Arrange
             var visitor = new TestDistributedTracingVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
+                InputFactory.MethodParameter(
                 "p1",
-                InputPrimitiveType.String,
-                kind: InputParameterKind.Method)
+                InputPrimitiveType.String)
             ];
             var basicOperation = InputFactory.Operation(
                 "foo",
@@ -94,12 +95,11 @@ namespace Azure.Generator.Tests.Visitors
         public void TestUpdatesSubClientFactoryMethods()
         {
             var visitor = new TestDistributedTracingVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
+                InputFactory.MethodParameter(
                 "p1",
-                InputPrimitiveType.String,
-                kind: InputParameterKind.Method)
+                InputPrimitiveType.String)
             ];
             var basicOperation = InputFactory.Operation(
                 "foo",
@@ -131,12 +131,11 @@ namespace Azure.Generator.Tests.Visitors
             var visitor = new TestDistributedTracingVisitor();
 
             // load the input
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
+                InputFactory.MethodParameter(
                 "p1",
-                InputFactory.Model("foo"),
-                kind: InputParameterKind.Method)
+                InputPrimitiveType.String)
             ];
             var basicOperation = InputFactory.Operation(
                 "foo",
@@ -157,13 +156,67 @@ namespace Azure.Generator.Tests.Visitors
                 $"The response returned from the service.",
                 [new ParameterProvider("p1", $"p1", AzureClientGenerator.Instance.TypeFactory.RequestContentApi.RequestContentType)]);
             var bodyStatements = InvokeConsoleWriteLine(Literal("Hello World"));
-            var method = new ScmMethodProvider(methodSignature, bodyStatements, clientProvider!, isProtocolMethod: isProtocolMethod);
+            var methodKind = isProtocolMethod ? ScmMethodKind.Protocol : ScmMethodKind.Convenience;
+            var method = new ScmMethodProvider(methodSignature, bodyStatements, clientProvider!, methodKind);
 
             var updatedMethod = visitor.InvokeVisitMethod(method!);
             Assert.IsNotNull(updatedMethod?.BodyStatements);
 
             var result = updatedMethod!.BodyStatements!.ToDisplayString();
             Assert.AreEqual(Helpers.GetExpectedFromFile(isProtocolMethod.ToString()), result);
+        }
+
+        [TestCase(true, ScmMethodKind.Protocol)]
+        [TestCase(false, ScmMethodKind.Protocol)]
+        [TestCase(true, ScmMethodKind.Convenience)]
+        [TestCase(false, ScmMethodKind.Convenience)]
+        public void TestSkipsInstrumentationForPagingMethods(bool isAsync, ScmMethodKind methodKind)
+        {
+            var visitor = new TestDistributedTracingVisitor();
+
+            // load the input
+            List<InputMethodParameter> parameters =
+            [
+                InputFactory.MethodParameter(
+                "context",
+                InputPrimitiveType.String)
+            ];
+            var basicOperation = InputFactory.Operation(
+                "listItems",
+                parameters: parameters);
+            var basicServiceMethod = InputFactory.BasicServiceMethod("listItems", basicOperation, parameters: parameters);
+            var inputClient = InputFactory.Client("TestClient", methods: [basicServiceMethod]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            // create the client provider
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            // create a paging method to test the visitor
+            var pagingReturnType = isAsync
+                ? new CSharpType(typeof(AsyncPageable<>), typeof(BinaryData))
+                : new CSharpType(typeof(Pageable<>), typeof(BinaryData));
+
+            var methodSignature = new MethodSignature(
+                isAsync ? "ListItemsAsync" : "ListItems",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                pagingReturnType,
+                $"The pageable response returned from the service.",
+                [new ParameterProvider("context", $"The request context", AzureClientGenerator.Instance.TypeFactory.RequestContentApi.RequestContentType)]);
+            var bodyStatements = Return(New.Instance(pagingReturnType));
+            var method = new ScmMethodProvider(methodSignature, bodyStatements, clientProvider!, methodKind);
+
+            var updatedMethod = visitor.InvokeVisitMethod(method!);
+            Assert.IsNotNull(updatedMethod?.BodyStatements);
+
+            var result = updatedMethod!.BodyStatements!.ToDisplayString();
+            // Verify that the method body does NOT contain DiagnosticScope instrumentation
+            Assert.IsFalse(result.Contains("DiagnosticScope"),
+                $"Paging method should not have DiagnosticScope instrumentation. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
+            Assert.IsFalse(result.Contains("scope.Start()"),
+                $"Paging method should not have scope.Start() call. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
+            Assert.IsFalse(result.Contains("scope.Failed"),
+                $"Paging method should not have scope.Failed() call. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
         }
 
         private static IEnumerable<TestCaseData> TestUpdatesConstructorsTestCases
@@ -177,8 +230,8 @@ namespace Azure.Generator.Tests.Visitors
                     [
                         InputFactory.BasicServiceMethod(
                             "foo",
-                            InputFactory.Operation("foo", parameters: [InputFactory.Parameter("p1", InputPrimitiveType.String, kind: InputParameterKind.Method)]),
-                            parameters: [InputFactory.Parameter("p1", InputPrimitiveType.String, kind: InputParameterKind.Method)])
+                            InputFactory.Operation("foo", parameters: [InputFactory.BodyParameter("p1", InputPrimitiveType.String)]),
+                            parameters: [InputFactory.MethodParameter("p1", InputPrimitiveType.String)])
                     ]));
                 // sub client
                 yield return new TestCaseData(InputFactory.Client(
@@ -187,8 +240,8 @@ namespace Azure.Generator.Tests.Visitors
                     [
                         InputFactory.BasicServiceMethod(
                             "foo",
-                            InputFactory.Operation("foo", parameters: [InputFactory.Parameter("p1", InputPrimitiveType.String, kind: InputParameterKind.Method)]),
-                            parameters: [InputFactory.Parameter("p1", InputPrimitiveType.String, kind: InputParameterKind.Method)])
+                            InputFactory.Operation("foo", parameters: [InputFactory.BodyParameter("p1", InputPrimitiveType.String)]),
+                            parameters: [InputFactory.MethodParameter("p1", InputPrimitiveType.String)])
                     ],
                     parent: InputFactory.Client("parent")));
             }

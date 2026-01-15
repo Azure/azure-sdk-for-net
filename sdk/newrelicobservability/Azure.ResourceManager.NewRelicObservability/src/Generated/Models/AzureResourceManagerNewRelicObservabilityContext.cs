@@ -6,6 +6,9 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NewRelicObservability.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
@@ -13,6 +16,65 @@ namespace Azure.ResourceManager.NewRelicObservability
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ActivateSaaSParameterContent))]
+    [ModelReaderWriterBuildable(typeof(ConnectedPartnerResourcesListResponse))]
+    [ModelReaderWriterBuildable(typeof(LinkedResourceListResponse))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceSaaSInfo))]
+    [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionPropertiesList))]
+    [ModelReaderWriterBuildable(typeof(NewRelicAccountProperties))]
+    [ModelReaderWriterBuildable(typeof(NewRelicAccountResourceData))]
+    [ModelReaderWriterBuildable(typeof(NewRelicAccountsListResult))]
+    [ModelReaderWriterBuildable(typeof(NewRelicAppServicesGetContent))]
+    [ModelReaderWriterBuildable(typeof(NewRelicAppServicesListResult))]
+    [ModelReaderWriterBuildable(typeof(NewRelicBillingInfoResult))]
+    [ModelReaderWriterBuildable(typeof(NewRelicConnectedPartnerResourceInfo))]
+    [ModelReaderWriterBuildable(typeof(NewRelicConnectedPartnerResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(NewRelicHostsGetContent))]
+    [ModelReaderWriterBuildable(typeof(NewRelicMetricsContent))]
+    [ModelReaderWriterBuildable(typeof(NewRelicMetricsStatusContent))]
+    [ModelReaderWriterBuildable(typeof(NewRelicMetricsStatusResult))]
+    [ModelReaderWriterBuildable(typeof(NewRelicMonitoredResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(NewRelicMonitoredSubscriptionData))]
+    [ModelReaderWriterBuildable(typeof(NewRelicMonitoredSubscriptionInfo))]
+    [ModelReaderWriterBuildable(typeof(NewRelicMonitoredSubscriptionProperties))]
+    [ModelReaderWriterBuildable(typeof(NewRelicMonitoredSubscriptionResource))]
+    [ModelReaderWriterBuildable(typeof(NewRelicMonitoringTagRules))]
+    [ModelReaderWriterBuildable(typeof(NewRelicMonitorResource))]
+    [ModelReaderWriterBuildable(typeof(NewRelicMonitorResourceData))]
+    [ModelReaderWriterBuildable(typeof(NewRelicMonitorResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(NewRelicMonitorResourcePatch))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityAccountInfo))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityAppServiceInfo))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityFilteringTag))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityLatestLinkedSaaSResult))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityLogRules))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityMetricRules))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityOrganizationInfo))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilitySaaSContent))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilitySaaSResourceDetailsResult))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityTagRuleData))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityTagRuleListResult))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityTagRulePatch))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityTagRuleResource))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityUserInfo))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityVmExtensionPayload))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityVmHostsListResponse))]
+    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityVmInfo))]
+    [ModelReaderWriterBuildable(typeof(NewRelicOrganizationResourceData))]
+    [ModelReaderWriterBuildable(typeof(NewRelicOrganizationsListResult))]
+    [ModelReaderWriterBuildable(typeof(NewRelicPlanData))]
+    [ModelReaderWriterBuildable(typeof(NewRelicPlanDataListResult))]
+    [ModelReaderWriterBuildable(typeof(NewRelicPlanDetails))]
+    [ModelReaderWriterBuildable(typeof(NewRelicResourceMonitorResult))]
+    [ModelReaderWriterBuildable(typeof(NewRelicSingleSignOnProperties))]
+    [ModelReaderWriterBuildable(typeof(NewRelicSwitchBillingContent))]
+    [ModelReaderWriterBuildable(typeof(PartnerBillingEntity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(ResubscribeProperties))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerNewRelicObservabilityContext : ModelReaderWriterContext
     {
     }

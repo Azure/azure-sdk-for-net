@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct OracleDatabaseProvisioningState : IEquatable<OracleDatabaseProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Indicates that resource in Provisioning state. </summary>
+        private const string ProvisioningValue = "Provisioning";
 
         /// <summary> Initializes a new instance of <see cref="OracleDatabaseProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OracleDatabaseProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string ProvisioningValue = "Provisioning";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static OracleDatabaseProvisioningState Succeeded { get; } = new OracleDatabaseProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static OracleDatabaseProvisioningState Failed { get; } = new OracleDatabaseProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static OracleDatabaseProvisioningState Canceled { get; } = new OracleDatabaseProvisioningState(CanceledValue);
+
         /// <summary> Indicates that resource in Provisioning state. </summary>
         public static OracleDatabaseProvisioningState Provisioning { get; } = new OracleDatabaseProvisioningState(ProvisioningValue);
+
         /// <summary> Determines if two <see cref="OracleDatabaseProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OracleDatabaseProvisioningState left, OracleDatabaseProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OracleDatabaseProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OracleDatabaseProvisioningState left, OracleDatabaseProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OracleDatabaseProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OracleDatabaseProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OracleDatabaseProvisioningState(string value) => new OracleDatabaseProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OracleDatabaseProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OracleDatabaseProvisioningState?(string value) => value == null ? null : new OracleDatabaseProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OracleDatabaseProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OracleDatabaseProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

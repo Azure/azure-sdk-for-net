@@ -75,6 +75,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("enableApiLogging"u8);
                 writer.WriteBooleanValue(IsApiLoggingEnabled.Value);
             }
+            if (Optional.IsDefined(AppHealth))
+            {
+                writer.WritePropertyName("appHealth"u8);
+                writer.WriteObjectValue(AppHealth, options);
+            }
+            if (Optional.IsDefined(MaxConcurrency))
+            {
+                writer.WritePropertyName("maxConcurrency"u8);
+                writer.WriteNumberValue(MaxConcurrency.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -120,6 +130,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             int? httpMaxRequestSize = default;
             ContainerAppDaprLogLevel? logLevel = default;
             bool? enableApiLogging = default;
+            DaprAppHealth appHealth = default;
+            int? maxConcurrency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,6 +204,24 @@ namespace Azure.ResourceManager.AppContainers.Models
                     enableApiLogging = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("appHealth"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    appHealth = DaprAppHealth.DeserializeDaprAppHealth(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("maxConcurrency"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxConcurrency = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -207,6 +237,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                 httpMaxRequestSize,
                 logLevel,
                 enableApiLogging,
+                appHealth,
+                maxConcurrency,
                 serializedAdditionalRawData);
         }
 
@@ -348,6 +380,36 @@ namespace Azure.ResourceManager.AppContainers.Models
                     builder.Append("  enableApiLogging: ");
                     var boolValue = IsApiLoggingEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppHealth), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  appHealth: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AppHealth))
+                {
+                    builder.Append("  appHealth: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AppHealth, options, 2, false, "  appHealth: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxConcurrency), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxConcurrency: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxConcurrency))
+                {
+                    builder.Append("  maxConcurrency: ");
+                    builder.AppendLine($"{MaxConcurrency.Value}");
                 }
             }
 

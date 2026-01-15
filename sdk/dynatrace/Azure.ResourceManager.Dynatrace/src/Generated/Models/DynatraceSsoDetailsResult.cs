@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> SSO details from the Dynatrace partner. </summary>
     public partial class DynatraceSsoDetailsResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DynatraceSsoDetailsResult"/>. </summary>
         internal DynatraceSsoDetailsResult()
@@ -58,25 +30,29 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="singleSignOnUri"> The login URL specific to this Dynatrace Environment. </param>
         /// <param name="aadDomains"> array of Aad(azure active directory) domains. </param>
         /// <param name="adminUsers"> Array of admin user emails. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DynatraceSsoDetailsResult(DynatraceSsoStatus? isSsoEnabled, Uri metadataUri, Uri singleSignOnUri, IReadOnlyList<string> aadDomains, IReadOnlyList<string> adminUsers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceSsoDetailsResult(DynatraceSsoStatus? isSsoEnabled, Uri metadataUri, Uri singleSignOnUri, IReadOnlyList<string> aadDomains, IReadOnlyList<string> adminUsers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsSsoEnabled = isSsoEnabled;
             MetadataUri = metadataUri;
             SingleSignOnUri = singleSignOnUri;
             AadDomains = aadDomains;
             AdminUsers = adminUsers;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether the SSO is enabled for this resource or not. </summary>
         public DynatraceSsoStatus? IsSsoEnabled { get; }
+
         /// <summary> URL for Azure AD metadata. </summary>
         public Uri MetadataUri { get; }
+
         /// <summary> The login URL specific to this Dynatrace Environment. </summary>
         public Uri SingleSignOnUri { get; }
+
         /// <summary> array of Aad(azure active directory) domains. </summary>
         public IReadOnlyList<string> AadDomains { get; }
+
         /// <summary> Array of admin user emails. </summary>
         public IReadOnlyList<string> AdminUsers { get; }
     }

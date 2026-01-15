@@ -25,12 +25,11 @@ namespace Azure.ResourceManager.ContainerInstance
     }
     public partial class ContainerGroupData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.ContainerGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.ContainerGroupData>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ContainerGroupData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> containers) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ContainerGroupData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> containers, Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType osType) { }
         public string ConfidentialComputeCcePolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType ContainerGroupOSType { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType? ContainerGroupOSType { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfileReferenceDefinition ContainerGroupProfile { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProvisioningState? ContainerGroupProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> Containers { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupLogAnalytics DiagnosticsLogAnalytics { get { throw null; } set { } }
@@ -43,13 +42,14 @@ namespace Azure.ResourceManager.ContainerInstance
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.InitContainerDefinitionContent> InitContainers { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupInstanceView InstanceView { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddress IPAddress { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public bool? IsCreatedFromStandbyPool { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType OSType { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority? Priority { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy? RestartPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSecretReference> SecretReferences { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku? Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition StandbyPoolProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSubnetId> SubnetIds { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerVolume> Volumes { get { throw null; } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
@@ -80,7 +80,6 @@ namespace Azure.ResourceManager.ContainerInstance
     public partial class ContainerGroupProfileData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.ContainerGroupProfileData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.ContainerGroupProfileData>
     {
         public ContainerGroupProfileData(Azure.Core.AzureLocation location) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ContainerGroupProfileData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> containers, Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType osType) { }
         public string ConfidentialComputeCcePolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> Containers { get { throw null; } }
@@ -92,9 +91,9 @@ namespace Azure.ResourceManager.ContainerInstance
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddress IPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType? OSType { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority? Priority { get { throw null; } set { } }
-        public System.Collections.Generic.IList<long> RegisteredRevisions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<int> RegisteredRevisions { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy? RestartPolicy { get { throw null; } set { } }
-        public long? Revision { get { throw null; } set { } }
+        public int? Revision { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextDefinition SecurityContext { get { throw null; } set { } }
         public System.DateTimeOffset? ShutdownGracePeriod { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku? Sku { get { throw null; } set { } }
@@ -376,14 +375,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerCapabilities ContainerCapabilities(string resourceType = null, string osType = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string ipAddressType = null, string gpu = null, Azure.ResourceManager.ContainerInstance.Models.ContainerSupportedCapabilities capabilities = null) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerEvent ContainerEvent(int? count = default(int?), System.DateTimeOffset? firstTimestamp = default(System.DateTimeOffset?), System.DateTimeOffset? lastTimestamp = default(System.DateTimeOffset?), string name = null, string message = null, string eventType = null) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerExecResult ContainerExecResult(System.Uri webSocketUri = null, string password = null) { throw null; }
-        public static Azure.ResourceManager.ContainerInstance.ContainerGroupData ContainerGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProvisioningState? containerGroupProvisioningState = default(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSecretReference> secretReferences = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> containers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupImageRegistryCredential> imageRegistryCredentials = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy? restartPolicy = default(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy?), Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddress ipAddress = null, Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType containerGroupOSType = default(Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerVolume> volumes = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupInstanceView instanceView = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupLogAnalytics diagnosticsLogAnalytics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSubnetId> subnetIds = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupDnsConfiguration dnsConfig = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku? sku = default(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku?), Azure.ResourceManager.ContainerInstance.Models.ContainerGroupEncryptionProperties encryptionProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.InitContainerDefinitionContent> initContainers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.DeploymentExtensionSpec> extensions = null, string confidentialComputeCcePolicy = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority? priority = default(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority?), Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessControlLevels identityAcls = null, System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.ContainerInstance.ContainerGroupData ContainerGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProvisioningState? containerGroupProvisioningState = default(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSecretReference> secretReferences = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> containers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupImageRegistryCredential> imageRegistryCredentials = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy? restartPolicy = default(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy?), Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddress ipAddress = null, Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType? containerGroupOSType = default(Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerVolume> volumes = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupInstanceView instanceView = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupLogAnalytics diagnosticsLogAnalytics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSubnetId> subnetIds = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupDnsConfiguration dnsConfig = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku? sku = default(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku?), Azure.ResourceManager.ContainerInstance.Models.ContainerGroupEncryptionProperties encryptionProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.InitContainerDefinitionContent> initContainers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.DeploymentExtensionSpec> extensions = null, string confidentialComputeCcePolicy = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority? priority = default(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority?), Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessControlLevels identityAcls = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfileReferenceDefinition containerGroupProfile = null, Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition standbyPoolProfile = null, bool? isCreatedFromStandbyPool = default(bool?), System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.ContainerGroupData ContainerGroupData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<string> zones, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> containers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupImageRegistryCredential> imageRegistryCredentials, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy? restartPolicy, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddress ipAddress, Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType osType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerVolume> volumes, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupInstanceView instanceView, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupLogAnalytics diagnosticsLogAnalytics, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSubnetId> subnetIds, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupDnsConfiguration dnsConfig, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku? sku, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupEncryptionProperties encryptionProperties, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.InitContainerDefinitionContent> initContainers, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.DeploymentExtensionSpec> extensions, string confidentialComputeCcePolicy, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority? priority) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupInstanceView ContainerGroupInstanceView(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerEvent> events = null, string state = null) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddress ContainerGroupIPAddress(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPort> ports = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddressType addressType = default(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddressType), System.Net.IPAddress ip = null, string dnsNameLabel = null, Azure.ResourceManager.ContainerInstance.Models.DnsNameLabelReusePolicy? autoGeneratedDomainNameLabelScope = default(Azure.ResourceManager.ContainerInstance.Models.DnsNameLabelReusePolicy?), string fqdn = null) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPatch ContainerGroupPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
-        public static Azure.ResourceManager.ContainerInstance.ContainerGroupProfileData ContainerGroupProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku? sku = default(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku?), Azure.ResourceManager.ContainerInstance.Models.ContainerGroupEncryptionProperties encryptionProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> containers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.InitContainerDefinitionContent> initContainers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.DeploymentExtensionSpec> extensions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupImageRegistryCredential> imageRegistryCredentials = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy? restartPolicy = default(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy?), System.DateTimeOffset? shutdownGracePeriod = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddress ipAddress = null, System.DateTimeOffset? timeToLive = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType? osType = default(Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerVolume> volumes = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupLogAnalytics diagnosticsLogAnalytics = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority? priority = default(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority?), string confidentialComputeCcePolicy = null, Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextDefinition securityContext = null, long? revision = default(long?), System.Collections.Generic.IEnumerable<long> registeredRevisions = null, bool? useKrypton = default(bool?), System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
-        public static Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer ContainerInstanceContainer(string name = null, string image = null, System.Collections.Generic.IEnumerable<string> command = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerPort> ports = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerEnvironmentVariable> environmentVariables = null, Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceView instanceView = null, Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequirements resources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerVolumeMount> volumeMounts = null, Azure.ResourceManager.ContainerInstance.Models.ContainerProbe livenessProbe = null, Azure.ResourceManager.ContainerInstance.Models.ContainerProbe readinessProbe = null, Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextDefinition securityContext = null) { throw null; }
+        public static Azure.ResourceManager.ContainerInstance.ContainerGroupProfileData ContainerGroupProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku? sku = default(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku?), Azure.ResourceManager.ContainerInstance.Models.ContainerGroupEncryptionProperties encryptionProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> containers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.InitContainerDefinitionContent> initContainers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.DeploymentExtensionSpec> extensions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupImageRegistryCredential> imageRegistryCredentials = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy? restartPolicy = default(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy?), System.DateTimeOffset? shutdownGracePeriod = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddress ipAddress = null, System.DateTimeOffset? timeToLive = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType? osType = default(Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerVolume> volumes = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupLogAnalytics diagnosticsLogAnalytics = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority? priority = default(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority?), string confidentialComputeCcePolicy = null, Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextDefinition securityContext = null, int? revision = default(int?), System.Collections.Generic.IEnumerable<int> registeredRevisions = null, bool? useKrypton = default(bool?), System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
+        public static Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer ContainerInstanceContainer(string name, string image, System.Collections.Generic.IEnumerable<string> command, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerPort> ports, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerEnvironmentVariable> environmentVariables, Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceView instanceView, Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequirements resources, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerVolumeMount> volumeMounts, Azure.ResourceManager.ContainerInstance.Models.ContainerProbe livenessProbe, Azure.ResourceManager.ContainerInstance.Models.ContainerProbe readinessProbe, Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextDefinition securityContext) { throw null; }
+        public static Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer ContainerInstanceContainer(string name = null, string image = null, System.Collections.Generic.IEnumerable<string> command = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerPort> ports = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerEnvironmentVariable> environmentVariables = null, Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceView instanceView = null, Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequirements resources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerVolumeMount> volumeMounts = null, Azure.ResourceManager.ContainerInstance.Models.ContainerProbe livenessProbe = null, Azure.ResourceManager.ContainerInstance.Models.ContainerProbe readinessProbe = null, Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextDefinition securityContext = null, System.Collections.Generic.IDictionary<string, string> configMapKeyValuePairs = null) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsage ContainerInstanceUsage(string id = null, string unit = null, int? currentValue = default(int?), int? limit = default(int?), Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsageName name = null) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsageName ContainerInstanceUsageName(string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceView ContainerInstanceView(int? restartCount = default(int?), Azure.ResourceManager.ContainerInstance.Models.ContainerState currentState = null, Azure.ResourceManager.ContainerInstance.Models.ContainerState previousState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerEvent> events = null) { throw null; }
@@ -407,9 +406,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope TenantReuse { get { throw null; } }
         public static Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope Unsecure { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope left, Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope (string value) { throw null; }
@@ -556,9 +553,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGpuSku P100 { get { throw null; } }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGpuSku V100 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.ContainerGpuSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.ContainerGpuSku left, Azure.ResourceManager.ContainerInstance.Models.ContainerGpuSku right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.ContainerGpuSku (string value) { throw null; }
@@ -665,9 +660,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessLevel System { get { throw null; } }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessLevel User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessLevel left, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessLevel (string value) { throw null; }
@@ -677,7 +670,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     public partial class ContainerGroupImageRegistryCredential : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupImageRegistryCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupImageRegistryCredential>
     {
         public ContainerGroupImageRegistryCredential(string server) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public ContainerGroupImageRegistryCredential(string server, string username) { }
         public string Identity { get { throw null; } set { } }
@@ -711,7 +703,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddressType AddressType { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.DnsNameLabelReusePolicy? AutoGeneratedDomainNameLabelScope { get { throw null; } set { } }
         public string DnsNameLabel { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DnsNameLabelReusePolicy is deprecated, use AutoGeneratedDnsNameLabelScope instead", false)]
         public Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope? DnsNameLabelReusePolicy { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
@@ -733,9 +724,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddressType Private { get { throw null; } }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddressType Public { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddressType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddressType left, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddressType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddressType (string value) { throw null; }
@@ -766,9 +755,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupLogAnalyticsLogType ContainerInsights { get { throw null; } }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupLogAnalyticsLogType ContainerInstanceLogs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupLogAnalyticsLogType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupLogAnalyticsLogType left, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupLogAnalyticsLogType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.ContainerGroupLogAnalyticsLogType (string value) { throw null; }
@@ -796,9 +783,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupNetworkProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupNetworkProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupNetworkProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupNetworkProtocol left, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupNetworkProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.ContainerGroupNetworkProtocol (string value) { throw null; }
@@ -837,9 +822,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority Regular { get { throw null; } }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority Spot { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority left, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority (string value) { throw null; }
@@ -856,6 +839,18 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfilePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfilePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfilePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfilePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContainerGroupProfileReferenceDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfileReferenceDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfileReferenceDefinition>
+    {
+        public ContainerGroupProfileReferenceDefinition() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public int? Revision { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfileReferenceDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfileReferenceDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfileReferenceDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfileReferenceDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfileReferenceDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfileReferenceDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfileReferenceDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ContainerGroupProfileStub : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfileStub>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfileStub>
     {
@@ -892,9 +887,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProvisioningState Unhealthy { get { throw null; } }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProvisioningState left, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProvisioningState (string value) { throw null; }
@@ -911,9 +904,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy Never { get { throw null; } }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy OnFailure { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy left, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy (string value) { throw null; }
@@ -944,9 +935,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku left, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku (string value) { throw null; }
@@ -988,9 +977,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerHttpGetScheme Http { get { throw null; } }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerHttpGetScheme Https { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.ContainerHttpGetScheme other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.ContainerHttpGetScheme left, Azure.ResourceManager.ContainerInstance.Models.ContainerHttpGetScheme right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.ContainerHttpGetScheme (string value) { throw null; }
@@ -1026,9 +1013,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerInstanceContainer : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public ContainerInstanceContainer(string name) { }
         public ContainerInstanceContainer(string name, string image, Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequirements resources) { }
         public System.Collections.Generic.IList<string> Command { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> ConfigMapKeyValuePairs { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerEnvironmentVariable> EnvironmentVariables { get { throw null; } }
         public string Image { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceView InstanceView { get { throw null; } }
@@ -1068,9 +1056,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType Linux { get { throw null; } }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType left, Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType (string value) { throw null; }
@@ -1138,9 +1124,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerNetworkProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerNetworkProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.ContainerNetworkProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.ContainerNetworkProtocol left, Azure.ResourceManager.ContainerInstance.Models.ContainerNetworkProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.ContainerNetworkProtocol (string value) { throw null; }
@@ -1326,9 +1310,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.DnsNameLabelReusePolicy TenantReuse { get { throw null; } }
         public static Azure.ResourceManager.ContainerInstance.Models.DnsNameLabelReusePolicy Unsecure { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.DnsNameLabelReusePolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.DnsNameLabelReusePolicy left, Azure.ResourceManager.ContainerInstance.Models.DnsNameLabelReusePolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.DnsNameLabelReusePolicy (string value) { throw null; }
@@ -1447,9 +1429,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.NGroupProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.ContainerInstance.Models.NGroupProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.NGroupProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.NGroupProvisioningState left, Azure.ResourceManager.ContainerInstance.Models.NGroupProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.NGroupProvisioningState (string value) { throw null; }
@@ -1479,9 +1459,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.NGroupUpdateMode Manual { get { throw null; } }
         public static Azure.ResourceManager.ContainerInstance.Models.NGroupUpdateMode Rolling { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.NGroupUpdateMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.NGroupUpdateMode left, Azure.ResourceManager.ContainerInstance.Models.NGroupUpdateMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.NGroupUpdateMode (string value) { throw null; }
@@ -1499,5 +1477,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         Azure.ResourceManager.ContainerInstance.Models.NGroupUpdateProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.NGroupUpdateProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.NGroupUpdateProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.NGroupUpdateProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class StandbyPoolProfileDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition>
+    {
+        public StandbyPoolProfileDefinition() { }
+        public bool? FailContainerGroupCreateOnReuseFailure { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

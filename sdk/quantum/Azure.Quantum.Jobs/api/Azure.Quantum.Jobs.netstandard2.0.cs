@@ -12,12 +12,6 @@ namespace Azure.Quantum
 }
 namespace Azure.Quantum.Jobs
 {
-    public partial class AzureQuantumJobsContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureQuantumJobsContext() { }
-        public static Azure.Quantum.Jobs.AzureQuantumJobsContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class QuantumJobClient
     {
         protected QuantumJobClient() { }
@@ -62,9 +56,7 @@ namespace Azure.Quantum.Jobs.Models
         public static Azure.Quantum.Jobs.Models.DimensionScope Subscription { get { throw null; } }
         public static Azure.Quantum.Jobs.Models.DimensionScope Workspace { get { throw null; } }
         public bool Equals(Azure.Quantum.Jobs.Models.DimensionScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Quantum.Jobs.Models.DimensionScope left, Azure.Quantum.Jobs.Models.DimensionScope right) { throw null; }
         public static implicit operator Azure.Quantum.Jobs.Models.DimensionScope (string value) { throw null; }
@@ -112,9 +104,7 @@ namespace Azure.Quantum.Jobs.Models
         public static Azure.Quantum.Jobs.Models.JobStatus Succeeded { get { throw null; } }
         public static Azure.Quantum.Jobs.Models.JobStatus Waiting { get { throw null; } }
         public bool Equals(Azure.Quantum.Jobs.Models.JobStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Quantum.Jobs.Models.JobStatus left, Azure.Quantum.Jobs.Models.JobStatus right) { throw null; }
         public static implicit operator Azure.Quantum.Jobs.Models.JobStatus (string value) { throw null; }
@@ -142,9 +132,7 @@ namespace Azure.Quantum.Jobs.Models
         public static Azure.Quantum.Jobs.Models.JsonPatchOperation Replace { get { throw null; } }
         public static Azure.Quantum.Jobs.Models.JsonPatchOperation Test { get { throw null; } }
         public bool Equals(Azure.Quantum.Jobs.Models.JsonPatchOperation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Quantum.Jobs.Models.JsonPatchOperation left, Azure.Quantum.Jobs.Models.JsonPatchOperation right) { throw null; }
         public static implicit operator Azure.Quantum.Jobs.Models.JsonPatchOperation (string value) { throw null; }
@@ -160,9 +148,7 @@ namespace Azure.Quantum.Jobs.Models
         public static Azure.Quantum.Jobs.Models.MeterPeriod Monthly { get { throw null; } }
         public static Azure.Quantum.Jobs.Models.MeterPeriod None { get { throw null; } }
         public bool Equals(Azure.Quantum.Jobs.Models.MeterPeriod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Quantum.Jobs.Models.MeterPeriod left, Azure.Quantum.Jobs.Models.MeterPeriod right) { throw null; }
         public static implicit operator Azure.Quantum.Jobs.Models.MeterPeriod (string value) { throw null; }
@@ -179,9 +165,7 @@ namespace Azure.Quantum.Jobs.Models
         public static Azure.Quantum.Jobs.Models.ProviderAvailability Degraded { get { throw null; } }
         public static Azure.Quantum.Jobs.Models.ProviderAvailability Unavailable { get { throw null; } }
         public bool Equals(Azure.Quantum.Jobs.Models.ProviderAvailability other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Quantum.Jobs.Models.ProviderAvailability left, Azure.Quantum.Jobs.Models.ProviderAvailability right) { throw null; }
         public static implicit operator Azure.Quantum.Jobs.Models.ProviderAvailability (string value) { throw null; }
@@ -239,9 +223,7 @@ namespace Azure.Quantum.Jobs.Models
         public static Azure.Quantum.Jobs.Models.TargetAvailability Degraded { get { throw null; } }
         public static Azure.Quantum.Jobs.Models.TargetAvailability Unavailable { get { throw null; } }
         public bool Equals(Azure.Quantum.Jobs.Models.TargetAvailability other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Quantum.Jobs.Models.TargetAvailability left, Azure.Quantum.Jobs.Models.TargetAvailability right) { throw null; }
         public static implicit operator Azure.Quantum.Jobs.Models.TargetAvailability (string value) { throw null; }

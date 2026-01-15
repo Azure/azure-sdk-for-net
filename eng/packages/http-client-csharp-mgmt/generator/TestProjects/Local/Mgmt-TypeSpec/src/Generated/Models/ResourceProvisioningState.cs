@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The provisioning state of a resource type. </summary>
     public readonly partial struct ResourceProvisioningState : IEquatable<ResourceProvisioningState>
@@ -54,6 +54,10 @@ namespace MgmtTypeSpec.Models
         /// <summary> Converts a string to a <see cref="ResourceProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ResourceProvisioningState(string value) => new ResourceProvisioningState(value);
+
+        /// <summary> Converts a string to a <see cref="ResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceProvisioningState?(string value) => value == null ? null : new ResourceProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Storage
             SystemData systemData = default;
             StorageCorsRules cors = default;
             DeleteRetentionPolicy shareDeleteRetentionPolicy = default;
-            ProtocolSettings protocolSettings = default;
+            FileServiceProtocolSettings protocolSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            protocolSettings = ProtocolSettings.DeserializeProtocolSettings(property0.Value, options);
+                            protocolSettings = FileServiceProtocolSettings.DeserializeFileServiceProtocolSettings(property0.Value, options);
                             continue;
                         }
                     }
@@ -301,16 +301,11 @@ namespace Azure.ResourceManager.Storage
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ProtocolSmbSetting", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProtocolSettings), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    protocolSettings: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      protocolSettings: {");
-                builder.Append("        smb: ");
                 builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
             }
             else
             {

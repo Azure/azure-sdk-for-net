@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SchedulersCreateOrUpdate()
         {
-            // Generated from example definition: 2025-04-01-preview/Schedulers_CreateOrUpdate.json
+            // Generated from example definition: 2025-11-01/Schedulers_CreateOrUpdate.json
             // this example is just showing the usage of "Scheduler_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
             string schedulerName = "testscheduler";
             DurableTaskSchedulerData data = new DurableTaskSchedulerData(new AzureLocation("northcentralus"))
             {
-                Properties = new DurableTaskSchedulerProperties(new string[] { "10.0.0.0/8" }, new DurableTaskSchedulerSku("Dedicated")),
+                Properties = new DurableTaskSchedulerProperties(new string[] { "10.0.0.0/8" }, new DurableTaskSchedulerSku(DurableTaskSchedulerSkuName.Dedicated)),
                 Tags =
 {
 ["department"] = "research",
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SchedulersGet()
         {
-            // Generated from example definition: 2025-04-01-preview/Schedulers_Get.json
+            // Generated from example definition: 2025-11-01/Schedulers_Get.json
             // this example is just showing the usage of "Scheduler_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SchedulersListByResourceGroup()
         {
-            // Generated from example definition: 2025-04-01-preview/Schedulers_ListByResourceGroup.json
+            // Generated from example definition: 2025-11-01/Schedulers_ListByResourceGroup.json
             // this example is just showing the usage of "Scheduler_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_SchedulersGet()
         {
-            // Generated from example definition: 2025-04-01-preview/Schedulers_Get.json
+            // Generated from example definition: 2025-11-01/Schedulers_Get.json
             // this example is just showing the usage of "Scheduler_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SchedulersGet()
         {
-            // Generated from example definition: 2025-04-01-preview/Schedulers_Get.json
+            // Generated from example definition: 2025-11-01/Schedulers_Get.json
             // this example is just showing the usage of "Scheduler_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -55,6 +56,63 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(expectedToken, actualToken.Token);
             Assert.AreEqual(expires, actualToken.ExpiresOn);
+        }
+
+        [Test]
+        public void CreateTokenOptionsWithValidScopes()
+        {
+            // Test with ReadOnlyMemory<string> scopes
+            var scopesMemory = new ReadOnlyMemory<string>(new string[] { "scope1", "scope2" });
+            var properties = new Dictionary<string, object>
+            {
+                [GetTokenOptions.ScopesPropertyName] = scopesMemory,
+                ["additionalProperty"] = "value"
+            };
+
+            var credential = DelegatedTokenCredential.Create(getToken);
+            var result = credential.CreateTokenOptions(properties);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(scopesMemory, result.Properties[GetTokenOptions.ScopesPropertyName]);
+            Assert.AreEqual("value", result.Properties["additionalProperty"]);
+        }
+
+        [Test]
+        public void CreateTokenOptionsWithoutScopes()
+        {
+            // Test without scopes property
+            var properties = new Dictionary<string, object>
+            {
+                ["additionalProperty"] = "value"
+            };
+
+            var credential = DelegatedTokenCredential.Create(getToken);
+            var result = credential.CreateTokenOptions(properties);
+
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void CreateTokenOptionsCanCreateValidTokenRequestContext()
+        {
+            // Test that the created GetTokenOptions can be used to create TokenRequestContext
+            var scopesMemory = new ReadOnlyMemory<string>(new string[] { "scope1", "scope2" });
+            var properties = new Dictionary<string, object>
+            {
+                [GetTokenOptions.ScopesPropertyName] = scopesMemory
+            };
+
+            var credential = DelegatedTokenCredential.Create(getToken);
+            var tokenOptions = credential.CreateTokenOptions(properties);
+
+            Assert.IsNotNull(tokenOptions);
+
+            // This should not throw since we have valid scopes
+            Assert.DoesNotThrow(() =>
+            {
+                var context = TokenRequestContext.FromGetTokenOptions(tokenOptions);
+                Assert.AreEqual(scopesMemory.ToArray(), context.Scopes);
+            });
         }
     }
 }

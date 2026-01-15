@@ -6,12 +6,10 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.ServerSentEvents;
 using System.Text.Json;
 using System.Threading;
 using Azure.AI.Agents.Persistent.Telemetry;
-using System.Threading.Tasks;
 
 #nullable enable
 
@@ -26,7 +24,7 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
     private readonly CancellationToken _cancellationToken;
     private readonly OpenTelemetryScope? _scope;
     private readonly ToolCallsResolver? _toolCallsResolver;
-    private readonly Func<ThreadRun, IEnumerable<ToolOutput>, int, CollectionResult<StreamingUpdate>> _submitToolOutputsToStream;
+    private readonly Func<ThreadRun, IEnumerable<ToolOutput>, IEnumerable<ToolApproval>, int, CollectionResult<StreamingUpdate>> _submitToolOutputsToStream;
     private readonly int _maxRetry;
     private int _currRetry;
     private readonly Func<string, Response<ThreadRun>> _cancelRun;
@@ -37,7 +35,7 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
         int currentRetry,
         Func<Response> sendRequest,
         Func<string, Response<ThreadRun>> cancelRun,
-        Func<ThreadRun, IEnumerable<ToolOutput>, int, CollectionResult<StreamingUpdate>> submitToolOutputsToStream,
+        Func<ThreadRun, IEnumerable<ToolOutput>, IEnumerable<ToolApproval>, int, CollectionResult<StreamingUpdate>> submitToolOutputsToStream,
         OpenTelemetryScope? scope = null)
     {
         Argument.AssertNotNull(sendRequest, nameof(sendRequest));
@@ -75,7 +73,7 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
         do
         {
             using IEnumerator<StreamingUpdate> enumerator = (toolOutputs.Count > 0 && streamRun != null) ?
-                _submitToolOutputsToStream(streamRun, toolOutputs, _currRetry).GetEnumerator() :
+                _submitToolOutputsToStream(streamRun, toolOutputs, [], _currRetry).GetEnumerator() :
                 new StreamingUpdateEnumerator(page, _cancellationToken, _scope);
             toolOutputs.Clear();
             bool hasError = false;
@@ -95,7 +93,10 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
                     }
                     catch (Exception ex)
                     {
-                        string errorJson = JsonSerializer.Serialize(new { error = ex.GetBaseException().Message });
+                        string errorJson = JsonSerializer.Serialize(
+                            new SerializableError(ex.GetBaseException().Message),
+                            SourceGenerationContext.Default.SerializableError
+                        );
                         toolOutput = new ToolOutput(newActionUpdate.ToolCallId, errorJson);
                         hasError = true;
                     }
@@ -203,7 +204,12 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
                         return false;
                     }
 
-                    var updates = StreamingUpdate.FromEvent(_events.Current);
+                    IEnumerable<StreamingUpdate> updates = StreamingUpdate.FromEvent(_events.Current);
+                    if (updates is null)
+                    {
+                        StreamingUpdateReason updateKind = StreamingUpdateReasonExtensions.FromSseEventLabel(_events.Current.EventType);
+                        throw new InvalidOperationException($"Unknown streaming update reason {updateKind}");
+                    }
                     _updates = updates.GetEnumerator();
 
                     if (_updates.MoveNext())

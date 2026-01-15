@@ -1,11 +1,5 @@
 namespace Azure.Analytics.Synapse.Spark
 {
-    public partial class AzureAnalyticsSynapseSparkContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureAnalyticsSynapseSparkContext() { }
-        public static Azure.Analytics.Synapse.Spark.AzureAnalyticsSynapseSparkContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class SparkBatchClient
     {
         protected SparkBatchClient() { }
@@ -126,9 +120,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static Azure.Analytics.Synapse.Spark.Models.LivyStatementStates Running { get { throw null; } }
         public static Azure.Analytics.Synapse.Spark.Models.LivyStatementStates Waiting { get { throw null; } }
         public bool Equals(Azure.Analytics.Synapse.Spark.Models.LivyStatementStates other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Synapse.Spark.Models.LivyStatementStates left, Azure.Analytics.Synapse.Spark.Models.LivyStatementStates right) { throw null; }
         public static implicit operator Azure.Analytics.Synapse.Spark.Models.LivyStatementStates (string value) { throw null; }
@@ -153,9 +145,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static Azure.Analytics.Synapse.Spark.Models.LivyStates Starting { get { throw null; } }
         public static Azure.Analytics.Synapse.Spark.Models.LivyStates Success { get { throw null; } }
         public bool Equals(Azure.Analytics.Synapse.Spark.Models.LivyStates other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Synapse.Spark.Models.LivyStates left, Azure.Analytics.Synapse.Spark.Models.LivyStates right) { throw null; }
         public static implicit operator Azure.Analytics.Synapse.Spark.Models.LivyStates (string value) { throw null; }
@@ -176,9 +166,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static Azure.Analytics.Synapse.Spark.Models.PluginCurrentState ResourceAcquisition { get { throw null; } }
         public static Azure.Analytics.Synapse.Spark.Models.PluginCurrentState Submission { get { throw null; } }
         public bool Equals(Azure.Analytics.Synapse.Spark.Models.PluginCurrentState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Synapse.Spark.Models.PluginCurrentState left, Azure.Analytics.Synapse.Spark.Models.PluginCurrentState right) { throw null; }
         public static implicit operator Azure.Analytics.Synapse.Spark.Models.PluginCurrentState (string value) { throw null; }
@@ -195,9 +183,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static Azure.Analytics.Synapse.Spark.Models.SchedulerCurrentState Queued { get { throw null; } }
         public static Azure.Analytics.Synapse.Spark.Models.SchedulerCurrentState Scheduled { get { throw null; } }
         public bool Equals(Azure.Analytics.Synapse.Spark.Models.SchedulerCurrentState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Synapse.Spark.Models.SchedulerCurrentState left, Azure.Analytics.Synapse.Spark.Models.SchedulerCurrentState right) { throw null; }
         public static implicit operator Azure.Analytics.Synapse.Spark.Models.SchedulerCurrentState (string value) { throw null; }
@@ -266,9 +252,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static Azure.Analytics.Synapse.Spark.Models.SparkBatchJobResultType Succeeded { get { throw null; } }
         public static Azure.Analytics.Synapse.Spark.Models.SparkBatchJobResultType Uncertain { get { throw null; } }
         public bool Equals(Azure.Analytics.Synapse.Spark.Models.SparkBatchJobResultType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Synapse.Spark.Models.SparkBatchJobResultType left, Azure.Analytics.Synapse.Spark.Models.SparkBatchJobResultType right) { throw null; }
         public static implicit operator Azure.Analytics.Synapse.Spark.Models.SparkBatchJobResultType (string value) { throw null; }
@@ -304,9 +288,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static Azure.Analytics.Synapse.Spark.Models.SparkErrorSource UnknownError { get { throw null; } }
         public static Azure.Analytics.Synapse.Spark.Models.SparkErrorSource UserError { get { throw null; } }
         public bool Equals(Azure.Analytics.Synapse.Spark.Models.SparkErrorSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Synapse.Spark.Models.SparkErrorSource left, Azure.Analytics.Synapse.Spark.Models.SparkErrorSource right) { throw null; }
         public static implicit operator Azure.Analytics.Synapse.Spark.Models.SparkErrorSource (string value) { throw null; }
@@ -322,9 +304,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static Azure.Analytics.Synapse.Spark.Models.SparkJobType SparkBatch { get { throw null; } }
         public static Azure.Analytics.Synapse.Spark.Models.SparkJobType SparkSession { get { throw null; } }
         public bool Equals(Azure.Analytics.Synapse.Spark.Models.SparkJobType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Synapse.Spark.Models.SparkJobType left, Azure.Analytics.Synapse.Spark.Models.SparkJobType right) { throw null; }
         public static implicit operator Azure.Analytics.Synapse.Spark.Models.SparkJobType (string value) { throw null; }
@@ -435,9 +415,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static Azure.Analytics.Synapse.Spark.Models.SparkSessionResultType Succeeded { get { throw null; } }
         public static Azure.Analytics.Synapse.Spark.Models.SparkSessionResultType Uncertain { get { throw null; } }
         public bool Equals(Azure.Analytics.Synapse.Spark.Models.SparkSessionResultType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Synapse.Spark.Models.SparkSessionResultType left, Azure.Analytics.Synapse.Spark.Models.SparkSessionResultType right) { throw null; }
         public static implicit operator Azure.Analytics.Synapse.Spark.Models.SparkSessionResultType (string value) { throw null; }
@@ -489,9 +467,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType Spark { get { throw null; } }
         public static Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType Sql { get { throw null; } }
         public bool Equals(Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType left, Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType right) { throw null; }
         public static implicit operator Azure.Analytics.Synapse.Spark.Models.SparkStatementLanguageType (string value) { throw null; }

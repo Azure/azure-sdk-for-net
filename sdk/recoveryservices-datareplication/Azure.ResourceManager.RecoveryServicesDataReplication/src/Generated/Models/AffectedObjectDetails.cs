@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> The AffectedObjectDetails. </summary>
+    /// <summary> Details of the affected object. </summary>
     public partial class AffectedObjectDetails
     {
         /// <summary>
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AffectedObjectDetails"/>. </summary>
-        /// <param name="description"></param>
-        /// <param name="type"></param>
+        /// <param name="description"> Description of the affected object details. </param>
+        /// <param name="type"> Type of the affected object details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AffectedObjectDetails(string description, AffectedObjectDetailsType? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the description. </summary>
+        /// <summary> Description of the affected object details. </summary>
         public string Description { get; }
-        /// <summary> Gets the type. </summary>
+        /// <summary> Type of the affected object details. </summary>
         public AffectedObjectDetailsType? Type { get; }
     }
 }

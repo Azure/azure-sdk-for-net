@@ -1,11 +1,5 @@
 namespace Azure.Data.Tables
 {
-    public partial class AzureDataTablesContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureDataTablesContext() { }
-        public static Azure.Data.Tables.AzureDataTablesContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial interface ITableEntity
     {
         Azure.ETag ETag { get; set; }
@@ -23,9 +17,7 @@ namespace Azure.Data.Tables
         public static Azure.Data.Tables.TableAudience AzureGovernment { get { throw null; } }
         public static Azure.Data.Tables.TableAudience AzurePublicCloud { get { throw null; } }
         public bool Equals(Azure.Data.Tables.TableAudience other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Data.Tables.TableAudience left, Azure.Data.Tables.TableAudience right) { throw null; }
         public static implicit operator Azure.Data.Tables.TableAudience (string value) { throw null; }
@@ -304,9 +296,7 @@ namespace Azure.Data.Tables.Models
         public static Azure.Data.Tables.Models.TableErrorCode XMethodIncorrectValue { get { throw null; } }
         public static Azure.Data.Tables.Models.TableErrorCode XMethodNotUsingPost { get { throw null; } }
         public bool Equals(Azure.Data.Tables.Models.TableErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Data.Tables.Models.TableErrorCode left, Azure.Data.Tables.Models.TableErrorCode right) { throw null; }
         public static bool operator ==(Azure.Data.Tables.Models.TableErrorCode code, string value) { throw null; }
@@ -333,9 +323,7 @@ namespace Azure.Data.Tables.Models
         public static Azure.Data.Tables.Models.TableGeoReplicationStatus Live { get { throw null; } }
         public static Azure.Data.Tables.Models.TableGeoReplicationStatus Unavailable { get { throw null; } }
         public bool Equals(Azure.Data.Tables.Models.TableGeoReplicationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Data.Tables.Models.TableGeoReplicationStatus left, Azure.Data.Tables.Models.TableGeoReplicationStatus right) { throw null; }
         public static implicit operator Azure.Data.Tables.Models.TableGeoReplicationStatus (string value) { throw null; }
@@ -359,6 +347,7 @@ namespace Azure.Data.Tables.Models
     {
         public static Azure.Data.Tables.Models.TableGeoReplicationInfo TableGeoReplicationInfo(Azure.Data.Tables.Models.TableGeoReplicationStatus status = default(Azure.Data.Tables.Models.TableGeoReplicationStatus), System.DateTimeOffset lastSyncedOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.Data.Tables.Models.TableItem TableItem(string name = null, string odataType = null, string odataId = null, string odataEditLink = null) { throw null; }
+        public static Azure.Data.Tables.Models.TableServiceProperties TableServiceProperties(Azure.Data.Tables.Models.TableAnalyticsLoggingSettings logging = null, Azure.Data.Tables.Models.TableMetrics hourMetrics = null, Azure.Data.Tables.Models.TableMetrics minuteMetrics = null, System.Collections.Generic.IList<Azure.Data.Tables.Models.TableCorsRule> cors = null) { throw null; }
         public static Azure.Data.Tables.Models.TableServiceStatistics TableServiceStatistics(Azure.Data.Tables.Models.TableGeoReplicationInfo geoReplication = null) { throw null; }
     }
     public partial class TableServiceProperties
@@ -401,15 +390,12 @@ namespace Azure.Data.Tables.Sas
         public Azure.Data.Tables.Sas.TableSasProtocol Protocol { get { throw null; } set { } }
         public Azure.Data.Tables.Sas.TableAccountSasResourceTypes ResourceTypes { get { throw null; } set { } }
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public void SetPermissions(Azure.Data.Tables.Sas.TableAccountSasPermissions permissions) { }
         public void SetPermissions(string rawPermissions) { }
         public string Sign(Azure.Data.Tables.TableSharedKeyCredential sharedKeyCredential) { throw null; }
         public Azure.Data.Tables.Sas.TableAccountSasQueryParameters ToSasQueryParameters(Azure.Data.Tables.TableSharedKeyCredential sharedKeyCredential) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
     [System.FlagsAttribute]
@@ -463,15 +449,12 @@ namespace Azure.Data.Tables.Sas
         public string RowKeyStart { get { throw null; } set { } }
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public void SetPermissions(Azure.Data.Tables.Sas.TableSasPermissions permissions) { }
         public void SetPermissions(string rawPermissions) { }
         public string Sign(Azure.Data.Tables.TableSharedKeyCredential sharedKeyCredential) { throw null; }
         public Azure.Data.Tables.Sas.TableSasQueryParameters ToSasQueryParameters(Azure.Data.Tables.TableSharedKeyCredential sharedKeyCredential) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -483,9 +466,7 @@ namespace Azure.Data.Tables.Sas
         public System.Net.IPAddress End { get { throw null; } }
         public System.Net.IPAddress Start { get { throw null; } }
         public bool Equals(Azure.Data.Tables.Sas.TableSasIPRange other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Data.Tables.Sas.TableSasIPRange left, Azure.Data.Tables.Sas.TableSasIPRange right) { throw null; }
         public static bool operator !=(Azure.Data.Tables.Sas.TableSasIPRange left, Azure.Data.Tables.Sas.TableSasIPRange right) { throw null; }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -64,6 +65,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(InstantAccess))
+            {
+                writer.WritePropertyName("instantAccess"u8);
+                writer.WriteBooleanValue(InstantAccess.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -97,6 +103,7 @@ namespace Azure.ResourceManager.Compute
             string provisioningState = default;
             string restorePointGroupId = default;
             IReadOnlyList<RestorePointData> restorePoints = default;
+            bool? instantAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +148,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -186,6 +193,15 @@ namespace Azure.ResourceManager.Compute
                             restorePoints = array;
                             continue;
                         }
+                        if (property0.NameEquals("instantAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            instantAccess = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -206,6 +222,7 @@ namespace Azure.ResourceManager.Compute
                 provisioningState,
                 restorePointGroupId,
                 restorePoints ?? new ChangeTrackingList<RestorePointData>(),
+                instantAccess,
                 serializedAdditionalRawData);
         }
 

@@ -34,21 +34,6 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
 
     protected AzureVectorStoreClient()
     { }
-
-    internal override CreateVectorStoreOperation CreateCreateVectorStoreOperation(ClientResult<VectorStore> result)
-    {
-        return new CreateVectorStoreOperation(this, _endpoint, result);
-    }
-
-    internal override AddFileToVectorStoreOperation CreateAddFileToVectorStoreOperation(ClientResult<VectorStoreFileAssociation> result)
-    {
-        return new AddFileToVectorStoreOperation(this, _endpoint, result);
-    }
-
-    internal override CreateBatchFileJobOperation CreateBatchFileJobOperation(ClientResult<VectorStoreBatchFileJob> result)
-    {
-        return new CreateBatchFileJobOperation(this, _endpoint, result);
-    }
 }
 
 #endif

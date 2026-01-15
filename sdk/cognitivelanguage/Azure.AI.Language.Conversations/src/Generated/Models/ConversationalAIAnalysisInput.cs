@@ -49,7 +49,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Initializes a new instance of <see cref="ConversationalAIAnalysisInput"/>. </summary>
         /// <param name="conversations"> List of multiple conversations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversations"/> is null. </exception>
-        public ConversationalAIAnalysisInput(IEnumerable<AIConversation> conversations)
+        public ConversationalAIAnalysisInput(IEnumerable<TextConversation> conversations)
         {
             Argument.AssertNotNull(conversations, nameof(conversations));
 
@@ -59,7 +59,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Initializes a new instance of <see cref="ConversationalAIAnalysisInput"/>. </summary>
         /// <param name="conversations"> List of multiple conversations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationalAIAnalysisInput(IList<AIConversation> conversations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationalAIAnalysisInput(IList<TextConversation> conversations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Conversations = conversations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +71,6 @@ namespace Azure.AI.Language.Conversations.Models
         }
 
         /// <summary> List of multiple conversations. </summary>
-        public IList<AIConversation> Conversations { get; }
+        public IList<TextConversation> Conversations { get; }
     }
 }

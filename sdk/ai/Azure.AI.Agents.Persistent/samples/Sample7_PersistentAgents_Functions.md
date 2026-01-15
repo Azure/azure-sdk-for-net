@@ -173,7 +173,7 @@ do
         {
             toolOutputs.Add(GetResolvedToolOutput(toolCall));
         }
-        run = client.Runs.SubmitToolOutputsToRun(run, toolOutputs);
+        run = client.Runs.SubmitToolOutputsToRun(run, toolOutputs, null);
     }
 }
 while (run.Status == RunStatus.Queued
@@ -199,7 +199,7 @@ do
         {
             toolOutputs.Add(GetResolvedToolOutput(toolCall));
         }
-        run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs);
+        run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs, toolApprovals: null);
     }
 }
 while (run.Status == RunStatus.Queued

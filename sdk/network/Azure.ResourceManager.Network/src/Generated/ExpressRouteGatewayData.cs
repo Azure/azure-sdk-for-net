@@ -49,10 +49,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Configuration for auto scaling. </summary>
         internal ExpressRouteGatewayPropertiesAutoScaleConfiguration AutoScaleConfiguration { get; set; }
         /// <summary> Minimum and maximum number of scale units to deploy. </summary>
+        [WirePath("properties.autoScaleConfiguration.bounds")]
         public ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds AutoScaleBounds
         {
             get => AutoScaleConfiguration is null ? default : AutoScaleConfiguration.Bounds;
@@ -65,12 +67,15 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> List of ExpressRoute connections to the ExpressRoute gateway. </summary>
+        [WirePath("properties.expressRouteConnections")]
         public IList<ExpressRouteConnectionData> ExpressRouteConnectionList { get; }
         /// <summary> The provisioning state of the express route gateway resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </summary>
         internal WritableSubResource VirtualHub { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.virtualHub.id")]
         public ResourceIdentifier VirtualHubId
         {
             get => VirtualHub is null ? default : VirtualHub.Id;
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Configures this gateway to accept traffic from non Virtual WAN networks. </summary>
+        [WirePath("properties.allowNonVirtualWanTraffic")]
         public bool? AllowNonVirtualWanTraffic { get; set; }
     }
 }

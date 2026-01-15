@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(Vault))
             {
                 writer.WritePropertyName("vault"u8);
-                JsonSerializer.Serialize(writer, Vault);
+                ((IJsonModel<WritableSubResource>)Vault).Write(writer, options);
             }
             if (Optional.IsDefined(SecretName))
             {
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            vault = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            vault = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerFrontDoorContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("secretName"u8))
@@ -199,6 +200,144 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateSource), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  certificateSource: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  certificateSource: ");
+                builder.AppendLine($"'{CertificateSource.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProtocolType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  protocolType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  protocolType: ");
+                builder.AppendLine($"'{ProtocolType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimumTlsVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minimumTlsVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  minimumTlsVersion: ");
+                builder.AppendLine($"'{MinimumTlsVersion.ToString()}'");
+            }
+
+            builder.Append("  frontDoorCertificateSourceParameters:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    certificateType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CertificateType))
+                {
+                    builder.Append("    certificateType: ");
+                    builder.AppendLine($"'{CertificateType.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.Append("  keyVaultCertificateSourceParameters:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("VaultId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    vault: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      vault: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Vault))
+                {
+                    builder.Append("    vault: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Vault, options, 4, false, "    vault: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    secretName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecretName))
+                {
+                    builder.Append("    secretName: ");
+                    if (SecretName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecretName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecretName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    secretVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecretVersion))
+                {
+                    builder.Append("    secretVersion: ");
+                    if (SecretVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecretVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecretVersion}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CustomHttpsConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomHttpsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -207,6 +346,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CustomHttpsConfiguration)} does not support writing '{options.Format}' format.");
             }

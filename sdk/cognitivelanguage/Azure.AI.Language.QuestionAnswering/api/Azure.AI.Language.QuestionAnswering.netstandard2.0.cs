@@ -37,12 +37,6 @@ namespace Azure.AI.Language.QuestionAnswering
         internal AnswersResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.QuestionAnswering.KnowledgeBaseAnswer> Answers { get { throw null; } }
     }
-    public partial class AzureAILanguageQuestionAnsweringContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureAILanguageQuestionAnsweringContext() { }
-        public static Azure.AI.Language.QuestionAnswering.AzureAILanguageQuestionAnsweringContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class KnowledgeBaseAnswer
     {
         internal KnowledgeBaseAnswer() { }
@@ -83,9 +77,7 @@ namespace Azure.AI.Language.QuestionAnswering
         public static Azure.AI.Language.QuestionAnswering.LogicalOperationKind And { get { throw null; } }
         public static Azure.AI.Language.QuestionAnswering.LogicalOperationKind Or { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.LogicalOperationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.LogicalOperationKind left, Azure.AI.Language.QuestionAnswering.LogicalOperationKind right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.LogicalOperationKind (string value) { throw null; }
@@ -121,9 +113,7 @@ namespace Azure.AI.Language.QuestionAnswering
         public static Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience AzureGovernment { get { throw null; } }
         public static Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience AzurePublicCloud { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience left, Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience (string value) { throw null; }
@@ -184,9 +174,7 @@ namespace Azure.AI.Language.QuestionAnswering
         public static Azure.AI.Language.QuestionAnswering.RankerKind Default { get { throw null; } }
         public static Azure.AI.Language.QuestionAnswering.RankerKind QuestionOnly { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.RankerKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.RankerKind left, Azure.AI.Language.QuestionAnswering.RankerKind right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.RankerKind (string value) { throw null; }

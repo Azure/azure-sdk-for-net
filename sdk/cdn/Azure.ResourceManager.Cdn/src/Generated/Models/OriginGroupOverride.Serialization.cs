@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(OriginGroup))
             {
                 writer.WritePropertyName("originGroup"u8);
-                JsonSerializer.Serialize(writer, OriginGroup);
+                ((IJsonModel<WritableSubResource>)OriginGroup).Write(writer, options);
             }
             if (Optional.IsDefined(ForwardingProtocol))
             {
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    originGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    originGroup = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (property.NameEquals("forwardingProtocol"u8))
@@ -115,6 +116,54 @@ namespace Azure.ResourceManager.Cdn.Models
             return new OriginGroupOverride(originGroup, forwardingProtocol, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("OriginGroupId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  originGroup: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(OriginGroup))
+                {
+                    builder.Append("  originGroup: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, OriginGroup, options, 2, false, "  originGroup: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForwardingProtocol), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  forwardingProtocol: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ForwardingProtocol))
+                {
+                    builder.Append("  forwardingProtocol: ");
+                    builder.AppendLine($"'{ForwardingProtocol.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<OriginGroupOverride>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OriginGroupOverride>)this).GetFormatFromOptions(options) : options.Format;
@@ -123,6 +172,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(OriginGroupOverride)} does not support writing '{options.Format}' format.");
             }

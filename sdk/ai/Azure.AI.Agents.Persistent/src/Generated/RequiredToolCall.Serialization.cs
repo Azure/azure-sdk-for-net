@@ -63,7 +63,9 @@ namespace Azure.AI.Agents.Persistent
             {
                 switch (discriminator.GetString())
                 {
+                    case "computer_use_preview": return RequiredComputerUseToolCall.DeserializeRequiredComputerUseToolCall(element, options);
                     case "function": return RequiredFunctionToolCall.DeserializeRequiredFunctionToolCall(element, options);
+                    case "mcp": return RequiredMcpToolCall.DeserializeRequiredMcpToolCall(element, options);
                 }
             }
             return UnknownRequiredToolCall.DeserializeUnknownRequiredToolCall(element, options);

@@ -2,26 +2,20 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Tests;
-using Microsoft.Win32;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.ContainerService.Tests;
 
-public class BasicContainerServiceTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicContainerServiceTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.kubernetes/aks/main.bicep")]
-    public async Task CreateAksCluster()
+    internal static Trycep CreateAksClusterTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
+                #region Snippet:ContainerServiceBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter dnsPrefix = new(nameof(dnsPrefix), typeof(string));
@@ -34,7 +28,7 @@ public class BasicContainerServiceTests(bool async)
                 infra.Add(sshRsaPublicKey);
 
                 ContainerServiceManagedCluster aks =
-                    new(nameof(aks))
+                    new(nameof(aks), ContainerServiceManagedCluster.ResourceVersions.V2024_08_01)
                     {
                         ClusterIdentity = new ManagedClusterIdentity { ResourceIdentityType = ManagedServiceIdentityType.SystemAssigned },
                         DnsPrefix = dnsPrefix,
@@ -61,10 +55,18 @@ public class BasicContainerServiceTests(bool async)
                         }
                     };
                 infra.Add(aks);
+                #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.kubernetes/aks/main.bicep")]
+    public async Task CreateAksCluster()
+    {
+        await using Trycep test = CreateAksClusterTest();
+        test.Compare(
             """
             param dnsPrefix string
 
@@ -105,8 +107,6 @@ public class BasicContainerServiceTests(bool async)
                 type: 'SystemAssigned'
               }
             }
-            """)
-        .Lint()
-        .ValidateAndDeployAsync();
+            """);
     }
 }

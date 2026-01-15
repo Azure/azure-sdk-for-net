@@ -24,6 +24,112 @@ namespace Azure.Communication.CallAutomation
     [CodeGenModel("CommunicationCallAutomationModelFactory")]
     public static partial class CallAutomationModelFactory
     {
+        /// <summary>
+        /// Initializes a new instance of audio data.
+        /// </summary>
+        /// <param name="data">Base64 encoded audio data.</param>
+        /// <param name="timestamp">The timestamp of when the audio was captured.</param>
+        /// <param name="participantId">The identifier of the participant who sent the audio.</param>
+        /// <param name="silent">Indicates if the audio data represents silence.</param>
+        /// <returns>A new instance of <see cref="AudioData"/> for mocking.</returns>
+        public static AudioData AudioData(
+            string data,
+            DateTime timestamp,
+            string participantId,
+            bool silent)
+        {
+            return new AudioData(data, timestamp, participantId, silent);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of audio meta data.
+        /// </summary>
+        /// <param name="mediaSubscriptionId">The media subscription id.</param>
+        /// <param name="encoding">The audio encoding.</param>
+        /// <param name="sampleRate">The audio sample rate.</param>
+        /// <param name="channels">The number of audio channels.</param>
+        /// <param name="length">The length of the audio in milliseconds.</param>
+        /// <returns>A new instance of <see cref="AudioMetadata"/> for mocking.</returns>
+        public static AudioMetadata AudioMetadata(
+            string mediaSubscriptionId,
+            string encoding,
+            int sampleRate,
+            int channels,
+            int length)
+        {
+            var internalObject = new AudioMetadataInternal
+            {
+                MediaSubscriptionId = mediaSubscriptionId,
+                Encoding = encoding,
+                SampleRate = sampleRate,
+                Channels = channels,
+                Length = length
+            };
+            return new AudioMetadata(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of transcription data.
+        /// </summary>
+        /// <param name="text">The transcribed text.</param>
+        /// <param name="format">The format of the transcription.</param>
+        /// <param name="confidence">The confidence score of the transcription.</param>
+        /// <param name="offset">The offset of the transcription in the audio stream.</param>
+        /// <param name="duration">The duration of the transcription in milliseconds.</param>
+        /// <param name="words">The list of words in the transcription.</param>
+        /// <param name="participantRawID">The raw ID of the participant who spoke.</param>
+        /// <param name="resultState">The result state of the transcription.</param>
+        /// <returns>A new instance of <see cref="TranscriptionData"/> for mocking.</returns>
+        public static TranscriptionData TranscriptionData(
+            string text,
+            string format,
+            double confidence,
+            long offset,
+            long duration,
+            IEnumerable<WordData> words,
+            string participantRawID,
+            TranscriptionResultState resultState)
+        {
+            IEnumerable<WordDataInternal> wordDataInternalList = words.Select(w => new WordDataInternal { Text = w.Text, Offset = w.Offset.Ticks, Duration = w.Duration.Ticks });
+            return new TranscriptionData
+            (
+                text,
+                format,
+                confidence,
+                offset,
+                duration,
+                wordDataInternalList,
+                participantRawID,
+                resultState
+            );
+        }
+
+        /// <summary>
+        /// Initializes a new instance of word data.
+        /// </summary>
+        /// <param name="text">The text of the word.</param>
+        /// <param name="offset">The offset of the word in the audio stream.</param>
+        /// <param name="duration">The duration of the word in milliseconds.</param>
+        /// <returns>A new instance of <see cref="WordData"/> for mocking.</returns>
+        public static WordData WordData(
+            string text,
+            long offset,
+            long duration)
+        {
+            return new WordData(text, offset, duration);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of out streaming data.
+        /// </summary>
+        /// <param name="kind">The media kind.</param>
+        /// <returns>A new instance of <see cref="OutStreamingData"/> for mocking.</returns>
+        public static OutStreamingData OutStreamingData(
+            MediaKind kind)
+        {
+            return new OutStreamingData(kind);
+        }
+
         /// <summary> Initializes a new instance of AddParticipantsResult. </summary>
         /// <param name="participant"> Participant of the call. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
@@ -137,7 +243,7 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer_2025_06_30.Serialize(participant)
                 );
 
             return new AddParticipantFailed(internalObject);
@@ -154,7 +260,7 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer_2025_06_30.Serialize(participant)
                 );
 
             return new AddParticipantSucceeded(internalObject);
@@ -172,7 +278,7 @@ namespace Azure.Communication.CallAutomation
                 sequenceNumber: sequenceNumber,
                 participants: participants == null
                     ? new List<CallParticipantInternal>()
-                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted, p.IsOnHold)).ToList(),
+                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer_2025_06_30.Serialize(p.Identifier), p.IsMuted, p.IsOnHold)).ToList(),
                 resultInformation: resultInformation
                 );
 
@@ -190,7 +296,7 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer_2025_06_30.Serialize(participant)
                 );
 
             return new RemoveParticipantFailed(internalObject);
@@ -207,7 +313,7 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer_2025_06_30.Serialize(participant)
                 );
 
             return new RemoveParticipantSucceeded(internalObject);
@@ -247,8 +353,8 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                transferTarget: transferTarget == null ? null : CommunicationIdentifierSerializer.Serialize(transferTarget),
-                transferee: transferee == null ? null : CommunicationIdentifierSerializer.Serialize(transferee)
+                transferTarget: transferTarget == null ? null : CommunicationIdentifierSerializer_2025_06_30.Serialize(transferTarget),
+                transferee: transferee == null ? null : CommunicationIdentifierSerializer_2025_06_30.Serialize(transferee)
                 );
             return new CallTransferAccepted(internalEvent);
         }

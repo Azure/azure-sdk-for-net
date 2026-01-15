@@ -68,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // TODO: Add Ai Sampler.
                 tracerProvider.AddProcessor(new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
-                    new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions)),
+                    new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions), exporterOptions),
                     new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions))
                 }));
             }
@@ -83,19 +83,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 var exporterOptions = serviceProvider!.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
                 var exporter = new AzureMonitorLogExporter(exporterOptions);
 
+                BaseProcessor<LogRecord> baseProcessor = exporterOptions.EnableTraceBasedLogsSampler
+                                                            ? new LogFilteringProcessor(exporter)
+                                                            : new BatchLogRecordExportProcessor(exporter);
+
                 if (exporterOptions.EnableLiveMetrics)
                 {
                     var manager = serviceProvider!.GetRequiredService<LiveMetricsClientManager>();
 
-                    loggerProvider.AddProcessor(new CompositeProcessor<LogRecord>(new BaseProcessor<LogRecord>[]
-                        {
-                                new LiveMetricsLogProcessor(manager),
-                                new BatchLogRecordExportProcessor(exporter)
-                        }));
+                    loggerProvider.AddProcessor(new CompositeProcessor<LogRecord>(
+                    [
+                        new LiveMetricsLogProcessor(manager),
+                        baseProcessor
+                    ]));
                 }
                 else
                 {
-                    loggerProvider.AddProcessor(new BatchLogRecordExportProcessor(exporter));
+                    loggerProvider.AddProcessor(baseProcessor);
                 }
             }
         }

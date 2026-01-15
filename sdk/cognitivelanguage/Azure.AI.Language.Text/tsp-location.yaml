@@ -1,4 +1,5 @@
 repo: azure/azure-rest-api-specs
-commit: 52dae3e072fa71d0e6df8e29e36811571df79d5d
-directory: specification/cognitiveservices/Language.AnalyzeText
+commit: 11a22589537a23c3086f0e9e5a01697da788f3d8
+directory: specification/cognitiveservices/data-plane/LanguageAnalyzeText/
 
+emitterPackageJsonPath: eng/legacy-emitter-package.json

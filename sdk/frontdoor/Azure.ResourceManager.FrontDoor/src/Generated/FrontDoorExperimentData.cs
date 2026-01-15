@@ -90,18 +90,25 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> The description of the details or intents of the Experiment. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The endpoint A of an experiment. </summary>
+        [WirePath("properties.endpointA")]
         public FrontDoorExperimentEndpointProperties ExperimentEndpointA { get; set; }
         /// <summary> The endpoint B of an experiment. </summary>
+        [WirePath("properties.endpointB")]
         public FrontDoorExperimentEndpointProperties ExperimentEndpointB { get; set; }
         /// <summary> The state of the Experiment. </summary>
+        [WirePath("properties.enabledState")]
         public FrontDoorExperimentState? EnabledState { get; set; }
         /// <summary> Resource status. </summary>
+        [WirePath("properties.resourceState")]
         public NetworkExperimentResourceState? ResourceState { get; }
         /// <summary> The description of Experiment status from the server side. </summary>
+        [WirePath("properties.status")]
         public string Status { get; }
         /// <summary> The uri to the Script used in the Experiment. </summary>
+        [WirePath("properties.scriptFileUri")]
         public Uri ScriptFileUri { get; }
     }
 }

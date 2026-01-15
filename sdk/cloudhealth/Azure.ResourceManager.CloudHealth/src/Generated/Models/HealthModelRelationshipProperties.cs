@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Relationship properties. </summary>
     public partial class HealthModelRelationshipProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HealthModelRelationshipProperties"/>. </summary>
         /// <param name="parentEntityName"> Resource name of the parent entity. </param>
@@ -67,8 +39,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="labels"> Optional set of labels (key-value pairs). </param>
         /// <param name="discoveredBy"> Discovered by which discovery rule. If set, the relationship cannot be deleted manually. </param>
         /// <param name="deletedOn"> Date when the relationship was (soft-)deleted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthModelRelationshipProperties(HealthModelProvisioningState? provisioningState, string displayName, string parentEntityName, string childEntityName, IDictionary<string, string> labels, string discoveredBy, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HealthModelRelationshipProperties(HealthModelProvisioningState? provisioningState, string displayName, string parentEntityName, string childEntityName, IDictionary<string, string> labels, string discoveredBy, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -77,26 +49,27 @@ namespace Azure.ResourceManager.CloudHealth.Models
             Labels = labels;
             DiscoveredBy = discoveredBy;
             DeletedOn = deletedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HealthModelRelationshipProperties"/> for deserialization. </summary>
-        internal HealthModelRelationshipProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status of the last operation. </summary>
         public HealthModelProvisioningState? ProvisioningState { get; }
+
         /// <summary> Display name. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> Resource name of the parent entity. </summary>
         public string ParentEntityName { get; set; }
+
         /// <summary> Resource name of the child entity. </summary>
         public string ChildEntityName { get; set; }
+
         /// <summary> Optional set of labels (key-value pairs). </summary>
         public IDictionary<string, string> Labels { get; }
+
         /// <summary> Discovered by which discovery rule. If set, the relationship cannot be deleted manually. </summary>
         public string DiscoveredBy { get; }
+
         /// <summary> Date when the relationship was (soft-)deleted. </summary>
         public DateTimeOffset? DeletedOn { get; }
     }

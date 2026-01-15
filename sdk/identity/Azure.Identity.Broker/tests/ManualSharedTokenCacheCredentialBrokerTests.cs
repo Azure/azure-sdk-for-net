@@ -30,8 +30,9 @@ namespace Azure.Identity.Broker.Tests
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
             Assert.NotNull(token.Token);
-
+#pragma warning disable CS0618 // Type or member is obsolete
             var silentCred = new SharedTokenCacheCredential(new SharedTokenCacheCredentialBrokerOptions());
+#pragma warning restore CS0618 // Type or member is obsolete
 
             // The calls below this should be silent and not require user interaction
             token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
@@ -47,7 +48,9 @@ namespace Azure.Identity.Broker.Tests
         [Ignore("This test is an integration test which can only be run with user interaction")]
         public async Task AuthenticateWithBrokerWithUseOperatingSystemAccount_DoesNotPrompt()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             var cred = new SharedTokenCacheCredential(new SharedTokenCacheCredentialBrokerOptions() { UseDefaultBrokerAccount = true });
+#pragma warning restore CS0618 // Type or member is obsolete
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 

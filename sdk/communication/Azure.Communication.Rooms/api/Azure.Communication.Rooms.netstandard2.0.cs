@@ -1,11 +1,5 @@
 namespace Azure.Communication.Rooms
 {
-    public partial class AzureCommunicationRoomsContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureCommunicationRoomsContext() { }
-        public static Azure.Communication.Rooms.AzureCommunicationRoomsContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class CommunicationRoom
     {
         internal CommunicationRoom() { }
@@ -34,9 +28,7 @@ namespace Azure.Communication.Rooms
         public static Azure.Communication.Rooms.ParticipantRole Consumer { get { throw null; } }
         public static Azure.Communication.Rooms.ParticipantRole Presenter { get { throw null; } }
         public bool Equals(Azure.Communication.Rooms.ParticipantRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.Rooms.ParticipantRole left, Azure.Communication.Rooms.ParticipantRole right) { throw null; }
         public static implicit operator Azure.Communication.Rooms.ParticipantRole (string value) { throw null; }

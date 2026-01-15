@@ -79,12 +79,16 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The version of the template defined, for instance 1. </summary>
+        [WirePath("version")]
         public int Version { get; set; }
         /// <summary> A boolean value that indicate if the optimized autoscale feature is enabled or not. </summary>
+        [WirePath("isEnabled")]
         public bool IsEnabled { get; set; }
         /// <summary> Minimum allowed instances count. </summary>
+        [WirePath("minimum")]
         public int Minimum { get; set; }
         /// <summary> Maximum allowed instances count. </summary>
+        [WirePath("maximum")]
         public int Maximum { get; set; }
     }
 }

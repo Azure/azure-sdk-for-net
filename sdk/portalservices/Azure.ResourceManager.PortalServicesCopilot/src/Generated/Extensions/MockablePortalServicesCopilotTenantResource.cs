@@ -6,31 +6,48 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.PortalServicesCopilot;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PortalServicesCopilot.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockablePortalServicesCopilotTenantResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockablePortalServicesCopilotTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePortalServicesCopilotTenantResource for mocking. </summary>
         protected MockablePortalServicesCopilotTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePortalServicesCopilotTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePortalServicesCopilotTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePortalServicesCopilotTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets an object representing a PortalServicesCopilotSettingResource along with the instance operations that can be performed on it in the TenantResource. </summary>
+        /// <summary>
+        /// Get a CopilotSettingsResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.PortalServices/copilotSettings/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CopilotSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PortalServicesCopilotSettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <returns> Returns a <see cref="PortalServicesCopilotSettingResource"/> object. </returns>
         public virtual PortalServicesCopilotSettingResource GetPortalServicesCopilotSetting()
         {

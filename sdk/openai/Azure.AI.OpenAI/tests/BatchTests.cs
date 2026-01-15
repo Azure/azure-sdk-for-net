@@ -69,7 +69,7 @@ public class BatchTests : AoaiTestBase<BatchClient>
 #else
     [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_10_21)]
 #endif
-    // [TestCase(null)]
+    [TestCase(null)]
     [Category("LongRunning")] // observed live runtime up to 5 minutes
     public async Task CanCancelBatch(AzureOpenAIClientOptions.ServiceVersion? version)
     {

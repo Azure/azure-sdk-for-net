@@ -12,19 +12,6 @@ trigger:
     exclude:
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/appconfiguration/
-    exclude:
-    - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/
-
 # These comments should stay.
 
 extends:
@@ -35,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.Data.AppConfiguration
       safeName: AzureDataAppConfiguration
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.Data.AppConfiguration
-      ExpectedWarningsFilepath: None

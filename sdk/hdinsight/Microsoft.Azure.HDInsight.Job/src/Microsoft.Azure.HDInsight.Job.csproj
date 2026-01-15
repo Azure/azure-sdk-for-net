@@ -10,10 +10,25 @@ Support using Apache Spark REST API to submit remote jobs to an HDInsight Spark 
       ]]>
     </PackageReleaseNotes>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <ApiCompatBaselineTargetFramework>netstandard2.0</ApiCompatBaselineTargetFramework>
     <Version>3.0.0-preview.4</Version>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="WindowsAzure.Storage" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" />
+    <PackageReference Include="Newtonsoft.Json" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
+    <PackageReference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
 </Project>

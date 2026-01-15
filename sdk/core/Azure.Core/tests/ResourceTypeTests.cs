@@ -130,6 +130,46 @@ namespace Azure.Core.Tests
             Assert.AreEqual(expected, rt.Equals(rightObject));
         }
 
+        [TestCase("Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase("Microsoft.Network1/Virtualnetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        public void CompareToEqualsWithResourceType(string left, string right)
+        {
+            ResourceType rt = left;
+            ResourceType rightRt = right;
+            Assert.AreEqual(rt.CompareTo(rightRt), 0);
+        }
+
+        [TestCase("Microsoft.Network1/VirtualNetworks2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase("Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets2")]
+        [TestCase("Microsoft.ClassicStorage/storageAccounts", "Microsoft.Network/VirtualNetworks2/subnets1")]
+        public void CompareToLessThanWithResourceType(string left, string right)
+        {
+            ResourceType rt = left;
+            ResourceType rightRt = right;
+            Assert.Less(rt.CompareTo(rightRt), 0);
+        }
+
+        [TestCase("Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2")]
+        [TestCase("Microsoft.Network1/VirtualNetworks2/subnets2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase("Microsoft.Network/VirtualNetworks2/subnets1", "Microsoft.ClassicStorage/storageAccounts")]
+        public void CompareToGreaterThanWithResourceType(string left, string right)
+        {
+            ResourceType rt = left;
+            ResourceType rightRt = right;
+            Assert.Greater(rt.CompareTo(rightRt), 0);
+        }
+
+        [TestCase]
+        public void CompareToWithDefaultResourceType()
+        {
+            ResourceType rt = "Microsoft.Network1/VirtualNetworks2/subnets1";
+            ResourceType defaultRt = default;
+            ResourceType defaultRt2 = default;
+            Assert.AreEqual(defaultRt.CompareTo(defaultRt2), 0);
+            Assert.Less(defaultRt.CompareTo(rt), 0); // default < non-default ResourceType
+            Assert.Greater(rt.CompareTo(defaultRt), 0); // non-default ResourceType > default
+        }
+
         [TestCase("Microsoft.classicStorage/storageAccounts")]
         [TestCase("Microsoft.ClassicStorage/diffaccount")]
         [TestCase("Microsoft.ClassicStorage/storageAccounts")]

@@ -1,45 +1,65 @@
 parameters:
-  ArtifactPath: $(Build.ArtifactStagingDirectory)
-  Artifacts: []
-  ConfigFileDir: $(Build.ArtifactStagingDirectory)/PackageInfo
-  MarkPackageAsShipped: false
-  GenerateApiReviewForManualOnly: false
-  ArtifactName: 'packages'
-  PackageName: ''
-  SourceRootPath: $(Build.SourcesDirectory)
+  - name: ArtifactPath
+    type: string
+    default: $(Build.ArtifactStagingDirectory)
+  - name: Artifacts
+    type: object
+    default: []
+  - name: ConfigFileDir
+    type: string
+    default: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - name: MarkPackageAsShipped
+    type: boolean
+    default: false
+  - name: GenerateApiReviewForManualOnly
+    type: boolean
+    default: false
+  - name: ArtifactName
+    type: string
+    default: 'packages'
+  - name: PackageName
+    type: string
+    default: ''
+  - name: SourceRootPath
+    type: string
+    default: $(Build.SourcesDirectory)
+  - name: PackageInfoFiles
+    type: object
+    default: []
 
 steps:
-  # ideally this should be done as initial step of a job in caller template
-  # We can remove this step later once it is added in caller
-  - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
-    parameters:
-      WorkingDirectory: ${{ parameters.SourceRootPath }}
-
   # Automatic API review is generated for a package when pipeline runs irrespective of how pipeline gets triggered.
-  # Below condition ensures that API review is generated only for manual pipeline runs when flag GenerateApiReviewForManualOnly is set to true. 
+  # Below condition ensures that API review is generated only for manual pipeline runs when flag GenerateApiReviewForManualOnly is set to true.
   - ${{ if or(ne(parameters.GenerateApiReviewForManualOnly, true), eq(variables['Build.Reason'], 'Manual')) }}:
-    - task: Powershell@2
-      inputs:
-        filePath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Create-APIReview.ps1
-        arguments: >
-          -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name)
-          -ArtifactPath '${{parameters.ArtifactPath}}'
-          -ArtifactName ${{ parameters.ArtifactName }}
-          -APIKey '$(azuresdk-apiview-apikey)'
-          -PackageName '${{parameters.PackageName}}'
-          -SourceBranch '$(Build.SourceBranchName)'
-          -DefaultBranch '$(DefaultBranch)'
-          -ConfigFileDir '${{parameters.ConfigFileDir}}'
-          -BuildId '$(Build.BuildId)'
-          -RepoName '$(Build.Repository.Name)'    
-          -MarkPackageAsShipped $${{parameters.MarkPackageAsShipped}}
-        pwsh: true
-      displayName: Create API Review
-      condition: >-
-        and(
-          succeededOrFailed(),
-          ne(variables['Skip.CreateApiReview'], 'true'),
-          ne(variables['Build.Reason'],'PullRequest'),
-          eq(variables['System.TeamProject'], 'internal'),
-          not(endsWith(variables['Build.Repository.Name'], '-pr'))
-        )
+    # ideally this should be done as initial step of a job in caller template
+    # We can remove this step later once it is added in caller
+    - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+      parameters:
+        WorkingDirectory: ${{ parameters.SourceRootPath }}
+
+    - ${{ if and(eq(variables['System.TeamProject'], 'internal'), ne(variables['Build.Reason'], 'PullRequest'), not(endsWith(variables['Build.Repository.Name'], '-pr'))) }}:
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'APIView prod deployment'
+          scriptType: pscore
+          scriptLocation: scriptPath
+          scriptPath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Create-APIReview.ps1
+          # PackageInfoFiles example: @('a/file1.json','a/file2.json')
+          arguments: >
+            -PackageInfoFiles @('${{ join(''',''', parameters.PackageInfoFiles) }}')
+            -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name)
+            -ArtifactPath '${{parameters.ArtifactPath}}'
+            -ArtifactName ${{ parameters.ArtifactName }}
+            -PackageName '${{parameters.PackageName}}'
+            -SourceBranch '$(Build.SourceBranchName)'
+            -DefaultBranch '$(DefaultBranch)'
+            -ConfigFileDir '${{parameters.ConfigFileDir}}'
+            -BuildId '$(Build.BuildId)'
+            -RepoName '$(Build.Repository.Name)'
+            -MarkPackageAsShipped $${{parameters.MarkPackageAsShipped}}
+        displayName: Create API Review
+        condition: >-
+          and(
+            succeededOrFailed(),
+            ne(variables['Skip.CreateApiReview'], 'true')
+          )

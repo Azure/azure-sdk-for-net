@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -57,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Origins)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -165,7 +167,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerCdnContext.Default));
                             }
                             origins = array;
                             continue;
@@ -208,6 +210,115 @@ namespace Azure.ResourceManager.Cdn.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HealthProbeSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    healthProbeSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HealthProbeSettings))
+                {
+                    builder.Append("    healthProbeSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HealthProbeSettings, options, 4, false, "    healthProbeSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Origins), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    origins: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Origins))
+                {
+                    if (Origins.Any())
+                    {
+                        builder.Append("    origins: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Origins)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    origins: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    trafficRestorationTimeToHealedOrNewEndpointsInMinutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
+                {
+                    builder.Append("    trafficRestorationTimeToHealedOrNewEndpointsInMinutes: ");
+                    builder.AppendLine($"{TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResponseBasedOriginErrorDetectionSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    responseBasedOriginErrorDetectionSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResponseBasedOriginErrorDetectionSettings))
+                {
+                    builder.Append("    responseBasedOriginErrorDetectionSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ResponseBasedOriginErrorDetectionSettings, options, 4, false, "    responseBasedOriginErrorDetectionSettings: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DeepCreatedOriginGroup>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeepCreatedOriginGroup>)this).GetFormatFromOptions(options) : options.Format;
@@ -216,6 +327,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support writing '{options.Format}' format.");
             }

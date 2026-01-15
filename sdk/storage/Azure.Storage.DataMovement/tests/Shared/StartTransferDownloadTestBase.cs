@@ -172,7 +172,7 @@ namespace Azure.Storage.DataMovement.Tests
                 options: options);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 failureTransferHolder,
@@ -207,7 +207,7 @@ namespace Azure.Storage.DataMovement.Tests
                 options: options);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventRaised,
@@ -246,7 +246,7 @@ namespace Azure.Storage.DataMovement.Tests
                 options: options);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventRaised,
@@ -375,7 +375,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 // Assert
                 Assert.NotNull(downloadedObjectInfo[i].TransferOperation);
-                CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
+                using CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
                 await TestTransferWithTimeout.WaitForCompletionAsync(
                     downloadedObjectInfo[i].TransferOperation,
                     downloadedObjectInfo[i].EventsRaised,
@@ -507,7 +507,7 @@ namespace Azure.Storage.DataMovement.Tests
                 GetStorageResourceItem(sourceClient),
                 destinationResource,
                 options);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,
@@ -558,7 +558,7 @@ namespace Azure.Storage.DataMovement.Tests
                 GetStorageResourceItem(sourceClient),
                 destinationResource,
                 options);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,

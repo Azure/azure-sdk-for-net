@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -377,6 +378,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("zoneBalance"u8);
                 writer.WriteBooleanValue(IsZoneBalanceEnabled.Value);
             }
+            if (Optional.IsDefined(IsOutboundOnly))
+            {
+                writer.WritePropertyName("isOutboundOnly"u8);
+                writer.WriteBooleanValue(IsOutboundOnly.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -458,6 +464,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             string computerNamePrefix = default;
             IList<ServiceFabricManagedVmApplication> vmApplications = default;
             bool? zoneBalance = default;
+            bool? isOutboundOnly = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -506,7 +513,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricManagedClustersContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -1010,6 +1017,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             zoneBalance = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("isOutboundOnly"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isOutboundOnly = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -1076,6 +1092,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 computerNamePrefix,
                 vmApplications ?? new ChangeTrackingList<ServiceFabricManagedVmApplication>(),
                 zoneBalance,
+                isOutboundOnly,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 sku,
                 serializedAdditionalRawData);

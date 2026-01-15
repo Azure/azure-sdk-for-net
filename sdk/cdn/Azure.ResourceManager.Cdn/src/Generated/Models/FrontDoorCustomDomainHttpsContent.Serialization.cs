@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(Secret))
             {
                 writer.WritePropertyName("secret"u8);
-                JsonSerializer.Serialize(writer, Secret);
+                ((IJsonModel<WritableSubResource>)Secret).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    secret = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    secret = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,6 +160,96 @@ namespace Azure.ResourceManager.Cdn.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  certificateType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  certificateType: ");
+                builder.AppendLine($"'{CertificateType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CipherSuiteSetType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cipherSuiteSetType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CipherSuiteSetType))
+                {
+                    builder.Append("  cipherSuiteSetType: ");
+                    builder.AppendLine($"'{CipherSuiteSetType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimumTlsVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minimumTlsVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinimumTlsVersion))
+                {
+                    builder.Append("  minimumTlsVersion: ");
+                    builder.AppendLine($"'{MinimumTlsVersion.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomizedCipherSuiteSet), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customizedCipherSuiteSet: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomizedCipherSuiteSet))
+                {
+                    builder.Append("  customizedCipherSuiteSet: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CustomizedCipherSuiteSet, options, 2, false, "  customizedCipherSuiteSet: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SecretId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secret: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Secret))
+                {
+                    builder.Append("  secret: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Secret, options, 2, false, "  secret: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FrontDoorCustomDomainHttpsContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -167,6 +258,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support writing '{options.Format}' format.");
             }

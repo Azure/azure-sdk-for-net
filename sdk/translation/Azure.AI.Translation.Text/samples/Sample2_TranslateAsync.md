@@ -9,16 +9,16 @@ Translate text from known source language to target language.
 ```C# Snippet:GetTextTranslationBySourceAsync
 try
 {
-    string from = "en";
+    string sourceLanguage = "en";
     string targetLanguage = "cs";
     string inputText = "This is a test.";
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguage, inputText, sourceLanguage: from).ConfigureAwait(false);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguage, inputText, sourceLanguage).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
-    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
-    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().TargetLanguage}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
 }
 catch (RequestFailedException exception)
 {
@@ -44,8 +44,8 @@ try
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
-    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
-    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().TargetLanguage}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
 }
 catch (RequestFailedException exception)
 {
@@ -64,48 +64,18 @@ try
     string fromScript = "Latn";
     string fromLanguage = "ar";
     string toScript = "Latn";
-    IEnumerable<string> tarGetSupportedLanguages = new[] { "zh-Hans" };
-    IEnumerable<string> inputTextElements = new[]
-    {
-        "hudha akhtabar."
-    };
+    string toLanguage = "zh-Hans";
+    string inputText = "hudha akhtabar.";
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, sourceLanguage: fromLanguage, fromScript: fromScript, toScript: toScript).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value;
-    TranslatedTextItem translation = translations.FirstOrDefault();
+    TranslationTarget target = new TranslationTarget(toLanguage, script: toScript);
+    TranslateInputItem inputItem = new TranslateInputItem(inputText, target, language: fromLanguage, script: fromScript);
 
-    Console.WriteLine($"Source Text: {translation.SourceText.Text}");
+    Response<TranslatedTextItem> response = await client.TranslateAsync(inputItem).ConfigureAwait(false);
+    TranslatedTextItem translation = response.Value;
+    TranslationText translated = translation.Translations.FirstOrDefault();
+
     Console.WriteLine($"Translation: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-    Console.WriteLine($"Transliterated text ({translation?.Translations?.FirstOrDefault()?.Transliteration?.Script}): {translation?.Translations?.FirstOrDefault()?.Transliteration?.Text}");
-}
-catch (RequestFailedException exception)
-{
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
-}
-```
-
-A convenience overload of Translate is provided using a single TextTranslationTranslateOptions parameter.  This sample demonstrates Translation and Transliteration in a single call using the options parameter.
-
-```C# Snippet:GetTranslationTextTransliteratedOptionsAsync
-try
-{
-    TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
-        targetLanguage: "zh-Hans",
-        content: "hudha akhtabar.")
-    {
-        FromScript = "Latn",
-        SourceLanguage = "ar",
-        ToScript = "Latn"
-    };
-
-    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(options).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value;
-    TranslatedTextItem translation = translations.FirstOrDefault();
-
-    Console.WriteLine($"Source Text: {translation.SourceText.Text}");
-    Console.WriteLine($"Translation: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-    Console.WriteLine($"Transliterated text ({translation?.Translations?.FirstOrDefault()?.Transliteration?.Script}): {translation?.Translations?.FirstOrDefault()?.Transliteration?.Text}");
+    Console.WriteLine($"Transliterated text ({translated.Language}): {translated.Text}");
 }
 catch (RequestFailedException exception)
 {
@@ -118,26 +88,24 @@ catch (RequestFailedException exception)
 
 You can translate multiple text elements. Each input element can be in different language (source language parameter needs to be omitted and language auto-detection is used). Refer to [Request limits for Translator](https://learn.microsoft.com/azure/cognitive-services/translator/request-limits) for current limits.
 
-```C# Snippet:GetMultipleTextTranslationsOptionsAsync
+```C# Snippet:GetMultipleTextTranslationsAsync
 try
 {
-    TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
-        targetLanguages: new[] { "cs" },
-        content: new[]
-        {
-            "This is a test.",
-            "Esto es una prueba.",
-            "Dies ist ein Test."
-        }
-    );
+    string targetLanguage = "cs";
+    IEnumerable<string> inputTextElements = new[]
+    {
+        "This is a test.",
+        "Esto es una prueba.",
+        "Dies ist ein Test."
+    };
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(options).ConfigureAwait(false);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguage, inputTextElements).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
 
     foreach (TranslatedTextItem translation in translations)
     {
-        Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
-        Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().TargetLanguage}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+        Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+        Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
     }
 }
 catch (RequestFailedException exception)
@@ -154,20 +122,17 @@ You can provide multiple target languages which results in each input element be
 ```C# Snippet:GetTextTranslationMatrixAsync
 try
 {
-    IEnumerable<string> tarGetSupportedLanguages = new[] { "cs", "es", "de" };
-    IEnumerable<string> inputTextElements = new[]
+    IEnumerable<string> targetLanguages = new[] { "cs", "es", "de" };
+    string inputText = "This is a test.";
+
+    TranslateInputItem input = new TranslateInputItem(inputText, targetLanguages.Select(lang => new TranslationTarget(lang)));
+
+    Response<TranslatedTextItem> response = await client.TranslateAsync(input).ConfigureAwait(false);
+    IReadOnlyList<TranslationText> translations = response.Value.Translations;
+
+    foreach (TranslationText translation in translations)
     {
-        "This is a test."
-    };
-
-    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value;
-
-    foreach (TranslatedTextItem translation in translations)
-    {
-        Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
-
-        Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().TargetLanguage}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+        Console.WriteLine($"Text was translated to: '{translation?.Language}' and the result is: '{translation?.Text}'.");
     }
 }
 catch (RequestFailedException exception)
@@ -184,18 +149,16 @@ You can select whether the translated text is plain text or HTML text. Any HTML 
 ```C# Snippet:GetTextTranslationFormatAsync
 try
 {
-    IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
-    IEnumerable<string> inputTextElements = new[]
-    {
-        "<html><body>This <b>is</b> a test.</body></html>"
-    };
+    string targetLanguage = "cs";
+    string inputText = "<html><body>This <b>is</b> a test.</body></html>";
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, textType: TextType.Html).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value;
-    TranslatedTextItem translation = translations.FirstOrDefault();
+    TranslateInputItem input = new TranslateInputItem(inputText, new TranslationTarget(targetLanguage), textType: TextType.Html);
 
-    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
-    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().TargetLanguage}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+    Response<TranslatedTextItem> response = await client.TranslateAsync(input).ConfigureAwait(false);
+    TranslatedTextItem translation = response.Value;
+
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
 }
 catch (RequestFailedException exception)
 {
@@ -211,19 +174,17 @@ It's sometimes useful to exclude specific content from translation. You can use 
 ```C# Snippet:GetTextTranslationFilterAsync
 try
 {
-    string from = "en";
-    IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
-    IEnumerable<string> inputTextElements = new[]
-    {
-        "<div class=\"notranslate\">This will not be translated.</div><div>This will be translated. </div>"
-    };
+    string sourceLanguage = "en";
+    string targetLanguage = "cs";
+    string inputText = "<div class=\"notranslate\">This will not be translated.</div><div>This will be translated. </div>";
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, textType: TextType.Html, sourceLanguage: from).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value;
-    TranslatedTextItem translation = translations.FirstOrDefault();
+    TranslateInputItem input = new TranslateInputItem(inputText, new TranslationTarget(targetLanguage), language: sourceLanguage, textType: TextType.Html);
 
-    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
-    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().TargetLanguage}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+    Response<TranslatedTextItem> response = await client.TranslateAsync(input).ConfigureAwait(false);
+    TranslatedTextItem translation = response.Value;
+
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
 }
 catch (RequestFailedException exception)
 {
@@ -241,19 +202,18 @@ If you already know the translation you want to apply to a word or a phrase, you
 ```C# Snippet:GetTextTranslationMarkupAsync
 try
 {
-    string from = "en";
-    IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
-    IEnumerable<string> inputTextElements = new[]
-    {
-        "The word <mstrans:dictionary translation=\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry."
-};
+    string sourceLanguage = "en";
+    string targetLanguage = "cs";
+    string inputText = "The word <mstrans:dictionary translation=\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry.";
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, sourceLanguage: from).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value;
-    TranslatedTextItem translation = translations.FirstOrDefault();
+    TranslateInputItem input = new TranslateInputItem(inputText, new TranslationTarget(targetLanguage), language: sourceLanguage, textType: TextType.Html);
 
-    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
-    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().TargetLanguage}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+    Response<TranslatedTextItem> response = await client.TranslateAsync(input).ConfigureAwait(false);
+    TranslatedTextItem translation = response.Value;
+    TranslationText translated = translation.Translations.FirstOrDefault();
+
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translated?.Language}' and the result is: '{translated?.Text}'.");
 }
 catch (RequestFailedException exception)
 {
@@ -264,7 +224,7 @@ catch (RequestFailedException exception)
 
 ## Profanity handling
 
-[Profanity handling](https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-translate#handle-profanity). Normally the Translator service will retain profanity that is present in the source in the translation. The degree of profanity and the context that makes words profane differ between cultures, and as a result the degree of profanity in the target language may be amplified or reduced.
+Normally the Translator service will retain profanity that is present in the source in the translation. The degree of profanity and the context that makes words profane differ between cultures, and as a result the degree of profanity in the target language may be amplified or reduced.
 
 If you want to avoid getting profanity in the translation, regardless of the presence of profanity in the source text, you can use the profanity filtering option. The option allows you to choose whether you want to see profanity deleted, whether you want to mark profanities with appropriate tags (giving you the option to add your own post-processing), or you want no action taken. The accepted values of `ProfanityAction` are `Deleted`, `Marked` and `NoAction` (default).
 
@@ -274,79 +234,18 @@ try
     ProfanityAction profanityAction = ProfanityAction.Marked;
     ProfanityMarker profanityMarkers = ProfanityMarker.Asterisk;
 
-    IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
-    IEnumerable<string> inputTextElements = new[]
-    {
-        "This is ***."
-    };
+    string targetLanguage = "cs";
+    string inputText = "This is ***.";
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, profanityAction: profanityAction, profanityMarker: profanityMarkers).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value;
-    TranslatedTextItem translation = translations.FirstOrDefault();
+    TranslationTarget target = new TranslationTarget(targetLanguage, profanityAction: profanityAction, profanityMarker: profanityMarkers);
+    TranslateInputItem input = new TranslateInputItem(inputText, target);
 
-    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
-    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().TargetLanguage}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-}
-catch (RequestFailedException exception)
-{
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
-}
-```
+    Response<TranslatedTextItem> response = await client.TranslateAsync(input).ConfigureAwait(false);
+    TranslatedTextItem translation = response.Value;
+    TranslationText translated = translation.Translations.FirstOrDefault();
 
-## Include alignments into translations
-
-You can ask translation service to include alignment projection from source text to translated text.
-
-```C# Snippet:GetTextTranslationAlignmentAsync
-try
-{
-    bool includeAlignment = true;
-
-    IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
-    IEnumerable<string> inputTextElements = new[]
-    {
-        "The answer lies in machine translation."
-    };
-
-    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, includeAlignment: includeAlignment).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value;
-    TranslatedTextItem translation = translations.FirstOrDefault();
-
-    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
-    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().TargetLanguage}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-    Console.WriteLine($"Alignments: {translation?.Translations?.FirstOrDefault()?.Alignment?.Projections}");
-}
-catch (RequestFailedException exception)
-{
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
-}
-```
-
-## Include sentence lenght
-
-You can ask translator service to include sentence boundaries for the input text and the translated text.
-
-```C# Snippet:GetTextTranslationSentencesAsync
-try
-{
-    bool includeSentenceLength = true;
-
-    IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
-    IEnumerable<string> inputTextElements = new[]
-    {
-        "The answer lies in machine translation. This is a test."
-    };
-
-    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, includeSentenceLength: includeSentenceLength).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value;
-    TranslatedTextItem translation = translations.FirstOrDefault();
-
-    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with confidence: {translation?.DetectedLanguage?.Confidence}.");
-    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().TargetLanguage}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-    Console.WriteLine($"Source Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentenceBoundaries?.SourceSentencesLengths)}");
-    Console.WriteLine($"Translated Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentenceBoundaries?.TranslatedSentencesLengths)}");
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translated?.Language}' and the result is: '{translated?.Text}'.");
 }
 catch (RequestFailedException exception)
 {
@@ -367,18 +266,45 @@ It is possible to set `allowFalback` paramter. It specifies that the service is 
 try
 {
     string category = "<<Category ID>>";
-    IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
-    IEnumerable<string> inputTextElements = new[]
-    {
-        "This is a test."
-    };
+    string targetLanguage = "cs";
+    string inputText = "This is a test.";
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, category: category).ConfigureAwait(false);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value;
-    TranslatedTextItem translation = translations.FirstOrDefault();
+    TranslationTarget target = new TranslationTarget(targetLanguage, deploymentName: category, allowFallback: true);
+    TranslateInputItem input = new TranslateInputItem(inputText, target);
 
-    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
-    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().TargetLanguage}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+    Response<TranslatedTextItem> response = await client.TranslateAsync(input).ConfigureAwait(false);
+    TranslatedTextItem translation = response.Value;
+    TranslationText translated = translation.Translations.FirstOrDefault();
+
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translated?.Language}' and the result is: '{translated?.Text}'.");
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
+## Translation using LLM
+
+You can get translations from Large Language Model (LLM) models in addition to default neural Machine Translation (NMT). [Azure resources for Azure AI translation](https://learn.microsoft.com/azure/ai-services/translator/how-to/create-translator-resource?tabs=foundry)
+
+```C# Snippet:GetTextTranslationLlmAsync
+try
+{
+    string targetLanguage = "cs";
+    string llmModelname = "gpt-4o-mini";
+    string inputText = "This is a test.";
+
+    TranslationTarget target = new TranslationTarget(targetLanguage, deploymentName: llmModelname);
+    TranslateInputItem input = new TranslateInputItem(inputText, target);
+
+    Response<TranslatedTextItem> response = await client.TranslateAsync(input).ConfigureAwait(false);
+    TranslatedTextItem translation = response.Value;
+
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
 }
 catch (RequestFailedException exception)
 {

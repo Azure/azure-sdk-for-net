@@ -13,43 +13,11 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    /// <summary>
-    /// A class representing the JobDefinition data model.
-    /// The Job Definition resource.
-    /// </summary>
+    /// <summary> The Job Definition resource. </summary>
     public partial class JobDefinitionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="JobDefinitionData"/>. </summary>
         /// <param name="copyMode"> Strategy to use for copy. </param>
@@ -61,82 +29,265 @@ namespace Azure.ResourceManager.StorageMover
             Argument.AssertNotNull(sourceName, nameof(sourceName));
             Argument.AssertNotNull(targetName, nameof(targetName));
 
-            CopyMode = copyMode;
-            SourceName = sourceName;
-            TargetName = targetName;
+            Properties = new JobDefinitionProperties(copyMode, sourceName, targetName);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobDefinitionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> A description for the Job Definition. </param>
-        /// <param name="copyMode"> Strategy to use for copy. </param>
-        /// <param name="sourceName"> The name of the source Endpoint. </param>
-        /// <param name="sourceResourceId"> Fully qualified resource ID of the source Endpoint. </param>
-        /// <param name="sourceSubpath"> The subpath to use when reading from the source Endpoint. </param>
-        /// <param name="targetName"> The name of the target Endpoint. </param>
-        /// <param name="targetResourceId"> Fully qualified resource ID of the target Endpoint. </param>
-        /// <param name="targetSubpath"> The subpath to use when writing to the target Endpoint. </param>
-        /// <param name="latestJobRunName"> The name of the Job Run in a non-terminal state, if exists. </param>
-        /// <param name="latestJobRunResourceId"> The fully qualified resource ID of the Job Run in a non-terminal state, if exists. </param>
-        /// <param name="latestJobRunStatus"> The current status of the Job Run in a non-terminal state, if exists. </param>
-        /// <param name="agentName"> Name of the Agent to assign for new Job Runs of this Job Definition. </param>
-        /// <param name="agentResourceId"> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </param>
-        /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Job definition properties. </param>
+        internal JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, JobDefinitionProperties properties) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            CopyMode = copyMode;
-            SourceName = sourceName;
-            SourceResourceId = sourceResourceId;
-            SourceSubpath = sourceSubpath;
-            TargetName = targetName;
-            TargetResourceId = targetResourceId;
-            TargetSubpath = targetSubpath;
-            LatestJobRunName = latestJobRunName;
-            LatestJobRunResourceId = latestJobRunResourceId;
-            LatestJobRunStatus = latestJobRunStatus;
-            AgentName = agentName;
-            AgentResourceId = agentResourceId;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobDefinitionData"/> for deserialization. </summary>
-        internal JobDefinitionData()
+        /// <summary> Job definition properties. </summary>
+        internal JobDefinitionProperties Properties { get; set; }
+
+        /// <summary> A description for the Job Definition. OnPremToCloud is for migrating data from on-premises to cloud. CloudToCloud is for migrating data between cloud to cloud. </summary>
+        public string Description
         {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionProperties();
+                }
+                Properties.Description = value;
+            }
         }
 
-        /// <summary> A description for the Job Definition. </summary>
-        public string Description { get; set; }
+        /// <summary> The type of the Job. </summary>
+        public JobType? JobType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.JobType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionProperties();
+                }
+                Properties.JobType = value.Value;
+            }
+        }
+
         /// <summary> Strategy to use for copy. </summary>
-        public StorageMoverCopyMode CopyMode { get; set; }
+        public StorageMoverCopyMode CopyMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CopyMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionProperties();
+                }
+                Properties.CopyMode = value;
+            }
+        }
+
         /// <summary> The name of the source Endpoint. </summary>
-        public string SourceName { get; set; }
+        public string SourceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionProperties();
+                }
+                Properties.SourceName = value;
+            }
+        }
+
         /// <summary> Fully qualified resource ID of the source Endpoint. </summary>
-        public ResourceIdentifier SourceResourceId { get; }
+        public ResourceIdentifier SourceResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceResourceId;
+            }
+        }
+
         /// <summary> The subpath to use when reading from the source Endpoint. </summary>
-        public string SourceSubpath { get; set; }
+        public string SourceSubpath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceSubpath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionProperties();
+                }
+                Properties.SourceSubpath = value;
+            }
+        }
+
         /// <summary> The name of the target Endpoint. </summary>
-        public string TargetName { get; set; }
+        public string TargetName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionProperties();
+                }
+                Properties.TargetName = value;
+            }
+        }
+
         /// <summary> Fully qualified resource ID of the target Endpoint. </summary>
-        public ResourceIdentifier TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetResourceId;
+            }
+        }
+
         /// <summary> The subpath to use when writing to the target Endpoint. </summary>
-        public string TargetSubpath { get; set; }
+        public string TargetSubpath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetSubpath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionProperties();
+                }
+                Properties.TargetSubpath = value;
+            }
+        }
+
         /// <summary> The name of the Job Run in a non-terminal state, if exists. </summary>
-        public string LatestJobRunName { get; }
+        public string LatestJobRunName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LatestJobRunName;
+            }
+        }
+
         /// <summary> The fully qualified resource ID of the Job Run in a non-terminal state, if exists. </summary>
-        public ResourceIdentifier LatestJobRunResourceId { get; }
+        public ResourceIdentifier LatestJobRunResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LatestJobRunResourceId;
+            }
+        }
+
         /// <summary> The current status of the Job Run in a non-terminal state, if exists. </summary>
-        public JobRunStatus? LatestJobRunStatus { get; }
+        public JobRunStatus? LatestJobRunStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LatestJobRunStatus;
+            }
+        }
+
         /// <summary> Name of the Agent to assign for new Job Runs of this Job Definition. </summary>
-        public string AgentName { get; set; }
+        public string AgentName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AgentName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionProperties();
+                }
+                Properties.AgentName = value;
+            }
+        }
+
         /// <summary> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </summary>
-        public ResourceIdentifier AgentResourceId { get; }
+        public ResourceIdentifier AgentResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AgentResourceId;
+            }
+        }
+
         /// <summary> The provisioning state of this resource. </summary>
-        public StorageMoverProvisioningState? ProvisioningState { get; }
+        public StorageMoverProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> List of connections associated to this job. </summary>
+        public IList<ResourceIdentifier> Connections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionProperties();
+                }
+                return Properties.Connections;
+            }
+        }
+
+        /// <summary> The checksum validation mode for the job definition. </summary>
+        public DataIntegrityValidation? DataIntegrityValidation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataIntegrityValidation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionProperties();
+                }
+                Properties.DataIntegrityValidation = value.Value;
+            }
+        }
+
+        /// <summary> Gets the Value. </summary>
+        public IReadOnlyList<SourceTargetMap> SourceTargetMapValue
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobDefinitionProperties();
+                }
+                return Properties.SourceTargetMapValue;
+            }
+        }
     }
 }

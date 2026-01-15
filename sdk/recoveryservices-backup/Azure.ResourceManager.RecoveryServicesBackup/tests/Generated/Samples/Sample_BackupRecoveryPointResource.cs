@@ -89,6 +89,76 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task ProvisionItemLevelRecoveryConnection_ProvisionInstantItemLevelRecoveryForAzureVm()
+        {
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/AzureIaasVm/Provision_Ilr.json
+            // this example is just showing the usage of "ItemLevelRecoveryConnections_Provision" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BackupRecoveryPointResource created on azure
+            // for more information of creating BackupRecoveryPointResource, please refer to the document of BackupRecoveryPointResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "PythonSDKBackupTestRg";
+            string vaultName = "PySDKBackupTestRsVault";
+            string fabricName = "Azure";
+            string containerName = "iaasvmcontainer;iaasvmcontainerv2;pysdktestrg;pysdktestv2vm1";
+            string protectedItemName = "vm;iaasvmcontainerv2;pysdktestrg;pysdktestv2vm1";
+            string recoveryPointId = "1";
+            ResourceIdentifier backupRecoveryPointResourceId = BackupRecoveryPointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName, recoveryPointId);
+            BackupRecoveryPointResource backupRecoveryPoint = client.GetBackupRecoveryPointResource(backupRecoveryPointResourceId);
+
+            // invoke the operation
+            ProvisionIlrConnectionContent content = new ProvisionIlrConnectionContent(default)
+            {
+                Properties = new IaasVmIlrRegistrationContent
+                {
+                    RecoveryPointId = "38823086363464",
+                    VirtualMachineId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/pysdktestrg/providers/Microsoft.Compute/virtualMachines/pysdktestv2vm1"),
+                    InitiatorName = "Hello World",
+                    RenewExistingRegistration = true,
+                },
+            };
+            await backupRecoveryPoint.ProvisionItemLevelRecoveryConnectionAsync(content);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task RevokeItemLevelRecoveryConnection_RevokeInstantItemLevelRecoveryForAzureVm()
+        {
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/AzureIaasVm/Revoke_Ilr.json
+            // this example is just showing the usage of "ItemLevelRecoveryConnections_Revoke" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BackupRecoveryPointResource created on azure
+            // for more information of creating BackupRecoveryPointResource, please refer to the document of BackupRecoveryPointResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "PythonSDKBackupTestRg";
+            string vaultName = "PySDKBackupTestRsVault";
+            string fabricName = "Azure";
+            string containerName = "iaasvmcontainer;iaasvmcontainerv2;pysdktestrg;pysdktestv2vm1";
+            string protectedItemName = "vm;iaasvmcontainerv2;pysdktestrg;pysdktestv2vm1";
+            string recoveryPointId = "1";
+            ResourceIdentifier backupRecoveryPointResourceId = BackupRecoveryPointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName, recoveryPointId);
+            BackupRecoveryPointResource backupRecoveryPoint = client.GetBackupRecoveryPointResource(backupRecoveryPointResourceId);
+
+            // invoke the operation
+            await backupRecoveryPoint.RevokeItemLevelRecoveryConnectionAsync();
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TriggerRestore_RestoreDisksWithIaasVMRestoreRequest()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/AzureIaasVm/TriggerRestore_RestoreDisks_IaasVMRestoreRequest.json
@@ -472,76 +542,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                 },
             };
             await backupRecoveryPoint.TriggerRestoreAsync(WaitUntil.Completed, content);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task ProvisionItemLevelRecoveryConnection_ProvisionInstantItemLevelRecoveryForAzureVm()
-        {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/AzureIaasVm/Provision_Ilr.json
-            // this example is just showing the usage of "ItemLevelRecoveryConnections_Provision" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BackupRecoveryPointResource created on azure
-            // for more information of creating BackupRecoveryPointResource, please refer to the document of BackupRecoveryPointResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "PythonSDKBackupTestRg";
-            string vaultName = "PySDKBackupTestRsVault";
-            string fabricName = "Azure";
-            string containerName = "iaasvmcontainer;iaasvmcontainerv2;pysdktestrg;pysdktestv2vm1";
-            string protectedItemName = "vm;iaasvmcontainerv2;pysdktestrg;pysdktestv2vm1";
-            string recoveryPointId = "1";
-            ResourceIdentifier backupRecoveryPointResourceId = BackupRecoveryPointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName, recoveryPointId);
-            BackupRecoveryPointResource backupRecoveryPoint = client.GetBackupRecoveryPointResource(backupRecoveryPointResourceId);
-
-            // invoke the operation
-            ProvisionIlrConnectionContent content = new ProvisionIlrConnectionContent(default)
-            {
-                Properties = new IaasVmIlrRegistrationContent
-                {
-                    RecoveryPointId = "38823086363464",
-                    VirtualMachineId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/pysdktestrg/providers/Microsoft.Compute/virtualMachines/pysdktestv2vm1"),
-                    InitiatorName = "Hello World",
-                    RenewExistingRegistration = true,
-                },
-            };
-            await backupRecoveryPoint.ProvisionItemLevelRecoveryConnectionAsync(content);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task RevokeItemLevelRecoveryConnection_RevokeInstantItemLevelRecoveryForAzureVm()
-        {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/AzureIaasVm/Revoke_Ilr.json
-            // this example is just showing the usage of "ItemLevelRecoveryConnections_Revoke" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BackupRecoveryPointResource created on azure
-            // for more information of creating BackupRecoveryPointResource, please refer to the document of BackupRecoveryPointResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "PythonSDKBackupTestRg";
-            string vaultName = "PySDKBackupTestRsVault";
-            string fabricName = "Azure";
-            string containerName = "iaasvmcontainer;iaasvmcontainerv2;pysdktestrg;pysdktestv2vm1";
-            string protectedItemName = "vm;iaasvmcontainerv2;pysdktestrg;pysdktestv2vm1";
-            string recoveryPointId = "1";
-            ResourceIdentifier backupRecoveryPointResourceId = BackupRecoveryPointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName, recoveryPointId);
-            BackupRecoveryPointResource backupRecoveryPoint = client.GetBackupRecoveryPointResource(backupRecoveryPointResourceId);
-
-            // invoke the operation
-            await backupRecoveryPoint.RevokeItemLevelRecoveryConnectionAsync();
 
             Console.WriteLine("Succeeded");
         }

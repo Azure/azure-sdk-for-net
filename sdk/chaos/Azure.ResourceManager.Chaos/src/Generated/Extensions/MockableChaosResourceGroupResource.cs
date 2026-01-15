@@ -33,75 +33,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ChaosExperimentResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ChaosExperimentResources and their operations over a ChaosExperimentResource. </returns>
-        public virtual ChaosExperimentCollection GetChaosExperiments()
-        {
-            return GetCachedClient(client => new ChaosExperimentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Experiment resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiment_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosExperimentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="experimentName"> String that represents a Experiment resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ChaosExperimentResource>> GetChaosExperimentAsync(string experimentName, CancellationToken cancellationToken = default)
-        {
-            return await GetChaosExperiments().GetAsync(experimentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Experiment resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiment_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosExperimentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="experimentName"> String that represents a Experiment resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ChaosExperimentResource> GetChaosExperiment(string experimentName, CancellationToken cancellationToken = default)
-        {
-            return GetChaosExperiments().Get(experimentName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of ChaosTargetResources in the ResourceGroupResource. </summary>
         /// <param name="parentProviderNamespace"> The parent resource provider namespace. </param>
         /// <param name="parentResourceType"> The parent resource type. </param>
@@ -180,6 +111,75 @@ namespace Azure.ResourceManager.Chaos.Mocking
         public virtual Response<ChaosTargetResource> GetChaosTarget(string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
         {
             return GetChaosTargets(parentProviderNamespace, parentResourceType, parentResourceName).Get(targetName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ChaosExperimentResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ChaosExperimentResources and their operations over a ChaosExperimentResource. </returns>
+        public virtual ChaosExperimentCollection GetChaosExperiments()
+        {
+            return GetCachedClient(client => new ChaosExperimentCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Experiment resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiment_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosExperimentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="experimentName"> String that represents a Experiment resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ChaosExperimentResource>> GetChaosExperimentAsync(string experimentName, CancellationToken cancellationToken = default)
+        {
+            return await GetChaosExperiments().GetAsync(experimentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Experiment resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiment_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosExperimentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="experimentName"> String that represents a Experiment resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ChaosExperimentResource> GetChaosExperiment(string experimentName, CancellationToken cancellationToken = default)
+        {
+            return GetChaosExperiments().Get(experimentName, cancellationToken);
         }
     }
 }

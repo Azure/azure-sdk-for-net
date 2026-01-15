@@ -216,7 +216,6 @@ namespace Azure.ResourceManager.DataFactory
         public static Azure.ResourceManager.DataFactory.DataFactoryGlobalParameterResource GetDataFactoryGlobalParameterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataFactory.DataFactoryIntegrationRuntimeResource GetDataFactoryIntegrationRuntimeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataFactory.DataFactoryLinkedServiceResource GetDataFactoryLinkedServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialResource GetDataFactoryManagedIdentityCredentialResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataFactory.DataFactoryManagedVirtualNetworkResource GetDataFactoryManagedVirtualNetworkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataFactory.DataFactoryPipelineResource GetDataFactoryPipelineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -318,6 +317,10 @@ namespace Azure.ResourceManager.DataFactory
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteIntegrationRuntimeNode(string nodeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteIntegrationRuntimeNodeAsync(string nodeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.DataFactoryIntegrationRuntimeResource> DisableInteractiveQueryIntegrationRuntime(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.DataFactoryIntegrationRuntimeResource>> DisableInteractiveQueryIntegrationRuntimeAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.DataFactoryIntegrationRuntimeResource> EnableInteractiveQueryIntegrationRuntime(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataFactory.Models.EnableInteractiveQueryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.DataFactoryIntegrationRuntimeResource>> EnableInteractiveQueryIntegrationRuntimeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataFactory.Models.EnableInteractiveQueryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryIntegrationRuntimeResource> Get(string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataFactory.Models.SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadata(Azure.ResourceManager.DataFactory.Models.GetSsisObjectMetadataContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataFactory.Models.SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadataAsync(Azure.ResourceManager.DataFactory.Models.GetSsisObjectMetadataContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -408,7 +411,6 @@ namespace Azure.ResourceManager.DataFactory
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.DataFactoryLinkedServiceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataFactory.DataFactoryLinkedServiceData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.DataFactoryLinkedServiceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataFactory.DataFactoryLinkedServiceData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class DataFactoryManagedIdentityCredentialCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialResource>, System.Collections.IEnumerable
     {
         protected DataFactoryManagedIdentityCredentialCollection() { }
@@ -426,7 +428,6 @@ namespace Azure.ResourceManager.DataFactory
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class DataFactoryManagedIdentityCredentialData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialData>
     {
         public DataFactoryManagedIdentityCredentialData(Azure.ResourceManager.DataFactory.Models.DataFactoryManagedIdentityCredentialProperties properties) { }
@@ -438,7 +439,6 @@ namespace Azure.ResourceManager.DataFactory
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class DataFactoryManagedIdentityCredentialResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -705,11 +705,8 @@ namespace Azure.ResourceManager.DataFactory
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryLinkedServiceResource> GetDataFactoryLinkedService(string linkedServiceName, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryLinkedServiceResource>> GetDataFactoryLinkedServiceAsync(string linkedServiceName, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataFactory.DataFactoryLinkedServiceCollection GetDataFactoryLinkedServices() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialResource> GetDataFactoryManagedIdentityCredential(string credentialName, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialResource>> GetDataFactoryManagedIdentityCredentialAsync(string credentialName, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialCollection GetDataFactoryManagedIdentityCredentials() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryManagedVirtualNetworkResource> GetDataFactoryManagedVirtualNetwork(string managedVirtualNetworkName, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryManagedVirtualNetworkResource>> GetDataFactoryManagedVirtualNetworkAsync(string managedVirtualNetworkName, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -880,7 +877,6 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         public virtual Azure.ResourceManager.DataFactory.DataFactoryGlobalParameterResource GetDataFactoryGlobalParameterResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataFactory.DataFactoryIntegrationRuntimeResource GetDataFactoryIntegrationRuntimeResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataFactory.DataFactoryLinkedServiceResource GetDataFactoryLinkedServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialResource GetDataFactoryManagedIdentityCredentialResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataFactory.DataFactoryManagedVirtualNetworkResource GetDataFactoryManagedVirtualNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataFactory.DataFactoryPipelineResource GetDataFactoryPipelineResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -920,9 +916,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkAs Skipped { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkAs Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkAs other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkAs left, Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkAs right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.ActivityOnInactiveMarkAs (string value) { throw null; }
@@ -979,9 +973,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public AmazonRdsForOracleAuthenticationType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleAuthenticationType Basic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleAuthenticationType left, Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleAuthenticationType (string value) { throw null; }
@@ -991,7 +983,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonRdsForOracleLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleLinkedService>
     {
         public AmazonRdsForOracleLinkedService() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public AmazonRdsForOracleLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> connectionString) { }
         public Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ConnectionString { get { throw null; } set { } }
@@ -1035,6 +1026,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public AmazonRdsForOracleSource() { }
         public System.BinaryData AdditionalColumns { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> NumberPrecision { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> NumberScale { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> OracleReaderQuery { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> PartitionOption { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AmazonRdsForOraclePartitionSettings PartitionSettings { get { throw null; } set { } }
@@ -1067,9 +1060,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.AmazonRdsForSqlAuthenticationType Sql { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.AmazonRdsForSqlAuthenticationType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.AmazonRdsForSqlAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.AmazonRdsForSqlAuthenticationType left, Azure.ResourceManager.DataFactory.Models.AmazonRdsForSqlAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.AmazonRdsForSqlAuthenticationType (string value) { throw null; }
@@ -1079,7 +1070,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonRdsForSqlServerLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AmazonRdsForSqlServerLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AmazonRdsForSqlServerLinkedService>
     {
         public AmazonRdsForSqlServerLinkedService() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public AmazonRdsForSqlServerLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> connectionString) { }
         public Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ApplicationIntent { get { throw null; } set { } }
@@ -1344,7 +1334,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryIntegrationRuntimeStatusResult DataFactoryIntegrationRuntimeStatusResult(string name = null, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeStatus properties = null) { throw null; }
         public static Azure.ResourceManager.DataFactory.DataFactoryLinkedServiceData DataFactoryLinkedServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties properties = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceDebugInfo DataFactoryLinkedServiceDebugInfo(string name = null, Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties properties = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release", false)]
         public static Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialData DataFactoryManagedIdentityCredentialData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataFactory.Models.DataFactoryManagedIdentityCredentialProperties properties = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.DataFactory.DataFactoryManagedVirtualNetworkData DataFactoryManagedVirtualNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataFactory.Models.DataFactoryManagedVirtualNetworkProperties properties = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
@@ -1380,8 +1369,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeOutboundNetworkDependenciesEndpoint IntegrationRuntimeOutboundNetworkDependenciesEndpoint(string domainName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> endpointDetails = null) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(int? port = default(int?)) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeStatus IntegrationRuntimeStatus(string runtimeType = null, string dataFactoryName = null, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState? state = default(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState?), System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.InteractiveQueryProperties InteractiveQueryProperties(Azure.ResourceManager.DataFactory.Models.InteractiveCapabilityStatus? status = default(Azure.ResourceManager.DataFactory.Models.InteractiveCapabilityStatus?), int? autoTerminationMinutes = default(int?)) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.LinkedIntegrationRuntime LinkedIntegrationRuntime(string name = null, string subscriptionId = null, string dataFactoryName = null, Azure.Core.AzureLocation? dataFactoryLocation = default(Azure.Core.AzureLocation?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntime ManagedIntegrationRuntime(string description = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState? state = default(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState?), Azure.ResourceManager.DataFactory.Models.ManagedVirtualNetworkReference managedVirtualNetwork = null, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeComputeProperties computeProperties = null, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeSsisProperties ssisProperties = null, Azure.Core.ResourceIdentifier customerVirtualNetworkSubnetId = null) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntime ManagedIntegrationRuntime(string description, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState? state, Azure.ResourceManager.DataFactory.Models.ManagedVirtualNetworkReference managedVirtualNetwork, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeComputeProperties computeProperties, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeSsisProperties ssisProperties, Azure.Core.ResourceIdentifier customerVirtualNetworkSubnetId) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntime ManagedIntegrationRuntime(string description = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState? state = default(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState?), Azure.ResourceManager.DataFactory.Models.ManagedVirtualNetworkReference managedVirtualNetwork = null, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeComputeProperties computeProperties = null, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeSsisProperties ssisProperties = null, Azure.Core.ResourceIdentifier customerVirtualNetworkSubnetId = null, Azure.ResourceManager.DataFactory.Models.InteractiveQueryProperties interactiveQuery = null) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntimeError ManagedIntegrationRuntimeError(System.DateTimeOffset? time = default(System.DateTimeOffset?), string code = null, System.Collections.Generic.IEnumerable<string> parameters = null, string message = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntimeNode ManagedIntegrationRuntimeNode(string nodeId = null, Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntimeNodeStatus? status = default(Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntimeNodeStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntimeError> errors = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntimeOperationResult ManagedIntegrationRuntimeOperationResult(string managedIntegrationRuntimeOperationResultType = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), string result = null, string errorCode = null, System.Collections.Generic.IEnumerable<string> parameters = null, string activityId = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
@@ -2037,7 +2028,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public AzureFunctionActivity(string name, Azure.ResourceManager.DataFactory.Models.AzureFunctionActivityMethod method, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> functionName) : base (default(string)) { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Body { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> FunctionName { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IDictionary<string, Azure.Core.Expressions.DataFactory.DataFactoryElement<string>> Headers { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.AzureFunctionActivityMethod Method { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> RequestHeaders { get { throw null; } }
@@ -2062,9 +2052,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.AzureFunctionActivityMethod Put { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.AzureFunctionActivityMethod Trace { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.AzureFunctionActivityMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.AzureFunctionActivityMethod left, Azure.ResourceManager.DataFactory.Models.AzureFunctionActivityMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.AzureFunctionActivityMethod (string value) { throw null; }
@@ -2352,9 +2340,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum CopyCommand { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum Upsert { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum left, Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum (string value) { throw null; }
@@ -2402,9 +2388,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.AzureSearchIndexWriteBehaviorType Merge { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.AzureSearchIndexWriteBehaviorType Upload { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.AzureSearchIndexWriteBehaviorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.AzureSearchIndexWriteBehaviorType left, Azure.ResourceManager.DataFactory.Models.AzureSearchIndexWriteBehaviorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.AzureSearchIndexWriteBehaviorType (string value) { throw null; }
@@ -2435,9 +2419,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.AzureSqlDatabaseAuthenticationType SystemAssignedManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.AzureSqlDatabaseAuthenticationType UserAssignedManagedIdentity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.AzureSqlDatabaseAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.AzureSqlDatabaseAuthenticationType left, Azure.ResourceManager.DataFactory.Models.AzureSqlDatabaseAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.AzureSqlDatabaseAuthenticationType (string value) { throw null; }
@@ -2447,7 +2429,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureSqlDatabaseLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AzureSqlDatabaseLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AzureSqlDatabaseLinkedService>
     {
         public AzureSqlDatabaseLinkedService() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public AzureSqlDatabaseLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> connectionString) { }
         public Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ApplicationIntent { get { throw null; } set { } }
@@ -2499,9 +2480,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.AzureSqlDWAuthenticationType SystemAssignedManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.AzureSqlDWAuthenticationType UserAssignedManagedIdentity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.AzureSqlDWAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.AzureSqlDWAuthenticationType left, Azure.ResourceManager.DataFactory.Models.AzureSqlDWAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.AzureSqlDWAuthenticationType (string value) { throw null; }
@@ -2511,7 +2490,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureSqlDWLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AzureSqlDWLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AzureSqlDWLinkedService>
     {
         public AzureSqlDWLinkedService() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public AzureSqlDWLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> connectionString) { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ApplicationIntent { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureSqlDWAuthenticationType? AuthenticationType { get { throw null; } set { } }
@@ -2575,9 +2553,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.AzureSqlMIAuthenticationType SystemAssignedManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.AzureSqlMIAuthenticationType UserAssignedManagedIdentity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.AzureSqlMIAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.AzureSqlMIAuthenticationType left, Azure.ResourceManager.DataFactory.Models.AzureSqlMIAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.AzureSqlMIAuthenticationType (string value) { throw null; }
@@ -2587,7 +2563,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureSqlMILinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AzureSqlMILinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AzureSqlMILinkedService>
     {
         public AzureSqlMILinkedService() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public AzureSqlMILinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> connectionString) { }
         public Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ApplicationIntent { get { throw null; } set { } }
@@ -2702,9 +2677,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.AzureStorageAuthenticationType SasUri { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.AzureStorageAuthenticationType ServicePrincipal { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.AzureStorageAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.AzureStorageAuthenticationType left, Azure.ResourceManager.DataFactory.Models.AzureStorageAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.AzureStorageAuthenticationType (string value) { throw null; }
@@ -2813,9 +2786,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public BigDataPoolReferenceType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.BigDataPoolReferenceType BigDataPoolReference { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.BigDataPoolReferenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.BigDataPoolReferenceType left, Azure.ResourceManager.DataFactory.Models.BigDataPoolReferenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.BigDataPoolReferenceType (string value) { throw null; }
@@ -2913,9 +2884,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.CassandraSourceReadConsistencyLevel Three { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.CassandraSourceReadConsistencyLevel Two { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.CassandraSourceReadConsistencyLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.CassandraSourceReadConsistencyLevel left, Azure.ResourceManager.DataFactory.Models.CassandraSourceReadConsistencyLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.CassandraSourceReadConsistencyLevel (string value) { throw null; }
@@ -3213,9 +3182,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.CosmosDBConnectionMode Direct { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.CosmosDBConnectionMode Gateway { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.CosmosDBConnectionMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.CosmosDBConnectionMode left, Azure.ResourceManager.DataFactory.Models.CosmosDBConnectionMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.CosmosDBConnectionMode (string value) { throw null; }
@@ -3530,9 +3497,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryBlobEventType MicrosoftStorageBlobCreated { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryBlobEventType MicrosoftStorageBlobDeleted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFactoryBlobEventType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFactoryBlobEventType left, Azure.ResourceManager.DataFactory.Models.DataFactoryBlobEventType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFactoryBlobEventType (string value) { throw null; }
@@ -3614,9 +3579,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryCredentialReferenceType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryCredentialReferenceType CredentialReference { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFactoryCredentialReferenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFactoryCredentialReferenceType left, Azure.ResourceManager.DataFactory.Models.DataFactoryCredentialReferenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFactoryCredentialReferenceType (string value) { throw null; }
@@ -3826,9 +3789,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryExpressionType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionType Expression { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionType left, Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionType (string value) { throw null; }
@@ -3839,13 +3800,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public DataFactoryExpressionV2() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2> Operands { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public string Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.Expressions.DataFactory.DataFactoryElement<string>> Operators { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type? V2Type { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> V2Value { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Value { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2 System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3866,9 +3825,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type NAry { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type Unary { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type left, Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type (string value) { throw null; }
@@ -3915,9 +3872,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryGlobalParameterType Object { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryGlobalParameterType String { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFactoryGlobalParameterType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFactoryGlobalParameterType left, Azure.ResourceManager.DataFactory.Models.DataFactoryGlobalParameterType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFactoryGlobalParameterType (string value) { throw null; }
@@ -4135,9 +4090,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryPipelineReferenceType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryPipelineReferenceType PipelineReference { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFactoryPipelineReferenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFactoryPipelineReferenceType left, Azure.ResourceManager.DataFactory.Models.DataFactoryPipelineReferenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFactoryPipelineReferenceType (string value) { throw null; }
@@ -4259,9 +4212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryPublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryPublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFactoryPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFactoryPublicNetworkAccess left, Azure.ResourceManager.DataFactory.Models.DataFactoryPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFactoryPublicNetworkAccess (string value) { throw null; }
@@ -4282,9 +4233,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryRecurrenceFrequency Week { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryRecurrenceFrequency Year { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFactoryRecurrenceFrequency other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFactoryRecurrenceFrequency left, Azure.ResourceManager.DataFactory.Models.DataFactoryRecurrenceFrequency right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFactoryRecurrenceFrequency (string value) { throw null; }
@@ -4352,6 +4301,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> ReturnMultistatementResult { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ScriptBlockExecutionTimeout { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.ScriptActivityScriptBlock> Scripts { get { throw null; } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> TreatDecimalAsString { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.DataFactoryScriptActivity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.DataFactoryScriptActivity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.DataFactoryScriptActivity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4359,7 +4309,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DataFactoryScriptActivity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DataFactoryScriptActivity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataFactoryScriptType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.DataFactoryScriptType>
     {
@@ -4369,9 +4318,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryScriptType NonQuery { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryScriptType Query { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFactoryScriptType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFactoryScriptType left, Azure.ResourceManager.DataFactory.Models.DataFactoryScriptType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFactoryScriptType (string value) { throw null; }
@@ -4388,9 +4335,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.DataFactorySparkConfigurationType Customized { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.DataFactorySparkConfigurationType Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFactorySparkConfigurationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFactorySparkConfigurationType left, Azure.ResourceManager.DataFactory.Models.DataFactorySparkConfigurationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFactorySparkConfigurationType (string value) { throw null; }
@@ -4431,9 +4376,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryTriggerReferenceType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerReferenceType TriggerReference { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerReferenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerReferenceType left, Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerReferenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerReferenceType (string value) { throw null; }
@@ -4471,9 +4414,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerRunStatus Inprogress { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerRunStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerRunStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerRunStatus left, Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerRunStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerRunStatus (string value) { throw null; }
@@ -4490,9 +4431,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerRuntimeState Started { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerRuntimeState Stopped { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerRuntimeState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerRuntimeState left, Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerRuntimeState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerRuntimeState (string value) { throw null; }
@@ -4534,9 +4473,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.DataFlowComputeType General { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.DataFlowComputeType MemoryOptimized { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFlowComputeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFlowComputeType left, Azure.ResourceManager.DataFactory.Models.DataFlowComputeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFlowComputeType (string value) { throw null; }
@@ -4580,9 +4517,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.DataFlowDebugCommandType ExecutePreviewQuery { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.DataFlowDebugCommandType ExecuteStatisticsQuery { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFlowDebugCommandType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFlowDebugCommandType left, Azure.ResourceManager.DataFactory.Models.DataFlowDebugCommandType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFlowDebugCommandType (string value) { throw null; }
@@ -4645,9 +4580,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFlowReferenceType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.DataFlowReferenceType DataFlowReference { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFlowReferenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFlowReferenceType left, Azure.ResourceManager.DataFactory.Models.DataFlowReferenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFlowReferenceType (string value) { throw null; }
@@ -4853,9 +4786,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DatasetReferenceType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.DatasetReferenceType DatasetReference { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DatasetReferenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DatasetReferenceType left, Azure.ResourceManager.DataFactory.Models.DatasetReferenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DatasetReferenceType (string value) { throw null; }
@@ -4884,9 +4815,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType Actual { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType Display { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType left, Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType (string value) { throw null; }
@@ -4945,9 +4874,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Db2AuthenticationType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.Db2AuthenticationType Basic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.Db2AuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.Db2AuthenticationType left, Azure.ResourceManager.DataFactory.Models.Db2AuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.Db2AuthenticationType (string value) { throw null; }
@@ -5106,9 +5033,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.DependencyCondition Skipped { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.DependencyCondition Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DependencyCondition other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DependencyCondition left, Azure.ResourceManager.DataFactory.Models.DependencyCondition right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DependencyCondition (string value) { throw null; }
@@ -5395,9 +5320,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DynamicsSinkWriteBehavior(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.DynamicsSinkWriteBehavior Upsert { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.DynamicsSinkWriteBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DynamicsSinkWriteBehavior left, Azure.ResourceManager.DataFactory.Models.DynamicsSinkWriteBehavior right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.DynamicsSinkWriteBehavior (string value) { throw null; }
@@ -5455,6 +5378,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.EloquaSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.EloquaSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class EnableInteractiveQueryContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.EnableInteractiveQueryContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.EnableInteractiveQueryContent>
+    {
+        public EnableInteractiveQueryContent() { }
+        public int? AutoTerminationMinutes { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataFactory.Models.EnableInteractiveQueryContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.EnableInteractiveQueryContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.EnableInteractiveQueryContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataFactory.Models.EnableInteractiveQueryContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.EnableInteractiveQueryContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.EnableInteractiveQueryContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.EnableInteractiveQueryContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class EntityParameterSpecification : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.EntityParameterSpecification>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.EntityParameterSpecification>
     {
         public EntityParameterSpecification(Azure.ResourceManager.DataFactory.Models.EntityParameterType parameterType) { }
@@ -5481,9 +5415,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.EntityParameterType SecureString { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.EntityParameterType String { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.EntityParameterType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.EntityParameterType left, Azure.ResourceManager.DataFactory.Models.EntityParameterType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.EntityParameterType (string value) { throw null; }
@@ -5526,9 +5458,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.EventSubscriptionStatus Provisioning { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.EventSubscriptionStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.EventSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.EventSubscriptionStatus left, Azure.ResourceManager.DataFactory.Models.EventSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.EventSubscriptionStatus (string value) { throw null; }
@@ -5962,9 +5892,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.FtpAuthenticationType Anonymous { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.FtpAuthenticationType Basic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.FtpAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.FtpAuthenticationType left, Azure.ResourceManager.DataFactory.Models.FtpAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.FtpAuthenticationType (string value) { throw null; }
@@ -6077,9 +6005,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.GoogleAdWordsAuthenticationType ServiceAuthentication { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.GoogleAdWordsAuthenticationType UserAuthentication { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.GoogleAdWordsAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.GoogleAdWordsAuthenticationType left, Azure.ResourceManager.DataFactory.Models.GoogleAdWordsAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.GoogleAdWordsAuthenticationType (string value) { throw null; }
@@ -6143,9 +6069,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.GoogleBigQueryAuthenticationType ServiceAuthentication { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.GoogleBigQueryAuthenticationType UserAuthentication { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.GoogleBigQueryAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.GoogleBigQueryAuthenticationType left, Azure.ResourceManager.DataFactory.Models.GoogleBigQueryAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.GoogleBigQueryAuthenticationType (string value) { throw null; }
@@ -6207,9 +6131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.GoogleBigQueryV2AuthenticationType ServiceAuthentication { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.GoogleBigQueryV2AuthenticationType UserAuthentication { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.GoogleBigQueryV2AuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.GoogleBigQueryV2AuthenticationType left, Azure.ResourceManager.DataFactory.Models.GoogleBigQueryV2AuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.GoogleBigQueryV2AuthenticationType (string value) { throw null; }
@@ -6322,9 +6244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public GreenplumAuthenticationType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.GreenplumAuthenticationType Basic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.GreenplumAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.GreenplumAuthenticationType left, Azure.ResourceManager.DataFactory.Models.GreenplumAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.GreenplumAuthenticationType (string value) { throw null; }
@@ -6385,9 +6305,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.HBaseAuthenticationType Anonymous { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.HBaseAuthenticationType Basic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.HBaseAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.HBaseAuthenticationType left, Azure.ResourceManager.DataFactory.Models.HBaseAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.HBaseAuthenticationType (string value) { throw null; }
@@ -6504,13 +6422,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting Failure { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting left, Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting left, Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HDInsightClusterAuthenticationType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HDInsightClusterAuthenticationType(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType BasicAuth { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType SystemAssignedManagedIdentity { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType UserAssignedManagedIdentity { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType left, Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType left, Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class HDInsightHiveActivity : Azure.ResourceManager.DataFactory.Models.ExecutionActivity, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.HDInsightHiveActivity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.HDInsightHiveActivity>
@@ -6534,7 +6467,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class HDInsightLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.HDInsightLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.HDInsightLinkedService>
     {
         public HDInsightLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> clusterUri) { }
+        public Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType? ClusterAuthType { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ClusterUri { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DataFactoryCredentialReference Credential { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> FileSystem { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference HcatalogLinkedServiceName { get { throw null; } set { } }
@@ -6567,6 +6502,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.HDInsightMapReduceActivity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.HDInsightMapReduceActivity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HDInsightOnDemandClusterResourceGroupAuthenticationType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.HDInsightOnDemandClusterResourceGroupAuthenticationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HDInsightOnDemandClusterResourceGroupAuthenticationType(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.HDInsightOnDemandClusterResourceGroupAuthenticationType ServicePrincipalKey { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.HDInsightOnDemandClusterResourceGroupAuthenticationType SystemAssignedManagedIdentity { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.HDInsightOnDemandClusterResourceGroupAuthenticationType UserAssignedManagedIdentity { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.HDInsightOnDemandClusterResourceGroupAuthenticationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.HDInsightOnDemandClusterResourceGroupAuthenticationType left, Azure.ResourceManager.DataFactory.Models.HDInsightOnDemandClusterResourceGroupAuthenticationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.HDInsightOnDemandClusterResourceGroupAuthenticationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.HDInsightOnDemandClusterResourceGroupAuthenticationType left, Azure.ResourceManager.DataFactory.Models.HDInsightOnDemandClusterResourceGroupAuthenticationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class HDInsightOnDemandLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.HDInsightOnDemandLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.HDInsightOnDemandLinkedService>
     {
         public HDInsightOnDemandLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<int> clusterSize, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> timeToLiveExpression, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> version, Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> hostSubscriptionId, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> tenant, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> clusterResourceGroup) { }
@@ -6574,6 +6526,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ClusterNamePrefix { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactorySecret ClusterPassword { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ClusterResourceGroup { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.HDInsightOnDemandClusterResourceGroupAuthenticationType? ClusterResourceGroupAuthType { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> ClusterSize { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactorySecret ClusterSshPassword { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ClusterSshUserName { get { throw null; } set { } }
@@ -6678,9 +6631,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.HiveAuthenticationType UsernameAndPassword { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.HiveAuthenticationType WindowsAzureHDInsightService { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.HiveAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.HiveAuthenticationType left, Azure.ResourceManager.DataFactory.Models.HiveAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.HiveAuthenticationType (string value) { throw null; }
@@ -6738,9 +6689,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.HiveServerType HiveServer2 { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.HiveServerType HiveThriftServer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.HiveServerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.HiveServerType left, Azure.ResourceManager.DataFactory.Models.HiveServerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.HiveServerType (string value) { throw null; }
@@ -6768,9 +6717,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.HiveThriftTransportProtocol Http { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.HiveThriftTransportProtocol Sasl { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.HiveThriftTransportProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.HiveThriftTransportProtocol left, Azure.ResourceManager.DataFactory.Models.HiveThriftTransportProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.HiveThriftTransportProtocol (string value) { throw null; }
@@ -6789,9 +6736,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.HttpAuthenticationType Digest { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.HttpAuthenticationType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.HttpAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.HttpAuthenticationType left, Azure.ResourceManager.DataFactory.Models.HttpAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.HttpAuthenticationType (string value) { throw null; }
@@ -6939,9 +6884,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.ImpalaAuthenticationType SaslUsername { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.ImpalaAuthenticationType UsernameAndPassword { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.ImpalaAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ImpalaAuthenticationType left, Azure.ResourceManager.DataFactory.Models.ImpalaAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.ImpalaAuthenticationType (string value) { throw null; }
@@ -7069,9 +7012,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeAuthKeyName AuthKey1 { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeAuthKeyName AuthKey2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeAuthKeyName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeAuthKeyName left, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeAuthKeyName right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeAuthKeyName (string value) { throw null; }
@@ -7099,9 +7040,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeAutoUpdateState Off { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeAutoUpdateState On { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeAutoUpdateState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeAutoUpdateState left, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeAutoUpdateState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeAutoUpdateState (string value) { throw null; }
@@ -7206,9 +7145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeEdition Enterprise { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeEdition Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeEdition other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeEdition left, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeEdition right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeEdition (string value) { throw null; }
@@ -7224,9 +7161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeEntityReferenceType IntegrationRuntimeReference { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeEntityReferenceType LinkedServiceReference { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeEntityReferenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeEntityReferenceType left, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeEntityReferenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeEntityReferenceType (string value) { throw null; }
@@ -7243,9 +7178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeInternalChannelEncryptionMode NotSet { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeInternalChannelEncryptionMode SslEncrypted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeInternalChannelEncryptionMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeInternalChannelEncryptionMode left, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeInternalChannelEncryptionMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeInternalChannelEncryptionMode (string value) { throw null; }
@@ -7261,9 +7194,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeLicenseType BasePrice { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeLicenseType LicenseIncluded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeLicenseType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeLicenseType left, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeLicenseType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeLicenseType (string value) { throw null; }
@@ -7368,9 +7299,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public IntegrationRuntimeReferenceType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeReferenceType IntegrationRuntimeReference { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeReferenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeReferenceType left, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeReferenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeReferenceType (string value) { throw null; }
@@ -7415,9 +7344,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeSsisCatalogPricingTier PremiumRS { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeSsisCatalogPricingTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeSsisCatalogPricingTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeSsisCatalogPricingTier left, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeSsisCatalogPricingTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeSsisCatalogPricingTier (string value) { throw null; }
@@ -7460,9 +7387,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState Stopped { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState Stopping { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState left, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState (string value) { throw null; }
@@ -7492,9 +7417,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeUpdateResult None { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeUpdateResult Succeed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeUpdateResult other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeUpdateResult left, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeUpdateResult right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeUpdateResult (string value) { throw null; }
@@ -7515,6 +7438,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeVnetProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeVnetProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeVnetProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeVnetProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct InteractiveCapabilityStatus : System.IEquatable<Azure.ResourceManager.DataFactory.Models.InteractiveCapabilityStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public InteractiveCapabilityStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.InteractiveCapabilityStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.InteractiveCapabilityStatus Disabling { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.InteractiveCapabilityStatus Enabled { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.InteractiveCapabilityStatus Enabling { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.InteractiveCapabilityStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.InteractiveCapabilityStatus left, Azure.ResourceManager.DataFactory.Models.InteractiveCapabilityStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.InteractiveCapabilityStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.InteractiveCapabilityStatus left, Azure.ResourceManager.DataFactory.Models.InteractiveCapabilityStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class InteractiveQueryProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.InteractiveQueryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.InteractiveQueryProperties>
+    {
+        public InteractiveQueryProperties() { }
+        public int? AutoTerminationMinutes { get { throw null; } }
+        public Azure.ResourceManager.DataFactory.Models.InteractiveCapabilityStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataFactory.Models.InteractiveQueryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.InteractiveQueryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.InteractiveQueryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataFactory.Models.InteractiveQueryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.InteractiveQueryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.InteractiveQueryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.InteractiveQueryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class JiraLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.JiraLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.JiraLinkedService>
     {
@@ -7537,6 +7490,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class JiraObjectDataset : Azure.ResourceManager.DataFactory.Models.DataFactoryDatasetProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.JiraObjectDataset>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.JiraObjectDataset>
     {
         public JiraObjectDataset(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName) : base (default(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference)) { }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SchemaTypePropertiesSchema { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Table { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> TableName { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.JiraObjectDataset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.JiraObjectDataset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7617,10 +7572,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.JsonWriteSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.JsonWriteSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LakehouseAuthenticationType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LakehouseAuthenticationType(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType ServicePrincipal { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType SystemAssignedManagedIdentity { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType UserAssignedManagedIdentity { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType left, Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType left, Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class LakeHouseLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.LakeHouseLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.LakeHouseLinkedService>
     {
         public LakeHouseLinkedService() { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ArtifactId { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType? AuthenticationType { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DataFactoryCredentialReference Credential { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactorySecret ServicePrincipalCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ServicePrincipalCredentialType { get { throw null; } set { } }
@@ -7804,6 +7778,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.DatasetReference Dataset { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> FirstRowOnly { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.CopyActivitySource Source { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> TreatDecimalAsString { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.LookupActivity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.LookupActivity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.LookupActivity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7854,6 +7829,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public ManagedIntegrationRuntime() { }
         public Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeComputeProperties ComputeProperties { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier CustomerVirtualNetworkSubnetId { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.InteractiveQueryProperties InteractiveQuery { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.ManagedVirtualNetworkReference ManagedVirtualNetwork { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeSsisProperties SsisProperties { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState? State { get { throw null; } }
@@ -7904,9 +7880,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntimeNodeStatus Starting { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntimeNodeStatus Unavailable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntimeNodeStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntimeNodeStatus left, Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntimeNodeStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntimeNodeStatus (string value) { throw null; }
@@ -7964,9 +7938,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public ManagedVirtualNetworkReferenceType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.ManagedVirtualNetworkReferenceType ManagedVirtualNetworkReference { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.ManagedVirtualNetworkReferenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ManagedVirtualNetworkReferenceType left, Azure.ResourceManager.DataFactory.Models.ManagedVirtualNetworkReferenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.ManagedVirtualNetworkReferenceType (string value) { throw null; }
@@ -8037,9 +8009,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public MapperConnectionType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.MapperConnectionType Linkedservicetype { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.MapperConnectionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.MapperConnectionType left, Azure.ResourceManager.DataFactory.Models.MapperConnectionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.MapperConnectionType (string value) { throw null; }
@@ -8092,9 +8062,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.MapperPolicyRecurrenceFrequencyType Minute { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.MapperPolicyRecurrenceFrequencyType Second { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.MapperPolicyRecurrenceFrequencyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.MapperPolicyRecurrenceFrequencyType left, Azure.ResourceManager.DataFactory.Models.MapperPolicyRecurrenceFrequencyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.MapperPolicyRecurrenceFrequencyType (string value) { throw null; }
@@ -8162,9 +8130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.MappingType Derived { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.MappingType Direct { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.MappingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.MappingType left, Azure.ResourceManager.DataFactory.Models.MappingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.MappingType (string value) { throw null; }
@@ -8361,9 +8327,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.MongoDBAuthenticationType Anonymous { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.MongoDBAuthenticationType Basic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.MongoDBAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.MongoDBAuthenticationType left, Azure.ResourceManager.DataFactory.Models.MongoDBAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.MongoDBAuthenticationType (string value) { throw null; }
@@ -8541,8 +8505,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public NetezzaLinkedService() { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ConnectionString { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Database { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryKeyVaultSecret Password { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> Port { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.NetezzaSecurityLevelType? SecurityLevel { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Server { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Uid { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.NetezzaLinkedService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.NetezzaLinkedService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.NetezzaLinkedService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -8562,6 +8531,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         Azure.ResourceManager.DataFactory.Models.NetezzaPartitionSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.NetezzaPartitionSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.NetezzaPartitionSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.NetezzaPartitionSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetezzaSecurityLevelType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.NetezzaSecurityLevelType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetezzaSecurityLevelType(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.NetezzaSecurityLevelType OnlyUnSecured { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.NetezzaSecurityLevelType PreferredUnSecured { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.NetezzaSecurityLevelType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.NetezzaSecurityLevelType left, Azure.ResourceManager.DataFactory.Models.NetezzaSecurityLevelType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.NetezzaSecurityLevelType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.NetezzaSecurityLevelType left, Azure.ResourceManager.DataFactory.Models.NetezzaSecurityLevelType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class NetezzaSource : Azure.ResourceManager.DataFactory.Models.TabularSource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.NetezzaSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.NetezzaSource>
     {
@@ -8612,9 +8597,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.NotebookParameterType Int { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.NotebookParameterType String { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.NotebookParameterType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.NotebookParameterType left, Azure.ResourceManager.DataFactory.Models.NotebookParameterType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.NotebookParameterType (string value) { throw null; }
@@ -8629,9 +8612,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public NotebookReferenceType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.NotebookReferenceType NotebookReference { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.NotebookReferenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.NotebookReferenceType left, Azure.ResourceManager.DataFactory.Models.NotebookReferenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.NotebookReferenceType (string value) { throw null; }
@@ -8647,9 +8628,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.ODataAadServicePrincipalCredentialType ServicePrincipalCert { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.ODataAadServicePrincipalCredentialType ServicePrincipalKey { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.ODataAadServicePrincipalCredentialType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ODataAadServicePrincipalCredentialType left, Azure.ResourceManager.DataFactory.Models.ODataAadServicePrincipalCredentialType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.ODataAadServicePrincipalCredentialType (string value) { throw null; }
@@ -8668,9 +8647,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.ODataAuthenticationType ManagedServiceIdentity { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.ODataAuthenticationType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.ODataAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ODataAuthenticationType left, Azure.ResourceManager.DataFactory.Models.ODataAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.ODataAuthenticationType (string value) { throw null; }
@@ -8839,9 +8816,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public OracleAuthenticationType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.OracleAuthenticationType Basic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.OracleAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.OracleAuthenticationType left, Azure.ResourceManager.DataFactory.Models.OracleAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.OracleAuthenticationType (string value) { throw null; }
@@ -8897,7 +8872,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class OracleLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.OracleLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.OracleLinkedService>
     {
         public OracleLinkedService() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public OracleLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> connectionString) { }
         public Azure.ResourceManager.DataFactory.Models.OracleAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ConnectionString { get { throw null; } set { } }
@@ -8991,6 +8965,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public OracleSource() { }
         public System.BinaryData AdditionalColumns { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> NumberPrecision { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> NumberScale { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> OracleReaderQuery { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> PartitionOption { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.OraclePartitionSettings PartitionSettings { get { throw null; } set { } }
@@ -9172,9 +9148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.PhoenixAuthenticationType UsernameAndPassword { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.PhoenixAuthenticationType WindowsAzureHDInsightService { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.PhoenixAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.PhoenixAuthenticationType left, Azure.ResourceManager.DataFactory.Models.PhoenixAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.PhoenixAuthenticationType (string value) { throw null; }
@@ -9306,9 +9280,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.PipelineActivityState Active { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.PipelineActivityState Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.PipelineActivityState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.PipelineActivityState left, Azure.ResourceManager.DataFactory.Models.PipelineActivityState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.PipelineActivityState (string value) { throw null; }
@@ -9374,9 +9346,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.PipelineVariableType Bool { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.PipelineVariableType String { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.PipelineVariableType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.PipelineVariableType left, Azure.ResourceManager.DataFactory.Models.PipelineVariableType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.PipelineVariableType (string value) { throw null; }
@@ -9407,9 +9377,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.PolybaseSettingsRejectType Percentage { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.PolybaseSettingsRejectType Value { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.PolybaseSettingsRejectType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.PolybaseSettingsRejectType left, Azure.ResourceManager.DataFactory.Models.PolybaseSettingsRejectType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.PolybaseSettingsRejectType (string value) { throw null; }
@@ -9455,7 +9423,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class PostgreSqlV2LinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.PostgreSqlV2LinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.PostgreSqlV2LinkedService>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public PostgreSqlV2LinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> server, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> username, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> database, Azure.Core.Expressions.DataFactory.DataFactoryElement<int> sslMode) { }
         public PostgreSqlV2LinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> server, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> username, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> database, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> authenticationType, Azure.Core.Expressions.DataFactory.DataFactoryElement<int> sslMode) { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> AuthenticationType { get { throw null; } set { } }
@@ -9551,9 +9518,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.PrestoAuthenticationType Anonymous { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.PrestoAuthenticationType Ldap { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.PrestoAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.PrestoAuthenticationType left, Azure.ResourceManager.DataFactory.Models.PrestoAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.PrestoAuthenticationType (string value) { throw null; }
@@ -9562,7 +9527,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class PrestoLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.PrestoLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.PrestoLinkedService>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public PrestoLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> host, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> serverVersion, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> catalog, Azure.ResourceManager.DataFactory.Models.PrestoAuthenticationType authenticationType) { }
         public PrestoLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> host, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> catalog, Azure.ResourceManager.DataFactory.Models.PrestoAuthenticationType authenticationType) { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> AllowHostNameCNMismatch { get { throw null; } set { } }
@@ -9819,9 +9783,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.RestServiceAuthenticationType ManagedServiceIdentity { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.RestServiceAuthenticationType OAuth2ClientCredential { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.RestServiceAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.RestServiceAuthenticationType left, Azure.ResourceManager.DataFactory.Models.RestServiceAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.RestServiceAuthenticationType (string value) { throw null; }
@@ -9950,9 +9912,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.RunQueryFilterOperand TriggerName { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.RunQueryFilterOperand TriggerRunTimestamp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.RunQueryFilterOperand other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.RunQueryFilterOperand left, Azure.ResourceManager.DataFactory.Models.RunQueryFilterOperand right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.RunQueryFilterOperand (string value) { throw null; }
@@ -9970,9 +9930,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.RunQueryFilterOperator NotEquals { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.RunQueryFilterOperator NotIn { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.RunQueryFilterOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.RunQueryFilterOperator left, Azure.ResourceManager.DataFactory.Models.RunQueryFilterOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.RunQueryFilterOperator (string value) { throw null; }
@@ -9988,9 +9946,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.RunQueryOrder Asc { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.RunQueryOrder Desc { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.RunQueryOrder other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.RunQueryOrder left, Azure.ResourceManager.DataFactory.Models.RunQueryOrder right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.RunQueryOrder (string value) { throw null; }
@@ -10025,9 +9981,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.RunQueryOrderByField TriggerName { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.RunQueryOrderByField TriggerRunTimestamp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.RunQueryOrderByField other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.RunQueryOrderByField left, Azure.ResourceManager.DataFactory.Models.RunQueryOrderByField right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.RunQueryOrderByField (string value) { throw null; }
@@ -10231,9 +10185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.SalesforceSinkWriteBehavior Insert { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SalesforceSinkWriteBehavior Upsert { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SalesforceSinkWriteBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SalesforceSinkWriteBehavior left, Azure.ResourceManager.DataFactory.Models.SalesforceSinkWriteBehavior right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SalesforceSinkWriteBehavior (string value) { throw null; }
@@ -10302,9 +10254,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.SalesforceV2SinkWriteBehavior Insert { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SalesforceV2SinkWriteBehavior Upsert { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SalesforceV2SinkWriteBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SalesforceV2SinkWriteBehavior left, Azure.ResourceManager.DataFactory.Models.SalesforceV2SinkWriteBehavior right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SalesforceV2SinkWriteBehavior (string value) { throw null; }
@@ -10316,6 +10266,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public SalesforceV2Source() { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> IncludeDeletedObjects { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> PageSize { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> PartitionOption { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Query { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SoqlQuery { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -10408,9 +10359,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.SapCloudForCustomerSinkWriteBehavior Insert { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SapCloudForCustomerSinkWriteBehavior Update { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SapCloudForCustomerSinkWriteBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SapCloudForCustomerSinkWriteBehavior left, Azure.ResourceManager.DataFactory.Models.SapCloudForCustomerSinkWriteBehavior right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SapCloudForCustomerSinkWriteBehavior (string value) { throw null; }
@@ -10475,9 +10424,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.SapHanaAuthenticationType Basic { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SapHanaAuthenticationType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SapHanaAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SapHanaAuthenticationType left, Azure.ResourceManager.DataFactory.Models.SapHanaAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SapHanaAuthenticationType (string value) { throw null; }
@@ -10539,7 +10486,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Server { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> SncFlag { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SncLibraryPath { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SncMode { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SncMyName { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SncPartnerName { get { throw null; } set { } }
@@ -10643,7 +10589,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Server { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> SncFlag { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SncLibraryPath { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SncMode { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SncMyName { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SncPartnerName { get { throw null; } set { } }
@@ -10728,9 +10673,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.ScriptActivityLogDestination ActivityOutput { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.ScriptActivityLogDestination ExternalStore { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.ScriptActivityLogDestination other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ScriptActivityLogDestination left, Azure.ResourceManager.DataFactory.Models.ScriptActivityLogDestination right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.ScriptActivityLogDestination (string value) { throw null; }
@@ -10762,9 +10705,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.ScriptActivityParameterDirection InputOutput { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.ScriptActivityParameterDirection Output { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.ScriptActivityParameterDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ScriptActivityParameterDirection left, Azure.ResourceManager.DataFactory.Models.ScriptActivityParameterDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.ScriptActivityParameterDirection (string value) { throw null; }
@@ -10790,9 +10731,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.ScriptActivityParameterType String { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.ScriptActivityParameterType TimeSpan { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.ScriptActivityParameterType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ScriptActivityParameterType left, Azure.ResourceManager.DataFactory.Models.ScriptActivityParameterType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.ScriptActivityParameterType (string value) { throw null; }
@@ -10805,7 +10744,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public ScriptActivityScriptBlock(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> text, Azure.ResourceManager.DataFactory.Models.DataFactoryScriptType scriptType) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.ScriptActivityParameter> Parameters { get { throw null; } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> QueryType { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.DataFactory.Models.DataFactoryScriptType ScriptType { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Text { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -10906,9 +10844,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.SelfHostedIntegrationRuntimeNodeStatus Online { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SelfHostedIntegrationRuntimeNodeStatus Upgrading { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SelfHostedIntegrationRuntimeNodeStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SelfHostedIntegrationRuntimeNodeStatus left, Azure.ResourceManager.DataFactory.Models.SelfHostedIntegrationRuntimeNodeStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SelfHostedIntegrationRuntimeNodeStatus (string value) { throw null; }
@@ -10951,9 +10887,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.ServiceNowAuthenticationType Basic { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.ServiceNowAuthenticationType OAuth2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.ServiceNowAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ServiceNowAuthenticationType left, Azure.ResourceManager.DataFactory.Models.ServiceNowAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.ServiceNowAuthenticationType (string value) { throw null; }
@@ -11011,9 +10945,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.ServiceNowV2AuthenticationType Basic { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.ServiceNowV2AuthenticationType OAuth2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.ServiceNowV2AuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ServiceNowV2AuthenticationType left, Azure.ResourceManager.DataFactory.Models.ServiceNowV2AuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.ServiceNowV2AuthenticationType (string value) { throw null; }
@@ -11099,9 +11031,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.SftpAuthenticationType MultiFactor { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SftpAuthenticationType SshPublicKey { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SftpAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SftpAuthenticationType left, Azure.ResourceManager.DataFactory.Models.SftpAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SftpAuthenticationType (string value) { throw null; }
@@ -11285,9 +11215,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.SnowflakeAuthenticationType Basic { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SnowflakeAuthenticationType KeyPair { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SnowflakeAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SnowflakeAuthenticationType left, Azure.ResourceManager.DataFactory.Models.SnowflakeAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SnowflakeAuthenticationType (string value) { throw null; }
@@ -11399,6 +11327,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Scope { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> TenantId { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> User { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> UseUtcTimestamps { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Warehouse { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.SnowflakeV2LinkedService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.SnowflakeV2LinkedService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -11442,9 +11371,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.SparkAuthenticationType UsernameAndPassword { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SparkAuthenticationType WindowsAzureHDInsightService { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SparkAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SparkAuthenticationType left, Azure.ResourceManager.DataFactory.Models.SparkAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SparkAuthenticationType (string value) { throw null; }
@@ -11471,9 +11398,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public SparkConfigurationReferenceType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.SparkConfigurationReferenceType SparkConfigurationReference { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SparkConfigurationReferenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SparkConfigurationReferenceType left, Azure.ResourceManager.DataFactory.Models.SparkConfigurationReferenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SparkConfigurationReferenceType (string value) { throw null; }
@@ -11488,9 +11413,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public SparkJobReferenceType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.SparkJobReferenceType SparkJobDefinitionReference { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SparkJobReferenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SparkJobReferenceType left, Azure.ResourceManager.DataFactory.Models.SparkJobReferenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SparkJobReferenceType (string value) { throw null; }
@@ -11545,9 +11468,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.SparkServerType SharkServer2 { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SparkServerType SparkThriftServer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SparkServerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SparkServerType left, Azure.ResourceManager.DataFactory.Models.SparkServerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SparkServerType (string value) { throw null; }
@@ -11575,9 +11496,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.SparkThriftTransportProtocol Http { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SparkThriftTransportProtocol Sasl { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SparkThriftTransportProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SparkThriftTransportProtocol left, Azure.ResourceManager.DataFactory.Models.SparkThriftTransportProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SparkThriftTransportProtocol (string value) { throw null; }
@@ -11594,9 +11513,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedAkvAuthType ServicePrincipal { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedAkvAuthType UserAssignedManagedIdentity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedAkvAuthType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedAkvAuthType left, Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedAkvAuthType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedAkvAuthType (string value) { throw null; }
@@ -11723,9 +11640,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.SqlServerAuthenticationType UserAssignedManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SqlServerAuthenticationType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SqlServerAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SqlServerAuthenticationType left, Azure.ResourceManager.DataFactory.Models.SqlServerAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SqlServerAuthenticationType (string value) { throw null; }
@@ -11735,7 +11650,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SqlServerLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.SqlServerLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.SqlServerLinkedService>
     {
         public SqlServerLinkedService() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public SqlServerLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> connectionString) { }
         public Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ApplicationIntent { get { throw null; } set { } }
@@ -12029,9 +11943,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public SsisLogLocationType(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.SsisLogLocationType File { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SsisLogLocationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SsisLogLocationType left, Azure.ResourceManager.DataFactory.Models.SsisLogLocationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SsisLogLocationType (string value) { throw null; }
@@ -12110,9 +12022,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.SsisPackageLocationType PackageStore { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SsisPackageLocationType SsisDB { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SsisPackageLocationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SsisPackageLocationType left, Azure.ResourceManager.DataFactory.Models.SsisPackageLocationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SsisPackageLocationType (string value) { throw null; }
@@ -12260,9 +12170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.SybaseAuthenticationType Basic { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.SybaseAuthenticationType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.SybaseAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.SybaseAuthenticationType left, Azure.ResourceManager.DataFactory.Models.SybaseAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.SybaseAuthenticationType (string value) { throw null; }
@@ -12421,9 +12329,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.TeamDeskAuthenticationType Basic { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.TeamDeskAuthenticationType Token { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.TeamDeskAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.TeamDeskAuthenticationType left, Azure.ResourceManager.DataFactory.Models.TeamDeskAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.TeamDeskAuthenticationType (string value) { throw null; }
@@ -12455,9 +12361,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.TeradataAuthenticationType Basic { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.TeradataAuthenticationType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.TeradataAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.TeradataAuthenticationType left, Azure.ResourceManager.DataFactory.Models.TeradataAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.TeradataAuthenticationType (string value) { throw null; }
@@ -12591,9 +12495,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.TumblingWindowFrequency Minute { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.TumblingWindowFrequency Month { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.TumblingWindowFrequency other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.TumblingWindowFrequency left, Azure.ResourceManager.DataFactory.Models.TumblingWindowFrequency right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.TumblingWindowFrequency (string value) { throw null; }
@@ -12734,10 +12636,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.WaitActivity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.WaitActivity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WarehouseAuthenticationType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WarehouseAuthenticationType(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType ServicePrincipal { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType SystemAssignedManagedIdentity { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType UserAssignedManagedIdentity { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType left, Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType left, Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class WarehouseLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.WarehouseLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.WarehouseLinkedService>
     {
         public WarehouseLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> artifactId, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> endpoint) { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ArtifactId { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType? AuthenticationType { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DataFactoryCredentialReference Credential { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Endpoint { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactorySecret ServicePrincipalCredential { get { throw null; } set { } }
@@ -12804,7 +12725,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeReference ConnectVia { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.DatasetReference> Datasets { get { throw null; } }
         public bool? DisableCertValidation { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IDictionary<string, Azure.Core.Expressions.DataFactory.DataFactoryElement<string>> Headers { get { throw null; } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> HttpRequestTimeout { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> LinkedServices { get { throw null; } }
@@ -12847,9 +12767,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.WebActivityMethod Post { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.WebActivityMethod Put { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.WebActivityMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.WebActivityMethod left, Azure.ResourceManager.DataFactory.Models.WebActivityMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.WebActivityMethod (string value) { throw null; }
@@ -12895,7 +12813,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public WebHookActivity(string name, Azure.ResourceManager.DataFactory.Models.WebHookActivityMethod method, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> uri) : base (default(string)) { }
         public Azure.ResourceManager.DataFactory.Models.WebActivityAuthentication Authentication { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Body { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IDictionary<string, Azure.Core.Expressions.DataFactory.DataFactoryElement<string>> Headers { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.WebHookActivityMethod Method { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecureInputOutputPolicy Policy { get { throw null; } set { } }
@@ -12918,9 +12835,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public WebHookActivityMethod(string value) { throw null; }
         public static Azure.ResourceManager.DataFactory.Models.WebHookActivityMethod Post { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.WebHookActivityMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.WebHookActivityMethod left, Azure.ResourceManager.DataFactory.Models.WebHookActivityMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.WebHookActivityMethod (string value) { throw null; }
@@ -13063,9 +12978,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static Azure.ResourceManager.DataFactory.Models.ZendeskAuthenticationType Basic { get { throw null; } }
         public static Azure.ResourceManager.DataFactory.Models.ZendeskAuthenticationType Token { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataFactory.Models.ZendeskAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ZendeskAuthenticationType left, Azure.ResourceManager.DataFactory.Models.ZendeskAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataFactory.Models.ZendeskAuthenticationType (string value) { throw null; }

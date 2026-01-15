@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(MakeSourceServerReadOnly))
+            if (Optional.IsDefined(ShouldMakeSourceServerReadOnly))
             {
                 writer.WritePropertyName("makeSourceServerReadOnly"u8);
-                writer.WriteBooleanValue(MakeSourceServerReadOnly.Value);
+                writer.WriteBooleanValue(ShouldMakeSourceServerReadOnly.Value);
             }
             if (Optional.IsDefined(StartedOn))
             {
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            MySqlConnectionInfo sourceConnectionInfo = default;
-            MySqlConnectionInfo targetConnectionInfo = default;
+            DataMigrationMySqlConnectionInfo sourceConnectionInfo = default;
+            DataMigrationMySqlConnectionInfo targetConnectionInfo = default;
             IList<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> selectedDatabases = default;
             bool? makeSourceServerReadOnly = default;
             DateTimeOffset? startedOn = default;
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = DataMigrationMySqlConnectionInfo.DeserializeDataMigrationMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = DataMigrationMySqlConnectionInfo.DeserializeDataMigrationMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedDatabases"u8))

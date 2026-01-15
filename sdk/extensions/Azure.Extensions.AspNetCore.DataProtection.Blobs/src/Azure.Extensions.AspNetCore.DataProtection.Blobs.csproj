@@ -8,13 +8,12 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.5.1</ApiCompatVersion>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-    <NoWarn>$(NoWarn);AZC0102</NoWarn>
+    <NoWarn>$(NoWarn);AZC0102;AZC0035</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="Azure.Storage.Blobs" />
   </ItemGroup>
 

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="endedOn"> Validation end time. </param>
         /// <param name="status"> Current status of validation at the database level. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationValidationDatabaseSummaryResult(string id, string migrationId, string sourceDatabaseName, string targetDatabaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ValidationStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MigrationValidationDatabaseSummaryResult(string id, string migrationId, string sourceDatabaseName, string targetDatabaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, MigrationValidationStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             MigrationId = migrationId;
@@ -84,6 +84,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Validation end time. </summary>
         public DateTimeOffset? EndedOn { get; }
         /// <summary> Current status of validation at the database level. </summary>
-        public ValidationStatus? Status { get; }
+        public MigrationValidationStatus? Status { get; }
     }
 }

@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.Core.Lro.Standard
+namespace Specs.Azure.Core.Lro.Standard
 {
     public partial class StandardClient
     {

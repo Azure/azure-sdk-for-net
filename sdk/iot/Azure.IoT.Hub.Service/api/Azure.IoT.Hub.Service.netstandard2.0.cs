@@ -1,11 +1,5 @@
 namespace Azure.IoT.Hub.Service
 {
-    public partial class AzureIoTHubServiceContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureIoTHubServiceContext() { }
-        public static Azure.IoT.Hub.Service.AzureIoTHubServiceContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public enum BulkIfMatchPrecondition
     {
         Unconditional = 0,
@@ -182,9 +176,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.AuthenticationMechanismType Sas { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.AuthenticationMechanismType SelfSigned { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.AuthenticationMechanismType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.AuthenticationMechanismType left, Azure.IoT.Hub.Service.Models.AuthenticationMechanismType right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.AuthenticationMechanismType (string value) { throw null; }
@@ -251,9 +243,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.DeviceConnectionState Connected { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.DeviceConnectionState Disconnected { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.DeviceConnectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.DeviceConnectionState left, Azure.IoT.Hub.Service.Models.DeviceConnectionState right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.DeviceConnectionState (string value) { throw null; }
@@ -518,9 +508,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.DeviceRegistryOperationErrorCode UnexpectedPropertyValue { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.DeviceRegistryOperationErrorCode UnsupportedOperationOnReplica { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.DeviceRegistryOperationErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.DeviceRegistryOperationErrorCode left, Azure.IoT.Hub.Service.Models.DeviceRegistryOperationErrorCode right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.DeviceRegistryOperationErrorCode (string value) { throw null; }
@@ -542,9 +530,7 @@ namespace Azure.IoT.Hub.Service.Models
         public DeviceRegistryOperationWarningCode(string value) { throw null; }
         public static Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode DeviceRegisteredWithoutTwin { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode left, Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarningCode (string value) { throw null; }
@@ -567,9 +553,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.DeviceStatus Disabled { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.DeviceStatus Enabled { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.DeviceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.DeviceStatus left, Azure.IoT.Hub.Service.Models.DeviceStatus right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.DeviceStatus (string value) { throw null; }
@@ -606,9 +590,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.ExportImportDeviceImportMode UpdateTwin { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.ExportImportDeviceImportMode UpdateTwinIfMatchETag { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.ExportImportDeviceImportMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.ExportImportDeviceImportMode left, Azure.IoT.Hub.Service.Models.ExportImportDeviceImportMode right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.ExportImportDeviceImportMode (string value) { throw null; }
@@ -624,9 +606,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.ExportImportDeviceStatus Disabled { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.ExportImportDeviceStatus Enabled { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.ExportImportDeviceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.ExportImportDeviceStatus left, Azure.IoT.Hub.Service.Models.ExportImportDeviceStatus right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.ExportImportDeviceStatus (string value) { throw null; }
@@ -692,9 +672,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.JobPropertiesStatus Scheduled { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.JobPropertiesStatus Unknown { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.JobPropertiesStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.JobPropertiesStatus left, Azure.IoT.Hub.Service.Models.JobPropertiesStatus right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.JobPropertiesStatus (string value) { throw null; }
@@ -710,9 +688,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.JobPropertiesStorageAuthenticationType IdentityBased { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.JobPropertiesStorageAuthenticationType KeyBased { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.JobPropertiesStorageAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.JobPropertiesStorageAuthenticationType left, Azure.IoT.Hub.Service.Models.JobPropertiesStorageAuthenticationType right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.JobPropertiesStorageAuthenticationType (string value) { throw null; }
@@ -740,9 +716,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.JobPropertiesType UpdateDeviceConfiguration { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.JobPropertiesType WriteDeviceProperties { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.JobPropertiesType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.JobPropertiesType left, Azure.IoT.Hub.Service.Models.JobPropertiesType right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.JobPropertiesType (string value) { throw null; }
@@ -786,9 +760,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.JobRequestType UpdateDeviceConfiguration { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.JobRequestType WriteDeviceProperties { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.JobRequestType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.JobRequestType left, Azure.IoT.Hub.Service.Models.JobRequestType right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.JobRequestType (string value) { throw null; }
@@ -827,9 +799,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.JobResponseStatus Scheduled { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.JobResponseStatus Unknown { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.JobResponseStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.JobResponseStatus left, Azure.IoT.Hub.Service.Models.JobResponseStatus right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.JobResponseStatus (string value) { throw null; }
@@ -857,9 +827,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.JobResponseType UpdateDeviceConfiguration { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.JobResponseType WriteDeviceProperties { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.JobResponseType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.JobResponseType left, Azure.IoT.Hub.Service.Models.JobResponseType right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.JobResponseType (string value) { throw null; }
@@ -875,9 +843,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.ModuleConnectionState Connected { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.ModuleConnectionState Disconnected { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.ModuleConnectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.ModuleConnectionState left, Azure.IoT.Hub.Service.Models.ModuleConnectionState right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.ModuleConnectionState (string value) { throw null; }
@@ -933,9 +899,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.QueryResultType Twin { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.QueryResultType Unknown { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.QueryResultType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.QueryResultType left, Azure.IoT.Hub.Service.Models.QueryResultType right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.QueryResultType (string value) { throw null; }
@@ -969,9 +933,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.TwinAuthenticationType Sas { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.TwinAuthenticationType SelfSigned { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.TwinAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.TwinAuthenticationType left, Azure.IoT.Hub.Service.Models.TwinAuthenticationType right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.TwinAuthenticationType (string value) { throw null; }
@@ -1002,9 +964,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.TwinConnectionState Connected { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.TwinConnectionState Disconnected { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.TwinConnectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.TwinConnectionState left, Azure.IoT.Hub.Service.Models.TwinConnectionState right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.TwinConnectionState (string value) { throw null; }
@@ -1047,9 +1007,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static Azure.IoT.Hub.Service.Models.TwinStatus Disabled { get { throw null; } }
         public static Azure.IoT.Hub.Service.Models.TwinStatus Enabled { get { throw null; } }
         public bool Equals(Azure.IoT.Hub.Service.Models.TwinStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.IoT.Hub.Service.Models.TwinStatus left, Azure.IoT.Hub.Service.Models.TwinStatus right) { throw null; }
         public static implicit operator Azure.IoT.Hub.Service.Models.TwinStatus (string value) { throw null; }

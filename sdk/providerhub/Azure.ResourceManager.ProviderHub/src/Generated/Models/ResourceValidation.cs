@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceValidation. </summary>
+    /// <summary> The resource validation. </summary>
     public readonly partial struct ResourceValidation : IEquatable<ResourceValidation>
     {
         private readonly string _value;

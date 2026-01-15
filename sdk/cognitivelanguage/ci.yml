@@ -9,17 +9,6 @@ trigger:
     include:
     - sdk/cognitivelanguage/
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/cognitivelanguage/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -36,3 +25,7 @@ extends:
       safeName: AzureAILanguageConversations
     - name: Azure.AI.Language.QuestionAnswering
       safeName: AzureAILanguageQuestionAnswering
+    - name: Azure.AI.Language.QuestionAnswering.Inference
+      safeName: AzureAILanguageQuestionAnsweringInference
+    - name: Azure.AI.Language.QuestionAnswering.Authoring
+      safeName: AzureAILanguageQuestionAnsweringAuthoring

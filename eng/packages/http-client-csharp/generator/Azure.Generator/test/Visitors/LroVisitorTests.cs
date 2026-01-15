@@ -25,12 +25,9 @@ namespace Azure.Generator.Tests.Visitors
         public void UpdatesLroSignatureNoResponseBody()
         {
             var visitor = new TestLroVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
-                    "p1",
-                    InputPrimitiveType.String,
-                    kind: InputParameterKind.Method)
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
             ];
             var lro = InputFactory.Operation(
                 "foo",
@@ -55,7 +52,7 @@ namespace Azure.Generator.Tests.Visitors
                 Assert.IsTrue(scmMethod.Signature.ReturnType!.Equals(typeof(Operation)) ||
                               scmMethod.Signature.ReturnType!.Equals(new CSharpType(typeof(Task<>), typeof(Operation))));
 
-                if (scmMethod.IsProtocolMethod)
+                if (scmMethod.Kind == ScmMethodKind.Protocol)
                 {
                     var requestContextParameter = scmMethod.Signature.Parameters[^1];
                     Assert.IsTrue(requestContextParameter.Type.Equals(typeof(RequestContext)));
@@ -74,12 +71,9 @@ namespace Azure.Generator.Tests.Visitors
         public void UpdatesLroSignatureWithResponseBody()
         {
             var visitor = new TestLroVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
-                    "p1",
-                    InputPrimitiveType.String,
-                    kind: InputParameterKind.Method)
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
             ];
             var lro = InputFactory.Operation(
                 "foo",
@@ -108,7 +102,7 @@ namespace Azure.Generator.Tests.Visitors
                 Assert.IsTrue(waitUntilParameter.Type.Equals(typeof(WaitUntil)));
                 Assert.AreEqual("waitUntil", waitUntilParameter.Name);
 
-                if (scmMethod.IsProtocolMethod)
+                if (scmMethod.Kind == ScmMethodKind.Protocol)
                 {
                     var requestContextParameter = scmMethod.Signature.Parameters[^1];
                     Assert.IsTrue(requestContextParameter.Type.Equals(typeof(RequestContext)));
@@ -126,15 +120,12 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
-        public void UpdatesExplicitOperatorToUseResultSegment()
+        public void AddsFromLroResponseMethodAndRemovesExplicitOperatorForLroOnlyModel()
         {
             var visitor = new TestLroVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
-                    "p1",
-                    InputPrimitiveType.String,
-                    kind: InputParameterKind.Method)
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
             ];
             var responseModel = InputFactory.Model("foo");
             var lro = InputFactory.Operation(
@@ -163,25 +154,149 @@ namespace Azure.Generator.Tests.Visitors
             visitor.InvokeVisitServiceMethod(lroServiceMethod, clientProvider!, methodCollection);
 
             var serializationProvider = responseModelProvider!.SerializationProviders[0];
+
+            // Check that FromLroResponse method was added
+            var fromLroResponseMethod = serializationProvider.Methods
+                .FirstOrDefault(m => m.Signature.Name == "FromLroResponse");
+
+            Assert.IsNotNull(fromLroResponseMethod);
+            Assert.IsNotNull(fromLroResponseMethod!.BodyStatements);
+            var result = fromLroResponseMethod!.BodyStatements!.ToDisplayString();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), result);
+
+            // Check that explicit operator was removed since model is only used in LRO
             var explicitOperator = serializationProvider.Methods
                 .FirstOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Explicit) &&
                                      m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator));
+            Assert.IsNull(explicitOperator);
 
+            // does not add the method again on subsequent calls
+            visitor.InvokeVisitServiceMethod(lroServiceMethod, clientProvider!, methodCollection);
+            serializationProvider = responseModelProvider!.SerializationProviders[0];
+            fromLroResponseMethod = serializationProvider.Methods
+                .FirstOrDefault(m => m.Signature.Name == "FromLroResponse");
+            result = fromLroResponseMethod!.BodyStatements!.ToDisplayString();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), result);
+        }
+
+        [Test]
+        public void RetainsExplicitOperatorWhenModelUsedInNonLroContext()
+        {
+            var visitor = new TestLroVisitor();
+            List<InputMethodParameter> parameters =
+            [
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
+            ];
+            var responseModel = InputFactory.Model("foo");
+
+            // Create an LRO method
+            var lro = InputFactory.Operation(
+                "lroOp",
+                parameters: parameters,
+                responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
+            var lroServiceMethod = InputFactory.LongRunningServiceMethod(
+                "lroOp",
+                lro,
+                parameters: parameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]),
+                longRunningServiceMetadata: InputFactory.LongRunningServiceMetadata(
+                    finalState: 1,
+                    finalResponse: InputFactory.OperationResponse(),
+                    resultPath: "someResultPath"));
+
+            // Create a non-LRO method that also returns the same model
+            var nonLroOp = InputFactory.Operation(
+                "nonLroOp",
+                parameters: parameters,
+                responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
+            var nonLroServiceMethod = InputFactory.BasicServiceMethod(
+                "nonLroOp",
+                nonLroOp,
+                parameters: parameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
+
+            var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod, nonLroServiceMethod]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            var responseModelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(responseModel);
+            Assert.IsNotNull(responseModelProvider);
+
+            var methodCollection = new ScmMethodProviderCollection(lroServiceMethod, clientProvider!);
+            visitor.InvokeVisitServiceMethod(lroServiceMethod, clientProvider!, methodCollection);
+
+            var serializationProvider = responseModelProvider!.SerializationProviders[0];
+
+            // Check that FromLroResponse method was added
+            var fromLroResponseMethod = serializationProvider.Methods
+                .FirstOrDefault(m => m.Signature.Name == "FromLroResponse");
+            Assert.IsNotNull(fromLroResponseMethod);
+
+            // Check that explicit operator was RETAINED since model is also used in non-LRO context
+            var explicitOperator = serializationProvider.Methods
+                .FirstOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Explicit) &&
+                                     m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator));
             Assert.IsNotNull(explicitOperator);
-            Assert.IsNotNull(explicitOperator!.BodyStatements);
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), explicitOperator!.BodyStatements!.ToDisplayString());
+        }
+
+        [Test]
+        public void DoesNotAddFromLroResponseMethodWhenNoResultPath()
+        {
+            var visitor = new TestLroVisitor();
+            List<InputMethodParameter> parameters =
+            [
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
+            ];
+            var responseModel = InputFactory.Model("foo");
+            var lro = InputFactory.Operation(
+                "foo",
+                parameters: parameters,
+                responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
+            // LRO service method without result path
+            var lroServiceMethod = InputFactory.LongRunningServiceMethod(
+                "foo",
+                lro,
+                parameters: parameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]),
+                longRunningServiceMetadata: InputFactory.LongRunningServiceMetadata(
+                    finalState: 1,
+                    finalResponse: InputFactory.OperationResponse(),
+                    resultPath: null)); // No result path
+            var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            var responseModelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(responseModel);
+            Assert.IsNotNull(responseModelProvider);
+
+            var methodCollection = new ScmMethodProviderCollection(lroServiceMethod, clientProvider!);
+            visitor.InvokeVisitServiceMethod(lroServiceMethod, clientProvider!, methodCollection);
+
+            var serializationProvider = responseModelProvider!.SerializationProviders[0];
+
+            // Check that FromLroResponse method was NOT added
+            var fromLroResponseMethod = serializationProvider.Methods
+                .FirstOrDefault(m => m.Signature.Name == "FromLroResponse");
+            Assert.IsNull(fromLroResponseMethod);
+
+            // Explicit operator should still be present
+            var explicitOperator = serializationProvider.Methods
+                .FirstOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Explicit) &&
+                                     m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator));
+            Assert.IsNotNull(explicitOperator);
         }
 
         [Test]
         public void UpdatesConvenienceMethodBody()
         {
             var visitor = new TestLroVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
-                    "p1",
-                    InputPrimitiveType.String,
-                    kind: InputParameterKind.Method)
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
             ];
             var lro = InputFactory.Operation(
                 "foo",
@@ -212,10 +327,11 @@ namespace Azure.Generator.Tests.Visitors
             var visitor = new TestLroVisitor();
             List<InputParameter> parameters =
             [
-                InputFactory.Parameter(
-                    "p1",
-                    InputPrimitiveType.String,
-                    kind: InputParameterKind.Method)
+                InputFactory.BodyParameter("p1", InputPrimitiveType.String)
+            ];
+            List<InputMethodParameter> methodParameters =
+            [
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
             ];
             var lro = InputFactory.Operation(
                 "foo",
@@ -223,7 +339,7 @@ namespace Azure.Generator.Tests.Visitors
             var responseModel = InputFactory.Model("foo");
             var lroServiceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
-                lro, parameters: parameters,
+                lro, parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
             var plugin = MockHelpers.LoadMockGenerator(clients: () => [inputClient]);

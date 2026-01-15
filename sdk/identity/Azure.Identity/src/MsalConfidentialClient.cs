@@ -169,8 +169,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(tenantId);
             }
             if (!string.IsNullOrEmpty(claims))
             {
@@ -211,8 +210,7 @@ namespace Azure.Identity
             var builder = client.AcquireTokenSilent(scopes, account);
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(tenantId);
             }
             if (!string.IsNullOrEmpty(claims))
             {
@@ -254,8 +252,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(tenantId);
             }
             if (!string.IsNullOrEmpty(claims))
             {
@@ -297,8 +294,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
-                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                builder.WithTenantId(tenantId);
             }
             if (!string.IsNullOrEmpty(claims))
             {

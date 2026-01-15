@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Cdn
     /// <summary>
     /// A class representing the Profile data model.
     /// A profile is a logical grouping of endpoints that share the same settings.
-    /// Serialized Name: Profile
     /// </summary>
     public partial class ProfileData : TrackedResourceData
     {
@@ -54,10 +53,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Initializes a new instance of <see cref="ProfileData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="sku">
-        /// The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile.
-        /// Serialized Name: Profile.sku
-        /// </param>
+        /// <param name="sku"> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public ProfileData(AzureLocation location, CdnSku sku) : base(location)
         {
@@ -74,42 +70,15 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku">
-        /// The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile.
-        /// Serialized Name: Profile.sku
-        /// </param>
-        /// <param name="kind">
-        /// Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile.
-        /// Serialized Name: Profile.kind
-        /// </param>
-        /// <param name="identity">
-        /// Managed service identity (system assigned and/or user assigned identities).
-        /// Serialized Name: Profile.identity
-        /// </param>
-        /// <param name="resourceState">
-        /// Resource status of the profile.
-        /// Serialized Name: Profile.properties.resourceState
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning status of the profile.
-        /// Serialized Name: Profile.properties.provisioningState
-        /// </param>
-        /// <param name="extendedProperties">
-        /// Key-Value pair representing additional properties for profiles.
-        /// Serialized Name: Profile.properties.extendedProperties
-        /// </param>
-        /// <param name="frontDoorId">
-        /// The Id of the frontdoor.
-        /// Serialized Name: Profile.properties.frontDoorId
-        /// </param>
-        /// <param name="originResponseTimeoutSeconds">
-        /// Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns.
-        /// Serialized Name: Profile.properties.originResponseTimeoutSeconds
-        /// </param>
-        /// <param name="logScrubbing">
-        /// Defines rules that scrub sensitive fields in the Azure Front Door profile logs.
-        /// Serialized Name: Profile.properties.logScrubbing
-        /// </param>
+        /// <param name="sku"> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </param>
+        /// <param name="kind"> Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="resourceState"> Resource status of the profile. </param>
+        /// <param name="provisioningState"> Provisioning status of the profile. </param>
+        /// <param name="extendedProperties"> Key-Value pair representing additional properties for profiles. </param>
+        /// <param name="frontDoorId"> The Id of the frontdoor. </param>
+        /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
+        /// <param name="logScrubbing"> Defines rules that scrub sensitive fields in the Azure Front Door profile logs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSku sku, string kind, ManagedServiceIdentity identity, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, IReadOnlyDictionary<string, string> extendedProperties, Guid? frontDoorId, int? originResponseTimeoutSeconds, ProfileLogScrubbing logScrubbing, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -130,15 +99,10 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        /// <summary>
-        /// The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile.
-        /// Serialized Name: Profile.sku
-        /// </summary>
+        /// <summary> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </summary>
         internal CdnSku Sku { get; set; }
-        /// <summary>
-        /// Name of the pricing tier.
-        /// Serialized Name: Sku.name
-        /// </summary>
+        /// <summary> Name of the pricing tier. </summary>
+        [WirePath("sku.name")]
         public CdnSkuName? SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -150,45 +114,29 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary>
-        /// Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile.
-        /// Serialized Name: Profile.kind
-        /// </summary>
+        /// <summary> Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
-        /// <summary>
-        /// Managed service identity (system assigned and/or user assigned identities).
-        /// Serialized Name: Profile.identity
-        /// </summary>
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// Resource status of the profile.
-        /// Serialized Name: Profile.properties.resourceState
-        /// </summary>
+        /// <summary> Resource status of the profile. </summary>
+        [WirePath("properties.resourceState")]
         public ProfileResourceState? ResourceState { get; }
-        /// <summary>
-        /// Provisioning status of the profile.
-        /// Serialized Name: Profile.properties.provisioningState
-        /// </summary>
+        /// <summary> Provisioning status of the profile. </summary>
+        [WirePath("properties.provisioningState")]
         public ProfileProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Key-Value pair representing additional properties for profiles.
-        /// Serialized Name: Profile.properties.extendedProperties
-        /// </summary>
+        /// <summary> Key-Value pair representing additional properties for profiles. </summary>
+        [WirePath("properties.extendedProperties")]
         public IReadOnlyDictionary<string, string> ExtendedProperties { get; }
-        /// <summary>
-        /// The Id of the frontdoor.
-        /// Serialized Name: Profile.properties.frontDoorId
-        /// </summary>
+        /// <summary> The Id of the frontdoor. </summary>
+        [WirePath("properties.frontDoorId")]
         public Guid? FrontDoorId { get; }
-        /// <summary>
-        /// Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns.
-        /// Serialized Name: Profile.properties.originResponseTimeoutSeconds
-        /// </summary>
+        /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>
+        [WirePath("properties.originResponseTimeoutSeconds")]
         public int? OriginResponseTimeoutSeconds { get; set; }
-        /// <summary>
-        /// Defines rules that scrub sensitive fields in the Azure Front Door profile logs.
-        /// Serialized Name: Profile.properties.logScrubbing
-        /// </summary>
+        /// <summary> Defines rules that scrub sensitive fields in the Azure Front Door profile logs. </summary>
+        [WirePath("properties.logScrubbing")]
         public ProfileLogScrubbing LogScrubbing { get; set; }
     }
 }

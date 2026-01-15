@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,23 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2025-10-17)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2021-06' to 'package-2024-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/1bd335533d57d11a33d41be9b5841e6986ec3567/specification/resourcegraph/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.28.0 to 1.49.0
+- Upgraded Azure.ResourceManager from 1.4.0 to 1.13.2
+
+## 1.1.0-beta.4 (2025-07-30)
+
+### Features Added
+
+- Make `Azure.ResourceManager.ResourceGraph` AOT-compatible
 
 ## 1.1.0-beta.3 (2025-03-11)
 

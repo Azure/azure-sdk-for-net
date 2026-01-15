@@ -47,6 +47,20 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerInstanceContainer"/>. </summary>
         /// <param name="name"> The user-provided name of the container instance. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ContainerInstanceContainer(string name)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
+            Command = new ChangeTrackingList<string>();
+            Ports = new ChangeTrackingList<ContainerPort>();
+            EnvironmentVariables = new ChangeTrackingList<ContainerEnvironmentVariable>();
+            VolumeMounts = new ChangeTrackingList<ContainerVolumeMount>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceContainer"/>. </summary>
+        /// <param name="name"> The user-provided name of the container instance. </param>
         /// <param name="image"> The name of the image used to create the container instance. </param>
         /// <param name="command"> The commands to execute within the container instance in exec form. </param>
         /// <param name="ports"> The exposed ports on the container instance. </param>
@@ -57,8 +71,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="livenessProbe"> The liveness probe. </param>
         /// <param name="readinessProbe"> The readiness probe. </param>
         /// <param name="securityContext"> The container security properties. </param>
+        /// <param name="configMap"> The config map. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerInstanceContainer(string name, string image, IList<string> command, IList<ContainerPort> ports, IList<ContainerEnvironmentVariable> environmentVariables, ContainerInstanceView instanceView, ContainerResourceRequirements resources, IList<ContainerVolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe, ContainerSecurityContextDefinition securityContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerInstanceContainer(string name, string image, IList<string> command, IList<ContainerPort> ports, IList<ContainerEnvironmentVariable> environmentVariables, ContainerInstanceView instanceView, ContainerResourceRequirements resources, IList<ContainerVolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe, ContainerSecurityContextDefinition securityContext, ConfigMap configMap, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Image = image;
@@ -71,6 +86,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             LivenessProbe = livenessProbe;
             ReadinessProbe = readinessProbe;
             SecurityContext = securityContext;
+            ConfigMap = configMap;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -101,5 +117,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public ContainerProbe ReadinessProbe { get; set; }
         /// <summary> The container security properties. </summary>
         public ContainerSecurityContextDefinition SecurityContext { get; set; }
+        /// <summary> The config map. </summary>
+        internal ConfigMap ConfigMap { get; set; }
+        /// <summary> The key value pairs dictionary in the config map. </summary>
+        public IDictionary<string, string> ConfigMapKeyValuePairs
+        {
+            get
+            {
+                if (ConfigMap is null)
+                    ConfigMap = new ConfigMap();
+                return ConfigMap.KeyValuePairs;
+            }
+        }
     }
 }

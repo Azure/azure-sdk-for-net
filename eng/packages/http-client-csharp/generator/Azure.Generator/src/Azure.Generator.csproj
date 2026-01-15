@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageId>Azure.Generator</PackageId>
     <Version>1.0.0-beta.1</Version>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
@@ -7,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Core.Expressions.DataFactory" />
 	  <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
   </ItemGroup>
@@ -56,7 +58,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
-
-
 
 </Project>

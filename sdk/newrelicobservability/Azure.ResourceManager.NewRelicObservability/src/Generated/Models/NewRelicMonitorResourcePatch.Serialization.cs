@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -67,6 +68,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData, options);
+            }
+            if (Optional.IsDefined(SaaSData))
+            {
+                writer.WritePropertyName("saaSData"u8);
+                writer.WriteObjectValue(SaaSData, options);
             }
             if (Optional.IsDefined(OrgCreationSource))
             {
@@ -121,6 +127,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             NewRelicAccountProperties newRelicAccountProperties = default;
             NewRelicObservabilityUserInfo userInfo = default;
             NewRelicPlanDetails planData = default;
+            NewRelicObservabilitySaaSContent saaSData = default;
             NewRelicObservabilityOrgCreationSource? orgCreationSource = default;
             NewRelicObservabilityAccountCreationSource? accountCreationSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -133,7 +140,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNewRelicObservabilityContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -186,6 +193,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                             planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("saaSData"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            saaSData = NewRelicObservabilitySaaSContent.DeserializeNewRelicObservabilitySaaSContent(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("orgCreationSource"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -219,6 +235,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 newRelicAccountProperties,
                 userInfo,
                 planData,
+                saaSData,
                 orgCreationSource,
                 accountCreationSource,
                 serializedAdditionalRawData);

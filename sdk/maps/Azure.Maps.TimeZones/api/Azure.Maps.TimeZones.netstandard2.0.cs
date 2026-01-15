@@ -11,20 +11,12 @@ namespace Azure.Maps.TimeZones
         public static Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation Transitions { get { throw null; } }
         public static Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation ZoneInfo { get { throw null; } }
         public bool Equals(Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation left, Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation right) { throw null; }
         public static implicit operator Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation (string value) { throw null; }
         public static bool operator !=(Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation left, Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class AzureMapsTimeZonesContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureMapsTimeZonesContext() { }
-        public static Azure.Maps.TimeZones.AzureMapsTimeZonesContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
     public partial class CountryRecord
     {

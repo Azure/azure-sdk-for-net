@@ -10,17 +10,6 @@ trigger:
     include:
     - sdk/extension-wcf
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/extension-wcf
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -31,6 +20,5 @@ extends:
       safeName: MicrosoftCoreWCFAzureStorageQueues
     - name: Microsoft.WCF.Azure.StorageQueues
       safeName: MicrosoftWCFAzureStorageQueues
-    CheckAOTCompat: false
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

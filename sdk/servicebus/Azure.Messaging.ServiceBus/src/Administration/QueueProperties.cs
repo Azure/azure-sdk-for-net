@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using Azure.Core;
 
@@ -11,6 +12,7 @@ namespace Azure.Messaging.ServiceBus.Administration
     /// <summary>
     /// Represents the static properties of the queue.
     /// </summary>
+    [SuppressMessage("Usage", "AZC0034:Type name 'QueueProperties' conflicts with 'Azure.Storage.Queues.Models.QueueProperties (from Azure.Storage.Queues)'. Consider renaming to 'AdministrationQueuePropertiesClient' or 'AdministrationQueuePropertiesService' to avoid confusion.", Justification = "The type name is already approved in a stable version.")]
     public class QueueProperties : IEquatable<QueueProperties>
     {
         private TimeSpan _duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
@@ -344,35 +346,30 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         public bool Equals(QueueProperties other)
         {
-            if (other is QueueProperties otherProperties
-                && Name.Equals(otherProperties.Name, StringComparison.OrdinalIgnoreCase)
-                && AutoDeleteOnIdle.Equals(otherProperties.AutoDeleteOnIdle)
-                && DefaultMessageTimeToLive.Equals(otherProperties.DefaultMessageTimeToLive)
-                && (!RequiresDuplicateDetection || DuplicateDetectionHistoryTimeWindow.Equals(otherProperties.DuplicateDetectionHistoryTimeWindow))
-                && EnableBatchedOperations == otherProperties.EnableBatchedOperations
-                && DeadLetteringOnMessageExpiration == otherProperties.DeadLetteringOnMessageExpiration
-                && EnablePartitioning == otherProperties.EnablePartitioning
-                && string.Equals(ForwardDeadLetteredMessagesTo, otherProperties.ForwardDeadLetteredMessagesTo, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(ForwardTo, otherProperties.ForwardTo, StringComparison.OrdinalIgnoreCase)
-                && LockDuration.Equals(otherProperties.LockDuration)
-                && MaxDeliveryCount == otherProperties.MaxDeliveryCount
-                && MaxSizeInMegabytes == otherProperties.MaxSizeInMegabytes
-                && RequiresDuplicateDetection.Equals(otherProperties.RequiresDuplicateDetection)
-                && RequiresSession.Equals(otherProperties.RequiresSession)
-                && Status.Equals(otherProperties.Status)
-                && SupportOrdering.Equals(other.SupportOrdering)
-                && EnableExpress == other.EnableExpress
-                && IsAnonymousAccessible == other.IsAnonymousAccessible
-                && string.Equals(_userMetadata, otherProperties._userMetadata, StringComparison.OrdinalIgnoreCase)
-                && (AuthorizationRules != null && otherProperties.AuthorizationRules != null
-                    || AuthorizationRules == null && otherProperties.AuthorizationRules == null)
-                && (AuthorizationRules == null || AuthorizationRules.Equals(otherProperties.AuthorizationRules))
-                && MaxMessageSizeInKilobytes.Equals(other.MaxMessageSizeInKilobytes))
-            {
-                return true;
-            }
-
-            return false;
+            return other is not null
+                   && Name.Equals(other.Name, StringComparison.OrdinalIgnoreCase)
+                   && AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
+                   && DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
+                   && (!RequiresDuplicateDetection || DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow))
+                   && EnableBatchedOperations == other.EnableBatchedOperations
+                   && DeadLetteringOnMessageExpiration == other.DeadLetteringOnMessageExpiration
+                   && EnablePartitioning == other.EnablePartitioning
+                   && string.Equals(ForwardDeadLetteredMessagesTo, other.ForwardDeadLetteredMessagesTo, StringComparison.OrdinalIgnoreCase)
+                   && string.Equals(ForwardTo, other.ForwardTo, StringComparison.OrdinalIgnoreCase)
+                   && LockDuration.Equals(other.LockDuration)
+                   && MaxDeliveryCount == other.MaxDeliveryCount
+                   && MaxSizeInMegabytes == other.MaxSizeInMegabytes
+                   && RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
+                   && RequiresSession.Equals(other.RequiresSession)
+                   && Status.Equals(other.Status)
+                   && SupportOrdering.Equals(other.SupportOrdering)
+                   && EnableExpress == other.EnableExpress
+                   && IsAnonymousAccessible == other.IsAnonymousAccessible
+                   && string.Equals(_userMetadata, other._userMetadata, StringComparison.OrdinalIgnoreCase)
+                   && (AuthorizationRules != null && other.AuthorizationRules != null
+                       || AuthorizationRules == null && other.AuthorizationRules == null)
+                   && (AuthorizationRules == null || AuthorizationRules.Equals(other.AuthorizationRules))
+                   && MaxMessageSizeInKilobytes.Equals(other.MaxMessageSizeInKilobytes);
         }
 
         /// <summary></summary>

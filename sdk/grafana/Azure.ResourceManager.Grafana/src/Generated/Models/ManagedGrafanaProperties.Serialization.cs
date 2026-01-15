@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    public partial class ManagedGrafanaProperties : IUtf8JsonSerializable, IJsonModel<ManagedGrafanaProperties>
+    /// <summary> Properties specific to the grafana resource. </summary>
+    public partial class ManagedGrafanaProperties : IJsonModel<ManagedGrafanaProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedGrafanaProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedGrafanaProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedGrafanaProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -64,6 +64,11 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey.Value.ToString());
             }
+            if (Optional.IsDefined(CreatorCanAdmin))
+            {
+                writer.WritePropertyName("creatorCanAdmin"u8);
+                writer.WriteStringValue(CreatorCanAdmin.Value.ToString());
+            }
             if (Optional.IsDefined(DeterministicOutboundIP))
             {
                 writer.WritePropertyName("deterministicOutboundIP"u8);
@@ -73,8 +78,13 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 writer.WritePropertyName("outboundIPs"u8);
                 writer.WriteStartArray();
-                foreach (var item in OutboundIPs)
+                foreach (string item in OutboundIPs)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -83,7 +93,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
-                foreach (var item in PrivateEndpointConnections)
+                foreach (GrafanaPrivateEndpointConnectionData item in PrivateEndpointConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -125,15 +135,15 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("grafanaMajorVersion"u8);
                 writer.WriteStringValue(GrafanaMajorVersion);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -142,22 +152,27 @@ namespace Azure.ResourceManager.Grafana.Models
             }
         }
 
-        ManagedGrafanaProperties IJsonModel<ManagedGrafanaProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedGrafanaProperties IJsonModel<ManagedGrafanaProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedGrafanaProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedGrafanaProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeManagedGrafanaProperties(document.RootElement, options);
         }
 
-        internal static ManagedGrafanaProperties DeserializeManagedGrafanaProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ManagedGrafanaProperties DeserializeManagedGrafanaProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -168,6 +183,7 @@ namespace Azure.ResourceManager.Grafana.Models
             GrafanaPublicNetworkAccess? publicNetworkAccess = default;
             GrafanaZoneRedundancy? zoneRedundancy = default;
             GrafanaApiKey? apiKey = default;
+            GrafanaCreatorCanAdmin? creatorCanAdmin = default;
             DeterministicOutboundIP? deterministicOutboundIP = default;
             IReadOnlyList<string> outboundIPs = default;
             IReadOnlyList<GrafanaPrivateEndpointConnectionData> privateEndpointConnections = default;
@@ -177,154 +193,168 @@ namespace Azure.ResourceManager.Grafana.Models
             GrafanaConfigurations grafanaConfigurations = default;
             IDictionary<string, GrafanaPlugin> grafanaPlugins = default;
             string grafanaMajorVersion = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new GrafanaProvisioningState(property.Value.GetString());
+                    provisioningState = new GrafanaProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("grafanaVersion"u8))
+                if (prop.NameEquals("grafanaVersion"u8))
                 {
-                    grafanaVersion = property.Value.GetString();
+                    grafanaVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpoint"u8))
+                if (prop.NameEquals("endpoint"u8))
                 {
-                    endpoint = property.Value.GetString();
+                    endpoint = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicNetworkAccess"u8))
+                if (prop.NameEquals("publicNetworkAccess"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    publicNetworkAccess = new GrafanaPublicNetworkAccess(property.Value.GetString());
+                    publicNetworkAccess = new GrafanaPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("zoneRedundancy"u8))
+                if (prop.NameEquals("zoneRedundancy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    zoneRedundancy = new GrafanaZoneRedundancy(property.Value.GetString());
+                    zoneRedundancy = new GrafanaZoneRedundancy(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("apiKey"u8))
+                if (prop.NameEquals("apiKey"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    apiKey = new GrafanaApiKey(property.Value.GetString());
+                    apiKey = new GrafanaApiKey(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deterministicOutboundIP"u8))
+                if (prop.NameEquals("creatorCanAdmin"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deterministicOutboundIP = new DeterministicOutboundIP(property.Value.GetString());
+                    creatorCanAdmin = new GrafanaCreatorCanAdmin(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("outboundIPs"u8))
+                if (prop.NameEquals("deterministicOutboundIP"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deterministicOutboundIP = new DeterministicOutboundIP(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("outboundIPs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     outboundIPs = array;
                     continue;
                 }
-                if (property.NameEquals("privateEndpointConnections"u8))
+                if (prop.NameEquals("privateEndpointConnections"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<GrafanaPrivateEndpointConnectionData> array = new List<GrafanaPrivateEndpointConnectionData>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(GrafanaPrivateEndpointConnectionData.DeserializeGrafanaPrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
                 }
-                if (property.NameEquals("autoGeneratedDomainNameLabelScope"u8))
+                if (prop.NameEquals("autoGeneratedDomainNameLabelScope"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoGeneratedDomainNameLabelScope = new AutoGeneratedDomainNameLabelScope(property.Value.GetString());
+                    autoGeneratedDomainNameLabelScope = new AutoGeneratedDomainNameLabelScope(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("grafanaIntegrations"u8))
+                if (prop.NameEquals("grafanaIntegrations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    grafanaIntegrations = GrafanaIntegrations.DeserializeGrafanaIntegrations(property.Value, options);
+                    grafanaIntegrations = GrafanaIntegrations.DeserializeGrafanaIntegrations(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("enterpriseConfigurations"u8))
+                if (prop.NameEquals("enterpriseConfigurations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enterpriseConfigurations = EnterpriseConfigurations.DeserializeEnterpriseConfigurations(property.Value, options);
+                    enterpriseConfigurations = EnterpriseConfigurations.DeserializeEnterpriseConfigurations(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("grafanaConfigurations"u8))
+                if (prop.NameEquals("grafanaConfigurations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    grafanaConfigurations = GrafanaConfigurations.DeserializeGrafanaConfigurations(property.Value, options);
+                    grafanaConfigurations = GrafanaConfigurations.DeserializeGrafanaConfigurations(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("grafanaPlugins"u8))
+                if (prop.NameEquals("grafanaPlugins"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, GrafanaPlugin> dictionary = new Dictionary<string, GrafanaPlugin>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, GrafanaPlugin.DeserializeGrafanaPlugin(property0.Value, options));
+                        dictionary.Add(prop0.Name, GrafanaPlugin.DeserializeGrafanaPlugin(prop0.Value, options));
                     }
                     grafanaPlugins = dictionary;
                     continue;
                 }
-                if (property.NameEquals("grafanaMajorVersion"u8))
+                if (prop.NameEquals("grafanaMajorVersion"u8))
                 {
-                    grafanaMajorVersion = property.Value.GetString();
+                    grafanaMajorVersion = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedGrafanaProperties(
                 provisioningState,
                 grafanaVersion,
@@ -332,6 +362,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 publicNetworkAccess,
                 zoneRedundancy,
                 apiKey,
+                creatorCanAdmin,
                 deterministicOutboundIP,
                 outboundIPs ?? new ChangeTrackingList<string>(),
                 privateEndpointConnections ?? new ChangeTrackingList<GrafanaPrivateEndpointConnectionData>(),
@@ -341,13 +372,16 @@ namespace Azure.ResourceManager.Grafana.Models
                 grafanaConfigurations,
                 grafanaPlugins ?? new ChangeTrackingDictionary<string, GrafanaPlugin>(),
                 grafanaMajorVersion,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ManagedGrafanaProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedGrafanaProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -357,15 +391,20 @@ namespace Azure.ResourceManager.Grafana.Models
             }
         }
 
-        ManagedGrafanaProperties IPersistableModel<ManagedGrafanaProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedGrafanaProperties IPersistableModel<ManagedGrafanaProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedGrafanaProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedGrafanaProperties(document.RootElement, options);
                     }
                 default:
@@ -373,6 +412,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ManagedGrafanaProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

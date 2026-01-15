@@ -22,7 +22,7 @@ namespace Azure.AI.OpenAI.Tests;
 #pragma warning disable CS0618
 #pragma warning disable OPENAICUA001
 
-public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
+public class ResponsesTests : AoaiTestBase<ResponsesClient>
 {
     private IConfiguration DefaultResponsesConfig { get; set; }
 
@@ -42,7 +42,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         OpenAIClient topLevelClient = GetTestTopLevelClient(DefaultResponsesConfig);
         OpenAIFileClient fileClient = topLevelClient.GetOpenAIFileClient();
         VectorStoreClient vectorStoreClient = topLevelClient.GetVectorStoreClient();
-        OpenAIResponseClient client = topLevelClient.GetOpenAIResponseClient(deploymentName);
+        ResponsesClient client = topLevelClient.GetResponsesClient(deploymentName);
 
         OpenAIFile testFile = await fileClient.UploadFileAsync(
             BinaryData.FromString("""
@@ -52,21 +52,23 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
             FileUploadPurpose.Assistants);
         Validate(testFile);
 
-        CreateVectorStoreOperation createStoreOp = await vectorStoreClient.CreateVectorStoreAsync(
-            waitUntilCompleted: true,
+        VectorStore vectorStore = await vectorStoreClient.CreateVectorStoreAsync(
             new VectorStoreCreationOptions()
             {
                 FileIds = { testFile.Id },
             });
-        Validate(createStoreOp);
+        Validate(vectorStore);
 
-        OpenAIResponse response = await client.CreateResponseAsync(
-            "Using the file search tool, what's Travis's favorite food?",
-            new ResponseCreationOptions()
+        ResponseResult response = await client.CreateResponseAsync(
+            new CreateResponseOptions()
             {
+                InputItems =
+                {
+                    ResponseItem.CreateUserMessageItem("Using the file search tool, what's Travis's favorite food?"),
+                },
                 Tools =
                 {
-                    ResponseTool.CreateFileSearchTool([createStoreOp.VectorStoreId], null),
+                    ResponseTool.CreateFileSearchTool([vectorStore.Id], null),
                 }
             });
         Assert.That(response.OutputItems?.Count, Is.EqualTo(2));
@@ -80,9 +82,9 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         Assert.That(messageContentPart, Is.Not.Null);
         Assert.That(messageContentPart?.Text, Does.Contain("pizza"));
         Assert.That(messageContentPart?.OutputTextAnnotations, Is.Not.Null.And.Not.Empty);
-        Assert.That(messageContentPart?.OutputTextAnnotations[0].FileCitationFileId, Is.EqualTo(testFile.Id));
-        Assert.That(messageContentPart?.OutputTextAnnotations[0].FileCitationIndex, Is.GreaterThan(0));
-
+        FileCitationMessageAnnotation? citationAnnotation = messageContentPart!.OutputTextAnnotations[0] as FileCitationMessageAnnotation;
+        Assert.That(citationAnnotation?.FileId, Is.EqualTo(testFile.Id));
+        Assert.That(citationAnnotation?.Index, Is.GreaterThan(0));
 
         await foreach (ResponseItem inputItem in client.GetResponseInputItemsAsync(response?.Id))
         {
@@ -93,21 +95,20 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [RecordedTest]
     public async Task ComputerToolWithScreenshotRoundTrip()
     {
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(ComputerUseDeployment);
+        ResponsesClient client = GetResponseTestClientForDeployment(ComputerUseDeployment);
 
-        ResponseTool computerTool = ResponseTool.CreateComputerTool(1024, 768, ComputerToolEnvironment.Windows);
-        ResponseCreationOptions options = new()
+        ResponseTool computerTool = ResponseTool.CreateComputerTool(ComputerToolEnvironment.Windows, 1024, 768);
+        CreateResponseOptions options = new()
         {
             Tools = { computerTool },
             TruncationMode = ResponseTruncationMode.Auto,
-        };
-        OpenAIResponse response = await client.CreateResponseAsync(
-            inputItems:
-            [
+            InputItems =
+            {
                 ResponseItem.CreateDeveloperMessageItem("Call tools when the user asks to perform computer-related tasks like clicking interface elements."),
                 ResponseItem.CreateUserMessageItem("Click on the Save button.")
-            ],
-            options);
+            }
+        };
+        ResponseResult response = await client.CreateResponseAsync(options);
 
         while (true)
         {
@@ -119,16 +120,13 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                 {
                     string screenshotPath = Assets.ScreenshotWithSaveButton.RelativePath;
                     BinaryData screenshotBytes = BinaryData.FromBytes(File.ReadAllBytes(screenshotPath));
-                    ResponseItem screenshotReply = ResponseItem.CreateComputerCallOutputItem(
-                        computerCall.CallId,
-                        [],
-                        screenshotBytes,
-                        "image/png");
-
                     options.PreviousResponseId = response!.Id;
-                    response = await client.CreateResponseAsync(
-                        [screenshotReply],
-                        options);
+                    options.InputItems.Clear();
+                    options.InputItems.Add(
+                        ResponseItem.CreateComputerCallOutputItem(
+                            computerCall.CallId,
+                            ComputerCallOutput.CreateScreenshotOutput(screenshotBytes, "image/png")));
+                    response = await client.CreateResponseAsync(options);
                 }
                 else if (computerCall.Action.Kind == ComputerCallActionKind.Click)
                 {
@@ -146,13 +144,10 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                     || assistantText.Contains("please confirm")))
             {
                 options.PreviousResponseId = response!.Id;
-                response = await client.CreateResponseAsync(
-                    "Yes, proceed.",
-                    new ResponseCreationOptions()
-                    {
-                        PreviousResponseId = response?.Id,
-                        Tools = { computerTool }
-                    });
+                options.InputItems.Clear();
+                options.InputItems.Add(
+                    ResponseItem.CreateUserMessageItem("Yes, proceed."));
+                response = await client.CreateResponseAsync(options);
             }
             else
             {
@@ -164,15 +159,18 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [RecordedTest]
     public void WebSearchNotSupported()
     {
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(Gpt4oMiniDeployment);
+        ResponsesClient client = GetResponseTestClientForDeployment(Gpt4oMiniDeployment);
         ClientResultException? expectedException = Assert.ThrowsAsync<ClientResultException>(() =>
             client.CreateResponseAsync(
-                "What was a positive news story from today?",
-                new ResponseCreationOptions()
+                new CreateResponseOptions()
                 {
                     Tools =
                     {
-                        ResponseTool.CreateWebSearchTool()
+                        ResponseTool.CreateWebSearchPreviewTool()
+                    },
+                    InputItems =
+                    {
+                        ResponseItem.CreateUserMessageItem("What was a positive news story from today?"),
                     }
                 }));
         Assert.That(expectedException, Is.Not.Null);
@@ -183,19 +181,23 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [TestCase(ComputerUseDeployment)]
     public async Task StreamingResponses(string deploymentName)
     {
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
 
-        ResponseCreationOptions options = new();
+        CreateResponseOptions options = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello, world!") },
+            StreamingEnabled = true
+        };
         if (deploymentName == ComputerUseDeployment)
         {
             options.TruncationMode = ResponseTruncationMode.Auto;
         }
 
-        List<ResponseItem> inputItems = [ResponseItem.CreateUserMessageItem("Hello, world!")];
+        List<ResponseItem> inputItems = [];
         List<string> deltaTextSegments = [];
         string? finalResponseText = null;
         await foreach (StreamingResponseUpdate update
-            in client.CreateResponseStreamingAsync(inputItems, options))
+            in client.CreateResponseStreamingAsync(options))
         {
             Console.WriteLine(ModelReaderWriter.Write(update));
             Assert.That(update, Is.Not.InstanceOf<StreamingResponseErrorUpdate>());
@@ -219,9 +221,9 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [TestCase(ComputerUseDeployment)]
     public async Task ResponsesHelloWorldWithTool(string deploymentName)
     {
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
 
-        ResponseCreationOptions options = new()
+        CreateResponseOptions options = new()
         {
             Tools =
             {
@@ -239,7 +241,15 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                           }
                         }
                         """),
-                    functionSchemaIsStrict: false),
+                    strictModeEnabled: false),
+            },
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem(
+                    contentParts:
+                    [
+                        ResponseContentPart.CreateInputTextPart("good morning, responses!"),
+                    ]),
             },
         };
         if (deploymentName == ComputerUseDeployment)
@@ -247,15 +257,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
             options.TruncationMode = ResponseTruncationMode.Auto;
         }
 
-        OpenAIResponse response = await client.CreateResponseAsync(
-            [
-                ResponseItem.CreateUserMessageItem(
-                [
-                    ResponseContentPart.CreateInputTextPart("good morning, responses!"),
-                ]),
-            ],
-            options);
-
+        ResponseResult response = await client.CreateResponseAsync(options);
         Assert.That(response.Id, Is.Not.Null.And.Not.Empty);
         Assert.That(response.CreatedAt, Is.GreaterThan(new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero)));
         // Assert.That(response.Status, Is.EqualTo(ResponsesStatus.Completed));
@@ -267,15 +269,15 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     }
 
     [RecordedTest]
-    [Ignore("o1/o3 not yet supported on test environment")]
     public async Task ResponsesWithReasoning()
     {
-        OpenAIResponseClient client = GetTestClient();
+        ResponsesClient client = GetTestClient("chat_o3-mini");
 
-        ResponseCreationOptions options = new()
+        CreateResponseOptions options = new()
         {
             ReasoningOptions = new()
             {
+                ReasoningSummaryVerbosity = ResponseReasoningSummaryVerbosity.Detailed,
                 ReasoningEffortLevel = ResponseReasoningEffortLevel.Medium,
             },
             Metadata =
@@ -283,13 +285,16 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                 ["superfluous_key"] = "superfluous_value",
             },
             Instructions = "Perform reasoning over any questions asked by the user.",
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem("What's the best way to fold a burrito?"),
+            }
         };
 
-        OpenAIResponse response = await client.CreateResponseAsync([ResponseItem.CreateUserMessageItem("What's the best way to fold a burrito?")], options);
+        ResponseResult response = await client.CreateResponseAsync(options);
         Assert.That(response, Is.Not.Null);
         Assert.That(response.Id, Is.Not.Null);
         Assert.That(response.CreatedAt, Is.GreaterThan(new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero)));
-        Assert.That(response.TruncationMode, Is.EqualTo(ResponseTruncationMode.Auto));
         Assert.That(response.MaxOutputTokenCount, Is.Null);
         Assert.That(response.Model, Does.StartWith("o3-mini"));
         Assert.That(response.Usage, Is.Not.Null);
@@ -300,7 +305,8 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         Assert.That(response.OutputItems, Has.Count.EqualTo(2));
         ReasoningResponseItem? reasoningItem = response.OutputItems?[0] as ReasoningResponseItem;
         MessageResponseItem? messageItem = response.OutputItems?[1] as MessageResponseItem;
-        Assert.That(reasoningItem?.SummaryTextParts, Is.Not.Null);
+        Assert.That(reasoningItem?.SummaryParts, Is.Not.Null);
+        Assert.That(reasoningItem?.GetSummaryText(), Is.Not.Null.And.Not.Empty);
         Assert.That(reasoningItem?.Id, Is.Not.Null.And.Not.Empty);
         Assert.That(messageItem?.Content?.FirstOrDefault()?.Text, Has.Length.GreaterThan(0));
     }
@@ -310,19 +316,25 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [TestCase(ComputerUseDeployment)]
     public async Task HelloWorldStreaming(string deploymentName)
     {
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
 
-        ResponseCreationOptions options = new();
+        CreateResponseOptions options = new()
+        {
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem(
+                    [
+                        ResponseContentPart.CreateInputTextPart("Hello, responses!")
+                    ]),
+            },
+            StreamingEnabled = true,
+        };
         if (deploymentName == ComputerUseDeployment)
         {
             options.TruncationMode = ResponseTruncationMode.Auto;
         }
 
-        ResponseContentPart contentPart = ResponseContentPart.CreateInputTextPart("Hello, responses!");
-        ResponseItem inputItem = ResponseItem.CreateUserMessageItem([contentPart]);
-
-        await foreach (StreamingResponseUpdate update
-            in client.CreateResponseStreamingAsync([inputItem], options))
+        await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(options))
         {
             Console.WriteLine(ModelReaderWriter.Write(update));
         }
@@ -333,21 +345,22 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [TestCase(ComputerUseDeployment)]
     public async Task CanDeleteResponse(string deploymentName)
     {
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
 
-        ResponseCreationOptions options = new();
+        CreateResponseOptions options = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello, model!") },
+        };
         if (deploymentName == ComputerUseDeployment)
         {
             options.TruncationMode = ResponseTruncationMode.Auto;
         }
 
-        OpenAIResponse response = await client.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("Hello, model!")],
-            options);
+        ResponseResult response = await client.CreateResponseAsync(options);
 
         async Task RetrieveThatResponseAsync()
         {
-            OpenAIResponse retrievedResponse = await client.GetResponseAsync(response.Id);
+            ResponseResult retrievedResponse = await client.GetResponseAsync(response.Id);
             Assert.That(retrievedResponse.Id, Is.EqualTo(response.Id));
         }
 
@@ -364,20 +377,19 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [TestCase(ComputerUseDeployment)]
     public async Task CanOptOutOfStorage(string deploymentName)
     {
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
 
-        ResponseCreationOptions options = new()
+        CreateResponseOptions options = new()
         {
-            StoredOutputEnabled = false
+            StoredOutputEnabled = false,
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello, model!") },
         };
         if (deploymentName == ComputerUseDeployment)
         {
             options.TruncationMode = ResponseTruncationMode.Auto;
         }
 
-        OpenAIResponse response = await client.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("Hello, model!")],
-            options);
+        ResponseResult response = await client.CreateResponseAsync(options);
 
         ClientResultException? expectedException = Assert.ThrowsAsync<ClientResultException>(async () => await client.GetResponseAsync(response.Id));
         Assert.That(expectedException?.Message, Does.Contain("not found"));
@@ -386,29 +398,35 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [RecordedTest]
     [TestCase(Gpt4oMiniDeployment)]
     [TestCase(ComputerUseDeployment)]
-    [Ignore("Disabled pending resolution of known issues with tool_choice")]
     public async Task OutputTextProperty(string deploymentName)
     {
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
-        ResponseCreationOptions options = new();
+        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
+        CreateResponseOptions options = new()
+        {
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem("Respond with only the word hello."),
+            }
+        };
         if (deploymentName == ComputerUseDeployment)
         {
             options.TruncationMode = ResponseTruncationMode.Auto;
         }
 
-        OpenAIResponse response = await client.CreateResponseAsync(
-            "Respond with only the word hello.",
-            options);
+        ResponseResult response = await client.CreateResponseAsync(options);
         Assert.That(response?.GetOutputText()?.Length, Is.GreaterThan(0).And.LessThan(7));
         Assert.That(response?.GetOutputText()?.ToLower(), Does.Contain("hello"));
 
         response = await client.CreateResponseAsync(
-            "How's the weather?",
-            new ResponseCreationOptions()
+            new CreateResponseOptions()
             {
-                Tools = { ResponseTool.CreateFunctionTool("get_weather", "gets the weather", BinaryData.FromString("{}")) },
+                Tools = { ResponseTool.CreateFunctionTool("get_weather", functionDescription: "gets the weather", functionParameters: BinaryData.FromString("{}"), strictModeEnabled: false) },
                 ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
                 TruncationMode = ResponseTruncationMode.Auto,
+                InputItems =
+                {
+                    ResponseItem.CreateUserMessageItem("How's the weather?"),
+                },
             });
         Assert.That(response.GetOutputText(), Is.Null);
     }
@@ -418,51 +436,55 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [TestCase(ComputerUseDeployment)]
     public async Task MessageHistoryWorks(string deploymentName)
     {
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
 
-        ResponseCreationOptions options = new();
+        CreateResponseOptions options = new()
+        {
+            InputItems =
+            {
+                ResponseItem.CreateDeveloperMessageItem("You are a helpful assistant."),
+                ResponseItem.CreateUserMessageItem("Hello, Assistant, my name is Bob!"),
+                ResponseItem.CreateAssistantMessageItem("Hello, Bob. It's a nice, sunny day!"),
+                ResponseItem.CreateUserMessageItem("What's my name and what did you tell me the weather was like?"),
+            }
+        };
         if (deploymentName == ComputerUseDeployment)
         {
             options.TruncationMode = ResponseTruncationMode.Auto;
         }
 
-        OpenAIResponse response = await client.CreateResponseAsync(
-            [
-                ResponseItem.CreateDeveloperMessageItem("You are a helpful assistant."),
-                ResponseItem.CreateUserMessageItem("Hello, Assistant, my name is Bob!"),
-                ResponseItem.CreateAssistantMessageItem("Hello, Bob. It's a nice, sunny day!"),
-                ResponseItem.CreateUserMessageItem("What's my name and what did you tell me the weather was like?"),
-            ],
-            options);
+        ResponseResult response = await client.CreateResponseAsync(options);
 
         Assert.That(response, Is.Not.Null);
     }
 
     [RecordedTest]
     [TestCase(Gpt4oMiniDeployment)]
-    [TestCase(ComputerUseDeployment)]
+    [TestCase(ComputerUseDeployment, Ignore = "image input not currently supported")]
     public async Task ImageInputWorks(string deploymentName)
     {
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
 
         string imagePath = Assets.DogAndCat.RelativePath;
         BinaryData imageBytes = BinaryData.FromBytes(File.ReadAllBytes(imagePath)!);
 
-        ResponseCreationOptions options = new();
+        CreateResponseOptions options = new()
+        {
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem(
+                [
+                    ResponseContentPart.CreateInputTextPart("Please describe this picture for me"),
+                    ResponseContentPart.CreateInputImagePart(imageBytes, "image/png", ResponseImageDetailLevel.Low),
+                ]),
+            }
+        };
         if (deploymentName == ComputerUseDeployment)
         {
             options.TruncationMode = ResponseTruncationMode.Auto;
         }
 
-        OpenAIResponse response = await client.CreateResponseAsync(
-            [
-                ResponseItem.CreateUserMessageItem(
-                    [
-                        ResponseContentPart.CreateInputTextPart("Please describe this picture for me"),
-                        ResponseContentPart.CreateInputImagePart(imageBytes, "image/png", ResponseImageDetailLevel.Low),
-                    ]),
-            ],
-            options);
+        ResponseResult response = await client.CreateResponseAsync(options);
     }
 
     public enum ResponsesTestInstructionMethod
@@ -483,7 +505,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     {
         const string instructions = "Always begin your replies with 'Arr, matey'";
 
-        List<MessageResponseItem> messages = new();
+        List<ResponseItem> messages = new();
 
         if (instructionMethod == ResponsesTestInstructionMethod.SystemMessage)
         {
@@ -497,7 +519,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         const string userMessage = "Hello, model!";
         messages.Add(ResponseItem.CreateUserMessageItem(userMessage));
 
-        ResponseCreationOptions options = new();
+        CreateResponseOptions options = new(messages);
         if (deploymentName == ComputerUseDeployment)
         {
             options.TruncationMode = ResponseTruncationMode.Auto;
@@ -508,8 +530,8 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
             options.Instructions = instructions;
         }
 
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
-        OpenAIResponse response = await client.CreateResponseAsync(messages, options);
+        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponseResult response = await client.CreateResponseAsync(options);
 
         Assert.That(response, Is.Not.Null);
         Assert.That(response.OutputItems, Is.Not.Null.And.Not.Empty);
@@ -517,7 +539,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         Assert.That((response?.OutputItems?[0] as MessageResponseItem)?.Content, Is.Not.Null.And.Not.Empty);
         Assert.That((response?.OutputItems?[0] as MessageResponseItem)?.Content[0].Text, Does.StartWith("Arr, matey"));
 
-        OpenAIResponse retrievedResponse = await client.GetResponseAsync(response?.Id);
+        ResponseResult retrievedResponse = await client.GetResponseAsync(response?.Id);
         Assert.That((retrievedResponse?.OutputItems?.FirstOrDefault() as MessageResponseItem)?.Content?.FirstOrDefault()?.Text, Does.StartWith("Arr, matey"));
 
         if (instructionMethod == ResponsesTestInstructionMethod.InstructionsProperty)
@@ -555,32 +577,32 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [RecordedTest]
     public async Task TwoTurnCrossModel()
     {
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(Gpt4oMiniDeployment);
-        OpenAIResponseClient client2 = GetResponseTestClientForDeployment(ComputerUseDeployment);
+        ResponsesClient client = GetResponseTestClientForDeployment(Gpt4oMiniDeployment);
+        ResponsesClient client2 = GetResponseTestClientForDeployment(ComputerUseDeployment);
 
-        ResponseCreationOptions options = new()
-        {
-            TruncationMode = ResponseTruncationMode.Auto
-        };
-
-        OpenAIResponse response = await client.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("Hello, Assistant! My name is Travis.")],
-            options);
-        options.PreviousResponseId = response.Id;
-        OpenAIResponse response2 = await client2.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("What's my name?")],
-            options);
+        ResponseResult response = await client.CreateResponseAsync(
+            new CreateResponseOptions()
+            {
+                TruncationMode = ResponseTruncationMode.Auto,
+                InputItems = { ResponseItem.CreateUserMessageItem("Hello, Assistant! My name is Travis.") },
+            });
+        ResponseResult response2 = await client2.CreateResponseAsync(
+            new CreateResponseOptions()
+            {
+                TruncationMode = ResponseTruncationMode.Auto,
+                InputItems = { ResponseItem.CreateUserMessageItem("What's my name?") },
+                PreviousResponseId = response.Id,
+            });
     }
 
     [RecordedTest]
     [TestCase(Gpt4oMiniDeployment)]
     [TestCase(ComputerUseDeployment, Ignore = "Not yet supported with computer-use-preview")]
-    [Ignore("Disabled pending resolution of known issues with text.format")]
     public async Task StructuredOutputs(string deploymentName)
     {
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
 
-        ResponseCreationOptions options = new ResponseCreationOptions()
+        CreateResponseOptions options = new CreateResponseOptions()
         {
             TextOptions = new ResponseTextOptions()
             {
@@ -601,6 +623,10 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                               "additionalProperties": false
                             }
                             """)),
+            },
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem("Write a JSON document with a list of five animals"),
             }
         };
         if (deploymentName == ComputerUseDeployment)
@@ -608,9 +634,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
             options.TruncationMode = ResponseTruncationMode.Auto;
         }
 
-        OpenAIResponse response = await client.CreateResponseAsync(
-            "Write a JSON document with a list of five animals",
-            options);
+        ResponseResult response = await client.CreateResponseAsync(options);
 
         Assert.That(
             response?.TextOptions?.TextFormat?.Kind,
@@ -633,20 +657,19 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [TestCase(Gpt4oMiniDeployment)]
     public async Task FunctionCall(string deploymentName)
     {
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
 
-        ResponseCreationOptions options = new()
+        CreateResponseOptions options = new()
         {
-            Tools = { s_GetWeatherAtLocationTool }
+            Tools = { s_GetWeatherAtLocationTool },
+            InputItems = { ResponseItem.CreateUserMessageItem("What should I wear for the weather in San Francisco, CA?") },
         };
         if (deploymentName == ComputerUseDeployment)
         {
             options.TruncationMode = ResponseTruncationMode.Auto;
         }
 
-        OpenAIResponse response = await client.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("What should I wear for the weather in San Francisco, CA?")],
-            options);
+        ResponseResult response = await client.CreateResponseAsync(options);
 
         Assert.That(response.OutputItems, Has.Count.EqualTo(1));
         FunctionCallResponseItem? functionCall = response.OutputItems?[0] as FunctionCallResponseItem;
@@ -662,10 +685,9 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         });
 
         options.PreviousResponseId = response.Id;
-        ResponseItem functionReply = ResponseItem.CreateFunctionCallOutputItem(functionCall?.CallId, "22 celcius and windy");
-        OpenAIResponse turn2Response = await client.CreateResponseAsync(
-            [functionReply],
-            options);
+        options.InputItems.Clear();
+        options.InputItems.Add(ResponseItem.CreateFunctionCallOutputItem(functionCall?.CallId, "22 celcius and windy"));
+        ResponseResult turn2Response = await client.CreateResponseAsync(options);
         Assert.That(turn2Response.OutputItems?.Count, Is.EqualTo(1));
         MessageResponseItem? turn2Message = turn2Response?.OutputItems?[0] as MessageResponseItem;
         Assert.That(turn2Message, Is.Not.Null);
@@ -679,20 +701,22 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [TestCase(ComputerUseDeployment)]
     public async Task MaxTokens(string deploymentName)
     {
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
 
-        ResponseCreationOptions options = new()
+        CreateResponseOptions options = new()
         {
             MaxOutputTokenCount = 20,
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem("Write three haikus about tropical fruit"),
+            }
         };
         if (deploymentName == ComputerUseDeployment)
         {
             options.TruncationMode = ResponseTruncationMode.Auto;
         }
 
-        OpenAIResponse response = await client.CreateResponseAsync(
-            "Write three haikus about tropical fruit",
-            options);
+        ResponseResult response = await client.CreateResponseAsync(options);
 
         Assert.That(
             response?.IncompleteStatusDetails?.Reason,
@@ -707,21 +731,23 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [TestCase(ComputerUseDeployment)]
     public async Task FunctionCallStreaming(string deploymentName)
     {
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
 
-        ResponseCreationOptions options = new()
+        CreateResponseOptions options = new()
         {
             Tools = { s_GetWeatherAtLocationTool },
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem("What should I wear for the weather in San Francisco right now?"),
+            },
+            StreamingEnabled = true
         };
         if (deploymentName == ComputerUseDeployment)
         {
             options.TruncationMode = ResponseTruncationMode.Auto;
         }
 
-        await foreach (StreamingResponseUpdate update
-            in client.CreateResponseStreamingAsync(
-                "What should I wear for the weather in San Francisco right now?",
-                options))
+        await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(options))
         {
             Console.WriteLine(ModelReaderWriter.Write(update).ToString());
             if (update is StreamingResponseCreatedUpdate responseCreatedUpdate)
@@ -738,51 +764,28 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [RecordedTest]
     [TestCase(Gpt4oMiniDeployment)]
     [TestCase(ComputerUseDeployment)]
-    [Ignore("Disabled pending resolution of known issues with tool_choice")]
     public async Task FunctionToolChoiceWorks(string deploymentName)
     {
-        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
 
         ResponseToolChoice toolChoice
             = ResponseToolChoice.CreateFunctionChoice(s_GetWeatherAtLocationToolName);
 
-        ResponseCreationOptions options = new()
+        CreateResponseOptions options = new()
         {
             Tools = { s_GetWeatherAtLocationTool },
             ToolChoice = toolChoice,
+            TruncationMode = ResponseTruncationMode.Auto,
+            InputItems = { ResponseItem.CreateUserMessageItem("What should I wear for the weather in San Francisco, CA?") },
         };
-        if (deploymentName == ComputerUseDeployment)
-        {
-            options.TruncationMode = ResponseTruncationMode.Auto;
-        }
 
-        OpenAIResponse response = await client.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("What should I wear for the weather in San Francisco, CA?")],
-            options);
+        ResponseResult response = await client.CreateResponseAsync(options);
 
         Assert.That(response.ToolChoice, Is.Not.Null);
         Assert.That(response.ToolChoice.Kind, Is.EqualTo(ResponseToolChoiceKind.Function));
         Assert.That(response.ToolChoice.FunctionName, Is.EqualTo(toolChoice.FunctionName));
 
-        ResponseToolChoice newEquivalentChoice = ResponseToolChoice.CreateFunctionChoice(toolChoice.FunctionName);
-        ResponseToolChoice newDifferentChoice = ResponseToolChoice.CreateFunctionChoice("foo");
-
-        Assert.That(response.ToolChoice, Is.EqualTo(toolChoice));
-        Assert.That(response.ToolChoice, Is.EqualTo(newEquivalentChoice));
-        Assert.That(response.ToolChoice, Is.Not.EqualTo(newDifferentChoice));
-
-        Assert.IsTrue(response.ToolChoice == toolChoice);
-        Assert.IsTrue(response.ToolChoice == newEquivalentChoice);
-        Assert.IsTrue(toolChoice == response.ToolChoice);
-        Assert.IsTrue(newEquivalentChoice == response.ToolChoice);
-        Assert.IsFalse(response.ToolChoice == newDifferentChoice);
-        Assert.IsFalse(newDifferentChoice == response.ToolChoice);
-        Assert.IsTrue(response.ToolChoice != newDifferentChoice);
-        Assert.IsTrue(newDifferentChoice != response.ToolChoice);
-        Assert.IsFalse(response.ToolChoice != newEquivalentChoice);
-        Assert.IsFalse(newEquivalentChoice != response.ToolChoice);
-
-        FunctionCallResponseItem? functionCall = response.OutputItems?.FirstOrDefault() as FunctionCallResponseItem;
+        FunctionCallResponseItem? functionCall = response.OutputItems.FirstOrDefault() as FunctionCallResponseItem;
         Assert.That(functionCall, Is.Not.Null);
         Assert.That(functionCall?.FunctionName, Is.EqualTo(toolChoice.FunctionName));
     }
@@ -794,11 +797,12 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         foreach (ResponseItem item in new ResponseItem[]
         {
             ResponseItem.CreateComputerCallItem("call_abcd", ComputerCallAction.CreateScreenshotAction(), []),
-            ResponseItem.CreateComputerCallOutputItem("call_abcd", [], "file_abcd"),
-            ResponseItem.CreateFileSearchCallItem(["query1"], []),
+            ResponseItem.CreateComputerCallOutputItem("call_abcd", ComputerCallOutput.CreateScreenshotOutput("file_abcd")),
+            ResponseItem.CreateFileSearchCallItem(["query1"]),
             ResponseItem.CreateFunctionCallItem("call_abcd", "function_name", BinaryData.Empty),
             ResponseItem.CreateFunctionCallOutputItem("call_abcd", "functionOutput"),
-            ResponseItem.CreateReasoningItem(["summary goes here"]),
+            ResponseItem.CreateReasoningItem("summary goes here"),
+            ResponseItem.CreateReasoningItem([new ReasoningSummaryTextPart("another summary"), new ReasoningSummaryTextPart("with multiple parts")]),
             ResponseItem.CreateReferenceItem("msg_1234"),
             ResponseItem.CreateAssistantMessageItem("Goodbye!", []),
             ResponseItem.CreateDeveloperMessageItem("Talk like a pirate"),
@@ -813,7 +817,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         }
 
         AssertSerializationRoundTrip<MessageResponseItem>(
-            @"{""type"":""message"",""potato_details"":{""cultivar"":""russet""},""role"":""potato""}",
+            @"{""type"":""message"",""role"":""potato"",""potato_details"":{""cultivar"":""russet""}}",
             potatoMessage =>
             {
                 Assert.That(potatoMessage.Role, Is.EqualTo(MessageRole.Unknown));
@@ -899,12 +903,12 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
             textFormat => Assert.That(textFormat.Kind == ResponseTextFormatKind.Text));
     }
 
-    public override OpenAIResponseClient GetTestClient(TestClientOptions? options = null, TokenCredential? tokenCredential = null, ApiKeyCredential? keyCredential = null)
+    public override ResponsesClient GetTestClient(TestClientOptions? options = null, TokenCredential? tokenCredential = null, ApiKeyCredential? keyCredential = null)
     {
         throw new NotImplementedException($"Please use the deployment-specific {nameof(GetResponseTestClientForDeployment)} for this fixture.");
     }
 
-    private OpenAIResponseClient GetResponseTestClientForDeployment(string? deploymentName = null)
+    private ResponsesClient GetResponseTestClientForDeployment(string? deploymentName = null)
     {
         if (deploymentName is null)
         {
@@ -912,7 +916,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         }
         AzureOpenAIClient toplevelClient = GetTestTopLevelClient(
             TestConfig.GetConfig("responses"));
-        return toplevelClient.GetOpenAIResponseClient(deploymentName);
+        return toplevelClient.GetResponsesClient(deploymentName);
     }
 
     private static void AssertSerializationRoundTrip<T>(
@@ -936,8 +940,8 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     private static readonly string s_GetWeatherAtLocationToolName = "get_weather_at_location";
     private static readonly ResponseTool s_GetWeatherAtLocationTool = ResponseTool.CreateFunctionTool(
             s_GetWeatherAtLocationToolName,
-            "Gets the weather at a specified location, optionally specifying units for temperature",
-            BinaryData.FromString("""
+            functionDescription: "Gets the weather at a specified location, optionally specifying units for temperature",
+            functionParameters: BinaryData.FromString("""
                 {
                     "type": "object",
                     "properties": {
@@ -952,5 +956,5 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                     "required": ["location"]
                 }
                 """),
-            false);
+            strictModeEnabled: false);
 }

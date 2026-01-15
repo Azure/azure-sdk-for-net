@@ -13,36 +13,35 @@ In this example, we will demonstrate listing and retrieving connections using th
 ```C# Snippet:AI_Projects_ConnectionsExampleSync
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-Connections connectionsClient = projectClient.GetConnectionsClient();
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("List the properties of all connections:");
-foreach (var connection in connectionsClient.GetConnections())
+foreach (AIProjectConnection connection in projectClient.Connections.GetConnections())
 {
     Console.WriteLine(connection);
-    Console.Write(connection.Name);
+    Console.WriteLine(connection.Name);
 }
 
 Console.WriteLine("List the properties of all connections of a particular type (e.g., Azure OpenAI connections):");
-foreach (var connection in connectionsClient.GetConnections(connectionType: ConnectionType.AzureOpenAI))
+foreach (AIProjectConnection connection in projectClient.Connections.GetConnections(connectionType: ConnectionType.AzureOpenAI))
 {
     Console.WriteLine(connection);
 }
 
 Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
-var specificConnection = connectionsClient.Get(connectionName, includeCredentials: false);
+AIProjectConnection specificConnection = projectClient.Connections.GetConnection(connectionName, includeCredentials: false);
 Console.WriteLine(specificConnection);
 
 Console.WriteLine("Get the properties of a connection with credentials:");
-var specificConnectionCredentials = connectionsClient.Get(connectionName, includeCredentials: true);
+AIProjectConnection specificConnectionCredentials = projectClient.Connections.GetConnection(connectionName, includeCredentials: true);
 Console.WriteLine(specificConnectionCredentials);
 
 Console.WriteLine($"Get the properties of the default connection:");
-var defaultConnection = connectionsClient.GetDefault(includeCredentials: false);
+AIProjectConnection defaultConnection = projectClient.Connections.GetDefaultConnection(includeCredentials: false);
 Console.WriteLine(defaultConnection);
 
 Console.WriteLine($"Get the properties of the default connection with credentials:");
-var defaultConnectionCredentials = connectionsClient.GetDefault(includeCredentials: true);
+AIProjectConnection defaultConnectionCredentials = projectClient.Connections.GetDefaultConnection(includeCredentials: true);
 Console.WriteLine(defaultConnectionCredentials);
 ```
 
@@ -50,35 +49,34 @@ Console.WriteLine(defaultConnectionCredentials);
 ```C# Snippet:AI_Projects_ConnectionsExampleAsync
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-Connections connectionsClient = projectClient.GetConnectionsClient();
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("List the properties of all connections:");
-await foreach (var connection in connectionsClient.GetConnectionsAsync())
+await foreach (AIProjectConnection connection in projectClient.Connections.GetConnectionsAsync())
 {
     Console.WriteLine(connection);
     Console.Write(connection.Name);
 }
 
 Console.WriteLine("List the properties of all connections of a particular type (e.g., Azure OpenAI connections):");
-await foreach (var connection in connectionsClient.GetConnectionsAsync(connectionType: ConnectionType.AzureOpenAI))
+await foreach (AIProjectConnection connection in projectClient.Connections.GetConnectionsAsync(connectionType: ConnectionType.AzureOpenAI))
 {
     Console.WriteLine(connection);
 }
 
 Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
-var specificConnection = await connectionsClient.GetAsync(connectionName, includeCredentials: false);
+AIProjectConnection specificConnection = await projectClient.Connections.GetConnectionAsync(connectionName, includeCredentials: false);
 Console.WriteLine(specificConnection);
 
 Console.WriteLine("Get the properties of a connection with credentials:");
-var specificConnectionCredentials = await connectionsClient.GetAsync(connectionName, includeCredentials: true);
+AIProjectConnection specificConnectionCredentials = await projectClient.Connections.GetConnectionAsync(connectionName, includeCredentials: true);
 Console.WriteLine(specificConnectionCredentials);
 
 Console.WriteLine($"Get the properties of the default connection:");
-var defaultConnection = await connectionsClient.GetDefaultAsync(includeCredentials: false);
+AIProjectConnection defaultConnection = await projectClient.Connections.GetDefaultConnectionAsync(includeCredentials: false);
 Console.WriteLine(defaultConnection);
 
 Console.WriteLine($"Get the properties of the default connection with credentials:");
-var defaultConnectionCredentials = await connectionsClient.GetDefaultAsync(includeCredentials: true);
+AIProjectConnection defaultConnectionCredentials = await projectClient.Connections.GetDefaultConnectionAsync(includeCredentials: true);
 Console.WriteLine(defaultConnectionCredentials);
 ```

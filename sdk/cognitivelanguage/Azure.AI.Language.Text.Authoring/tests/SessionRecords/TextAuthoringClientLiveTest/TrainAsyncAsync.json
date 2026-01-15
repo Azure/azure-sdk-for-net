@@ -1,15 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyTextProject001/:train?api-version=2024-11-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/single-class-project/:train?api-version=2025-05-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json",
-        "Connection": "keep-alive",
         "Content-Length": "159",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250302.1 (.NET Framework 4.8.9290.0; Microsoft Windows 10.0.26100 )",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250627.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -25,22 +23,22 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "4c0b8e99-6774-473c-ac82-1cdae262aff3",
+        "apim-request-id": "65c83d79-a28d-4ed0-b006-644bb60fe511",
         "Content-Length": "0",
-        "Date": "Mon, 03 Mar 2025 06:54:06 GMT",
-        "operation-location": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyTextProject001/train/jobs/0fbeef32-263a-46c6-a532-8f819d83c95c_638765568000000000?api-version=2024-11-15-preview",
-        "request-id": "4c0b8e99-6774-473c-ac82-1cdae262aff3",
+        "Date": "Fri, 27 Jun 2025 17:21:35 GMT",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/single-class-project/train/jobs/5d105f21-fb58-4d0c-8eab-f42e6a79684a_638865792000000000?api-version=2025-05-15-preview",
+        "request-id": "65c83d79-a28d-4ed0-b006-644bb60fe511",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "148",
+        "x-envoy-upstream-service-time": "181",
         "x-ms-region": "East US"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com/",
+    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
     "AZURE_TEXT_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "66619128"
+    "RandomSeed": "1283118484"
   }
 }

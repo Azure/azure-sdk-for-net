@@ -1,11 +1,5 @@
 namespace Azure.Messaging.WebPubSub
 {
-    public partial class AzureMessagingWebPubSubContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureMessagingWebPubSubContext() { }
-        public static Azure.Messaging.WebPubSub.AzureMessagingWebPubSubContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public static partial class ClientConnectionFilter
     {
         public static string Create(System.FormattableString filter) { throw null; }
@@ -59,24 +53,16 @@ namespace Azure.Messaging.WebPubSub
         public virtual Azure.Response<bool> ConnectionExists(string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ConnectionExistsAsync(string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Uri GetClientAccessUri(System.DateTimeOffset expiresAt, string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, Azure.Messaging.WebPubSub.WebPubSubClientProtocol clientProtocol = Azure.Messaging.WebPubSub.WebPubSubClientProtocol.Default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Uri GetClientAccessUri(System.DateTimeOffset expiresAt, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Collections.Generic.IEnumerable<string> groups, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Uri GetClientAccessUri(System.DateTimeOffset expiresAt, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Uri GetClientAccessUri(System.TimeSpan expiresAfter = default(System.TimeSpan), string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, Azure.Messaging.WebPubSub.WebPubSubClientProtocol clientProtocol = Azure.Messaging.WebPubSub.WebPubSubClientProtocol.Default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Uri GetClientAccessUri(System.TimeSpan expiresAfter, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Collections.Generic.IEnumerable<string> groups, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Uri GetClientAccessUri(System.TimeSpan expiresAfter, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.DateTimeOffset expiresAt, string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, Azure.Messaging.WebPubSub.WebPubSubClientProtocol clientProtocol = Azure.Messaging.WebPubSub.WebPubSubClientProtocol.Default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.DateTimeOffset expiresAt, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Collections.Generic.IEnumerable<string> groups, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.DateTimeOffset expiresAt, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.TimeSpan expiresAfter = default(System.TimeSpan), string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, Azure.Messaging.WebPubSub.WebPubSubClientProtocol clientProtocol = Azure.Messaging.WebPubSub.WebPubSubClientProtocol.Default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.TimeSpan expiresAfter, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Collections.Generic.IEnumerable<string> groups, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.TimeSpan expiresAfter, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response GrantPermission(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GrantPermissionAsync(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestContext context = null) { throw null; }

@@ -2,9 +2,8 @@ namespace Azure.DigitalTwins.Core
 {
     public partial class AzureDigitalTwinsCoreContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureDigitalTwinsCoreContext() { }
-        public static Azure.DigitalTwins.Core.AzureDigitalTwinsCoreContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureDigitalTwinsCoreContext() { }
+        public Azure.DigitalTwins.Core.AzureDigitalTwinsCoreContext Default { get { throw null; } }
     }
     public partial class BasicDigitalTwin
     {
@@ -218,9 +217,7 @@ namespace Azure.DigitalTwins.Core
         public static Azure.DigitalTwins.Core.ImportJobStatus Running { get { throw null; } }
         public static Azure.DigitalTwins.Core.ImportJobStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.DigitalTwins.Core.ImportJobStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.DigitalTwins.Core.ImportJobStatus left, Azure.DigitalTwins.Core.ImportJobStatus right) { throw null; }
         public static implicit operator Azure.DigitalTwins.Core.ImportJobStatus (string value) { throw null; }

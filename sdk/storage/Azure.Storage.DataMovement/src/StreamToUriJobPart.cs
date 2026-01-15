@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class StreamToUriJobPart : JobPartInternal, IAsyncDisposable
+    internal class StreamToUriJobPart : JobPartInternal
     {
         /// <summary>
         ///  Will handle the calling the commit block list API once
@@ -87,11 +87,6 @@ namespace Azure.Storage.DataMovement
                   jobPartStatus: jobPartStatus,
                   length: default)
         {
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            await DisposeHandlersAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -400,7 +395,7 @@ namespace Azure.Storage.DataMovement
                 cancellationToken: _cancellationToken).ConfigureAwait(false);
 
             // Dispose the handlers
-            await DisposeHandlersAsync().ConfigureAwait(false);
+            await CleanUpHandlersAsync().ConfigureAwait(false);
 
             // Set completion status to completed
             await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
@@ -500,11 +495,11 @@ namespace Azure.Storage.DataMovement
             await base.InvokeFailedArgAsync(ex).ConfigureAwait(false);
         }
 
-        public override async Task DisposeHandlersAsync()
+        public override async Task CleanUpHandlersAsync()
         {
             if (_commitBlockHandler != default)
             {
-                await _commitBlockHandler.DisposeAsync().ConfigureAwait(false);
+                await _commitBlockHandler.CleanUpAsync().ConfigureAwait(false);
                 _commitBlockHandler = null;
             }
         }

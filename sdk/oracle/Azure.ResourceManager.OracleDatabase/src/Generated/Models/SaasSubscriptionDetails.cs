@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> SaaS Subscription Details model. </summary>
     public partial class SaasSubscriptionDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SaasSubscriptionDetails"/>. </summary>
         internal SaasSubscriptionDetails()
@@ -63,8 +34,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="termUnit"> Purchase Term Unit. </param>
         /// <param name="isAutoRenew"> AutoRenew flag. </param>
         /// <param name="isFreeTrial"> FreeTrial flag. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SaasSubscriptionDetails(string id, string subscriptionName, DateTimeOffset? createdOn, string offerId, string planId, string saasSubscriptionStatus, string publisherId, string purchaserEmailId, string purchaserTenantId, string termUnit, bool? isAutoRenew, bool? isFreeTrial, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SaasSubscriptionDetails(string id, string subscriptionName, DateTimeOffset? createdOn, string offerId, string planId, string saasSubscriptionStatus, string publisherId, string purchaserEmailId, string purchaserTenantId, string termUnit, bool? isAutoRenew, bool? isFreeTrial, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             SubscriptionName = subscriptionName;
@@ -78,31 +49,42 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             TermUnit = termUnit;
             IsAutoRenew = isAutoRenew;
             IsFreeTrial = isFreeTrial;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Purchased SaaS subscription ID. </summary>
         public string Id { get; }
+
         /// <summary> SaaS subscription name. </summary>
         public string SubscriptionName { get; }
+
         /// <summary> Creation Date and Time. </summary>
         public DateTimeOffset? CreatedOn { get; }
+
         /// <summary> Purchased offer ID. </summary>
         public string OfferId { get; }
+
         /// <summary> Purchased offer's plan ID. </summary>
         public string PlanId { get; }
+
         /// <summary> Indicates the status of the Subscription. </summary>
         public string SaasSubscriptionStatus { get; }
+
         /// <summary> Publisher ID. </summary>
         public string PublisherId { get; }
+
         /// <summary> Purchaser Email ID. </summary>
         public string PurchaserEmailId { get; }
+
         /// <summary> Purchaser Tenant ID. </summary>
         public string PurchaserTenantId { get; }
+
         /// <summary> Purchase Term Unit. </summary>
         public string TermUnit { get; }
+
         /// <summary> AutoRenew flag. </summary>
         public bool? IsAutoRenew { get; }
+
         /// <summary> FreeTrial flag. </summary>
         public bool? IsFreeTrial { get; }
     }

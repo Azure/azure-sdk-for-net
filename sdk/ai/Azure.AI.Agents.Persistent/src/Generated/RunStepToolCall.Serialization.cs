@@ -80,12 +80,18 @@ namespace Azure.AI.Agents.Persistent
                 switch (discriminator.GetString())
                 {
                     case "azure_ai_search": return RunStepAzureAISearchToolCall.DeserializeRunStepAzureAISearchToolCall(element, options);
+                    case "azure_function": return RunStepAzureFunctionToolCall.DeserializeRunStepAzureFunctionToolCall(element, options);
                     case "bing_custom_search": return RunStepBingCustomSearchToolCall.DeserializeRunStepBingCustomSearchToolCall(element, options);
                     case "bing_grounding": return RunStepBingGroundingToolCall.DeserializeRunStepBingGroundingToolCall(element, options);
+                    case "browser_automation": return RunStepBrowserAutomationToolCall.DeserializeRunStepBrowserAutomationToolCall(element, options);
                     case "code_interpreter": return RunStepCodeInterpreterToolCall.DeserializeRunStepCodeInterpreterToolCall(element, options);
+                    case "computer_use_preview": return RunStepComputerUseToolCall.DeserializeRunStepComputerUseToolCall(element, options);
+                    case "connected_agent": return RunStepConnectedAgentToolCall.DeserializeRunStepConnectedAgentToolCall(element, options);
+                    case "deep_research": return RunStepDeepResearchToolCall.DeserializeRunStepDeepResearchToolCall(element, options);
                     case "fabric_dataagent": return RunStepMicrosoftFabricToolCall.DeserializeRunStepMicrosoftFabricToolCall(element, options);
                     case "file_search": return RunStepFileSearchToolCall.DeserializeRunStepFileSearchToolCall(element, options);
                     case "function": return RunStepFunctionToolCall.DeserializeRunStepFunctionToolCall(element, options);
+                    case "mcp": return RunStepMcpToolCall.DeserializeRunStepMcpToolCall(element, options);
                     case "openapi": return RunStepOpenAPIToolCall.DeserializeRunStepOpenAPIToolCall(element, options);
                     case "sharepoint_grounding": return RunStepSharepointToolCall.DeserializeRunStepSharepointToolCall(element, options);
                 }

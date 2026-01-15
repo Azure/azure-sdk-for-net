@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -59,7 +60,17 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WriteStartArray();
                 foreach (var item in DnsResolverDomainLists)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ManagedDomainLists))
+            {
+                writer.WritePropertyName("managedDomainLists"u8);
+                writer.WriteStartArray();
+                foreach (var item in ManagedDomainLists)
+                {
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -114,6 +125,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             IDictionary<string, string> tags = default;
             DnsSecurityRuleAction action = default;
             IList<WritableSubResource> dnsResolverDomainLists = default;
+            IList<ManagedDomainList> managedDomainLists = default;
             DnsSecurityRuleState? dnsSecurityRuleState = default;
             int? priority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -161,9 +173,23 @@ namespace Azure.ResourceManager.DnsResolver.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerDnsResolverContext.Default));
                             }
                             dnsResolverDomainLists = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("managedDomainLists"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ManagedDomainList> array = new List<ManagedDomainList>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new ManagedDomainList(item.GetString()));
+                            }
+                            managedDomainLists = array;
                             continue;
                         }
                         if (property0.NameEquals("dnsSecurityRuleState"u8))
@@ -197,6 +223,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 action,
                 dnsResolverDomainLists ?? new ChangeTrackingList<WritableSubResource>(),
+                managedDomainLists ?? new ChangeTrackingList<ManagedDomainList>(),
                 dnsSecurityRuleState,
                 priority,
                 serializedAdditionalRawData);

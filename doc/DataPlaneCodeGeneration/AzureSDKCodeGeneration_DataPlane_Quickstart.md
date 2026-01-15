@@ -6,17 +6,19 @@ Azure SDK Code Generation takes a [TypeSpec](https://microsoft.github.io/typespe
 
 ## Prerequisites
 
+The initial library generation should happen as part of the `azure-rest-api-specs` repo PR. Details about this process can be found [here](https://eng.ms/docs/products/azure-developer-experience/develop/sdk-generation-pipelines). To proceed with manual generation, follow the rest of the steps in this doc.
+
 For first time to set up of a new SDK package, please verify you have met the prerequisites, including runtime environment, TypeSpec project, and SDK project folder. You can refer to [SDK Generation Prerequisites](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKGeneration_Prerequistites.md) to set up.
 
 ## Generate SDK
 
 We will generate an SDK under the SDK project folder of `azure-sdk-for-net`.
 
-### Configuration (optional)
+### Configuration
 
 You can update `tsp-location.yaml` under sdk project folder to set the typespec project.
 
-You can refer to the [tsp-location.yaml](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/TypeSpec-Project-Scripts.md#tsp-locationyaml) which describes the supported properties in the file.
+You can refer to the [tsp-location.yaml](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/TypeSpec-Project-Scripts.md#tsp-locationyaml) which describes the supported properties in the file. For new data plane services, you must set the `emitterPackageJsonPath` property in tsp-location.yaml to `eng/azure-typespec-http-client-csharp-emitter-package.json`. An example can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/tsp-location.yaml#L4).
 
 ### Generate Code
 
@@ -25,6 +27,18 @@ Run `dotnet build /t:GenerateCode`, and the code will be generated under `sdk\<s
 
 ```dotnetcli
 dotnet build /t:GenerateCode
+```
+
+#### Run with tracing enabled
+```dotnetcli
+dotnet build /t:GenerateCode /p:Trace=true -v d
+```
+
+#### Run with additional emitter options
+Any of the [emitter options](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp/README.md#emitter-options) can be passed through to the build target
+as shown below:
+```dotnetcli
+dotnet build /t:GenerateCode /p:TypespecAdditionalOptions="debug=true;new-project=true"
 ```
 
 Now that you have generated your SDK, you can release it by following the following steps:

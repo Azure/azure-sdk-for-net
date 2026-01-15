@@ -6,13 +6,29 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
+using Azure.ResourceManager.HealthBot.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthBot
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(BotResponseList))]
+    [ModelReaderWriterBuildable(typeof(HealthBotData))]
+    [ModelReaderWriterBuildable(typeof(HealthBotKey))]
+    [ModelReaderWriterBuildable(typeof(HealthBotKeysResult))]
+    [ModelReaderWriterBuildable(typeof(HealthBotKeyVaultProperties))]
+    [ModelReaderWriterBuildable(typeof(HealthBotPatch))]
+    [ModelReaderWriterBuildable(typeof(HealthBotProperties))]
+    [ModelReaderWriterBuildable(typeof(HealthBotResource))]
+    [ModelReaderWriterBuildable(typeof(HealthBotSku))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerHealthBotContext : ModelReaderWriterContext
     {
     }

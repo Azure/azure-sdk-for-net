@@ -12,6 +12,11 @@ namespace Azure.Core.Expressions.DataFactory
     public partial class DataFactoryLinkedServiceReference
     {
         /// <summary> Initializes a new instance of DataFactoryLinkedServiceReference. </summary>
+        internal DataFactoryLinkedServiceReference()
+        {
+            Parameters = new ChangeTrackingDictionary<string, BinaryData?>();
+        }
+        /// <summary> Initializes a new instance of DataFactoryLinkedServiceReference. </summary>
         /// <param name="referenceKind"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>

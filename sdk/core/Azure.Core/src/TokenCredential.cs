@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -54,6 +55,15 @@ namespace Azure.Core
             GetToken(TokenRequestContext.FromGetTokenOptions(properties), cancellationToken).ToAuthenticationToken();
 
         /// <inheritdoc />
-        public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties) => null;
+        public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties)
+        {
+            // Check if scopes are present
+            if (properties.TryGetValue(GetTokenOptions.ScopesPropertyName, out var scopesValue))
+            {
+                return new GetTokenOptions(properties);
+            }
+            // No scopes provided - insufficient information to create TokenRequestContext
+            return null;
+        }
     }
 }

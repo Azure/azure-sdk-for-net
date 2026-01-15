@@ -6,9 +6,16 @@
     <PackageTags>Azure;Azure Maps;Maps Azure.Maps.Search</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);AZC0012;CA1835</NoWarn>
     <AzureMapsSharedSources>$(RepoRoot)/sdk/maps/Azure.Maps.Common/src/</AzureMapsSharedSources>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>
+      $(NoWarn);
+      AZC0012;
+      CA1835;
+      AZC0035; <!-- Missing model factory methods.  #51230-->
+    </NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>

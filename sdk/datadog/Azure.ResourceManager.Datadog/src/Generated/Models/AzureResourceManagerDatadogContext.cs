@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Datadog.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Datadog
 {
@@ -13,6 +15,57 @@ namespace Azure.ResourceManager.Datadog
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CreateResourceSupportedResponseList))]
+    [ModelReaderWriterBuildable(typeof(DatadogAgreement))]
+    [ModelReaderWriterBuildable(typeof(DatadogAgreementProperties))]
+    [ModelReaderWriterBuildable(typeof(DatadogAgreementResourceListResponse))]
+    [ModelReaderWriterBuildable(typeof(DatadogApiKey))]
+    [ModelReaderWriterBuildable(typeof(DatadogApiKeyListResponse))]
+    [ModelReaderWriterBuildable(typeof(DatadogBillingInfoResult))]
+    [ModelReaderWriterBuildable(typeof(DatadogHost))]
+    [ModelReaderWriterBuildable(typeof(DatadogHostListResponse))]
+    [ModelReaderWriterBuildable(typeof(DatadogHostMetadata))]
+    [ModelReaderWriterBuildable(typeof(DatadogInstallMethod))]
+    [ModelReaderWriterBuildable(typeof(DatadogLinkedResourceResult))]
+    [ModelReaderWriterBuildable(typeof(DatadogLogsAgent))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitorAgentRules))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitorData))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitoredResourceResult))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitoredSubscriptionData))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitoredSubscriptionItem))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitoredSubscriptionResource))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitorFilteringTag))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitorLogRules))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitorMetricRules))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitorPatch))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitorProperties))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitorResource))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitorResourceListResponse))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitorResourcePatchProperties))]
+    [ModelReaderWriterBuildable(typeof(DatadogOrganizationProperties))]
+    [ModelReaderWriterBuildable(typeof(DatadogSetPasswordLink))]
+    [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnData))]
+    [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnProperties))]
+    [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnResource))]
+    [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnResourceListResponse))]
+    [ModelReaderWriterBuildable(typeof(DatadogSku))]
+    [ModelReaderWriterBuildable(typeof(DatadogSubscriptionProperties))]
+    [ModelReaderWriterBuildable(typeof(DatadogSubscriptionStatusProperties))]
+    [ModelReaderWriterBuildable(typeof(DatadogSubscriptionStatusResult))]
+    [ModelReaderWriterBuildable(typeof(DatadogUserInfo))]
+    [ModelReaderWriterBuildable(typeof(DataMonitoringTagRuleData))]
+    [ModelReaderWriterBuildable(typeof(DataMonitoringTagRuleResource))]
+    [ModelReaderWriterBuildable(typeof(LinkedResourceListResponse))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceSaaSInfo))]
+    [ModelReaderWriterBuildable(typeof(MonitoredResourceListResponse))]
+    [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionPropertiesList))]
+    [ModelReaderWriterBuildable(typeof(MonitoringTagRuleProperties))]
+    [ModelReaderWriterBuildable(typeof(MonitoringTagRulesListResponse))]
+    [ModelReaderWriterBuildable(typeof(PartnerBillingEntity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(ResubscribeOrganizationContent))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerDatadogContext : ModelReaderWriterContext
     {
     }

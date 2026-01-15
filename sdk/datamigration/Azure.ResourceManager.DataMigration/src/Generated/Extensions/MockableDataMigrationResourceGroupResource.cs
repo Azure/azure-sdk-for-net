@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Database Migration Service. The GET method retrieves information about a service instance.
+        /// The services resource is the top-level resource that represents the Azure Database Migration Service (classic). The GET method retrieves information about a service instance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Database Migration Service. The GET method retrieves information about a service instance.
+        /// The services resource is the top-level resource that represents the Azure Database Migration Service (classic). The GET method retrieves information about a service instance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

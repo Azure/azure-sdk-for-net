@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(MarketplaceSubscription))
             {
                 writer.WritePropertyName("marketplaceSubscription"u8);
-                JsonSerializer.Serialize(writer, MarketplaceSubscription);
+                writer.WriteObjectValue(MarketplaceSubscription, options);
             }
             if (Optional.IsDefined(MarketplaceName))
             {
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            SubResource marketplaceSubscription = default;
+            MarketplaceSaaSInfoMarketplaceSubscription marketplaceSubscription = default;
             string marketplaceName = default;
             string marketplaceResourceId = default;
             string marketplaceStatus = default;
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    marketplaceSubscription = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    marketplaceSubscription = MarketplaceSaaSInfoMarketplaceSubscription.DeserializeMarketplaceSaaSInfoMarketplaceSubscription(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("marketplaceName"u8))

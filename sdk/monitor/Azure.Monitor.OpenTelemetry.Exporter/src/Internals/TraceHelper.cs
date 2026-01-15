@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -20,10 +21,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const int Version = 2;
         private const int MaxlinksAllowed = 100;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey, float sampleRate)
+        internal static (List<TelemetryItem> TelemetryItems, TelemetrySchemaTypeCounter TelemetrySchemaTypeCounter) OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey, float sampleRate)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
+            var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
 
             if (batchActivity.Count > 0 && azureMonitorResource?.MonitorBaseData != null)
             {
@@ -41,19 +43,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     // Check for Exceptions events
                     if (activity.Events.Any())
                     {
-                        AddTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems);
+                        AddTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems, ref telemetrySchemaTypeCounter);
                     }
 
                     switch (activity.GetTelemetryType())
                     {
                         case TelemetryType.Request:
                             var requestData = new RequestData(Version, activity, ref activityTagsProcessor);
-                            requestData.Name = telemetryItem.Tags.TryGetValue(ContextTagKeys.AiOperationName.ToString(), out var operationName) ? operationName.Truncate(SchemaConstants.RequestData_Name_MaxLength) : activity.DisplayName.Truncate(SchemaConstants.RequestData_Name_MaxLength);
+                            // Only set Name if not already set by override attribute
+                            if (string.IsNullOrEmpty(requestData.Name))
+                            {
+                                requestData.Name = telemetryItem.Tags.TryGetValue(ContextTagKeys.AiOperationName.ToString(), out var operationName) ? operationName.Truncate(SchemaConstants.RequestData_Name_MaxLength) : activity.DisplayName.Truncate(SchemaConstants.RequestData_Name_MaxLength);
+                            }
                             telemetryItem.Data = new MonitorBase
                             {
                                 BaseType = "RequestData",
                                 BaseData = requestData,
                             };
+                            telemetrySchemaTypeCounter._requestCount++;
                             break;
                         case TelemetryType.Dependency:
                             telemetryItem.Data = new MonitorBase
@@ -61,6 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 BaseType = "RemoteDependencyData",
                                 BaseData = new RemoteDependencyData(Version, activity, ref activityTagsProcessor),
                             };
+                            telemetrySchemaTypeCounter._dependencyCount++;
                             break;
                     }
 
@@ -73,7 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            return telemetryItems;
+            return (telemetryItems, telemetrySchemaTypeCounter);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -226,7 +234,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return activity.DisplayName;
         }
 
-        private static void AddTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems)
+        private static void AddTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems, ref TelemetrySchemaTypeCounter telemetrySchemaTypeCounter)
         {
             foreach (ref readonly var @event in activity.EnumerateEvents())
             {
@@ -240,6 +248,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             var exceptionTelemetryItem = new TelemetryItem("Exception", telemetryItem, activity.SpanId, activity.Kind, @event.Timestamp);
                             exceptionTelemetryItem.Data = exceptionData;
                             telemetryItems.Add(exceptionTelemetryItem);
+                            telemetrySchemaTypeCounter._exceptionCount++;
                         }
                     }
                     else
@@ -250,6 +259,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             var traceTelemetryItem = new TelemetryItem("Message", telemetryItem, activity.SpanId, activity.Kind, @event.Timestamp);
                             traceTelemetryItem.Data = messageData;
                             telemetryItems.Add(traceTelemetryItem);
+                            telemetrySchemaTypeCounter._traceCount++;
                         }
                     }
                 }

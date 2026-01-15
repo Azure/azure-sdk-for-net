@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> X509 for BrokerAuthentication. </summary>
     public partial class BrokerAuthenticatorMethodX509
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorMethodX509"/>. </summary>
         public BrokerAuthenticatorMethodX509()
@@ -54,17 +26,23 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorMethodX509"/>. </summary>
         /// <param name="authorizationAttributes"> X509 authorization attributes properties. </param>
         /// <param name="trustedClientCaCert"> Name of the trusted client ca cert resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BrokerAuthenticatorMethodX509(IDictionary<string, BrokerAuthenticatorMethodX509Attributes> authorizationAttributes, string trustedClientCaCert, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalValidation"> X509 authentication attributes properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BrokerAuthenticatorMethodX509(IDictionary<string, BrokerAuthenticatorMethodX509Attributes> authorizationAttributes, string trustedClientCaCert, BrokerAuthenticatorValidationMethod? additionalValidation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthorizationAttributes = authorizationAttributes;
             TrustedClientCaCert = trustedClientCaCert;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            AdditionalValidation = additionalValidation;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> X509 authorization attributes properties. </summary>
         public IDictionary<string, BrokerAuthenticatorMethodX509Attributes> AuthorizationAttributes { get; }
+
         /// <summary> Name of the trusted client ca cert resource. </summary>
         public string TrustedClientCaCert { get; set; }
+
+        /// <summary> X509 authentication attributes properties. </summary>
+        public BrokerAuthenticatorValidationMethod? AdditionalValidation { get; set; }
     }
 }

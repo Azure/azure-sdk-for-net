@@ -206,5 +206,29 @@ namespace Azure.Storage.Queues.Models
                 LastSyncedOn = lastSyncedOn,
             };
         }
+
+        /// <summary>
+        /// Creates a new UserDelegationKey instance for mocking.
+        /// </summary>
+        public static UserDelegationKey UserDelegationKey(
+            string signedObjectId = default,
+            string signedTenantId = default,
+            DateTimeOffset signedStartsOn = default,
+            DateTimeOffset signedExpiresOn = default,
+            string signedService = default,
+            string signedVersion = default,
+            string value = default)
+        {
+            return new UserDelegationKey()
+            {
+                SignedObjectId = signedObjectId,
+                SignedTenantId = signedTenantId,
+                SignedStartsOn = signedStartsOn,
+                SignedExpiresOn = signedExpiresOn,
+                SignedService = signedService,
+                SignedVersion = signedVersion,
+                Value = value
+            };
+        }
     }
 }

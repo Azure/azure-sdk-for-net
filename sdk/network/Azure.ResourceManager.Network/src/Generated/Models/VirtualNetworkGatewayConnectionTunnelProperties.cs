@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Tunnel remote IP address. </summary>
+        [WirePath("tunnelIpAddress")]
         public string TunnelIPAddress { get; set; }
         /// <summary> Tunnel BGP peering address. </summary>
+        [WirePath("bgpPeeringAddress")]
         public string BgpPeeringAddress { get; set; }
     }
 }

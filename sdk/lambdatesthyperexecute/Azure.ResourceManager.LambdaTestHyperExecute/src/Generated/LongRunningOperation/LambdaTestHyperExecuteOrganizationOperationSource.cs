@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute
 {
-    internal class LambdaTestHyperExecuteOrganizationOperationSource : IOperationSource<LambdaTestHyperExecuteOrganizationResource>
+    /// <summary></summary>
+    internal partial class LambdaTestHyperExecuteOrganizationOperationSource : IOperationSource<LambdaTestHyperExecuteOrganizationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal LambdaTestHyperExecuteOrganizationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         LambdaTestHyperExecuteOrganizationResource IOperationSource<LambdaTestHyperExecuteOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LambdaTestHyperExecuteOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerLambdaTestHyperExecuteContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            LambdaTestHyperExecuteOrganizationData data = LambdaTestHyperExecuteOrganizationData.DeserializeLambdaTestHyperExecuteOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new LambdaTestHyperExecuteOrganizationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<LambdaTestHyperExecuteOrganizationResource> IOperationSource<LambdaTestHyperExecuteOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LambdaTestHyperExecuteOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerLambdaTestHyperExecuteContext.Default);
-            return await Task.FromResult(new LambdaTestHyperExecuteOrganizationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            LambdaTestHyperExecuteOrganizationData data = LambdaTestHyperExecuteOrganizationData.DeserializeLambdaTestHyperExecuteOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new LambdaTestHyperExecuteOrganizationResource(_client, data);
         }
     }
 }

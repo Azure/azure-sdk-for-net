@@ -1,13 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.StorageCache.Models;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 {
@@ -20,6 +17,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task Delete()
         {
             await AzureResourceTestHelper.TestDelete<AmlFileSystemResource>(
@@ -30,6 +28,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task Update()
         {
             AmlFileSystemResource amlFSResource = await this.CreateOrUpdateAmlFilesystem();
@@ -54,6 +53,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task AmlFSArchiveOperations()
         {
             AmlFileSystemResource amlFSResource = await this.CreateOrUpdateAmlFilesystem();

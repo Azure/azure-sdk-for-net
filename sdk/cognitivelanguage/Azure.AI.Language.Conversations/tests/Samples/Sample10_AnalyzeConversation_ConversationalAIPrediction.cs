@@ -15,7 +15,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2025_11_15_Preview)]
         public void AnalyzeConversationalAI()
         {
             ConversationAnalysisClient client = Client;
@@ -30,16 +30,15 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             AnalyzeConversationInput data = new ConversationalAITask(
                 new ConversationalAIAnalysisInput(
-                    conversations: new AIConversation[] {
-                        new AIConversation(
+                    conversations: new TextConversation[] {
+                        new TextConversation(
                             id: "order",
-                            modality: InputModality.Text,
                             language: "en-GB",
-                            conversationItems: new ConversationalAIItem[]
+                            conversationItems: new TextConversationItem[]
                             {
-                                new ConversationalAIItem(id: "1", participantId: "user", text: "Hi"),
-                                new ConversationalAIItem(id: "2", participantId: "bot", text: "Hello, how can I help you?"),
-                                new ConversationalAIItem(id: "3", participantId: "user", text: "Send an email to Carol about tomorrow's demo")
+                                new TextConversationItem(id: "1", participantId: "user", text: "Hi"),
+                                new TextConversationItem(id: "2", participantId: "bot", text: "Hello, how can I help you?"),
+                                new TextConversationItem(id: "3", participantId: "user", text: "Send an email to Carol about tomorrow's demo")
                             }
                         )
                     }),
@@ -134,7 +133,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2025_11_15_Preview)]
         public async Task AnalyzeConversationalAIAsync()
         {
             ConversationAnalysisClient client = Client;
@@ -144,17 +143,16 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             AnalyzeConversationInput data = new ConversationalAITask(
                 new ConversationalAIAnalysisInput(
-                    conversations: new AIConversation[]
+                    conversations: new TextConversation[]
                     {
-                        new AIConversation(
+                        new TextConversation(
                             id: "order",
-                            modality: InputModality.Text,
                             language: "en-GB",
-                            conversationItems: new ConversationalAIItem[]
+                            conversationItems: new TextConversationItem[]
                             {
-                                new ConversationalAIItem(id: "1", participantId: "user", text: "Hi"),
-                                new ConversationalAIItem(id: "2", participantId: "bot", text: "Hello, how can I help you?"),
-                                new ConversationalAIItem(id: "3", participantId: "user", text: "Send an email to Carol about tomorrow's demo")
+                                new TextConversationItem(id: "1", participantId: "user", text: "Hi"),
+                                new TextConversationItem(id: "2", participantId: "bot", text: "Hello, how can I help you?"),
+                                new TextConversationItem(id: "3", participantId: "user", text: "Send an email to Carol about tomorrow's demo")
                             }
                         )
                     }),

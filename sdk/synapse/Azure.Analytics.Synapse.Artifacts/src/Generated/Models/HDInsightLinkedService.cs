@@ -33,6 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="clusterUri"> HDInsight cluster URI. Type: string (or Expression with resultType string). </param>
+        /// <param name="clusterAuthType"> HDInsight cluster authentication type. </param>
         /// <param name="userName"> HDInsight cluster user name. Type: string (or Expression with resultType string). </param>
         /// <param name="password">
         /// HDInsight cluster password.
@@ -44,9 +45,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="isEspEnabled"> Specify if the HDInsight is created with ESP (Enterprise Security Package). Type: Boolean. </param>
         /// <param name="fileSystem"> Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string). </param>
-        internal HDInsightLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object clusterUri, object userName, SecretBase password, LinkedServiceReference linkedServiceName, LinkedServiceReference hcatalogLinkedServiceName, object encryptedCredential, object isEspEnabled, object fileSystem) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="credential"> The credential reference containing MI authentication information for the HDInsight cluster. </param>
+        internal HDInsightLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object clusterUri, HDInsightClusterAuthenticationType? clusterAuthType, object userName, SecretBase password, LinkedServiceReference linkedServiceName, LinkedServiceReference hcatalogLinkedServiceName, object encryptedCredential, object isEspEnabled, object fileSystem, CredentialReference credential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterUri = clusterUri;
+            ClusterAuthType = clusterAuthType;
             UserName = userName;
             Password = password;
             LinkedServiceName = linkedServiceName;
@@ -54,11 +57,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             EncryptedCredential = encryptedCredential;
             IsEspEnabled = isEspEnabled;
             FileSystem = fileSystem;
+            Credential = credential;
             Type = type ?? "HDInsight";
         }
 
         /// <summary> HDInsight cluster URI. Type: string (or Expression with resultType string). </summary>
         public object ClusterUri { get; set; }
+        /// <summary> HDInsight cluster authentication type. </summary>
+        public HDInsightClusterAuthenticationType? ClusterAuthType { get; set; }
         /// <summary> HDInsight cluster user name. Type: string (or Expression with resultType string). </summary>
         public object UserName { get; set; }
         /// <summary>
@@ -77,5 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object IsEspEnabled { get; set; }
         /// <summary> Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string). </summary>
         public object FileSystem { get; set; }
+        /// <summary> The credential reference containing MI authentication information for the HDInsight cluster. </summary>
+        public CredentialReference Credential { get; set; }
     }
 }

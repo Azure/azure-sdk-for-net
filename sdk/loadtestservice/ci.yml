@@ -14,21 +14,6 @@ trigger:
     - sdk/loadtestservice/Azure.Developer.Playwright.NUnit
     - sdk/loadtestservice/Azure.Developer.Playwright.MSTest
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/loadtestservice/ci.yml
-    - sdk/loadtestservice/Azure.Developer.LoadTesting
-    - sdk/loadtestservice/Azure.Developer.Playwright
-    - sdk/loadtestservice/Azure.Developer.Playwright.NUnit
-    - sdk/loadtestservice/Azure.Developer.Playwright.MSTest
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

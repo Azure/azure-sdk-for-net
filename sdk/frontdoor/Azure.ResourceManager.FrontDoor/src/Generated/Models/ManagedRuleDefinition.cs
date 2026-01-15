@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Identifier for the managed rule. </summary>
+        [WirePath("ruleId")]
         public string RuleId { get; }
         /// <summary> Describes the default state for the managed rule. </summary>
+        [WirePath("defaultState")]
         public ManagedRuleEnabledState? DefaultState { get; }
         /// <summary> Describes the default action to be applied when the managed rule matches. </summary>
+        [WirePath("defaultAction")]
         public RuleMatchActionType? DefaultAction { get; }
         /// <summary> Describes the functionality of the managed rule. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

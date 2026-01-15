@@ -36,15 +36,15 @@ namespace Azure.AI.Language.Conversations
     }
     public partial class ConversationsClientOptions : Azure.Core.ClientOptions
     {
-        public ConversationsClientOptions(Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion version = Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview) { }
+        public ConversationsClientOptions(Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion version = Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion.V2025_11_15_Preview) { }
         public enum ServiceVersion
         {
             V2022_05_01 = 1,
             V2023_04_01 = 2,
             V2024_05_01 = 3,
             V2024_11_01 = 4,
-            V2024_11_15_Preview = 5,
-            V2025_05_15_Preview = 6,
+            V2025_05_15_Preview = 5,
+            V2025_11_15_Preview = 6,
         }
     }
     public static partial class ConversationsModelFactory
@@ -155,10 +155,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTrainedModelAsync(string projectName, string trainedModelLabel, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation<System.BinaryData> DeployProject(Azure.WaitUntil waitUntil, string projectName, string deploymentName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeployProjectAsync(Azure.WaitUntil waitUntil, string projectName, string deploymentName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Operation<System.BinaryData> ExportProject(Azure.WaitUntil waitUntil, string projectName, string exportedProjectFormat, string assetKind, string stringIndexType, Azure.RequestContext context) { throw null; }
         public virtual Azure.Operation<System.BinaryData> ExportProject(Azure.WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", string trainedModelLabel = null, Azure.RequestContext context = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ExportProjectAsync(Azure.WaitUntil waitUntil, string projectName, string exportedProjectFormat, string assetKind, string stringIndexType, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ExportProjectAsync(Azure.WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", string trainedModelLabel = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDeployment(string projectName, string deploymentName, Azure.RequestContext context = null) { throw null; }
@@ -235,28 +233,12 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.AgeUnit Week { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.AgeUnit Year { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.AgeUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.AgeUnit left, Azure.AI.Language.Conversations.Models.AgeUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.AgeUnit (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.Conversations.Models.AgeUnit left, Azure.AI.Language.Conversations.Models.AgeUnit right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class AIConversation : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AIConversation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AIConversation>
-    {
-        public AIConversation(string id, Azure.AI.Language.Conversations.Models.InputModality modality, string language, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.ConversationalAIItem> conversationItems) { }
-        public System.Collections.Generic.IList<Azure.AI.Language.Conversations.Models.ConversationalAIItem> ConversationItems { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string Language { get { throw null; } }
-        public Azure.AI.Language.Conversations.Models.InputModality Modality { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.AIConversation System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AIConversation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AIConversation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.AIConversation System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AIConversation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AIConversation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AIConversation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AIConversationLanguageUnderstandingActionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AIConversationLanguageUnderstandingActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AIConversationLanguageUnderstandingActionContent>
     {
@@ -430,9 +412,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.AreaUnit SquareYard { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.AreaUnit Unspecified { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.AreaUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.AreaUnit left, Azure.AI.Language.Conversations.Models.AreaUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.AreaUnit (string value) { throw null; }
@@ -523,9 +503,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.ConversationActionState Running { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationActionState Succeeded { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.ConversationActionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.ConversationActionState left, Azure.AI.Language.Conversations.Models.ConversationActionState right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.ConversationActionState (string value) { throw null; }
@@ -547,8 +525,8 @@ namespace Azure.AI.Language.Conversations.Models
     }
     public partial class ConversationalAIAnalysisInput : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalAIAnalysisInput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIAnalysisInput>
     {
-        public ConversationalAIAnalysisInput(System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.AIConversation> conversations) { }
-        public System.Collections.Generic.IList<Azure.AI.Language.Conversations.Models.AIConversation> Conversations { get { throw null; } }
+        public ConversationalAIAnalysisInput(System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.TextConversation> conversations) { }
+        public System.Collections.Generic.IList<Azure.AI.Language.Conversations.Models.TextConversation> Conversations { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Conversations.Models.ConversationalAIAnalysisInput System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalAIAnalysisInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalAIAnalysisInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -588,19 +566,6 @@ namespace Azure.AI.Language.Conversations.Models
         Azure.AI.Language.Conversations.Models.ConversationalAIIntent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIIntent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIIntent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIIntent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ConversationalAIItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalAIItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIItem>
-    {
-        public ConversationalAIItem(string id, string participantId, string text) { }
-        public string Id { get { throw null; } }
-        public string ParticipantId { get { throw null; } }
-        public string Text { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.ConversationalAIItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalAIItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalAIItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.ConversationalAIItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ConversationalAIResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationalAIResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationalAIResult>
     {
@@ -696,9 +661,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.ConversationDomain Generic { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationDomain Healthcare { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.ConversationDomain other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.ConversationDomain left, Azure.AI.Language.Conversations.Models.ConversationDomain right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.ConversationDomain (string value) { throw null; }
@@ -772,9 +735,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.ConversationErrorCode Unauthorized { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationErrorCode Warning { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.ConversationErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.ConversationErrorCode left, Azure.AI.Language.Conversations.Models.ConversationErrorCode right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.ConversationErrorCode (string value) { throw null; }
@@ -883,19 +844,38 @@ namespace Azure.AI.Language.Conversations.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ConversationPiiCategories(string value) { throw null; }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories ABARoutingNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Address { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Age { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories All { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories BankAccountNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories CASocialInsuranceNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories CreditCard { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories CVV { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Date { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories DateOfBirth { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Default { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories DriversLicenseNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Email { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories GithubAccount { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories GovernmentIssuedId { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories GPE { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories HealthCardNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories InternationalBankingAccountNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Location { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories NumericIdentifier { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Organization { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories PassportNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Person { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories PersonType { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Phone { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories SWIFTCode { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories USMedicareBeneficiaryId { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories UsSocialSecurityNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories VehicleIdentificationNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories ZipCode { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.ConversationPiiCategories other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.ConversationPiiCategories left, Azure.AI.Language.Conversations.Models.ConversationPiiCategories right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.ConversationPiiCategories (string value) { throw null; }
@@ -908,17 +888,36 @@ namespace Azure.AI.Language.Conversations.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ConversationPiiCategoryExclusions(string value) { throw null; }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions ABARoutingNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Address { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Age { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions BankAccountNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions CASocialInsuranceNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions CreditCard { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions CVV { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Date { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions DateOfBirth { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions DriversLicenseNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Email { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions GithubAccount { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions GovernmentIssuedId { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions GPE { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions HealthCardNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions InternationalBankingAccountNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Location { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions NumericIdentifier { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Organization { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions PassportNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Person { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions PersonType { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Phone { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions SWIFTCode { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions USMedicareBeneficiaryId { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions UsSocialSecurityNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions VehicleIdentificationNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions ZipCode { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions left, Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions (string value) { throw null; }
@@ -1151,9 +1150,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.DateTimeSubKind Set { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.DateTimeSubKind Time { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.DateTimeSubKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.DateTimeSubKind left, Azure.AI.Language.Conversations.Models.DateTimeSubKind right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.DateTimeSubKind (string value) { throw null; }
@@ -1238,9 +1235,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.InformationUnit Terabyte { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.InformationUnit Unspecified { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.InformationUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.InformationUnit left, Azure.AI.Language.Conversations.Models.InformationUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.InformationUnit (string value) { throw null; }
@@ -1268,9 +1263,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.InnerErrorCode ModelVersionIncorrect { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.InnerErrorCode UnsupportedLanguageCode { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.InnerErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.InnerErrorCode left, Azure.AI.Language.Conversations.Models.InnerErrorCode right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.InnerErrorCode (string value) { throw null; }
@@ -1301,9 +1294,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.InputModality Text { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.InputModality Transcript { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.InputModality other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.InputModality left, Azure.AI.Language.Conversations.Models.InputModality right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.InputModality (string value) { throw null; }
@@ -1427,9 +1418,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.LengthUnit Unspecified { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.LengthUnit Yard { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.LengthUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.LengthUnit left, Azure.AI.Language.Conversations.Models.LengthUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.LengthUnit (string value) { throw null; }
@@ -1456,9 +1445,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.LogicalOperationKind And { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.LogicalOperationKind Or { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.LogicalOperationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.LogicalOperationKind left, Azure.AI.Language.Conversations.Models.LogicalOperationKind right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.LogicalOperationKind (string value) { throw null; }
@@ -1603,9 +1590,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.NumberKind Power { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.NumberKind Unspecified { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.NumberKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.NumberKind left, Azure.AI.Language.Conversations.Models.NumberKind right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.NumberKind (string value) { throw null; }
@@ -1671,9 +1656,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.ParticipantRole Customer { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ParticipantRole Generic { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.ParticipantRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.ParticipantRole left, Azure.AI.Language.Conversations.Models.ParticipantRole right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.ParticipantRole (string value) { throw null; }
@@ -1774,9 +1757,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.RangeKind Volume { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.RangeKind Weight { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.RangeKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.RangeKind left, Azure.AI.Language.Conversations.Models.RangeKind right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.RangeKind (string value) { throw null; }
@@ -1792,9 +1773,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.RankerKind Default { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.RankerKind QuestionOnly { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.RankerKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.RankerKind left, Azure.AI.Language.Conversations.Models.RankerKind right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.RankerKind (string value) { throw null; }
@@ -1837,9 +1816,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.RedactionCharacter Tilde { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.RedactionCharacter Underscore { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.RedactionCharacter other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.RedactionCharacter left, Azure.AI.Language.Conversations.Models.RedactionCharacter right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.RedactionCharacter (string value) { throw null; }
@@ -1868,9 +1845,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.RelativeTo End { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.RelativeTo Start { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.RelativeTo other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.RelativeTo left, Azure.AI.Language.Conversations.Models.RelativeTo right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.RelativeTo (string value) { throw null; }
@@ -1947,9 +1922,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.SpeedUnit YardsPerMinute { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.SpeedUnit YardsPerSecond { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.SpeedUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.SpeedUnit left, Azure.AI.Language.Conversations.Models.SpeedUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.SpeedUnit (string value) { throw null; }
@@ -1966,9 +1939,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.StringIndexType UnicodeCodePoint { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.StringIndexType Utf16CodeUnit { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.StringIndexType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.StringIndexType left, Azure.AI.Language.Conversations.Models.StringIndexType right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.StringIndexType (string value) { throw null; }
@@ -2010,9 +1981,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.SummaryAspect Recap { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.SummaryAspect Resolution { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.SummaryAspect other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.SummaryAspect left, Azure.AI.Language.Conversations.Models.SummaryAspect right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.SummaryAspect (string value) { throw null; }
@@ -2029,9 +1998,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.SummaryLengthBucket Medium { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.SummaryLengthBucket Short { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.SummaryLengthBucket other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.SummaryLengthBucket left, Azure.AI.Language.Conversations.Models.SummaryLengthBucket right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.SummaryLengthBucket (string value) { throw null; }
@@ -2101,9 +2068,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.TemperatureUnit Rankine { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.TemperatureUnit Unspecified { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.TemperatureUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.TemperatureUnit left, Azure.AI.Language.Conversations.Models.TemperatureUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.TemperatureUnit (string value) { throw null; }
@@ -2135,9 +2100,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.TemporalModifier Start { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.TemporalModifier Until { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.TemporalModifier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.TemporalModifier left, Azure.AI.Language.Conversations.Models.TemporalModifier right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.TemporalModifier (string value) { throw null; }
@@ -2197,9 +2160,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.TranscriptContentType MaskedItn { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.TranscriptContentType Text { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.TranscriptContentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.TranscriptContentType left, Azure.AI.Language.Conversations.Models.TranscriptContentType right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.TranscriptContentType (string value) { throw null; }
@@ -2285,9 +2246,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.VolumeUnit Teaspoon { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.VolumeUnit Unspecified { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.VolumeUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.VolumeUnit left, Azure.AI.Language.Conversations.Models.VolumeUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.VolumeUnit (string value) { throw null; }
@@ -2329,9 +2288,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.WeightUnit Ton { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.WeightUnit Unspecified { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.WeightUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Conversations.Models.WeightUnit left, Azure.AI.Language.Conversations.Models.WeightUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.Models.WeightUnit (string value) { throw null; }

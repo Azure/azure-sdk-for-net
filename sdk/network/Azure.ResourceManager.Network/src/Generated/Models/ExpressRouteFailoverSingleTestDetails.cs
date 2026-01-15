@@ -77,20 +77,28 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Peering location of the test. </summary>
+        [WirePath("peeringLocation")]
         public string PeeringLocation { get; }
         /// <summary> The current status of the test. </summary>
+        [WirePath("status")]
         public FailoverTestStatusForSingleTest? Status { get; }
         /// <summary> Time when the test was started. </summary>
+        [WirePath("startTimeUtc")]
         public string StartTimeUtc { get; }
         /// <summary> Time when the test was completed. </summary>
+        [WirePath("endTimeUtc")]
         public string EndTimeUtc { get; }
         /// <summary> List of routes received from this peering as well as some other peering location. </summary>
+        [WirePath("redundantRoutes")]
         public IReadOnlyList<ExpressRouteFailoverRedundantRoute> RedundantRoutes { get; }
         /// <summary> List of al the routes that were received only from this peering location. </summary>
+        [WirePath("nonRedundantRoutes")]
         public IReadOnlyList<string> NonRedundantRoutes { get; }
         /// <summary> Whether the failover simulation was successful or not. </summary>
+        [WirePath("wasSimulationSuccessful")]
         public bool? WasSimulationSuccessful { get; }
         /// <summary> List of all the failover connections for this peering location. </summary>
+        [WirePath("failoverConnectionDetails")]
         public IReadOnlyList<FailoverConnectionDetails> FailoverConnectionDetails { get; }
     }
 }

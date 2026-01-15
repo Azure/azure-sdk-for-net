@@ -13,9 +13,9 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="System.Linq.Async" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
-    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1" />
+    <PackageReference Include="System.Linq.AsyncEnumerable" />
+    <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,7 +45,7 @@
     <Compile Include="..\ModelReaderWriterTests\MrwTestBase.cs" LinkBase="SharedTests" />
     <Compile Include="..\ModelReaderWriterTests\RoundTripStrategy.cs" LinkBase="SharedTests" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\BaseModel.cs" LinkBase="Shared\Models" />
     <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\ModelX.cs" LinkBase="Shared\Models" />
@@ -64,5 +64,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
+
 </Project>

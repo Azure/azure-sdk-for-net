@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Describes the supported variable for group by. </summary>
+        [WirePath("variableName")]
         public FrontDoorWebApplicationFirewallPolicyGroupByVariableName VariableName { get; set; }
     }
 }

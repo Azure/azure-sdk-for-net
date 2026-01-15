@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
@@ -25,12 +26,8 @@ namespace Samples
         /// <param name="client"> The CatClient client used to send requests. </param>
         /// <param name="myToken"> myToken description. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::System.ArgumentNullException"> <paramref name="myToken"/> is null. </exception>
-        /// <exception cref="global::System.ArgumentException"> <paramref name="myToken"/> is an empty string, and was expected to be non-empty. </exception>
         public CatClientGetCatsAsyncCollectionResult(global::Samples.CatClient client, string myToken, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
         {
-            global::Samples.Argument.AssertNotNullOrEmpty(myToken, nameof(myToken));
-
             _client = client;
             _myToken = myToken;
             _context = context;
@@ -43,29 +40,35 @@ namespace Samples
         public override async global::System.Collections.Generic.IAsyncEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             string nextPage = (continuationToken ?? _myToken);
-            do
+            while (true)
             {
-                global::Azure.Response response = await this.GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
+                global::Azure.Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if ((response is null))
                 {
                     yield break;
                 }
-                global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
+                global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
                 global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
-                foreach (var item in responseWithType.Cats)
+                foreach (var item in result.Cats)
                 {
-                    items.Add(global::System.BinaryData.FromObjectAsJson(item));
+                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default));
                 }
-                nextPage = response.Headers.TryGetValue("nextPage", out string value) ? value : null;
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage, response);
+                if ((response.Headers.TryGetValue("nextPage", out string value) && !string.IsNullOrEmpty(value)))
+                {
+                    nextPage = value;
+                }
+                else
+                {
+                    yield break;
+                }
             }
-            while (!string.IsNullOrEmpty(nextPage));
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private async global::System.Threading.Tasks.ValueTask<global::Azure.Response> GetNextResponse(int? pageSizeHint, string continuationToken)
+        private async global::System.Threading.Tasks.ValueTask<global::Azure.Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
         {
             global::Azure.Core.HttpMessage message = _client.CreateGetCatsRequest(continuationToken, _context);
             using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CatClient.GetCats");

@@ -23,30 +23,27 @@ internal partial class AzureAudioClient : AudioClient
     }
 #endif
 
-    internal override PipelineMessage CreateCreateTranscriptionRequest(BinaryContent content, string contentType, RequestOptions options)
+    internal override PipelineMessage CreateTranscribeAudioRequest(BinaryContent content, string contentType, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion, _deploymentName)
             .WithMethod("POST")
             .WithPath("audio", "transcriptions")
             .WithContent(content, contentType)
-            .WithAccept("application/json")
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateCreateTranslationRequest(BinaryContent content, string contentType, RequestOptions options)
+    internal override PipelineMessage CreateTranslateAudioRequest(BinaryContent content, string contentType, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion, _deploymentName)
             .WithMethod("POST")
             .WithPath("audio", "translations")
             .WithContent(content, contentType)
-            .WithAccept("application/json")
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateCreateSpeechRequest(BinaryContent content, RequestOptions options)
+    internal override PipelineMessage CreateGenerateSpeechRequest(BinaryContent content, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion, _deploymentName)
             .WithMethod("POST")
             .WithPath("audio", "speech")
             .WithContent(content, "application/json")
-            .WithAccept("application/octet-stream")
             .WithOptions(options)
             .Build();
 }

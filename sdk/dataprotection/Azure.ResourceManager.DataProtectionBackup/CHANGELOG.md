@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.7.0 (2025-09-25)
+
+### Features Added
+
+- Stable version release for API version 2025-07-01.
+    - Added property `RenameTo` in the model `ItemPathBasedRestoreCriteria` to support rename during restore.
+    - Added model `AdlsBlobBackupDatasourceParameters` to support ADLS Gen2 backup datasource.
+- Make `Azure.ResourceManager.DataProtectionBackup` AOT-compatible.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.45.0 to 1.49.0
+- Upgraded Azure.ResourceManager from 1.13.0 to 1.13.2
 
 ## 1.6.0 (2025-02-12)
 

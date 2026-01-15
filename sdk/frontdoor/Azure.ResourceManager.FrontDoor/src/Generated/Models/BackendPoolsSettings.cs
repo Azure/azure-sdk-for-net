@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Whether to enforce certificate name check on HTTPS requests to all backend pools. No effect on non-HTTPS requests. </summary>
+        [WirePath("enforceCertificateNameCheck")]
         public EnforceCertificateNameCheckEnabledState? EnforceCertificateNameCheck { get; set; }
         /// <summary> Send and receive timeout on forwarding request to the backend. When timeout is reached, the request fails and returns. </summary>
+        [WirePath("sendRecvTimeoutSeconds")]
         public int? SendRecvTimeoutInSeconds { get; set; }
     }
 }

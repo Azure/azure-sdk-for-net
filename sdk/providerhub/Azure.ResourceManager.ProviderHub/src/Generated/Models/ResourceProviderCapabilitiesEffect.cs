@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceProviderCapabilitiesEffect. </summary>
+    /// <summary> The effect. </summary>
     public readonly partial struct ResourceProviderCapabilitiesEffect : IEquatable<ResourceProviderCapabilitiesEffect>
     {
         private readonly string _value;

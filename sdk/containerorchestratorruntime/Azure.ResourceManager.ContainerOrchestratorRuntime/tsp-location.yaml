@@ -1,3 +1,4 @@
 directory: specification\kubernetesruntime\KubernetesRuntime.Management
-commit: 462574dbd02088c209bb1da3eef0d93f699e8de2
+commit: 595f822d3a7d4488e6a71b1d9724ef4d79fe6f4d
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

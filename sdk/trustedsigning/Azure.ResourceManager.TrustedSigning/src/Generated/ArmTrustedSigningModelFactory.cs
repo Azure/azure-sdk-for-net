@@ -8,110 +8,110 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.TrustedSigning;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmTrustedSigningModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.TrustedSigningAccountNameAvailabilityResult"/>. </summary>
-        /// <param name="isNameAvailable"> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
-        /// <param name="reason"> The reason that a trusted signing account name could not be used. The Reason element is only returned if nameAvailable is false. </param>
-        /// <param name="message"> An error message explaining the Reason value in more detail. </param>
-        /// <returns> A new <see cref="Models.TrustedSigningAccountNameAvailabilityResult"/> instance for mocking. </returns>
-        public static TrustedSigningAccountNameAvailabilityResult TrustedSigningAccountNameAvailabilityResult(bool? isNameAvailable = null, TrustedSigningAccountNameUnavailabilityReason? reason = null, string message = null)
-        {
-            return new TrustedSigningAccountNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
-        }
 
-        /// <summary> Initializes a new instance of <see cref="TrustedSigning.TrustedSigningAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="accountUri"> The URI of the trusted signing account which is used during signing files. </param>
-        /// <param name="skuName"> SKU of the trusted signing account. </param>
         /// <param name="provisioningState"> Status of the current operation on trusted signing account. </param>
+        /// <param name="skuName"> Name of the SKU. </param>
         /// <returns> A new <see cref="TrustedSigning.TrustedSigningAccountData"/> instance for mocking. </returns>
-        public static TrustedSigningAccountData TrustedSigningAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, Uri accountUri = null, TrustedSigningSkuName? skuName = null, TrustedSigningProvisioningState? provisioningState = null)
+        public static TrustedSigningAccountData TrustedSigningAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri accountUri = default, TrustedSigningProvisioningState? provisioningState = default, TrustedSigningSkuName? skuName = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new TrustedSigningAccountData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                accountUri,
-                skuName.HasValue ? new TrustedSigningAccountSku(skuName.Value, serializedAdditionalRawData: null) : null,
-                provisioningState,
-                serializedAdditionalRawData: null);
+                accountUri is null && provisioningState is null && skuName is null ? default : new CodeSigningAccountProperties(accountUri, new TrustedSigningAccountSku(skuName.Value, null), provisioningState, null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrustedSigning.TrustedSigningCertificateProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="skuName"> Name of the SKU. </param>
+        /// <returns> A new <see cref="Models.TrustedSigningAccountPatch"/> instance for mocking. </returns>
+        public static TrustedSigningAccountPatch TrustedSigningAccountPatch(IDictionary<string, string> tags = default, TrustedSigningSkuName? skuName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new TrustedSigningAccountPatch(tags, skuName is null ? default : new CodeSigningAccountPatchProperties(new AccountSkuPatch(skuName, null), null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The parameters used to check the availability of the trusted signing account name. </summary>
+        /// <param name="resourceType"> The type of the resource, "Microsoft.CodeSigning/codeSigningAccounts". </param>
+        /// <param name="name"> Trusted signing account name. </param>
+        /// <returns> A new <see cref="Models.TrustedSigningAccountNameAvailabilityContent"/> instance for mocking. </returns>
+        public static TrustedSigningAccountNameAvailabilityContent TrustedSigningAccountNameAvailabilityContent(ResourceType resourceType = default, string name = default)
+        {
+            return new TrustedSigningAccountNameAvailabilityContent(resourceType, name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CheckNameAvailability operation response. </summary>
+        /// <param name="isNameAvailable"> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
+        /// <param name="reason"> The reason that a trusted signing account name could not be used. The Reason element is only returned if nameAvailable is false. </param>
+        /// <param name="message"> An error message explaining the Reason value in more detail. </param>
+        /// <returns> A new <see cref="Models.TrustedSigningAccountNameAvailabilityResult"/> instance for mocking. </returns>
+        public static TrustedSigningAccountNameAvailabilityResult TrustedSigningAccountNameAvailabilityResult(bool? isNameAvailable = default, TrustedSigningAccountNameUnavailabilityReason? reason = default, string message = default)
+        {
+            return new TrustedSigningAccountNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="profileType"> Profile type of the certificate. </param>
-        /// <param name="commonName"> Used as CN in the certificate subject name. </param>
-        /// <param name="organization"> Used as O in the certificate subject name. </param>
-        /// <param name="organizationUnit"> Used as OU in the private trust certificate subject name. </param>
-        /// <param name="streetAddress"> Used as STREET in the certificate subject name. </param>
         /// <param name="includeStreetAddress"> Whether to include STREET in the certificate subject name. </param>
-        /// <param name="city"> Used as L in the certificate subject name. </param>
         /// <param name="includeCity"> Whether to include L in the certificate subject name. Applicable only for private trust, private trust ci profile types. </param>
-        /// <param name="state"> Used as S in the certificate subject name. </param>
         /// <param name="includeState"> Whether to include S in the certificate subject name. Applicable only for private trust, private trust ci profile types. </param>
-        /// <param name="country"> Used as C in the certificate subject name. </param>
         /// <param name="includeCountry"> Whether to include C in the certificate subject name. Applicable only for private trust, private trust ci profile types. </param>
-        /// <param name="postalCode"> Used as PC in the certificate subject name. </param>
         /// <param name="includePostalCode"> Whether to include PC in the certificate subject name. </param>
-        /// <param name="enhancedKeyUsage"> Enhanced key usage of the certificate. </param>
         /// <param name="identityValidationId"> Identity validation id used for the certificate subject name. </param>
         /// <param name="provisioningState"> Status of the current operation on certificate profile. </param>
         /// <param name="status"> Status of the certificate profile. </param>
         /// <param name="certificates"> List of renewed certificates. </param>
         /// <returns> A new <see cref="TrustedSigning.TrustedSigningCertificateProfileData"/> instance for mocking. </returns>
-        public static TrustedSigningCertificateProfileData TrustedSigningCertificateProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CertificateProfileType? profileType = null, string commonName = null, string organization = null, string organizationUnit = null, string streetAddress = null, bool? includeStreetAddress = null, string city = null, bool? includeCity = null, string state = null, bool? includeState = null, string country = null, bool? includeCountry = null, string postalCode = null, bool? includePostalCode = null, string enhancedKeyUsage = null, string identityValidationId = null, TrustedSigningProvisioningState? provisioningState = null, CertificateProfileStatus? status = null, IEnumerable<TrustedSigningCertificate> certificates = null)
+        public static TrustedSigningCertificateProfileData TrustedSigningCertificateProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CertificateProfileType? profileType = default, bool? includeStreetAddress = default, bool? includeCity = default, bool? includeState = default, bool? includeCountry = default, bool? includePostalCode = default, string identityValidationId = default, TrustedSigningProvisioningState? provisioningState = default, CertificateProfileStatus? status = default, IEnumerable<TrustedSigningCertificate> certificates = default)
         {
-            certificates ??= new List<TrustedSigningCertificate>();
-
             return new TrustedSigningCertificateProfileData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                profileType,
-                commonName,
-                organization,
-                organizationUnit,
-                streetAddress,
-                includeStreetAddress,
-                city,
-                includeCity,
-                state,
-                includeState,
-                country,
-                includeCountry,
-                postalCode,
-                includePostalCode,
-                enhancedKeyUsage,
-                identityValidationId,
-                provisioningState,
-                status,
-                certificates?.ToList(),
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                profileType is null && includeStreetAddress is null && includeCity is null && includeState is null && includeCountry is null && includePostalCode is null && identityValidationId is null && provisioningState is null && status is null && certificates is null ? default : new CertificateProfileProperties(
+                    profileType.Value,
+                    includeStreetAddress,
+                    includeCity,
+                    includeState,
+                    includeCountry,
+                    includePostalCode,
+                    identityValidationId,
+                    provisioningState,
+                    status,
+                    (certificates ?? new ChangeTrackingList<TrustedSigningCertificate>()).ToList(),
+                    null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TrustedSigningCertificate"/>. </summary>
         /// <param name="serialNumber"> Serial number of the certificate. </param>
+        /// <param name="enhancedKeyUsage"> Enhanced key usage of the certificate. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
         /// <param name="createOn"> Certificate created date. </param>
@@ -121,35 +121,38 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         /// <param name="effectiveOn"> The timestamp when the revocation is effective. </param>
         /// <param name="reason"> Reason for revocation. </param>
         /// <param name="remarks"> Remarks for the revocation. </param>
-        /// <param name="statusRevocationStatus"> Status of the revocation. </param>
+        /// <param name="revocationStatus"> Status of the revocation. </param>
         /// <param name="failureReason"> Reason for the revocation failure. </param>
         /// <returns> A new <see cref="Models.TrustedSigningCertificate"/> instance for mocking. </returns>
-        public static TrustedSigningCertificate TrustedSigningCertificate(string serialNumber = null, string subjectName = null, string thumbprint = null, DateTimeOffset? createOn = null, DateTimeOffset? expireOn = null, TrustedSigningCertificateStatus? status = null, DateTimeOffset? requestedOn = null, DateTimeOffset? effectiveOn = null, string reason = null, string remarks = null, CertificateRevocationStatus? statusRevocationStatus = null, string failureReason = null)
+        public static TrustedSigningCertificate TrustedSigningCertificate(string serialNumber = default, string enhancedKeyUsage = default, string subjectName = default, string thumbprint = default, DateTimeOffset? createOn = default, DateTimeOffset? expireOn = default, TrustedSigningCertificateStatus? status = default, DateTimeOffset? requestedOn = default, DateTimeOffset? effectiveOn = default, string reason = default, string remarks = default, CertificateRevocationStatus? revocationStatus = default, string failureReason = default)
         {
             return new TrustedSigningCertificate(
                 serialNumber,
+                enhancedKeyUsage,
                 subjectName,
                 thumbprint,
                 createOn,
                 expireOn,
                 status,
-                requestedOn,
-                effectiveOn,
-                reason,
-                remarks,
-                statusRevocationStatus,
-                failureReason,
-                serializedAdditionalRawData: null);
+                requestedOn is null && effectiveOn is null && reason is null && remarks is null && revocationStatus is null && failureReason is null ? default : new Revocation(
+                    requestedOn,
+                    effectiveOn,
+                    reason,
+                    remarks,
+                    revocationStatus,
+                    failureReason,
+                    null),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RevokeCertificateContent"/>. </summary>
+        /// <summary> Defines the certificate revocation properties. </summary>
         /// <param name="serialNumber"> Serial number of the certificate. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
         /// <param name="effectiveOn"> The timestamp when the revocation is effective. </param>
         /// <param name="reason"> Reason for the revocation. </param>
         /// <param name="remarks"> Remarks for the revocation. </param>
         /// <returns> A new <see cref="Models.RevokeCertificateContent"/> instance for mocking. </returns>
-        public static RevokeCertificateContent RevokeCertificateContent(string serialNumber = null, string thumbprint = null, DateTimeOffset effectiveOn = default, string reason = null, string remarks = null)
+        public static RevokeCertificateContent RevokeCertificateContent(string serialNumber = default, string thumbprint = default, DateTimeOffset effectiveOn = default, string reason = default, string remarks = default)
         {
             return new RevokeCertificateContent(
                 serialNumber,
@@ -157,7 +160,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 effectiveOn,
                 reason,
                 remarks,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
     }
 }

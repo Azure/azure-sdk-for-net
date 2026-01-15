@@ -84,6 +84,7 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyName? DefaultPredefinedSslPolicy { get { throw null; } }
         public bool? EnableFips { get { throw null; } set { } }
         public bool? EnableHttp2 { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayEntraJwtValidationConfig> EntraJwtValidationConfigs { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier FirewallPolicyId { get { throw null; } set { } }
         public bool? ForceFirewallPolicyAssociation { get { throw null; } set { } }
@@ -331,6 +332,7 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleCollectionData> ApplicationRuleCollections { get { throw null; } }
         public Azure.ResourceManager.Network.Models.AzureFirewallAutoscaleConfiguration AutoscaleConfiguration { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier FirewallPolicyId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.HubIPAddresses HubIPAddresses { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration> IPConfigurations { get { throw null; } }
@@ -365,12 +367,12 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.AzureFirewallResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.LearnedIPPrefixesListResult> GetLearnedPrefixes(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.LearnedIPPrefixesListResult>> GetLearnedPrefixesAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation PacketCapture(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.FirewallPacketCaptureContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation PacketCapture(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.FirewallPacketCaptureRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.FirewallPacketCaptureContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.FirewallPacketCaptureRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResult> PacketCaptureOperation(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.FirewallPacketCaptureRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResult>> PacketCaptureOperationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.FirewallPacketCaptureRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.AzureFirewallResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.AzureFirewallResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.AzureFirewallResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -607,11 +609,9 @@ namespace Azure.ResourceManager.Network
         Azure.ResourceManager.Network.BastionHostData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.BastionHostData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.BastionHostData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.BastionHostData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.BastionHostResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.BastionHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.BastionHostResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.NetworkTagsObject networkTagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.BastionHostResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.BastionHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.BastionHostResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.NetworkTagsObject networkTagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -659,17 +659,13 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.BgpConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PeerRouteList> GetAdvertisedRoutesVirtualHubBgpConnection(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PeerRouteList>> GetAdvertisedRoutesVirtualHubBgpConnectionAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.BgpConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PeerRouteList> GetLearnedRoutesVirtualHubBgpConnection(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PeerRouteList>> GetLearnedRoutesVirtualHubBgpConnectionAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.PeerRoute>>> GetVirtualHubBgpConnectionAdvertisedRoutes(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -785,17 +781,13 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ConnectionMonitorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ConnectionMonitorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult> Query(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult>> QueryAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ConnectionMonitorResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ConnectionMonitorResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ConnectionMonitorResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ConnectionMonitorResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -885,13 +877,11 @@ namespace Azure.ResourceManager.Network
         public CustomIPPrefixData() { }
         public string Asn { get { throw null; } set { } }
         public string AuthorizationMessage { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.CustomIPPrefixData> ChildCustomIPPrefixes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> ChildCustomIPPrefixList { get { throw null; } }
         public string Cidr { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.CommissionedState? CommissionedState { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public Azure.ResourceManager.Network.CustomIPPrefixData CustomIPPrefixParent { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
@@ -954,12 +944,12 @@ namespace Azure.ResourceManager.Network
     public partial class DdosCustomPolicyData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.DdosCustomPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.DdosCustomPolicyData>
     {
         public DdosCustomPolicyData() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.DdosDetectionRule> DetectionRules { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> FrontEndIPConfiguration { get { throw null; } }
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ProtocolCustomSettings> ProtocolCustomSettings { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> PublicIPAddresses { get { throw null; } }
         public System.Guid? ResourceGuid { get { throw null; } }
@@ -1621,7 +1611,6 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.Models.ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds AutoScaleBounds { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ExpressRouteConnectionData> ExpressRouteConnectionList { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.ExpressRouteConnectionData> ExpressRouteConnections { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -1871,25 +1860,19 @@ namespace Azure.ResourceManager.Network
         protected ExpressRoutePortsLocationResource() { }
         public virtual Azure.ResourceManager.Network.ExpressRoutePortsLocationData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.Network.ExpressRoutePortsLocationResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRoutePortsLocationResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ExpressRoutePortsLocationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRoutePortsLocationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.Network.ExpressRoutePortsLocationResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRoutePortsLocationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.Network.ExpressRoutePortsLocationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRoutePortsLocationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Network.ExpressRoutePortsLocationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.ExpressRoutePortsLocationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1982,7 +1965,6 @@ namespace Azure.ResourceManager.Network
         public string Size { get { throw null; } }
         public Azure.ResourceManager.Network.Models.FirewallPolicySkuTier? SkuTier { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.FirewallPolicySnat Snat { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public System.Collections.Generic.IList<string> SnatPrivateRanges { get { throw null; } }
         public Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode? ThreatIntelMode { get { throw null; } set { } }
@@ -2073,11 +2055,9 @@ namespace Azure.ResourceManager.Network
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.FirewallPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.FirewallPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.FirewallPolicyResource> Update(Azure.ResourceManager.Network.Models.NetworkTagsObject networkTagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.FirewallPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.FirewallPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.FirewallPolicyResource>> UpdateAsync(Azure.ResourceManager.Network.Models.NetworkTagsObject networkTagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.FirewallPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.FirewallPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -2191,6 +2171,7 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.Models.FlowLogProperties Format { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public string RecordTypes { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.RetentionPolicyParameters RetentionPolicy { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageId { get { throw null; } set { } }
         public System.Guid? TargetResourceGuid { get { throw null; } }
@@ -2757,6 +2738,7 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ProbeData> Probes { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? ResourceGuid { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.LoadBalancerScope? Scope { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.LoadBalancerSku Sku { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Network.LoadBalancerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.LoadBalancerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2830,33 +2812,20 @@ namespace Azure.ResourceManager.Network
     public partial class LoadBalancingRuleData : Azure.ResourceManager.Network.Models.NetworkResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.LoadBalancingRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.LoadBalancingRuleData>
     {
         public LoadBalancingRuleData() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier BackendAddressPoolId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> BackendAddressPools { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? BackendPort { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? DisableOutboundSnat { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? EnableFloatingIP { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? EnableTcpReset { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier FrontendIPConfigurationId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? FrontendPort { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Network.Models.LoadDistribution? LoadDistribution { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier ProbeId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties Properties { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? Protocol { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Network.LoadBalancingRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.LoadBalancingRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3061,10 +3030,8 @@ namespace Azure.ResourceManager.Network
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsoleted and will be removed in a future release, please use `GetAppGatewayAvailableWafRuleSets` instead", false)]
         public static Azure.Pageable<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsoleted and will be removed in a future release, please use `GetAppGatewayAvailableWafRuleSetsAsync` instead", false)]
         public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsyncAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Network.ApplicationGatewayPrivateEndpointConnectionResource GetApplicationGatewayPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -3176,10 +3143,8 @@ namespace Azure.ResourceManager.Network
         public static Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource GetExpressRouteCrossConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Network.ExpressRouteCrossConnectionCollection GetExpressRouteCrossConnections(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnections(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Pageable<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnections(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnectionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AsyncPageable<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnectionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Network.ExpressRouteGatewayResource> GetExpressRouteGateway(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string expressRouteGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ExpressRouteGatewayResource>> GetExpressRouteGatewayAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string expressRouteGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3304,6 +3269,8 @@ namespace Azure.ResourceManager.Network
         public static Azure.ResourceManager.Network.NetworkSecurityPerimeterCollection GetNetworkSecurityPerimeters(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Network.NetworkSecurityPerimeterResource> GetNetworkSecurityPerimeters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Network.NetworkSecurityPerimeterResource> GetNetworkSecurityPerimetersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterServiceTags> GetNetworkSecurityPerimeterServiceTags(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterServiceTags> GetNetworkSecurityPerimeterServiceTagsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Network.NetworkVerifierWorkspaceResource GetNetworkVerifierWorkspaceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceResource> GetNetworkVirtualAppliance(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string networkVirtualApplianceName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceResource>> GetNetworkVirtualApplianceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string networkVirtualApplianceName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3907,6 +3874,7 @@ namespace Azure.ResourceManager.Network
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? ResourceGuid { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.RouteTableUsageMode? RouteTableUsageMode { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Network.NetworkManagerRoutingConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.NetworkManagerRoutingConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.NetworkManagerRoutingConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4873,7 +4841,6 @@ namespace Azure.ResourceManager.Network
         public bool? EnableInternetSecurity { get { throw null; } set { } }
         public string NamePropertiesName { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Network.Models.RoutingConfigurationNfv RoutingConfiguration { get { throw null; } set { } }
         public long? TunnelIdentifier { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4917,8 +4884,10 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> InboundSecurityRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> InternetIngressPublicIPs { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.VirtualApplianceNetworkInterfaceConfiguration> NetworkInterfaceConfigurations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.NvaInterfaceConfigurationsProperties> NvaInterfaceConfigurations { get { throw null; } }
         public Azure.ResourceManager.Network.Models.VirtualApplianceSkuProperties NvaSku { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.PartnerManagedResourceProperties PartnerManagedResource { get { throw null; } set { } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string SshPublicKey { get { throw null; } set { } }
         public long? VirtualApplianceAsn { get { throw null; } set { } }
@@ -4941,9 +4910,7 @@ namespace Azure.ResourceManager.Network
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.InboundSecurityRule> CreateOrUpdateInboundSecurityRule(Azure.WaitUntil waitUntil, string ruleCollectionName, Azure.ResourceManager.Network.Models.InboundSecurityRule inboundSecurityRule, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.InboundSecurityRule>> CreateOrUpdateInboundSecurityRuleAsync(Azure.WaitUntil waitUntil, string ruleCollectionName, Azure.ResourceManager.Network.Models.InboundSecurityRule inboundSecurityRule, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4965,10 +4932,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.NetworkVirtualApplianceInstanceIds>> ReimageAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.NetworkVirtualApplianceInstanceIds networkVirtualApplianceInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response Restart(Azure.ResourceManager.Network.Models.NetworkVirtualApplianceInstanceIds networkVirtualApplianceInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.NetworkVirtualApplianceInstanceIds> Restart(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.NetworkVirtualApplianceInstanceIds networkVirtualApplianceInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response> RestartAsync(Azure.ResourceManager.Network.Models.NetworkVirtualApplianceInstanceIds networkVirtualApplianceInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.NetworkVirtualApplianceInstanceIds>> RestartAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.NetworkVirtualApplianceInstanceIds networkVirtualApplianceInstanceIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -5016,25 +4981,19 @@ namespace Azure.ResourceManager.Network
         protected NetworkVirtualApplianceSkuResource() { }
         public virtual Azure.ResourceManager.Network.NetworkVirtualApplianceSkuData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceSkuResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceSkuResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string skuName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceSkuResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceSkuResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceSkuResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceSkuResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceSkuResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceSkuResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Network.NetworkVirtualApplianceSkuData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.NetworkVirtualApplianceSkuData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5467,6 +5426,7 @@ namespace Azure.ResourceManager.Network
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.PrivateEndpointIPConfiguration> IPConfigurations { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.PrivateEndpointIPVersionType? IPVersionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceData> NetworkInterfaces { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnection> PrivateLinkServiceConnections { get { throw null; } }
@@ -5527,6 +5487,7 @@ namespace Azure.ResourceManager.Network
     public partial class PrivateLinkServiceData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.PrivateLinkServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.PrivateLinkServiceData>
     {
         public PrivateLinkServiceData() { }
+        public Azure.ResourceManager.Network.Models.PrivateLinkServiceAccessMode? AccessMode { get { throw null; } set { } }
         public string Alias { get { throw null; } }
         public System.Collections.Generic.IList<string> AutoApprovalSubscriptions { get { throw null; } }
         public string DestinationIPAddress { get { throw null; } set { } }
@@ -5685,10 +5646,14 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PublicIPDdosProtectionStatusResult>> DdosProtectionStatusAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PublicIPAddressResource> DisassociateCloudServiceReservedPublicIP(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.DisassociateCloudServicePublicIPContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PublicIPAddressResource>> DisassociateCloudServiceReservedPublicIPAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.DisassociateCloudServicePublicIPContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.PublicIPAddressResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PublicIPAddressResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.PublicIPAddressResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PublicIPAddressResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PublicIPAddressResource> ReserveCloudServicePublicIPAddress(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.ReserveCloudServicePublicIPAddressContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.PublicIPAddressResource>> ReserveCloudServicePublicIPAddressAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.ReserveCloudServicePublicIPAddressContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.PublicIPAddressResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.PublicIPAddressResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Network.PublicIPAddressData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.PublicIPAddressData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6801,10 +6766,8 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.Response<Azure.ResourceManager.Network.BgpConnectionResource> GetBgpConnection(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.BgpConnectionResource>> GetBgpConnectionAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Network.BgpConnectionCollection GetBgpConnections() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.ResourceManager.ArmOperation GetEffectiveVirtualHubRoutes(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.EffectiveRoutesContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> GetEffectiveVirtualHubRoutesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.EffectiveRoutesContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.HubIPConfigurationResource> GetHubIPConfiguration(string ipConfigName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -6816,16 +6779,12 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.Response<Azure.ResourceManager.Network.HubVirtualNetworkConnectionResource> GetHubVirtualNetworkConnection(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.HubVirtualNetworkConnectionResource>> GetHubVirtualNetworkConnectionAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Network.HubVirtualNetworkConnectionCollection GetHubVirtualNetworkConnections() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.ResourceManager.ArmOperation GetInboundRoutes(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VirtualHubInboundRoutesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> GetInboundRoutesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VirtualHubInboundRoutesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.ResourceManager.ArmOperation GetOutboundRoutes(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VirtualHubOutboundRoutesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> GetOutboundRoutesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VirtualHubOutboundRoutesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.RouteMapResource> GetRouteMap(string routeMapName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -7014,7 +6973,9 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkGatewayConnectionData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionData>
     {
         public VirtualNetworkGatewayConnectionData(Azure.ResourceManager.Network.VirtualNetworkGatewayData virtualNetworkGateway1, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType connectionType) { }
+        public Azure.ResourceManager.Network.Models.ConnectionAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public string AuthorizationKey { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.CertificateAuthentication CertificateAuthentication { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionMode? ConnectionMode { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol? ConnectionProtocol { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionStatus? ConnectionStatus { get { throw null; } }
@@ -7078,19 +7039,15 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.Response<Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<string> StartPacketCapture(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStartContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.ResourceManager.ArmOperation<string> StartPacketCapture(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStartParameters vpnPacketCaptureStartParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StartPacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStartContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StartPacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStartParameters vpnPacketCaptureStartParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<string> StopPacketCapture(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStopContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.ResourceManager.ArmOperation<string> StopPacketCapture(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStopParameters vpnPacketCaptureStopParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StopPacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStopContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StopPacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStopParameters vpnPacketCaptureStopParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7212,19 +7169,15 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.ResourceManager.ArmOperation DisconnectVirtualNetworkGatewayVpnConnections(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.P2SVpnConnectionRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DisconnectVirtualNetworkGatewayVpnConnectionsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.P2SVpnConnectionRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<string> GenerateVpnClientPackage(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnClientContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.ResourceManager.ArmOperation<string> Generatevpnclientpackage(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnClientParameters vpnClientParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> GenerateVpnClientPackageAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnClientContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> GeneratevpnclientpackageAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnClientParameters vpnClientParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<string> GenerateVpnProfile(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnClientContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.ResourceManager.ArmOperation<string> GenerateVpnProfile(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnClientParameters vpnClientParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> GenerateVpnProfileAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnClientContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> GenerateVpnProfileAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnClientParameters vpnClientParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VirtualNetworkGatewayResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -7241,6 +7194,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ExpressRouteFailoverSingleTestDetails>>> GetFailoverSingleTestDetailsAsync(Azure.WaitUntil waitUntil, string peeringLocation, string failoverTestId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.GatewayRouteListResult> GetLearnedRoutes(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.GatewayRouteListResult>> GetLearnedRoutesAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.RadiusAuthServer> GetRadiusSecrets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.RadiusAuthServer> GetRadiusSecretsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.GatewayResiliencyInformation> GetResiliencyInformation(Azure.WaitUntil waitUntil, bool? attemptRefresh = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.GatewayResiliencyInformation>> GetResiliencyInformationAsync(Azure.WaitUntil waitUntil, bool? attemptRefresh = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.GatewayRouteSetsInformation> GetRoutesInformation(Azure.WaitUntil waitUntil, bool? attemptRefresh = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -7275,21 +7230,17 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.ResourceManager.ArmOperation<string> StartExpressRouteSiteFailoverSimulation(Azure.WaitUntil waitUntil, string peeringLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StartExpressRouteSiteFailoverSimulationAsync(Azure.WaitUntil waitUntil, string peeringLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<string> StartPacketCapture(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStartContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.ResourceManager.ArmOperation<string> StartPacketCapture(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStartParameters vpnPacketCaptureStartParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StartPacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStartContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StartPacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStartParameters vpnPacketCaptureStartParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<string> StopExpressRouteSiteFailoverSimulation(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.ExpressRouteFailoverStopApiContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StopExpressRouteSiteFailoverSimulationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.ExpressRouteFailoverStopApiContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<string> StopPacketCapture(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStopContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.ResourceManager.ArmOperation<string> StopPacketCapture(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStopParameters vpnPacketCaptureStopParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StopPacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStopContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<string>> StopPacketCaptureAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VpnPacketCaptureStopParameters vpnPacketCaptureStopParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<string> SupportedVpnDevices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -7632,11 +7583,9 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation DownloadVpnSitesConfiguration(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.GetVpnSitesConfigurationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DownloadVpnSitesConfigurationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.GetVpnSitesConfigurationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.VpnProfileResponse> Generatevirtualwanvpnserverconfigurationvpnprofile(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VirtualWanVpnProfileContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.VpnProfileResponse> GenerateVirtualWanVpnServerConfigurationVpnProfile(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VirtualWanVpnProfileContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.VpnProfileResponse>> GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VirtualWanVpnProfileContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.VpnProfileResponse>> GenerateVirtualWanVpnServerConfigurationVpnProfileAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VirtualWanVpnProfileContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -7845,10 +7794,8 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.Response<Azure.ResourceManager.Network.VpnGatewayResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VpnGatewayResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VpnGatewayResource> Reset(Azure.WaitUntil waitUntil, string ipConfigurationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VpnGatewayResource> Reset(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VpnGatewayResource>> ResetAsync(Azure.WaitUntil waitUntil, string ipConfigurationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.VpnGatewayResource>> ResetAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VpnGatewayResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VpnGatewayResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -8001,6 +7948,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VpnServerConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VpnServerConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.RadiusAuthServer> GetRadiusSecrets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.RadiusAuthServer> GetRadiusSecretsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VpnServerConfigurationPolicyGroupResource> GetVpnServerConfigurationPolicyGroup(string configurationPolicyGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VpnServerConfigurationPolicyGroupResource>> GetVpnServerConfigurationPolicyGroupAsync(string configurationPolicyGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Network.VpnServerConfigurationPolicyGroupCollection GetVpnServerConfigurationPolicyGroups() { throw null; }
@@ -8612,10 +8561,8 @@ namespace Azure.ResourceManager.Network.Mocking
         public virtual Azure.Pageable<Azure.ResourceManager.Network.ExpressRouteCircuitResource> GetExpressRouteCircuits(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.ExpressRouteCircuitResource> GetExpressRouteCircuitsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnections(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnections(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnectionsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnectionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Network.ExpressRouteGatewayResource> GetExpressRouteGateways(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.ExpressRouteGatewayResource> GetExpressRouteGatewaysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -8651,6 +8598,8 @@ namespace Azure.ResourceManager.Network.Mocking
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterAssociableResourceType> GetNetworkSecurityPerimeterAssociableResourceTypesAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Network.NetworkSecurityPerimeterResource> GetNetworkSecurityPerimeters(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.NetworkSecurityPerimeterResource> GetNetworkSecurityPerimetersAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterServiceTags> GetNetworkSecurityPerimeterServiceTags(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterServiceTags> GetNetworkSecurityPerimeterServiceTagsAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Network.NetworkVirtualApplianceResource> GetNetworkVirtualAppliances(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Network.NetworkVirtualApplianceResource> GetNetworkVirtualAppliancesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.NetworkVirtualApplianceSkuResource> GetNetworkVirtualApplianceSku(string skuName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -8826,9 +8775,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AddressPrefixType NetworkGroup { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.AddressPrefixType ServiceTag { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.AddressPrefixType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.AddressPrefixType left, Azure.ResourceManager.Network.Models.AddressPrefixType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.AddressPrefixType (string value) { throw null; }
@@ -8844,9 +8791,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AddressSpaceAggregationOption Manual { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.AddressSpaceAggregationOption None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.AddressSpaceAggregationOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.AddressSpaceAggregationOption left, Azure.ResourceManager.Network.Models.AddressSpaceAggregationOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.AddressSpaceAggregationOption (string value) { throw null; }
@@ -8884,9 +8829,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AdvertisedPublicPrefixPropertiesValidationState ValidationFailed { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.AdvertisedPublicPrefixPropertiesValidationState ValidationNeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.AdvertisedPublicPrefixPropertiesValidationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.AdvertisedPublicPrefixPropertiesValidationState left, Azure.ResourceManager.Network.Models.AdvertisedPublicPrefixPropertiesValidationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.AdvertisedPublicPrefixPropertiesValidationState (string value) { throw null; }
@@ -9045,9 +8988,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealthServerHealth Unknown { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealthServerHealth Up { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealthServerHealth other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealthServerHealth left, Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealthServerHealth right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealthServerHealth (string value) { throw null; }
@@ -9063,6 +9004,9 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.ApplicationGatewayCookieBasedAffinity? CookieBasedAffinity { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public string HostName { get { throw null; } set { } }
+        public bool? IsDedicatedBackendConnectionEnabled { get { throw null; } set { } }
+        public bool? IsValidateCertChainAndExpiryEnabled { get { throw null; } set { } }
+        public bool? IsValidateSniEnabled { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public bool? PickHostNameFromBackendAddress { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
@@ -9071,6 +9015,7 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public int? RequestTimeoutInSeconds { get { throw null; } set { } }
+        public string SniName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> TrustedRootCertificates { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHttpSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHttpSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -9084,6 +9029,7 @@ namespace Azure.ResourceManager.Network.Models
         public ApplicationGatewayBackendSettings() { }
         public Azure.ETag? ETag { get { throw null; } }
         public string HostName { get { throw null; } set { } }
+        public bool? IsL4ClientIPPreservationEnabled { get { throw null; } set { } }
         public bool? PickHostNameFromBackendAddress { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ProbeId { get { throw null; } set { } }
@@ -9101,6 +9047,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayClientAuthConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ApplicationGatewayClientAuthConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ApplicationGatewayClientAuthConfiguration>
     {
         public ApplicationGatewayClientAuthConfiguration() { }
+        public Azure.ResourceManager.Network.Models.ApplicationGatewayClientAuthVerificationMode? VerifyClientAuthMode { get { throw null; } set { } }
         public bool? VerifyClientCertIssuerDN { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayClientRevocationOption? VerifyClientRevocation { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -9111,6 +9058,22 @@ namespace Azure.ResourceManager.Network.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ApplicationGatewayClientAuthConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ApplicationGatewayClientAuthVerificationMode : System.IEquatable<Azure.ResourceManager.Network.Models.ApplicationGatewayClientAuthVerificationMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ApplicationGatewayClientAuthVerificationMode(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewayClientAuthVerificationMode Passthrough { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewayClientAuthVerificationMode Strict { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayClientAuthVerificationMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayClientAuthVerificationMode left, Azure.ResourceManager.Network.Models.ApplicationGatewayClientAuthVerificationMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayClientAuthVerificationMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.ApplicationGatewayClientAuthVerificationMode left, Azure.ResourceManager.Network.Models.ApplicationGatewayClientAuthVerificationMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ApplicationGatewayClientRevocationOption : System.IEquatable<Azure.ResourceManager.Network.Models.ApplicationGatewayClientRevocationOption>
     {
         private readonly object _dummy;
@@ -9119,9 +9082,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayClientRevocationOption None { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayClientRevocationOption Ocsp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayClientRevocationOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayClientRevocationOption left, Azure.ResourceManager.Network.Models.ApplicationGatewayClientRevocationOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayClientRevocationOption (string value) { throw null; }
@@ -9149,9 +9110,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayCookieBasedAffinity Disabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayCookieBasedAffinity Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayCookieBasedAffinity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayCookieBasedAffinity left, Azure.ResourceManager.Network.Models.ApplicationGatewayCookieBasedAffinity right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayCookieBasedAffinity (string value) { throw null; }
@@ -9181,7 +9140,6 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode HttpStatus404 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode HttpStatus405 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode HttpStatus408 { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This status is obsolete and will be removed in a future release", false)]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode HttpStatus499 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode HttpStatus500 { get { throw null; } }
@@ -9189,14 +9147,28 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode HttpStatus503 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode HttpStatus504 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode left, Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode left, Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ApplicationGatewayEntraJwtValidationConfig : Azure.ResourceManager.Network.Models.NetworkResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ApplicationGatewayEntraJwtValidationConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ApplicationGatewayEntraJwtValidationConfig>
+    {
+        public ApplicationGatewayEntraJwtValidationConfig() { }
+        public System.Collections.Generic.IList<string> Audiences { get { throw null; } }
+        public string ClientId { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? TenantId { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.ApplicationGatewayUnAuthorizedRequestAction? UnAuthorizedRequestAction { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.ApplicationGatewayEntraJwtValidationConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ApplicationGatewayEntraJwtValidationConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ApplicationGatewayEntraJwtValidationConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.ApplicationGatewayEntraJwtValidationConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ApplicationGatewayEntraJwtValidationConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ApplicationGatewayEntraJwtValidationConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ApplicationGatewayEntraJwtValidationConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ApplicationGatewayFirewallDisabledRuleGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallDisabledRuleGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallDisabledRuleGroup>
     {
@@ -9247,9 +9219,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallMode Detection { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallMode Prevention { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallMode left, Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallMode (string value) { throw null; }
@@ -9265,9 +9235,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRateLimitDuration FiveMins { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRateLimitDuration OneMin { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRateLimitDuration other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRateLimitDuration left, Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRateLimitDuration right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRateLimitDuration (string value) { throw null; }
@@ -9330,9 +9298,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallUserSessionVariable GeoLocationXFFHeader { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallUserSessionVariable None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallUserSessionVariable other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallUserSessionVariable left, Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallUserSessionVariable right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallUserSessionVariable (string value) { throw null; }
@@ -9457,9 +9423,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayLoadDistributionAlgorithm LeastConnections { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayLoadDistributionAlgorithm RoundRobin { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayLoadDistributionAlgorithm other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayLoadDistributionAlgorithm left, Azure.ResourceManager.Network.Models.ApplicationGatewayLoadDistributionAlgorithm right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayLoadDistributionAlgorithm (string value) { throw null; }
@@ -9499,6 +9463,7 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.Core.ResourceIdentifier BackendAddressPoolId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier BackendHttpSettingsId { get { throw null; } set { } }
         public string Host { get { throw null; } set { } }
+        public bool? IsProbeProxyProtocolHeaderEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayProbeHealthResponseMatch Match { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public bool? PickHostNameFromBackendHttpSettings { get { throw null; } set { } }
@@ -9522,9 +9487,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayOperationalState Stopped { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayOperationalState Stopping { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayOperationalState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayOperationalState left, Azure.ResourceManager.Network.Models.ApplicationGatewayOperationalState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayOperationalState (string value) { throw null; }
@@ -9599,6 +9562,7 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ETag? ETag { get { throw null; } }
         public string Host { get { throw null; } set { } }
         public int? IntervalInSeconds { get { throw null; } set { } }
+        public bool? IsProbeProxyProtocolHeaderEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayProbeHealthResponseMatch Match { get { throw null; } set { } }
         public int? MinServers { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
@@ -9639,9 +9603,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol Tls { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol left, Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol (string value) { throw null; }
@@ -9678,9 +9640,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayRedirectType SeeOther { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayRedirectType Temporary { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayRedirectType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayRedirectType left, Azure.ResourceManager.Network.Models.ApplicationGatewayRedirectType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayRedirectType (string value) { throw null; }
@@ -9692,6 +9652,7 @@ namespace Azure.ResourceManager.Network.Models
         public ApplicationGatewayRequestRoutingRule() { }
         public Azure.Core.ResourceIdentifier BackendAddressPoolId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier BackendHttpSettingsId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier EntraJwtValidationConfigId { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier HttpListenerId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LoadDistributionPolicyId { get { throw null; } set { } }
@@ -9717,9 +9678,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRuleType Basic { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRuleType PathBasedRouting { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRuleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRuleType left, Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRuleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRuleType (string value) { throw null; }
@@ -9808,9 +9767,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayRuleSetStatusOption Preview { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayRuleSetStatusOption Supported { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayRuleSetStatusOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayRuleSetStatusOption left, Azure.ResourceManager.Network.Models.ApplicationGatewayRuleSetStatusOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayRuleSetStatusOption (string value) { throw null; }
@@ -9840,9 +9797,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySkuFamily Generation1 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySkuFamily Generation2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewaySkuFamily other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewaySkuFamily left, Azure.ResourceManager.Network.Models.ApplicationGatewaySkuFamily right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewaySkuFamily (string value) { throw null; }
@@ -9864,9 +9819,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySkuName WAFMedium { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySkuName WAFV2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewaySkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewaySkuName left, Azure.ResourceManager.Network.Models.ApplicationGatewaySkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewaySkuName (string value) { throw null; }
@@ -9924,9 +9877,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsRsaWithAes256CbcSha256 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsRsaWithAes256GcmSha384 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite left, Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite (string value) { throw null; }
@@ -9960,9 +9911,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyName AppGwSslPolicy20220101 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyName AppGwSslPolicy20220101S { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyName left, Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyName (string value) { throw null; }
@@ -9979,9 +9928,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyType CustomV2 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyType Predefined { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyType left, Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyType (string value) { throw null; }
@@ -10008,7 +9955,6 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicy SslPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> TrustedClientCertificates { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public bool? VerifyClientCertIssuerDN { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -10029,9 +9975,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol Tls1_2 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol TLSv13 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol left, Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol (string value) { throw null; }
@@ -10050,9 +9994,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayTier WAF { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayTier WAFV2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayTier left, Azure.ResourceManager.Network.Models.ApplicationGatewayTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayTier (string value) { throw null; }
@@ -10070,9 +10012,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayTierType Waf { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayTierType WafV2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayTierType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayTierType left, Azure.ResourceManager.Network.Models.ApplicationGatewayTierType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayTierType (string value) { throw null; }
@@ -10107,6 +10047,22 @@ namespace Azure.ResourceManager.Network.Models
         Azure.ResourceManager.Network.Models.ApplicationGatewayTrustedRootCertificate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ApplicationGatewayTrustedRootCertificate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ApplicationGatewayTrustedRootCertificate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ApplicationGatewayTrustedRootCertificate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ApplicationGatewayUnAuthorizedRequestAction : System.IEquatable<Azure.ResourceManager.Network.Models.ApplicationGatewayUnAuthorizedRequestAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ApplicationGatewayUnAuthorizedRequestAction(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewayUnAuthorizedRequestAction Allow { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewayUnAuthorizedRequestAction Deny { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayUnAuthorizedRequestAction other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayUnAuthorizedRequestAction left, Azure.ResourceManager.Network.Models.ApplicationGatewayUnAuthorizedRequestAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayUnAuthorizedRequestAction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.ApplicationGatewayUnAuthorizedRequestAction left, Azure.ResourceManager.Network.Models.ApplicationGatewayUnAuthorizedRequestAction right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ApplicationGatewayUrlConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ApplicationGatewayUrlConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ApplicationGatewayUrlConfiguration>
     {
@@ -10151,9 +10107,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleActionType Log { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleActionType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleActionType left, Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleActionType (string value) { throw null; }
@@ -10171,9 +10125,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleSensitivityType Medium { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleSensitivityType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleSensitivityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleSensitivityType left, Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleSensitivityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleSensitivityType (string value) { throw null; }
@@ -10189,9 +10141,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleStateType Disabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleStateType Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleStateType left, Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleStateType (string value) { throw null; }
@@ -10242,7 +10192,6 @@ namespace Azure.ResourceManager.Network.Models
     {
         public static Azure.ResourceManager.Network.Models.ActiveBaseSecurityAdminRule ActiveBaseSecurityAdminRule(string id = null, System.DateTimeOffset? commitOn = default(System.DateTimeOffset?), string region = null, string configurationDescription = null, string ruleCollectionDescription = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkConfigurationGroup> ruleGroups = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.ActiveConnectivityConfiguration ActiveConnectivityConfiguration(string id = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkConfigurationGroup> configurationGroups = null, string description = null, Azure.ResourceManager.Network.Models.ConnectivityTopology? connectivityTopology = default(Azure.ResourceManager.Network.Models.ConnectivityTopology?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityHub> hubs = null, Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag? isGlobal = default(Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag?), Azure.ResourceManager.Network.Models.ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityGroupItem> appliesToGroups = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.DeleteExistingPeering? deleteExistingPeering = default(Azure.ResourceManager.Network.Models.DeleteExistingPeering?), System.Guid? resourceGuid = default(System.Guid?), System.DateTimeOffset? committedOn = default(System.DateTimeOffset?), Azure.Core.AzureLocation? region = default(Azure.Core.AzureLocation?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.Models.ActiveConnectivityConfiguration ActiveConnectivityConfiguration(string id, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkConfigurationGroup> configurationGroups, string description, Azure.ResourceManager.Network.Models.ConnectivityTopology? connectivityTopology, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityHub> hubs, Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag? isGlobal, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityGroupItem> appliesToGroups, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, Azure.ResourceManager.Network.Models.DeleteExistingPeering? deleteExistingPeering, System.Guid? resourceGuid, System.DateTimeOffset? committedOn, Azure.Core.AzureLocation? region) { throw null; }
         public static Azure.ResourceManager.Network.Models.ActiveDefaultSecurityAdminRule ActiveDefaultSecurityAdminRule(string id = null, System.DateTimeOffset? commitOn = default(System.DateTimeOffset?), string region = null, string configurationDescription = null, string ruleCollectionDescription = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkConfigurationGroup> ruleGroups = null, string description = null, string flag = null, Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol? protocol = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AddressPrefixItem> sources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AddressPrefixItem> destinations = null, System.Collections.Generic.IEnumerable<string> sourcePortRanges = null, System.Collections.Generic.IEnumerable<string> destinationPortRanges = null, Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess? access = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess?), int? priority = default(int?), Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection? direction = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.ActiveSecurityAdminRule ActiveSecurityAdminRule(string id = null, System.DateTimeOffset? commitOn = default(System.DateTimeOffset?), string region = null, string configurationDescription = null, string ruleCollectionDescription = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkConfigurationGroup> ruleGroups = null, string description = null, Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol? protocol = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AddressPrefixItem> sources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AddressPrefixItem> destinations = null, System.Collections.Generic.IEnumerable<string> sourcePortRanges = null, System.Collections.Generic.IEnumerable<string> destinationPortRanges = null, Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess? access = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess?), int? priority = default(int?), Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection? direction = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?)) { throw null; }
@@ -10257,17 +10206,19 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealthOnDemand ApplicationGatewayBackendHealthOnDemand(Azure.ResourceManager.Network.Models.ApplicationGatewayBackendAddressPool backendAddressPool = null, Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealthHttpSettings backendHealthHttpSettings = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealthPool ApplicationGatewayBackendHealthPool(Azure.ResourceManager.Network.Models.ApplicationGatewayBackendAddressPool backendAddressPool = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealthHttpSettings> backendHttpSettingsCollection = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealthServer ApplicationGatewayBackendHealthServer(string address = null, Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData ipConfiguration = null, Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealthServerHealth? health = default(Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealthServerHealth?), string healthProbeLog = null) { throw null; }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHttpSettings ApplicationGatewayBackendHttpSettings(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), int? port = default(int?), Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? protocol = default(Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol?), Azure.ResourceManager.Network.Models.ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity = default(Azure.ResourceManager.Network.Models.ApplicationGatewayCookieBasedAffinity?), int? requestTimeoutInSeconds = default(int?), Azure.Core.ResourceIdentifier probeId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> authenticationCertificates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> trustedRootCertificates = null, Azure.ResourceManager.Network.Models.ApplicationGatewayConnectionDraining connectionDraining = null, string hostName = null, bool? pickHostNameFromBackendAddress = default(bool?), string affinityCookieName = null, bool? probeEnabled = default(bool?), string path = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewayBackendSettings ApplicationGatewayBackendSettings(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), int? port = default(int?), Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? protocol = default(Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol?), int? timeoutInSeconds = default(int?), Azure.Core.ResourceIdentifier probeId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> trustedRootCertificates = null, string hostName = null, bool? pickHostNameFromBackendAddress = default(bool?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Network.ApplicationGatewayData ApplicationGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> availabilityZones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Network.Models.ApplicationGatewaySku sku = null, Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicy sslPolicy = null, Azure.ResourceManager.Network.Models.ApplicationGatewayOperationalState? operationalState = default(Azure.ResourceManager.Network.Models.ApplicationGatewayOperationalState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayIPConfiguration> gatewayIPConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayAuthenticationCertificate> authenticationCertificates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayTrustedRootCertificate> trustedRootCertificates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayTrustedClientCertificate> trustedClientCertificates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslCertificate> sslCertificates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayFrontendPort> frontendPorts = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayProbe> probes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendAddressPool> backendAddressPools = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendSettings> backendSettingsCollection = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayHttpListener> httpListeners = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayListener> listeners = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslProfile> sslProfiles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayUrlPathMap> urlPathMaps = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRule> requestRoutingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayRoutingRule> routingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayRewriteRuleSet> rewriteRuleSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayRedirectConfiguration> redirectConfigurations = null, Azure.ResourceManager.Network.Models.ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration = null, Azure.Core.ResourceIdentifier firewallPolicyId = null, bool? enableHttp2 = default(bool?), bool? enableFips = default(bool?), Azure.ResourceManager.Network.Models.ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayCustomError> customErrorConfigurations = null, bool? forceFirewallPolicyAssociation = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies = null, Azure.ResourceManager.Network.Models.ApplicationGatewayGlobalConfiguration globalConfiguration = null, Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy = default(Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyName?)) { throw null; }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHttpSettings ApplicationGatewayBackendHttpSettings(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, int? port, Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? protocol, Azure.ResourceManager.Network.Models.ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeoutInSeconds, Azure.Core.ResourceIdentifier probeId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> authenticationCertificates, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> trustedRootCertificates, Azure.ResourceManager.Network.Models.ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHttpSettings ApplicationGatewayBackendHttpSettings(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), int? port = default(int?), Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? protocol = default(Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol?), Azure.ResourceManager.Network.Models.ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity = default(Azure.ResourceManager.Network.Models.ApplicationGatewayCookieBasedAffinity?), int? requestTimeoutInSeconds = default(int?), Azure.Core.ResourceIdentifier probeId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> authenticationCertificates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> trustedRootCertificates = null, Azure.ResourceManager.Network.Models.ApplicationGatewayConnectionDraining connectionDraining = null, string hostName = null, bool? pickHostNameFromBackendAddress = default(bool?), string affinityCookieName = null, bool? probeEnabled = default(bool?), string path = null, bool? isDedicatedBackendConnectionEnabled = default(bool?), bool? isValidateCertChainAndExpiryEnabled = default(bool?), bool? isValidateSniEnabled = default(bool?), string sniName = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewayBackendSettings ApplicationGatewayBackendSettings(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, int? port, Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? protocol, int? timeoutInSeconds, Azure.Core.ResourceIdentifier probeId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> trustedRootCertificates, string hostName, bool? pickHostNameFromBackendAddress, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewayBackendSettings ApplicationGatewayBackendSettings(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), int? port = default(int?), Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? protocol = default(Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol?), int? timeoutInSeconds = default(int?), Azure.Core.ResourceIdentifier probeId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> trustedRootCertificates = null, string hostName = null, bool? pickHostNameFromBackendAddress = default(bool?), bool? isL4ClientIPPreservationEnabled = default(bool?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Network.ApplicationGatewayData ApplicationGatewayData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ETag? etag, System.Collections.Generic.IEnumerable<string> availabilityZones, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Network.Models.ApplicationGatewaySku sku, Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicy sslPolicy, Azure.ResourceManager.Network.Models.ApplicationGatewayOperationalState? operationalState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayIPConfiguration> gatewayIPConfigurations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayAuthenticationCertificate> authenticationCertificates, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayTrustedRootCertificate> trustedRootCertificates, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayTrustedClientCertificate> trustedClientCertificates, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslCertificate> sslCertificates, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayFrontendPort> frontendPorts, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayProbe> probes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendAddressPool> backendAddressPools, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendSettings> backendSettingsCollection, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayHttpListener> httpListeners, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayListener> listeners, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslProfile> sslProfiles, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayUrlPathMap> urlPathMaps, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRule> requestRoutingRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayRoutingRule> routingRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayRewriteRuleSet> rewriteRuleSets, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayRedirectConfiguration> redirectConfigurations, Azure.ResourceManager.Network.Models.ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration, Azure.Core.ResourceIdentifier firewallPolicyId, bool? enableHttp2, bool? enableFips, Azure.ResourceManager.Network.Models.ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayCustomError> customErrorConfigurations, bool? forceFirewallPolicyAssociation, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies, Azure.ResourceManager.Network.Models.ApplicationGatewayGlobalConfiguration globalConfiguration, Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy) { throw null; }
+        public static Azure.ResourceManager.Network.ApplicationGatewayData ApplicationGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> availabilityZones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Network.Models.ApplicationGatewaySku sku = null, Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicy sslPolicy = null, Azure.ResourceManager.Network.Models.ApplicationGatewayOperationalState? operationalState = default(Azure.ResourceManager.Network.Models.ApplicationGatewayOperationalState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayIPConfiguration> gatewayIPConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayAuthenticationCertificate> authenticationCertificates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayTrustedRootCertificate> trustedRootCertificates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayTrustedClientCertificate> trustedClientCertificates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslCertificate> sslCertificates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayFrontendPort> frontendPorts = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayProbe> probes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendAddressPool> backendAddressPools = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendSettings> backendSettingsCollection = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayHttpListener> httpListeners = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayListener> listeners = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslProfile> sslProfiles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayUrlPathMap> urlPathMaps = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRule> requestRoutingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayRoutingRule> routingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayRewriteRuleSet> rewriteRuleSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayRedirectConfiguration> redirectConfigurations = null, Azure.ResourceManager.Network.Models.ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration = null, Azure.Core.ResourceIdentifier firewallPolicyId = null, bool? enableHttp2 = default(bool?), bool? enableFips = default(bool?), Azure.ResourceManager.Network.Models.ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayCustomError> customErrorConfigurations = null, bool? forceFirewallPolicyAssociation = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayEntraJwtValidationConfig> entraJwtValidationConfigs = null, Azure.ResourceManager.Network.Models.ApplicationGatewayGlobalConfiguration globalConfiguration = null, Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy = default(Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyName?)) { throw null; }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewayEntraJwtValidationConfig ApplicationGatewayEntraJwtValidationConfig(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.ApplicationGatewayUnAuthorizedRequestAction? unAuthorizedRequestAction = default(Azure.ResourceManager.Network.Models.ApplicationGatewayUnAuthorizedRequestAction?), System.Guid? tenantId = default(System.Guid?), string clientId = null, System.Collections.Generic.IEnumerable<string> audiences = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallManifestRuleSet ApplicationGatewayFirewallManifestRuleSet(string ruleSetType = null, string ruleSetVersion = null, Azure.ResourceManager.Network.Models.ApplicationGatewayRuleSetStatusOption? status = default(Azure.ResourceManager.Network.Models.ApplicationGatewayRuleSetStatusOption?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayTierType> tiers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleGroup> ruleGroups = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleSet ApplicationGatewayFirewallRuleSet(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), string ruleSetType = null, string ruleSetVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleGroup> ruleGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayTierType> tiers = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayFrontendIPConfiguration ApplicationGatewayFrontendIPConfiguration(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, string privateIPAddress, Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod? privateIPAllocationMethod, Azure.Core.ResourceIdentifier subnetId, Azure.Core.ResourceIdentifier publicIPAddressId, Azure.Core.ResourceIdentifier privateLinkConfigurationId, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayFrontendPort ApplicationGatewayFrontendPort(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), int? port = default(int?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayHttpListener ApplicationGatewayHttpListener(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier frontendIPConfigurationId = null, Azure.Core.ResourceIdentifier frontendPortId = null, Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? protocol = default(Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol?), string hostName = null, Azure.Core.ResourceIdentifier sslCertificateId = null, Azure.Core.ResourceIdentifier sslProfileId = null, bool? requireServerNameIndication = default(bool?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayCustomError> customErrorConfigurations = null, Azure.Core.ResourceIdentifier firewallPolicyId = null, System.Collections.Generic.IEnumerable<string> hostNames = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayIPConfiguration ApplicationGatewayIPConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier subnetId = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayListener ApplicationGatewayListener(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, Azure.Core.ResourceIdentifier frontendIPConfigurationId, Azure.Core.ResourceIdentifier frontendPortId, Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? protocol, Azure.Core.ResourceIdentifier sslCertificateId, Azure.Core.ResourceIdentifier sslProfileId, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayListener ApplicationGatewayListener(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier frontendIPConfigurationId = null, Azure.Core.ResourceIdentifier frontendPortId = null, Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? protocol = default(Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol?), Azure.Core.ResourceIdentifier sslCertificateId = null, Azure.Core.ResourceIdentifier sslProfileId = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IEnumerable<string> hostNames = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayLoadDistributionPolicy ApplicationGatewayLoadDistributionPolicy(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayLoadDistributionTarget> loadDistributionTargets = null, Azure.ResourceManager.Network.Models.ApplicationGatewayLoadDistributionAlgorithm? loadDistributionAlgorithm = default(Azure.ResourceManager.Network.Models.ApplicationGatewayLoadDistributionAlgorithm?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
@@ -10277,9 +10228,11 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayPrivateLinkConfiguration ApplicationGatewayPrivateLinkConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayPrivateLinkIPConfiguration> ipConfigurations = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayPrivateLinkIPConfiguration ApplicationGatewayPrivateLinkIPConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), string privateIPAddress = null, Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod? privateIPAllocationMethod = default(Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod?), Azure.Core.ResourceIdentifier subnetId = null, bool? isPrimary = default(bool?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayPrivateLinkResource ApplicationGatewayPrivateLinkResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewayProbe ApplicationGatewayProbe(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? protocol = default(Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol?), string host = null, string path = null, int? intervalInSeconds = default(int?), int? timeoutInSeconds = default(int?), int? unhealthyThreshold = default(int?), bool? pickHostNameFromBackendHttpSettings = default(bool?), bool? pickHostNameFromBackendSettings = default(bool?), int? minServers = default(int?), Azure.ResourceManager.Network.Models.ApplicationGatewayProbeHealthResponseMatch match = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), int? port = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewayProbe ApplicationGatewayProbe(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? protocol, string host, string path, int? intervalInSeconds, int? timeoutInSeconds, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, bool? pickHostNameFromBackendSettings, int? minServers, Azure.ResourceManager.Network.Models.ApplicationGatewayProbeHealthResponseMatch match, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, int? port) { throw null; }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewayProbe ApplicationGatewayProbe(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? protocol = default(Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol?), string host = null, string path = null, int? intervalInSeconds = default(int?), int? timeoutInSeconds = default(int?), int? unhealthyThreshold = default(int?), bool? pickHostNameFromBackendHttpSettings = default(bool?), bool? pickHostNameFromBackendSettings = default(bool?), int? minServers = default(int?), Azure.ResourceManager.Network.Models.ApplicationGatewayProbeHealthResponseMatch match = null, bool? isProbeProxyProtocolHeaderEnabled = default(bool?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), int? port = default(int?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayRedirectConfiguration ApplicationGatewayRedirectConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.ApplicationGatewayRedirectType? redirectType = default(Azure.ResourceManager.Network.Models.ApplicationGatewayRedirectType?), Azure.Core.ResourceIdentifier targetListenerId = null, System.Uri targetUri = null, bool? includePath = default(bool?), bool? includeQueryString = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> requestRoutingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> urlPathMaps = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> pathRules = null) { throw null; }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRule ApplicationGatewayRequestRoutingRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRuleType? ruleType = default(Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRuleType?), int? priority = default(int?), Azure.Core.ResourceIdentifier backendAddressPoolId = null, Azure.Core.ResourceIdentifier backendHttpSettingsId = null, Azure.Core.ResourceIdentifier httpListenerId = null, Azure.Core.ResourceIdentifier urlPathMapId = null, Azure.Core.ResourceIdentifier rewriteRuleSetId = null, Azure.Core.ResourceIdentifier redirectConfigurationId = null, Azure.Core.ResourceIdentifier loadDistributionPolicyId = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRule ApplicationGatewayRequestRoutingRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRuleType? ruleType = default(Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRuleType?), int? priority = default(int?), Azure.Core.ResourceIdentifier backendAddressPoolId = null, Azure.Core.ResourceIdentifier backendHttpSettingsId = null, Azure.Core.ResourceIdentifier httpListenerId = null, Azure.Core.ResourceIdentifier urlPathMapId = null, Azure.Core.ResourceIdentifier rewriteRuleSetId = null, Azure.Core.ResourceIdentifier redirectConfigurationId = null, Azure.Core.ResourceIdentifier loadDistributionPolicyId = null, Azure.Core.ResourceIdentifier entraJwtValidationConfigId = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRule ApplicationGatewayRequestRoutingRule(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, Azure.Core.ResourceIdentifier backendAddressPoolId, Azure.Core.ResourceIdentifier backendHttpSettingsId, Azure.Core.ResourceIdentifier httpListenerId, Azure.Core.ResourceIdentifier urlPathMapId, Azure.Core.ResourceIdentifier rewriteRuleSetId, Azure.Core.ResourceIdentifier redirectConfigurationId, Azure.Core.ResourceIdentifier loadDistributionPolicyId, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayRewriteRuleSet ApplicationGatewayRewriteRuleSet(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayRewriteRule> rewriteRules = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewayRoutingRule ApplicationGatewayRoutingRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRuleType? ruleType = default(Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRuleType?), int? priority = default(int?), Azure.Core.ResourceIdentifier backendAddressPoolId = null, Azure.Core.ResourceIdentifier backendSettingsId = null, Azure.Core.ResourceIdentifier listenerId = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCertificate ApplicationGatewaySslCertificate(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), System.BinaryData data = null, string password = null, System.BinaryData publicCertData = null, string keyVaultSecretId = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
@@ -10299,32 +10252,28 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AvailableProvidersListState AvailableProvidersListState(string stateName = null, System.Collections.Generic.IEnumerable<string> providers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AvailableProvidersListCity> cities = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.AvailableServiceAlias AvailableServiceAlias(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string resourceName = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleCollectionData AzureFirewallApplicationRuleCollectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), int? priority = default(int?), Azure.ResourceManager.Network.Models.AzureFirewallRCActionType? actionType = default(Azure.ResourceManager.Network.Models.AzureFirewallRCActionType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallApplicationRule> rules = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Network.AzureFirewallData AzureFirewallData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleCollectionData> applicationRuleCollections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallNatRuleCollectionData> natRuleCollections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallNetworkRuleCollectionData> networkRuleCollections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration> ipConfigurations = null, Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration managementIPConfiguration = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode? threatIntelMode = default(Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode?), Azure.Core.ResourceIdentifier virtualHubId = null, Azure.Core.ResourceIdentifier firewallPolicyId = null, Azure.ResourceManager.Network.Models.HubIPAddresses hubIPAddresses = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallIPGroups> ipGroups = null, Azure.ResourceManager.Network.Models.AzureFirewallSku sku = null, System.Collections.Generic.IDictionary<string, string> additionalProperties = null, Azure.ResourceManager.Network.Models.AzureFirewallAutoscaleConfiguration autoscaleConfiguration = null) { throw null; }
         public static Azure.ResourceManager.Network.AzureFirewallData AzureFirewallData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, System.Collections.Generic.IEnumerable<string> zones, Azure.ETag? etag, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallNatRuleCollectionData> natRuleCollections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallNetworkRuleCollectionData> networkRuleCollections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration> ipConfigurations, Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration managementIPConfiguration, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode? threatIntelMode, Azure.Core.ResourceIdentifier virtualHubId, Azure.Core.ResourceIdentifier firewallPolicyId, Azure.ResourceManager.Network.Models.HubIPAddresses hubIPAddresses, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallIPGroups> ipGroups, Azure.ResourceManager.Network.Models.AzureFirewallSku sku, System.Collections.Generic.IDictionary<string, string> additionalProperties) { throw null; }
-        public static Azure.ResourceManager.Network.AzureFirewallData AzureFirewallData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleCollectionData> applicationRuleCollections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallNatRuleCollectionData> natRuleCollections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallNetworkRuleCollectionData> networkRuleCollections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration> ipConfigurations = null, Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration managementIPConfiguration = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode? threatIntelMode = default(Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode?), Azure.Core.ResourceIdentifier virtualHubId = null, Azure.Core.ResourceIdentifier firewallPolicyId = null, Azure.ResourceManager.Network.Models.HubIPAddresses hubIPAddresses = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallIPGroups> ipGroups = null, Azure.ResourceManager.Network.Models.AzureFirewallSku sku = null, System.Collections.Generic.IDictionary<string, string> additionalProperties = null, Azure.ResourceManager.Network.Models.AzureFirewallAutoscaleConfiguration autoscaleConfiguration = null) { throw null; }
+        public static Azure.ResourceManager.Network.AzureFirewallData AzureFirewallData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, System.Collections.Generic.IEnumerable<string> zones, Azure.ETag? etag, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallNatRuleCollectionData> natRuleCollections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallNetworkRuleCollectionData> networkRuleCollections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration> ipConfigurations, Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration managementIPConfiguration, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode? threatIntelMode, Azure.Core.ResourceIdentifier virtualHubId, Azure.Core.ResourceIdentifier firewallPolicyId, Azure.ResourceManager.Network.Models.HubIPAddresses hubIPAddresses, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallIPGroups> ipGroups, Azure.ResourceManager.Network.Models.AzureFirewallSku sku, System.Collections.Generic.IDictionary<string, string> additionalProperties, Azure.ResourceManager.Network.Models.AzureFirewallAutoscaleConfiguration autoscaleConfiguration) { throw null; }
         public static Azure.ResourceManager.Network.Models.AzureFirewallFqdnTag AzureFirewallFqdnTag(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), string fqdnTagName = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration AzureFirewallIPConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), string privateIPAddress = null, Azure.Core.ResourceIdentifier subnetId = null, Azure.Core.ResourceIdentifier publicIPAddressId = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.AzureFirewallIPGroups AzureFirewallIPGroups(Azure.Core.ResourceIdentifier id = null, string changeNumber = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.AzureFirewallNatRuleCollectionData AzureFirewallNatRuleCollectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), int? priority = default(int?), Azure.ResourceManager.Network.Models.AzureFirewallNatRCActionType? actionType = default(Azure.ResourceManager.Network.Models.AzureFirewallNatRCActionType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallNatRule> rules = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.AzureFirewallNetworkRuleCollectionData AzureFirewallNetworkRuleCollectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), int? priority = default(int?), Azure.ResourceManager.Network.Models.AzureFirewallRCActionType? actionType = default(Azure.ResourceManager.Network.Models.AzureFirewallRCActionType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureFirewallNetworkRule> rules = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResult AzureFirewallPacketCaptureResult(Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode? statusCode = default(Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode?), string message = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.AzureReachabilityReport AzureReachabilityReport(string aggregationLevel = null, Azure.ResourceManager.Network.Models.AzureReachabilityReportLocation providerLocation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureReachabilityReportItem> reachabilityReport = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.AzureReachabilityReportContent AzureReachabilityReportContent(Azure.ResourceManager.Network.Models.AzureReachabilityReportLocation providerLocation = null, System.Collections.Generic.IEnumerable<string> providers = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> azureLocations = null, System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset endOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.ResourceManager.Network.Models.AzureReachabilityReportItem AzureReachabilityReportItem(string provider = null, Azure.Core.AzureLocation? azureLocation = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AzureReachabilityReportLatencyInfo> latencies = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.AzureReachabilityReportLatencyInfo AzureReachabilityReportLatencyInfo(System.DateTimeOffset? timeStamp = default(System.DateTimeOffset?), int? score = default(int?)) { throw null; }
         public static Azure.ResourceManager.Network.AzureWebCategoryData AzureWebCategoryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string group = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.BackendAddressInboundNatRulePortMappings BackendAddressInboundNatRulePortMappings(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.InboundNatRulePortMapping> inboundNatRulePortMappings = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.BackendAddressPoolData BackendAddressPoolData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, Azure.Core.AzureLocation? location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelInterface> tunnelInterfaces, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.LoadBalancerBackendAddress> loadBalancerBackendAddresses, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData> backendIPConfigurations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> loadBalancingRules, Azure.Core.ResourceIdentifier outboundRuleId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> outboundRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> inboundNatRules, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, int? drainPeriodInSeconds, Azure.Core.ResourceIdentifier virtualNetworkId) { throw null; }
         public static Azure.ResourceManager.Network.BackendAddressPoolData BackendAddressPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelInterface> tunnelInterfaces = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.LoadBalancerBackendAddress> loadBalancerBackendAddresses = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData> backendIPConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> loadBalancingRules = null, Azure.Core.ResourceIdentifier outboundRuleId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> outboundRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> inboundNatRules = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), int? drainPeriodInSeconds = default(int?), Azure.Core.ResourceIdentifier virtualNetworkId = null, Azure.ResourceManager.Network.Models.BackendAddressSyncMode? syncMode = default(Azure.ResourceManager.Network.Models.BackendAddressSyncMode?)) { throw null; }
         public static Azure.ResourceManager.Network.BaseAdminRuleData BaseAdminRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.BastionHostData BastionHostData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, System.Collections.Generic.IEnumerable<string> zones, Azure.ETag? etag, Azure.ResourceManager.Network.Models.BastionHostSkuName? skuName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.BastionHostIPConfiguration> ipConfigurations, string dnsName, Azure.Core.ResourceIdentifier virtualNetworkId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.BastionHostIPRule> networkAclsIPRules, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.BastionHostData BastionHostData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, System.Collections.Generic.IEnumerable<string> zones, Azure.ETag? etag, Azure.ResourceManager.Network.Models.BastionHostSkuName? skuName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.BastionHostIPConfiguration> ipConfigurations, string dnsName, Azure.Core.ResourceIdentifier virtualNetworkId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.BastionHostIPRule> networkAclsIPRules, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos, bool? enableSessionRecording) { throw null; }
         public static Azure.ResourceManager.Network.BastionHostData BastionHostData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.BastionHostSkuName? skuName = default(Azure.ResourceManager.Network.Models.BastionHostSkuName?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.BastionHostIPConfiguration> ipConfigurations = null, string dnsName = null, Azure.Core.ResourceIdentifier virtualNetworkId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.BastionHostIPRule> networkAclsIPRules = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), int? scaleUnits = default(int?), bool? disableCopyPaste = default(bool?), bool? enableFileCopy = default(bool?), bool? enableIPConnect = default(bool?), bool? enableShareableLink = default(bool?), bool? enableTunneling = default(bool?), bool? enableKerberos = default(bool?), bool? enableSessionRecording = default(bool?), bool? enablePrivateOnlyBastion = default(bool?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.BastionHostData BastionHostData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ETag? etag, Azure.ResourceManager.Network.Models.BastionHostSkuName? skuName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.BastionHostIPConfiguration> ipConfigurations, string dnsName, Azure.Core.ResourceIdentifier virtualNetworkId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.BastionHostIPRule> networkAclsIPRules, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.BastionHostData BastionHostData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ETag? etag, Azure.ResourceManager.Network.Models.BastionHostSkuName? skuName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.BastionHostIPConfiguration> ipConfigurations, string dnsName, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos) { throw null; }
         public static Azure.ResourceManager.Network.Models.BastionHostIPConfiguration BastionHostIPConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier subnetId = null, Azure.Core.ResourceIdentifier publicIPAddressId = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod? privateIPAllocationMethod = default(Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod?)) { throw null; }
         public static Azure.ResourceManager.Network.BgpConnectionData BgpConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), long? peerAsn = default(long?), string peerIP = null, Azure.Core.ResourceIdentifier hubVirtualNetworkConnectionId = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.HubBgpConnectionStatus? connectionState = default(Azure.ResourceManager.Network.Models.HubBgpConnectionStatus?)) { throw null; }
@@ -10337,7 +10286,6 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult ConnectionMonitorQueryResult(Azure.ResourceManager.Network.Models.ConnectionMonitorSourceStatus? sourceStatus = default(Azure.ResourceManager.Network.Models.ConnectionMonitorSourceStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectionStateSnapshot> states = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.ConnectionStateSnapshot ConnectionStateSnapshot(Azure.ResourceManager.Network.Models.NetworkConnectionState? networkConnectionState = default(Azure.ResourceManager.Network.Models.NetworkConnectionState?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.Network.Models.EvaluationState? evaluationState = default(Azure.ResourceManager.Network.Models.EvaluationState?), long? avgLatencyInMs = default(long?), long? minLatencyInMs = default(long?), long? maxLatencyInMs = default(long?), long? probesSent = default(long?), long? probesFailed = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityHopInfo> hops = null) { throw null; }
         public static Azure.ResourceManager.Network.ConnectivityConfigurationData ConnectivityConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Network.Models.ConnectivityTopology? connectivityTopology = default(Azure.ResourceManager.Network.Models.ConnectivityTopology?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityHub> hubs = null, Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag? isGlobal = default(Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag?), Azure.ResourceManager.Network.Models.ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityGroupItem> appliesToGroups = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.DeleteExistingPeering? deleteExistingPeering = default(Azure.ResourceManager.Network.Models.DeleteExistingPeering?), System.Guid? resourceGuid = default(System.Guid?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.ConnectivityConfigurationData ConnectivityConfigurationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, Azure.ResourceManager.Network.Models.ConnectivityTopology? connectivityTopology, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityHub> hubs, Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag? isGlobal, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityGroupItem> appliesToGroups, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, Azure.ResourceManager.Network.Models.DeleteExistingPeering? deleteExistingPeering, System.Guid? resourceGuid, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.Network.Models.ConnectivityContent ConnectivityContent(Azure.ResourceManager.Network.Models.ConnectivitySource source = null, Azure.ResourceManager.Network.Models.ConnectivityDestination destination = null, Azure.ResourceManager.Network.Models.NetworkWatcherProtocol? protocol = default(Azure.ResourceManager.Network.Models.NetworkWatcherProtocol?), Azure.ResourceManager.Network.Models.NetworkHttpConfiguration httpProtocolConfiguration = null, Azure.ResourceManager.Network.Models.NetworkIPVersion? preferredIPVersion = default(Azure.ResourceManager.Network.Models.NetworkIPVersion?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.ConnectivityHopInfo ConnectivityHopInfo(string connectivityHopType = null, string id = null, string address = null, Azure.Core.ResourceIdentifier resourceId = null, System.Collections.Generic.IEnumerable<string> nextHopIds = null, System.Collections.Generic.IEnumerable<string> previousHopIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.HopLink> links = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.HopLink> previousLinks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityIssueInfo> issues = null) { throw null; }
@@ -10349,13 +10297,14 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ContainerNetworkInterfaceIPConfiguration ContainerNetworkInterfaceIPConfiguration(string name = null, string containerNetworkInterfaceIPConfigurationType = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.CrossTenantScopes CrossTenantScopes(System.Guid? tenantId = default(System.Guid?), System.Collections.Generic.IEnumerable<string> managementGroups = null, System.Collections.Generic.IEnumerable<string> subscriptions = null) { throw null; }
         public static Azure.ResourceManager.Network.CustomIPPrefixData CustomIPPrefixData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> zones = null, string asn = null, string cidr = null, string signedMessage = null, string authorizationMessage = null, Azure.Core.ResourceIdentifier parentCustomIPPrefixId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> childCustomIPPrefixList = null, Azure.ResourceManager.Network.Models.CommissionedState? commissionedState = default(Azure.ResourceManager.Network.Models.CommissionedState?), bool? expressRouteAdvertise = default(bool?), Azure.ResourceManager.Network.Models.CidrAdvertisingGeoCode? geo = default(Azure.ResourceManager.Network.Models.CidrAdvertisingGeoCode?), bool? noInternetAdvertise = default(bool?), Azure.ResourceManager.Network.Models.CustomIPPrefixType? prefixType = default(Azure.ResourceManager.Network.Models.CustomIPPrefixType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> publicIPPrefixes = null, System.Guid? resourceGuid = default(System.Guid?), string failedReason = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Network.DdosCustomPolicyData DdosCustomPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Network.DdosCustomPolicyData DdosCustomPolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ETag? etag, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
+        public static Azure.ResourceManager.Network.DdosCustomPolicyData DdosCustomPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.DdosDetectionRule> detectionRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> frontEndIPConfiguration = null) { throw null; }
+        public static Azure.ResourceManager.Network.Models.DdosDetectionRule DdosDetectionRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.DdosDetectionMode? detectionMode = default(Azure.ResourceManager.Network.Models.DdosDetectionMode?), Azure.ResourceManager.Network.Models.TrafficDetectionRule trafficDetectionRule = null) { throw null; }
         public static Azure.ResourceManager.Network.DdosProtectionPlanData DdosProtectionPlanData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> publicIPAddresses = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualNetworks = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.DnsNameAvailabilityResult DnsNameAvailabilityResult(bool? available = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Network.DscpConfigurationData DscpConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<int> markings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.QosIPRange> sourceIPRanges = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.QosIPRange> destinationIPRanges = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.QosPortRange> sourcePortRanges = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.QosPortRange> destinationPortRanges = null, Azure.ResourceManager.Network.Models.ProtocolType? protocol = default(Azure.ResourceManager.Network.Models.ProtocolType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.DscpQosDefinition> qosDefinitionCollection = null, string qosCollectionId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceData> associatedNetworkInterfaces = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.EffectiveBaseSecurityAdminRule EffectiveBaseSecurityAdminRule(Azure.Core.ResourceIdentifier resourceId = null, string configurationDescription = null, string ruleCollectionDescription = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkConfigurationGroup> ruleGroups = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.EffectiveConnectivityConfiguration EffectiveConnectivityConfiguration(string id = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkConfigurationGroup> configurationGroups = null, string description = null, Azure.ResourceManager.Network.Models.ConnectivityTopology? connectivityTopology = default(Azure.ResourceManager.Network.Models.ConnectivityTopology?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityHub> hubs = null, Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag? isGlobal = default(Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag?), Azure.ResourceManager.Network.Models.ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityGroupItem> appliesToGroups = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.DeleteExistingPeering? deleteExistingPeering = default(Azure.ResourceManager.Network.Models.DeleteExistingPeering?), System.Guid? resourceGuid = default(System.Guid?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.Models.EffectiveConnectivityConfiguration EffectiveConnectivityConfiguration(string id, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkConfigurationGroup> configurationGroups, string description, Azure.ResourceManager.Network.Models.ConnectivityTopology? connectivityTopology, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityHub> hubs, Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag? isGlobal, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ConnectivityGroupItem> appliesToGroups, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, Azure.ResourceManager.Network.Models.DeleteExistingPeering? deleteExistingPeering, System.Guid? resourceGuid) { throw null; }
         public static Azure.ResourceManager.Network.Models.EffectiveDefaultSecurityAdminRule EffectiveDefaultSecurityAdminRule(Azure.Core.ResourceIdentifier resourceId = null, string configurationDescription = null, string ruleCollectionDescription = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkConfigurationGroup> ruleGroups = null, string description = null, string flag = null, Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol? protocol = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AddressPrefixItem> sources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AddressPrefixItem> destinations = null, System.Collections.Generic.IEnumerable<string> sourcePortRanges = null, System.Collections.Generic.IEnumerable<string> destinationPortRanges = null, Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess? access = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess?), int? priority = default(int?), Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection? direction = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityGroup EffectiveNetworkSecurityGroup(Azure.Core.ResourceIdentifier networkSecurityGroupId = null, Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityGroupAssociation association = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityRule> effectiveSecurityRules = null, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IList<string>> tagToIPAddresses = null) { throw null; }
@@ -10370,14 +10319,11 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.EndpointServiceResult EndpointServiceResult(string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.ResourceIdentifier id = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.EvaluatedNetworkSecurityGroup EvaluatedNetworkSecurityGroup(Azure.Core.ResourceIdentifier networkSecurityGroupId = null, string appliedTo = null, Azure.ResourceManager.Network.Models.MatchedRule matchedRule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkSecurityRulesEvaluationResult> rulesEvaluationResult = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.ExpressRouteCircuitArpTable ExpressRouteCircuitArpTable(int? age = default(int?), string @interface = null, string ipAddress = null, string macAddress = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.ExpressRouteCircuitAuthorizationData ExpressRouteCircuitAuthorizationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, string authorizationKey, Azure.ResourceManager.Network.Models.AuthorizationUseStatus? authorizationUseStatus, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Network.ExpressRouteCircuitAuthorizationData ExpressRouteCircuitAuthorizationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), string authorizationKey = null, Azure.ResourceManager.Network.Models.AuthorizationUseStatus? authorizationUseStatus = default(Azure.ResourceManager.Network.Models.AuthorizationUseStatus?), System.Uri connectionResourceUri = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.ExpressRouteCircuitConnectionData ExpressRouteCircuitConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier expressRouteCircuitPeeringId = null, Azure.Core.ResourceIdentifier peerExpressRouteCircuitPeeringId = null, string addressPrefix = null, string authorizationKey = null, Azure.ResourceManager.Network.Models.IPv6CircuitConnectionConfig ipv6CircuitConnectionConfig = null, Azure.ResourceManager.Network.Models.CircuitConnectionStatus? circuitConnectionStatus = default(Azure.ResourceManager.Network.Models.CircuitConnectionStatus?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.ExpressRouteCircuitData ExpressRouteCircuitData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Network.Models.ExpressRouteCircuitSku sku, Azure.ETag? etag, bool? allowClassicOperations, string circuitProvisioningState, Azure.ResourceManager.Network.Models.ServiceProviderProvisioningState? serviceProviderProvisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteCircuitAuthorizationData> authorizations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, Azure.ResourceManager.Network.Models.ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, Azure.Core.ResourceIdentifier expressRoutePortId, float? bandwidthInGbps, int? stag, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus) { throw null; }
         public static Azure.ResourceManager.Network.ExpressRouteCircuitData ExpressRouteCircuitData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Network.Models.ExpressRouteCircuitSku sku = null, Azure.ETag? etag = default(Azure.ETag?), bool? allowClassicOperations = default(bool?), string circuitProvisioningState = null, Azure.ResourceManager.Network.Models.ServiceProviderProvisioningState? serviceProviderProvisioningState = default(Azure.ResourceManager.Network.Models.ServiceProviderProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteCircuitAuthorizationData> authorizations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData> peerings = null, string serviceKey = null, string serviceProviderNotes = null, Azure.ResourceManager.Network.Models.ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = null, Azure.Core.ResourceIdentifier expressRoutePortId = null, float? bandwidthInGbps = default(float?), int? stag = default(int?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), string gatewayManagerETag = null, bool? globalReachEnabled = default(bool?), string authorizationKey = null, string authorizationStatus = null, bool? enableDirectPortRateLimit = default(bool?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringConfig ExpressRouteCircuitPeeringConfig(System.Collections.Generic.IEnumerable<string> advertisedPublicPrefixes, System.Collections.Generic.IEnumerable<string> advertisedCommunities, Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringAdvertisedPublicPrefixState? advertisedPublicPrefixesState, int? legacyMode, int? customerASN, string routingRegistryName) { throw null; }
         public static Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringConfig ExpressRouteCircuitPeeringConfig(System.Collections.Generic.IEnumerable<string> advertisedPublicPrefixes = null, System.Collections.Generic.IEnumerable<string> advertisedCommunities = null, Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringAdvertisedPublicPrefixState? advertisedPublicPrefixesState = default(Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringAdvertisedPublicPrefixState?), int? legacyMode = default(int?), int? customerASN = default(int?), string routingRegistryName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AdvertisedPublicPrefixProperties> advertisedPublicPrefixInfo = null) { throw null; }
         public static Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData ExpressRouteCircuitPeeringData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.ExpressRoutePeeringType? peeringType = default(Azure.ResourceManager.Network.Models.ExpressRoutePeeringType?), Azure.ResourceManager.Network.Models.ExpressRoutePeeringState? state = default(Azure.ResourceManager.Network.Models.ExpressRoutePeeringState?), int? azureASN = default(int?), long? peerASN = default(long?), string primaryPeerAddressPrefix = null, string secondaryPeerAddressPrefix = null, string primaryAzurePort = null, string secondaryAzurePort = null, string sharedKey = null, int? vlanId = default(int?), Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = null, Azure.ResourceManager.Network.Models.ExpressRouteCircuitStats stats = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), string gatewayManagerETag = null, string lastModifiedBy = null, Azure.Core.ResourceIdentifier routeFilterId = null, Azure.ResourceManager.Network.Models.IPv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig = null, Azure.Core.ResourceIdentifier expressRouteConnectionId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteCircuitConnectionData> connections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PeerExpressRouteCircuitConnectionData> peeredConnections = null) { throw null; }
@@ -10404,17 +10350,15 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.ExpressRoutePortsLocationData ExpressRoutePortsLocationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, string address = null, string contact = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ExpressRoutePortsLocationBandwidths> availableBandwidths = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.ExpressRouteProviderPortData ExpressRouteProviderPortData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), string portPairDescriptor = null, string primaryAzurePort = null, string secondaryAzurePort = null, string peeringLocation = null, int? overprovisionFactor = default(int?), int? portBandwidthInMbps = default(int?), int? usedBandwidthInMbps = default(int?), int? remainingBandwidthInMbps = default(int?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.ExpressRouteServiceProvider ExpressRouteServiceProvider(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<string> peeringLocations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.FirewallPolicyData FirewallPolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ETag? etag, Azure.ResourceManager.Models.ManagedServiceIdentity identity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ruleCollectionGroups, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, Azure.Core.ResourceIdentifier basePolicyId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> firewalls, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> childPolicies, Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode? threatIntelMode, Azure.ResourceManager.Network.Models.FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, Azure.ResourceManager.Network.Models.FirewallPolicyInsights insights, Azure.ResourceManager.Network.Models.FirewallPolicySnat snat, bool? allowSqlRedirect, Azure.ResourceManager.Network.Models.DnsSettings dnsSettings, Azure.ResourceManager.Network.Models.FirewallPolicyExplicitProxy explicitProxy, Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetection intrusionDetection, Azure.ResourceManager.Network.Models.FirewallPolicyCertificateAuthority transportSecurityCertificateAuthority, Azure.ResourceManager.Network.Models.FirewallPolicySkuTier? skuTier) { throw null; }
         public static Azure.ResourceManager.Network.FirewallPolicyData FirewallPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string size = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ruleCollectionGroups = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.Core.ResourceIdentifier basePolicyId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> firewalls = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> childPolicies = null, Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode? threatIntelMode = default(Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode?), Azure.ResourceManager.Network.Models.FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = null, Azure.ResourceManager.Network.Models.FirewallPolicyInsights insights = null, Azure.ResourceManager.Network.Models.FirewallPolicySnat snat = null, bool? allowSqlRedirect = default(bool?), Azure.ResourceManager.Network.Models.DnsSettings dnsSettings = null, Azure.ResourceManager.Network.Models.FirewallPolicyExplicitProxy explicitProxy = null, Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetection intrusionDetection = null, Azure.ResourceManager.Network.Models.FirewallPolicyCertificateAuthority transportSecurityCertificateAuthority = null, Azure.ResourceManager.Network.Models.FirewallPolicySkuTier? skuTier = default(Azure.ResourceManager.Network.Models.FirewallPolicySkuTier?)) { throw null; }
         public static Azure.ResourceManager.Network.FirewallPolicyDraftData FirewallPolicyDraftData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.ResourceIdentifier basePolicyId = null, Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode? threatIntelMode = default(Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode?), Azure.ResourceManager.Network.Models.FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = null, Azure.ResourceManager.Network.Models.FirewallPolicyInsights insights = null, Azure.ResourceManager.Network.Models.FirewallPolicySnat snat = null, bool? allowSqlRedirect = default(bool?), Azure.ResourceManager.Network.Models.DnsSettings dnsSettings = null, Azure.ResourceManager.Network.Models.FirewallPolicyExplicitProxy explicitProxy = null, Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetection intrusionDetection = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.FirewallPolicyRuleCollectionGroupData FirewallPolicyRuleCollectionGroupData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, int? priority, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionInfo> ruleCollections, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Network.FirewallPolicyRuleCollectionGroupData FirewallPolicyRuleCollectionGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), string size = null, int? priority = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionInfo> ruleCollections = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.FirewallPolicyRuleCollectionGroupDraftData FirewallPolicyRuleCollectionGroupDraftData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string size = null, int? priority = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionInfo> ruleCollections = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.FlowLogData FlowLogData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ETag? etag, Azure.Core.ResourceIdentifier targetResourceId, System.Guid? targetResourceGuid, Azure.Core.ResourceIdentifier storageId, bool? enabled, Azure.ResourceManager.Network.Models.RetentionPolicyParameters retentionPolicy, Azure.ResourceManager.Network.Models.FlowLogProperties format, Azure.ResourceManager.Network.Models.TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
-        public static Azure.ResourceManager.Network.FlowLogData FlowLogData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.Core.ResourceIdentifier targetResourceId = null, System.Guid? targetResourceGuid = default(System.Guid?), Azure.Core.ResourceIdentifier storageId = null, string enabledFilteringCriteria = null, bool? enabled = default(bool?), Azure.ResourceManager.Network.Models.RetentionPolicyParameters retentionPolicy = null, Azure.ResourceManager.Network.Models.FlowLogProperties format = null, Azure.ResourceManager.Network.Models.TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Network.FlowLogData FlowLogData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ETag? etag, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.Core.ResourceIdentifier targetResourceId, System.Guid? targetResourceGuid, Azure.Core.ResourceIdentifier storageId, string enabledFilteringCriteria, bool? enabled, Azure.ResourceManager.Network.Models.RetentionPolicyParameters retentionPolicy, Azure.ResourceManager.Network.Models.FlowLogProperties format, Azure.ResourceManager.Network.Models.TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
+        public static Azure.ResourceManager.Network.FlowLogData FlowLogData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.Core.ResourceIdentifier targetResourceId = null, System.Guid? targetResourceGuid = default(System.Guid?), Azure.Core.ResourceIdentifier storageId = null, string enabledFilteringCriteria = null, string recordTypes = null, bool? enabled = default(bool?), Azure.ResourceManager.Network.Models.RetentionPolicyParameters retentionPolicy = null, Azure.ResourceManager.Network.Models.FlowLogProperties format = null, Azure.ResourceManager.Network.Models.TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.FrontendIPConfigurationData FrontendIPConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> inboundNatRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> inboundNatPools = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> outboundRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> loadBalancingRules = null, string privateIPAddress = null, Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod? privateIPAllocationMethod = default(Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod?), Azure.ResourceManager.Network.Models.NetworkIPVersion? privateIPAddressVersion = default(Azure.ResourceManager.Network.Models.NetworkIPVersion?), Azure.ResourceManager.Network.SubnetData subnet = null, Azure.ResourceManager.Network.PublicIPAddressData publicIPAddress = null, Azure.Core.ResourceIdentifier publicIPPrefixId = null, Azure.Core.ResourceIdentifier gatewayLoadBalancerId = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.GatewayResiliencyInformation GatewayResiliencyInformation(string overallScore = null, string scoreChange = null, string minScoreFromRecommendations = null, string maxScoreFromRecommendations = null, System.DateTimeOffset? lastComputedOn = default(System.DateTimeOffset?), System.DateTimeOffset? nextEligibleComputeOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ResiliencyRecommendationComponents> components = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.GatewayResiliencyRecommendation GatewayResiliencyRecommendation(string recommendationTitle = null, string recommendationId = null, string severity = null, string recommendationText = null, string callToActionText = null, string callToActionLink = null) { throw null; }
@@ -10432,15 +10376,12 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.IdpsSignatureResult IdpsSignatureResult(int? signatureId = default(int?), Azure.ResourceManager.Network.Models.FirewallPolicyIdpsSignatureMode? mode = default(Azure.ResourceManager.Network.Models.FirewallPolicyIdpsSignatureMode?), Azure.ResourceManager.Network.Models.FirewallPolicyIdpsSignatureSeverity? severity = default(Azure.ResourceManager.Network.Models.FirewallPolicyIdpsSignatureSeverity?), Azure.ResourceManager.Network.Models.FirewallPolicyIdpsSignatureDirection? direction = default(Azure.ResourceManager.Network.Models.FirewallPolicyIdpsSignatureDirection?), string group = null, string description = null, string protocol = null, System.Collections.Generic.IEnumerable<string> sourcePorts = null, System.Collections.Generic.IEnumerable<string> destinationPorts = null, string lastUpdated = null, bool? inheritedFromParentPolicy = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Network.InboundNatRuleData InboundNatRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier frontendIPConfigurationId = null, Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData backendIPConfiguration = null, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? protocol = default(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol?), int? frontendPort = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), bool? enableTcpReset = default(bool?), int? frontendPortRangeStart = default(int?), int? frontendPortRangeEnd = default(int?), Azure.Core.ResourceIdentifier backendAddressPoolId = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.InboundNatRulePortMapping InboundNatRulePortMapping(string inboundNatRuleName = null, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? protocol = default(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol?), int? frontendPort = default(int?), int? backendPort = default(int?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.Models.InboundSecurityRule InboundSecurityRule(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.InboundSecurityRules> rules, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.Models.InboundSecurityRule InboundSecurityRule(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, Azure.ResourceManager.Network.Models.InboundSecurityRuleType? ruleType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.InboundSecurityRules> rules, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Network.InboundSecurityRuleData InboundSecurityRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.InboundSecurityRuleType? ruleType = default(Azure.ResourceManager.Network.Models.InboundSecurityRuleType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.InboundSecurityRules> rules = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.IPAddressAvailabilityResult IPAddressAvailabilityResult(bool? available = default(bool?), System.Collections.Generic.IEnumerable<string> availableIPAddresses = null, bool? isPlatformReserved = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Network.IPAllocationData IPAllocationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier subnetId = null, Azure.Core.ResourceIdentifier virtualNetworkId = null, Azure.ResourceManager.Network.Models.NetworkIPAllocationType? ipAllocationType = default(Azure.ResourceManager.Network.Models.NetworkIPAllocationType?), string prefix = null, int? prefixLength = default(int?), Azure.ResourceManager.Network.Models.NetworkIPVersion? prefixType = default(Azure.ResourceManager.Network.Models.NetworkIPVersion?), string ipamAllocationId = null, System.Collections.Generic.IDictionary<string, string> allocationTags = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.IpamPoolAssociation IpamPoolAssociation(Azure.Core.ResourceIdentifier resourceId = null, Azure.Core.ResourceIdentifier poolId = null, string description = null, System.Collections.Generic.IEnumerable<string> addressPrefixes = null, System.Collections.Generic.IEnumerable<string> reservedPrefixes = null, string totalNumberOfIPAddresses = null, string numberOfReservedIPAddresses = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? reservationExpiresOn = default(System.DateTimeOffset?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.IpamPoolData IpamPoolData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.IpamPoolProperties properties) { throw null; }
         public static Azure.ResourceManager.Network.IpamPoolData IpamPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Network.Models.IpamPoolProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.IpamPoolPrefixAllocation IpamPoolPrefixAllocation(string numberOfIPAddresses = null, System.Collections.Generic.IEnumerable<string> allocatedAddressPrefixes = null, Azure.Core.ResourceIdentifier id = null) { throw null; }
@@ -10451,30 +10392,25 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.IPv6CircuitConnectionConfig IPv6CircuitConnectionConfig(string addressPrefix = null, Azure.ResourceManager.Network.Models.CircuitConnectionStatus? circuitConnectionStatus = default(Azure.ResourceManager.Network.Models.CircuitConnectionStatus?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.LearnedIPPrefixesListResult LearnedIPPrefixesListResult(System.Collections.Generic.IEnumerable<string> ipPrefixes = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.LoadBalancerBackendAddress LoadBalancerBackendAddress(string name = null, Azure.Core.ResourceIdentifier virtualNetworkId = null, Azure.Core.ResourceIdentifier subnetId = null, string ipAddress = null, Azure.Core.ResourceIdentifier networkInterfaceIPConfigurationId = null, Azure.Core.ResourceIdentifier loadBalancerFrontendIPConfigurationId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NatRulePortMapping> inboundNatRulesPortMapping = null, Azure.ResourceManager.Network.Models.LoadBalancerBackendAddressAdminState? adminState = default(Azure.ResourceManager.Network.Models.LoadBalancerBackendAddressAdminState?)) { throw null; }
-        public static Azure.ResourceManager.Network.LoadBalancerData LoadBalancerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.Network.Models.LoadBalancerSku sku = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FrontendIPConfigurationData> frontendIPConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.BackendAddressPoolData> backendAddressPools = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.LoadBalancingRuleData> loadBalancingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ProbeData> probes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.InboundNatRuleData> inboundNatRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool> inboundNatPools = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.OutboundRuleData> outboundRules = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Network.LoadBalancerData LoadBalancerData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.Network.Models.LoadBalancerSku sku, Azure.ETag? etag, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FrontendIPConfigurationData> frontendIPConfigurations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.BackendAddressPoolData> backendAddressPools, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.LoadBalancingRuleData> loadBalancingRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ProbeData> probes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.InboundNatRuleData> inboundNatRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool> inboundNatPools, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.OutboundRuleData> outboundRules, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
+        public static Azure.ResourceManager.Network.LoadBalancerData LoadBalancerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.Network.Models.LoadBalancerSku sku = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FrontendIPConfigurationData> frontendIPConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.BackendAddressPoolData> backendAddressPools = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.LoadBalancingRuleData> loadBalancingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ProbeData> probes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.InboundNatRuleData> inboundNatRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool> inboundNatPools = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.OutboundRuleData> outboundRules = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.LoadBalancerScope? scope = default(Azure.ResourceManager.Network.Models.LoadBalancerScope?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.LoadBalancerHealthPerRule LoadBalancerHealthPerRule(int? up = default(int?), int? down = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.LoadBalancerHealthPerRulePerBackendAddress> loadBalancerBackendAddresses = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.LoadBalancerHealthPerRulePerBackendAddress LoadBalancerHealthPerRulePerBackendAddress(string ipAddress = null, Azure.Core.ResourceIdentifier networkInterfaceIPConfigurationResourceId = null, string state = null, string reason = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.Models.LoadBalancerHealthPerRulePerBackendAddress LoadBalancerHealthPerRulePerBackendAddress(string ipAddress, Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData networkInterfaceIPConfigurationId, string state, string reason) { throw null; }
         public static Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool LoadBalancerInboundNatPool(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool LoadBalancerInboundNatPool(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, Azure.Core.ResourceIdentifier frontendIPConfigurationId, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? protocol, int? frontendPortRangeStart, int? frontendPortRangeEnd, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties LoadBalancerInboundNatPoolProperties(Azure.Core.ResourceIdentifier frontendIPConfigurationId = null, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol protocol = default(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol), int frontendPortRangeStart = 0, int frontendPortRangeEnd = 0, int backendPort = 0, int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), bool? enableTcpReset = default(bool?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.Network.LoadBalancingRuleData LoadBalancingRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.LoadBalancingRuleData LoadBalancingRuleData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, Azure.Core.ResourceIdentifier frontendIPConfigurationId, Azure.Core.ResourceIdentifier backendAddressPoolId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> backendAddressPools, Azure.Core.ResourceIdentifier probeId, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? protocol, Azure.ResourceManager.Network.Models.LoadDistribution? loadDistribution, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, bool? disableOutboundSnat, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties LoadBalancingRuleProperties(Azure.Core.ResourceIdentifier frontendIPConfigurationId, Azure.Core.ResourceIdentifier backendAddressPoolId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> backendAddressPools, Azure.Core.ResourceIdentifier probeId, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol protocol, Azure.ResourceManager.Network.Models.LoadDistribution? loadDistribution, int frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, bool? disableOutboundSnat, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties) { throw null; }
         public static Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties LoadBalancingRuleProperties(Azure.Core.ResourceIdentifier frontendIPConfigurationId = null, Azure.Core.ResourceIdentifier backendAddressPoolId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> backendAddressPools = null, Azure.Core.ResourceIdentifier probeId = null, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol protocol = default(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol), Azure.ResourceManager.Network.Models.LoadDistribution? loadDistribution = default(Azure.ResourceManager.Network.Models.LoadDistribution?), int frontendPort = 0, int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), bool? enableTcpReset = default(bool?), bool? disableOutboundSnat = default(bool?), bool? enableConnectionTracking = default(bool?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.Network.LocalNetworkGatewayData LocalNetworkGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.VirtualNetworkAddressSpace localNetworkAddressSpace = null, string gatewayIPAddress = null, string fqdn = null, Azure.ResourceManager.Network.Models.BgpSettings bgpSettings = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.LocalNetworkGatewayData LocalNetworkGatewayData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ETag? etag, System.Collections.Generic.IEnumerable<string> localNetworkAddressPrefixes, string gatewayIPAddress, string fqdn, Azure.ResourceManager.Network.Models.BgpSettings bgpSettings, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Network.Models.ManagedRuleSet ManagedRuleSet(string ruleSetType = null, string ruleSetVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ManagedRuleGroupOverride> ruleGroupOverrides = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ManagedRuleSetRuleGroup> computedDisabledRules = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.ManagedRuleSetRuleGroup ManagedRuleSetRuleGroup(string ruleGroupName = null, System.Collections.Generic.IEnumerable<string> rules = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.MatchedRule MatchedRule(string ruleName = null, string action = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.MigrateLoadBalancerToIPBasedResult MigrateLoadBalancerToIPBasedResult(System.Collections.Generic.IEnumerable<string> migratedPools = null) { throw null; }
         public static Azure.ResourceManager.Network.NatGatewayData NatGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Network.Models.NatGatewaySkuName? skuName = default(Azure.ResourceManager.Network.Models.NatGatewaySkuName?), System.Collections.Generic.IEnumerable<string> zones = null, Azure.ETag? etag = default(Azure.ETag?), int? idleTimeoutInMinutes = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> publicIPAddresses = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> publicIPAddressesV6 = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> publicIPPrefixes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> publicIPPrefixesV6 = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> subnets = null, Azure.Core.ResourceIdentifier sourceVirtualNetworkId = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.NatGatewayData NatGatewayData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Network.Models.NatGatewaySkuName? skuName, System.Collections.Generic.IEnumerable<string> zones, Azure.ETag? etag, int? idleTimeoutInMinutes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> publicIPAddresses, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> publicIPPrefixes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> subnets, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Network.Models.NatRulePortMapping NatRulePortMapping(string inboundNatRuleName = null, int? frontendPort = default(int?), int? backendPort = default(int?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkAdminRule NetworkAdminRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string description = null, Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol? protocol = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AddressPrefixItem> sources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AddressPrefixItem> destinations = null, System.Collections.Generic.IEnumerable<string> sourcePortRanges = null, System.Collections.Generic.IEnumerable<string> destinationPortRanges = null, Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess? access = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess?), int? priority = default(int?), Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection? direction = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?)) { throw null; }
@@ -10482,20 +10418,16 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkConfigurationDiagnosticResponse NetworkConfigurationDiagnosticResponse(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkConfigurationDiagnosticResult> results = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkConfigurationDiagnosticResult NetworkConfigurationDiagnosticResult(Azure.ResourceManager.Network.Models.NetworkConfigurationDiagnosticProfile profile = null, Azure.ResourceManager.Network.Models.NetworkSecurityGroupResult networkSecurityGroupResult = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkConfigurationGroup NetworkConfigurationGroup(string id = null, string description = null, Azure.ResourceManager.Network.Models.NetworkGroupMemberType? memberType = default(Azure.ResourceManager.Network.Models.NetworkGroupMemberType?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.Models.NetworkConfigurationGroup NetworkConfigurationGroup(string id, string description, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, System.Guid? resourceGuid) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkDefaultAdminRule NetworkDefaultAdminRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string description = null, string flag = null, Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol? protocol = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AddressPrefixItem> sources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AddressPrefixItem> destinations = null, System.Collections.Generic.IEnumerable<string> sourcePortRanges = null, System.Collections.Generic.IEnumerable<string> destinationPortRanges = null, Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess? access = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess?), int? priority = default(int?), Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection? direction = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Network.NetworkGroupData NetworkGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Network.Models.NetworkGroupMemberType? memberType = default(Azure.ResourceManager.Network.Models.NetworkGroupMemberType?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.NetworkGroupData NetworkGroupData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, System.Guid? resourceGuid, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.Network.NetworkGroupStaticMemberData NetworkGroupStaticMemberData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier resourceId = null, string region = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkIntentPolicy NetworkIntentPolicy(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkInterfaceAssociation NetworkInterfaceAssociation(Azure.Core.ResourceIdentifier id = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.SecurityRuleData> securityRules = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.NetworkInterfaceData NetworkInterfaceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, Azure.ETag? etag, Azure.Core.ResourceIdentifier virtualMachineId, Azure.ResourceManager.Network.NetworkSecurityGroupData networkSecurityGroup, Azure.ResourceManager.Network.PrivateEndpointData privateEndpoint, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData> ipConfigurations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationData> tapConfigurations, Azure.ResourceManager.Network.Models.NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? vnetEncryptionSupported, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableIPForwarding, System.Collections.Generic.IEnumerable<string> hostedWorkloads, Azure.Core.ResourceIdentifier dscpConfigurationId, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, string workloadType, Azure.ResourceManager.Network.Models.NetworkInterfaceNicType? nicType, Azure.ResourceManager.Network.PrivateLinkServiceData privateLinkService, Azure.ResourceManager.Network.Models.NetworkInterfaceMigrationPhase? migrationPhase, Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliaryMode? auxiliaryMode, Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliarySku? auxiliarySku) { throw null; }
         public static Azure.ResourceManager.Network.NetworkInterfaceData NetworkInterfaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier virtualMachineId = null, Azure.ResourceManager.Network.NetworkSecurityGroupData networkSecurityGroup = null, Azure.ResourceManager.Network.PrivateEndpointData privateEndpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData> ipConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationData> tapConfigurations = null, Azure.ResourceManager.Network.Models.NetworkInterfaceDnsSettings dnsSettings = null, string macAddress = null, bool? primary = default(bool?), bool? vnetEncryptionSupported = default(bool?), bool? defaultOutboundConnectivityEnabled = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? disableTcpStateTracking = default(bool?), bool? enableIPForwarding = default(bool?), System.Collections.Generic.IEnumerable<string> hostedWorkloads = null, Azure.Core.ResourceIdentifier dscpConfigurationId = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), string workloadType = null, Azure.ResourceManager.Network.Models.NetworkInterfaceNicType? nicType = default(Azure.ResourceManager.Network.Models.NetworkInterfaceNicType?), Azure.ResourceManager.Network.PrivateLinkServiceData privateLinkService = null, Azure.ResourceManager.Network.Models.NetworkInterfaceMigrationPhase? migrationPhase = default(Azure.ResourceManager.Network.Models.NetworkInterfaceMigrationPhase?), Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliaryMode? auxiliaryMode = default(Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliaryMode?), Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliarySku? auxiliarySku = default(Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliarySku?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkInterfaceDnsSettings NetworkInterfaceDnsSettings(System.Collections.Generic.IEnumerable<string> dnsServers = null, System.Collections.Generic.IEnumerable<string> appliedDnsServers = null, string internalDnsNameLabel = null, string internalFqdn = null, string internalDomainNameSuffix = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData NetworkInterfaceIPConfigurationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, Azure.Core.ResourceIdentifier gatewayLoadBalancerId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkTapData> virtualNetworkTaps, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.BackendAddressPoolData> loadBalancerBackendAddressPools, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.InboundNatRuleData> loadBalancerInboundNatRules, string privateIPAddress, Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod? privateIPAllocationMethod, Azure.ResourceManager.Network.Models.NetworkIPVersion? privateIPAddressVersion, Azure.ResourceManager.Network.SubnetData subnet, bool? primary, Azure.ResourceManager.Network.PublicIPAddressData publicIPAddress, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ApplicationSecurityGroupData> applicationSecurityGroups, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, Azure.ResourceManager.Network.Models.NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties) { throw null; }
         public static Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData NetworkInterfaceIPConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier gatewayLoadBalancerId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkTapData> virtualNetworkTaps = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.BackendAddressPoolData> loadBalancerBackendAddressPools = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.InboundNatRuleData> loadBalancerInboundNatRules = null, string privateIPAddress = null, int? privateIPAddressPrefixLength = default(int?), Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod? privateIPAllocationMethod = default(Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod?), Azure.ResourceManager.Network.Models.NetworkIPVersion? privateIPAddressVersion = default(Azure.ResourceManager.Network.Models.NetworkIPVersion?), Azure.ResourceManager.Network.SubnetData subnet = null, bool? primary = default(bool?), Azure.ResourceManager.Network.PublicIPAddressData publicIPAddress = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ApplicationSecurityGroupData> applicationSecurityGroups = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(string groupId = null, string requiredMemberName = null, System.Collections.Generic.IEnumerable<string> fqdns = null) { throw null; }
@@ -10508,7 +10440,8 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.NetworkManagerData NetworkManagerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Network.Models.NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkConfigurationDeploymentType> networkManagerScopeAccesses = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkManagerDeploymentStatus NetworkManagerDeploymentStatus(System.DateTimeOffset? commitOn = default(System.DateTimeOffset?), string region = null, Azure.ResourceManager.Network.Models.NetworkManagerDeploymentState? deploymentState = default(Azure.ResourceManager.Network.Models.NetworkManagerDeploymentState?), System.Collections.Generic.IEnumerable<string> configurationIds = null, Azure.ResourceManager.Network.Models.NetworkConfigurationDeploymentType? deploymentType = default(Azure.ResourceManager.Network.Models.NetworkConfigurationDeploymentType?), string errorMessage = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkManagerPropertiesNetworkManagerScopes NetworkManagerPropertiesNetworkManagerScopes(System.Collections.Generic.IEnumerable<string> managementGroups = null, System.Collections.Generic.IEnumerable<string> subscriptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.CrossTenantScopes> crossTenantScopes = null) { throw null; }
-        public static Azure.ResourceManager.Network.NetworkManagerRoutingConfigurationData NetworkManagerRoutingConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.Network.NetworkManagerRoutingConfigurationData NetworkManagerRoutingConfigurationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, System.Guid? resourceGuid, Azure.ETag? etag) { throw null; }
+        public static Azure.ResourceManager.Network.NetworkManagerRoutingConfigurationData NetworkManagerRoutingConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.RouteTableUsageMode? routeTableUsageMode = default(Azure.ResourceManager.Network.Models.RouteTableUsageMode?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Network.NetworkManagerRoutingRuleData NetworkManagerRoutingRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.RoutingRuleRouteDestination destination = null, Azure.ResourceManager.Network.Models.RoutingRuleNextHop nextHop = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Network.NetworkManagerRoutingRulesData NetworkManagerRoutingRulesData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkManagerRoutingGroupItem> appliesTo = null, Azure.ResourceManager.Network.Models.DisableBgpRoutePropagation? disableBgpRoutePropagation = default(Azure.ResourceManager.Network.Models.DisableBgpRoutePropagation?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Network.NetworkManagerSecurityUserConfigurationData NetworkManagerSecurityUserConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
@@ -10530,21 +10463,20 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.NetworkSecurityPerimeterLoggingConfigurationData NetworkSecurityPerimeterLoggingConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> enabledLogCategories = null, string version = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterPatch NetworkSecurityPerimeterPatch(Azure.Core.ResourceIdentifier id = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Network.NetworkSecurityPerimeterProfileData NetworkSecurityPerimeterProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string accessRulesVersion = null, string diagnosticSettingsVersion = null) { throw null; }
+        public static Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterServiceTags NetworkSecurityPerimeterServiceTags(System.Collections.Generic.IEnumerable<string> serviceTags = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkSecurityRulesEvaluationResult NetworkSecurityRulesEvaluationResult(string name = null, bool? protocolMatched = default(bool?), bool? sourceMatched = default(bool?), bool? sourcePortMatched = default(bool?), bool? destinationMatched = default(bool?), bool? destinationPortMatched = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkTopology NetworkTopology(string id = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.TopologyResourceInfo> resources = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkTrackedResourceData NetworkTrackedResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkUsage NetworkUsage(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.Network.Models.NetworkUsageUnit unit = default(Azure.ResourceManager.Network.Models.NetworkUsageUnit), long currentValue = (long)0, long limit = (long)0, Azure.ResourceManager.Network.Models.NetworkUsageName name = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkUsageName NetworkUsageName(string value = null, string localizedValue = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.NetworkVerifierWorkspaceData NetworkVerifierWorkspaceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.NetworkVerifierWorkspaceProperties properties) { throw null; }
         public static Azure.ResourceManager.Network.NetworkVerifierWorkspaceData NetworkVerifierWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Network.Models.NetworkVerifierWorkspaceProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Network.NetworkVirtualApplianceConnectionData NetworkVirtualApplianceConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string namePropertiesName = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), long? asn = default(long?), long? tunnelIdentifier = default(long?), System.Collections.Generic.IEnumerable<string> bgpPeerAddress = null, bool? enableInternetSecurity = default(bool?), Azure.ResourceManager.Network.Models.RoutingConfiguration connectionRoutingConfiguration = null) { throw null; }
         public static Azure.ResourceManager.Network.NetworkVirtualApplianceConnectionData NetworkVirtualApplianceConnectionData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, string namePropertiesName, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, long? asn, long? tunnelIdentifier, System.Collections.Generic.IEnumerable<string> bgpPeerAddress, bool? enableInternetSecurity, Azure.ResourceManager.Network.Models.RoutingConfigurationNfv routingConfiguration) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.NetworkVirtualApplianceData NetworkVirtualApplianceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? etag, Azure.ResourceManager.Network.Models.VirtualApplianceSkuProperties nvaSku, string addressPrefix, System.Collections.Generic.IEnumerable<string> bootStrapConfigurationBlobs, Azure.Core.ResourceIdentifier virtualHubId, System.Collections.Generic.IEnumerable<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualApplianceNicProperties> virtualApplianceNics, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualApplianceAdditionalNicProperties> additionalNics, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> internetIngressPublicIPs, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualApplianceSites, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualApplianceConnections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> inboundSecurityRules, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, string deploymentType, Azure.ResourceManager.Network.Models.VirtualApplianceDelegationProperties delegation, Azure.ResourceManager.Network.Models.PartnerManagedResourceProperties partnerManagedResource) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.NetworkVirtualApplianceData NetworkVirtualApplianceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? etag, Azure.ResourceManager.Network.Models.VirtualApplianceSkuProperties nvaSku, string addressPrefix, System.Collections.Generic.IEnumerable<string> bootStrapConfigurationBlobs, Azure.Core.ResourceIdentifier virtualHubId, System.Collections.Generic.IEnumerable<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualApplianceNicProperties> virtualApplianceNics, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualApplianceAdditionalNicProperties> additionalNics, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualApplianceSites, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualApplianceConnections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> inboundSecurityRules, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, string deploymentType, Azure.ResourceManager.Network.Models.VirtualApplianceDelegationProperties delegation, Azure.ResourceManager.Network.Models.PartnerManagedResourceProperties partnerManagedResource) { throw null; }
-        public static Azure.ResourceManager.Network.NetworkVirtualApplianceData NetworkVirtualApplianceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.VirtualApplianceSkuProperties nvaSku = null, string addressPrefix = null, System.Collections.Generic.IEnumerable<string> bootStrapConfigurationBlobs = null, Azure.Core.ResourceIdentifier virtualHubId = null, System.Collections.Generic.IEnumerable<string> cloudInitConfigurationBlobs = null, string cloudInitConfiguration = null, long? virtualApplianceAsn = default(long?), string sshPublicKey = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualApplianceNicProperties> virtualApplianceNics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualApplianceNetworkInterfaceConfiguration> networkInterfaceConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualApplianceAdditionalNicProperties> additionalNics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> internetIngressPublicIPs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualApplianceSites = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualApplianceConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> inboundSecurityRules = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), string deploymentType = null, Azure.ResourceManager.Network.Models.VirtualApplianceDelegationProperties delegation = null, Azure.ResourceManager.Network.Models.PartnerManagedResourceProperties partnerManagedResource = null) { throw null; }
+        public static Azure.ResourceManager.Network.NetworkVirtualApplianceData NetworkVirtualApplianceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? etag, Azure.ResourceManager.Network.Models.VirtualApplianceSkuProperties nvaSku, string addressPrefix, System.Collections.Generic.IEnumerable<string> bootStrapConfigurationBlobs, Azure.Core.ResourceIdentifier virtualHubId, System.Collections.Generic.IEnumerable<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualApplianceNicProperties> virtualApplianceNics, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualApplianceNetworkInterfaceConfiguration> networkInterfaceConfigurations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualApplianceAdditionalNicProperties> additionalNics, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> internetIngressPublicIPs, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualApplianceSites, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualApplianceConnections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> inboundSecurityRules, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, string deploymentType, Azure.ResourceManager.Network.Models.VirtualApplianceDelegationProperties delegation, Azure.ResourceManager.Network.Models.PartnerManagedResourceProperties partnerManagedResource) { throw null; }
+        public static Azure.ResourceManager.Network.NetworkVirtualApplianceData NetworkVirtualApplianceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.VirtualApplianceSkuProperties nvaSku = null, string addressPrefix = null, System.Collections.Generic.IEnumerable<string> bootStrapConfigurationBlobs = null, Azure.Core.ResourceIdentifier virtualHubId = null, System.Collections.Generic.IEnumerable<string> cloudInitConfigurationBlobs = null, string cloudInitConfiguration = null, long? virtualApplianceAsn = default(long?), string sshPublicKey = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualApplianceNicProperties> virtualApplianceNics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualApplianceNetworkInterfaceConfiguration> networkInterfaceConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualApplianceAdditionalNicProperties> additionalNics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> internetIngressPublicIPs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualApplianceSites = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> virtualApplianceConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> inboundSecurityRules = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), string deploymentType = null, Azure.ResourceManager.Network.Models.VirtualApplianceDelegationProperties delegation = null, Azure.ResourceManager.Network.Models.PartnerManagedResourceProperties partnerManagedResource = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations = null, System.Net.IPAddress privateIPAddress = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkVirtualApplianceInstanceId NetworkVirtualApplianceInstanceId(int? instanceId = default(int?)) { throw null; }
         public static Azure.ResourceManager.Network.NetworkVirtualApplianceSkuData NetworkVirtualApplianceSkuData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), string vendor = null, System.Collections.Generic.IEnumerable<string> availableVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkVirtualApplianceSkuInstances> availableScaleUnits = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkVirtualApplianceSkuInstances NetworkVirtualApplianceSkuInstances(string scaleUnit = null, int? instanceCount = default(int?)) { throw null; }
@@ -10556,10 +10488,8 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.P2SConnectionConfiguration P2SConnectionConfiguration(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, System.Collections.Generic.IEnumerable<string> vpnClientAddressPrefixes, Azure.ResourceManager.Network.Models.RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> configurationPolicyGroupAssociations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Network.Models.P2SVpnConnectionHealth P2SVpnConnectionHealth(System.Uri sasUri = null) { throw null; }
         public static Azure.ResourceManager.Network.P2SVpnGatewayData P2SVpnGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier virtualHubId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.P2SConnectionConfiguration> p2sConnectionConfigurations = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), int? vpnGatewayScaleUnit = default(int?), Azure.Core.ResourceIdentifier vpnServerConfigurationId = null, Azure.ResourceManager.Network.Models.VpnClientConnectionHealth vpnClientConnectionHealth = null, System.Collections.Generic.IEnumerable<string> customDnsServers = null, bool? isRoutingPreferenceInternet = default(bool?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.Models.PacketCaptureCreateOrUpdateContent PacketCaptureCreateOrUpdateContent(string target, Azure.ResourceManager.Network.Models.PacketCaptureMachineScope scope, Azure.ResourceManager.Network.Models.PacketCaptureTargetType? targetType, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, Azure.ResourceManager.Network.Models.PacketCaptureStorageLocation storageLocation, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.PacketCaptureFilter> filters) { throw null; }
         public static Azure.ResourceManager.Network.Models.PacketCaptureCreateOrUpdateContent PacketCaptureCreateOrUpdateContent(string target = null, Azure.ResourceManager.Network.Models.PacketCaptureMachineScope scope = null, Azure.ResourceManager.Network.Models.PacketCaptureTargetType? targetType = default(Azure.ResourceManager.Network.Models.PacketCaptureTargetType?), long? bytesToCapturePerPacket = default(long?), long? totalBytesPerSession = default(long?), int? timeLimitInSeconds = default(int?), Azure.ResourceManager.Network.Models.PacketCaptureStorageLocation storageLocation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.PacketCaptureFilter> filters = null, bool? isContinuousCapture = default(bool?), Azure.ResourceManager.Network.Models.PacketCaptureSettings captureSettings = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.PacketCaptureData PacketCaptureData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? etag, string target, Azure.ResourceManager.Network.Models.PacketCaptureMachineScope scope, Azure.ResourceManager.Network.Models.PacketCaptureTargetType? targetType, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, Azure.ResourceManager.Network.Models.PacketCaptureStorageLocation storageLocation, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.PacketCaptureFilter> filters, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Network.PacketCaptureData PacketCaptureData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string target = null, Azure.ResourceManager.Network.Models.PacketCaptureMachineScope scope = null, Azure.ResourceManager.Network.Models.PacketCaptureTargetType? targetType = default(Azure.ResourceManager.Network.Models.PacketCaptureTargetType?), long? bytesToCapturePerPacket = default(long?), long? totalBytesPerSession = default(long?), int? timeLimitInSeconds = default(int?), Azure.ResourceManager.Network.Models.PacketCaptureStorageLocation storageLocation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.PacketCaptureFilter> filters = null, bool? isContinuousCapture = default(bool?), Azure.ResourceManager.Network.Models.PacketCaptureSettings captureSettings = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.PacketCaptureQueryStatusResult PacketCaptureQueryStatusResult(string name = null, string id = null, System.DateTimeOffset? captureStartOn = default(System.DateTimeOffset?), Azure.ResourceManager.Network.Models.PcStatus? packetCaptureStatus = default(Azure.ResourceManager.Network.Models.PcStatus?), string stopReason = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.PcError> packetCaptureError = null) { throw null; }
@@ -10568,19 +10498,20 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.PeerRoute PeerRoute(string localAddress = null, string network = null, string nextHop = null, string sourcePeer = null, string origin = null, string asPath = null, int? weight = default(int?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.PrivateDnsZoneConfig PrivateDnsZoneConfig(string name = null, string privateDnsZoneId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.RecordSet> recordSets = null) { throw null; }
         public static Azure.ResourceManager.Network.PrivateDnsZoneGroupData PrivateDnsZoneGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.PrivateDnsZoneConfig> privateDnsZoneConfigs = null) { throw null; }
-        public static Azure.ResourceManager.Network.PrivateEndpointData PrivateEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.SubnetData subnet = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceData> networkInterfaces = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnection> privateLinkServiceConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.CustomDnsConfigProperties> customDnsConfigs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ApplicationSecurityGroupData> applicationSecurityGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.PrivateEndpointIPConfiguration> ipConfigurations = null, string customNetworkInterfaceName = null) { throw null; }
+        public static Azure.ResourceManager.Network.PrivateEndpointData PrivateEndpointData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, Azure.ETag? etag, Azure.ResourceManager.Network.SubnetData subnet, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceData> networkInterfaces, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnection> privateLinkServiceConnections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.CustomDnsConfigProperties> customDnsConfigs, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ApplicationSecurityGroupData> applicationSecurityGroups, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.PrivateEndpointIPConfiguration> ipConfigurations, string customNetworkInterfaceName) { throw null; }
+        public static Azure.ResourceManager.Network.PrivateEndpointData PrivateEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.SubnetData subnet = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceData> networkInterfaces = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.PrivateEndpointIPVersionType? ipVersionType = default(Azure.ResourceManager.Network.Models.PrivateEndpointIPVersionType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnection> privateLinkServiceConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.CustomDnsConfigProperties> customDnsConfigs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ApplicationSecurityGroupData> applicationSecurityGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.PrivateEndpointIPConfiguration> ipConfigurations = null, string customNetworkInterfaceName = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.PrivateEndpointIPConfiguration PrivateEndpointIPConfiguration(string name = null, string privateEndpointIPConfigurationType = null, Azure.ETag? etag = default(Azure.ETag?), string groupId = null, string memberName = null, System.Net.IPAddress privateIPAddress = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.PrivateLinkServiceData PrivateLinkServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, Azure.ETag? etag, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.PrivateLinkServiceIPConfiguration> ipConfigurations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceData> networkInterfaces, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionData> privateEndpointConnections, System.Collections.Generic.IEnumerable<string> visibilitySubscriptions, System.Collections.Generic.IEnumerable<string> autoApprovalSubscriptions, System.Collections.Generic.IEnumerable<string> fqdns, string alias, bool? enableProxyProtocol) { throw null; }
-        public static Azure.ResourceManager.Network.PrivateLinkServiceData PrivateLinkServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.PrivateLinkServiceIPConfiguration> ipConfigurations = null, string destinationIPAddress = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceData> networkInterfaces = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionData> privateEndpointConnections = null, System.Collections.Generic.IEnumerable<string> visibilitySubscriptions = null, System.Collections.Generic.IEnumerable<string> autoApprovalSubscriptions = null, System.Collections.Generic.IEnumerable<string> fqdns = null, string alias = null, bool? enableProxyProtocol = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Network.PrivateLinkServiceData PrivateLinkServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, Azure.ETag? etag, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.PrivateLinkServiceIPConfiguration> ipConfigurations, string destinationIPAddress, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceData> networkInterfaces, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionData> privateEndpointConnections, System.Collections.Generic.IEnumerable<string> visibilitySubscriptions, System.Collections.Generic.IEnumerable<string> autoApprovalSubscriptions, System.Collections.Generic.IEnumerable<string> fqdns, string alias, bool? enableProxyProtocol) { throw null; }
+        public static Azure.ResourceManager.Network.PrivateLinkServiceData PrivateLinkServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.PrivateLinkServiceIPConfiguration> ipConfigurations = null, string destinationIPAddress = null, Azure.ResourceManager.Network.Models.PrivateLinkServiceAccessMode? accessMode = default(Azure.ResourceManager.Network.Models.PrivateLinkServiceAccessMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceData> networkInterfaces = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkPrivateEndpointConnectionData> privateEndpointConnections = null, System.Collections.Generic.IEnumerable<string> visibilitySubscriptions = null, System.Collections.Generic.IEnumerable<string> autoApprovalSubscriptions = null, System.Collections.Generic.IEnumerable<string> fqdns = null, string alias = null, bool? enableProxyProtocol = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.PrivateLinkServiceIPConfiguration PrivateLinkServiceIPConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), string privateIPAddress = null, Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod? privateIPAllocationMethod = default(Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod?), Azure.ResourceManager.Network.SubnetData subnet = null, bool? primary = default(bool?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.NetworkIPVersion? privateIPAddressVersion = default(Azure.ResourceManager.Network.Models.NetworkIPVersion?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility PrivateLinkServiceVisibility(bool? visible = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Network.ProbeData ProbeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> loadBalancingRules = null, Azure.ResourceManager.Network.Models.ProbeProtocol? protocol = default(Azure.ResourceManager.Network.Models.ProbeProtocol?), int? port = default(int?), int? intervalInSeconds = default(int?), Azure.ResourceManager.Network.Models.ProbeNoHealthyBackendsBehavior? noHealthyBackendsBehavior = default(Azure.ResourceManager.Network.Models.ProbeNoHealthyBackendsBehavior?), int? numberOfProbes = default(int?), int? probeThreshold = default(int?), string requestPath = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.ProbeData ProbeData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> loadBalancingRules, Azure.ResourceManager.Network.Models.ProbeProtocol? protocol, int? port, int? intervalInSeconds, int? numberOfProbes, int? probeThreshold, string requestPath, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Network.PublicIPAddressData PublicIPAddressData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.Network.Models.PublicIPAddressSku sku = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod? publicIPAllocationMethod = default(Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod?), Azure.ResourceManager.Network.Models.NetworkIPVersion? publicIPAddressVersion = default(Azure.ResourceManager.Network.Models.NetworkIPVersion?), Azure.ResourceManager.Network.Models.NetworkIPConfiguration ipConfiguration = null, Azure.ResourceManager.Network.Models.PublicIPAddressDnsSettings dnsSettings = null, Azure.ResourceManager.Network.Models.DdosSettings ddosSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.IPTag> ipTags = null, string ipAddress = null, Azure.Core.ResourceIdentifier publicIPPrefixId = null, int? idleTimeoutInMinutes = default(int?), System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.PublicIPAddressData servicePublicIPAddress = null, Azure.ResourceManager.Network.NatGatewayData natGateway = null, Azure.ResourceManager.Network.Models.PublicIPAddressMigrationPhase? migrationPhase = default(Azure.ResourceManager.Network.Models.PublicIPAddressMigrationPhase?), Azure.ResourceManager.Network.PublicIPAddressData linkedPublicIPAddress = null, Azure.ResourceManager.Network.Models.IPAddressDeleteOption? deleteOption = default(Azure.ResourceManager.Network.Models.IPAddressDeleteOption?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.PublicIPDdosProtectionStatusResult PublicIPDdosProtectionStatusResult(Azure.Core.ResourceIdentifier publicIPAddressId = null, System.Net.IPAddress publicIPAddress = null, Azure.ResourceManager.Network.Models.WorkloadProtectedFlag? isWorkloadProtected = default(Azure.ResourceManager.Network.Models.WorkloadProtectedFlag?), Azure.Core.ResourceIdentifier ddosProtectionPlanId = null) { throw null; }
         public static Azure.ResourceManager.Network.PublicIPPrefixData PublicIPPrefixData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.Network.Models.PublicIPPrefixSku sku = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Network.Models.NetworkIPVersion? publicIPAddressVersion = default(Azure.ResourceManager.Network.Models.NetworkIPVersion?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.IPTag> ipTags = null, int? prefixLength = default(int?), string ipPrefix = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> publicIPAddresses = null, Azure.Core.ResourceIdentifier loadBalancerFrontendIPConfigurationId = null, Azure.Core.ResourceIdentifier customIPPrefixId = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.NatGatewayData natGateway = null) { throw null; }
+        public static Azure.ResourceManager.Network.Models.RadiusAuthServer RadiusAuthServer(string radiusServerAddress = null, string radiusServerSecret = null) { throw null; }
         public static Azure.ResourceManager.Network.ReachabilityAnalysisIntentData ReachabilityAnalysisIntentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Network.Models.ReachabilityAnalysisIntentProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Network.ReachabilityAnalysisRunData ReachabilityAnalysisRunData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Network.Models.ReachabilityAnalysisRunProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.ReachabilityAnalysisRunProperties ReachabilityAnalysisRunProperties(string description = null, string intentId = null, Azure.ResourceManager.Network.Models.AnalysisRunIntentContent intentContent = null, string analysisResult = null, string errorMessage = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
@@ -10596,7 +10527,6 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.RoutingIntentData RoutingIntentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.RoutingPolicy> routingPolicies = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.ScopeConnectionData ScopeConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? tenantId = default(System.Guid?), Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Network.Models.ScopeConnectionState? connectionState = default(Azure.ResourceManager.Network.Models.ScopeConnectionState?), string description = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Network.SecurityAdminConfigurationData SecurityAdminConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkIntentPolicyBasedService> applyOnNetworkIntentPolicyBasedServices = null, Azure.ResourceManager.Network.Models.AddressSpaceAggregationOption? networkGroupAddressSpaceAggregationOption = default(Azure.ResourceManager.Network.Models.AddressSpaceAggregationOption?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.SecurityAdminConfigurationData SecurityAdminConfigurationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkIntentPolicyBasedService> applyOnNetworkIntentPolicyBasedServices, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, System.Guid? resourceGuid, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.Network.Models.SecurityGroupNetworkInterface SecurityGroupNetworkInterface(string id = null, Azure.ResourceManager.Network.Models.SecurityRuleAssociations securityRuleAssociations = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.SecurityGroupViewResult SecurityGroupViewResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.SecurityGroupNetworkInterface> networkInterfaces = null) { throw null; }
@@ -10608,7 +10538,6 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.ServiceEndpointPolicyData ServiceEndpointPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), string kind = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.SubnetData> subnets = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), string serviceAlias = null, System.Collections.Generic.IEnumerable<string> contextualServiceEndpointPolicies = null) { throw null; }
         public static Azure.ResourceManager.Network.ServiceEndpointPolicyDefinitionData ServiceEndpointPolicyDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), string description = null, string service = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> serviceResources = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.ServiceEndpointProperties ServiceEndpointProperties(string service = null, Azure.Core.ResourceIdentifier networkIdentifierId = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.Models.ServiceEndpointProperties ServiceEndpointProperties(string service, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Network.Models.ServiceTagInformation ServiceTagInformation(Azure.ResourceManager.Network.Models.ServiceTagInformationPropertiesFormat properties = null, string name = null, string id = null, string serviceTagChangeNumber = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.ServiceTagInformationPropertiesFormat ServiceTagInformationPropertiesFormat(string changeNumber = null, string region = null, string systemService = null, System.Collections.Generic.IEnumerable<string> addressPrefixes = null, string state = null) { throw null; }
@@ -10618,12 +10547,9 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.StaticCidrProperties StaticCidrProperties(string description = null, string numberOfIPAddressesToAllocate = null, System.Collections.Generic.IEnumerable<string> addressPrefixes = null, string totalNumberOfIPAddresses = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.StaticRoutesConfig StaticRoutesConfig(bool? propagateStaticRoutes = default(bool?), Azure.ResourceManager.Network.Models.VnetLocalRouteOverrideCriterion? vnetLocalRouteOverrideCriteria = default(Azure.ResourceManager.Network.Models.VnetLocalRouteOverrideCriterion?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.SubnetAssociation SubnetAssociation(Azure.Core.ResourceIdentifier id = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.SecurityRuleData> securityRules = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.SubnetData SubnetData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, string addressPrefix, System.Collections.Generic.IEnumerable<string> addressPrefixes, Azure.ResourceManager.Network.NetworkSecurityGroupData networkSecurityGroup, Azure.ResourceManager.Network.RouteTableData routeTable, Azure.Core.ResourceIdentifier natGatewayId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ServiceEndpointProperties> serviceEndpoints, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ServiceEndpointPolicyData> serviceEndpointPolicies, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PrivateEndpointData> privateEndpoints, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkIPConfiguration> ipConfigurations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkIPConfigurationProfile> ipConfigurationProfiles, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ipAllocations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ResourceNavigationLink> resourceNavigationLinks, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ServiceAssociationLink> serviceAssociationLinks, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ServiceDelegation> delegations, string purpose, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.SubnetData SubnetData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, string addressPrefix, System.Collections.Generic.IEnumerable<string> addressPrefixes, Azure.ResourceManager.Network.NetworkSecurityGroupData networkSecurityGroup, Azure.ResourceManager.Network.RouteTableData routeTable, Azure.Core.ResourceIdentifier natGatewayId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ServiceEndpointProperties> serviceEndpoints, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ServiceEndpointPolicyData> serviceEndpointPolicies, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PrivateEndpointData> privateEndpoints, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkIPConfiguration> ipConfigurations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkIPConfigurationProfile> ipConfigurationProfiles, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ipAllocations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ResourceNavigationLink> resourceNavigationLinks, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ServiceAssociationLink> serviceAssociationLinks, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ServiceDelegation> delegations, string purpose, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, Azure.ResourceManager.Network.Models.SharingScope? sharingScope, bool? defaultOutboundAccess) { throw null; }
         public static Azure.ResourceManager.Network.SubnetData SubnetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), string addressPrefix = null, System.Collections.Generic.IEnumerable<string> addressPrefixes = null, Azure.ResourceManager.Network.NetworkSecurityGroupData networkSecurityGroup = null, Azure.ResourceManager.Network.RouteTableData routeTable = null, Azure.Core.ResourceIdentifier natGatewayId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ServiceEndpointProperties> serviceEndpoints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ServiceEndpointPolicyData> serviceEndpointPolicies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PrivateEndpointData> privateEndpoints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkIPConfiguration> ipConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkIPConfigurationProfile> ipConfigurationProfiles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ipAllocations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ResourceNavigationLink> resourceNavigationLinks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ServiceAssociationLink> serviceAssociationLinks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ServiceDelegation> delegations = null, string purpose = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy = default(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy?), Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy = default(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations = null, Azure.ResourceManager.Network.Models.SharingScope? sharingScope = default(Azure.ResourceManager.Network.Models.SharingScope?), bool? defaultOutboundAccess = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.IpamPoolPrefixAllocation> ipamPoolPrefixAllocations = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.SubnetData SubnetData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, string addressPrefix, System.Collections.Generic.IEnumerable<string> addressPrefixes, Azure.ResourceManager.Network.NetworkSecurityGroupData networkSecurityGroup, Azure.ResourceManager.Network.RouteTableData routeTable, Azure.Core.ResourceIdentifier natGatewayId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ServiceEndpointProperties> serviceEndpoints, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ServiceEndpointPolicyData> serviceEndpointPolicies, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PrivateEndpointData> privateEndpoints, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkIPConfiguration> ipConfigurations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkIPConfigurationProfile> ipConfigurationProfiles, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ipAllocations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ResourceNavigationLink> resourceNavigationLinks, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ServiceAssociationLink> serviceAssociationLinks, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ServiceDelegation> delegations, string purpose, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, bool? defaultOutboundAccess) { throw null; }
         public static Azure.ResourceManager.Network.Models.TopologyAssociation TopologyAssociation(string name = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Network.Models.AssociationType? associationType = default(Azure.ResourceManager.Network.Models.AssociationType?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.TopologyResourceInfo TopologyResourceInfo(string name = null, string id = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.TopologyAssociation> associations = null) { throw null; }
@@ -10635,7 +10561,6 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VerificationIPFlowResult VerificationIPFlowResult(Azure.ResourceManager.Network.Models.NetworkAccess? access = default(Azure.ResourceManager.Network.Models.NetworkAccess?), string ruleName = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.VirtualApplianceDelegationProperties VirtualApplianceDelegationProperties(string serviceName = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.VirtualApplianceNicProperties VirtualApplianceNicProperties(Azure.ResourceManager.Network.Models.NicTypeInResponse? nicType = default(Azure.ResourceManager.Network.Models.NicTypeInResponse?), string name = null, string publicIPAddress = null, string privateIPAddress = null, string instanceName = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.Models.VirtualApplianceNicProperties VirtualApplianceNicProperties(string name, string publicIPAddress, string privateIPAddress, string instanceName) { throw null; }
         public static Azure.ResourceManager.Network.VirtualApplianceSiteData VirtualApplianceSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), string addressPrefix = null, Azure.ResourceManager.Network.Models.BreakOutCategoryPolicies o365BreakOutCategories = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.VirtualHubData VirtualHubData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), string kind = null, Azure.Core.ResourceIdentifier virtualWanId = null, Azure.Core.ResourceIdentifier vpnGatewayId = null, Azure.Core.ResourceIdentifier p2sVpnGatewayId = null, Azure.Core.ResourceIdentifier expressRouteGatewayId = null, Azure.Core.ResourceIdentifier azureFirewallId = null, Azure.Core.ResourceIdentifier securityPartnerProviderId = null, string addressPrefix = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualHubRoute> routes = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), string securityProviderName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualHubRouteTableV2Data> virtualHubRouteTableV2S = null, string sku = null, Azure.ResourceManager.Network.Models.RoutingState? routingState = default(Azure.ResourceManager.Network.Models.RoutingState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> bgpConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ipConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> routeMaps = null, long? virtualRouterAsn = default(long?), System.Collections.Generic.IEnumerable<string> virtualRouterIPs = null, bool? allowBranchToBranchTraffic = default(bool?), Azure.ResourceManager.Network.Models.PreferredRoutingGateway? preferredRoutingGateway = default(Azure.ResourceManager.Network.Models.PreferredRoutingGateway?), Azure.ResourceManager.Network.Models.HubRoutingPreference? hubRoutingPreference = default(Azure.ResourceManager.Network.Models.HubRoutingPreference?), int? virtualRouterAutoScaleMinCapacity = default(int?)) { throw null; }
@@ -10643,23 +10568,18 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualHubEffectiveRouteList VirtualHubEffectiveRouteList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualHubEffectiveRoute> value = null) { throw null; }
         public static Azure.ResourceManager.Network.VirtualHubRouteTableV2Data VirtualHubRouteTableV2Data(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualHubRouteV2> routes = null, System.Collections.Generic.IEnumerable<string> attachedConnections = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkBgpCommunities VirtualNetworkBgpCommunities(string virtualNetworkCommunity = null, string regionalCommunity = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.VirtualNetworkData VirtualNetworkData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, Azure.ETag? etag, Azure.ResourceManager.Network.Models.VirtualNetworkAddressSpace addressSpace, System.Collections.Generic.IEnumerable<string> dhcpOptionsDnsServers, int? flowTimeoutInMinutes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.SubnetData> subnets, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkPeeringData> virtualNetworkPeerings, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, Azure.Core.ResourceIdentifier ddosProtectionPlanId, Azure.ResourceManager.Network.Models.VirtualNetworkBgpCommunities bgpCommunities, Azure.ResourceManager.Network.Models.VirtualNetworkEncryption encryption, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ipAllocations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FlowLogData> flowLogs, Azure.ResourceManager.Network.Models.PrivateEndpointVnetPolicy? privateEndpointVnetPolicy) { throw null; }
         public static Azure.ResourceManager.Network.VirtualNetworkData VirtualNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.VirtualNetworkAddressSpace addressSpace = null, System.Collections.Generic.IEnumerable<string> dhcpOptionsDnsServers = null, int? flowTimeoutInMinutes = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.SubnetData> subnets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkPeeringData> virtualNetworkPeerings = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), bool? enableDdosProtection = default(bool?), bool? enableVmProtection = default(bool?), Azure.Core.ResourceIdentifier ddosProtectionPlanId = null, Azure.ResourceManager.Network.Models.VirtualNetworkBgpCommunities bgpCommunities = null, Azure.ResourceManager.Network.Models.VirtualNetworkEncryption encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ipAllocations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FlowLogData> flowLogs = null, Azure.ResourceManager.Network.Models.PrivateEndpointVnetPolicy? privateEndpointVnetPolicy = default(Azure.ResourceManager.Network.Models.PrivateEndpointVnetPolicy?), Azure.Core.ResourceIdentifier defaultPublicNatGatewayId = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.VirtualNetworkData VirtualNetworkData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, Azure.ETag? etag, System.Collections.Generic.IEnumerable<string> addressPrefixes, System.Collections.Generic.IEnumerable<string> dhcpOptionsDnsServers, int? flowTimeoutInMinutes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.SubnetData> subnets, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkPeeringData> virtualNetworkPeerings, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, Azure.Core.ResourceIdentifier ddosProtectionPlanId, Azure.ResourceManager.Network.Models.VirtualNetworkBgpCommunities bgpCommunities, Azure.ResourceManager.Network.Models.VirtualNetworkEncryption encryption, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ipAllocations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FlowLogData> flowLogs) { throw null; }
         public static Azure.ResourceManager.Network.VirtualNetworkData VirtualNetworkData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, Azure.ETag? etag, System.Collections.Generic.IEnumerable<string> addressPrefixes, System.Collections.Generic.IEnumerable<string> dhcpOptionsDnsServers, int? flowTimeoutInMinutes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.SubnetData> subnets, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkPeeringData> virtualNetworkPeerings, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, Azure.Core.ResourceIdentifier ddosProtectionPlanId, Azure.ResourceManager.Network.Models.VirtualNetworkBgpCommunities bgpCommunities, Azure.ResourceManager.Network.Models.VirtualNetworkEncryption encryption, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ipAllocations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FlowLogData> flowLogs, Azure.ResourceManager.Network.Models.PrivateEndpointVnetPolicy? privateEndpointVnetPolicy) { throw null; }
-        public static Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionData VirtualNetworkGatewayConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), string authorizationKey = null, Azure.ResourceManager.Network.VirtualNetworkGatewayData virtualNetworkGateway1 = null, Azure.ResourceManager.Network.VirtualNetworkGatewayData virtualNetworkGateway2 = null, Azure.ResourceManager.Network.LocalNetworkGatewayData localNetworkGateway2 = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ingressNatRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> egressNatRules = null, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType connectionType = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType), Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol? connectionProtocol = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol?), int? routingWeight = default(int?), int? dpdTimeoutSeconds = default(int?), Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionMode? connectionMode = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionTunnelProperties> tunnelProperties = null, string sharedKey = null, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionStatus? connectionStatus = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.TunnelConnectionHealth> tunnelConnectionStatus = null, long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), Azure.Core.ResourceIdentifier peerId = null, bool? enableBgp = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses = null, bool? useLocalAzureIPAddress = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.IPsecPolicy> ipsecPolicies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.TrafficSelectorPolicy> trafficSelectorPolicies = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), bool? expressRouteGatewayBypass = default(bool?), bool? enablePrivateLinkFastPath = default(bool?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionData VirtualNetworkGatewayConnectionData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ETag? etag, string authorizationKey, Azure.ResourceManager.Network.VirtualNetworkGatewayData virtualNetworkGateway1, Azure.ResourceManager.Network.VirtualNetworkGatewayData virtualNetworkGateway2, Azure.ResourceManager.Network.LocalNetworkGatewayData localNetworkGateway2, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ingressNatRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> egressNatRules, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType connectionType, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, int? dpdTimeoutSeconds, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionMode? connectionMode, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionTunnelProperties> tunnelProperties, string sharedKey, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionStatus? connectionStatus, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, Azure.Core.ResourceIdentifier peerId, bool? enableBgp, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses, bool? useLocalAzureIPAddress, bool? usePolicyBasedTrafficSelectors, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.IPsecPolicy> ipsecPolicies, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.TrafficSelectorPolicy> trafficSelectorPolicies, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath) { throw null; }
+        public static Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionData VirtualNetworkGatewayConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), string authorizationKey = null, Azure.ResourceManager.Network.VirtualNetworkGatewayData virtualNetworkGateway1 = null, Azure.ResourceManager.Network.VirtualNetworkGatewayData virtualNetworkGateway2 = null, Azure.ResourceManager.Network.LocalNetworkGatewayData localNetworkGateway2 = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ingressNatRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> egressNatRules = null, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType connectionType = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType), Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol? connectionProtocol = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol?), int? routingWeight = default(int?), int? dpdTimeoutSeconds = default(int?), Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionMode? connectionMode = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionTunnelProperties> tunnelProperties = null, string sharedKey = null, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionStatus? connectionStatus = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.TunnelConnectionHealth> tunnelConnectionStatus = null, long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), Azure.Core.ResourceIdentifier peerId = null, bool? enableBgp = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses = null, bool? useLocalAzureIPAddress = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.IPsecPolicy> ipsecPolicies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.TrafficSelectorPolicy> trafficSelectorPolicies = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), bool? expressRouteGatewayBypass = default(bool?), bool? enablePrivateLinkFastPath = default(bool?), Azure.ResourceManager.Network.Models.ConnectionAuthenticationType? authenticationType = default(Azure.ResourceManager.Network.Models.ConnectionAuthenticationType?), Azure.ResourceManager.Network.Models.CertificateAuthentication certificateAuthentication = null) { throw null; }
         public static Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionData VirtualNetworkGatewayConnectionData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ETag? etag, string authorizationKey, Azure.ResourceManager.Network.VirtualNetworkGatewayData virtualNetworkGateway1, Azure.ResourceManager.Network.VirtualNetworkGatewayData virtualNetworkGateway2, Azure.ResourceManager.Network.LocalNetworkGatewayData localNetworkGateway2, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ingressNatRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> egressNatRules, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType connectionType, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, int? dpdTimeoutSeconds, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionMode? connectionMode, string sharedKey, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionStatus? connectionStatus, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, Azure.Core.ResourceIdentifier peerId, bool? enableBgp, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses, bool? useLocalAzureIPAddress, bool? usePolicyBasedTrafficSelectors, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.IPsecPolicy> ipsecPolicies, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.TrafficSelectorPolicy> trafficSelectorPolicies, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath) { throw null; }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionListEntity VirtualNetworkGatewayConnectionListEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), string authorizationKey = null, Azure.Core.ResourceIdentifier virtualNetworkGateway1Id = null, Azure.Core.ResourceIdentifier virtualNetworkGateway2Id = null, Azure.Core.ResourceIdentifier localNetworkGateway2Id = null, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType connectionType = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType), Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol? connectionProtocol = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol?), int? routingWeight = default(int?), Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionMode? connectionMode = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionMode?), string sharedKey = null, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionStatus? connectionStatus = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.TunnelConnectionHealth> tunnelConnectionStatus = null, long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), Azure.Core.ResourceIdentifier peerId = null, bool? enableBgp = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses = null, bool? usePolicyBasedTrafficSelectors = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.IPsecPolicy> ipsecPolicies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.TrafficSelectorPolicy> trafficSelectorPolicies = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), bool? expressRouteGatewayBypass = default(bool?), bool? enablePrivateLinkFastPath = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Network.VirtualNetworkGatewayData VirtualNetworkGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayAutoScaleBounds autoScaleBounds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayIPConfiguration> ipConfigurations = null, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayType? gatewayType = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayType?), Azure.ResourceManager.Network.Models.VpnType? vpnType = default(Azure.ResourceManager.Network.Models.VpnType?), Azure.ResourceManager.Network.Models.VpnGatewayGeneration? vpnGatewayGeneration = default(Azure.ResourceManager.Network.Models.VpnGatewayGeneration?), bool? enableBgp = default(bool?), bool? enablePrivateIPAddress = default(bool?), Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationStatus virtualNetworkGatewayMigrationStatus = null, bool? active = default(bool?), bool? enableHighBandwidthVpnGateway = default(bool?), bool? disableIPSecReplayProtection = default(bool?), Azure.Core.ResourceIdentifier gatewayDefaultSiteId = null, Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySku sku = null, Azure.ResourceManager.Network.Models.VpnClientConfiguration vpnClientConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups = null, Azure.ResourceManager.Network.Models.BgpSettings bgpSettings = null, Azure.ResourceManager.Network.Models.VirtualNetworkAddressSpace customRoutes = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), bool? enableDnsForwarding = default(bool?), string inboundDnsForwardingEndpoint = null, Azure.Core.ResourceIdentifier vNetExtendedLocationResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkGatewayNatRuleData> natRules = null, bool? enableBgpRouteTranslationForNat = default(bool?), bool? allowVirtualWanTraffic = default(bool?), bool? allowRemoteVnetTraffic = default(bool?), Azure.ResourceManager.Network.Models.ExpressRouteGatewayAdminState? adminState = default(Azure.ResourceManager.Network.Models.ExpressRouteGatewayAdminState?), Azure.ResourceManager.Network.Models.ExpressRouteGatewayResiliencyModel? resiliencyModel = default(Azure.ResourceManager.Network.Models.ExpressRouteGatewayResiliencyModel?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.VirtualNetworkGatewayData VirtualNetworkGatewayData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, Azure.ETag? etag, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayAutoScaleBounds autoScaleBounds, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayIPConfiguration> ipConfigurations, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayType? gatewayType, Azure.ResourceManager.Network.Models.VpnType? vpnType, Azure.ResourceManager.Network.Models.VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, Azure.Core.ResourceIdentifier gatewayDefaultSiteId, Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySku sku, Azure.ResourceManager.Network.Models.VpnClientConfiguration vpnClientConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, Azure.ResourceManager.Network.Models.BgpSettings bgpSettings, Azure.ResourceManager.Network.Models.VirtualNetworkAddressSpace customRoutes, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, Azure.Core.ResourceIdentifier vNetExtendedLocationResourceId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, Azure.ResourceManager.Network.Models.ExpressRouteGatewayAdminState? adminState, Azure.ResourceManager.Network.Models.ExpressRouteGatewayResiliencyModel? resiliencyModel) { throw null; }
         public static Azure.ResourceManager.Network.VirtualNetworkGatewayData VirtualNetworkGatewayData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, Azure.ETag? etag, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayAutoScaleBounds autoScaleBounds, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayIPConfiguration> ipConfigurations, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayType? gatewayType, Azure.ResourceManager.Network.Models.VpnType? vpnType, Azure.ResourceManager.Network.Models.VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, Azure.Core.ResourceIdentifier gatewayDefaultSiteId, Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySku sku, Azure.ResourceManager.Network.Models.VpnClientConfiguration vpnClientConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, Azure.ResourceManager.Network.Models.BgpSettings bgpSettings, System.Collections.Generic.IEnumerable<string> customRoutesAddressPrefixes, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, Azure.Core.ResourceIdentifier vNetExtendedLocationResourceId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, Azure.ResourceManager.Network.Models.ExpressRouteGatewayAdminState? adminState, Azure.ResourceManager.Network.Models.ExpressRouteGatewayResiliencyModel? resiliencyModel) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.VirtualNetworkGatewayData VirtualNetworkGatewayData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, Azure.ETag? etag, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayAutoScaleBounds autoScaleBounds, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayIPConfiguration> ipConfigurations, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayType? gatewayType, Azure.ResourceManager.Network.Models.VpnType? vpnType, Azure.ResourceManager.Network.Models.VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, Azure.Core.ResourceIdentifier gatewayDefaultSiteId, Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySku sku, Azure.ResourceManager.Network.Models.VpnClientConfiguration vpnClientConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, Azure.ResourceManager.Network.Models.BgpSettings bgpSettings, System.Collections.Generic.IEnumerable<string> customRoutesAddressPrefixes, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, Azure.Core.ResourceIdentifier vNetExtendedLocationResourceId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, Azure.ResourceManager.Network.Models.ExpressRouteGatewayAdminState? adminState) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.VirtualNetworkGatewayData VirtualNetworkGatewayData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, Azure.ETag? etag, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayIPConfiguration> ipConfigurations, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayType? gatewayType, Azure.ResourceManager.Network.Models.VpnType? vpnType, Azure.ResourceManager.Network.Models.VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, Azure.Core.ResourceIdentifier gatewayDefaultSiteId, Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySku sku, Azure.ResourceManager.Network.Models.VpnClientConfiguration vpnClientConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, Azure.ResourceManager.Network.Models.BgpSettings bgpSettings, System.Collections.Generic.IEnumerable<string> customRoutesAddressPrefixes, System.Guid? resourceGuid, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, Azure.Core.ResourceIdentifier vNetExtendedLocationResourceId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, Azure.ResourceManager.Network.Models.ExpressRouteGatewayAdminState? adminState) { throw null; }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayIPConfiguration VirtualNetworkGatewayIPConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod? privateIPAllocationMethod = default(Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod?), Azure.Core.ResourceIdentifier subnetId = null, Azure.Core.ResourceIdentifier publicIPAddressId = null, string privateIPAddress = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationContent VirtualNetworkGatewayMigrationContent(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationType migrationType = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationType), System.Uri resourceUri = null) { throw null; }
@@ -10667,7 +10587,6 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayPolicyGroup VirtualNetworkGatewayPolicyGroup(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), bool? isDefault = default(bool?), int? priority = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayPolicyGroupMember> policyMembers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> vngClientConnectionConfigurations = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySku VirtualNetworkGatewaySku(Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySkuName? name = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySkuName?), Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySkuTier? tier = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySkuTier?), int? capacity = default(int?)) { throw null; }
         public static Azure.ResourceManager.Network.VirtualNetworkPeeringData VirtualNetworkPeeringData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), bool? allowVirtualNetworkAccess = default(bool?), bool? allowForwardedTraffic = default(bool?), bool? allowGatewayTransit = default(bool?), bool? useRemoteGateways = default(bool?), Azure.Core.ResourceIdentifier remoteVirtualNetworkId = null, Azure.ResourceManager.Network.Models.VirtualNetworkAddressSpace localAddressSpace = null, Azure.ResourceManager.Network.Models.VirtualNetworkAddressSpace localVirtualNetworkAddressSpace = null, Azure.ResourceManager.Network.Models.VirtualNetworkAddressSpace remoteAddressSpace = null, Azure.ResourceManager.Network.Models.VirtualNetworkAddressSpace remoteVirtualNetworkAddressSpace = null, Azure.ResourceManager.Network.Models.VirtualNetworkBgpCommunities remoteBgpCommunities = null, Azure.ResourceManager.Network.Models.VirtualNetworkEncryption remoteVirtualNetworkEncryption = null, Azure.ResourceManager.Network.Models.VirtualNetworkPeeringState? peeringState = default(Azure.ResourceManager.Network.Models.VirtualNetworkPeeringState?), Azure.ResourceManager.Network.Models.VirtualNetworkPeeringLevel? peeringSyncLevel = default(Azure.ResourceManager.Network.Models.VirtualNetworkPeeringLevel?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), bool? doNotVerifyRemoteGateways = default(bool?), System.Guid? resourceGuid = default(System.Guid?), bool? areCompleteVnetsPeered = default(bool?), bool? enableOnlyIPv6Peering = default(bool?), System.Collections.Generic.IEnumerable<string> localSubnetNames = null, System.Collections.Generic.IEnumerable<string> remoteSubnetNames = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.VirtualNetworkPeeringData VirtualNetworkPeeringData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, Azure.Core.ResourceIdentifier remoteVirtualNetworkId, System.Collections.Generic.IEnumerable<string> remoteAddressPrefixes, System.Collections.Generic.IEnumerable<string> remoteVirtualNetworkAddressPrefixes, Azure.ResourceManager.Network.Models.VirtualNetworkBgpCommunities remoteBgpCommunities, Azure.ResourceManager.Network.Models.VirtualNetworkEncryption remoteVirtualNetworkEncryption, Azure.ResourceManager.Network.Models.VirtualNetworkPeeringState? peeringState, Azure.ResourceManager.Network.Models.VirtualNetworkPeeringLevel? peeringSyncLevel, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, System.Guid? resourceGuid) { throw null; }
         public static Azure.ResourceManager.Network.VirtualNetworkPeeringData VirtualNetworkPeeringData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, Azure.Core.ResourceIdentifier remoteVirtualNetworkId, System.Collections.Generic.IEnumerable<string> localAddressPrefixes, System.Collections.Generic.IEnumerable<string> localVirtualNetworkAddressPrefixes, System.Collections.Generic.IEnumerable<string> remoteAddressPrefixes, System.Collections.Generic.IEnumerable<string> remoteVirtualNetworkAddressPrefixes, Azure.ResourceManager.Network.Models.VirtualNetworkBgpCommunities remoteBgpCommunities, Azure.ResourceManager.Network.Models.VirtualNetworkEncryption remoteVirtualNetworkEncryption, Azure.ResourceManager.Network.Models.VirtualNetworkPeeringState? peeringState, Azure.ResourceManager.Network.Models.VirtualNetworkPeeringLevel? peeringSyncLevel, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, System.Guid? resourceGuid, bool? areCompleteVnetsPeered, bool? enableOnlyIPv6Peering, System.Collections.Generic.IEnumerable<string> localSubnetNames, System.Collections.Generic.IEnumerable<string> remoteSubnetNames) { throw null; }
         public static Azure.ResourceManager.Network.VirtualNetworkTapData VirtualNetworkTapData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration = null, Azure.ResourceManager.Network.FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration = null, int? destinationPort = default(int?)) { throw null; }
@@ -10698,12 +10617,10 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VpnServerConfigurationsResponse VpnServerConfigurationsResponse(System.Collections.Generic.IEnumerable<string> vpnServerConfigurationResourceIds = null) { throw null; }
         public static Azure.ResourceManager.Network.VpnSiteData VpnSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier virtualWanId = null, Azure.ResourceManager.Network.Models.DeviceProperties deviceProperties = null, string ipAddress = null, string siteKey = null, Azure.ResourceManager.Network.Models.VirtualNetworkAddressSpace addressSpace = null, Azure.ResourceManager.Network.Models.BgpSettings bgpProperties = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), bool? isSecuritySite = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VpnSiteLinkData> vpnSiteLinks = null, Azure.ResourceManager.Network.Models.O365BreakOutCategoryPolicies o365BreakOutCategories = null) { throw null; }
         public static Azure.ResourceManager.Network.VpnSiteData VpnSiteData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ETag? etag, Azure.Core.ResourceIdentifier virtualWanId, Azure.ResourceManager.Network.Models.DeviceProperties deviceProperties, string ipAddress, string siteKey, System.Collections.Generic.IEnumerable<string> addressPrefixes, Azure.ResourceManager.Network.Models.BgpSettings bgpProperties, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, bool? isSecuritySite, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.VpnSiteLinkData> vpnSiteLinks, Azure.ResourceManager.Network.Models.O365BreakOutCategoryPolicies o365BreakOutCategories) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.VpnSiteLinkConnectionData VpnSiteLinkConnectionData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.ETag? etag, Azure.Core.ResourceIdentifier vpnSiteLinkId, int? routingWeight, Azure.ResourceManager.Network.Models.VpnLinkConnectionMode? vpnLinkConnectionMode, Azure.ResourceManager.Network.Models.VpnConnectionStatus? connectionStatus, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses, bool? usePolicyBasedTrafficSelectors, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.IPsecPolicy> ipsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIPAddress, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ingressNatRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> egressNatRules) { throw null; }
         public static Azure.ResourceManager.Network.VpnSiteLinkConnectionData VpnSiteLinkConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier vpnSiteLinkId = null, int? routingWeight = default(int?), Azure.ResourceManager.Network.Models.VpnLinkConnectionMode? vpnLinkConnectionMode = default(Azure.ResourceManager.Network.Models.VpnLinkConnectionMode?), Azure.ResourceManager.Network.Models.VpnConnectionStatus? connectionStatus = default(Azure.ResourceManager.Network.Models.VpnConnectionStatus?), Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType = default(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol?), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), int? connectionBandwidth = default(int?), string sharedKey = null, bool? enableBgp = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses = null, bool? usePolicyBasedTrafficSelectors = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.IPsecPolicy> ipsecPolicies = null, bool? enableRateLimiting = default(bool?), bool? useLocalAzureIPAddress = default(bool?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ingressNatRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> egressNatRules = null, int? dpdTimeoutSeconds = default(int?)) { throw null; }
         public static Azure.ResourceManager.Network.VpnSiteLinkData VpnSiteLinkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.VpnLinkProviderProperties linkProperties = null, string ipAddress = null, string fqdn = null, Azure.ResourceManager.Network.Models.VpnLinkBgpSettings bgpProperties = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallCustomRule WebApplicationFirewallCustomRule(string name = null, Azure.ETag? etag = default(Azure.ETag?), int priority = 0, Azure.ResourceManager.Network.Models.WebApplicationFirewallState? state = default(Azure.ResourceManager.Network.Models.WebApplicationFirewallState?), Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRateLimitDuration? rateLimitDuration = default(Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRateLimitDuration?), int? rateLimitThreshold = default(int?), Azure.ResourceManager.Network.Models.WebApplicationFirewallRuleType ruleType = default(Azure.ResourceManager.Network.Models.WebApplicationFirewallRuleType), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.MatchCondition> matchConditions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.GroupByUserSession> groupByUserSession = null, Azure.ResourceManager.Network.Models.WebApplicationFirewallAction action = default(Azure.ResourceManager.Network.Models.WebApplicationFirewallAction)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.WebApplicationFirewallPolicyData WebApplicationFirewallPolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType? resourceType, Azure.Core.AzureLocation? location, System.Collections.Generic.IDictionary<string, string> tags, Azure.ETag? etag, Azure.ResourceManager.Network.Models.PolicySettings policySettings, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.WebApplicationFirewallCustomRule> customRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ApplicationGatewayData> applicationGateways, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState, Azure.ResourceManager.Network.Models.WebApplicationFirewallPolicyResourceState? resourceState, Azure.ResourceManager.Network.Models.ManagedRulesDefinition managedRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> httpListeners, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> pathBasedRules) { throw null; }
         public static Azure.ResourceManager.Network.WebApplicationFirewallPolicyData WebApplicationFirewallPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.PolicySettings policySettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.WebApplicationFirewallCustomRule> customRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ApplicationGatewayData> applicationGateways = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.WebApplicationFirewallPolicyResourceState? resourceState = default(Azure.ResourceManager.Network.Models.WebApplicationFirewallPolicyResourceState?), Azure.ResourceManager.Network.Models.ManagedRulesDefinition managedRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> httpListeners = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> pathBasedRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> applicationGatewayForContainers = null) { throw null; }
     }
@@ -10716,9 +10633,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AssociationType Associated { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.AssociationType Contains { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.AssociationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.AssociationType left, Azure.ResourceManager.Network.Models.AssociationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.AssociationType (string value) { throw null; }
@@ -10734,9 +10649,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AuthorizationUseStatus Available { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.AuthorizationUseStatus InUse { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.AuthorizationUseStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.AuthorizationUseStatus left, Azure.ResourceManager.Network.Models.AuthorizationUseStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.AuthorizationUseStatus (string value) { throw null; }
@@ -10763,9 +10676,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AutoLearnPrivateRangesMode Disabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.AutoLearnPrivateRangesMode Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.AutoLearnPrivateRangesMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.AutoLearnPrivateRangesMode left, Azure.ResourceManager.Network.Models.AutoLearnPrivateRangesMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.AutoLearnPrivateRangesMode (string value) { throw null; }
@@ -10924,9 +10835,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleProtocolType Https { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleProtocolType Mssql { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleProtocolType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleProtocolType left, Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleProtocolType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleProtocolType (string value) { throw null; }
@@ -10994,9 +10903,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AzureFirewallNatRCActionType Dnat { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.AzureFirewallNatRCActionType Snat { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.AzureFirewallNatRCActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.AzureFirewallNatRCActionType left, Azure.ResourceManager.Network.Models.AzureFirewallNatRCActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.AzureFirewallNatRCActionType (string value) { throw null; }
@@ -11083,9 +10990,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AzureFirewallNetworkRuleProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.AzureFirewallNetworkRuleProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.AzureFirewallNetworkRuleProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.AzureFirewallNetworkRuleProtocol left, Azure.ResourceManager.Network.Models.AzureFirewallNetworkRuleProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.AzureFirewallNetworkRuleProtocol (string value) { throw null; }
@@ -11116,13 +11021,64 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureFlagsType Syn { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureFlagsType Urg { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureFlagsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureFlagsType left, Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureFlagsType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureFlagsType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureFlagsType left, Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureFlagsType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureFirewallPacketCaptureOperationType : System.IEquatable<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureOperationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureFirewallPacketCaptureOperationType(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureOperationType Start { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureOperationType Status { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureOperationType Stop { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureOperationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureOperationType left, Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureOperationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureOperationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureOperationType left, Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureOperationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AzureFirewallPacketCaptureResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResult>
+    {
+        internal AzureFirewallPacketCaptureResult() { }
+        public string Message { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode? StatusCode { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureFirewallPacketCaptureResultCode : System.IEquatable<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureFirewallPacketCaptureResultCode(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureCompleted { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureFailed { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureInProgress { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureNotInProgress { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureStartFailed { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureStartFailedToUpload { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureStartFailure { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureStartSucceeded { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureStopSucceeded { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode NotImplemented { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode left, Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode left, Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureResultCode right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class AzureFirewallPacketCaptureRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureRule>
@@ -11158,9 +11114,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AzureFirewallRCActionType Allow { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.AzureFirewallRCActionType Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.AzureFirewallRCActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.AzureFirewallRCActionType left, Azure.ResourceManager.Network.Models.AzureFirewallRCActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.AzureFirewallRCActionType (string value) { throw null; }
@@ -11188,9 +11142,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AzureFirewallSkuName AzfwHub { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.AzureFirewallSkuName AzfwVnet { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.AzureFirewallSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.AzureFirewallSkuName left, Azure.ResourceManager.Network.Models.AzureFirewallSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.AzureFirewallSkuName (string value) { throw null; }
@@ -11207,9 +11159,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AzureFirewallSkuTier Premium { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.AzureFirewallSkuTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.AzureFirewallSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.AzureFirewallSkuTier left, Azure.ResourceManager.Network.Models.AzureFirewallSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.AzureFirewallSkuTier (string value) { throw null; }
@@ -11226,9 +11176,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode Deny { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode Off { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode left, Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.AzureFirewallThreatIntelMode (string value) { throw null; }
@@ -11321,9 +11269,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.BackendAddressSyncMode Automatic { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.BackendAddressSyncMode Manual { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.BackendAddressSyncMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.BackendAddressSyncMode left, Azure.ResourceManager.Network.Models.BackendAddressSyncMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.BackendAddressSyncMode (string value) { throw null; }
@@ -11367,9 +11313,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.BastionHostSkuName Premium { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.BastionHostSkuName Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.BastionHostSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.BastionHostSkuName left, Azure.ResourceManager.Network.Models.BastionHostSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.BastionHostSkuName (string value) { throw null; }
@@ -11415,9 +11359,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.BgpPeerState Stopped { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.BgpPeerState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.BgpPeerState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.BgpPeerState left, Azure.ResourceManager.Network.Models.BgpPeerState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.BgpPeerState (string value) { throw null; }
@@ -11492,6 +11434,19 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.BreakOutCategoryPolicies>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.BreakOutCategoryPolicies>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class CertificateAuthentication : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.CertificateAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.CertificateAuthentication>
+    {
+        public CertificateAuthentication() { }
+        public System.Collections.Generic.IList<string> InboundAuthCertificateChain { get { throw null; } }
+        public string InboundAuthCertificateSubjectName { get { throw null; } set { } }
+        public System.Uri OutboundAuthCertificate { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.CertificateAuthentication System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.CertificateAuthentication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.CertificateAuthentication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.CertificateAuthentication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.CertificateAuthentication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.CertificateAuthentication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.CertificateAuthentication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class CheckPrivateLinkServiceVisibilityRequest : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest>
     {
         public CheckPrivateLinkServiceVisibilityRequest() { }
@@ -11519,9 +11474,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.CidrAdvertisingGeoCode Nam { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.CidrAdvertisingGeoCode Oceania { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.CidrAdvertisingGeoCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.CidrAdvertisingGeoCode left, Azure.ResourceManager.Network.Models.CidrAdvertisingGeoCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.CidrAdvertisingGeoCode (string value) { throw null; }
@@ -11538,9 +11491,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.CircuitConnectionStatus Connecting { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.CircuitConnectionStatus Disconnected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.CircuitConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.CircuitConnectionStatus left, Azure.ResourceManager.Network.Models.CircuitConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.CircuitConnectionStatus (string value) { throw null; }
@@ -11575,9 +11526,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.CommissionedState Provisioned { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.CommissionedState Provisioning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.CommissionedState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.CommissionedState left, Azure.ResourceManager.Network.Models.CommissionedState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.CommissionedState (string value) { throw null; }
@@ -11593,9 +11542,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ConnectedGroupAddressOverlap Allowed { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ConnectedGroupAddressOverlap Disallowed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ConnectedGroupAddressOverlap other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ConnectedGroupAddressOverlap left, Azure.ResourceManager.Network.Models.ConnectedGroupAddressOverlap right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ConnectedGroupAddressOverlap (string value) { throw null; }
@@ -11611,13 +11558,27 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ConnectedGroupPrivateEndpointsScale HighScale { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ConnectedGroupPrivateEndpointsScale Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ConnectedGroupPrivateEndpointsScale other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ConnectedGroupPrivateEndpointsScale left, Azure.ResourceManager.Network.Models.ConnectedGroupPrivateEndpointsScale right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ConnectedGroupPrivateEndpointsScale (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.ConnectedGroupPrivateEndpointsScale left, Azure.ResourceManager.Network.Models.ConnectedGroupPrivateEndpointsScale right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConnectionAuthenticationType : System.IEquatable<Azure.ResourceManager.Network.Models.ConnectionAuthenticationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConnectionAuthenticationType(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.ConnectionAuthenticationType Certificate { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ConnectionAuthenticationType PSK { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.ConnectionAuthenticationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.ConnectionAuthenticationType left, Azure.ResourceManager.Network.Models.ConnectionAuthenticationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.ConnectionAuthenticationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.ConnectionAuthenticationType left, Azure.ResourceManager.Network.Models.ConnectionAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ConnectionMonitorCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ConnectionMonitorCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionMonitorCreateOrUpdateContent>
@@ -11705,9 +11666,7 @@ namespace Azure.ResourceManager.Network.Models
         public ConnectionMonitorEndpointFilterItemType(string value) { throw null; }
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterItemType AgentAddress { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterItemType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterItemType left, Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterItemType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterItemType (string value) { throw null; }
@@ -11722,9 +11681,7 @@ namespace Azure.ResourceManager.Network.Models
         public ConnectionMonitorEndpointFilterType(string value) { throw null; }
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterType Include { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterType left, Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterType (string value) { throw null; }
@@ -11770,9 +11727,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointType MMAWorkspaceMachine { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointType MMAWorkspaceNetwork { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointType left, Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointType (string value) { throw null; }
@@ -11807,7 +11762,6 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionMonitorOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionMonitorOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ConnectionMonitorQueryResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult>
     {
         internal ConnectionMonitorQueryResult() { }
@@ -11832,7 +11786,6 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionMonitorSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionMonitorSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConnectionMonitorSourceStatus : System.IEquatable<Azure.ResourceManager.Network.Models.ConnectionMonitorSourceStatus>
     {
@@ -11843,9 +11796,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorSourceStatus Inactive { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorSourceStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ConnectionMonitorSourceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ConnectionMonitorSourceStatus left, Azure.ResourceManager.Network.Models.ConnectionMonitorSourceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ConnectionMonitorSourceStatus (string value) { throw null; }
@@ -11905,9 +11856,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorTestConfigurationProtocol Icmp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorTestConfigurationProtocol Tcp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ConnectionMonitorTestConfigurationProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ConnectionMonitorTestConfigurationProtocol left, Azure.ResourceManager.Network.Models.ConnectionMonitorTestConfigurationProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ConnectionMonitorTestConfigurationProtocol (string value) { throw null; }
@@ -11938,9 +11887,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorType MultiEndpoint { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ConnectionMonitorType SingleSourceDestination { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ConnectionMonitorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ConnectionMonitorType left, Azure.ResourceManager.Network.Models.ConnectionMonitorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ConnectionMonitorType (string value) { throw null; }
@@ -11969,7 +11916,6 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionSharedKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionSharedKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ConnectionStateSnapshot : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ConnectionStateSnapshot>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ConnectionStateSnapshot>
     {
         internal ConnectionStateSnapshot() { }
@@ -12123,9 +12069,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ConnectivityIssueType Unknown { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ConnectivityIssueType UserDefinedRoute { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ConnectivityIssueType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ConnectivityIssueType left, Azure.ResourceManager.Network.Models.ConnectivityIssueType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ConnectivityIssueType (string value) { throw null; }
@@ -12153,9 +12097,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ConnectivityTopology HubAndSpoke { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ConnectivityTopology Mesh { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ConnectivityTopology other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ConnectivityTopology left, Azure.ResourceManager.Network.Models.ConnectivityTopology right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ConnectivityTopology (string value) { throw null; }
@@ -12218,9 +12160,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.CoverageLevel Full { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.CoverageLevel Low { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.CoverageLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.CoverageLevel left, Azure.ResourceManager.Network.Models.CoverageLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.CoverageLevel (string value) { throw null; }
@@ -12262,16 +12202,13 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.CustomIPPrefixType Parent { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.CustomIPPrefixType Singular { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.CustomIPPrefixType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.CustomIPPrefixType left, Azure.ResourceManager.Network.Models.CustomIPPrefixType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.CustomIPPrefixType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.CustomIPPrefixType left, Azure.ResourceManager.Network.Models.CustomIPPrefixType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This struct is obsolete and will be removed in a future release", false)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DdosCustomPolicyProtocol : System.IEquatable<Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol>
@@ -12283,16 +12220,13 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol left, Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol left, Azure.ResourceManager.Network.Models.DdosCustomPolicyProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This struct is obsolete and will be removed in a future release", false)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DdosCustomPolicyTriggerSensitivityOverride : System.IEquatable<Azure.ResourceManager.Network.Models.DdosCustomPolicyTriggerSensitivityOverride>
@@ -12305,26 +12239,50 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.DdosCustomPolicyTriggerSensitivityOverride Low { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.DdosCustomPolicyTriggerSensitivityOverride Relaxed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.DdosCustomPolicyTriggerSensitivityOverride other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.DdosCustomPolicyTriggerSensitivityOverride left, Azure.ResourceManager.Network.Models.DdosCustomPolicyTriggerSensitivityOverride right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.DdosCustomPolicyTriggerSensitivityOverride (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.DdosCustomPolicyTriggerSensitivityOverride left, Azure.ResourceManager.Network.Models.DdosCustomPolicyTriggerSensitivityOverride right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DdosDetectionMode : System.IEquatable<Azure.ResourceManager.Network.Models.DdosDetectionMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DdosDetectionMode(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.DdosDetectionMode TrafficThreshold { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.DdosDetectionMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.DdosDetectionMode left, Azure.ResourceManager.Network.Models.DdosDetectionMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.DdosDetectionMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.DdosDetectionMode left, Azure.ResourceManager.Network.Models.DdosDetectionMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DdosDetectionRule : Azure.ResourceManager.Network.Models.NetworkResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.DdosDetectionRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.DdosDetectionRule>
+    {
+        public DdosDetectionRule() { }
+        public Azure.ResourceManager.Network.Models.DdosDetectionMode? DetectionMode { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.TrafficDetectionRule TrafficDetectionRule { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.DdosDetectionRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.DdosDetectionRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.DdosDetectionRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.DdosDetectionRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.DdosDetectionRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.DdosDetectionRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.DdosDetectionRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DdosSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.DdosSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.DdosSettings>
     {
         public DdosSettings() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public Azure.Core.ResourceIdentifier DdosCustomPolicyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DdosProtectionPlanId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public bool? ProtectedIP { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage? ProtectionCoverage { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.DdosSettingsProtectionMode? ProtectionMode { get { throw null; } set { } }
@@ -12335,7 +12293,6 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.DdosSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.DdosSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This struct is obsolete and will be removed in a future release", false)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DdosSettingsProtectionCoverage : System.IEquatable<Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage>
@@ -12346,9 +12303,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage Basic { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage left, Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage (string value) { throw null; }
@@ -12365,13 +12320,28 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.DdosSettingsProtectionMode Enabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.DdosSettingsProtectionMode VirtualNetworkInherited { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.DdosSettingsProtectionMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.DdosSettingsProtectionMode left, Azure.ResourceManager.Network.Models.DdosSettingsProtectionMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.DdosSettingsProtectionMode (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.DdosSettingsProtectionMode left, Azure.ResourceManager.Network.Models.DdosSettingsProtectionMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DdosTrafficType : System.IEquatable<Azure.ResourceManager.Network.Models.DdosTrafficType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DdosTrafficType(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.DdosTrafficType Tcp { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.DdosTrafficType TcpSyn { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.DdosTrafficType Udp { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.DdosTrafficType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.DdosTrafficType left, Azure.ResourceManager.Network.Models.DdosTrafficType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.DdosTrafficType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.DdosTrafficType left, Azure.ResourceManager.Network.Models.DdosTrafficType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -12383,9 +12353,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.DeleteExistingPeering False { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.DeleteExistingPeering True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.DeleteExistingPeering other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.DeleteExistingPeering left, Azure.ResourceManager.Network.Models.DeleteExistingPeering right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.DeleteExistingPeering (string value) { throw null; }
@@ -12401,9 +12369,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.DestinationPortBehavior ListenIfAvailable { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.DestinationPortBehavior None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.DestinationPortBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.DestinationPortBehavior left, Azure.ResourceManager.Network.Models.DestinationPortBehavior right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.DestinationPortBehavior (string value) { throw null; }
@@ -12438,9 +12404,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.DHGroup Ecp384 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.DHGroup None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.DHGroup other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.DHGroup left, Azure.ResourceManager.Network.Models.DHGroup right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.DHGroup (string value) { throw null; }
@@ -12456,14 +12420,23 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.DisableBgpRoutePropagation False { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.DisableBgpRoutePropagation True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.DisableBgpRoutePropagation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.DisableBgpRoutePropagation left, Azure.ResourceManager.Network.Models.DisableBgpRoutePropagation right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.DisableBgpRoutePropagation (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.DisableBgpRoutePropagation left, Azure.ResourceManager.Network.Models.DisableBgpRoutePropagation right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class DisassociateCloudServicePublicIPContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.DisassociateCloudServicePublicIPContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.DisassociateCloudServicePublicIPContent>
+    {
+        public DisassociateCloudServicePublicIPContent(Azure.Core.ResourceIdentifier publicIPArmId) { }
+        public Azure.Core.ResourceIdentifier PublicIPArmId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.DisassociateCloudServicePublicIPContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.DisassociateCloudServicePublicIPContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.DisassociateCloudServicePublicIPContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.DisassociateCloudServicePublicIPContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.DisassociateCloudServicePublicIPContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.DisassociateCloudServicePublicIPContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.DisassociateCloudServicePublicIPContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DnsNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.DnsNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.DnsNameAvailabilityResult>
     {
@@ -12569,7 +12542,6 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityGroupAssociation Association { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityRule> EffectiveSecurityRules { get { throw null; } }
         public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public string TagMap { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IList<string>> TagToIPAddresses { get { throw null; } }
@@ -12706,9 +12678,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.EffectiveRouteSource User { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.EffectiveRouteSource VirtualNetworkGateway { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.EffectiveRouteSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.EffectiveRouteSource left, Azure.ResourceManager.Network.Models.EffectiveRouteSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.EffectiveRouteSource (string value) { throw null; }
@@ -12724,9 +12694,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.EffectiveRouteState Active { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.EffectiveRouteState Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.EffectiveRouteState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.EffectiveRouteState left, Azure.ResourceManager.Network.Models.EffectiveRouteState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.EffectiveRouteState (string value) { throw null; }
@@ -12764,9 +12732,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.EffectiveSecurityRuleProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.EffectiveSecurityRuleProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.EffectiveSecurityRuleProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.EffectiveSecurityRuleProtocol left, Azure.ResourceManager.Network.Models.EffectiveSecurityRuleProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.EffectiveSecurityRuleProtocol (string value) { throw null; }
@@ -12800,7 +12766,6 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.EvaluatedNetworkSecurityGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.EvaluatedNetworkSecurityGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EvaluationState : System.IEquatable<Azure.ResourceManager.Network.Models.EvaluationState>
     {
@@ -12811,9 +12776,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.EvaluationState InProgress { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.EvaluationState NotStarted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.EvaluationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.EvaluationState left, Azure.ResourceManager.Network.Models.EvaluationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.EvaluationState (string value) { throw null; }
@@ -12846,9 +12809,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExceptionEntryMatchVariable RequestHeader { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExceptionEntryMatchVariable RequestUri { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExceptionEntryMatchVariable other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExceptionEntryMatchVariable left, Azure.ResourceManager.Network.Models.ExceptionEntryMatchVariable right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExceptionEntryMatchVariable (string value) { throw null; }
@@ -12866,9 +12827,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExceptionEntrySelectorMatchOperator EqualsValue { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExceptionEntrySelectorMatchOperator StartsWith { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExceptionEntrySelectorMatchOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExceptionEntrySelectorMatchOperator left, Azure.ResourceManager.Network.Models.ExceptionEntrySelectorMatchOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExceptionEntrySelectorMatchOperator (string value) { throw null; }
@@ -12887,9 +12846,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExceptionEntryValueMatchOperator IPMatch { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExceptionEntryValueMatchOperator StartsWith { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExceptionEntryValueMatchOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExceptionEntryValueMatchOperator left, Azure.ResourceManager.Network.Models.ExceptionEntryValueMatchOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExceptionEntryValueMatchOperator (string value) { throw null; }
@@ -12957,9 +12914,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringAdvertisedPublicPrefixState NotConfigured { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringAdvertisedPublicPrefixState ValidationNeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringAdvertisedPublicPrefixState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringAdvertisedPublicPrefixState left, Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringAdvertisedPublicPrefixState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringAdvertisedPublicPrefixState (string value) { throw null; }
@@ -12992,9 +12947,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringState Disabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringState left, Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringState (string value) { throw null; }
@@ -13078,9 +13031,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExpressRouteCircuitSkuFamily MeteredData { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExpressRouteCircuitSkuFamily UnlimitedData { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExpressRouteCircuitSkuFamily other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExpressRouteCircuitSkuFamily left, Azure.ResourceManager.Network.Models.ExpressRouteCircuitSkuFamily right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExpressRouteCircuitSkuFamily (string value) { throw null; }
@@ -13098,9 +13049,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExpressRouteCircuitSkuTier Premium { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExpressRouteCircuitSkuTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExpressRouteCircuitSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExpressRouteCircuitSkuTier left, Azure.ResourceManager.Network.Models.ExpressRouteCircuitSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExpressRouteCircuitSkuTier (string value) { throw null; }
@@ -13269,9 +13218,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExpressRouteGatewayAdminState Disabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExpressRouteGatewayAdminState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExpressRouteGatewayAdminState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExpressRouteGatewayAdminState left, Azure.ResourceManager.Network.Models.ExpressRouteGatewayAdminState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExpressRouteGatewayAdminState (string value) { throw null; }
@@ -13299,9 +13246,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExpressRouteGatewayResiliencyModel MultiHomed { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExpressRouteGatewayResiliencyModel SingleHomed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExpressRouteGatewayResiliencyModel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExpressRouteGatewayResiliencyModel left, Azure.ResourceManager.Network.Models.ExpressRouteGatewayResiliencyModel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExpressRouteGatewayResiliencyModel (string value) { throw null; }
@@ -13317,9 +13262,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExpressRouteLinkAdminState Disabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExpressRouteLinkAdminState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExpressRouteLinkAdminState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExpressRouteLinkAdminState left, Azure.ResourceManager.Network.Models.ExpressRouteLinkAdminState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExpressRouteLinkAdminState (string value) { throw null; }
@@ -13335,9 +13278,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExpressRouteLinkConnectorType LC { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExpressRouteLinkConnectorType SC { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExpressRouteLinkConnectorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExpressRouteLinkConnectorType left, Azure.ResourceManager.Network.Models.ExpressRouteLinkConnectorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExpressRouteLinkConnectorType (string value) { throw null; }
@@ -13355,9 +13296,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExpressRouteLinkMacSecCipher GcmAesXpn128 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExpressRouteLinkMacSecCipher GcmAesXpn256 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExpressRouteLinkMacSecCipher other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExpressRouteLinkMacSecCipher left, Azure.ResourceManager.Network.Models.ExpressRouteLinkMacSecCipher right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExpressRouteLinkMacSecCipher (string value) { throw null; }
@@ -13387,9 +13326,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExpressRouteLinkMacSecSciState Disabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExpressRouteLinkMacSecSciState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExpressRouteLinkMacSecSciState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExpressRouteLinkMacSecSciState left, Azure.ResourceManager.Network.Models.ExpressRouteLinkMacSecSciState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExpressRouteLinkMacSecSciState (string value) { throw null; }
@@ -13405,9 +13342,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExpressRoutePeeringState Disabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExpressRoutePeeringState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExpressRoutePeeringState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExpressRoutePeeringState left, Azure.ResourceManager.Network.Models.ExpressRoutePeeringState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExpressRoutePeeringState (string value) { throw null; }
@@ -13424,9 +13359,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExpressRoutePeeringType AzurePublicPeering { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExpressRoutePeeringType MicrosoftPeering { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExpressRoutePeeringType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExpressRoutePeeringType left, Azure.ResourceManager.Network.Models.ExpressRoutePeeringType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExpressRoutePeeringType (string value) { throw null; }
@@ -13442,9 +13375,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExpressRoutePortAuthorizationUseStatus Available { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExpressRoutePortAuthorizationUseStatus InUse { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExpressRoutePortAuthorizationUseStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExpressRoutePortAuthorizationUseStatus left, Azure.ResourceManager.Network.Models.ExpressRoutePortAuthorizationUseStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExpressRoutePortAuthorizationUseStatus (string value) { throw null; }
@@ -13460,9 +13391,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExpressRoutePortsBillingType MeteredData { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExpressRoutePortsBillingType UnlimitedData { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExpressRoutePortsBillingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExpressRoutePortsBillingType left, Azure.ResourceManager.Network.Models.ExpressRoutePortsBillingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExpressRoutePortsBillingType (string value) { throw null; }
@@ -13478,9 +13407,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ExpressRoutePortsEncapsulation Dot1Q { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ExpressRoutePortsEncapsulation QinQ { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ExpressRoutePortsEncapsulation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ExpressRoutePortsEncapsulation left, Azure.ResourceManager.Network.Models.ExpressRoutePortsEncapsulation right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ExpressRoutePortsEncapsulation (string value) { throw null; }
@@ -13546,9 +13473,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.FailoverConnectionStatus Connected { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FailoverConnectionStatus Disconnected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.FailoverConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.FailoverConnectionStatus left, Azure.ResourceManager.Network.Models.FailoverConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.FailoverConnectionStatus (string value) { throw null; }
@@ -13571,9 +13496,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.FailoverTestStatus StopFailed { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FailoverTestStatus Stopping { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.FailoverTestStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.FailoverTestStatus left, Azure.ResourceManager.Network.Models.FailoverTestStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.FailoverTestStatus (string value) { throw null; }
@@ -13596,9 +13519,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.FailoverTestStatusForSingleTest StopFailed { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FailoverTestStatusForSingleTest Stopping { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.FailoverTestStatusForSingleTest other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.FailoverTestStatusForSingleTest left, Azure.ResourceManager.Network.Models.FailoverTestStatusForSingleTest right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.FailoverTestStatusForSingleTest (string value) { throw null; }
@@ -13615,16 +13536,13 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.FailoverTestType MultiSiteFailover { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FailoverTestType SingleSiteFailover { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.FailoverTestType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.FailoverTestType left, Azure.ResourceManager.Network.Models.FailoverTestType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.FailoverTestType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.FailoverTestType left, Azure.ResourceManager.Network.Models.FailoverTestType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class FirewallPacketCaptureContent : Azure.ResourceManager.Network.Models.NetworkSubResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.FirewallPacketCaptureContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.FirewallPacketCaptureContent>
     {
         public FirewallPacketCaptureContent() { }
@@ -13649,6 +13567,7 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureRule> Filters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureFlags> Flags { get { throw null; } }
         public int? NumberOfPacketsToCapture { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.AzureFirewallPacketCaptureOperationType? Operation { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.AzureFirewallNetworkRuleProtocol? Protocol { get { throw null; } set { } }
         public System.Uri SasUri { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -13695,9 +13614,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionActionType Allow { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionActionType Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionActionType left, Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionActionType (string value) { throw null; }
@@ -13737,9 +13654,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIdpsQuerySortOrder Ascending { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIdpsQuerySortOrder Descending { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.FirewallPolicyIdpsQuerySortOrder other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.FirewallPolicyIdpsQuerySortOrder left, Azure.ResourceManager.Network.Models.FirewallPolicyIdpsQuerySortOrder right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.FirewallPolicyIdpsQuerySortOrder (string value) { throw null; }
@@ -13835,9 +13750,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType Extended { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType left, Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProfileType (string value) { throw null; }
@@ -13855,9 +13768,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProtocol left, Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionProtocol (string value) { throw null; }
@@ -13886,9 +13797,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionStateType Deny { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionStateType Off { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionStateType left, Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.FirewallPolicyIntrusionDetectionStateType (string value) { throw null; }
@@ -13927,9 +13836,7 @@ namespace Azure.ResourceManager.Network.Models
         public FirewallPolicyNatRuleCollectionActionType(string value) { throw null; }
         public static Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType Dnat { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType left, Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType (string value) { throw null; }
@@ -13981,9 +13888,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.FirewallPolicyRuleApplicationProtocolType Http { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FirewallPolicyRuleApplicationProtocolType Https { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.FirewallPolicyRuleApplicationProtocolType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.FirewallPolicyRuleApplicationProtocolType left, Azure.ResourceManager.Network.Models.FirewallPolicyRuleApplicationProtocolType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.FirewallPolicyRuleApplicationProtocolType (string value) { throw null; }
@@ -14013,9 +13918,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.FirewallPolicyRuleNetworkProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FirewallPolicyRuleNetworkProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.FirewallPolicyRuleNetworkProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.FirewallPolicyRuleNetworkProtocol left, Azure.ResourceManager.Network.Models.FirewallPolicyRuleNetworkProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.FirewallPolicyRuleNetworkProtocol (string value) { throw null; }
@@ -14032,9 +13935,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.FirewallPolicySkuTier Premium { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.FirewallPolicySkuTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.FirewallPolicySkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.FirewallPolicySkuTier left, Azure.ResourceManager.Network.Models.FirewallPolicySkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.FirewallPolicySkuTier (string value) { throw null; }
@@ -14073,9 +13974,7 @@ namespace Azure.ResourceManager.Network.Models
         public FlowLogFormatType(string value) { throw null; }
         public static Azure.ResourceManager.Network.Models.FlowLogFormatType Json { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.FlowLogFormatType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.FlowLogFormatType left, Azure.ResourceManager.Network.Models.FlowLogFormatType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.FlowLogFormatType (string value) { throw null; }
@@ -14089,6 +13988,7 @@ namespace Azure.ResourceManager.Network.Models
         public string EnabledFilteringCriteria { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.FlowLogProperties Format { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public string RecordTypes { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.RetentionPolicyParameters RetentionPolicy { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
@@ -14159,9 +14059,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelInterfaceType Internal { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelInterfaceType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelInterfaceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelInterfaceType left, Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelInterfaceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelInterfaceType (string value) { throw null; }
@@ -14178,9 +14076,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelProtocol None { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelProtocol Vxlan { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelProtocol left, Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelProtocol (string value) { throw null; }
@@ -14319,9 +14215,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag False { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag left, Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.GlobalMeshSupportFlag (string value) { throw null; }
@@ -14359,9 +14253,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.GroupConnectivity DirectlyConnected { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.GroupConnectivity None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.GroupConnectivity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.GroupConnectivity left, Azure.ResourceManager.Network.Models.GroupConnectivity right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.GroupConnectivity (string value) { throw null; }
@@ -14410,9 +14302,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.HubBgpConnectionStatus NotConnected { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.HubBgpConnectionStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.HubBgpConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.HubBgpConnectionStatus left, Azure.ResourceManager.Network.Models.HubBgpConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.HubBgpConnectionStatus (string value) { throw null; }
@@ -14428,9 +14318,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.HubGatewayUsageFlag False { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.HubGatewayUsageFlag True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.HubGatewayUsageFlag other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.HubGatewayUsageFlag left, Azure.ResourceManager.Network.Models.HubGatewayUsageFlag right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.HubGatewayUsageFlag (string value) { throw null; }
@@ -14486,9 +14374,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.HubRoutingPreference ExpressRoute { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.HubRoutingPreference VpnGateway { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.HubRoutingPreference other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.HubRoutingPreference left, Azure.ResourceManager.Network.Models.HubRoutingPreference right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.HubRoutingPreference (string value) { throw null; }
@@ -14581,9 +14467,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.IkeEncryption GcmAes128 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.IkeEncryption GcmAes256 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.IkeEncryption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.IkeEncryption left, Azure.ResourceManager.Network.Models.IkeEncryption right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.IkeEncryption (string value) { throw null; }
@@ -14603,9 +14487,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.IkeIntegrity Sha256 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.IkeIntegrity Sha384 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.IkeIntegrity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.IkeIntegrity left, Azure.ResourceManager.Network.Models.IkeIntegrity right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.IkeIntegrity (string value) { throw null; }
@@ -14626,7 +14508,6 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.InboundNatRulePortMapping>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.InboundNatRulePortMapping>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class InboundSecurityRule : Azure.ResourceManager.Network.Models.NetworkResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.InboundSecurityRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.InboundSecurityRule>
     {
         public InboundSecurityRule() { }
@@ -14666,9 +14547,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.InboundSecurityRulesProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.InboundSecurityRulesProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.InboundSecurityRulesProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.InboundSecurityRulesProtocol left, Azure.ResourceManager.Network.Models.InboundSecurityRulesProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.InboundSecurityRulesProtocol (string value) { throw null; }
@@ -14684,9 +14563,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.InboundSecurityRuleType AutoExpire { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.InboundSecurityRuleType Permanent { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.InboundSecurityRuleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.InboundSecurityRuleType left, Azure.ResourceManager.Network.Models.InboundSecurityRuleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.InboundSecurityRuleType (string value) { throw null; }
@@ -14715,9 +14592,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.IPAddressDeleteOption Delete { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.IPAddressDeleteOption Detach { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.IPAddressDeleteOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.IPAddressDeleteOption left, Azure.ResourceManager.Network.Models.IPAddressDeleteOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.IPAddressDeleteOption (string value) { throw null; }
@@ -14733,9 +14608,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.IpamIPType IPv4 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.IpamIPType IPv6 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.IpamIPType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.IpamIPType left, Azure.ResourceManager.Network.Models.IpamIPType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.IpamIPType (string value) { throw null; }
@@ -14854,9 +14727,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.IPFlowProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.IPFlowProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.IPFlowProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.IPFlowProtocol left, Azure.ResourceManager.Network.Models.IPFlowProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.IPFlowProtocol (string value) { throw null; }
@@ -14879,9 +14750,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.IPsecEncryption GcmAes256 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.IPsecEncryption None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.IPsecEncryption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.IPsecEncryption left, Azure.ResourceManager.Network.Models.IPsecEncryption right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.IPsecEncryption (string value) { throw null; }
@@ -14901,9 +14770,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.IPsecIntegrity Sha256 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.IPsecIntegrity Sha384 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.IPsecIntegrity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.IPsecIntegrity left, Azure.ResourceManager.Network.Models.IPsecIntegrity right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.IPsecIntegrity (string value) { throw null; }
@@ -14977,9 +14844,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.IssueOrigin Local { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.IssueOrigin Outbound { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.IssueOrigin other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.IssueOrigin left, Azure.ResourceManager.Network.Models.IssueOrigin right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.IssueOrigin (string value) { throw null; }
@@ -14995,9 +14860,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.IssueSeverity Error { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.IssueSeverity Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.IssueSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.IssueSeverity left, Azure.ResourceManager.Network.Models.IssueSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.IssueSeverity (string value) { throw null; }
@@ -15040,15 +14903,12 @@ namespace Azure.ResourceManager.Network.Models
         private readonly int _dummyPrimitive;
         public LoadBalancerBackendAddressAdminState(string value) { throw null; }
         public static Azure.ResourceManager.Network.Models.LoadBalancerBackendAddressAdminState Down { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This state is obsolete and will be removed in a future release", false)]
         public static Azure.ResourceManager.Network.Models.LoadBalancerBackendAddressAdminState Drain { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.LoadBalancerBackendAddressAdminState None { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.LoadBalancerBackendAddressAdminState Up { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.LoadBalancerBackendAddressAdminState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.LoadBalancerBackendAddressAdminState left, Azure.ResourceManager.Network.Models.LoadBalancerBackendAddressAdminState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.LoadBalancerBackendAddressAdminState (string value) { throw null; }
@@ -15086,25 +14946,16 @@ namespace Azure.ResourceManager.Network.Models
     public partial class LoadBalancerInboundNatPool : Azure.ResourceManager.Network.Models.NetworkResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool>
     {
         public LoadBalancerInboundNatPool() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? BackendPort { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? EnableFloatingIP { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? EnableTcpReset { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier FrontendIPConfigurationId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? FrontendPortRangeEnd { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? FrontendPortRangeStart { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties Properties { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? Protocol { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15143,13 +14994,27 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.LoadBalancerOutboundRuleProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.LoadBalancerOutboundRuleProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.LoadBalancerOutboundRuleProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.LoadBalancerOutboundRuleProtocol left, Azure.ResourceManager.Network.Models.LoadBalancerOutboundRuleProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.LoadBalancerOutboundRuleProtocol (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.LoadBalancerOutboundRuleProtocol left, Azure.ResourceManager.Network.Models.LoadBalancerOutboundRuleProtocol right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LoadBalancerScope : System.IEquatable<Azure.ResourceManager.Network.Models.LoadBalancerScope>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LoadBalancerScope(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.LoadBalancerScope Private { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.LoadBalancerScope Public { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.LoadBalancerScope other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.LoadBalancerScope left, Azure.ResourceManager.Network.Models.LoadBalancerScope right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.LoadBalancerScope (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.LoadBalancerScope left, Azure.ResourceManager.Network.Models.LoadBalancerScope right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class LoadBalancerSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.LoadBalancerSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancerSku>
@@ -15174,9 +15039,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.LoadBalancerSkuName Gateway { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.LoadBalancerSkuName Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.LoadBalancerSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.LoadBalancerSkuName left, Azure.ResourceManager.Network.Models.LoadBalancerSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.LoadBalancerSkuName (string value) { throw null; }
@@ -15192,9 +15055,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.LoadBalancerSkuTier Global { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.LoadBalancerSkuTier Regional { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.LoadBalancerSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.LoadBalancerSkuTier left, Azure.ResourceManager.Network.Models.LoadBalancerSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.LoadBalancerSkuTier (string value) { throw null; }
@@ -15256,12 +15117,11 @@ namespace Azure.ResourceManager.Network.Models
         private readonly int _dummyPrimitive;
         public LoadBalancingTransportProtocol(string value) { throw null; }
         public static Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol All { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol Quic { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol left, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol (string value) { throw null; }
@@ -15278,9 +15138,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.LoadDistribution SourceIP { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.LoadDistribution SourceIPProtocol { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.LoadDistribution other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.LoadDistribution left, Azure.ResourceManager.Network.Models.LoadDistribution right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.LoadDistribution (string value) { throw null; }
@@ -15296,9 +15154,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ManagedRuleEnabledState Disabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ManagedRuleEnabledState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ManagedRuleEnabledState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ManagedRuleEnabledState left, Azure.ResourceManager.Network.Models.ManagedRuleEnabledState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ManagedRuleEnabledState (string value) { throw null; }
@@ -15355,9 +15211,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ManagedRuleSensitivityType Medium { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ManagedRuleSensitivityType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ManagedRuleSensitivityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ManagedRuleSensitivityType left, Azure.ResourceManager.Network.Models.ManagedRuleSensitivityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ManagedRuleSensitivityType (string value) { throw null; }
@@ -15460,9 +15314,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NatGatewaySkuName Standard { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NatGatewaySkuName StandardV2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NatGatewaySkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NatGatewaySkuName left, Azure.ResourceManager.Network.Models.NatGatewaySkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NatGatewaySkuName (string value) { throw null; }
@@ -15509,9 +15361,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkAccess Allow { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkAccess Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkAccess left, Azure.ResourceManager.Network.Models.NetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkAccess (string value) { throw null; }
@@ -15548,9 +15398,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkAuthenticationMethod EapmschaPv2 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkAuthenticationMethod Eaptls { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkAuthenticationMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkAuthenticationMethod left, Azure.ResourceManager.Network.Models.NetworkAuthenticationMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkAuthenticationMethod (string value) { throw null; }
@@ -15568,9 +15416,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkConfigurationDeploymentType SecurityAdmin { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkConfigurationDeploymentType SecurityUser { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkConfigurationDeploymentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkConfigurationDeploymentType left, Azure.ResourceManager.Network.Models.NetworkConfigurationDeploymentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkConfigurationDeploymentType (string value) { throw null; }
@@ -15643,7 +15489,6 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.NetworkConfigurationGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.NetworkConfigurationGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkConnectionState : System.IEquatable<Azure.ResourceManager.Network.Models.NetworkConnectionState>
     {
@@ -15654,9 +15499,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkConnectionState Unknown { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkConnectionState Unreachable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkConnectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkConnectionState left, Azure.ResourceManager.Network.Models.NetworkConnectionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkConnectionState (string value) { throw null; }
@@ -15674,9 +15517,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkConnectionStatus Disconnected { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkConnectionStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkConnectionStatus left, Azure.ResourceManager.Network.Models.NetworkConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkConnectionStatus (string value) { throw null; }
@@ -15714,9 +15555,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkGroupMemberType Subnet { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkGroupMemberType VirtualNetwork { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkGroupMemberType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkGroupMemberType left, Azure.ResourceManager.Network.Models.NetworkGroupMemberType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkGroupMemberType (string value) { throw null; }
@@ -15745,9 +15584,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkHttpConfigurationMethod Get { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkHttpConfigurationMethod Post { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkHttpConfigurationMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkHttpConfigurationMethod left, Azure.ResourceManager.Network.Models.NetworkHttpConfigurationMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkHttpConfigurationMethod (string value) { throw null; }
@@ -15775,9 +15612,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkIntentPolicyBasedService AllowRulesOnly { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkIntentPolicyBasedService None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkIntentPolicyBasedService other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkIntentPolicyBasedService left, Azure.ResourceManager.Network.Models.NetworkIntentPolicyBasedService right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkIntentPolicyBasedService (string value) { throw null; }
@@ -15819,9 +15654,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliaryMode MaxConnections { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliaryMode None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliaryMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliaryMode left, Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliaryMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliaryMode (string value) { throw null; }
@@ -15840,9 +15673,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliarySku A8 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliarySku None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliarySku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliarySku left, Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliarySku right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkInterfaceAuxiliarySku (string value) { throw null; }
@@ -15889,9 +15720,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkInterfaceMigrationPhase None { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkInterfaceMigrationPhase Prepare { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkInterfaceMigrationPhase other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkInterfaceMigrationPhase left, Azure.ResourceManager.Network.Models.NetworkInterfaceMigrationPhase right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkInterfaceMigrationPhase (string value) { throw null; }
@@ -15907,9 +15736,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkInterfaceNicType Elastic { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkInterfaceNicType Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkInterfaceNicType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkInterfaceNicType left, Azure.ResourceManager.Network.Models.NetworkInterfaceNicType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkInterfaceNicType (string value) { throw null; }
@@ -15925,9 +15752,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod Dynamic { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod Static { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod left, Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod (string value) { throw null; }
@@ -15943,9 +15768,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkIPAllocationType Hypernet { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkIPAllocationType Undefined { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkIPAllocationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkIPAllocationType left, Azure.ResourceManager.Network.Models.NetworkIPAllocationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkIPAllocationType (string value) { throw null; }
@@ -16004,9 +15827,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkIPVersion IPv4 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkIPVersion IPv6 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkIPVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkIPVersion left, Azure.ResourceManager.Network.Models.NetworkIPVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkIPVersion (string value) { throw null; }
@@ -16049,9 +15870,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkManagerDeploymentState Failed { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkManagerDeploymentState NotStarted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkManagerDeploymentState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkManagerDeploymentState left, Azure.ResourceManager.Network.Models.NetworkManagerDeploymentState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkManagerDeploymentState (string value) { throw null; }
@@ -16173,9 +15992,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkProtocol left, Azure.ResourceManager.Network.Models.NetworkProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkProtocol (string value) { throw null; }
@@ -16195,9 +16012,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkProvisioningState left, Azure.ResourceManager.Network.Models.NetworkProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkProvisioningState (string value) { throw null; }
@@ -16255,9 +16070,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterAccessRuleDirection Inbound { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterAccessRuleDirection Outbound { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterAccessRuleDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterAccessRuleDirection left, Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterAccessRuleDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterAccessRuleDirection (string value) { throw null; }
@@ -16286,9 +16099,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterAssociationAccessMode Enforced { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterAssociationAccessMode Learning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterAssociationAccessMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterAssociationAccessMode left, Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterAssociationAccessMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterAssociationAccessMode (string value) { throw null; }
@@ -16322,9 +16133,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterLinkProvisioningState Updating { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterLinkProvisioningState WaitForRemoteCompletion { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterLinkProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterLinkProvisioningState left, Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterLinkProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterLinkProvisioningState (string value) { throw null; }
@@ -16342,9 +16151,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterLinkStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterLinkStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterLinkStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterLinkStatus left, Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterLinkStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterLinkStatus (string value) { throw null; }
@@ -16376,14 +16183,23 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterProvisioningState left, Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterProvisioningState left, Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class NetworkSecurityPerimeterServiceTags : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterServiceTags>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterServiceTags>
+    {
+        internal NetworkSecurityPerimeterServiceTags() { }
+        public System.Collections.Generic.IReadOnlyList<string> ServiceTags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterServiceTags System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterServiceTags>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterServiceTags>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterServiceTags System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterServiceTags>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterServiceTags>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.NetworkSecurityPerimeterServiceTags>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkSecurityRulesEvaluationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.NetworkSecurityRulesEvaluationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.NetworkSecurityRulesEvaluationResult>
     {
@@ -16461,9 +16277,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkTrafficDirection Inbound { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkTrafficDirection Outbound { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkTrafficDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkTrafficDirection left, Azure.ResourceManager.Network.Models.NetworkTrafficDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkTrafficDirection (string value) { throw null; }
@@ -16505,9 +16319,7 @@ namespace Azure.ResourceManager.Network.Models
         public NetworkUsageUnit(string value) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkUsageUnit Count { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkUsageUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkUsageUnit left, Azure.ResourceManager.Network.Models.NetworkUsageUnit right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkUsageUnit (string value) { throw null; }
@@ -16620,9 +16432,7 @@ namespace Azure.ResourceManager.Network.Models
         public NetworkWatcherHttpMethod(string value) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkWatcherHttpMethod Get { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkWatcherHttpMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkWatcherHttpMethod left, Azure.ResourceManager.Network.Models.NetworkWatcherHttpMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkWatcherHttpMethod (string value) { throw null; }
@@ -16640,9 +16450,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NetworkWatcherProtocol Icmp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NetworkWatcherProtocol Tcp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NetworkWatcherProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkWatcherProtocol left, Azure.ResourceManager.Network.Models.NetworkWatcherProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NetworkWatcherProtocol (string value) { throw null; }
@@ -16702,9 +16510,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NextHopType VirtualNetworkGateway { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NextHopType VnetLocal { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NextHopType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NextHopType left, Azure.ResourceManager.Network.Models.NextHopType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NextHopType (string value) { throw null; }
@@ -16720,9 +16526,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NicTypeInRequest PrivateNic { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NicTypeInRequest PublicNic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NicTypeInRequest other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NicTypeInRequest left, Azure.ResourceManager.Network.Models.NicTypeInRequest right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NicTypeInRequest (string value) { throw null; }
@@ -16739,13 +16543,42 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.NicTypeInResponse PrivateNic { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.NicTypeInResponse PublicNic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.NicTypeInResponse other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.NicTypeInResponse left, Azure.ResourceManager.Network.Models.NicTypeInResponse right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.NicTypeInResponse (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.NicTypeInResponse left, Azure.ResourceManager.Network.Models.NicTypeInResponse right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NvaInterfaceConfigurationsProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.NvaInterfaceConfigurationsProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.NvaInterfaceConfigurationsProperties>
+    {
+        public NvaInterfaceConfigurationsProperties() { }
+        public string Name { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.NvaNicType> PropertiesType { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.NvaInterfaceConfigurationsProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.NvaInterfaceConfigurationsProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.NvaInterfaceConfigurationsProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.NvaInterfaceConfigurationsProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.NvaInterfaceConfigurationsProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.NvaInterfaceConfigurationsProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.NvaInterfaceConfigurationsProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NvaNicType : System.IEquatable<Azure.ResourceManager.Network.Models.NvaNicType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NvaNicType(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.NvaNicType AdditionalPrivateNic { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.NvaNicType AdditionalPublicNic { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.NvaNicType PrivateNic { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.NvaNicType PublicNic { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.NvaNicType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.NvaNicType left, Azure.ResourceManager.Network.Models.NvaNicType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.NvaNicType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.NvaNicType left, Azure.ResourceManager.Network.Models.NvaNicType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class O365BreakOutCategoryPolicies : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.O365BreakOutCategoryPolicies>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.O365BreakOutCategoryPolicies>
@@ -16772,9 +16605,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.OfficeTrafficCategory Optimize { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.OfficeTrafficCategory OptimizeAndAllow { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.OfficeTrafficCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.OfficeTrafficCategory left, Azure.ResourceManager.Network.Models.OfficeTrafficCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.OfficeTrafficCategory (string value) { throw null; }
@@ -16789,9 +16620,7 @@ namespace Azure.ResourceManager.Network.Models
         public OutputType(string value) { throw null; }
         public static Azure.ResourceManager.Network.Models.OutputType Workspace { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.OutputType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.OutputType left, Azure.ResourceManager.Network.Models.OutputType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.OutputType (string value) { throw null; }
@@ -16828,9 +16657,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.OwaspCrsExclusionEntryMatchVariable RequestHeaderNames { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.OwaspCrsExclusionEntryMatchVariable RequestHeaderValues { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.OwaspCrsExclusionEntryMatchVariable other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.OwaspCrsExclusionEntryMatchVariable left, Azure.ResourceManager.Network.Models.OwaspCrsExclusionEntryMatchVariable right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.OwaspCrsExclusionEntryMatchVariable (string value) { throw null; }
@@ -16849,9 +16676,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.OwaspCrsExclusionEntrySelectorMatchOperator EqualsValue { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.OwaspCrsExclusionEntrySelectorMatchOperator StartsWith { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.OwaspCrsExclusionEntrySelectorMatchOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.OwaspCrsExclusionEntrySelectorMatchOperator left, Azure.ResourceManager.Network.Models.OwaspCrsExclusionEntrySelectorMatchOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.OwaspCrsExclusionEntrySelectorMatchOperator (string value) { throw null; }
@@ -17042,9 +16867,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.PcError LocalFileFailed { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.PcError StorageFailed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.PcError other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.PcError left, Azure.ResourceManager.Network.Models.PcError right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.PcError (string value) { throw null; }
@@ -17061,9 +16884,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.PcProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.PcProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.PcProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.PcProtocol left, Azure.ResourceManager.Network.Models.PcProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.PcProtocol (string value) { throw null; }
@@ -17082,9 +16903,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.PcStatus Stopped { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.PcStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.PcStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.PcStatus left, Azure.ResourceManager.Network.Models.PcStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.PcStatus (string value) { throw null; }
@@ -17100,9 +16919,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.PeeringEnforcement Enforced { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.PeeringEnforcement Unenforced { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.PeeringEnforcement other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.PeeringEnforcement left, Azure.ResourceManager.Network.Models.PeeringEnforcement right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.PeeringEnforcement (string value) { throw null; }
@@ -17126,7 +16943,6 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.PeerRoute>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.PeerRoute>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release", false)]
     public partial class PeerRouteList
     {
@@ -17149,9 +16965,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.PfsGroup Pfs2048 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.PfsGroup Pfs24 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.PfsGroup other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.PfsGroup left, Azure.ResourceManager.Network.Models.PfsGroup right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.PfsGroup (string value) { throw null; }
@@ -17202,9 +17016,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.PreferredRoutingGateway None { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.PreferredRoutingGateway VpnGateway { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.PreferredRoutingGateway other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.PreferredRoutingGateway left, Azure.ResourceManager.Network.Models.PreferredRoutingGateway right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.PreferredRoutingGateway (string value) { throw null; }
@@ -17253,6 +17065,23 @@ namespace Azure.ResourceManager.Network.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.PrivateEndpointIPConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PrivateEndpointIPVersionType : System.IEquatable<Azure.ResourceManager.Network.Models.PrivateEndpointIPVersionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PrivateEndpointIPVersionType(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.PrivateEndpointIPVersionType DualStack { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.PrivateEndpointIPVersionType IPv4 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.PrivateEndpointIPVersionType IPv6 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.PrivateEndpointIPVersionType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.PrivateEndpointIPVersionType left, Azure.ResourceManager.Network.Models.PrivateEndpointIPVersionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.PrivateEndpointIPVersionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.PrivateEndpointIPVersionType left, Azure.ResourceManager.Network.Models.PrivateEndpointIPVersionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PrivateEndpointVnetPolicy : System.IEquatable<Azure.ResourceManager.Network.Models.PrivateEndpointVnetPolicy>
     {
         private readonly object _dummy;
@@ -17261,13 +17090,27 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.PrivateEndpointVnetPolicy Basic { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.PrivateEndpointVnetPolicy Disabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.PrivateEndpointVnetPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.PrivateEndpointVnetPolicy left, Azure.ResourceManager.Network.Models.PrivateEndpointVnetPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.PrivateEndpointVnetPolicy (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.PrivateEndpointVnetPolicy left, Azure.ResourceManager.Network.Models.PrivateEndpointVnetPolicy right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PrivateLinkServiceAccessMode : System.IEquatable<Azure.ResourceManager.Network.Models.PrivateLinkServiceAccessMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PrivateLinkServiceAccessMode(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.PrivateLinkServiceAccessMode Default { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.PrivateLinkServiceAccessMode Restricted { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.PrivateLinkServiceAccessMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.PrivateLinkServiceAccessMode left, Azure.ResourceManager.Network.Models.PrivateLinkServiceAccessMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.PrivateLinkServiceAccessMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.PrivateLinkServiceAccessMode left, Azure.ResourceManager.Network.Models.PrivateLinkServiceAccessMode right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PrivateLinkServiceIPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.PrivateLinkServiceIPConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.PrivateLinkServiceIPConfiguration>
@@ -17307,9 +17150,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ProbeNoHealthyBackendsBehavior AllProbedDown { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ProbeNoHealthyBackendsBehavior AllProbedUp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ProbeNoHealthyBackendsBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ProbeNoHealthyBackendsBehavior left, Azure.ResourceManager.Network.Models.ProbeNoHealthyBackendsBehavior right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ProbeNoHealthyBackendsBehavior (string value) { throw null; }
@@ -17326,9 +17167,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ProbeProtocol Https { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ProbeProtocol Tcp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ProbeProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ProbeProtocol left, Azure.ResourceManager.Network.Models.ProbeProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ProbeProtocol (string value) { throw null; }
@@ -17344,9 +17183,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ProcessorArchitecture Amd64 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ProcessorArchitecture X86 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ProcessorArchitecture other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ProcessorArchitecture left, Azure.ResourceManager.Network.Models.ProcessorArchitecture right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ProcessorArchitecture (string value) { throw null; }
@@ -17365,7 +17202,6 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.PropagatedRouteTable>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.PropagatedRouteTable>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class PropagatedRouteTableNfv : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.PropagatedRouteTableNfv>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.PropagatedRouteTableNfv>
     {
         public PropagatedRouteTableNfv() { }
@@ -17377,7 +17213,6 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.PropagatedRouteTableNfv>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.PropagatedRouteTableNfv>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release", false)]
     public partial class ProtocolCustomSettings
     {
@@ -17403,9 +17238,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ProtocolType Udp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ProtocolType Vxlan { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ProtocolType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ProtocolType left, Azure.ResourceManager.Network.Models.ProtocolType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ProtocolType (string value) { throw null; }
@@ -17445,9 +17278,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.PublicIPAddressMigrationPhase None { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.PublicIPAddressMigrationPhase Prepare { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.PublicIPAddressMigrationPhase other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.PublicIPAddressMigrationPhase left, Azure.ResourceManager.Network.Models.PublicIPAddressMigrationPhase right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.PublicIPAddressMigrationPhase (string value) { throw null; }
@@ -17476,9 +17307,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.PublicIPAddressSkuName Standard { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.PublicIPAddressSkuName StandardV2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.PublicIPAddressSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.PublicIPAddressSkuName left, Azure.ResourceManager.Network.Models.PublicIPAddressSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.PublicIPAddressSkuName (string value) { throw null; }
@@ -17494,9 +17323,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.PublicIPAddressSkuTier Global { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.PublicIPAddressSkuTier Regional { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.PublicIPAddressSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.PublicIPAddressSkuTier left, Azure.ResourceManager.Network.Models.PublicIPAddressSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.PublicIPAddressSkuTier (string value) { throw null; }
@@ -17538,9 +17365,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.PublicIPPrefixSkuName Standard { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.PublicIPPrefixSkuName StandardV2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.PublicIPPrefixSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.PublicIPPrefixSkuName left, Azure.ResourceManager.Network.Models.PublicIPPrefixSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.PublicIPPrefixSkuName (string value) { throw null; }
@@ -17556,9 +17381,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.PublicIPPrefixSkuTier Global { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.PublicIPPrefixSkuTier Regional { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.PublicIPPrefixSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.PublicIPPrefixSkuTier left, Azure.ResourceManager.Network.Models.PublicIPPrefixSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.PublicIPPrefixSkuTier (string value) { throw null; }
@@ -17611,6 +17434,18 @@ namespace Azure.ResourceManager.Network.Models
         Azure.ResourceManager.Network.Models.QueryTroubleshootingContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.QueryTroubleshootingContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.QueryTroubleshootingContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.QueryTroubleshootingContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RadiusAuthServer : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.RadiusAuthServer>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RadiusAuthServer>
+    {
+        internal RadiusAuthServer() { }
+        public string RadiusServerAddress { get { throw null; } }
+        public string RadiusServerSecret { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.RadiusAuthServer System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.RadiusAuthServer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.RadiusAuthServer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.RadiusAuthServer System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RadiusAuthServer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RadiusAuthServer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RadiusAuthServer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RadiusServer : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.RadiusServer>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RadiusServer>
     {
@@ -17671,6 +17506,17 @@ namespace Azure.ResourceManager.Network.Models
         Azure.ResourceManager.Network.Models.RecordSet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RecordSet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RecordSet>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RecordSet>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ReserveCloudServicePublicIPAddressContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ReserveCloudServicePublicIPAddressContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ReserveCloudServicePublicIPAddressContent>
+    {
+        public ReserveCloudServicePublicIPAddressContent(Azure.ResourceManager.Network.Models.UndoReservationType isRollback) { }
+        public Azure.ResourceManager.Network.Models.UndoReservationType IsRollback { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.ReserveCloudServicePublicIPAddressContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ReserveCloudServicePublicIPAddressContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ReserveCloudServicePublicIPAddressContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.ReserveCloudServicePublicIPAddressContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ReserveCloudServicePublicIPAddressContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ReserveCloudServicePublicIPAddressContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ReserveCloudServicePublicIPAddressContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ResiliencyRecommendationComponents : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.ResiliencyRecommendationComponents>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.ResiliencyRecommendationComponents>
     {
@@ -17734,9 +17580,7 @@ namespace Azure.ResourceManager.Network.Models
         public RouteFilterRuleType(string value) { throw null; }
         public static Azure.ResourceManager.Network.Models.RouteFilterRuleType Community { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.RouteFilterRuleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.RouteFilterRuleType left, Azure.ResourceManager.Network.Models.RouteFilterRuleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.RouteFilterRuleType (string value) { throw null; }
@@ -17780,9 +17624,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.RouteMapActionType Replace { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.RouteMapActionType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.RouteMapActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.RouteMapActionType left, Azure.ResourceManager.Network.Models.RouteMapActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.RouteMapActionType (string value) { throw null; }
@@ -17801,9 +17643,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.RouteMapMatchCondition NotEquals { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.RouteMapMatchCondition Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.RouteMapMatchCondition other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.RouteMapMatchCondition left, Azure.ResourceManager.Network.Models.RouteMapMatchCondition right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.RouteMapMatchCondition (string value) { throw null; }
@@ -17820,9 +17660,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.RouteMapNextStepBehavior Terminate { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.RouteMapNextStepBehavior Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.RouteMapNextStepBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.RouteMapNextStepBehavior left, Azure.ResourceManager.Network.Models.RouteMapNextStepBehavior right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.RouteMapNextStepBehavior (string value) { throw null; }
@@ -17855,9 +17693,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.RouteNextHopType VirtualNetworkGateway { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.RouteNextHopType VnetLocal { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.RouteNextHopType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.RouteNextHopType left, Azure.ResourceManager.Network.Models.RouteNextHopType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.RouteNextHopType (string value) { throw null; }
@@ -17877,6 +17713,22 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RouteSourceDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RouteSourceDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RouteTableUsageMode : System.IEquatable<Azure.ResourceManager.Network.Models.RouteTableUsageMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RouteTableUsageMode(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.RouteTableUsageMode ManagedOnly { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.RouteTableUsageMode UseExisting { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.RouteTableUsageMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.RouteTableUsageMode left, Azure.ResourceManager.Network.Models.RouteTableUsageMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.RouteTableUsageMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.RouteTableUsageMode left, Azure.ResourceManager.Network.Models.RouteTableUsageMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class RoutingConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.RoutingConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RoutingConfiguration>
     {
         public RoutingConfiguration() { }
@@ -17884,7 +17736,6 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.Core.ResourceIdentifier InboundRouteMapId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier OutboundRouteMapId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.PropagatedRouteTable PropagatedRouteTables { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.StaticRoute> StaticRoutes { get { throw null; } }
         public Azure.ResourceManager.Network.Models.VnetRoute VnetRoutes { get { throw null; } set { } }
@@ -17895,7 +17746,6 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RoutingConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RoutingConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class RoutingConfigurationNfv : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.RoutingConfigurationNfv>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RoutingConfigurationNfv>
     {
         public RoutingConfigurationNfv() { }
@@ -17909,7 +17759,6 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RoutingConfigurationNfv>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RoutingConfigurationNfv>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class RoutingConfigurationNfvSubResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.RoutingConfigurationNfvSubResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.RoutingConfigurationNfvSubResource>
     {
         public RoutingConfigurationNfvSubResource() { }
@@ -17942,9 +17791,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.RoutingRuleDestinationType AddressPrefix { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.RoutingRuleDestinationType ServiceTag { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.RoutingRuleDestinationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.RoutingRuleDestinationType left, Azure.ResourceManager.Network.Models.RoutingRuleDestinationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.RoutingRuleDestinationType (string value) { throw null; }
@@ -17975,9 +17822,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.RoutingRuleNextHopType VirtualNetworkGateway { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.RoutingRuleNextHopType VnetLocal { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.RoutingRuleNextHopType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.RoutingRuleNextHopType left, Azure.ResourceManager.Network.Models.RoutingRuleNextHopType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.RoutingRuleNextHopType (string value) { throw null; }
@@ -18007,9 +17852,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.RoutingState Provisioned { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.RoutingState Provisioning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.RoutingState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.RoutingState left, Azure.ResourceManager.Network.Models.RoutingState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.RoutingState (string value) { throw null; }
@@ -18028,9 +17871,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.RuleMatchActionType JSChallenge { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.RuleMatchActionType Log { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.RuleMatchActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.RuleMatchActionType left, Azure.ResourceManager.Network.Models.RuleMatchActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.RuleMatchActionType (string value) { throw null; }
@@ -18049,9 +17890,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ScopeConnectionState Rejected { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ScopeConnectionState Revoked { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ScopeConnectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ScopeConnectionState left, Azure.ResourceManager.Network.Models.ScopeConnectionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ScopeConnectionState (string value) { throw null; }
@@ -18067,9 +17906,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ScrubbingRuleEntryMatchOperator EqualsAny { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ScrubbingRuleEntryMatchOperator EqualsValue { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ScrubbingRuleEntryMatchOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ScrubbingRuleEntryMatchOperator left, Azure.ResourceManager.Network.Models.ScrubbingRuleEntryMatchOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ScrubbingRuleEntryMatchOperator (string value) { throw null; }
@@ -18089,9 +17926,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ScrubbingRuleEntryMatchVariable RequestJsonArgNames { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ScrubbingRuleEntryMatchVariable RequestPostArgNames { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ScrubbingRuleEntryMatchVariable other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ScrubbingRuleEntryMatchVariable left, Azure.ResourceManager.Network.Models.ScrubbingRuleEntryMatchVariable right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ScrubbingRuleEntryMatchVariable (string value) { throw null; }
@@ -18107,9 +17942,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ScrubbingRuleEntryState Disabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ScrubbingRuleEntryState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ScrubbingRuleEntryState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ScrubbingRuleEntryState left, Azure.ResourceManager.Network.Models.ScrubbingRuleEntryState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ScrubbingRuleEntryState (string value) { throw null; }
@@ -18126,9 +17959,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess AlwaysAllow { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess left, Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess (string value) { throw null; }
@@ -18144,9 +17975,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection Inbound { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection Outbound { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection left, Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection (string value) { throw null; }
@@ -18166,9 +17995,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol left, Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol (string value) { throw null; }
@@ -18220,9 +18047,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.SecurityPartnerProviderConnectionStatus PartiallyConnected { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.SecurityPartnerProviderConnectionStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.SecurityPartnerProviderConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.SecurityPartnerProviderConnectionStatus left, Azure.ResourceManager.Network.Models.SecurityPartnerProviderConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.SecurityPartnerProviderConnectionStatus (string value) { throw null; }
@@ -18239,9 +18064,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.SecurityProviderName IBoss { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.SecurityProviderName ZScaler { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.SecurityProviderName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.SecurityProviderName left, Azure.ResourceManager.Network.Models.SecurityProviderName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.SecurityProviderName (string value) { throw null; }
@@ -18257,9 +18080,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.SecurityRuleAccess Allow { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.SecurityRuleAccess Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.SecurityRuleAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.SecurityRuleAccess left, Azure.ResourceManager.Network.Models.SecurityRuleAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.SecurityRuleAccess (string value) { throw null; }
@@ -18289,9 +18110,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.SecurityRuleDirection Inbound { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.SecurityRuleDirection Outbound { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.SecurityRuleDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.SecurityRuleDirection left, Azure.ResourceManager.Network.Models.SecurityRuleDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.SecurityRuleDirection (string value) { throw null; }
@@ -18311,9 +18130,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.SecurityRuleProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.SecurityRuleProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.SecurityRuleProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.SecurityRuleProtocol left, Azure.ResourceManager.Network.Models.SecurityRuleProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.SecurityRuleProtocol (string value) { throw null; }
@@ -18386,9 +18203,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ServiceProviderProvisioningState Provisioned { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ServiceProviderProvisioningState Provisioning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ServiceProviderProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.ServiceProviderProvisioningState left, Azure.ResourceManager.Network.Models.ServiceProviderProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.ServiceProviderProvisioningState (string value) { throw null; }
@@ -18447,9 +18262,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.SharingScope DelegatedServices { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.SharingScope Tenant { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.SharingScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.SharingScope left, Azure.ResourceManager.Network.Models.SharingScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.SharingScope (string value) { throw null; }
@@ -18543,9 +18356,7 @@ namespace Azure.ResourceManager.Network.Models
         public SyncRemoteAddressSpace(string value) { throw null; }
         public static Azure.ResourceManager.Network.Models.SyncRemoteAddressSpace True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.SyncRemoteAddressSpace other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.SyncRemoteAddressSpace left, Azure.ResourceManager.Network.Models.SyncRemoteAddressSpace right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.SyncRemoteAddressSpace (string value) { throw null; }
@@ -18561,9 +18372,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.TestEvalPreferredIPVersion IPv4 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.TestEvalPreferredIPVersion IPv6 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.TestEvalPreferredIPVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.TestEvalPreferredIPVersion left, Azure.ResourceManager.Network.Models.TestEvalPreferredIPVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.TestEvalPreferredIPVersion (string value) { throw null; }
@@ -18624,6 +18433,18 @@ namespace Azure.ResourceManager.Network.Models
         Azure.ResourceManager.Network.Models.TrafficAnalyticsConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.TrafficAnalyticsConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.TrafficAnalyticsConfigurationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.TrafficAnalyticsConfigurationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TrafficDetectionRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.TrafficDetectionRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.TrafficDetectionRule>
+    {
+        public TrafficDetectionRule() { }
+        public int? PacketsPerSecond { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.DdosTrafficType? TrafficType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.TrafficDetectionRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.TrafficDetectionRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.TrafficDetectionRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.TrafficDetectionRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.TrafficDetectionRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.TrafficDetectionRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.TrafficDetectionRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TrafficSelectorPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.TrafficSelectorPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.TrafficSelectorPolicy>
     {
@@ -18708,6 +18529,22 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.TunnelConnectionHealth>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.TunnelConnectionHealth>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct UndoReservationType : System.IEquatable<Azure.ResourceManager.Network.Models.UndoReservationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public UndoReservationType(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.UndoReservationType False { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.UndoReservationType True { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.UndoReservationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.UndoReservationType left, Azure.ResourceManager.Network.Models.UndoReservationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.UndoReservationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.UndoReservationType left, Azure.ResourceManager.Network.Models.UndoReservationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class UnprepareNetworkPoliciesContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.UnprepareNetworkPoliciesContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.UnprepareNetworkPoliciesContent>
     {
         public UnprepareNetworkPoliciesContent() { }
@@ -18729,9 +18566,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VerbosityLevel Minimum { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VerbosityLevel Normal { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VerbosityLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VerbosityLevel left, Azure.ResourceManager.Network.Models.VerbosityLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VerbosityLevel (string value) { throw null; }
@@ -18965,9 +18800,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualNetworkEncryptionEnforcement AllowUnencrypted { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkEncryptionEnforcement DropUnencrypted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkEncryptionEnforcement other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkEncryptionEnforcement left, Azure.ResourceManager.Network.Models.VirtualNetworkEncryptionEnforcement right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkEncryptionEnforcement (string value) { throw null; }
@@ -19030,9 +18863,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionMode InitiatorOnly { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionMode ResponderOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionMode left, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionMode (string value) { throw null; }
@@ -19048,9 +18879,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol IkeV1 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol IkeV2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol left, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionProtocol (string value) { throw null; }
@@ -19068,9 +18897,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionStatus NotConnected { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionStatus left, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionStatus (string value) { throw null; }
@@ -19100,9 +18927,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType Vnet2Vnet { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType VpnClient { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType left, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType (string value) { throw null; }
@@ -19153,9 +18978,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationPhase Prepare { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationPhase PrepareSucceeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationPhase other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationPhase left, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationPhase right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationPhase (string value) { throw null; }
@@ -19173,9 +18996,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationState None { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationState left, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationState (string value) { throw null; }
@@ -19203,9 +19024,7 @@ namespace Azure.ResourceManager.Network.Models
         public VirtualNetworkGatewayMigrationType(string value) { throw null; }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationType UpgradeDeploymentToStandardIP { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationType left, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkGatewayMigrationType (string value) { throw null; }
@@ -19279,9 +19098,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySkuName VpnGw5 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySkuName VpnGw5AZ { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySkuName left, Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySkuName (string value) { throw null; }
@@ -19313,9 +19130,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySkuTier VpnGw5 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySkuTier VpnGw5AZ { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySkuTier left, Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkGatewaySkuTier (string value) { throw null; }
@@ -19332,9 +19147,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayType LocalGateway { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkGatewayType Vpn { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayType left, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkGatewayType (string value) { throw null; }
@@ -19352,9 +19165,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualNetworkPeeringLevel LocalNotInSync { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkPeeringLevel RemoteNotInSync { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkPeeringLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkPeeringLevel left, Azure.ResourceManager.Network.Models.VirtualNetworkPeeringLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkPeeringLevel (string value) { throw null; }
@@ -19371,9 +19182,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualNetworkPeeringState Disconnected { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkPeeringState Initiated { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkPeeringState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkPeeringState left, Azure.ResourceManager.Network.Models.VirtualNetworkPeeringState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkPeeringState (string value) { throw null; }
@@ -19391,9 +19200,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy NetworkSecurityGroupEnabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy RouteTableEnabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy left, Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy (string value) { throw null; }
@@ -19409,9 +19216,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy Disabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy left, Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy (string value) { throw null; }
@@ -19478,9 +19283,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType External { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType Native { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType left, Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType (string value) { throw null; }
@@ -19508,9 +19311,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VnetLocalRouteOverrideCriterion Contains { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VnetLocalRouteOverrideCriterion Equal { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VnetLocalRouteOverrideCriterion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VnetLocalRouteOverrideCriterion left, Azure.ResourceManager.Network.Models.VnetLocalRouteOverrideCriterion right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VnetLocalRouteOverrideCriterion (string value) { throw null; }
@@ -19551,16 +19352,13 @@ namespace Azure.ResourceManager.Network.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public VpnAuthenticationType(string value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This value is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public static Azure.ResourceManager.Network.Models.VpnAuthenticationType AAD { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnAuthenticationType Aad { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnAuthenticationType Certificate { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnAuthenticationType Radius { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VpnAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VpnAuthenticationType left, Azure.ResourceManager.Network.Models.VpnAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VpnAuthenticationType (string value) { throw null; }
@@ -19670,7 +19468,6 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.VpnClientIPsecParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.VpnClientIPsecParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release", false)]
     public partial class VpnClientParameters : Azure.ResourceManager.Network.Models.VpnClientContent
     {
@@ -19686,9 +19483,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VpnClientProtocol OpenVpn { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnClientProtocol Sstp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VpnClientProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VpnClientProtocol left, Azure.ResourceManager.Network.Models.VpnClientProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VpnClientProtocol (string value) { throw null; }
@@ -19756,9 +19551,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VpnConnectionStatus NotConnected { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnConnectionStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VpnConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VpnConnectionStatus left, Azure.ResourceManager.Network.Models.VpnConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VpnConnectionStatus (string value) { throw null; }
@@ -19788,9 +19581,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VpnGatewayGeneration Generation2 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnGatewayGeneration None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VpnGatewayGeneration other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VpnGatewayGeneration left, Azure.ResourceManager.Network.Models.VpnGatewayGeneration right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VpnGatewayGeneration (string value) { throw null; }
@@ -19841,9 +19632,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VpnGatewayTunnelingProtocol IkeV2 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnGatewayTunnelingProtocol OpenVpn { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VpnGatewayTunnelingProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VpnGatewayTunnelingProtocol left, Azure.ResourceManager.Network.Models.VpnGatewayTunnelingProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VpnGatewayTunnelingProtocol (string value) { throw null; }
@@ -19872,9 +19661,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VpnLinkConnectionMode InitiatorOnly { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnLinkConnectionMode ResponderOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VpnLinkConnectionMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VpnLinkConnectionMode left, Azure.ResourceManager.Network.Models.VpnLinkConnectionMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VpnLinkConnectionMode (string value) { throw null; }
@@ -19927,9 +19714,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VpnNatRuleMode EgressSnat { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnNatRuleMode IngressSnat { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VpnNatRuleMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VpnNatRuleMode left, Azure.ResourceManager.Network.Models.VpnNatRuleMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VpnNatRuleMode (string value) { throw null; }
@@ -19945,9 +19730,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VpnNatRuleType Dynamic { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnNatRuleType Static { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VpnNatRuleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VpnNatRuleType left, Azure.ResourceManager.Network.Models.VpnNatRuleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VpnNatRuleType (string value) { throw null; }
@@ -19965,7 +19748,6 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.VpnPacketCaptureStartContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.VpnPacketCaptureStartContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release", false)]
     public partial class VpnPacketCaptureStartParameters : Azure.ResourceManager.Network.Models.VpnPacketCaptureStartContent
     {
@@ -19982,7 +19764,6 @@ namespace Azure.ResourceManager.Network.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.VpnPacketCaptureStopContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.VpnPacketCaptureStopContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release", false)]
     public partial class VpnPacketCaptureStopParameters : Azure.ResourceManager.Network.Models.VpnPacketCaptureStopContent
     {
@@ -19998,9 +19779,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VpnPolicyMemberAttributeType CertificateGroupId { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnPolicyMemberAttributeType RadiusAzureGroupId { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VpnPolicyMemberAttributeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VpnPolicyMemberAttributeType left, Azure.ResourceManager.Network.Models.VpnPolicyMemberAttributeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VpnPolicyMemberAttributeType (string value) { throw null; }
@@ -20099,9 +19878,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.VpnType PolicyBased { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnType RouteBased { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VpnType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.VpnType left, Azure.ResourceManager.Network.Models.VpnType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.VpnType (string value) { throw null; }
@@ -20119,9 +19896,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallAction JSChallenge { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallAction Log { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.WebApplicationFirewallAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.WebApplicationFirewallAction left, Azure.ResourceManager.Network.Models.WebApplicationFirewallAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.WebApplicationFirewallAction (string value) { throw null; }
@@ -20157,9 +19932,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallEnabledState Disabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallEnabledState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.WebApplicationFirewallEnabledState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.WebApplicationFirewallEnabledState left, Azure.ResourceManager.Network.Models.WebApplicationFirewallEnabledState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.WebApplicationFirewallEnabledState (string value) { throw null; }
@@ -20181,9 +19954,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallMatchVariable RequestMethod { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallMatchVariable RequestUri { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.WebApplicationFirewallMatchVariable other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.WebApplicationFirewallMatchVariable left, Azure.ResourceManager.Network.Models.WebApplicationFirewallMatchVariable right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.WebApplicationFirewallMatchVariable (string value) { throw null; }
@@ -20199,9 +19970,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallMode Detection { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallMode Prevention { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.WebApplicationFirewallMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.WebApplicationFirewallMode left, Azure.ResourceManager.Network.Models.WebApplicationFirewallMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.WebApplicationFirewallMode (string value) { throw null; }
@@ -20227,9 +19996,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallOperator LessThanOrEqual { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallOperator Regex { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.WebApplicationFirewallOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.WebApplicationFirewallOperator left, Azure.ResourceManager.Network.Models.WebApplicationFirewallOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.WebApplicationFirewallOperator (string value) { throw null; }
@@ -20249,9 +20016,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallPolicyResourceState Enabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallPolicyResourceState Enabling { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.WebApplicationFirewallPolicyResourceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.WebApplicationFirewallPolicyResourceState left, Azure.ResourceManager.Network.Models.WebApplicationFirewallPolicyResourceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.WebApplicationFirewallPolicyResourceState (string value) { throw null; }
@@ -20268,9 +20033,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallRuleType MatchRule { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallRuleType RateLimitRule { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.WebApplicationFirewallRuleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.WebApplicationFirewallRuleType left, Azure.ResourceManager.Network.Models.WebApplicationFirewallRuleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.WebApplicationFirewallRuleType (string value) { throw null; }
@@ -20300,9 +20063,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallScrubbingState Disabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallScrubbingState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.WebApplicationFirewallScrubbingState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.WebApplicationFirewallScrubbingState left, Azure.ResourceManager.Network.Models.WebApplicationFirewallScrubbingState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.WebApplicationFirewallScrubbingState (string value) { throw null; }
@@ -20318,9 +20079,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallState Disabled { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.WebApplicationFirewallState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.WebApplicationFirewallState left, Azure.ResourceManager.Network.Models.WebApplicationFirewallState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.WebApplicationFirewallState (string value) { throw null; }
@@ -20341,9 +20100,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallTransform UrlDecode { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.WebApplicationFirewallTransform UrlEncode { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.WebApplicationFirewallTransform other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.WebApplicationFirewallTransform left, Azure.ResourceManager.Network.Models.WebApplicationFirewallTransform right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.WebApplicationFirewallTransform (string value) { throw null; }
@@ -20359,9 +20116,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.WorkloadProtectedFlag False { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.WorkloadProtectedFlag True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.WorkloadProtectedFlag other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Network.Models.WorkloadProtectedFlag left, Azure.ResourceManager.Network.Models.WorkloadProtectedFlag right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.WorkloadProtectedFlag (string value) { throw null; }

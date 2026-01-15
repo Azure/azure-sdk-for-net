@@ -66,7 +66,9 @@ namespace Azure.Storage.Blobs.Test
             var accountName = "accountName";
             var blobEndpoint = new Uri("https://127.0.0.1/" + accountName);
             BlobClient blob1 = InstrumentClient(new BlobClient(blobEndpoint));
+#pragma warning disable CS0618 // Type or member is obsolete
             BlobClient blob2 = InstrumentClient(new BlobClient(blobEndpoint, new SharedTokenCacheCredential()));
+#pragma warning restore CS0618 // Type or member is obsolete
 
             var builder1 = new BlobUriBuilder(blob1.Uri);
             var builder2 = new BlobUriBuilder(blob2.Uri);
@@ -1395,7 +1397,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 // Create a CancellationToken that times out after 60s
-                CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(60));
+                using CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(60));
                 CancellationToken token = source.Token;
 
                 // Keep uploading a GB
@@ -1447,7 +1449,7 @@ namespace Azure.Storage.Blobs.Test
                 // Create a CancellationToken that times out after .01s
                 // Intentionally not delaying here, as DownloadToAsync operation should always cancel
                 // since it buffers the full response.
-                CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
+                using CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
                 CancellationToken token = source.Token;
 
                 // Verifying DownloadTo will cancel

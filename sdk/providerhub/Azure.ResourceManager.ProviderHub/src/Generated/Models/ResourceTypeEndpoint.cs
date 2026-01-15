@@ -53,19 +53,30 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Locations = new ChangeTrackingList<AzureLocation>();
             RequiredFeatures = new ChangeTrackingList<string>();
             Extensions = new ChangeTrackingList<ResourceTypeExtension>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeEndpoint"/>. </summary>
-        /// <param name="isEnabled"></param>
-        /// <param name="apiVersions"></param>
-        /// <param name="locations"></param>
-        /// <param name="requiredFeatures"></param>
-        /// <param name="featuresRule"></param>
-        /// <param name="extensions"></param>
-        /// <param name="timeout"></param>
+        /// <param name="kind"> Resource type endpoint kind. This Metadata is also used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
+        /// <param name="isEnabled"> Whether the endpoint is enabled. </param>
+        /// <param name="apiVersions"> The api versions. </param>
+        /// <param name="locations"> The locations. </param>
+        /// <param name="requiredFeatures"> The required features. </param>
+        /// <param name="featuresRule"> The features rule. </param>
+        /// <param name="extensions"> The extensions. </param>
+        /// <param name="timeout"> The timeout. </param>
+        /// <param name="endpointType"> The endpoint type. </param>
+        /// <param name="tokenAuthConfiguration"> The token auth configuration. </param>
+        /// <param name="skuLink"> The sku link. </param>
+        /// <param name="endpointUri"> The endpoint uri. </param>
+        /// <param name="apiVersion"> Api version. </param>
+        /// <param name="zones"> List of zones. </param>
+        /// <param name="dstsConfiguration"> The dsts configuration. </param>
+        /// <param name="dataBoundary"> The data boundary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeEndpoint(bool? isEnabled, IList<string> apiVersions, IList<AzureLocation> locations, IList<string> requiredFeatures, FeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceTypeEndpoint(ResourceTypeEndpointKind? kind, bool? isEnabled, IList<string> apiVersions, IList<AzureLocation> locations, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, ProviderEndpointTypeResourceType? endpointType, TokenAuthConfiguration tokenAuthConfiguration, string skuLink, Uri endpointUri, string apiVersion, IList<string> zones, ProviderDstsConfiguration dstsConfiguration, ResourceTypeDataBoundary? dataBoundary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Kind = kind;
             IsEnabled = isEnabled;
             ApiVersions = apiVersions;
             Locations = locations;
@@ -73,32 +84,58 @@ namespace Azure.ResourceManager.ProviderHub.Models
             FeaturesRule = featuresRule;
             Extensions = extensions;
             Timeout = timeout;
+            EndpointType = endpointType;
+            TokenAuthConfiguration = tokenAuthConfiguration;
+            SkuLink = skuLink;
+            EndpointUri = endpointUri;
+            ApiVersion = apiVersion;
+            Zones = zones;
+            DstsConfiguration = dstsConfiguration;
+            DataBoundary = dataBoundary;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the is enabled. </summary>
+        /// <summary> Resource type endpoint kind. This Metadata is also used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
+        public ResourceTypeEndpointKind? Kind { get; set; }
+        /// <summary> Whether the endpoint is enabled. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> Gets the api versions. </summary>
+        /// <summary> The api versions. </summary>
         public IList<string> ApiVersions { get; }
-        /// <summary> Gets the locations. </summary>
+        /// <summary> The locations. </summary>
         public IList<AzureLocation> Locations { get; }
-        /// <summary> Gets the required features. </summary>
+        /// <summary> The required features. </summary>
         public IList<string> RequiredFeatures { get; }
-        /// <summary> Gets or sets the features rule. </summary>
-        internal FeaturesRule FeaturesRule { get; set; }
-        /// <summary> Gets or sets the required features policy. </summary>
+        /// <summary> The features rule. </summary>
+        internal ProviderFeaturesRule FeaturesRule { get; set; }
+        /// <summary> The required feature policy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule is null ? default(FeaturesPolicy?) : FeaturesRule.RequiredFeaturesPolicy;
             set
             {
-                FeaturesRule = value.HasValue ? new FeaturesRule(value.Value) : null;
+                FeaturesRule = value.HasValue ? new ProviderFeaturesRule(value.Value) : null;
             }
         }
 
-        /// <summary> Gets the extensions. </summary>
+        /// <summary> The extensions. </summary>
         public IList<ResourceTypeExtension> Extensions { get; }
-        /// <summary> Gets or sets the timeout. </summary>
+        /// <summary> The timeout. </summary>
         public TimeSpan? Timeout { get; set; }
+        /// <summary> The endpoint type. </summary>
+        public ProviderEndpointTypeResourceType? EndpointType { get; set; }
+        /// <summary> The token auth configuration. </summary>
+        public TokenAuthConfiguration TokenAuthConfiguration { get; set; }
+        /// <summary> The sku link. </summary>
+        public string SkuLink { get; set; }
+        /// <summary> The endpoint uri. </summary>
+        public Uri EndpointUri { get; set; }
+        /// <summary> Api version. </summary>
+        public string ApiVersion { get; set; }
+        /// <summary> List of zones. </summary>
+        public IList<string> Zones { get; }
+        /// <summary> The dsts configuration. </summary>
+        public ProviderDstsConfiguration DstsConfiguration { get; set; }
+        /// <summary> The data boundary. </summary>
+        public ResourceTypeDataBoundary? DataBoundary { get; set; }
     }
 }

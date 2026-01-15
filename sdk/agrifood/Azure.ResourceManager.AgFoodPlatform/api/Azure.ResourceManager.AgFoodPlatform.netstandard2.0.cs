@@ -335,9 +335,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         public static Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -354,9 +352,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         public static Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateEndpointServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateEndpointServiceConnectionStatus (string value) { throw null; }
@@ -421,9 +417,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         public static Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityReason (string value) { throw null; }
@@ -496,9 +490,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         public static Azure.ResourceManager.AgFoodPlatform.Models.ProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AgFoodPlatform.Models.ProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AgFoodPlatform.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AgFoodPlatform.Models.ProvisioningState left, Azure.ResourceManager.AgFoodPlatform.Models.ProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AgFoodPlatform.Models.ProvisioningState (string value) { throw null; }
@@ -514,9 +506,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         public static Azure.ResourceManager.AgFoodPlatform.Models.PublicNetworkAccess Enabled { get { throw null; } }
         public static Azure.ResourceManager.AgFoodPlatform.Models.PublicNetworkAccess Hybrid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AgFoodPlatform.Models.PublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AgFoodPlatform.Models.PublicNetworkAccess left, Azure.ResourceManager.AgFoodPlatform.Models.PublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.AgFoodPlatform.Models.PublicNetworkAccess (string value) { throw null; }

@@ -5,14 +5,14 @@
       This client library enables working with the Microsoft Azure Communication Messages service.
     </Description>
     <AssemblyTitle>Azure Communication Messages Service</AssemblyTitle>
-    <Version>1.3.0-beta.2</Version>
+    <Version>1.3.0-beta.3</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Communication Messages Service;Microsoft;Azure;Azure Communication Service;Azure Communication Messages Service;Messages;Communication</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <NoWarn>$(NoWarn);AZC0007</NoWarn>
-    <NoWarn>$(NoWarn);AZC0030</NoWarn>
+    <NoWarn>$(NoWarn);AZC0007;AZC0030;AZC0034</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

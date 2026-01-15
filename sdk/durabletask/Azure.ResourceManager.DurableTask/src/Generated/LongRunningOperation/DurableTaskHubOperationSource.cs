@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DurableTask
 {
-    internal class DurableTaskHubOperationSource : IOperationSource<DurableTaskHubResource>
+    /// <summary></summary>
+    internal partial class DurableTaskHubOperationSource : IOperationSource<DurableTaskHubResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DurableTaskHubOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DurableTaskHubResource IOperationSource<DurableTaskHubResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DurableTaskHubData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDurableTaskContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DurableTaskHubData data = DurableTaskHubData.DeserializeDurableTaskHubData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DurableTaskHubResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DurableTaskHubResource> IOperationSource<DurableTaskHubResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DurableTaskHubData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDurableTaskContext.Default);
-            return await Task.FromResult(new DurableTaskHubResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DurableTaskHubData data = DurableTaskHubData.DeserializeDurableTaskHubData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DurableTaskHubResource(_client, data);
         }
     }
 }

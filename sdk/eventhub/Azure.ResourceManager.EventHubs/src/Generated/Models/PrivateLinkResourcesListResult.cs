@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> Result of the List private link resources operation. </summary>
+    /// <summary> Paged collection of PrivateLinkResource items. </summary>
     internal partial class PrivateLinkResourcesListResult
     {
         /// <summary>
@@ -46,27 +47,36 @@ namespace Azure.ResourceManager.EventHubs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesListResult"/>. </summary>
-        internal PrivateLinkResourcesListResult()
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal PrivateLinkResourcesListResult(IEnumerable<EventHubsPrivateLinkResourceData> value)
         {
-            Value = new ChangeTrackingList<EventHubsPrivateLinkResourceData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesListResult"/>. </summary>
-        /// <param name="value"> A collection of private link resources. </param>
-        /// <param name="nextLink"> A link for the next page of private link resources. </param>
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkResourcesListResult(IReadOnlyList<EventHubsPrivateLinkResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateLinkResourcesListResult(IReadOnlyList<EventHubsPrivateLinkResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A collection of private link resources. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesListResult"/> for deserialization. </summary>
+        internal PrivateLinkResourcesListResult()
+        {
+        }
+
+        /// <summary> The PrivateLinkResource items on this page. </summary>
         [WirePath("value")]
         public IReadOnlyList<EventHubsPrivateLinkResourceData> Value { get; }
-        /// <summary> A link for the next page of private link resources. </summary>
+        /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

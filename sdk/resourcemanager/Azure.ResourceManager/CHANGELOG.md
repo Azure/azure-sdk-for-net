@@ -4,11 +4,19 @@
 
 ### Features Added
 
+- Bumped api-version of `ManagementGroup` to `2023-04-01`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.13.2 (2025-07-18)
+
+### Features Added
+
+- Make `Azure.ResourceManager` AOT-compatible.
 
 ## 1.14.0-beta.1 (2025-06-23)
 
