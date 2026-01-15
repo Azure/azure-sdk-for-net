@@ -5,8 +5,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Language.QuestionAnswering.Inference
 {
-    [CodeGenType("LanguageQuestionAnsweringInferenceModelFactory")]
-    public partial class QuestionAnsweringModelFactory
+    [CodeGenType("LanguageQuestionAnsweringInferenceClientBuilderExtensions")]
+    public partial class QuestionAnsweringClientBuilderExtensions
     {
     }
 }

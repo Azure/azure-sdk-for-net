@@ -8,13 +8,12 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure;
-using Azure.AI.Language.QuestionAnswering.Inference;
 using Azure.Core.Extensions;
 
-namespace Microsoft.Extensions.Azure
+namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-    public static partial class LanguageQuestionAnsweringInferenceClientBuilderExtensions
+    public static partial class QuestionAnsweringClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="QuestionAnsweringClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
