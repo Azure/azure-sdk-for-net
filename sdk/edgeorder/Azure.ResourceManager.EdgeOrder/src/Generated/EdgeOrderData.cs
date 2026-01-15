@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary> Order mode. </summary>
-        public OrderMode? OrderMode
+        public EdgeOrderOrderMode? OrderMode
         {
             get
             {

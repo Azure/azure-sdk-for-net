@@ -14,16 +14,16 @@ using Azure.ResourceManager.EdgeOrder;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Term Commitment Information. </summary>
-    public partial class TermCommitmentInformation : IJsonModel<TermCommitmentInformation>
+    public partial class EdgeOrderTermCommitmentInformation : IJsonModel<EdgeOrderTermCommitmentInformation>
     {
-        /// <summary> Initializes a new instance of <see cref="TermCommitmentInformation"/> for deserialization. </summary>
-        internal TermCommitmentInformation()
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderTermCommitmentInformation"/> for deserialization. </summary>
+        internal EdgeOrderTermCommitmentInformation()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TermCommitmentInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EdgeOrderTermCommitmentInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TermCommitmentInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderTermCommitmentInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TermCommitmentInformation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderTermCommitmentInformation)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("termCommitmentType"u8);
             writer.WriteStringValue(TermCommitmentType.ToString());
@@ -70,30 +70,30 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TermCommitmentInformation IJsonModel<TermCommitmentInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EdgeOrderTermCommitmentInformation IJsonModel<EdgeOrderTermCommitmentInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TermCommitmentInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EdgeOrderTermCommitmentInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TermCommitmentInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderTermCommitmentInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TermCommitmentInformation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderTermCommitmentInformation)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTermCommitmentInformation(document.RootElement, options);
+            return DeserializeEdgeOrderTermCommitmentInformation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TermCommitmentInformation DeserializeTermCommitmentInformation(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeOrderTermCommitmentInformation DeserializeEdgeOrderTermCommitmentInformation(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            TermCommitmentType termCommitmentType = default;
+            EdgeOrderTermCommitmentType termCommitmentType = default;
             TimeSpan? termCommitmentTypeDuration = default;
             int? pendingDaysForTerm = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 if (prop.NameEquals("termCommitmentType"u8))
                 {
-                    termCommitmentType = new TermCommitmentType(prop.Value.GetString());
+                    termCommitmentType = new EdgeOrderTermCommitmentType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("termCommitmentTypeDuration"u8))
@@ -127,47 +127,47 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TermCommitmentInformation(termCommitmentType, termCommitmentTypeDuration, pendingDaysForTerm, additionalBinaryDataProperties);
+            return new EdgeOrderTermCommitmentInformation(termCommitmentType, termCommitmentTypeDuration, pendingDaysForTerm, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TermCommitmentInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EdgeOrderTermCommitmentInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TermCommitmentInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderTermCommitmentInformation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TermCommitmentInformation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderTermCommitmentInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TermCommitmentInformation IPersistableModel<TermCommitmentInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EdgeOrderTermCommitmentInformation IPersistableModel<EdgeOrderTermCommitmentInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TermCommitmentInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EdgeOrderTermCommitmentInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TermCommitmentInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderTermCommitmentInformation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTermCommitmentInformation(document.RootElement, options);
+                        return DeserializeEdgeOrderTermCommitmentInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TermCommitmentInformation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderTermCommitmentInformation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TermCommitmentInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EdgeOrderTermCommitmentInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

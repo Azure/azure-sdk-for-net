@@ -12,23 +12,23 @@ using Azure.ResourceManager.EdgeOrder;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Child configuration filter. </summary>
-    public partial class ChildConfigurationFilter
+    public partial class EdgeOrderChildConfigurationFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ChildConfigurationFilter"/>. </summary>
-        public ChildConfigurationFilter()
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderChildConfigurationFilter"/>. </summary>
+        public EdgeOrderChildConfigurationFilter()
         {
             HierarchyInformations = new ChangeTrackingList<HierarchyInformation>();
-            ChildConfigurationTypes = new ChangeTrackingList<ChildConfigurationType>();
+            ChildConfigurationTypes = new ChangeTrackingList<EdgeOrderChildConfigurationType>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChildConfigurationFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderChildConfigurationFilter"/>. </summary>
         /// <param name="hierarchyInformations"> The list of child configuration hierarchy customer wants to filter for the given configuration. </param>
         /// <param name="childConfigurationTypes"> Filter to fetch all child configurations belonging to the given list of configuration types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChildConfigurationFilter(IList<HierarchyInformation> hierarchyInformations, IList<ChildConfigurationType> childConfigurationTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeOrderChildConfigurationFilter(IList<HierarchyInformation> hierarchyInformations, IList<EdgeOrderChildConfigurationType> childConfigurationTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HierarchyInformations = hierarchyInformations;
             ChildConfigurationTypes = childConfigurationTypes;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public IList<HierarchyInformation> HierarchyInformations { get; }
 
         /// <summary> Filter to fetch all child configurations belonging to the given list of configuration types. </summary>
-        public IList<ChildConfigurationType> ChildConfigurationTypes { get; }
+        public IList<EdgeOrderChildConfigurationType> ChildConfigurationTypes { get; }
     }
 }

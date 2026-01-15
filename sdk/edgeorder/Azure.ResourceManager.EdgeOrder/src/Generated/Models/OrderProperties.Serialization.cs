@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             IReadOnlyList<ResourceIdentifier> orderItemIds = default;
             EdgeOrderStageDetails currentStage = default;
             IReadOnlyList<EdgeOrderStageDetails> orderStageHistory = default;
-            OrderMode? orderMode = default;
+            EdgeOrderOrderMode? orderMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    orderMode = new OrderMode(prop.Value.GetString());
+                    orderMode = new EdgeOrderOrderMode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

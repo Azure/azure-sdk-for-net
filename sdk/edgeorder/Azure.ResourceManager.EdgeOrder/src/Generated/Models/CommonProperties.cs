@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="fulfilledBy"> The entity responsible for fulfillment of the item at the given hierarchy level. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="filterableProperties"> List of filters supported for a product. </param>
-        internal CommonProperties(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, FulfillmentType? fulfilledBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<FilterableProperty> filterableProperties) : base(displayName, description, imageInformation, costInformation, availabilityInformation, hierarchyInformation, fulfilledBy, additionalBinaryDataProperties)
+        internal CommonProperties(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, EdgeOrderFulfillmentType? fulfilledBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<FilterableProperty> filterableProperties) : base(displayName, description, imageInformation, costInformation, availabilityInformation, hierarchyInformation, fulfilledBy, additionalBinaryDataProperties)
         {
             FilterableProperties = filterableProperties;
         }

@@ -13,12 +13,12 @@ using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> Category related properties of a child configuration. </summary>
-    public partial class CategoryInformation : IJsonModel<CategoryInformation>
+    /// <summary> Grouped child configuration object. </summary>
+    public partial class EdgeOrderGroupedChildConfigurations : IJsonModel<EdgeOrderGroupedChildConfigurations>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CategoryInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EdgeOrderGroupedChildConfigurations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,31 +29,21 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CategoryInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderGroupedChildConfigurations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CategoryInformation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderGroupedChildConfigurations)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(CategoryName))
+            if (options.Format != "W" && Optional.IsDefined(CategoryInformation))
             {
-                writer.WritePropertyName("categoryName"u8);
-                writer.WriteStringValue(CategoryName);
+                writer.WritePropertyName("categoryInformation"u8);
+                writer.WriteObjectValue(CategoryInformation, options);
             }
-            if (Optional.IsDefined(CategoryDisplayName))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ChildConfigurations))
             {
-                writer.WritePropertyName("categoryDisplayName"u8);
-                writer.WriteStringValue(CategoryDisplayName);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Links))
-            {
-                writer.WritePropertyName("links"u8);
+                writer.WritePropertyName("childConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (ProductLink item in Links)
+                foreach (EdgeOrderChildConfiguration item in ChildConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -78,63 +68,55 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CategoryInformation IJsonModel<CategoryInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EdgeOrderGroupedChildConfigurations IJsonModel<EdgeOrderGroupedChildConfigurations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CategoryInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EdgeOrderGroupedChildConfigurations JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CategoryInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderGroupedChildConfigurations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CategoryInformation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderGroupedChildConfigurations)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCategoryInformation(document.RootElement, options);
+            return DeserializeEdgeOrderGroupedChildConfigurations(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CategoryInformation DeserializeCategoryInformation(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeOrderGroupedChildConfigurations DeserializeEdgeOrderGroupedChildConfigurations(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string categoryName = default;
-            string categoryDisplayName = default;
-            string description = default;
-            IList<ProductLink> links = default;
+            EdgeOrderCategoryInformation categoryInformation = default;
+            IReadOnlyList<EdgeOrderChildConfiguration> childConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("categoryName"u8))
-                {
-                    categoryName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("categoryDisplayName"u8))
-                {
-                    categoryDisplayName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("links"u8))
+                if (prop.NameEquals("categoryInformation"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<ProductLink> array = new List<ProductLink>();
+                    categoryInformation = EdgeOrderCategoryInformation.DeserializeEdgeOrderCategoryInformation(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("childConfigurations"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EdgeOrderChildConfiguration> array = new List<EdgeOrderChildConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProductLink.DeserializeProductLink(item, options));
+                        array.Add(EdgeOrderChildConfiguration.DeserializeEdgeOrderChildConfiguration(item, options));
                     }
-                    links = array;
+                    childConfigurations = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -142,47 +124,47 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CategoryInformation(categoryName, categoryDisplayName, description, links ?? new ChangeTrackingList<ProductLink>(), additionalBinaryDataProperties);
+            return new EdgeOrderGroupedChildConfigurations(categoryInformation, childConfigurations ?? new ChangeTrackingList<EdgeOrderChildConfiguration>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CategoryInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EdgeOrderGroupedChildConfigurations>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CategoryInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderGroupedChildConfigurations>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CategoryInformation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderGroupedChildConfigurations)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CategoryInformation IPersistableModel<CategoryInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EdgeOrderGroupedChildConfigurations IPersistableModel<EdgeOrderGroupedChildConfigurations>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CategoryInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EdgeOrderGroupedChildConfigurations PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CategoryInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderGroupedChildConfigurations>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCategoryInformation(document.RootElement, options);
+                        return DeserializeEdgeOrderGroupedChildConfigurations(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CategoryInformation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderGroupedChildConfigurations)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CategoryInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EdgeOrderGroupedChildConfigurations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

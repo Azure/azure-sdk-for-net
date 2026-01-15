@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             EdgeOrderProductCostInformation costInformation = default;
             ProductAvailabilityInformation availabilityInformation = default;
             HierarchyInformation hierarchyInformation = default;
-            FulfillmentType? fulfilledBy = default;
+            EdgeOrderFulfillmentType? fulfilledBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    fulfilledBy = new FulfillmentType(prop.Value.GetString());
+                    fulfilledBy = new EdgeOrderFulfillmentType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -5,6 +5,7 @@
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
+    // Manually add to maintain its backward compatibility
     public abstract partial class EdgeOrderProductMeterDetails
     {
         /// <summary> Initializes a new instance of <see cref="EdgeOrderProductMeterDetails"/>. </summary>

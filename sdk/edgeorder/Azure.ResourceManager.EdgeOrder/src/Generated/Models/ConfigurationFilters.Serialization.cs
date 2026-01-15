@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             HierarchyInformation hierarchyInformation = default;
             IList<FilterableProperty> filterableProperty = default;
-            ChildConfigurationFilter childConfigurationFilter = default;
+            EdgeOrderChildConfigurationFilter childConfigurationFilter = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    childConfigurationFilter = ChildConfigurationFilter.DeserializeChildConfigurationFilter(prop.Value, options);
+                    childConfigurationFilter = EdgeOrderChildConfigurationFilter.DeserializeEdgeOrderChildConfigurationFilter(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

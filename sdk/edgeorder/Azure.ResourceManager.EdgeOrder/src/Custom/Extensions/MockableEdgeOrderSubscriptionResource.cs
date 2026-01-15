@@ -8,6 +8,7 @@ using System.Threading;
 
 namespace Azure.ResourceManager.EdgeOrder.Mocking
 {
+    // Manually add to maintain its backward compatibility
     public partial class MockableEdgeOrderSubscriptionResource
     {
         /// <summary>

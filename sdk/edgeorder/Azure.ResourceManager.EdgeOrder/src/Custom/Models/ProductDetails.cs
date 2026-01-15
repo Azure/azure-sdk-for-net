@@ -9,6 +9,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
+    // Manually add to maintain its backward compatibility
     public partial class ProductDetails
     {
         /// <summary> Quantity of the product. </summary>

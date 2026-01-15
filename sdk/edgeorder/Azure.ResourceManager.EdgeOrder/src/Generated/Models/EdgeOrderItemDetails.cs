@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="managementRPDetailsList"> List of parent RP details supported for configuration. </param>
         /// <param name="error"> Top level error for the job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderItemDetails(ProductDetails productDetails, OrderItemType orderItemType, OrderMode? orderItemMode, SiteDetails siteDetails, EdgeOrderStageDetails currentStage, IReadOnlyList<EdgeOrderStageDetails> orderItemStageHistory, OrderItemPreferences preferences, ForwardShippingDetails forwardShippingDetails, ReverseShippingDetails reverseShippingDetails, IList<string> notificationEmailList, string cancellationReason, OrderItemCancellationStatus? cancellationStatus, EdgeOrderActionStatus? deletionStatus, string returnReason, OrderItemReturnStatus? returnStatus, IReadOnlyList<ResourceProviderDetails> managementRPDetailsList, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeOrderItemDetails(ProductDetails productDetails, OrderItemType orderItemType, EdgeOrderOrderMode? orderItemMode, SiteDetails siteDetails, EdgeOrderStageDetails currentStage, IReadOnlyList<EdgeOrderStageDetails> orderItemStageHistory, OrderItemPreferences preferences, ForwardShippingDetails forwardShippingDetails, ReverseShippingDetails reverseShippingDetails, IList<string> notificationEmailList, string cancellationReason, OrderItemCancellationStatus? cancellationStatus, EdgeOrderActionStatus? deletionStatus, string returnReason, OrderItemReturnStatus? returnStatus, IReadOnlyList<ResourceProviderDetails> managementRPDetailsList, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProductDetails = productDetails;
             OrderItemType = orderItemType;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public OrderItemType OrderItemType { get; set; }
 
         /// <summary> Defines the mode of the Order item. </summary>
-        public OrderMode? OrderItemMode { get; set; }
+        public EdgeOrderOrderMode? OrderItemMode { get; set; }
 
         /// <summary> Site Related Details. </summary>
         internal SiteDetails SiteDetails { get; set; }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public ResponseError Error { get; }
 
         /// <summary> Unique Id, Identifying A Site. </summary>
-        public string SiteId
+        public Guid? SiteId
         {
             get
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             set
             {
-                SiteDetails = new SiteDetails(value);
+                SiteDetails = value.HasValue ? new SiteDetails(value.Value) : default;
             }
         }
     }

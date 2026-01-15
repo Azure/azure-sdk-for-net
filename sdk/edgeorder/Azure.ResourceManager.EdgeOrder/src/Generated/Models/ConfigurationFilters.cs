@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="filterableProperty"> Filters specific to product. </param>
         /// <param name="childConfigurationFilter"> Filter to fetch specific child configurations that exist in the configuration. This must be passed to either fetch a list of specific child configurations, or all child configurations of specific types of child configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationFilters(HierarchyInformation hierarchyInformation, IList<FilterableProperty> filterableProperty, ChildConfigurationFilter childConfigurationFilter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfigurationFilters(HierarchyInformation hierarchyInformation, IList<FilterableProperty> filterableProperty, EdgeOrderChildConfigurationFilter childConfigurationFilter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HierarchyInformation = hierarchyInformation;
             FilterableProperty = filterableProperty;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public IList<FilterableProperty> FilterableProperty { get; }
 
         /// <summary> Filter to fetch specific child configurations that exist in the configuration. This must be passed to either fetch a list of specific child configurations, or all child configurations of specific types of child configurations. </summary>
-        public ChildConfigurationFilter ChildConfigurationFilter { get; set; }
+        public EdgeOrderChildConfigurationFilter ChildConfigurationFilter { get; set; }
     }
 }

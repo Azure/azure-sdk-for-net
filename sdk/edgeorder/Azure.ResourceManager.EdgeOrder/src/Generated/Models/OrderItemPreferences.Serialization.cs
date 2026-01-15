@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             TransportPreferences transportPreferences = default;
             EncryptionPreferences encryptionPreferences = default;
             ManagementResourcePreferences managementResourcePreferences = default;
-            TermCommitmentPreferences termCommitmentPreferences = default;
+            EdgeOrderTermCommitmentPreferences termCommitmentPreferences = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    termCommitmentPreferences = TermCommitmentPreferences.DeserializeTermCommitmentPreferences(prop.Value, options);
+                    termCommitmentPreferences = EdgeOrderTermCommitmentPreferences.DeserializeEdgeOrderTermCommitmentPreferences(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

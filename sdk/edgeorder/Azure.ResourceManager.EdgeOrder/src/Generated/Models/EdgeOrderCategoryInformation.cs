@@ -12,24 +12,24 @@ using Azure.ResourceManager.EdgeOrder;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Category related properties of a child configuration. </summary>
-    public partial class CategoryInformation
+    public partial class EdgeOrderCategoryInformation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CategoryInformation"/>. </summary>
-        internal CategoryInformation()
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderCategoryInformation"/>. </summary>
+        internal EdgeOrderCategoryInformation()
         {
             Links = new ChangeTrackingList<ProductLink>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CategoryInformation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderCategoryInformation"/>. </summary>
         /// <param name="categoryName"> Category name of the child configuration. </param>
         /// <param name="categoryDisplayName"> Category display name of the child configuration. </param>
         /// <param name="description"> Description text for the category. </param>
         /// <param name="links"> Links for the category. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CategoryInformation(string categoryName, string categoryDisplayName, string description, IList<ProductLink> links, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeOrderCategoryInformation(string categoryName, string categoryDisplayName, string description, IList<ProductLink> links, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CategoryName = categoryName;
             CategoryDisplayName = categoryDisplayName;

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> The entity responsible for fulfillment of the item at the given hierarchy level. </summary>
-        public FulfillmentType? FulfilledBy
+        public EdgeOrderFulfillmentType? FulfilledBy
         {
             get
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Determining nature of provisioning that the configuration supports. </summary>
-        public ProvisioningSupport? ProvisioningSupport
+        public EdgeOrderProvisioningSupport? ProvisioningSupport
         {
             get
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Different types of child configurations which exist for this configuration, these can be used to populate the child configuration filter. </summary>
-        public IReadOnlyList<ChildConfigurationType> ChildConfigurationTypes
+        public IReadOnlyList<EdgeOrderChildConfigurationType> ChildConfigurationTypes
         {
             get
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Child configurations present for the configuration after applying child configuration filter, grouped by the category name of the child configuration. </summary>
-        public IReadOnlyList<GroupedChildConfigurations> GroupedChildConfigurations
+        public IReadOnlyList<EdgeOrderGroupedChildConfigurations> GroupedChildConfigurations
         {
             get
             {

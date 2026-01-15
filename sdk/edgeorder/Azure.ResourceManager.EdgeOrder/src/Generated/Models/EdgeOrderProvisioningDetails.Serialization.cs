@@ -15,11 +15,11 @@ using Azure.ResourceManager.EdgeOrder;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Details Related To Provision Resource. </summary>
-    public partial class ProvisioningDetails : IJsonModel<ProvisioningDetails>
+    public partial class EdgeOrderProvisioningDetails : IJsonModel<EdgeOrderProvisioningDetails>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProvisioningDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EdgeOrderProvisioningDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisioningDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderProvisioningDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisioningDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderProvisioningDetails)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Quantity))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (options.Format != "W" && Optional.IsDefined(UniqueDeviceIdentifier))
             {
                 writer.WritePropertyName("uniqueDeviceIdentifier"u8);
-                writer.WriteStringValue(UniqueDeviceIdentifier);
+                writer.WriteStringValue(UniqueDeviceIdentifier.Value);
             }
             if (Optional.IsDefined(AutoProvisioningStatus))
             {
@@ -104,24 +104,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProvisioningDetails IJsonModel<ProvisioningDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EdgeOrderProvisioningDetails IJsonModel<EdgeOrderProvisioningDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProvisioningDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EdgeOrderProvisioningDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisioningDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderProvisioningDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisioningDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderProvisioningDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProvisioningDetails(document.RootElement, options);
+            return DeserializeEdgeOrderProvisioningDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProvisioningDetails DeserializeProvisioningDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeOrderProvisioningDetails DeserializeEdgeOrderProvisioningDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             string vendorName = default;
             ResourceIdentifier readyToConnectArmId = default;
             ResourceIdentifier managementResourceArmId = default;
-            string uniqueDeviceIdentifier = default;
-            AutoProvisioningStatus? autoProvisioningStatus = default;
+            Guid? uniqueDeviceIdentifier = default;
+            EdgeOrderAutoProvisioningStatus? autoProvisioningStatus = default;
             DevicePresenceVerificationDetails devicePresenceVerification = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -193,7 +193,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (prop.NameEquals("uniqueDeviceIdentifier"u8))
                 {
-                    uniqueDeviceIdentifier = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uniqueDeviceIdentifier = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("autoProvisioningStatus"u8))
@@ -202,7 +206,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    autoProvisioningStatus = new AutoProvisioningStatus(prop.Value.GetString());
+                    autoProvisioningStatus = new EdgeOrderAutoProvisioningStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("devicePresenceVerification"u8))
@@ -219,7 +223,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProvisioningDetails(
+            return new EdgeOrderProvisioningDetails(
                 quantity,
                 provisioningArmId,
                 provisioningEndPoint,
@@ -234,43 +238,43 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProvisioningDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EdgeOrderProvisioningDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisioningDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderProvisioningDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisioningDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderProvisioningDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProvisioningDetails IPersistableModel<ProvisioningDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EdgeOrderProvisioningDetails IPersistableModel<EdgeOrderProvisioningDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProvisioningDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EdgeOrderProvisioningDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisioningDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderProvisioningDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProvisioningDetails(document.RootElement, options);
+                        return DeserializeEdgeOrderProvisioningDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisioningDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderProvisioningDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProvisioningDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EdgeOrderProvisioningDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="frequency"> Frequency of recurrence. </param>
         /// <param name="termTypeDetails"> Represent Term Type details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderProductBillingMeterDetails(string name, EdgeOrderProductMeterDetails meterDetails, EdgeOrderProductMeteringType? meteringType, string frequency, TermTypeDetails termTypeDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeOrderProductBillingMeterDetails(string name, EdgeOrderProductMeterDetails meterDetails, EdgeOrderProductMeteringType? meteringType, string frequency, EdgeOrderTermTypeDetails termTypeDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             MeterDetails = meterDetails;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public string Frequency { get; }
 
         /// <summary> Represent Term Type details. </summary>
-        public TermTypeDetails TermTypeDetails { get; }
+        public EdgeOrderTermTypeDetails TermTypeDetails { get; }
     }
 }

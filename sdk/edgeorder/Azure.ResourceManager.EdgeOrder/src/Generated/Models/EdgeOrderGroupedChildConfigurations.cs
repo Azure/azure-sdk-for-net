@@ -12,22 +12,22 @@ using Azure.ResourceManager.EdgeOrder;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Grouped child configuration object. </summary>
-    public partial class GroupedChildConfigurations
+    public partial class EdgeOrderGroupedChildConfigurations
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GroupedChildConfigurations"/>. </summary>
-        internal GroupedChildConfigurations()
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderGroupedChildConfigurations"/>. </summary>
+        internal EdgeOrderGroupedChildConfigurations()
         {
-            ChildConfigurations = new ChangeTrackingList<ChildConfiguration>();
+            ChildConfigurations = new ChangeTrackingList<EdgeOrderChildConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GroupedChildConfigurations"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderGroupedChildConfigurations"/>. </summary>
         /// <param name="categoryInformation"> Category information. </param>
         /// <param name="childConfigurations"> List of child configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GroupedChildConfigurations(CategoryInformation categoryInformation, IReadOnlyList<ChildConfiguration> childConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeOrderGroupedChildConfigurations(EdgeOrderCategoryInformation categoryInformation, IReadOnlyList<EdgeOrderChildConfiguration> childConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CategoryInformation = categoryInformation;
             ChildConfigurations = childConfigurations;
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Category information. </summary>
-        public CategoryInformation CategoryInformation { get; }
+        public EdgeOrderCategoryInformation CategoryInformation { get; }
 
         /// <summary> List of child configurations. </summary>
-        public IReadOnlyList<ChildConfiguration> ChildConfigurations { get; }
+        public IReadOnlyList<EdgeOrderChildConfiguration> ChildConfigurations { get; }
     }
 }

@@ -8,6 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
+    // Manually add to maintain its backward compatibility
     public partial class ProductFamily
     {
         /// <summary> Contains details related to resource provider. </summary>

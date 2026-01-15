@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 writer.WritePropertyName("childConfigurationTypes"u8);
                 writer.WriteStartArray();
-                foreach (ChildConfigurationType item in ChildConfigurationTypes)
+                foreach (EdgeOrderChildConfigurationType item in ChildConfigurationTypes)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 writer.WritePropertyName("groupedChildConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (GroupedChildConfigurations item in GroupedChildConfigurations)
+                foreach (EdgeOrderGroupedChildConfigurations item in GroupedChildConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -196,15 +196,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            ChildConfigurationType? childConfigurationType = default;
+            EdgeOrderChildConfigurationType? childConfigurationType = default;
             bool? isPartOfBaseConfiguration = default;
             int? minimumQuantity = default;
             int? maximumQuantity = default;
             IReadOnlyList<ProductSpecification> specifications = default;
             ProductDimensions dimensions = default;
-            ProvisioningSupport? provisioningSupport = default;
-            IReadOnlyList<ChildConfigurationType> childConfigurationTypes = default;
-            IReadOnlyList<GroupedChildConfigurations> groupedChildConfigurations = default;
+            EdgeOrderProvisioningSupport? provisioningSupport = default;
+            IReadOnlyList<EdgeOrderChildConfigurationType> childConfigurationTypes = default;
+            IReadOnlyList<EdgeOrderGroupedChildConfigurations> groupedChildConfigurations = default;
             IReadOnlyList<TimeSpan> supportedTermCommitmentDurations = default;
             IReadOnlyList<FilterableProperty> filterableProperties = default;
             string displayName = default;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             EdgeOrderProductCostInformation costInformation = default;
             ProductAvailabilityInformation availabilityInformation = default;
             HierarchyInformation hierarchyInformation = default;
-            FulfillmentType? fulfilledBy = default;
+            EdgeOrderFulfillmentType? fulfilledBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    childConfigurationType = new ChildConfigurationType(prop.Value.GetString());
+                    childConfigurationType = new EdgeOrderChildConfigurationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("isPartOfBaseConfiguration"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    provisioningSupport = new ProvisioningSupport(prop.Value.GetString());
+                    provisioningSupport = new EdgeOrderProvisioningSupport(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("childConfigurationTypes"u8))
@@ -291,10 +291,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    List<ChildConfigurationType> array = new List<ChildConfigurationType>();
+                    List<EdgeOrderChildConfigurationType> array = new List<EdgeOrderChildConfigurationType>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new ChildConfigurationType(item.GetString()));
+                        array.Add(new EdgeOrderChildConfigurationType(item.GetString()));
                     }
                     childConfigurationTypes = array;
                     continue;
@@ -305,10 +305,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    List<GroupedChildConfigurations> array = new List<GroupedChildConfigurations>();
+                    List<EdgeOrderGroupedChildConfigurations> array = new List<EdgeOrderGroupedChildConfigurations>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.GroupedChildConfigurations.DeserializeGroupedChildConfigurations(item, options));
+                        array.Add(EdgeOrderGroupedChildConfigurations.DeserializeEdgeOrderGroupedChildConfigurations(item, options));
                     }
                     groupedChildConfigurations = array;
                     continue;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    fulfilledBy = new FulfillmentType(prop.Value.GetString());
+                    fulfilledBy = new EdgeOrderFulfillmentType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -418,8 +418,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 specifications ?? new ChangeTrackingList<ProductSpecification>(),
                 dimensions,
                 provisioningSupport,
-                childConfigurationTypes ?? new ChangeTrackingList<ChildConfigurationType>(),
-                groupedChildConfigurations ?? new ChangeTrackingList<GroupedChildConfigurations>(),
+                childConfigurationTypes ?? new ChangeTrackingList<EdgeOrderChildConfigurationType>(),
+                groupedChildConfigurations ?? new ChangeTrackingList<EdgeOrderGroupedChildConfigurations>(),
                 supportedTermCommitmentDurations ?? new ChangeTrackingList<TimeSpan>(),
                 filterableProperties ?? new ChangeTrackingList<FilterableProperty>(),
                 displayName,

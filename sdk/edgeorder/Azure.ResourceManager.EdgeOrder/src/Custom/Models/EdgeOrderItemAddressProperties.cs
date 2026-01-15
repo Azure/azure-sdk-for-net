@@ -8,6 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
+    // Manually add to maintain its backward compatibility
     public partial class EdgeOrderItemAddressProperties
     {
         /// <summary> Initializes a new instance of <see cref="EdgeOrderItemAddressProperties"/>. </summary>

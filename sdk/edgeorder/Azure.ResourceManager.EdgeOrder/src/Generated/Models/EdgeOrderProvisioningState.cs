@@ -12,7 +12,7 @@ using Azure.ResourceManager.EdgeOrder;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Provisioning state. </summary>
-    public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
+    public readonly partial struct EdgeOrderProvisioningState : IEquatable<EdgeOrderProvisioningState>
     {
         private readonly string _value;
         /// <summary> Creating state. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Canceled state. </summary>
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProvisioningState(string value)
+        public EdgeOrderProvisioningState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Creating state. </summary>
-        public static ProvisioningState Creating { get; } = new ProvisioningState(CreatingValue);
+        public static EdgeOrderProvisioningState Creating { get; } = new EdgeOrderProvisioningState(CreatingValue);
 
         /// <summary> Succeeded state. </summary>
-        public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
+        public static EdgeOrderProvisioningState Succeeded { get; } = new EdgeOrderProvisioningState(SucceededValue);
 
         /// <summary> Failed state. </summary>
-        public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
+        public static EdgeOrderProvisioningState Failed { get; } = new EdgeOrderProvisioningState(FailedValue);
 
         /// <summary> Canceled state. </summary>
-        public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
+        public static EdgeOrderProvisioningState Canceled { get; } = new EdgeOrderProvisioningState(CanceledValue);
 
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EdgeOrderProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
+        public static bool operator ==(EdgeOrderProvisioningState left, EdgeOrderProvisioningState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EdgeOrderProvisioningState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ProvisioningState left, ProvisioningState right) => !left.Equals(right);
+        public static bool operator !=(EdgeOrderProvisioningState left, EdgeOrderProvisioningState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EdgeOrderProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningState(string value) => new ProvisioningState(value);
+        public static implicit operator EdgeOrderProvisioningState(string value) => new EdgeOrderProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EdgeOrderProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningState?(string value) => value == null ? null : new ProvisioningState(value);
+        public static implicit operator EdgeOrderProvisioningState?(string value) => value == null ? null : new EdgeOrderProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is EdgeOrderProvisioningState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EdgeOrderProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             ProductDetails productDetails = default;
             OrderItemType orderItemType = default;
-            OrderMode? orderItemMode = default;
+            EdgeOrderOrderMode? orderItemMode = default;
             SiteDetails siteDetails = default;
             EdgeOrderStageDetails currentStage = default;
             IReadOnlyList<EdgeOrderStageDetails> orderItemStageHistory = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    orderItemMode = new OrderMode(prop.Value.GetString());
+                    orderItemMode = new EdgeOrderOrderMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("siteDetails"u8))

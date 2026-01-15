@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Term Commitment preference received from customer. </summary>
-    public partial class TermCommitmentPreferences
+    public partial class EdgeOrderTermCommitmentPreferences
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TermCommitmentPreferences"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderTermCommitmentPreferences"/>. </summary>
         /// <param name="preferredTermCommitmentType"> Term Commitment Type. </param>
-        public TermCommitmentPreferences(TermCommitmentType preferredTermCommitmentType)
+        public EdgeOrderTermCommitmentPreferences(EdgeOrderTermCommitmentType preferredTermCommitmentType)
         {
             PreferredTermCommitmentType = preferredTermCommitmentType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TermCommitmentPreferences"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderTermCommitmentPreferences"/>. </summary>
         /// <param name="preferredTermCommitmentType"> Term Commitment Type. </param>
         /// <param name="preferredTermCommitmentDuration"> Customer preferred Term Duration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TermCommitmentPreferences(TermCommitmentType preferredTermCommitmentType, TimeSpan? preferredTermCommitmentDuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeOrderTermCommitmentPreferences(EdgeOrderTermCommitmentType preferredTermCommitmentType, TimeSpan? preferredTermCommitmentDuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PreferredTermCommitmentType = preferredTermCommitmentType;
             PreferredTermCommitmentDuration = preferredTermCommitmentDuration;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Term Commitment Type. </summary>
-        public TermCommitmentType PreferredTermCommitmentType { get; set; }
+        public EdgeOrderTermCommitmentType PreferredTermCommitmentType { get; set; }
 
         /// <summary> Customer preferred Term Duration. </summary>
         public TimeSpan? PreferredTermCommitmentDuration { get; set; }

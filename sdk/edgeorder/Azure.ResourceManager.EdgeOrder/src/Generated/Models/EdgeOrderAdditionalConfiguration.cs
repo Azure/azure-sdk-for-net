@@ -12,30 +12,30 @@ using Azure.ResourceManager.EdgeOrder;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Additional Configuration details. </summary>
-    public partial class AdditionalConfiguration
+    public partial class EdgeOrderAdditionalConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AdditionalConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderAdditionalConfiguration"/>. </summary>
         /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the configuration. </param>
         /// <param name="quantity"> Quantity of the product. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hierarchyInformation"/> is null. </exception>
-        public AdditionalConfiguration(HierarchyInformation hierarchyInformation, int quantity)
+        public EdgeOrderAdditionalConfiguration(HierarchyInformation hierarchyInformation, int quantity)
         {
             Argument.AssertNotNull(hierarchyInformation, nameof(hierarchyInformation));
 
             HierarchyInformation = hierarchyInformation;
             Quantity = quantity;
-            ProvisioningDetails = new ChangeTrackingList<ProvisioningDetails>();
+            ProvisioningDetails = new ChangeTrackingList<EdgeOrderProvisioningDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AdditionalConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderAdditionalConfiguration"/>. </summary>
         /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the configuration. </param>
         /// <param name="quantity"> Quantity of the product. </param>
         /// <param name="provisioningDetails"> List Provisioning Details for Devices in Additional Config. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdditionalConfiguration(HierarchyInformation hierarchyInformation, int quantity, IList<ProvisioningDetails> provisioningDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeOrderAdditionalConfiguration(HierarchyInformation hierarchyInformation, int quantity, IList<EdgeOrderProvisioningDetails> provisioningDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HierarchyInformation = hierarchyInformation;
             Quantity = quantity;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public int Quantity { get; set; }
 
         /// <summary> List Provisioning Details for Devices in Additional Config. </summary>
-        public IList<ProvisioningDetails> ProvisioningDetails { get; }
+        public IList<EdgeOrderProvisioningDetails> ProvisioningDetails { get; }
     }
 }

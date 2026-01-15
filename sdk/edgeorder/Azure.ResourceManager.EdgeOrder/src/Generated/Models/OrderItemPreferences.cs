@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="managementResourcePreferences"> Preferences related to the Management resource. </param>
         /// <param name="termCommitmentPreferences"> Preferences related to the Term commitment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OrderItemPreferences(IList<NotificationPreference> notificationPreferences, TransportPreferences transportPreferences, EncryptionPreferences encryptionPreferences, ManagementResourcePreferences managementResourcePreferences, TermCommitmentPreferences termCommitmentPreferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OrderItemPreferences(IList<NotificationPreference> notificationPreferences, TransportPreferences transportPreferences, EncryptionPreferences encryptionPreferences, ManagementResourcePreferences managementResourcePreferences, EdgeOrderTermCommitmentPreferences termCommitmentPreferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NotificationPreferences = notificationPreferences;
             TransportPreferences = transportPreferences;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         internal ManagementResourcePreferences ManagementResourcePreferences { get; set; }
 
         /// <summary> Preferences related to the Term commitment. </summary>
-        public TermCommitmentPreferences TermCommitmentPreferences { get; set; }
+        public EdgeOrderTermCommitmentPreferences TermCommitmentPreferences { get; set; }
 
         /// <summary> Indicates Shipment Logistics type that the customer preferred. </summary>
         public TransportShipmentType? TransportPreferencesPreferredShipmentType

@@ -10,7 +10,7 @@ using Azure.ResourceManager.EdgeOrder.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    /// <summary> Address Resource. </summary>
+    /// Manually add to maintain its backward compatibility
     public partial class EdgeOrderAddressData
     {
         /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressData"/>. </summary>

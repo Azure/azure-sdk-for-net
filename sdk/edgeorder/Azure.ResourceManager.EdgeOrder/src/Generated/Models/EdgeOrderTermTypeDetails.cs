@@ -11,25 +11,25 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Holds details about term type and duration. </summary>
-    public partial class TermTypeDetails
+    public partial class EdgeOrderTermTypeDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TermTypeDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderTermTypeDetails"/>. </summary>
         /// <param name="termType"> Term Commitment Type. </param>
         /// <param name="termTypeDuration"> Duration for the term type. </param>
-        internal TermTypeDetails(TermCommitmentType termType, TimeSpan termTypeDuration)
+        internal EdgeOrderTermTypeDetails(EdgeOrderTermCommitmentType termType, TimeSpan termTypeDuration)
         {
             TermType = termType;
             TermTypeDuration = termTypeDuration;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TermTypeDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderTermTypeDetails"/>. </summary>
         /// <param name="termType"> Term Commitment Type. </param>
         /// <param name="termTypeDuration"> Duration for the term type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TermTypeDetails(TermCommitmentType termType, TimeSpan termTypeDuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeOrderTermTypeDetails(EdgeOrderTermCommitmentType termType, TimeSpan termTypeDuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TermType = termType;
             TermTypeDuration = termTypeDuration;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Term Commitment Type. </summary>
-        public TermCommitmentType TermType { get; }
+        public EdgeOrderTermCommitmentType TermType { get; }
 
         /// <summary> Duration for the term type. </summary>
         public TimeSpan TermTypeDuration { get; }

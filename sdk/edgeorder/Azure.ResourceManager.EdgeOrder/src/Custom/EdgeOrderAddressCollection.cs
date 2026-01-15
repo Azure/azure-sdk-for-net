@@ -8,6 +8,7 @@ using System.Threading;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
+    // Manually add to maintain its backward compatibility
     public partial class EdgeOrderAddressCollection
     {
         /// <summary>

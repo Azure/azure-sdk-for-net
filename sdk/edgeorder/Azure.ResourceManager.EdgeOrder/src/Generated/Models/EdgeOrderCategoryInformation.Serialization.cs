@@ -13,17 +13,12 @@ using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> Additional Configuration details. </summary>
-    public partial class AdditionalConfiguration : IJsonModel<AdditionalConfiguration>
+    /// <summary> Category related properties of a child configuration. </summary>
+    public partial class EdgeOrderCategoryInformation : IJsonModel<EdgeOrderCategoryInformation>
     {
-        /// <summary> Initializes a new instance of <see cref="AdditionalConfiguration"/> for deserialization. </summary>
-        internal AdditionalConfiguration()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AdditionalConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EdgeOrderCategoryInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,20 +29,31 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AdditionalConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderCategoryInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdditionalConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderCategoryInformation)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("hierarchyInformation"u8);
-            writer.WriteObjectValue(HierarchyInformation, options);
-            writer.WritePropertyName("quantity"u8);
-            writer.WriteNumberValue(Quantity);
-            if (Optional.IsCollectionDefined(ProvisioningDetails))
+            if (Optional.IsDefined(CategoryName))
             {
-                writer.WritePropertyName("provisioningDetails"u8);
+                writer.WritePropertyName("categoryName"u8);
+                writer.WriteStringValue(CategoryName);
+            }
+            if (Optional.IsDefined(CategoryDisplayName))
+            {
+                writer.WritePropertyName("categoryDisplayName"u8);
+                writer.WriteStringValue(CategoryDisplayName);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsCollectionDefined(Links))
+            {
+                writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
-                foreach (ProvisioningDetails item in ProvisioningDetails)
+                foreach (ProductLink item in Links)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -72,57 +78,63 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AdditionalConfiguration IJsonModel<AdditionalConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EdgeOrderCategoryInformation IJsonModel<EdgeOrderCategoryInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AdditionalConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EdgeOrderCategoryInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AdditionalConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderCategoryInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdditionalConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderCategoryInformation)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAdditionalConfiguration(document.RootElement, options);
+            return DeserializeEdgeOrderCategoryInformation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AdditionalConfiguration DeserializeAdditionalConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeOrderCategoryInformation DeserializeEdgeOrderCategoryInformation(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            HierarchyInformation hierarchyInformation = default;
-            int quantity = default;
-            IList<ProvisioningDetails> provisioningDetails = default;
+            string categoryName = default;
+            string categoryDisplayName = default;
+            string description = default;
+            IList<ProductLink> links = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("hierarchyInformation"u8))
+                if (prop.NameEquals("categoryName"u8))
                 {
-                    hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(prop.Value, options);
+                    categoryName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("quantity"u8))
+                if (prop.NameEquals("categoryDisplayName"u8))
                 {
-                    quantity = prop.Value.GetInt32();
+                    categoryDisplayName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("provisioningDetails"u8))
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("links"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<ProvisioningDetails> array = new List<ProvisioningDetails>();
+                    List<ProductLink> array = new List<ProductLink>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.ProvisioningDetails.DeserializeProvisioningDetails(item, options));
+                        array.Add(ProductLink.DeserializeProductLink(item, options));
                     }
-                    provisioningDetails = array;
+                    links = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,47 +142,47 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AdditionalConfiguration(hierarchyInformation, quantity, provisioningDetails ?? new ChangeTrackingList<ProvisioningDetails>(), additionalBinaryDataProperties);
+            return new EdgeOrderCategoryInformation(categoryName, categoryDisplayName, description, links ?? new ChangeTrackingList<ProductLink>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AdditionalConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EdgeOrderCategoryInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AdditionalConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderCategoryInformation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AdditionalConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderCategoryInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AdditionalConfiguration IPersistableModel<AdditionalConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EdgeOrderCategoryInformation IPersistableModel<EdgeOrderCategoryInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AdditionalConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EdgeOrderCategoryInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AdditionalConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderCategoryInformation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAdditionalConfiguration(document.RootElement, options);
+                        return DeserializeEdgeOrderCategoryInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdditionalConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderCategoryInformation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AdditionalConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EdgeOrderCategoryInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

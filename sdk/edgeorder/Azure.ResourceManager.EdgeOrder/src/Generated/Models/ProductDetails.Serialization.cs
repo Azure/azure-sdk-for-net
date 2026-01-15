@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 writer.WritePropertyName("optInAdditionalConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (AdditionalConfiguration item in OptInAdditionalConfigurations)
+                foreach (EdgeOrderAdditionalConfiguration item in OptInAdditionalConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 writer.WritePropertyName("childConfigurationDeviceDetails"u8);
                 writer.WriteStartArray();
-                foreach (ConfigurationDeviceDetails item in ChildConfigurationDeviceDetails)
+                foreach (EdgeOrderConfigurationDeviceDetails item in ChildConfigurationDeviceDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ProductDisplayInfo displayInfo = default;
             HierarchyInformation hierarchyInformation = default;
             DoubleEncryptionStatus? productDoubleEncryptionStatus = default;
-            IdentificationType? identificationType = default;
+            EdgeOrderIdentificationType? identificationType = default;
             EdgeOrderProductDeviceDetails parentDeviceDetails = default;
-            ProvisioningDetails parentProvisioningDetails = default;
-            IList<AdditionalConfiguration> optInAdditionalConfigurations = default;
-            IReadOnlyList<ConfigurationDeviceDetails> childConfigurationDeviceDetails = default;
-            TermCommitmentInformation termCommitmentInformation = default;
+            EdgeOrderProvisioningDetails parentProvisioningDetails = default;
+            IList<EdgeOrderAdditionalConfiguration> optInAdditionalConfigurations = default;
+            IReadOnlyList<EdgeOrderConfigurationDeviceDetails> childConfigurationDeviceDetails = default;
+            EdgeOrderTermCommitmentInformation termCommitmentInformation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    identificationType = new IdentificationType(prop.Value.GetString());
+                    identificationType = new EdgeOrderIdentificationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("parentDeviceDetails"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    parentProvisioningDetails = ProvisioningDetails.DeserializeProvisioningDetails(prop.Value, options);
+                    parentProvisioningDetails = EdgeOrderProvisioningDetails.DeserializeEdgeOrderProvisioningDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("optInAdditionalConfigurations"u8))
@@ -201,10 +201,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    List<AdditionalConfiguration> array = new List<AdditionalConfiguration>();
+                    List<EdgeOrderAdditionalConfiguration> array = new List<EdgeOrderAdditionalConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AdditionalConfiguration.DeserializeAdditionalConfiguration(item, options));
+                        array.Add(EdgeOrderAdditionalConfiguration.DeserializeEdgeOrderAdditionalConfiguration(item, options));
                     }
                     optInAdditionalConfigurations = array;
                     continue;
@@ -215,10 +215,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    List<ConfigurationDeviceDetails> array = new List<ConfigurationDeviceDetails>();
+                    List<EdgeOrderConfigurationDeviceDetails> array = new List<EdgeOrderConfigurationDeviceDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationDeviceDetails.DeserializeConfigurationDeviceDetails(item, options));
+                        array.Add(EdgeOrderConfigurationDeviceDetails.DeserializeEdgeOrderConfigurationDeviceDetails(item, options));
                     }
                     childConfigurationDeviceDetails = array;
                     continue;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    termCommitmentInformation = TermCommitmentInformation.DeserializeTermCommitmentInformation(prop.Value, options);
+                    termCommitmentInformation = EdgeOrderTermCommitmentInformation.DeserializeEdgeOrderTermCommitmentInformation(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -244,8 +244,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 identificationType,
                 parentDeviceDetails,
                 parentProvisioningDetails,
-                optInAdditionalConfigurations ?? new ChangeTrackingList<AdditionalConfiguration>(),
-                childConfigurationDeviceDetails ?? new ChangeTrackingList<ConfigurationDeviceDetails>(),
+                optInAdditionalConfigurations ?? new ChangeTrackingList<EdgeOrderAdditionalConfiguration>(),
+                childConfigurationDeviceDetails ?? new ChangeTrackingList<EdgeOrderConfigurationDeviceDetails>(),
                 termCommitmentInformation,
                 additionalBinaryDataProperties);
         }

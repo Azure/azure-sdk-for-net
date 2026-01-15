@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="orderId"> Id of the order to which order item belongs to. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OrderItemProperties(EdgeOrderItemDetails orderItemDetails, EdgeOrderItemAddressDetails addressDetails, DateTimeOffset? startOn, ResourceIdentifier orderId, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OrderItemProperties(EdgeOrderItemDetails orderItemDetails, EdgeOrderItemAddressDetails addressDetails, DateTimeOffset? startOn, ResourceIdentifier orderId, EdgeOrderProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OrderItemDetails = orderItemDetails;
             AddressDetails = addressDetails;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public ResourceIdentifier OrderId { get; set; }
 
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public EdgeOrderProvisioningState? ProvisioningState { get; }
     }
 }

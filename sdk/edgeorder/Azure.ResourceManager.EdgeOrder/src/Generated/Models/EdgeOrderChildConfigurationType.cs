@@ -12,7 +12,7 @@ using Azure.ResourceManager.EdgeOrder;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary></summary>
-    public readonly partial struct ChildConfigurationType : IEquatable<ChildConfigurationType>
+    public readonly partial struct EdgeOrderChildConfigurationType : IEquatable<EdgeOrderChildConfigurationType>
     {
         private readonly string _value;
         /// <summary> Child configuration is a device configuration. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Child configuration is an additional configuration. </summary>
         private const string AdditionalConfigurationValue = "AdditionalConfiguration";
 
-        /// <summary> Initializes a new instance of <see cref="ChildConfigurationType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderChildConfigurationType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ChildConfigurationType(string value)
+        public EdgeOrderChildConfigurationType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Child configuration is a device configuration. </summary>
-        public static ChildConfigurationType DeviceConfiguration { get; } = new ChildConfigurationType(DeviceConfigurationValue);
+        public static EdgeOrderChildConfigurationType DeviceConfiguration { get; } = new EdgeOrderChildConfigurationType(DeviceConfigurationValue);
 
         /// <summary> Child configuration is an additional configuration. </summary>
-        public static ChildConfigurationType AdditionalConfiguration { get; } = new ChildConfigurationType(AdditionalConfigurationValue);
+        public static EdgeOrderChildConfigurationType AdditionalConfiguration { get; } = new EdgeOrderChildConfigurationType(AdditionalConfigurationValue);
 
-        /// <summary> Determines if two <see cref="ChildConfigurationType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EdgeOrderChildConfigurationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ChildConfigurationType left, ChildConfigurationType right) => left.Equals(right);
+        public static bool operator ==(EdgeOrderChildConfigurationType left, EdgeOrderChildConfigurationType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ChildConfigurationType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EdgeOrderChildConfigurationType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ChildConfigurationType left, ChildConfigurationType right) => !left.Equals(right);
+        public static bool operator !=(EdgeOrderChildConfigurationType left, EdgeOrderChildConfigurationType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ChildConfigurationType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EdgeOrderChildConfigurationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChildConfigurationType(string value) => new ChildConfigurationType(value);
+        public static implicit operator EdgeOrderChildConfigurationType(string value) => new EdgeOrderChildConfigurationType(value);
 
-        /// <summary> Converts a string to a <see cref="ChildConfigurationType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EdgeOrderChildConfigurationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChildConfigurationType?(string value) => value == null ? null : new ChildConfigurationType(value);
+        public static implicit operator EdgeOrderChildConfigurationType?(string value) => value == null ? null : new EdgeOrderChildConfigurationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ChildConfigurationType other && Equals(other);
+        public override bool Equals(object obj) => obj is EdgeOrderChildConfigurationType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ChildConfigurationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EdgeOrderChildConfigurationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

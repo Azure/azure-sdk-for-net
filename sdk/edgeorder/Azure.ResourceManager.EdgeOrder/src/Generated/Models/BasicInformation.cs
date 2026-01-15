@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
         /// <param name="fulfilledBy"> The entity responsible for fulfillment of the item at the given hierarchy level. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BasicInformation(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, FulfillmentType? fulfilledBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BasicInformation(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, EdgeOrderFulfillmentType? fulfilledBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public HierarchyInformation HierarchyInformation { get; }
 
         /// <summary> The entity responsible for fulfillment of the item at the given hierarchy level. </summary>
-        public FulfillmentType? FulfilledBy { get; }
+        public EdgeOrderFulfillmentType? FulfilledBy { get; }
     }
 }

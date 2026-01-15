@@ -12,7 +12,7 @@ using Azure.ResourceManager.EdgeOrder;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Term Commitment Type. </summary>
-    public readonly partial struct TermCommitmentType : IEquatable<TermCommitmentType>
+    public readonly partial struct EdgeOrderTermCommitmentType : IEquatable<EdgeOrderTermCommitmentType>
     {
         private readonly string _value;
         /// <summary> Pay as you go Term Commitment Model. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Time based Term Commitment Model. </summary>
         private const string TimedValue = "Timed";
 
-        /// <summary> Initializes a new instance of <see cref="TermCommitmentType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderTermCommitmentType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TermCommitmentType(string value)
+        public EdgeOrderTermCommitmentType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Pay as you go Term Commitment Model. </summary>
-        public static TermCommitmentType None { get; } = new TermCommitmentType(NoneValue);
+        public static EdgeOrderTermCommitmentType None { get; } = new EdgeOrderTermCommitmentType(NoneValue);
 
         /// <summary> Trial Term Commitment Model. </summary>
-        public static TermCommitmentType Trial { get; } = new TermCommitmentType(TrialValue);
+        public static EdgeOrderTermCommitmentType Trial { get; } = new EdgeOrderTermCommitmentType(TrialValue);
 
         /// <summary> Time based Term Commitment Model. </summary>
-        public static TermCommitmentType Timed { get; } = new TermCommitmentType(TimedValue);
+        public static EdgeOrderTermCommitmentType Timed { get; } = new EdgeOrderTermCommitmentType(TimedValue);
 
-        /// <summary> Determines if two <see cref="TermCommitmentType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EdgeOrderTermCommitmentType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(TermCommitmentType left, TermCommitmentType right) => left.Equals(right);
+        public static bool operator ==(EdgeOrderTermCommitmentType left, EdgeOrderTermCommitmentType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TermCommitmentType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EdgeOrderTermCommitmentType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(TermCommitmentType left, TermCommitmentType right) => !left.Equals(right);
+        public static bool operator !=(EdgeOrderTermCommitmentType left, EdgeOrderTermCommitmentType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TermCommitmentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EdgeOrderTermCommitmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TermCommitmentType(string value) => new TermCommitmentType(value);
+        public static implicit operator EdgeOrderTermCommitmentType(string value) => new EdgeOrderTermCommitmentType(value);
 
-        /// <summary> Converts a string to a <see cref="TermCommitmentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EdgeOrderTermCommitmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TermCommitmentType?(string value) => value == null ? null : new TermCommitmentType(value);
+        public static implicit operator EdgeOrderTermCommitmentType?(string value) => value == null ? null : new EdgeOrderTermCommitmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TermCommitmentType other && Equals(other);
+        public override bool Equals(object obj) => obj is EdgeOrderTermCommitmentType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(TermCommitmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EdgeOrderTermCommitmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -19,24 +18,21 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Initializes a new instance of <see cref="SiteDetails"/>. </summary>
         /// <param name="siteId"> Unique Id, Identifying A Site. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteId"/> is null. </exception>
-        public SiteDetails(string siteId)
+        public SiteDetails(Guid siteId)
         {
-            Argument.AssertNotNull(siteId, nameof(siteId));
-
             SiteId = siteId;
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteDetails"/>. </summary>
         /// <param name="siteId"> Unique Id, Identifying A Site. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteDetails(string siteId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteDetails(Guid siteId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SiteId = siteId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique Id, Identifying A Site. </summary>
-        public string SiteId { get; set; }
+        public Guid SiteId { get; set; }
     }
 }

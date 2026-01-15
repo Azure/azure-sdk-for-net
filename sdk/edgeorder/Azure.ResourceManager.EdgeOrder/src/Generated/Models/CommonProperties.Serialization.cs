@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             EdgeOrderProductCostInformation costInformation = default;
             ProductAvailabilityInformation availabilityInformation = default;
             HierarchyInformation hierarchyInformation = default;
-            FulfillmentType? fulfilledBy = default;
+            EdgeOrderFulfillmentType? fulfilledBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IReadOnlyList<FilterableProperty> filterableProperties = default;
             foreach (var prop in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    fulfilledBy = new FulfillmentType(prop.Value.GetString());
+                    fulfilledBy = new EdgeOrderFulfillmentType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("filterableProperties"u8))

@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             OrderItemUpdateProperties properties = default;
             IDictionary<string, string> tags = default;
-            ResourceIdentity identity = default;
+            EdgeOrderResourceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    identity = ResourceIdentity.DeserializeResourceIdentity(prop.Value, options);
+                    identity = EdgeOrderResourceIdentity.DeserializeEdgeOrderResourceIdentity(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -12,17 +12,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Details Related To Provision Resource. </summary>
-    public partial class ProvisioningDetails
+    public partial class EdgeOrderProvisioningDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningDetails"/>. </summary>
-        public ProvisioningDetails()
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProvisioningDetails"/>. </summary>
+        public EdgeOrderProvisioningDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProvisioningDetails"/>. </summary>
         /// <param name="quantity"> Quantity of the devices. </param>
         /// <param name="provisioningArmId"> Provisioning Resource Arm ID. </param>
         /// <param name="provisioningEndPoint"> Provisioning End Point. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="autoProvisioningStatus"> Auto Provisioning Details. </param>
         /// <param name="devicePresenceVerification"> Proof of possession details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningDetails(int? quantity, ResourceIdentifier provisioningArmId, string provisioningEndPoint, string serialNumber, string vendorName, ResourceIdentifier readyToConnectArmId, ResourceIdentifier managementResourceArmId, string uniqueDeviceIdentifier, AutoProvisioningStatus? autoProvisioningStatus, DevicePresenceVerificationDetails devicePresenceVerification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeOrderProvisioningDetails(int? quantity, ResourceIdentifier provisioningArmId, string provisioningEndPoint, string serialNumber, string vendorName, ResourceIdentifier readyToConnectArmId, ResourceIdentifier managementResourceArmId, Guid? uniqueDeviceIdentifier, EdgeOrderAutoProvisioningStatus? autoProvisioningStatus, DevicePresenceVerificationDetails devicePresenceVerification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Quantity = quantity;
             ProvisioningArmId = provisioningArmId;
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public ResourceIdentifier ManagementResourceArmId { get; set; }
 
         /// <summary> Unique Identity for a Device. </summary>
-        public string UniqueDeviceIdentifier { get; }
+        public Guid? UniqueDeviceIdentifier { get; }
 
         /// <summary> Auto Provisioning Details. </summary>
-        public AutoProvisioningStatus? AutoProvisioningStatus { get; set; }
+        public EdgeOrderAutoProvisioningStatus? AutoProvisioningStatus { get; set; }
 
         /// <summary> Proof of possession details. </summary>
         public DevicePresenceVerificationDetails DevicePresenceVerification { get; set; }

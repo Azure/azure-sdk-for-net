@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             EdgeOrderItemAddressDetails addressDetails = default;
             DateTimeOffset? startOn = default;
             ResourceIdentifier orderId = default;
-            ProvisioningState? provisioningState = default;
+            EdgeOrderProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new EdgeOrderProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

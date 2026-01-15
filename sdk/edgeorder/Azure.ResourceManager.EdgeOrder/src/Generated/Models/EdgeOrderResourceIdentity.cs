@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Msi identity details of the resource. </summary>
-    public partial class ResourceIdentity
+    public partial class EdgeOrderResourceIdentity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceIdentity"/>. </summary>
-        public ResourceIdentity()
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderResourceIdentity"/>. </summary>
+        public EdgeOrderResourceIdentity()
         {
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderResourceIdentity"/>. </summary>
         /// <param name="type"> Identity type. </param>
         /// <param name="principalId"> Service Principal Id backing the Msi. </param>
         /// <param name="tenantId"> Home Tenant Id. </param>
         /// <param name="userAssignedIdentities"> User Assigned Identities. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceIdentity(string @type, string principalId, string tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeOrderResourceIdentity(string @type, string principalId, string tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             PrincipalId = principalId;

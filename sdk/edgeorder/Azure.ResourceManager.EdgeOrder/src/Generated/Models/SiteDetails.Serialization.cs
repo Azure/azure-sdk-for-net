@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            string siteId = default;
+            Guid siteId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("siteId"u8))
                 {
-                    siteId = prop.Value.GetString();
+                    siteId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

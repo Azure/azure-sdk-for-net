@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             string displaySerialNumber = default;
             string managementResourceId = default;
             string managementResourceTenantId = default;
-            ProvisioningSupport? provisioningSupport = default;
-            ProvisioningDetails provisioningDetails = default;
+            EdgeOrderProvisioningSupport? provisioningSupport = default;
+            EdgeOrderProvisioningDetails provisioningDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    provisioningSupport = new ProvisioningSupport(prop.Value.GetString());
+                    provisioningSupport = new EdgeOrderProvisioningSupport(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningDetails"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    provisioningDetails = ProvisioningDetails.DeserializeProvisioningDetails(prop.Value, options);
+                    provisioningDetails = EdgeOrderProvisioningDetails.DeserializeEdgeOrderProvisioningDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

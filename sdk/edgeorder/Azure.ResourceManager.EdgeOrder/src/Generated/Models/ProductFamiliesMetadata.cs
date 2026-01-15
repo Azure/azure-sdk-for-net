@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> The entity responsible for fulfillment of the item at the given hierarchy level. </summary>
-        public FulfillmentType? FulfilledBy
+        public EdgeOrderFulfillmentType? FulfilledBy
         {
             get
             {

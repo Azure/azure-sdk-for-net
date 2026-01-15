@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            ProvisioningDetails parentProvisioningDetails = default;
+            EdgeOrderProvisioningDetails parentProvisioningDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    parentProvisioningDetails = ProvisioningDetails.DeserializeProvisioningDetails(prop.Value, options);
+                    parentProvisioningDetails = EdgeOrderProvisioningDetails.DeserializeEdgeOrderProvisioningDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

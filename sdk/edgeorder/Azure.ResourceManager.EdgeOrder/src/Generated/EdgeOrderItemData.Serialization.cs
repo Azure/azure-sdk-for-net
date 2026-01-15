@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EdgeOrder
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             OrderItemProperties properties = default;
-            ResourceIdentity identity = default;
+            EdgeOrderResourceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.EdgeOrder
                     {
                         continue;
                     }
-                    identity = ResourceIdentity.DeserializeResourceIdentity(prop.Value, options);
+                    identity = EdgeOrderResourceIdentity.DeserializeEdgeOrderResourceIdentity(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Child configuration object. </summary>
-    public partial class ChildConfiguration
+    public partial class EdgeOrderChildConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ChildConfiguration"/>. </summary>
-        internal ChildConfiguration()
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderChildConfiguration"/>. </summary>
+        internal EdgeOrderChildConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChildConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderChildConfiguration"/>. </summary>
         /// <param name="properties"> Properties of child configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChildConfiguration(ChildConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeOrderChildConfiguration(ChildConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         internal ChildConfigurationProperties Properties { get; }
 
         /// <summary> Child configuration type. </summary>
-        public ChildConfigurationType? ChildConfigurationType
+        public EdgeOrderChildConfigurationType? ChildConfigurationType
         {
             get
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Determining nature of provisioning that the configuration supports. </summary>
-        public ProvisioningSupport? ProvisioningSupport
+        public EdgeOrderProvisioningSupport? ProvisioningSupport
         {
             get
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Different types of child configurations which exist for this configuration, these can be used to populate the child configuration filter. </summary>
-        public IReadOnlyList<ChildConfigurationType> ChildConfigurationTypes
+        public IReadOnlyList<EdgeOrderChildConfigurationType> ChildConfigurationTypes
         {
             get
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Child configurations present for the configuration after applying child configuration filter, grouped by the category name of the child configuration. </summary>
-        public IReadOnlyList<GroupedChildConfigurations> GroupedChildConfigurations
+        public IReadOnlyList<EdgeOrderGroupedChildConfigurations> GroupedChildConfigurations
         {
             get
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> The entity responsible for fulfillment of the item at the given hierarchy level. </summary>
-        public FulfillmentType? FulfilledBy
+        public EdgeOrderFulfillmentType? FulfilledBy
         {
             get
             {

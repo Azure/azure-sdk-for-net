@@ -12,7 +12,7 @@ using Azure.ResourceManager.EdgeOrder;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Determining nature of provisioning that the configuration supports. </summary>
-    public readonly partial struct ProvisioningSupport : IEquatable<ProvisioningSupport>
+    public readonly partial struct EdgeOrderProvisioningSupport : IEquatable<EdgeOrderProvisioningSupport>
     {
         private readonly string _value;
         /// <summary> The configuration can be provisioned from the cloud. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> The configuration need to be provisioned manually by the end user. </summary>
         private const string ManualValue = "Manual";
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningSupport"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProvisioningSupport"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProvisioningSupport(string value)
+        public EdgeOrderProvisioningSupport(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> The configuration can be provisioned from the cloud. </summary>
-        public static ProvisioningSupport CloudBased { get; } = new ProvisioningSupport(CloudBasedValue);
+        public static EdgeOrderProvisioningSupport CloudBased { get; } = new EdgeOrderProvisioningSupport(CloudBasedValue);
 
         /// <summary> The configuration need to be provisioned manually by the end user. </summary>
-        public static ProvisioningSupport Manual { get; } = new ProvisioningSupport(ManualValue);
+        public static EdgeOrderProvisioningSupport Manual { get; } = new EdgeOrderProvisioningSupport(ManualValue);
 
-        /// <summary> Determines if two <see cref="ProvisioningSupport"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EdgeOrderProvisioningSupport"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ProvisioningSupport left, ProvisioningSupport right) => left.Equals(right);
+        public static bool operator ==(EdgeOrderProvisioningSupport left, EdgeOrderProvisioningSupport right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ProvisioningSupport"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EdgeOrderProvisioningSupport"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ProvisioningSupport left, ProvisioningSupport right) => !left.Equals(right);
+        public static bool operator !=(EdgeOrderProvisioningSupport left, EdgeOrderProvisioningSupport right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ProvisioningSupport"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EdgeOrderProvisioningSupport"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningSupport(string value) => new ProvisioningSupport(value);
+        public static implicit operator EdgeOrderProvisioningSupport(string value) => new EdgeOrderProvisioningSupport(value);
 
-        /// <summary> Converts a string to a <see cref="ProvisioningSupport"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EdgeOrderProvisioningSupport"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningSupport?(string value) => value == null ? null : new ProvisioningSupport(value);
+        public static implicit operator EdgeOrderProvisioningSupport?(string value) => value == null ? null : new EdgeOrderProvisioningSupport(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProvisioningSupport other && Equals(other);
+        public override bool Equals(object obj) => obj is EdgeOrderProvisioningSupport other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ProvisioningSupport other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EdgeOrderProvisioningSupport other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

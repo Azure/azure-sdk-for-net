@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Order item properties. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
-        internal EdgeOrderItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, OrderItemProperties properties, ResourceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal EdgeOrderItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, OrderItemProperties properties, EdgeOrderResourceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EdgeOrder
         internal OrderItemProperties Properties { get; set; }
 
         /// <summary> Msi identity of the resource. </summary>
-        public ResourceIdentity Identity { get; set; }
+        public EdgeOrderResourceIdentity Identity { get; set; }
 
         /// <summary> Represents order item details. </summary>
         public EdgeOrderItemDetails OrderItemDetails
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState
+        public EdgeOrderProvisioningState? ProvisioningState
         {
             get
             {

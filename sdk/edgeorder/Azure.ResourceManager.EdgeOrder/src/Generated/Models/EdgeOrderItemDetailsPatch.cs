@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         internal SiteDetails SiteDetails { get; set; }
 
         /// <summary> Device Provisioning Details for Parent. </summary>
-        public ProvisioningDetails ParentProvisioningDetails
+        public EdgeOrderProvisioningDetails ParentProvisioningDetails
         {
             get
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Unique Id, Identifying A Site. </summary>
-        public string SiteId
+        public Guid? SiteId
         {
             get
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             set
             {
-                SiteDetails = new SiteDetails(value);
+                SiteDetails = value.HasValue ? new SiteDetails(value.Value) : default;
             }
         }
     }

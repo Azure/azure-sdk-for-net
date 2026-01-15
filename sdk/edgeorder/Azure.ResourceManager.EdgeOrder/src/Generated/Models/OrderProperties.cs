@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="orderStageHistory"> Order status history. </param>
         /// <param name="orderMode"> Order mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OrderProperties(IReadOnlyList<ResourceIdentifier> orderItemIds, EdgeOrderStageDetails currentStage, IReadOnlyList<EdgeOrderStageDetails> orderStageHistory, OrderMode? orderMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OrderProperties(IReadOnlyList<ResourceIdentifier> orderItemIds, EdgeOrderStageDetails currentStage, IReadOnlyList<EdgeOrderStageDetails> orderStageHistory, EdgeOrderOrderMode? orderMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OrderItemIds = orderItemIds;
             CurrentStage = currentStage;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public IReadOnlyList<EdgeOrderStageDetails> OrderStageHistory { get; } = new ChangeTrackingList<EdgeOrderStageDetails>();
 
         /// <summary> Order mode. </summary>
-        public OrderMode? OrderMode { get; }
+        public EdgeOrderOrderMode? OrderMode { get; }
     }
 }

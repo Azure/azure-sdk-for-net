@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            AddressClassification? addressClassification = default;
+            EdgeOrderAddressClassification? addressClassification = default;
             EdgeOrderShippingAddress shippingAddress = default;
             EdgeOrderAddressContactDetails contactDetails = default;
             EdgeOrderAddressValidationStatus? addressValidationStatus = default;
-            ProvisioningState? provisioningState = default;
+            EdgeOrderProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    addressClassification = new AddressClassification(prop.Value.GetString());
+                    addressClassification = new EdgeOrderAddressClassification(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("shippingAddress"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new EdgeOrderProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

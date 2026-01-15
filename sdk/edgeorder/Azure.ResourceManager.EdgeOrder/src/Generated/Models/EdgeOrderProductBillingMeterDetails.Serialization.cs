@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             EdgeOrderProductMeterDetails meterDetails = default;
             EdgeOrderProductMeteringType? meteringType = default;
             string frequency = default;
-            TermTypeDetails termTypeDetails = default;
+            EdgeOrderTermTypeDetails termTypeDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    termTypeDetails = TermTypeDetails.DeserializeTermTypeDetails(prop.Value, options);
+                    termTypeDetails = EdgeOrderTermTypeDetails.DeserializeEdgeOrderTermTypeDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

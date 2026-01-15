@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="filterableProperties"> List of filters supported for a product. </param>
         /// <param name="products"> List of products in the product line. </param>
-        internal ProductLineProperties(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, FulfillmentType? fulfilledBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<EdgeOrderProduct> products) : base(displayName, description, imageInformation, costInformation, availabilityInformation, hierarchyInformation, fulfilledBy, additionalBinaryDataProperties, filterableProperties)
+        internal ProductLineProperties(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, EdgeOrderFulfillmentType? fulfilledBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<EdgeOrderProduct> products) : base(displayName, description, imageInformation, costInformation, availabilityInformation, hierarchyInformation, fulfilledBy, additionalBinaryDataProperties, filterableProperties)
         {
             Products = products;
         }

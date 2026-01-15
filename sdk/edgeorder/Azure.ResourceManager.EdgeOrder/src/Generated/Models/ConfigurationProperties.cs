@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         internal ConfigurationProperties()
         {
             Specifications = new ChangeTrackingList<ProductSpecification>();
-            ChildConfigurationTypes = new ChangeTrackingList<ChildConfigurationType>();
-            GroupedChildConfigurations = new ChangeTrackingList<GroupedChildConfigurations>();
+            ChildConfigurationTypes = new ChangeTrackingList<EdgeOrderChildConfigurationType>();
+            GroupedChildConfigurations = new ChangeTrackingList<EdgeOrderGroupedChildConfigurations>();
             SupportedTermCommitmentDurations = new ChangeTrackingList<TimeSpan>();
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="childConfigurationTypes"> Different types of child configurations which exist for this configuration, these can be used to populate the child configuration filter. </param>
         /// <param name="groupedChildConfigurations"> Child configurations present for the configuration after applying child configuration filter, grouped by the category name of the child configuration. </param>
         /// <param name="supportedTermCommitmentDurations"> The Term Commitment Durations that are supported for a configuration. </param>
-        internal ConfigurationProperties(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, FulfillmentType? fulfilledBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductSpecification> specifications, ProductDimensions dimensions, ProvisioningSupport? provisioningSupport, IReadOnlyList<ChildConfigurationType> childConfigurationTypes, IReadOnlyList<GroupedChildConfigurations> groupedChildConfigurations, IReadOnlyList<TimeSpan> supportedTermCommitmentDurations) : base(displayName, description, imageInformation, costInformation, availabilityInformation, hierarchyInformation, fulfilledBy, additionalBinaryDataProperties, filterableProperties)
+        internal ConfigurationProperties(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, EdgeOrderFulfillmentType? fulfilledBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductSpecification> specifications, ProductDimensions dimensions, EdgeOrderProvisioningSupport? provisioningSupport, IReadOnlyList<EdgeOrderChildConfigurationType> childConfigurationTypes, IReadOnlyList<EdgeOrderGroupedChildConfigurations> groupedChildConfigurations, IReadOnlyList<TimeSpan> supportedTermCommitmentDurations) : base(displayName, description, imageInformation, costInformation, availabilityInformation, hierarchyInformation, fulfilledBy, additionalBinaryDataProperties, filterableProperties)
         {
             Specifications = specifications;
             Dimensions = dimensions;
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public ProductDimensions Dimensions { get; }
 
         /// <summary> Determining nature of provisioning that the configuration supports. </summary>
-        public ProvisioningSupport? ProvisioningSupport { get; }
+        public EdgeOrderProvisioningSupport? ProvisioningSupport { get; }
 
         /// <summary> Different types of child configurations which exist for this configuration, these can be used to populate the child configuration filter. </summary>
-        public IReadOnlyList<ChildConfigurationType> ChildConfigurationTypes { get; } = new ChangeTrackingList<ChildConfigurationType>();
+        public IReadOnlyList<EdgeOrderChildConfigurationType> ChildConfigurationTypes { get; } = new ChangeTrackingList<EdgeOrderChildConfigurationType>();
 
         /// <summary> Child configurations present for the configuration after applying child configuration filter, grouped by the category name of the child configuration. </summary>
-        public IReadOnlyList<GroupedChildConfigurations> GroupedChildConfigurations { get; } = new ChangeTrackingList<GroupedChildConfigurations>();
+        public IReadOnlyList<EdgeOrderGroupedChildConfigurations> GroupedChildConfigurations { get; } = new ChangeTrackingList<EdgeOrderGroupedChildConfigurations>();
 
         /// <summary> The Term Commitment Durations that are supported for a configuration. </summary>
         public IReadOnlyList<TimeSpan> SupportedTermCommitmentDurations { get; } = new ChangeTrackingList<TimeSpan>();

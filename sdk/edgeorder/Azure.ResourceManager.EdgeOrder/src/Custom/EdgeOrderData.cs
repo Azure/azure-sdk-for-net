@@ -7,6 +7,7 @@ using Azure.ResourceManager.EdgeOrder.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
+    // Manually add to maintain its backward compatibility
     public partial class EdgeOrderData
     {
         /// <summary> Initializes a new instance of <see cref="EdgeOrderData"/>. </summary>

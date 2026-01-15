@@ -11,6 +11,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
+    // Manually add to maintain its backward compatibility
     public static partial class EdgeOrderExtensions
     {
         /// <summary>

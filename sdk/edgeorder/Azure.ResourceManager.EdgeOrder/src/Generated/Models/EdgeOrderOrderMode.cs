@@ -12,7 +12,7 @@ using Azure.ResourceManager.EdgeOrder;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Defines the mode of the Order item. </summary>
-    public readonly partial struct OrderMode : IEquatable<OrderMode>
+    public readonly partial struct EdgeOrderOrderMode : IEquatable<EdgeOrderOrderMode>
     {
         private readonly string _value;
         /// <summary> Default Order mode. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Mode in which the Order will not be fulfilled. </summary>
         private const string DoNotFulfillValue = "DoNotFulfill";
 
-        /// <summary> Initializes a new instance of <see cref="OrderMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderOrderMode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OrderMode(string value)
+        public EdgeOrderOrderMode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Default Order mode. </summary>
-        public static OrderMode Default { get; } = new OrderMode(DefaultValue);
+        public static EdgeOrderOrderMode Default { get; } = new EdgeOrderOrderMode(DefaultValue);
 
         /// <summary> Mode in which the Order will not be fulfilled. </summary>
-        public static OrderMode DoNotFulfill { get; } = new OrderMode(DoNotFulfillValue);
+        public static EdgeOrderOrderMode DoNotFulfill { get; } = new EdgeOrderOrderMode(DoNotFulfillValue);
 
-        /// <summary> Determines if two <see cref="OrderMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EdgeOrderOrderMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(OrderMode left, OrderMode right) => left.Equals(right);
+        public static bool operator ==(EdgeOrderOrderMode left, EdgeOrderOrderMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="OrderMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EdgeOrderOrderMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(OrderMode left, OrderMode right) => !left.Equals(right);
+        public static bool operator !=(EdgeOrderOrderMode left, EdgeOrderOrderMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="OrderMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EdgeOrderOrderMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OrderMode(string value) => new OrderMode(value);
+        public static implicit operator EdgeOrderOrderMode(string value) => new EdgeOrderOrderMode(value);
 
-        /// <summary> Converts a string to a <see cref="OrderMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EdgeOrderOrderMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OrderMode?(string value) => value == null ? null : new OrderMode(value);
+        public static implicit operator EdgeOrderOrderMode?(string value) => value == null ? null : new EdgeOrderOrderMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OrderMode other && Equals(other);
+        public override bool Equals(object obj) => obj is EdgeOrderOrderMode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(OrderMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EdgeOrderOrderMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

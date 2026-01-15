@@ -10,6 +10,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
+    // Manually add to maintain its backward compatibility
     public partial class EdgeOrderAddressContactDetails
     {
         /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressContactDetails"/>. </summary>

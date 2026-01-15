@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Argument.AssertNotNull(hierarchyInformation, nameof(hierarchyInformation));
 
             HierarchyInformation = hierarchyInformation;
-            OptInAdditionalConfigurations = new ChangeTrackingList<AdditionalConfiguration>();
-            ChildConfigurationDeviceDetails = new ChangeTrackingList<ConfigurationDeviceDetails>();
+            OptInAdditionalConfigurations = new ChangeTrackingList<EdgeOrderAdditionalConfiguration>();
+            ChildConfigurationDeviceDetails = new ChangeTrackingList<EdgeOrderConfigurationDeviceDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProductDetails"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="childConfigurationDeviceDetails"> Details of all child configurations that are part of the order item. </param>
         /// <param name="termCommitmentInformation"> Term Commitment Information of the Device. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProductDetails(ProductDisplayInfo displayInfo, HierarchyInformation hierarchyInformation, DoubleEncryptionStatus? productDoubleEncryptionStatus, IdentificationType? identificationType, EdgeOrderProductDeviceDetails parentDeviceDetails, ProvisioningDetails parentProvisioningDetails, IList<AdditionalConfiguration> optInAdditionalConfigurations, IReadOnlyList<ConfigurationDeviceDetails> childConfigurationDeviceDetails, TermCommitmentInformation termCommitmentInformation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProductDetails(ProductDisplayInfo displayInfo, HierarchyInformation hierarchyInformation, DoubleEncryptionStatus? productDoubleEncryptionStatus, EdgeOrderIdentificationType? identificationType, EdgeOrderProductDeviceDetails parentDeviceDetails, EdgeOrderProvisioningDetails parentProvisioningDetails, IList<EdgeOrderAdditionalConfiguration> optInAdditionalConfigurations, IReadOnlyList<EdgeOrderConfigurationDeviceDetails> childConfigurationDeviceDetails, EdgeOrderTermCommitmentInformation termCommitmentInformation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayInfo = displayInfo;
             HierarchyInformation = hierarchyInformation;
@@ -64,21 +64,21 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public DoubleEncryptionStatus? ProductDoubleEncryptionStatus { get; }
 
         /// <summary> Identification type of the configuration. </summary>
-        public IdentificationType? IdentificationType { get; }
+        public EdgeOrderIdentificationType? IdentificationType { get; }
 
         /// <summary> Device details of the parent configuration. </summary>
         public EdgeOrderProductDeviceDetails ParentDeviceDetails { get; }
 
         /// <summary> Device Provisioning Details for Parent. </summary>
-        public ProvisioningDetails ParentProvisioningDetails { get; set; }
+        public EdgeOrderProvisioningDetails ParentProvisioningDetails { get; set; }
 
         /// <summary> List of additional configurations customer wants in the order item apart from the ones included in the base configuration. </summary>
-        public IList<AdditionalConfiguration> OptInAdditionalConfigurations { get; }
+        public IList<EdgeOrderAdditionalConfiguration> OptInAdditionalConfigurations { get; }
 
         /// <summary> Details of all child configurations that are part of the order item. </summary>
-        public IReadOnlyList<ConfigurationDeviceDetails> ChildConfigurationDeviceDetails { get; }
+        public IReadOnlyList<EdgeOrderConfigurationDeviceDetails> ChildConfigurationDeviceDetails { get; }
 
         /// <summary> Term Commitment Information of the Device. </summary>
-        public TermCommitmentInformation TermCommitmentInformation { get; }
+        public EdgeOrderTermCommitmentInformation TermCommitmentInformation { get; }
     }
 }

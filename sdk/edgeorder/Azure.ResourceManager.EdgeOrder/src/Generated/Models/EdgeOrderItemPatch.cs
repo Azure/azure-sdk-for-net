@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="tags"> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </param>
         /// <param name="identity"> Msi identity of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderItemPatch(OrderItemUpdateProperties properties, IDictionary<string, string> tags, ResourceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeOrderItemPatch(OrderItemUpdateProperties properties, IDictionary<string, string> tags, EdgeOrderResourceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Tags = tags;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Msi identity of the resource. </summary>
-        public ResourceIdentity Identity { get; set; }
+        public EdgeOrderResourceIdentity Identity { get; set; }
 
         /// <summary> Updates forward shipping address and contact details. </summary>
         public EdgeOrderItemAddressProperties ForwardAddress

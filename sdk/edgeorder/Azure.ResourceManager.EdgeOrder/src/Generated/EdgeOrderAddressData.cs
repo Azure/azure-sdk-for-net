@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EdgeOrder
         internal EdgeOrderItemAddressProperties Properties { get; set; }
 
         /// <summary> Type of address based on its usage context. </summary>
-        public AddressClassification? AddressClassification
+        public EdgeOrderAddressClassification? AddressClassification
         {
             get
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState
+        public EdgeOrderProvisioningState? ProvisioningState
         {
             get
             {
