@@ -9,7 +9,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientLocati
     public class MoveMethodParameterToClientTests : SpectorTestBase
     {
         [SpectorTest]
-        public Task Azure_ClientGenerator_Core_ClientLocation_MoveToExistingSubClient() => Test(async (host) =>
+        public Task Azure_ClientGenerator_Core_ClientLocation_MoveMethodParameterToClient() => Test(async (host) =>
         {
             var response = await new MoveMethodParameterToClientClass(host, "testaccount", new MoveMethodParameterToClientOptions()).GetBlobOperationsClient().GetBlobAsync("testcontainer", "testblob.txt");
             Assert.AreEqual(200, response.GetRawResponse().Status);
