@@ -19,14 +19,9 @@ public static class ConfigurationExtensions
     /// <param name="sectionName">The section of <see cref="IConfiguration"/> to bind from.</param>
     public static T GetClientSettings<T>(this IConfiguration configuration, string sectionName)
         where T : ClientSettings, new()
-        => configuration.GetSection(sectionName).GetClientSettings<T>();
+        => new ReferenceConfigurationSection(configuration, sectionName).GetClientSettings<T>();
 
-    /// <summary>
-    /// Creates an instance of <typeparamref name="T"/> and sets its properties from the specified <see cref="IConfigurationSection"/>.
-    /// </summary>
-    /// <typeparam name="T">The type of <see cref="ClientSettings"/> to create.</typeparam>
-    /// <param name="section">The <see cref="IConfigurationSection"/> to bind the properties of <typeparamref name="T"/> from.</param>
-    public static T GetClientSettings<T>(this IConfigurationSection section)
+    internal static T GetClientSettings<T>(this ReferenceConfigurationSection section)
         where T : ClientSettings, new()
     {
         T t = new();

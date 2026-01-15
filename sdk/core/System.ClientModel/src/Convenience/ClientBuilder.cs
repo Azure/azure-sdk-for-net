@@ -12,13 +12,12 @@ namespace System.ClientModel.Primitives;
 internal class ClientBuilder : IClientBuilder
 {
     private readonly IHostApplicationBuilder _host;
-    private readonly IConfigurationSection _section;
+    private readonly ReferenceConfigurationSection _section;
 
     public ClientBuilder(IHostApplicationBuilder host, IConfigurationSection section)
     {
         _host = host;
-        _section = section;
-        CredentialConfigurationSection = section.GetSection("Credential");
+        _section = new(host.Configuration, section.Path);
     }
 
     public IDictionary<object, object> Properties => _host.Properties;
@@ -33,9 +32,7 @@ internal class ClientBuilder : IClientBuilder
 
     public IServiceCollection Services => _host.Services;
 
-    internal IConfigurationSection ConfigurationSection => _section;
-
-    internal IConfigurationSection CredentialConfigurationSection { get; private set; }
+    internal ReferenceConfigurationSection ConfigurationSection => _section;
 
     public void ConfigureContainer<TContainerBuilder>(IServiceProviderFactory<TContainerBuilder> factory, Action<TContainerBuilder>? configure = null)
         where TContainerBuilder : notnull
@@ -43,10 +40,8 @@ internal class ClientBuilder : IClientBuilder
         _host.ConfigureContainer(factory, configure);
     }
 
-    public IHostApplicationBuilder WithCredential(string key = "Credential", Func<IConfigurationSection, AuthenticationTokenProvider>? factory = default)
+    public IHostApplicationBuilder WithCredential(Func<IConfigurationSection, AuthenticationTokenProvider>? factory = default)
     {
-        if (key != "Credential")
-            CredentialConfigurationSection = Configuration.GetRequiredSection(key);
         CredentialFactory = factory;
         return this;
     }

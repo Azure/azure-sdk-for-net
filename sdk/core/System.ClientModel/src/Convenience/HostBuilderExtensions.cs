@@ -110,14 +110,10 @@ public static class HostBuilderExtensions
     private static TSettings CreateSettings<TSettings>(Action<TSettings> configureSettings, ClientBuilder builder) where TSettings : ClientSettings, new()
     {
         TSettings settings = builder.ConfigurationSection.GetClientSettings<TSettings>();
-        if (!ReferenceEquals(builder.ConfigurationSection, builder.CredentialConfigurationSection))
-        {
-            settings.Credential = new CredentialSettings(builder.CredentialConfigurationSection);
-        }
         configureSettings?.Invoke(settings);
         if (builder.CredentialFactory is not null)
         {
-            settings.CredentialObject = builder.CredentialFactory.Invoke(builder.CredentialConfigurationSection);
+            settings.CredentialObject = builder.CredentialFactory.Invoke(builder.ConfigurationSection);
         }
         return settings;
     }

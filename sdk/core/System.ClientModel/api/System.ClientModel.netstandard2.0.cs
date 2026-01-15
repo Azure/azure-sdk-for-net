@@ -66,7 +66,6 @@ namespace System.ClientModel
     public static partial class ConfigurationExtensions
     {
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfigurationSection section) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
     }
     public partial class ContinuationToken
     {
@@ -270,7 +269,7 @@ namespace System.ClientModel.Primitives
     }
     public partial interface IClientBuilder : Microsoft.Extensions.Hosting.IHostApplicationBuilder
     {
-        Microsoft.Extensions.Hosting.IHostApplicationBuilder WithCredential(string key = "Credential", System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider>? factory = null);
+        Microsoft.Extensions.Hosting.IHostApplicationBuilder WithCredential(System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider>? factory = null);
     }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {

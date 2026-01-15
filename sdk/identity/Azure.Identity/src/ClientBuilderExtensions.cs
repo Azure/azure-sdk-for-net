@@ -18,14 +18,6 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="clientBuilder">The <see cref="IClientBuilder"/> to add the credential to.</param>
         public static IHostApplicationBuilder WithAzureCredential(this IClientBuilder clientBuilder)
-            => clientBuilder.WithCredential(factory: section => new ConfigurableCredential(new CredentialSettings(section)));
-
-        /// <summary>
-        /// Registers a credential factory to return a <see cref="TokenCredential"/> to use for the current <see cref="IClientBuilder"/>.
-        /// </summary>
-        /// <param name="clientBuilder">The <see cref="IClientBuilder"/> to add the credential to.</param>
-        /// <param name="key">The key for which section to load the credential settings from.</param>
-        public static IHostApplicationBuilder WithAzureCredential(this IClientBuilder clientBuilder, string key)
-            => clientBuilder.WithCredential(key, section => new ConfigurableCredential(new CredentialSettings(section)));
+            => clientBuilder.WithCredential(section => new ConfigurableCredential(new CredentialSettings(section.GetSection("Credential"))));
     }
 }
