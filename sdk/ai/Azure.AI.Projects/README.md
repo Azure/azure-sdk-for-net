@@ -35,6 +35,8 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
   - [Files operations](#files-operations)
   - [Fine-Tuning operations](#fine-tuning-operations)
   - [Memory store operations](#memory-store-operations)
+  - [Evaluations](#evalustions)
+    - [Basic evaluations sample](#basic-evaluations-sample)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -637,6 +639,185 @@ Console.WriteLine($"The memory store {deleteResponse.Name} was{status} deleted."
 ```
 
 For more information abouit memory stores please refer [this article](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/agent-memory)
+
+### Evaluations
+
+Evaluation in Azure AI Project client library provides quantitative, AI-assisted quality and safety metrics to asses
+performance and Evaluate LLM Models, GenAI Application and Agents. Metrics are defined as evaluators. Built-in or
+custom evaluators can provide comprehensive evaluation insights.
+
+#### Basic evaluation sample
+
+All the operations with evaluations can be performed using `EvaluationClient`. Here we will demonstrate only the basic concepts of the evaluations.
+Please see the full sample of evaluations in our samples section.
+
+First, we need to define the evaluation criteria and the data source config. Testing criteria lists all the evaluators and
+data mappings for them. In the example below we will use three built in evaluators: "violence_detection",
+"fluency" and "task_adherence". We will use Agent's string and structured JSON outputs, named `sample.output_text` and `sample.output_items` respectively as response parameter for the evaluation and take query property from the data set, using `item.query` placeholder.
+
+```C# Snippet:Sample_CreateData_Evaluations
+object[] testingCriteria = [
+    new {
+        type = "azure_ai_evaluator",
+        name = "violence_detection",
+        evaluator_name = "builtin.violence",
+        data_mapping = new { query = "{{item.query}}", response = "{{sample.output_text}}"}
+    },
+    new {
+        type = "azure_ai_evaluator",
+        name = "fluency",
+        evaluator_name = "builtin.fluency",
+        initialization_parameters = new { deployment_name = modelDeploymentName},
+        data_mapping = new { query = "{{item.query}}", response = "{{sample.output_text}}"}
+    },
+    new {
+        type = "azure_ai_evaluator",
+        name = "task_adherence",
+        evaluator_name = "builtin.task_adherence",
+        initialization_parameters = new { deployment_name = modelDeploymentName},
+        data_mapping = new { query = "{{item.query}}", response = "{{sample.output_items}}"}
+    },
+];
+object dataSourceConfig = new {
+    type = "custom",
+    item_schema = new
+    {
+        type = "object",
+        properties = new
+        {
+            query = new
+            {
+                type = "string"
+            }
+        },
+        required = new[] { "query" }
+    },
+    include_sample_schema = true
+};
+BinaryData evaluationData = BinaryData.FromObjectAsJson(
+    new
+    {
+        name = "Agent Evaluation",
+        data_source_config = dataSourceConfig,
+        testing_criteria = testingCriteria
+    }
+);
+```
+
+Use `EvaluationClient` to create the evaluation with provided parameters.
+
+```C# Snippet:Sample_CreateEvaluationObject_Evaluations_Async
+using BinaryContent evaluationDataContent = BinaryContent.Create(evaluationData);
+ClientResult evaluation = await evaluationClient.CreateEvaluationAsync(evaluationDataContent);
+Dictionary<string, string> fields = ParseClientResult(evaluation, ["name", "id"]);
+string evaluationName = fields["name"];
+string evaluationId = fields["id"];
+Console.WriteLine($"Evaluation created (id: {evaluationId}, name: {evaluationName})");
+```
+
+Create the data source. It contains name, the ID of the evaluation we have created above, and data source, consisting of target agent name and version, two queries for an agent and the template, mapping these questions to the text field of the user messages, which will be sent to Agent.
+
+```C# Snippet:Sample_CreateDataSource_Evaluations
+object dataSource = new
+{
+    type = "azure_ai_target_completions",
+    source = new
+    {
+        type = "file_content",
+        content = new[] {
+            new { item = new { query = "What is the capital of France?" } },
+            new { item = new { query = "How do I reverse a string in Python? "} },
+        }
+    },
+    input_messages = new
+    {
+        type = "template",
+        template = new[] {
+            new {
+                type = "message",
+                role = "user",
+                content = new { type = "input_text", text = "{{item.query}}" }
+            }
+        }
+    },
+    target = new
+    {
+        type = "azure_ai_agent",
+        name = agentVersion.Name,
+        // Version is optional. Defaults to latest version if not specified.
+        version = agentVersion.Version,
+    }
+};
+BinaryData runData = BinaryData.FromObjectAsJson(
+    new
+    {
+        eval_id = evaluationId,
+        name = $"Evaluation Run for Agent {agentVersion.Name}",
+        data_source = dataSource
+    }
+);
+using BinaryContent runDataContent = BinaryContent.Create(runData);
+```
+
+Create the evaluation run and extract its ID and status.
+
+```C# Snippet:Sample_CreateRun_Evaluations_Async
+ClientResult run = await evaluationClient.CreateEvaluationRunAsync(evaluationId: evaluationId, content: runDataContent);
+fields = ParseClientResult(run, ["id", "status"]);
+string runId = fields["id"];
+string runStatus = fields["status"];
+Console.WriteLine($"Evaluation run created (id: {runId})");
+```
+
+Wait for evaluation run to arrive at the terminal state.
+
+```C# Snippet:Sample_WaitForRun_Evaluations_Async
+while (runStatus != "failed" && runStatus != "completed")
+{
+    run = await evaluationClient.GetEvaluationRunAsync(evaluationId: evaluationId, evaluationRunId: runId, options: new());
+    runStatus = ParseClientResult(run, ["status"])["status"];
+    Console.WriteLine($"Waiting for eval run to complete... current status: {runStatus}");
+}
+if (runStatus == "failed")
+{
+    throw new InvalidOperationException("Evaluation run failed.");
+}
+```
+
+Get the results using `GetResultsListAsync` method. It calls `GetEvaluationRunOutputItemsAsync` on the `EvaluationClient` returning the object representing `ClientResult`, which contains binary encoded JSON response that can be retrieved using `GetRawResponse()`.
+
+```C# Snippet:Sampple_GetResultsList_Evaluations_Async
+private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
+{
+    List<string> resultJsons = [];
+    bool hasMore = false;
+    do
+    {
+        ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: default, outputItemStatus: default, options: new());
+        Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
+        JsonDocument document = JsonDocument.ParseValue(ref reader);
+
+        foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
+        {
+            if (topProperty.NameEquals("has_more"u8))
+            {
+                hasMore = topProperty.Value.GetBoolean();
+            }
+            else if (topProperty.NameEquals("data"u8))
+            {
+                if (topProperty.Value.ValueKind == JsonValueKind.Array)
+                {
+                    foreach (JsonElement dataElement in topProperty.Value.EnumerateArray())
+                    {
+                        resultJsons.Add(dataElement.ToString());
+                    }
+                }
+            }
+        }
+    } while (hasMore);
+    return resultJsons;
+}
+```
 
 ## Troubleshooting
 
