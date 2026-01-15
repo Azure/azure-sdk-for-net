@@ -29,15 +29,31 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Initializes a new instance of <see cref="JooProperties"/>. </summary>
         /// <param name="name"></param>
+        /// <param name="prediction"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JooProperties(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JooProperties(string name, Prediction prediction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
+            Prediction = prediction;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
+        /// <summary> Gets the Prediction. </summary>
+        [WirePath("prediction")]
+        internal Prediction Prediction { get; }
+
+        /// <summary> Gets the HistoricalData. </summary>
+        [WirePath("prediction.predictionInput.historicalData")]
+        public IReadOnlyList<long> PredictionInputHistoricalData
+        {
+            get
+            {
+                return Prediction.PredictionInputHistoricalData;
+            }
+        }
     }
 }

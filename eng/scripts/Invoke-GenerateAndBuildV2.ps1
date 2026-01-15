@@ -45,6 +45,30 @@ $relatedTypeSpecProjectFolder = $inputJson.relatedTypeSpecProjectFolder
 $apiVersion = $inputJson.apiVersion
 $sdkReleaseType = $inputJson.sdkReleaseType
 
+function Test-MgmtSdkUsingNewGenerator {
+    param(
+        [string]$serviceType,
+        [string]$tspConfigFile,
+        [string]$sdkProjectFolder
+    )
+
+    if ($serviceType -ne 'resource-manager') {
+        return $false
+    }
+
+    $tspLocationFile = Join-Path $sdkProjectFolder "tsp-location.yaml"
+
+    if (-not (Test-Path $tspConfigFile) -or -not (Test-Path $tspLocationFile)) {
+        return $false
+    }
+
+    $tspConfigContent = Get-Content $tspConfigFile -Raw
+    $isNewMgmtEmitter = $tspConfigContent -match '@azure-typespec/http-client-csharp-mgmt'
+    $tspLocationContent = Get-Content $tspLocationFile -Raw
+    $hasNewEmitterPackageJson = $tspLocationContent -match 'emitterPackageJsonPath:\s*eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json'
+    return ($isNewMgmtEmitter -and $hasNewEmitterPackageJson)
+}
+
 function Update-PackageVersionSuffix {
     param(
         [string]$csprojPath,
@@ -262,7 +286,10 @@ if ($relatedTypeSpecProjectFolder) {
             -generatedSDKPackages $generatedSDKPackages `
             -specRepoRoot $swaggerDir
         }
-        $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
+
+        if ((Test-MgmtSdkUsingNewGenerator -serviceType $serviceType -tspConfigFile $tspConfigFile -sdkProjectFolder $sdkProjectFolder) -or $serviceType -eq "data-plane") {
+            $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
+        }
     }
 }
 $outputJson = [PSCustomObject]@{

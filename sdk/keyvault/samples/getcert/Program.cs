@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.CommandLine;
-using System.CommandLine.Invocation;
-using System.CommandLine.IO;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -21,8 +20,7 @@ internal static class Program
     private static async Task<int> RunAsync(
         Uri vaultUri,
         string certificateName,
-        string message,
-        IConsole console)
+        string message)
     {
         CancellationToken cancellationToken = s_cancellationTokenSource.Token;
 
@@ -41,12 +39,12 @@ internal static class Program
         // Make sure the private key is exportable.
         if (certificate.Policy?.Exportable != true)
         {
-            console.Error.WriteLine($@"Error: certificate ""{certificateName}"" is not exportable.");
+            Console.Error.WriteLine($@"Error: certificate ""{certificateName}"" is not exportable.");
             return 1;
         }
         else if (certificate.Policy?.KeyType != CertificateKeyType.Rsa)
         {
-            console.Error.WriteLine($@"Error: certificate type ""{certificate.Policy?.KeyType}"" cannot be used to locally encrypt and decrypt.");
+            Console.Error.WriteLine($@"Error: certificate type ""{certificate.Policy?.KeyType}"" cannot be used to locally encrypt and decrypt.");
             return 1;
         }
 
@@ -65,14 +63,14 @@ internal static class Program
         using RSA encryptor = pfx.GetRSAPublicKey();
         byte[] ciphertext = encryptor.Encrypt(plaintext, RSAEncryptionPadding.OaepSHA256);
 
-        console.Out.WriteLine($"Encrypted message: {Convert.ToBase64String(ciphertext)}");
+        Console.Out.WriteLine($"Encrypted message: {Convert.ToBase64String(ciphertext)}");
 
         // Decrypt and encode the message.
         using RSA decryptor = pfx.GetRSAPrivateKey();
         plaintext = decryptor.Decrypt(ciphertext, RSAEncryptionPadding.OaepSHA256);
 
         message = Encoding.UTF8.GetString(plaintext);
-        console.Out.WriteLine($"Decrypted message: {message}");
+        Console.Out.WriteLine($"Decrypted message: {message}");
 
         return 0;
     }
@@ -92,7 +90,7 @@ internal static class Program
         if (string.Equals(secret.Properties.ContentType, CertificateContentType.Pkcs12.ToString(), StringComparison.InvariantCultureIgnoreCase))
         {
             byte[] pfx = Convert.FromBase64String(secret.Value);
-            return new X509Certificate2(pfx);
+            return X509CertificateLoader.LoadCertificate(pfx);
         }
 
         // For PEM, you'll need to extract the base64-encoded message body.
@@ -138,7 +136,7 @@ internal static class Program
             byte[] privateKey = Convert.FromBase64String(privateKeyBase64);
             byte[] publicKey = Convert.FromBase64String(publicKeyBase64);
 
-            X509Certificate2 certificate = new X509Certificate2(publicKey);
+            X509Certificate2 certificate = X509CertificateLoader.LoadCertificate(publicKey);
 
             using RSA rsa = RSA.Create();
             rsa.ImportPkcs8PrivateKey(privateKey, out _);
@@ -158,42 +156,38 @@ internal static class Program
     {
         Command = new RootCommand("Encrypts and decrypts a message using a certificate from Azure Key Vault")
         {
-            new Option<Uri>(
-                alias: "--vault-name",
-                description: "Key Vault name or URI, e.g. my-vault or https://my-vault-vault.azure.net",
-                parseArgument: result =>
+            Options =
+            {
+                new Option<Uri>("vaultUri", ["--vault-name"])
                 {
-                    string value = result.Tokens.Single().Value;
-                    if (Uri.TryCreate(value, UriKind.Absolute, out Uri vaultUri) ||
-                        Uri.TryCreate($"https://{value}.vault.azure.net", UriKind.Absolute, out vaultUri))
+                    Description = "Key Vault name or URI, e.g. my-vault or https://my-vault-vault.azure.net",
+                    Required = true,
+                    CustomParser = result =>
                     {
-                        return vaultUri;
+                        string value = result.Tokens.Single().Value;
+                        if (Uri.TryCreate(value, UriKind.Absolute, out Uri vaultUri) ||
+                            Uri.TryCreate($"https://{value}.vault.azure.net", UriKind.Absolute, out vaultUri))
+                        {
+                            return vaultUri;
+                        }
+
+                        result.AddError("Must specify a vault name or URI");
+                        return null;
                     }
+                },
 
-                    result.ErrorMessage = "Must specify a vault name or URI";
-                    return null!;
+                new Option<string>("certificateName", [ "-n", "--certificate-name"])
+                {
+                    Description = "Name of the certificate to use for encrypting and decrypting.",
+                    Required = true
+                },
+
+                new Option<string>("message", ["-m", "--message"])
+                {
+                    Description = "The message to encrypt and decrypt."
                 }
-            )
-            {
-                Name = "vaultUri",
-                IsRequired = true,
-            },
-
-            new Option<string>(
-                aliases: new[] { "-n", "--certificate-name" },
-                description: "Name of the certificate to use for encrypting and decrypting."
-            )
-            {
-                IsRequired = true,
-            },
-
-            new Option<string>(
-                aliases: new[] { "-m", "--message" },
-                description: "The message to encrypt and decrypt."
-            ),
+            }
         };
-
-        Command.Handler = CommandHandler.Create<Uri, string, string, IConsole>(RunAsync);
 
         s_cancellationTokenSource = new CancellationTokenSource();
     }
@@ -208,7 +202,24 @@ internal static class Program
             args.Cancel = true;
         };
 
-        return await Command.InvokeAsync(args);
+        ParseResult parseResult = Command.Parse(args);
+
+        if (parseResult.Errors.Count > 0)
+        {
+            foreach (var error in parseResult.Errors)
+            {
+                Console.Error.WriteLine(error.Message);
+            }
+
+            return 1;
+        }
+
+        await RunAsync(
+            parseResult.GetValue<Uri>("vaultUri"),
+            parseResult.GetValue<string>("certificateName"),
+            parseResult.GetValue<string>("message") ?? "Hello, World!");
+
+        return 0;
     }
     #endregion
 }

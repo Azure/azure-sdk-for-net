@@ -28,7 +28,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public EdgeConfigTemplateData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeConfigTemplateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeConfigTemplateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeConfigTemplateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeConfigTemplateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeConfigTemplateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -87,7 +90,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public EdgeConfigTemplateVersionData() { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateVersionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeConfigTemplateVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeConfigTemplateVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeConfigTemplateVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeConfigTemplateVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeConfigTemplateVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -130,7 +136,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     {
         public EdgeContextData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeContextData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeContextData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeContextData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeContextData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeContextData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -191,7 +200,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeDeploymentInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeDeploymentInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeDeploymentInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeDeploymentInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeDeploymentInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -219,7 +231,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceHistoryProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeDeploymentInstanceHistoryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeDeploymentInstanceHistoryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeDeploymentInstanceHistoryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeDeploymentInstanceHistoryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeDeploymentInstanceHistoryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -286,7 +301,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? EdgeDiagnosticProvisioningState { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeDiagnosticData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeDiagnosticData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeDiagnosticData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeDiagnosticData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeDiagnosticData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -340,7 +358,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public EdgeDynamicSchemaData() { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDynamicSchemaProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeDynamicSchemaData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeDynamicSchemaData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeDynamicSchemaData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeDynamicSchemaData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeDynamicSchemaData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -391,7 +412,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public EdgeDynamicSchemaVersionData() { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeDynamicSchemaVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeDynamicSchemaVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeDynamicSchemaVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeDynamicSchemaVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeDynamicSchemaVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -440,7 +464,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeExecutionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeExecutionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeExecutionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeExecutionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeExecutionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -486,7 +513,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         internal EdgeJobData() { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeJobData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeJobData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -530,7 +560,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public EdgeSchemaData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -540,6 +573,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     public partial class EdgeSchemaReferenceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceResource>, System.Collections.IEnumerable
     {
         protected EdgeSchemaReferenceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string schemaReferenceName, Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string schemaReferenceName, Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string schemaReferenceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string schemaReferenceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceResource> Get(string schemaReferenceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -554,10 +589,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     }
     public partial class EdgeSchemaReferenceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData>
     {
-        internal EdgeSchemaReferenceData() { }
+        public EdgeSchemaReferenceData() { }
         public Azure.ETag? ETag { get { throw null; } }
-        public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaReferenceProperties Properties { get { throw null; } }
+        public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaReferenceProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -571,6 +609,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public virtual Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri, string schemaReferenceName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -578,6 +618,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceResource> Update(Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceResource>> UpdateAsync(Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class EdgeSchemaResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaData>
     {
@@ -636,7 +678,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public EdgeSchemaVersionData() { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -683,7 +728,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     {
         public EdgeSiteReferenceData() { }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSiteReferenceProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSiteReferenceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSiteReferenceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSiteReferenceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSiteReferenceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSiteReferenceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -732,7 +780,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -786,7 +837,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public EdgeSolutionTemplateData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionTemplateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionTemplateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionTemplateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionTemplateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionTemplateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -845,7 +899,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public EdgeSolutionTemplateVersionData() { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionTemplateVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionTemplateVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionTemplateVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionTemplateVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionTemplateVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -894,7 +951,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -943,7 +1003,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeTargetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeTargetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeTargetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeTargetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeTargetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1015,7 +1078,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeWorkflowData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeWorkflowData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeWorkflowData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeWorkflowData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeWorkflowData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1067,7 +1133,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowVersionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.EdgeWorkflowVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeWorkflowVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.EdgeWorkflowVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.EdgeWorkflowVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.EdgeWorkflowVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1234,15 +1303,22 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public static partial class ArmWorkloadOrchestrationModelFactory
     {
         public static Azure.ResourceManager.WorkloadOrchestration.Models.AvailableSolutionTemplateVersion AvailableSolutionTemplateVersion(string solutionTemplateVersion = null, string latestConfigRevision = null, bool isConfigured = false) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeploySolutionContent BulkDeploySolutionContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeployTargetDetails> targets = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeployTargetDetails BulkDeployTargetDetails(Azure.Core.ResourceIdentifier solutionVersionId = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishSolutionContent BulkPublishSolutionContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishTargetDetails> targets = null, string solutionInstanceName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependencyContent> solutionDependencies = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishTargetDetails BulkPublishTargetDetails(Azure.Core.ResourceIdentifier targetId = null, string solutionInstanceName = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.ConfigTemplateVersionWithUpdateType ConfigTemplateVersionWithUpdateType(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType? updateType = default(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType?), string version = null, Azure.ResourceManager.WorkloadOrchestration.EdgeConfigTemplateVersionData configTemplateVersion = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.DeployJobContent DeployJobContent(Azure.Core.ResourceIdentifier parameterSolutionVersionId = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.DeployJobStepStatistics DeployJobStepStatistics(int? totalCount = default(int?), int? successCount = default(int?), int? failedCount = default(int?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeConfigTemplateData EdgeConfigTemplateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateProperties EdgeConfigTemplateProperties(string description = null, string latestVersion = null, Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplatePatch EdgeConfigTemplatePatch(System.Collections.Generic.IDictionary<string, string> tags = null, string configTemplateUpdateDescription = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateProperties EdgeConfigTemplateProperties(string description, string latestVersion, Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateProperties EdgeConfigTemplateProperties(string uniqueIdentifier = null, string description = null, string latestVersion = null, Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeConfigTemplateVersionData EdgeConfigTemplateVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateVersionProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateVersionProperties EdgeConfigTemplateVersionProperties(string configurations = null, Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeContextData EdgeContextData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatch EdgeContextPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatchProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatchProperties EdgeContextPatchProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.ContextCapability> capabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.ContextHierarchy> hierarchies = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextProperties EdgeContextProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.ContextCapability> capabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.ContextHierarchy> hierarchies = null, Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeDeploymentInstanceData EdgeDeploymentInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceProperties properties = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeDeploymentInstanceHistoryData EdgeDeploymentInstanceHistoryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceHistoryProperties properties = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
@@ -1250,6 +1326,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceProperties EdgeDeploymentInstanceProperties(string solutionVersionId = null, string targetId = null, Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState? activeState = default(Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState?), Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationPolicy reconciliationPolicy = null, string solutionScope = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentStatus status = null, long? deploymentTimestampEpoch = default(long?), Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentStatus EdgeDeploymentStatus(System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), int? deployed = default(int?), int? expectedRunningJobId = default(int?), int? runningJobId = default(int?), string status = null, string statusDetails = null, int? generation = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetStatus> targetStatuses = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeDiagnosticData EdgeDiagnosticData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? edgeDiagnosticProvisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatch EdgeDiagnosticPatch(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatchProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeDynamicSchemaData EdgeDynamicSchemaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDynamicSchemaProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDynamicSchemaProperties EdgeDynamicSchemaProperties(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType? configurationType = default(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType?), Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType? configurationModel = default(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType?), Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeDynamicSchemaVersionData EdgeDynamicSchemaVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
@@ -1261,6 +1338,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobProperties EdgeJobProperties(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType jobType = default(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus status = default(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus), Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobContent jobParameter = null, string correlationId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStep> steps = null, string triggeredBy = null, Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?), Azure.ResponseError errorDetails = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStep EdgeJobStep(string name = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus status = default(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string message = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStepStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStep> steps = null, Azure.ResponseError errorDetails = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaData EdgeSchemaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatch EdgeSchemaPatch(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatchProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaProperties EdgeSchemaProperties(string currentVersion = null, Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaReferenceData EdgeSchemaReferenceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaReferenceProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaReferenceProperties EdgeSchemaReferenceProperties(string schemaId = null, Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
@@ -1271,23 +1349,34 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSiteReferenceProperties EdgeSiteReferenceProperties(string siteId = null, Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionData EdgeSolutionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionProperties properties = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependency EdgeSolutionDependency(Azure.Core.ResourceIdentifier solutionVersionId = null, string solutionInstanceName = null, Azure.Core.ResourceIdentifier solutionTemplateVersionId = null, Azure.Core.ResourceIdentifier targetId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependency> dependencies = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependencyContent EdgeSolutionDependencyContent(Azure.Core.ResourceIdentifier solutionVersionId = null, Azure.Core.ResourceIdentifier solutionTemplateId = null, string solutionTemplateVersion = null, string solutionInstanceName = null, Azure.Core.ResourceIdentifier targetId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependencyContent> dependencies = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionProperties EdgeSolutionProperties(string solutionTemplateId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.AvailableSolutionTemplateVersion> availableSolutionTemplateVersions = null, Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateContent EdgeSolutionTemplateContent(Azure.Core.ResourceIdentifier solutionTemplateVersionId = null, string solutionInstanceName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependencyContent> solutionDependencies = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionTemplateData EdgeSolutionTemplateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateProperties EdgeSolutionTemplateProperties(string description = null, System.Collections.Generic.IEnumerable<string> capabilities = null, string latestVersion = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState? state = default(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState?), bool? isExternalValidationEnabled = default(bool?), Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatch EdgeSolutionTemplatePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatchProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatchProperties EdgeSolutionTemplatePatchProperties(string description = null, System.Collections.Generic.IEnumerable<string> capabilities = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState? state = default(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState?), bool? isExternalValidationEnabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateProperties EdgeSolutionTemplateProperties(string description, System.Collections.Generic.IEnumerable<string> capabilities, string latestVersion, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState? state, bool? isExternalValidationEnabled, Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateProperties EdgeSolutionTemplateProperties(string uniqueIdentifier = null, string description = null, System.Collections.Generic.IEnumerable<string> capabilities = null, string latestVersion = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState? state = default(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState?), bool? isExternalValidationEnabled = default(bool?), Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionTemplateVersionData EdgeSolutionTemplateVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionProperties EdgeSolutionTemplateVersionProperties(string configurations = null, System.Collections.Generic.IDictionary<string, System.BinaryData> specification = null, Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionOrchestratorType? orchestratorType = default(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionOrchestratorType?), Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionWithUpdateType EdgeSolutionTemplateVersionWithUpdateType(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType? updateType = default(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType?), string version = null, Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionTemplateVersionData solutionTemplateVersion = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionContent EdgeSolutionVersionContent(Azure.Core.ResourceIdentifier solutionVersionId = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionVersionData EdgeSolutionVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionProperties properties = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionProperties EdgeSolutionVersionProperties(string solutionTemplateVersionId = null, int? revision = default(int?), string targetDisplayName = null, string configuration = null, string targetLevelConfiguration = null, System.Collections.Generic.IDictionary<string, System.BinaryData> specification = null, string reviewId = null, string externalValidationId = null, Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState? state = default(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState?), string solutionInstanceName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependency> solutionDependencies = null, Azure.ResponseError errorDetails = null, string latestActionTrackingUri = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType? actionType = default(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType?), Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeTargetData EdgeTargetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetProperties properties = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatch EdgeTargetPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatchProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatchProperties EdgeTargetPatchProperties(string description = null, string displayName = null, Azure.Core.ResourceIdentifier contextId = null, System.Collections.Generic.IDictionary<string, System.BinaryData> targetSpecification = null, System.Collections.Generic.IEnumerable<string> capabilities = null, string hierarchyLevel = null, string solutionScope = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState? state = default(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetProperties EdgeTargetProperties(string description = null, string displayName = null, Azure.Core.ResourceIdentifier contextId = null, System.Collections.Generic.IDictionary<string, System.BinaryData> targetSpecification = null, System.Collections.Generic.IEnumerable<string> capabilities = null, string hierarchyLevel = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentStatus status = null, string solutionScope = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState? state = default(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState?), Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetSnapshot EdgeTargetSnapshot(Azure.Core.ResourceIdentifier targetId = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> targetSpecification = null, string solutionScope = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetStatus EdgeTargetStatus(string name = null, string status = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.TargetComponentStatus> componentStatuses = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeVersionContent EdgeVersionContent(string version = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeWorkflowData EdgeWorkflowData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowProperties properties = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowProperties EdgeWorkflowProperties(string workflowTemplateId = null, Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowStageSpec EdgeWorkflowStageSpec(string name = null, System.Collections.Generic.IDictionary<string, System.BinaryData> specification = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskSpec> tasks = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskConfig taskOption = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskSpec EdgeWorkflowTaskSpec(string name = null, Azure.Core.ResourceIdentifier targetId = null, System.Collections.Generic.IDictionary<string, System.BinaryData> specification = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.EdgeWorkflowVersionData EdgeWorkflowVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowVersionProperties properties = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowVersionProperties EdgeWorkflowVersionProperties(int? revision = default(int?), string configuration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowStageSpec> stageSpec = null, string reviewId = null, Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState? state = default(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState?), System.Collections.Generic.IDictionary<string, System.BinaryData> specification = null, Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.WorkloadOrchestration.Models.RemoveRevisionContent RemoveRevisionContent(Azure.Core.ResourceIdentifier solutionTemplateId = null, string solutionVersion = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.RemoveVersionResult RemoveVersionResult(string status = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.ResolvedConfiguration ResolvedConfiguration(string configuration = null) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionSnapshot SolutionVersionSnapshot(Azure.Core.ResourceIdentifier solutionVersionId = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> specification = null) { throw null; }
@@ -1301,7 +1390,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public bool IsConfigured { get { throw null; } }
         public string LatestConfigRevision { get { throw null; } }
         public string SolutionTemplateVersion { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.AvailableSolutionTemplateVersion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.AvailableSolutionTemplateVersion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.AvailableSolutionTemplateVersion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.AvailableSolutionTemplateVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.AvailableSolutionTemplateVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.AvailableSolutionTemplateVersion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.AvailableSolutionTemplateVersion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1312,7 +1404,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     {
         public BulkDeploySolutionContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeployTargetDetails> targets) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeployTargetDetails> Targets { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeploySolutionContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeploySolutionContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeploySolutionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeploySolutionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeploySolutionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeploySolutionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeploySolutionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1323,7 +1418,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     {
         public BulkDeployTargetDetails(Azure.Core.ResourceIdentifier solutionVersionId) { }
         public Azure.Core.ResourceIdentifier SolutionVersionId { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeployTargetDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeployTargetDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeployTargetDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeployTargetDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeployTargetDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeployTargetDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.BulkDeployTargetDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1336,7 +1434,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependencyContent> SolutionDependencies { get { throw null; } }
         public string SolutionInstanceName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishTargetDetails> Targets { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishSolutionContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishSolutionContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishSolutionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishSolutionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishSolutionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishSolutionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishSolutionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1348,7 +1449,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public BulkPublishTargetDetails(Azure.Core.ResourceIdentifier targetId) { }
         public string SolutionInstanceName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetId { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishTargetDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishTargetDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishTargetDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishTargetDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishTargetDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishTargetDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.BulkPublishTargetDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1361,7 +1465,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public Azure.ResourceManager.WorkloadOrchestration.EdgeConfigTemplateVersionData ConfigTemplateVersion { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType? UpdateType { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.ConfigTemplateVersionWithUpdateType JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.ConfigTemplateVersionWithUpdateType PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.ConfigTemplateVersionWithUpdateType System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.ConfigTemplateVersionWithUpdateType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.ConfigTemplateVersionWithUpdateType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.ConfigTemplateVersionWithUpdateType System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.ConfigTemplateVersionWithUpdateType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1374,7 +1481,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public string Description { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState? State { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.ContextCapability JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.ContextCapability PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.ContextCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.ContextCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.ContextCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.ContextCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.ContextCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1386,7 +1496,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public ContextHierarchy(string name, string description) { }
         public string Description { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.ContextHierarchy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.ContextHierarchy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.ContextHierarchy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.ContextHierarchy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.ContextHierarchy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.ContextHierarchy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.ContextHierarchy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1397,7 +1510,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     {
         internal DeployJobContent() { }
         public Azure.Core.ResourceIdentifier ParameterSolutionVersionId { get { throw null; } }
+        protected override Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.DeployJobContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.DeployJobContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.DeployJobContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.DeployJobContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.DeployJobContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1410,7 +1526,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public int? FailedCount { get { throw null; } }
         public int? SuccessCount { get { throw null; } }
         public int? TotalCount { get { throw null; } }
+        protected override Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStepStatistics JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStepStatistics PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.DeployJobStepStatistics System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.DeployJobStepStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.DeployJobStepStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.DeployJobStepStatistics System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.DeployJobStepStatistics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1422,7 +1541,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public EdgeConfigTemplatePatch() { }
         public string ConfigTemplateUpdateDescription { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplatePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplatePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplatePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplatePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplatePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplatePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplatePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1435,7 +1557,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public string Description { get { throw null; } set { } }
         public string LatestVersion { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? ProvisioningState { get { throw null; } }
+        public string UniqueIdentifier { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1447,7 +1573,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public EdgeConfigTemplateVersionProperties(string configurations) { }
         public string Configurations { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateVersionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateVersionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateVersionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateVersionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateVersionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateVersionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeConfigTemplateVersionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1459,7 +1588,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public EdgeContextPatch() { }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1471,7 +1603,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public EdgeContextPatchProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.WorkloadOrchestration.Models.ContextCapability> Capabilities { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.WorkloadOrchestration.Models.ContextHierarchy> Hierarchies { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1484,7 +1619,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.WorkloadOrchestration.Models.ContextCapability> Capabilities { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.WorkloadOrchestration.Models.ContextHierarchy> Hierarchies { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeContextProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1501,7 +1639,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionSnapshot SolutionVersion { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentStatus Status { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetSnapshot Target { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceHistoryProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceHistoryProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceHistoryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceHistoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceHistoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceHistoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceHistoryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1519,7 +1660,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public string SolutionVersionId { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentStatus Status { get { throw null; } }
         public string TargetId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentInstanceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1537,7 +1681,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public string Status { get { throw null; } }
         public string StatusDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetStatus> TargetStatuses { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1549,7 +1696,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public EdgeDiagnosticPatch() { }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1559,7 +1709,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public partial class EdgeDiagnosticPatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatchProperties>
     {
         public EdgeDiagnosticPatchProperties() { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDiagnosticPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1572,7 +1725,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType? ConfigurationModel { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType? ConfigurationType { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDynamicSchemaProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDynamicSchemaProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDynamicSchemaProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDynamicSchemaProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDynamicSchemaProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDynamicSchemaProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDynamicSchemaProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1586,7 +1742,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Specification { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionStatus Status { get { throw null; } }
         public string WorkflowVersionId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1604,7 +1763,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public string Stage { get { throw null; } }
         public int? Status { get { throw null; } }
         public string StatusMessage { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionStageStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionStageStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionStageStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionStageStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionStageStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionStageStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionStageStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1618,7 +1780,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public int? Status { get { throw null; } }
         public string StatusMessage { get { throw null; } }
         public System.DateTimeOffset? UpdateOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeExecutionStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1628,7 +1793,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public abstract partial class EdgeJobContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobContent>
     {
         protected EdgeJobContent() { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1648,7 +1816,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStep> Steps { get { throw null; } }
         public string TriggeredBy { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1666,12 +1837,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus NotStarted { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1686,7 +1856,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStepStatistics Statistics { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStep> Steps { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStep JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStep PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStep System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStep>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStep>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStep System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStep>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1696,7 +1869,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public abstract partial class EdgeJobStepStatistics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStepStatistics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStepStatistics>
     {
         protected EdgeJobStepStatistics() { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStepStatistics JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStepStatistics PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStepStatistics System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStepStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStepStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStepStatistics System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStepStatistics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1713,12 +1889,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType ExternalValidation { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType Staging { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1731,12 +1906,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState Active { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1749,12 +1923,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType Application { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType Common { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1767,12 +1940,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType Hierarchy { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType Shared { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1781,7 +1953,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public EdgeSchemaPatch() { }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1791,7 +1966,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public partial class EdgeSchemaPatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatchProperties>
     {
         public EdgeSchemaPatchProperties() { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1803,7 +1981,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public EdgeSchemaProperties() { }
         public string CurrentVersion { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1812,10 +1993,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     }
     public partial class EdgeSchemaReferenceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaReferenceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaReferenceProperties>
     {
-        internal EdgeSchemaReferenceProperties() { }
+        public EdgeSchemaReferenceProperties(string schemaId) { }
         public Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? ProvisioningState { get { throw null; } }
-        public string SchemaId { get { throw null; } }
+        public string SchemaId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaReferenceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaReferenceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaReferenceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaReferenceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaReferenceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaReferenceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaReferenceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1827,7 +2011,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public EdgeSchemaVersionProperties(string value) { }
         public Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? ProvisioningState { get { throw null; } }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1840,7 +2027,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public Azure.ResourceManager.WorkloadOrchestration.EdgeSchemaVersionData SchemaVersion { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType? UpdateType { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionWithUpdateType JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionWithUpdateType PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionWithUpdateType System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionWithUpdateType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionWithUpdateType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionWithUpdateType System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaVersionWithUpdateType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1852,7 +2042,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public EdgeSiteReferenceProperties(string siteId) { }
         public Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? ProvisioningState { get { throw null; } }
         public string SiteId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSiteReferenceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSiteReferenceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSiteReferenceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSiteReferenceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSiteReferenceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSiteReferenceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSiteReferenceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1867,7 +2060,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public Azure.Core.ResourceIdentifier SolutionTemplateVersionId { get { throw null; } }
         public Azure.Core.ResourceIdentifier SolutionVersionId { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetId { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependency JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependency PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependency System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependency>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependency>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependency System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependency>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1883,7 +2079,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public string SolutionTemplateVersion { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SolutionVersionId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependencyContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependencyContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependencyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependencyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependencyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependencyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependencyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1894,7 +2093,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     {
         public EdgeSolutionPatch() { }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatchProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1904,7 +2106,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public partial class EdgeSolutionPatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatchProperties>
     {
         public EdgeSolutionPatchProperties() { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1917,7 +2122,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.WorkloadOrchestration.Models.AvailableSolutionTemplateVersion> AvailableSolutionTemplateVersions { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? ProvisioningState { get { throw null; } }
         public string SolutionTemplateId { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1930,7 +2138,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionDependencyContent> SolutionDependencies { get { throw null; } }
         public string SolutionInstanceName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SolutionTemplateVersionId { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1942,7 +2153,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public EdgeSolutionTemplatePatch() { }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1956,7 +2170,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public string Description { get { throw null; } set { } }
         public bool? IsExternalValidationEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState? State { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplatePatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1972,7 +2189,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public string LatestVersion { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState? State { get { throw null; } set { } }
+        public string UniqueIdentifier { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1986,7 +2207,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionOrchestratorType? OrchestratorType { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Specification { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1999,7 +2223,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public Azure.ResourceManager.WorkloadOrchestration.EdgeSolutionTemplateVersionData SolutionTemplateVersion { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType? UpdateType { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionWithUpdateType JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionWithUpdateType PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionWithUpdateType System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionWithUpdateType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionWithUpdateType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionWithUpdateType System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionTemplateVersionWithUpdateType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2010,7 +2237,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     {
         public EdgeSolutionVersionContent(Azure.Core.ResourceIdentifier solutionVersionId) { }
         public Azure.Core.ResourceIdentifier SolutionVersionId { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2035,7 +2265,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState? State { get { throw null; } }
         public string TargetDisplayName { get { throw null; } }
         public string TargetLevelConfiguration { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSolutionVersionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2047,7 +2280,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public EdgeTargetPatch() { }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2065,7 +2301,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public string SolutionScope { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState? State { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> TargetSpecification { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2085,7 +2324,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState? State { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeDeploymentStatus Status { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> TargetSpecification { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2098,7 +2340,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public string SolutionScope { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> TargetSpecification { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetSnapshot JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetSnapshot PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetSnapshot System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetSnapshot>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetSnapshot>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetSnapshot System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetSnapshot>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2111,7 +2356,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.WorkloadOrchestration.Models.TargetComponentStatus> ComponentStatuses { get { throw null; } }
         public string Name { get { throw null; } }
         public string Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeTargetStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2128,12 +2376,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType Minor { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType Patch { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2141,7 +2388,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     {
         public EdgeVersionContent(string version) { }
         public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeVersionContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeVersionContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeVersionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeVersionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeVersionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeVersionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeVersionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2153,7 +2403,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public EdgeWorkflowProperties() { }
         public Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? ProvisioningState { get { throw null; } }
         public string WorkflowTemplateId { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2167,7 +2420,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Specification { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskConfig TaskOption { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskSpec> Tasks { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowStageSpec JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowStageSpec PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowStageSpec System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowStageSpec>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowStageSpec>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowStageSpec System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowStageSpec>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2179,7 +2435,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public EdgeWorkflowTaskConfig() { }
         public int? Concurrency { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorAction ErrorAction { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2192,7 +2451,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Specification { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskSpec JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskSpec PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskSpec System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskSpec>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskSpec>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskSpec System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowTaskSpec>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2209,7 +2471,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Specification { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowStageSpec> StageSpec { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState? State { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowVersionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowVersionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowVersionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowVersionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowVersionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowVersionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.EdgeWorkflowVersionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2220,7 +2485,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     {
         public InstallSolutionContent(Azure.Core.ResourceIdentifier solutionVersionId) { }
         public Azure.Core.ResourceIdentifier SolutionVersionId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.InstallSolutionContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.InstallSolutionContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.InstallSolutionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.InstallSolutionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.InstallSolutionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.InstallSolutionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.InstallSolutionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2236,12 +2504,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState Active { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState left, Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState left, Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2250,7 +2517,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public InstanceReconciliationPolicy(Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState state, string interval) { }
         public string Interval { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState State { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2266,12 +2536,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState Active { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState left, Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState left, Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2280,7 +2549,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public RemoveRevisionContent(Azure.Core.ResourceIdentifier solutionTemplateId, string solutionVersion) { }
         public Azure.Core.ResourceIdentifier SolutionTemplateId { get { throw null; } }
         public string SolutionVersion { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.RemoveRevisionContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.RemoveRevisionContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.RemoveRevisionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.RemoveRevisionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.RemoveRevisionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.RemoveRevisionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.RemoveRevisionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2291,7 +2563,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     {
         internal RemoveVersionResult() { }
         public string Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.RemoveVersionResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.RemoveVersionResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.RemoveVersionResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.RemoveVersionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.RemoveVersionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.RemoveVersionResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.RemoveVersionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2302,7 +2577,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     {
         internal ResolvedConfiguration() { }
         public string Configuration { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.ResolvedConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.ResolvedConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.ResolvedConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.ResolvedConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.ResolvedConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.ResolvedConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.ResolvedConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2327,12 +2605,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState Undeployed { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState UpgradeInReview { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState left, Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState left, Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2345,12 +2622,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceValidationStatus Invalid { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceValidationStatus Valid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceValidationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceValidationStatus left, Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceValidationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceValidationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceValidationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceValidationStatus left, Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceValidationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2362,12 +2638,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public SolutionVersionOrchestratorType(string value) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionOrchestratorType TO { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionOrchestratorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionOrchestratorType left, Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionOrchestratorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionOrchestratorType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionOrchestratorType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionOrchestratorType left, Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionOrchestratorType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2376,7 +2651,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         internal SolutionVersionSnapshot() { }
         public Azure.Core.ResourceIdentifier SolutionVersionId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Specification { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionSnapshot JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionSnapshot PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionSnapshot System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionSnapshot>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionSnapshot>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionSnapshot System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionSnapshot>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2388,7 +2666,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         internal TargetComponentStatus() { }
         public string Name { get { throw null; } }
         public string Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.TargetComponentStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.TargetComponentStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.TargetComponentStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.TargetComponentStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.TargetComponentStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.TargetComponentStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.TargetComponentStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2400,7 +2681,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public TaskErrorAction() { }
         public int? MaxToleratedFailures { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorActionModeType? Mode { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2417,12 +2701,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorActionModeType StopOnAnyFailure { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorActionModeType StopOnNFailures { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorActionModeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorActionModeType left, Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorActionModeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorActionModeType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorActionModeType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorActionModeType left, Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorActionModeType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2431,7 +2714,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public UninstallSolutionContent(Azure.Core.ResourceIdentifier solutionTemplateId) { }
         public string SolutionInstanceName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SolutionTemplateId { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.UninstallSolutionContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.UninstallSolutionContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.UninstallSolutionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.UninstallSolutionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.UninstallSolutionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.UninstallSolutionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.UninstallSolutionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2445,7 +2731,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public string ExternalValidationId { get { throw null; } }
         public Azure.Core.ResourceIdentifier SolutionVersionId { get { throw null; } }
         public Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceValidationStatus ValidationStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.UpdateExternalValidationStatusContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.WorkloadOrchestration.Models.UpdateExternalValidationStatusContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.WorkloadOrchestration.Models.UpdateExternalValidationStatusContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.UpdateExternalValidationStatusContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadOrchestration.Models.UpdateExternalValidationStatusContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadOrchestration.Models.UpdateExternalValidationStatusContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadOrchestration.Models.UpdateExternalValidationStatusContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2465,12 +2754,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState Inprogress { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState left, Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState left, Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }

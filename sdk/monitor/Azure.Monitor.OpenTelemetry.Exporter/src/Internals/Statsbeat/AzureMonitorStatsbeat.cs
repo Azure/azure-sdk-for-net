@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
@@ -26,8 +27,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         private string? _resourceProvider;
 
         private static string? s_runtimeVersion => SdkVersionUtils.GetVersion(typeof(object));
-
-        private static string? s_sdkVersion => SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter));
 
         private static bool s_hasSdkPrefix => SdkVersionUtils.SdkVersionPrefix != null;
 
@@ -73,6 +72,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.AttachStatsbeatInterval)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
+
+            // Wait 1 minute before sending the startup SDK stats attach signal to ensure we don't collect data from very short-lived apps that could spam the stats.
+            // If the version information is not yet available, wait up to five minutes - it really should be done in one minute or less
+            // (whenever the first Export call occurs, and otel does metrics at least once a minute).
+            // After the first attach metric emission, the AttachStatsbeatInterval above (24 hours by default) takes over sending metrics.
+            _ = Task.Run(async () =>
+            {
+                DateTime giveUpTime = DateTime.Now.AddMinutes(5);
+                do
+                {
+                    await Task.Delay(TimeSpan.FromMinutes(1)).ConfigureAwait(false);
+                    if (SdkVersionUtils.IsHydrated)
+                        break;
+                } while (!SdkVersionUtils.IsHydrated && giveUpTime > DateTime.Now);
+
+                _attachStatsbeatMeterProvider?.ForceFlush();
+            });
         }
 
         internal static string? GetStatsbeatConnectionString(string ingestionEndpoint)
@@ -112,7 +128,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                         new("cikey", _customer_Ikey),
                         new("runtimeVersion", s_runtimeVersion),
                         new("language", "dotnet"),
-                        new("version", s_sdkVersion),
+                        // We don't memoize this version because it can be updated up to a minute into the application startup
+                        new("version", SdkVersionUtils.GetVersion()),
                         new("os", s_operatingSystem));
             }
             catch (Exception ex)

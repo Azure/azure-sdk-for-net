@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.EdgeZones;
 
 namespace Azure.ResourceManager.EdgeZones.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableEdgeZonesArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableEdgeZonesArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableEdgeZonesArmClient for mocking. </summary>
         protected MockableEdgeZonesArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableEdgeZonesArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableEdgeZonesArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableEdgeZonesArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableEdgeZonesArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ExtendedZoneResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExtendedZoneResource.CreateResourceIdentifier" /> to create an <see cref="ExtendedZoneResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ExtendedZoneResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExtendedZoneResource"/> object. </returns>
         public virtual ExtendedZoneResource GetExtendedZoneResource(ResourceIdentifier id)

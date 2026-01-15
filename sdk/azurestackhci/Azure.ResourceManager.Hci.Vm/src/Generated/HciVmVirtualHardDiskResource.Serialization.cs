@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
+    /// <summary></summary>
     public partial class HciVmVirtualHardDiskResource : IJsonModel<HciVmVirtualHardDiskData>
     {
-        private static HciVmVirtualHardDiskData s_dataDeserializationInstance;
-        private static HciVmVirtualHardDiskData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HciVmVirtualHardDiskData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HciVmVirtualHardDiskData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HciVmVirtualHardDiskData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmVirtualHardDiskData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciVmVirtualHardDiskData>)Data).Write(writer, options);
 
-        HciVmVirtualHardDiskData IJsonModel<HciVmVirtualHardDiskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciVmVirtualHardDiskData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciVmVirtualHardDiskData IJsonModel<HciVmVirtualHardDiskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HciVmVirtualHardDiskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciVmVirtualHardDiskData>(Data, options, AzureResourceManagerHciVmContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HciVmVirtualHardDiskData IPersistableModel<HciVmVirtualHardDiskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciVmVirtualHardDiskData>(data, options, AzureResourceManagerHciVmContext.Default);
 
-        string IPersistableModel<HciVmVirtualHardDiskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciVmVirtualHardDiskData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciVmVirtualHardDiskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

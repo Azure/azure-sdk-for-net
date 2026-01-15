@@ -20,20 +20,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
         /// <returns>TagList with common dimensions</returns>
         public static TagList GetBaseTags(string telemetryType)
         {
-            var language = SdkVersionUtils.VersionType switch
-            {
-                SdkVersionType.Distro => "dotnet-distro",
-                SdkVersionType.ShimBase => "dotnet-shim",
-                SdkVersionType.ShimAspNetCore => "dotnet-core",
-                SdkVersionType.ShimWorkerService => "dotnet-worker",
-                SdkVersionType.ShimWeb => "dotnet-web",
-                _ => "dotnet-exp"
-            };
-
             return new TagList
             {
-                { "language", language },
-                { "version", SdkVersionUtils.ExtensionsVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength) },
+                { "language", "dotnet" },
+                { "version", SdkVersionUtils.ExtensionVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength) },
                 { "computeType", GetComputeType() },
                 { "telemetry_type", telemetryType }
             };

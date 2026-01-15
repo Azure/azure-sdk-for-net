@@ -88,7 +88,6 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Retrieves details about given subscription which is associated with the management group.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -130,7 +129,6 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Retrieves details about given subscription which is associated with the management group.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -142,7 +140,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -172,7 +170,6 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// De-associates subscription from the management group.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -184,7 +181,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -218,7 +215,6 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// De-associates subscription from the management group.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -230,7 +226,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -264,7 +260,6 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Associates existing subscription with the management group.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -276,7 +271,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -310,7 +305,6 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary>
         /// Associates existing subscription with the management group.
-        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -322,7 +316,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-04-01</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

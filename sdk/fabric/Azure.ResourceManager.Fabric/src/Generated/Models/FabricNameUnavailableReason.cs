@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Fabric;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Fabric.Models
     public readonly partial struct FabricNameUnavailableReason : IEquatable<FabricNameUnavailableReason>
     {
         private readonly string _value;
+        /// <summary> Name is invalid. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> Name already exists. </summary>
+        private const string AlreadyExistsValue = "AlreadyExists";
 
         /// <summary> Initializes a new instance of <see cref="FabricNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FabricNameUnavailableReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InvalidValue = "Invalid";
-        private const string AlreadyExistsValue = "AlreadyExists";
+            _value = value;
+        }
 
         /// <summary> Name is invalid. </summary>
         public static FabricNameUnavailableReason Invalid { get; } = new FabricNameUnavailableReason(InvalidValue);
+
         /// <summary> Name already exists. </summary>
         public static FabricNameUnavailableReason AlreadyExists { get; } = new FabricNameUnavailableReason(AlreadyExistsValue);
+
         /// <summary> Determines if two <see cref="FabricNameUnavailableReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FabricNameUnavailableReason left, FabricNameUnavailableReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FabricNameUnavailableReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FabricNameUnavailableReason left, FabricNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FabricNameUnavailableReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FabricNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FabricNameUnavailableReason(string value) => new FabricNameUnavailableReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FabricNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FabricNameUnavailableReason?(string value) => value == null ? null : new FabricNameUnavailableReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FabricNameUnavailableReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FabricNameUnavailableReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
