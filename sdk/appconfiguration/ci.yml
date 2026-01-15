@@ -12,19 +12,6 @@ trigger:
     exclude:
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/appconfiguration/
-    exclude:
-    - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/
-
 # These comments should stay.
 
 extends:

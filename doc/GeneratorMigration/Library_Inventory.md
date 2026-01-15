@@ -14,13 +14,13 @@
 
 - Total libraries: 401
 - Management Plane (MPG): 227
-  - Autorest/Swagger: 155
-  - New Emitter (TypeSpec): 54
+  - Autorest/Swagger: 154
+  - New Emitter (TypeSpec): 55
   - Old TypeSpec: 18
 - Data Plane (DPG): 174
   - Autorest/Swagger: 87
-  - New Emitter (TypeSpec): 22
-  - Old TypeSpec: 16
+  - New Emitter (TypeSpec): 23
+  - Old TypeSpec: 15
 - No generator: 49
 
 
@@ -28,7 +28,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 22 / 38 (57.9%)
+**Migration Status**: 23 / 38 (60.5%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -40,7 +40,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | batch | Azure.Compute.Batch | ✅ |
 | cognitivelanguage | Azure.AI.Language.Conversations |  |
 | cognitivelanguage | Azure.AI.Language.Conversations.Authoring |  |
-| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring |  |
+| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring | ✅ |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference |  |
 | cognitivelanguage | Azure.AI.Language.Text |  |
 | cognitivelanguage | Azure.AI.Language.Text.Authoring |  |
@@ -171,7 +171,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 87
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 54 / 72 (75%)
+**Migration Status**: 55 / 73 (75.3%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -230,6 +230,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | quota | Azure.ResourceManager.Quota | ✅ |
 | recoveryservices | Azure.ResourceManager.RecoveryServices |  |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication |  |
+| resourceconnector | Azure.ResourceManager.ResourceConnector | ✅ |
 | resources | Azure.ResourceManager.Resources.Bicep |  |
 | secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | ✅ |
 | selfhelp | Azure.ResourceManager.SelfHelp |  |
@@ -251,7 +252,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 155
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 154
 
 | Service | Library |
 | ------- | ------- |
@@ -377,7 +378,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | redisenterprise | Azure.ResourceManager.RedisEnterprise |
 | relay | Azure.ResourceManager.Relay |
 | reservations | Azure.ResourceManager.Reservations |
-| resourceconnector | Azure.ResourceManager.ResourceConnector |
 | resourcegraph | Azure.ResourceManager.ResourceGraph |
 | resourcehealth | Azure.ResourceManager.ResourceHealth |
 | resourcemanager | Azure.ResourceManager |
