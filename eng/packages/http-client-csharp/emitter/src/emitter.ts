@@ -64,6 +64,9 @@ async function generateMetadataFile(context: EmitContext<AzureEmitterOptions>): 
     "api-version": apiVersion || "not-specified"
   };
 
-  const outputPath = resolvePath(context.emitterOutputDir, "Generated", "metadata.json");
+  const generatedDir = resolvePath(context.emitterOutputDir, "Generated");
+  await context.program.host.mkdirp(generatedDir);
+  
+  const outputPath = resolvePath(generatedDir, "metadata.json");
   await context.program.host.writeFile(outputPath, JSON.stringify(metadata, null, 2));
 }

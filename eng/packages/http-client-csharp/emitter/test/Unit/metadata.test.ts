@@ -12,6 +12,7 @@ import { strictEqual, ok } from "assert";
 describe("Metadata generation tests", async () => {
   let program: Program;
   let writeFileMock: any;
+  let mkdirpMock: any;
 
   beforeEach(async () => {
     const runner = await createEmitterTestHost();
@@ -28,12 +29,14 @@ describe("Metadata generation tests", async () => {
       runner
     );
     
-    // Mock the file writing to capture what would be written
+    // Mock the file writing and directory creation to capture what would be written
     writeFileMock = vi.fn().mockResolvedValue(undefined);
+    mkdirpMock = vi.fn().mockResolvedValue(undefined);
     const originalHost = program.host;
     program.host = {
       ...originalHost,
-      writeFile: writeFileMock
+      writeFile: writeFileMock,
+      mkdirp: mkdirpMock
     };
     
     vi.mock("@typespec/http-client-csharp", async (importOriginal) => {
@@ -55,6 +58,11 @@ describe("Metadata generation tests", async () => {
     const context = createEmitterContext(program, options);
     
     await $onEmit(context);
+    
+    // Check that mkdirp was called for the Generated directory
+    strictEqual(mkdirpMock.mock.calls.length, 1);
+    const mkdirPath = mkdirpMock.mock.calls[0][0];
+    ok(mkdirPath.includes("Generated"));
     
     // Check that metadata file was written
     const metadataCalls = writeFileMock.mock.calls.filter((call: any) => 
