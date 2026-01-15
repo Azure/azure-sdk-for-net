@@ -37,6 +37,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
   - [Memory store operations](#memory-store-operations)
   - [Evaluations](#evalustions)
     - [Basic evaluations sample](#basic-evaluations-sample)
+    - [Using uploaded datasets](#using-uploaded-datasets)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -817,6 +818,38 @@ private static async Task<List<string>> GetResultsListAsync(EvaluationClient cli
     } while (hasMore);
     return resultJsons;
 }
+```
+
+#### Using uploaded datasets
+
+To use the uploaded data set with evaluations please upload the data set as described in [dataset operations](#dataset-operations) section and
+use uploaded data set ID while creating data source object.
+
+```C# Snippet:Sample_CreateDataSource_EvaluationsWithDataSetID
+object dataSource = new
+{
+    type = "jsonl",
+    source = new
+    {
+        type = "file_id",
+        id = fileDataset.Id
+    },
+};
+object runMetadata = new
+{
+    team = "evaluator-experimentation",
+    scenario = "dataset-with-id",
+};
+BinaryData runData = BinaryData.FromObjectAsJson(
+    new
+    {
+        eval_id = evaluationId,
+        name = $"Evaluation Run for dataset {fileDataset.Name}",
+        metadata = runMetadata,
+        data_source = dataSource
+    }
+);
+using BinaryContent runDataContent = BinaryContent.Create(runData);
 ```
 
 ## Troubleshooting
