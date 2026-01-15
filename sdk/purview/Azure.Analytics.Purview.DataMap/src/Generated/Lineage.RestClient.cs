@@ -17,7 +17,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        internal HttpMessage CreateGetRequest(string guid, string direction, int? depth, RequestContext context)
+        internal HttpMessage CreateGetLineageRequest(string guid, string direction, int? depth, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -146,7 +146,7 @@ namespace Azure.Analytics.Purview.DataMap
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
+        internal HttpMessage CreateGetEntityRequest(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -52,7 +52,7 @@ namespace Azure.Analytics.Purview.DataMap
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string guid, bool? extendedInfo, RequestContext context)
+        internal HttpMessage CreateGetRelationshipRequest(string guid, bool? extendedInfo, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

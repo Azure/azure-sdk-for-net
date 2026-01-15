@@ -444,7 +444,7 @@ namespace Azure.Analytics.Purview.DataMap
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string glossaryId, RequestContext context)
+        internal HttpMessage CreateGetGlossaryRequest(string glossaryId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

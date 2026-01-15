@@ -2162,15 +2162,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Get(string glossaryId, RequestContext context)
+        public virtual Response GetGlossary(string glossaryId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.Get");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetGlossary");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-                using HttpMessage message = CreateGetRequest(glossaryId, context);
+                using HttpMessage message = CreateGetGlossaryRequest(glossaryId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2194,15 +2194,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAsync(string glossaryId, RequestContext context)
+        public virtual async Task<Response> GetGlossaryAsync(string glossaryId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.Get");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Glossary.GetGlossary");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-                using HttpMessage message = CreateGetRequest(glossaryId, context);
+                using HttpMessage message = CreateGetGlossaryRequest(glossaryId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2218,11 +2218,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasGlossary> Get(string glossaryId, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasGlossary> GetGlossary(string glossaryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            Response result = Get(glossaryId, cancellationToken.ToRequestContext());
+            Response result = GetGlossary(glossaryId, cancellationToken.ToRequestContext());
             return Response.FromValue((AtlasGlossary)result, result);
         }
 
@@ -2232,11 +2232,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasGlossary>> GetAsync(string glossaryId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasGlossary>> GetGlossaryAsync(string glossaryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
 
-            Response result = await GetAsync(glossaryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetGlossaryAsync(glossaryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((AtlasGlossary)result, result);
         }
 

@@ -22,7 +22,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
-            Response response = client.Get("a6894eb3-81f3-829b-2adc-52f3e603411a", "INPUT");
+            Response response = client.GetLineage("a6894eb3-81f3-829b-2adc-52f3e603411a", "INPUT");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
-            Response response = await client.GetAsync("a6894eb3-81f3-829b-2adc-52f3e603411a", "INPUT");
+            Response response = await client.GetLineageAsync("a6894eb3-81f3-829b-2adc-52f3e603411a", "INPUT");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
-            Response<AtlasLineageInfo> response = client.Get("a6894eb3-81f3-829b-2adc-52f3e603411a", LineageDirection.Input);
+            Response<AtlasLineageInfo> response = client.GetLineage("a6894eb3-81f3-829b-2adc-52f3e603411a", LineageDirection.Input);
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
-            Response<AtlasLineageInfo> response = await client.GetAsync("a6894eb3-81f3-829b-2adc-52f3e603411a", LineageDirection.Input);
+            Response<AtlasLineageInfo> response = await client.GetLineageAsync("a6894eb3-81f3-829b-2adc-52f3e603411a", LineageDirection.Input);
         }
 
         [Test]

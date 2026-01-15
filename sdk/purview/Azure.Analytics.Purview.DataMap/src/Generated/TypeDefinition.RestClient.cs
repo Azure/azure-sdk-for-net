@@ -244,7 +244,7 @@ namespace Azure.Analytics.Purview.DataMap
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(bool? includeTermTemplate, string @type, RequestContext context)
+        internal HttpMessage CreateGetTypeDefinitionsRequest(bool? includeTermTemplate, string @type, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

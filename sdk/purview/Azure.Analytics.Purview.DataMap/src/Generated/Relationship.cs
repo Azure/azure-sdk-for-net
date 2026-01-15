@@ -232,15 +232,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Get(string guid, bool? extendedInfo, RequestContext context)
+        public virtual Response GetRelationship(string guid, bool? extendedInfo, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Relationship.Get");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Relationship.GetRelationship");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetRequest(guid, extendedInfo, context);
+                using HttpMessage message = CreateGetRelationshipRequest(guid, extendedInfo, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -265,15 +265,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAsync(string guid, bool? extendedInfo, RequestContext context)
+        public virtual async Task<Response> GetRelationshipAsync(string guid, bool? extendedInfo, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Relationship.Get");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Relationship.GetRelationship");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetRequest(guid, extendedInfo, context);
+                using HttpMessage message = CreateGetRelationshipRequest(guid, extendedInfo, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -290,11 +290,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasRelationshipWithExtInfo> Get(string guid, bool? extendedInfo = default, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasRelationshipWithExtInfo> GetRelationship(string guid, bool? extendedInfo = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = Get(guid, extendedInfo, cancellationToken.ToRequestContext());
+            Response result = GetRelationship(guid, extendedInfo, cancellationToken.ToRequestContext());
             return Response.FromValue((AtlasRelationshipWithExtInfo)result, result);
         }
 
@@ -305,11 +305,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasRelationshipWithExtInfo>> GetAsync(string guid, bool? extendedInfo = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasRelationshipWithExtInfo>> GetRelationshipAsync(string guid, bool? extendedInfo = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = await GetAsync(guid, extendedInfo, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetRelationshipAsync(guid, extendedInfo, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((AtlasRelationshipWithExtInfo)result, result);
         }
 

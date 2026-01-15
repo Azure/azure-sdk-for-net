@@ -1441,13 +1441,13 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Get(bool? includeTermTemplate, string @type, RequestContext context)
+        public virtual Response GetTypeDefinitions(bool? includeTermTemplate, string @type, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.Get");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTypeDefinitions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(includeTermTemplate, @type, context);
+                using HttpMessage message = CreateGetTypeDefinitionsRequest(includeTermTemplate, @type, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1474,13 +1474,13 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAsync(bool? includeTermTemplate, string @type, RequestContext context)
+        public virtual async Task<Response> GetTypeDefinitionsAsync(bool? includeTermTemplate, string @type, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.Get");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTypeDefinitions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRequest(includeTermTemplate, @type, context);
+                using HttpMessage message = CreateGetTypeDefinitionsRequest(includeTermTemplate, @type, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1499,9 +1499,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasTypesDef> Get(bool? includeTermTemplate = default, TypeCategory? @type = default, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasTypesDef> GetTypeDefinitions(bool? includeTermTemplate = default, TypeCategory? @type = default, CancellationToken cancellationToken = default)
         {
-            Response result = Get(includeTermTemplate, @type?.ToString(), cancellationToken.ToRequestContext());
+            Response result = GetTypeDefinitions(includeTermTemplate, @type?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((AtlasTypesDef)result, result);
         }
 
@@ -1514,9 +1514,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasTypesDef>> GetAsync(bool? includeTermTemplate = default, TypeCategory? @type = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasTypesDef>> GetTypeDefinitionsAsync(bool? includeTermTemplate = default, TypeCategory? @type = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetAsync(includeTermTemplate, @type?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetTypeDefinitionsAsync(includeTermTemplate, @type?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((AtlasTypesDef)result, result);
         }
 

@@ -1291,7 +1291,7 @@ Info = "Example Owner Info",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = client.Get("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", true, null, null);
+            Response response = client.GetEntity("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", true, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1305,7 +1305,7 @@ Info = "Example Owner Info",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = await client.GetAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", true, null, null);
+            Response response = await client.GetEntityAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", true, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1319,7 +1319,7 @@ Info = "Example Owner Info",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response<AtlasEntityWithExtInfo> response = client.Get("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
+            Response<AtlasEntityWithExtInfo> response = client.GetEntity("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
         }
 
         [Test]
@@ -1330,7 +1330,7 @@ Info = "Example Owner Info",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response<AtlasEntityWithExtInfo> response = await client.GetAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
+            Response<AtlasEntityWithExtInfo> response = await client.GetEntityAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
         }
 
         [Test]

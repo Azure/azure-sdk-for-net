@@ -2021,7 +2021,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = client.Get("47029611-67a1-42d5-8766-90eb904f7f22", null);
+            Response response = client.GetGlossary("47029611-67a1-42d5-8766-90eb904f7f22", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2035,7 +2035,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = await client.GetAsync("47029611-67a1-42d5-8766-90eb904f7f22", null);
+            Response response = await client.GetGlossaryAsync("47029611-67a1-42d5-8766-90eb904f7f22", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2049,7 +2049,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response<AtlasGlossary> response = client.Get("47029611-67a1-42d5-8766-90eb904f7f22");
+            Response<AtlasGlossary> response = client.GetGlossary("47029611-67a1-42d5-8766-90eb904f7f22");
         }
 
         [Test]
@@ -2060,7 +2060,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response<AtlasGlossary> response = await client.GetAsync("47029611-67a1-42d5-8766-90eb904f7f22");
+            Response<AtlasGlossary> response = await client.GetGlossaryAsync("47029611-67a1-42d5-8766-90eb904f7f22");
         }
 
         [Test]

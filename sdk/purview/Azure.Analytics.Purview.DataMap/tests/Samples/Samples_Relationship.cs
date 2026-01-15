@@ -334,7 +334,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            Response response = client.Get("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", false, null);
+            Response response = client.GetRelationship("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", false, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -348,7 +348,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            Response response = await client.GetAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", false, null);
+            Response response = await client.GetRelationshipAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", false, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -362,7 +362,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            Response<AtlasRelationshipWithExtInfo> response = client.Get("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
+            Response<AtlasRelationshipWithExtInfo> response = client.GetRelationship("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
         }
 
         [Test]
@@ -373,7 +373,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            Response<AtlasRelationshipWithExtInfo> response = await client.GetAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
+            Response<AtlasRelationshipWithExtInfo> response = await client.GetRelationshipAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
         }
 
         [Test]

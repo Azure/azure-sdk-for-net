@@ -1,4 +1,4 @@
 repo: Azure/azure-rest-api-specs
-commit: 6267b64842af3d744c5b092a3f3beef49729ad6d
-directory: specification/purview/Azure.Analytics.Purview.DataMap
+commit: 0b05eba33bd579dd10546b02744349f820d31736
+directory: specification/purview/data-plane/datamap/
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"

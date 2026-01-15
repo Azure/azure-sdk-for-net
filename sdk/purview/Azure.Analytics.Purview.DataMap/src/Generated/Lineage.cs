@@ -60,15 +60,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Get(string guid, string direction, int? depth = default, RequestContext context = null)
+        public virtual Response GetLineage(string guid, string direction, int? depth = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Lineage.Get");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Lineage.GetLineage");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetRequest(guid, direction, depth, context);
+                using HttpMessage message = CreateGetLineageRequest(guid, direction, depth, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -94,15 +94,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAsync(string guid, string direction, int? depth = default, RequestContext context = null)
+        public virtual async Task<Response> GetLineageAsync(string guid, string direction, int? depth = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Lineage.Get");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Lineage.GetLineage");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-                using HttpMessage message = CreateGetRequest(guid, direction, depth, context);
+                using HttpMessage message = CreateGetLineageRequest(guid, direction, depth, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -120,11 +120,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasLineageInfo> Get(string guid, LineageDirection direction, int? depth = default, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasLineageInfo> GetLineage(string guid, LineageDirection direction, int? depth = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = Get(guid, direction.ToString(), depth, cancellationToken.ToRequestContext());
+            Response result = GetLineage(guid, direction.ToString(), depth, cancellationToken.ToRequestContext());
             return Response.FromValue((AtlasLineageInfo)result, result);
         }
 
@@ -136,11 +136,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasLineageInfo>> GetAsync(string guid, LineageDirection direction, int? depth = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasLineageInfo>> GetLineageAsync(string guid, LineageDirection direction, int? depth = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = await GetAsync(guid, direction.ToString(), depth, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetLineageAsync(guid, direction.ToString(), depth, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((AtlasLineageInfo)result, result);
         }
 
