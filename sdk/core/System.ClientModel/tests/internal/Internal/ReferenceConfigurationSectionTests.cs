@@ -210,7 +210,7 @@ public class ReferenceConfigurationSectionTests
             {
                 ["Section:Target"] = "ReferencedValue",
                 ["Section:Child1"] = "NormalValue",
-                ["Section:Child2"] = "$Target"
+                ["Section:Child2"] = "$Section:Target"
             })
             .Build();
 
@@ -223,6 +223,48 @@ public class ReferenceConfigurationSectionTests
 
         Assert.AreEqual("NormalValue", child1.Value);
         Assert.AreEqual("ReferencedValue", child2.Value);
+    }
+
+    [Test]
+    public void GetChildrenCanReferenceRootConfiguration()
+    {
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["RootLevel:SharedValue"] = "ValueFromRoot",
+                ["Section:Child1"] = "NormalValue",
+                ["Section:Child2"] = "$RootLevel:SharedValue"
+            })
+            .Build();
+
+        ReferenceConfigurationSection section = new(config, "Section");
+        List<IConfigurationSection> children = section.GetChildren().ToList();
+
+        Assert.AreEqual(2, children.Count);
+        IConfigurationSection child1 = children.First(c => c.Key == "Child1");
+        IConfigurationSection child2 = children.First(c => c.Key == "Child2");
+
+        Assert.AreEqual("NormalValue", child1.Value);
+        Assert.AreEqual("ValueFromRoot", child2.Value);
+    }
+
+    [Test]
+    public void NestedChildrenCanReferenceRootConfiguration()
+    {
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["SharedConfig:ApiKey"] = "root-api-key",
+                ["Section:Level1:Level2:Reference"] = "$SharedConfig:ApiKey"
+            })
+            .Build();
+
+        ReferenceConfigurationSection section = new(config, "Section");
+        IConfigurationSection level1 = section.GetSection("Level1");
+        IConfigurationSection level2 = level1.GetSection("Level2");
+        IConfigurationSection reference = level2.GetSection("Reference");
+
+        Assert.AreEqual("root-api-key", reference.Value);
     }
 
     [Test]

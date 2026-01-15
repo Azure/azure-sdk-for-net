@@ -44,7 +44,7 @@ internal readonly struct ReferenceConfigurationSection : IConfigurationSection
         foreach (var child in _section.GetChildren())
         {
             if (child is not null)
-                yield return new ReferenceConfigurationSection(_section, child);
+                yield return new ReferenceConfigurationSection(_config, child);
         }
     }
 
