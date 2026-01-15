@@ -5,6 +5,11 @@ $failingSpecs = @(
     Join-Path 'http' 'payload' 'xml'
     Join-Path 'http' 'response' 'status-code-range' # Response namespace conflicts with Azure.Response
     Join-Path 'http' 'service' 'multi-service'
+# Long path issues https://github.com/Azure/azure-sdk-for-net/issues/55026
+    Join-Path 'http' 'azure' 'client-generator-core' 'client-location' 'move-method-parameter-to-client'
+    Join-Path 'http' 'azure' 'client-generator-core' 'client-location' 'move-to-existing-sub-client'
+    Join-Path 'http' 'azure' 'client-generator-core' 'client-location' 'move-to-new-sub-client'
+    Join-Path 'http' 'azure' 'client-generator-core' 'client-location' 'move-to-root-client'
 # Azure scenarios not yet buildable
     Join-Path 'http' 'azure' 'client-generator-core' 'alternate-type'
     Join-Path 'http' 'azure' 'client-generator-core' 'deserialize-empty-string-as-null' # long path issue and also not needed for Azure emitter
