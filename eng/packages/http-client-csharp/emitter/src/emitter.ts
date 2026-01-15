@@ -54,8 +54,7 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
  * }
  * ```
  * 
- * This file is not included as an asset of the nupkg. If no API version is specified, 
- * the value will be "not-specified".
+ * If no API version is specified, the value will be "not-specified".
  */
 async function generateMetadataFile(context: EmitContext<AzureEmitterOptions>): Promise<void> {
   const apiVersion = context.options["api-version"];
