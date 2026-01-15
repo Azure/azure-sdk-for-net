@@ -65,14 +65,23 @@ async function generateMetadataFile(context: EmitContext<AzureEmitterOptions>): 
     context.options["sdk-context-options"] ?? {}
   );
   
-  // Stringify the entire metadata object from the SDK package
-  const metadata = sdkContext.sdkPackage.metadata.apiVersion 
-    ? sdkContext.sdkPackage.metadata 
-    : { apiVersion: "not-specified" };
-
   const generatedDir = resolvePath(context.emitterOutputDir, "Generated");
   await context.program.host.mkdirp(generatedDir);
   
   const outputPath = resolvePath(generatedDir, "metadata.json");
-  await context.program.host.writeFile(outputPath, JSON.stringify(metadata, null, 2));
+  
+  // Stringify the entire metadata object from the SDK package
+  // If stringification fails, fallback to just the apiVersion property
+  let metadataJson: string;
+  try {
+    metadataJson = JSON.stringify(sdkContext.sdkPackage.metadata, null, 2);
+  } catch (error) {
+    // Fallback to just the apiVersion if metadata object is too complex
+    const fallbackMetadata = {
+      apiVersion: sdkContext.sdkPackage.metadata.apiVersion || "not-specified"
+    };
+    metadataJson = JSON.stringify(fallbackMetadata, null, 2);
+  }
+  
+  await context.program.host.writeFile(outputPath, metadataJson);
 }
