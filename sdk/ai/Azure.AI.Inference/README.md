@@ -429,7 +429,7 @@ catch (RequestFailedException e)
 {
     Console.WriteLine($"Exception status code: {e.Status}");
     Console.WriteLine($"Exception message: {e.Message}");
-    Assert.IsTrue(e.Message.Contains("Extra inputs are not permitted"));
+    Assert.That(e.Message.Contains("Extra inputs are not permitted"), Is.True);
 }
 ```
 

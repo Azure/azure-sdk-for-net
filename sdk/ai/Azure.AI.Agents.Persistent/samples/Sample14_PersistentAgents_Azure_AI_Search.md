@@ -91,9 +91,9 @@ do
 while (runResponse.Value.Status == RunStatus.Queued
     || runResponse.Value.Status == RunStatus.InProgress);
 
-Assert.AreEqual(
-    RunStatus.Completed,
+Assert.That(
     runResponse.Value.Status,
+    Is.EqualTo(RunStatus.Completed),
     runResponse.Value.LastError?.Message);
 ```
 
@@ -119,9 +119,9 @@ do
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
 
-Assert.AreEqual(
-    RunStatus.Completed,
+Assert.That(
     run.Status,
+    Is.EqualTo(RunStatus.Completed),
     run.LastError?.Message);
 ```
 

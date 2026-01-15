@@ -101,7 +101,7 @@ await searchClient.UploadDocumentsAsync(products);
 We can quickly check that the document count matches our expections:
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_SimpleIndexing2
-Assert.AreEqual(1000, (int)await searchClient.GetDocumentCountAsync());
+Assert.That((int)await searchClient.GetDocumentCountAsync(), Is.EqualTo(1000));
 ```
 
 We do need to be careful to understand the limits of this API though.  For

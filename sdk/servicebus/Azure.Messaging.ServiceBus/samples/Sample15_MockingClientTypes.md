@@ -240,13 +240,13 @@ for (int index = 0; index < batchCountThreshold; index++)
 
 foreach (var message in sourceMessages)
 {
-    Assert.True(batch.TryAddMessage(message));
+    Assert.That(batch.TryAddMessage(message), Is.True);
 }
 
 // Since there are already batchCountThreshold number of messages in the batch,
 // this message will be rejected from the batch.
 
-Assert.IsFalse(batch.TryAddMessage(new ServiceBusMessage("Too Many Messages.")));
+Assert.That(batch.TryAddMessage(new ServiceBusMessage("Too Many Messages.")), Is.False);
 
 // For illustrative purposes we are calling SendMessagesAsync. Application-defined methods
 // would be called here instead.
@@ -264,9 +264,9 @@ mockSender
 
 foreach (ServiceBusMessage message in backingList)
 {
-    Assert.IsTrue(sourceMessages.Contains(message));
+    Assert.That(sourceMessages.Contains(message), Is.True);
 }
-Assert.AreEqual(backingList.Count, sourceMessages.Count);
+Assert.That(sourceMessages.Count, Is.EqualTo(backingList.Count));
 ```
 
 ## Session sending and receiving
@@ -388,7 +388,7 @@ BinaryData state = await sessionReceiver.GetSessionStateAsync(CancellationToken.
 
 // For illustrative purposes, verify that the state of the session is what we expect.
 
-Assert.AreEqual(setState, state);
+Assert.That(state, Is.EqualTo(setState));
 ```
 
 ## Sending using topics and subscriptions
