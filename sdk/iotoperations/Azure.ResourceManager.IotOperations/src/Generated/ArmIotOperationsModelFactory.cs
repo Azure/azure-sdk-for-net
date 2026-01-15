@@ -334,17 +334,16 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new IotOperationsBrokerAuthenticationProperties(authenticationMethods.ToList(), provisioningState, healthState, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Custom method for BrokerAuthentication. </summary>
-        /// <param name="auth"> Optional authentication needed for authenticating with the custom authentication server. </param>
+        /// <param name="authX509SecretRef"> Kubernetes secret containing an X.509 client certificate. This is a reference to the secret through an identifying name, not the secret itself. </param>
         /// <param name="caCertConfigMap"> Optional CA certificate for validating the custom authentication server's certificate. </param>
         /// <param name="endpoint"> Endpoint of the custom authentication server. Must be an HTTPS endpoint. </param>
         /// <param name="headers"> Additional HTTP headers to pass to the custom authentication server. </param>
         /// <returns> A new <see cref="Models.BrokerAuthenticatorMethodCustom"/> instance for mocking. </returns>
-        public static BrokerAuthenticatorMethodCustom BrokerAuthenticatorMethodCustom(BrokerAuthenticatorCustomAuth auth = default, string caCertConfigMap = default, Uri endpoint = default, IDictionary<string, string> headers = default)
+        public static BrokerAuthenticatorMethodCustom BrokerAuthenticatorMethodCustom(string authX509SecretRef = default, string caCertConfigMap = default, Uri endpoint = default, IDictionary<string, string> headers = default)
         {
             headers ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BrokerAuthenticatorMethodCustom(auth, caCertConfigMap, endpoint, headers, additionalBinaryDataProperties: null);
+            return new BrokerAuthenticatorMethodCustom(authX509SecretRef is null ? default : new BrokerAuthenticatorCustomAuth(new BrokerX509ManualCertificate(authX509SecretRef, null), null), caCertConfigMap, endpoint, headers, additionalBinaryDataProperties: null);
         }
 
         /// <summary> X509 for BrokerAuthentication. </summary>
@@ -829,17 +828,16 @@ namespace Azure.ResourceManager.IotOperations.Models
                 extendedLocation);
         }
 
-        /// <summary> AkriConnectorTemplate properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="aioMetadata"> Metadata about AIO. </param>
         /// <param name="runtimeConfiguration"> The runtime configuration for the Connector template. </param>
-        /// <param name="diagnostics"> Diagnostics settings for the Connector template. </param>
+        /// <param name="diagnosticsLogsLevel"> The log level. Examples - 'debug', 'info', 'warn', 'error', 'trace'. </param>
         /// <param name="deviceInboundEndpointTypes"> Device inbound endpoint types. </param>
         /// <param name="mqttConnectionConfiguration"> Mqtt connection configuration settings. </param>
         /// <param name="connectorMetadataRef"> A reference to a connector metadata document reference in a container registry. </param>
         /// <param name="healthState"> The health state of the resource. </param>
         /// <returns> A new <see cref="Models.IotOperationsAkriConnectorTemplateProperties"/> instance for mocking. </returns>
-        public static IotOperationsAkriConnectorTemplateProperties IotOperationsAkriConnectorTemplateProperties(IotOperationsProvisioningState? provisioningState = default, AkriConnectorTemplateAioMetadata aioMetadata = default, AkriConnectorTemplateRuntimeConfiguration runtimeConfiguration = default, AkriConnectorTemplateDiagnostics diagnostics = default, IEnumerable<AkriConnectorTemplateDeviceInboundEndpointType> deviceInboundEndpointTypes = default, AkriConnectorsMqttConnectionConfiguration mqttConnectionConfiguration = default, string connectorMetadataRef = default, ResourceHealthState? healthState = default)
+        public static IotOperationsAkriConnectorTemplateProperties IotOperationsAkriConnectorTemplateProperties(IotOperationsProvisioningState? provisioningState = default, AkriConnectorTemplateAioMetadata aioMetadata = default, AkriConnectorTemplateRuntimeConfiguration runtimeConfiguration = default, string diagnosticsLogsLevel = default, IEnumerable<AkriConnectorTemplateDeviceInboundEndpointType> deviceInboundEndpointTypes = default, AkriConnectorsMqttConnectionConfiguration mqttConnectionConfiguration = default, string connectorMetadataRef = default, ResourceHealthState? healthState = default)
         {
             deviceInboundEndpointTypes ??= new ChangeTrackingList<AkriConnectorTemplateDeviceInboundEndpointType>();
 
@@ -847,7 +845,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 provisioningState,
                 aioMetadata,
                 runtimeConfiguration,
-                diagnostics,
+                diagnosticsLogsLevel is null ? default : new AkriConnectorTemplateDiagnostics(new AkriConnectorsDiagnosticsLogs(diagnosticsLogsLevel, null), null),
                 deviceInboundEndpointTypes.ToList(),
                 mqttConnectionConfiguration,
                 connectorMetadataRef,
