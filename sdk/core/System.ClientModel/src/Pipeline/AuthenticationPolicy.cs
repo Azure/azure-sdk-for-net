@@ -37,10 +37,7 @@ public abstract class AuthenticationPolicy : PipelinePolicy
     }
 
     private static AuthenticationPolicy CreateWithTokenCredential(ClientSettings settings, string scope)
-    {
-        var tokenCredential = (AuthenticationTokenProvider)settings.CredentialObject!;
-        return new BearerTokenPolicy(tokenCredential, scope);
-    }
+        => new BearerTokenPolicy(settings.CredentialObject!, scope);
 
     private static AuthenticationPolicy CreateWithApiKey(ClientSettings settings, string scope)
     {
