@@ -29,7 +29,7 @@ namespace Azure.Core.Tests
             {
                 failed = true;
             }
-            Assert.IsTrue(failed);
+            Assert.That(failed, Is.True);
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Azure.Core.Tests
             {
                 failed = true;
             }
-            Assert.IsTrue(failed);
+            Assert.That(failed, Is.True);
         }
     }
 

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var lro = await vmss.UpdateAsync(WaitUntil.Completed, update);
             VirtualMachineScaleSetResource updatedVM = lro.Value;
 
-            Assert.AreEqual(ppg.Id, updatedVM.Data.Properties.ProximityPlacementGroupId);
+            Assert.That(updatedVM.Data.Properties.ProximityPlacementGroupId, Is.EqualTo(ppg.Id));
         }
 
         [TestCase]

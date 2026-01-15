@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             var sbMessage = converter.AmqpMessageToSBReceivedMessage(amqpMessage);
             ReadOnlyMemory<byte> sbBody = sbMessage.Body;
-            Assert.AreEqual(messageBody, sbBody.ToArray());
+            Assert.That(sbBody.ToArray(), Is.EqualTo(messageBody));
         }
 
         [Test]
@@ -69,19 +69,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var amqpMessage = converter.SBMessageToAmqpMessage(sbMessage);
             var convertedSbMessage = converter.AmqpMessageToSBReceivedMessage(amqpMessage);
 
-            Assert.AreEqual("SomeUserProperty", convertedSbMessage.ApplicationProperties["UserProperty"]);
-            Assert.AreEqual(messageBody, convertedSbMessage.Body.ToArray());
-            Assert.AreEqual(messageId, convertedSbMessage.MessageId);
-            Assert.AreEqual(partitionKey, convertedSbMessage.PartitionKey);
-            Assert.AreEqual(viaPartitionKey, convertedSbMessage.TransactionPartitionKey);
-            Assert.AreEqual(sessionId, convertedSbMessage.SessionId);
-            Assert.AreEqual(correlationId, convertedSbMessage.CorrelationId);
-            Assert.AreEqual(label, convertedSbMessage.Subject);
-            Assert.AreEqual(to, convertedSbMessage.To);
-            Assert.AreEqual(contentType, convertedSbMessage.ContentType);
-            Assert.AreEqual(replyTo, convertedSbMessage.ReplyTo);
-            Assert.AreEqual(replyToSessionId, convertedSbMessage.ReplyToSessionId);
-            Assert.AreEqual(timeToLive, convertedSbMessage.TimeToLive);
+            Assert.That(convertedSbMessage.ApplicationProperties["UserProperty"], Is.EqualTo("SomeUserProperty"));
+            Assert.That(convertedSbMessage.Body.ToArray(), Is.EqualTo(messageBody));
+            Assert.That(convertedSbMessage.MessageId, Is.EqualTo(messageId));
+            Assert.That(convertedSbMessage.PartitionKey, Is.EqualTo(partitionKey));
+            Assert.That(convertedSbMessage.TransactionPartitionKey, Is.EqualTo(viaPartitionKey));
+            Assert.That(convertedSbMessage.SessionId, Is.EqualTo(sessionId));
+            Assert.That(convertedSbMessage.CorrelationId, Is.EqualTo(correlationId));
+            Assert.That(convertedSbMessage.Subject, Is.EqualTo(label));
+            Assert.That(convertedSbMessage.To, Is.EqualTo(to));
+            Assert.That(convertedSbMessage.ContentType, Is.EqualTo(contentType));
+            Assert.That(convertedSbMessage.ReplyTo, Is.EqualTo(replyTo));
+            Assert.That(convertedSbMessage.ReplyToSessionId, Is.EqualTo(replyToSessionId));
+            Assert.That(convertedSbMessage.TimeToLive, Is.EqualTo(timeToLive));
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             var amqpMessage = converter.SBMessageToAmqpMessage(sbMessage);
 
-            Assert.Null(amqpMessage.Header.Ttl);
+            Assert.That(amqpMessage.Header.Ttl, Is.Null);
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var sbMessage = converter.AmqpMessageToSBReceivedMessage(amqpMessage, isPeeked: true);
             sbMessage.SequenceNumber = 1L;
 
-            Assert.AreEqual(2, sbMessage.DeliveryCount);
+            Assert.That(sbMessage.DeliveryCount, Is.EqualTo(2));
         }
 
         [Test]
@@ -126,21 +126,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var sbMessage = converter.AmqpMessageToSBReceivedMessage(amqpMessage, isPeeked: false);
             sbMessage.SequenceNumber = 1L;
 
-            Assert.AreEqual(3, sbMessage.DeliveryCount);
+            Assert.That(sbMessage.DeliveryCount, Is.EqualTo(3));
         }
 
         [Test]
         public void CanRoundTripDictionaryValueSection()
         {
             var annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(new Dictionary<string, string> { { "key", "value" } }));
-            Assert.IsTrue(annotatedMessage.Body.TryGetValue(out object val));
-            Assert.AreEqual("value", ((Dictionary<string, string>)val)["key"]);
+            Assert.That(annotatedMessage.Body.TryGetValue(out object val), Is.True);
+            Assert.That(((Dictionary<string, string>)val)["key"], Is.EqualTo("value"));
 
             var amqpMessage = AmqpAnnotatedMessageConverter.ToAmqpMessage(annotatedMessage);
 
             annotatedMessage = AmqpAnnotatedMessageConverter.FromAmqpMessage(amqpMessage);
-            Assert.IsTrue(annotatedMessage.Body.TryGetValue(out val));
-            Assert.AreEqual("value", ((Dictionary<string, object>)val)["key"]);
+            Assert.That(annotatedMessage.Body.TryGetValue(out val), Is.True);
+            Assert.That(((Dictionary<string, object>)val)["key"], Is.EqualTo("value"));
         }
 
         [Test]
@@ -153,7 +153,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             var convertedSbMessage = converter.AmqpMessageToSBReceivedMessage(amqpMessage);
 
-            Assert.AreEqual(DateTimeOffset.MaxValue, convertedSbMessage.ExpiresAt);
+            Assert.That(convertedSbMessage.ExpiresAt, Is.EqualTo(DateTimeOffset.MaxValue));
         }
     }
 }

@@ -36,11 +36,11 @@ namespace Azure.Maps.Routing.Tests
             };
             var result = await client.GetImmediateRouteMatrixAsync(routeMatrixQuery);
 
-            Assert.AreEqual("0.0.1", result.Value.FormatVersion);
-            Assert.AreEqual(2, result.Value.Matrix.Count);
-            Assert.AreEqual(2, result.Value.Matrix[0].Count);
-            Assert.AreEqual(2, result.Value.Summary.SuccessfulRoutes);
-            Assert.AreEqual(4, result.Value.Summary.TotalRoutes);
+            Assert.That(result.Value.FormatVersion, Is.EqualTo("0.0.1"));
+            Assert.That(result.Value.Matrix.Count, Is.EqualTo(2));
+            Assert.That(result.Value.Matrix[0].Count, Is.EqualTo(2));
+            Assert.That(result.Value.Summary.SuccessfulRoutes, Is.EqualTo(2));
+            Assert.That(result.Value.Summary.TotalRoutes, Is.EqualTo(4));
         }
 
         [RecordedTest]
@@ -63,11 +63,11 @@ namespace Azure.Maps.Routing.Tests
 
             var result = await client.GetImmediateRouteMatrixAsync(routeMatrixOptions);
 
-            Assert.AreEqual("0.0.1", result.Value.FormatVersion);
-            Assert.AreEqual(2, result.Value.Matrix.Count);
-            Assert.AreEqual(1, result.Value.Matrix[0].Count);
-            Assert.AreEqual(2, result.Value.Summary.SuccessfulRoutes);
-            Assert.AreEqual(2, result.Value.Summary.TotalRoutes);
+            Assert.That(result.Value.FormatVersion, Is.EqualTo("0.0.1"));
+            Assert.That(result.Value.Matrix.Count, Is.EqualTo(2));
+            Assert.That(result.Value.Matrix[0].Count, Is.EqualTo(1));
+            Assert.That(result.Value.Summary.SuccessfulRoutes, Is.EqualTo(2));
+            Assert.That(result.Value.Summary.TotalRoutes, Is.EqualTo(2));
         }
 
         [RecordedTest]
@@ -85,7 +85,7 @@ namespace Azure.Maps.Routing.Tests
             };
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetImmediateRouteMatrixAsync(routeMatrixQuery));
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
         }
 
         [RecordedTest]
@@ -110,11 +110,11 @@ namespace Azure.Maps.Routing.Tests
             Thread.Sleep(400);
             var result = operation.WaitForCompletion();
 
-            Assert.AreEqual("0.0.1", result.Value.FormatVersion);
-            Assert.AreEqual(2, result.Value.Matrix.Count);
-            Assert.AreEqual(1, result.Value.Matrix[0].Count);
-            Assert.AreEqual(2, result.Value.Summary.SuccessfulRoutes);
-            Assert.AreEqual(2, result.Value.Summary.TotalRoutes);
+            Assert.That(result.Value.FormatVersion, Is.EqualTo("0.0.1"));
+            Assert.That(result.Value.Matrix.Count, Is.EqualTo(2));
+            Assert.That(result.Value.Matrix[0].Count, Is.EqualTo(1));
+            Assert.That(result.Value.Summary.SuccessfulRoutes, Is.EqualTo(2));
+            Assert.That(result.Value.Summary.TotalRoutes, Is.EqualTo(2));
         }
 
         [RecordedTest]
@@ -136,7 +136,7 @@ namespace Azure.Maps.Routing.Tests
             };
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetRouteMatrixAsync(WaitUntil.Started, routeMatrixOptions));
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
         }
     }
 }

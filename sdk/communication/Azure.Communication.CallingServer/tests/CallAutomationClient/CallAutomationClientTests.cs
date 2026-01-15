@@ -25,10 +25,10 @@ namespace Azure.Communication.CallingServer
 
             var response = await callAutomationClient.AnswerCallAsync(incomingCallContext, callbackUri).ConfigureAwait(false);
             Assert.NotNull(response);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyCallConnectionProperties(response.Value.CallConnectionProperties);
-            Assert.Null(response.Value.CallConnectionProperties.MediaSubscriptionId);
-            Assert.AreEqual(CallConnectionId, response.Value.CallConnection.CallConnectionId);
+            Assert.That(response.Value.CallConnectionProperties.MediaSubscriptionId, Is.Null);
+            Assert.That(response.Value.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
@@ -39,10 +39,10 @@ namespace Azure.Communication.CallingServer
 
             var response = callAutomationClient.AnswerCall(incomingCallContext, callbackUri);
             Assert.NotNull(response);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyCallConnectionProperties(response.Value.CallConnectionProperties);
-            Assert.Null(response.Value.CallConnectionProperties.MediaSubscriptionId);
-            Assert.AreEqual(CallConnectionId, response.Value.CallConnection.CallConnectionId);
+            Assert.That(response.Value.CallConnectionProperties.MediaSubscriptionId, Is.Null);
+            Assert.That(response.Value.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
@@ -57,10 +57,10 @@ namespace Azure.Communication.CallingServer
 
             var response = await callAutomationClient.AnswerCallAsync(options).ConfigureAwait(false);
             Assert.NotNull(response);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyCallConnectionProperties(response.Value.CallConnectionProperties);
-            Assert.AreEqual(CallConnectionId, response.Value.CallConnection.CallConnectionId);
-            Assert.AreEqual("mediaSubscriptionId", response.Value.CallConnectionProperties.MediaSubscriptionId);
+            Assert.That(response.Value.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(response.Value.CallConnectionProperties.MediaSubscriptionId, Is.EqualTo("mediaSubscriptionId"));
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
@@ -75,10 +75,10 @@ namespace Azure.Communication.CallingServer
 
             var response = callAutomationClient.AnswerCall(options);
             Assert.NotNull(response);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyCallConnectionProperties(response.Value.CallConnectionProperties);
-            Assert.AreEqual(CallConnectionId, response.Value.CallConnection.CallConnectionId);
-            Assert.AreEqual("mediaSubscriptionId", response.Value.CallConnectionProperties.MediaSubscriptionId);
+            Assert.That(response.Value.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(response.Value.CallConnectionProperties.MediaSubscriptionId, Is.EqualTo("mediaSubscriptionId"));
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
@@ -89,7 +89,7 @@ namespace Azure.Communication.CallingServer
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callAutomationClient.AnswerCallAsync(incomingCallContext, callbackUri).ConfigureAwait(false));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 401);
+            Assert.That(ex?.Status, Is.EqualTo(401));
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
@@ -100,7 +100,7 @@ namespace Azure.Communication.CallingServer
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.AnswerCall(incomingCallContext, callbackUri));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 401);
+            Assert.That(ex?.Status, Is.EqualTo(401));
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
@@ -111,7 +111,7 @@ namespace Azure.Communication.CallingServer
 
             var response = await callAutomationClient.RedirectCallAsync(incomingCallContext, target).ConfigureAwait(false);
             Assert.NotNull(response);
-            Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
@@ -122,7 +122,7 @@ namespace Azure.Communication.CallingServer
 
             var response = callAutomationClient.RedirectCall(incomingCallContext, target);
             Assert.NotNull(response);
-            Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
@@ -133,7 +133,7 @@ namespace Azure.Communication.CallingServer
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async() => await callAutomationClient.RedirectCallAsync(incomingCallContext, target).ConfigureAwait(false));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
@@ -144,7 +144,7 @@ namespace Azure.Communication.CallingServer
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.RedirectCall(incomingCallContext, target));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_RejectCall))]
@@ -155,7 +155,7 @@ namespace Azure.Communication.CallingServer
 
             var response = await callAutomationClient.RejectCallAsync(incomingCallContext, reason).ConfigureAwait(false);
             Assert.NotNull(response);
-            Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
         }
 
         [TestCaseSource(nameof(TestData_RejectCall))]
@@ -166,7 +166,7 @@ namespace Azure.Communication.CallingServer
 
             var response = callAutomationClient.RejectCall(incomingCallContext, reason);
             Assert.NotNull(response);
-            Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
         }
 
         [TestCaseSource(nameof(TestData_RejectCall))]
@@ -177,7 +177,7 @@ namespace Azure.Communication.CallingServer
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async() => await callAutomationClient.RejectCallAsync(incomingCallContext, reason).ConfigureAwait(false));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_RejectCall))]
@@ -188,7 +188,7 @@ namespace Azure.Communication.CallingServer
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.RejectCall(incomingCallContext, reason));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
@@ -200,10 +200,10 @@ namespace Azure.Communication.CallingServer
             var response = await callAutomationClient.CreateCallAsync(source, targets, callbackUri).ConfigureAwait(false);
             CreateCallResult result = (CreateCallResult)response;
             Assert.NotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
             verifyCallConnectionProperties(result.CallConnectionProperties);
-            Assert.Null(result.CallConnectionProperties.MediaSubscriptionId);
-            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+            Assert.That(result.CallConnectionProperties.MediaSubscriptionId, Is.Null);
+            Assert.That(result.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
@@ -215,10 +215,10 @@ namespace Azure.Communication.CallingServer
             var response = callAutomationClient.CreateCall(source, targets, callbackUri);
             CreateCallResult result = (CreateCallResult)response;
             Assert.NotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
             verifyCallConnectionProperties(result.CallConnectionProperties);
-            Assert.Null(result.CallConnectionProperties.MediaSubscriptionId);
-            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
+            Assert.That(result.CallConnectionProperties.MediaSubscriptionId, Is.Null);
+            Assert.That(result.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
@@ -238,10 +238,10 @@ namespace Azure.Communication.CallingServer
             var response = await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false);
             CreateCallResult result = (CreateCallResult)response;
             Assert.NotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
             verifyCallConnectionProperties(result.CallConnectionProperties);
-            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
-            Assert.AreEqual("mediaSubscriptionId", result.CallConnectionProperties.MediaSubscriptionId);
+            Assert.That(result.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(result.CallConnectionProperties.MediaSubscriptionId, Is.EqualTo("mediaSubscriptionId"));
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
@@ -261,10 +261,10 @@ namespace Azure.Communication.CallingServer
             var response = callAutomationClient.CreateCall(options);
             CreateCallResult result = (CreateCallResult)response;
             Assert.NotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
             verifyCallConnectionProperties(result.CallConnectionProperties);
-            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
-            Assert.AreEqual("mediaSubscriptionId", result.CallConnectionProperties.MediaSubscriptionId);
+            Assert.That(result.CallConnection.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(result.CallConnectionProperties.MediaSubscriptionId, Is.EqualTo("mediaSubscriptionId"));
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
@@ -275,7 +275,7 @@ namespace Azure.Communication.CallingServer
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callAutomationClient.CreateCallAsync(source, targets, callbackUri).ConfigureAwait(false));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
@@ -286,7 +286,7 @@ namespace Azure.Communication.CallingServer
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.CreateCall(source, targets, callbackUri));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_GetCallConnection))]
@@ -296,7 +296,7 @@ namespace Azure.Communication.CallingServer
             var response = new CallAutomationClient(ConnectionString).GetCallConnection(callConnectionId);
             CallConnection result = (CallConnection)response;
             Assert.NotNull(result);
-            Assert.AreEqual(callConnectionId, result.CallConnectionId);
+            Assert.That(result.CallConnectionId, Is.EqualTo(callConnectionId));
         }
 
         [Test]
@@ -311,7 +311,7 @@ namespace Azure.Communication.CallingServer
         {
             Assert.NotNull(createCallResult);
             Assert.NotNull(createCallResult.CallConnection);
-            Assert.AreEqual("callConnectionId", createCallResult.CallConnection.CallConnectionId);
+            Assert.That(createCallResult.CallConnection.CallConnectionId, Is.EqualTo("callConnectionId"));
             ValidateCallConnectionProperties(createCallResult.CallConnectionProperties);
         }
 
@@ -319,19 +319,19 @@ namespace Azure.Communication.CallingServer
         {
             Assert.NotNull(answerCallResult);
             Assert.NotNull(answerCallResult.CallConnection);
-            Assert.AreEqual("callConnectionId", answerCallResult.CallConnection.CallConnectionId);
+            Assert.That(answerCallResult.CallConnection.CallConnectionId, Is.EqualTo("callConnectionId"));
             ValidateCallConnectionProperties(answerCallResult.CallConnectionProperties);
         }
 
         private static void ValidateCallConnectionProperties(CallConnectionProperties properties)
         {
             Assert.NotNull(properties);
-            Assert.AreEqual("callConnectionId", properties.CallConnectionId);
-            Assert.AreEqual(CallConnectionState.Connecting, properties.CallConnectionState);
+            Assert.That(properties.CallConnectionId, Is.EqualTo("callConnectionId"));
+            Assert.That(properties.CallConnectionState, Is.EqualTo(CallConnectionState.Connecting));
             Assert.NotNull(properties.CallSource);
-            Assert.AreEqual("dummySourceUser", properties.CallSource.Identifier.RawId);
-            Assert.AreEqual("serverCallId", properties.ServerCallId);
-            Assert.AreEqual(1, properties.Targets.Count);
+            Assert.That(properties.CallSource.Identifier.RawId, Is.EqualTo("dummySourceUser"));
+            Assert.That(properties.ServerCallId, Is.EqualTo("serverCallId"));
+            Assert.That(properties.Targets.Count, Is.EqualTo(1));
         }
 
         // exceptions

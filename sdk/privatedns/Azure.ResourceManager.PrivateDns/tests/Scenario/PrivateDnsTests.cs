@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             string privateZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             await CreatePrivateZone(_resourceGroup, privateZoneName);
             bool flag = await _privateZoneResource.ExistsAsync(privateZoneName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             string privateZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             var privateZone = await CreatePrivateZone(_resourceGroup, privateZoneName);
             bool flag = await _privateZoneResource.ExistsAsync(privateZoneName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await privateZone.DeleteAsync(WaitUntil.Completed);
             flag = await _privateZoneResource.ExistsAsync(privateZoneName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [RecordedTest]
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Assert.IsNotEmpty(recordSets);
             Assert.IsNotNull(recordSets[0].PrivateDnsSoaRecordInfo);
 
-            Assert.AreEqual(2, recordSets[1].AaaaRecords.Count);
-            Assert.AreEqual("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d55", recordSets[1].AaaaRecords.First().IPv6Address.ToString());
+            Assert.That(recordSets[1].AaaaRecords.Count, Is.EqualTo(2));
+            Assert.That(recordSets[1].AaaaRecords.First().IPv6Address.ToString(), Is.EqualTo("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d55"));
             Assert.AreEqual(1, recordSets[2].AaaaRecords.Count);
-            Assert.AreEqual("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d57", recordSets[2].AaaaRecords.First().IPv6Address.ToString());
+            Assert.That(recordSets[2].AaaaRecords.First().IPv6Address.ToString(), Is.EqualTo("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d57"));
 
             Assert.AreEqual("mymail1.contoso.com", recordSets[3].MXRecords.First().Exchange.ToString());
         }
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.PrivateDns.Tests
                 Thread.Sleep(30000);
             }
             privateZone = await _privateZoneResource.GetAsync(privateZoneName);
-            Assert.AreEqual(1, privateZone.Data.Tags.Count);
+            Assert.That(privateZone.Data.Tags.Count, Is.EqualTo(1));
             KeyValuePair<string, string> tag = privateZone.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
 
             // RemoveTag
             await privateZone.RemoveTagAsync("addtagkey");
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
                 Thread.Sleep(30000);
             }
             privateZone = await _privateZoneResource.GetAsync(privateZoneName);
-            Assert.AreEqual(0, privateZone.Data.Tags.Count);
+            Assert.That(privateZone.Data.Tags.Count, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
 
             var virtualNetworkLinkResource = await privateZone.GetVirtualNetworkLinks().GetAsync(vnetLinkName);
             var vnetLinkData = virtualNetworkLinkResource.Value.Data;
-            Assert.AreEqual(vnetLinkData.PrivateDnsResolutionPolicy, virtualNetworkLinkData.PrivateDnsResolutionPolicy);
+            Assert.That(virtualNetworkLinkData.PrivateDnsResolutionPolicy, Is.EqualTo(vnetLinkData.PrivateDnsResolutionPolicy));
 
             // Update resolutionPolicy to default
             virtualNetworkLinkData.PrivateDnsResolutionPolicy = PrivateDnsResolutionPolicy.Default;
@@ -218,14 +218,14 @@ namespace Azure.ResourceManager.PrivateDns.Tests
 
             virtualNetworkLinkResource = await privateZone.GetVirtualNetworkLinks().GetAsync(vnetLinkName);
             vnetLinkData = virtualNetworkLinkResource.Value.Data;
-            Assert.AreEqual(vnetLinkData.PrivateDnsResolutionPolicy, virtualNetworkLinkData.PrivateDnsResolutionPolicy);
+            Assert.That(virtualNetworkLinkData.PrivateDnsResolutionPolicy, Is.EqualTo(vnetLinkData.PrivateDnsResolutionPolicy));
         }
 
         private void ValidatePrivateZone(PrivateDnsZoneResource privateZone, string privateZoneName)
         {
             Assert.IsNotNull(privateZone);
             Assert.IsNotNull(privateZone.Data.Id);
-            Assert.AreEqual(privateZoneName, privateZone.Data.Name);
+            Assert.That(privateZone.Data.Name, Is.EqualTo(privateZoneName));
         }
     }
 }

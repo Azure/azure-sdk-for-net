@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 hostPoolData);
 
             Assert.IsNotNull(op);
-            Assert.IsTrue(op.HasCompleted);
-            Assert.AreEqual(op.Value.Data.Name, hostPoolName);
+            Assert.That(op.HasCompleted, Is.True);
+            Assert.That(hostPoolName, Is.EqualTo(op.Value.Data.Name));
 
             Response<HostPoolResource> getOp = await hostPoolCollection.GetAsync(
                 hostPoolName);
 
-            Assert.AreEqual(hostPoolName, getOp.Value.Data.Name);
-            Assert.AreEqual(hostPoolType, getOp.Value.Data.HostPoolType);
-            Assert.AreEqual(expectedLoadBalancerType, getOp.Value.Data.LoadBalancerType);
-            Assert.AreEqual(preferredAppGroupType, getOp.Value.Data.PreferredAppGroupType);
+            Assert.That(getOp.Value.Data.Name, Is.EqualTo(hostPoolName));
+            Assert.That(getOp.Value.Data.HostPoolType, Is.EqualTo(hostPoolType));
+            Assert.That(getOp.Value.Data.LoadBalancerType, Is.EqualTo(expectedLoadBalancerType));
+            Assert.That(getOp.Value.Data.PreferredAppGroupType, Is.EqualTo(preferredAppGroupType));
 
             hostPoolData.FriendlyName = "Friendly Name";
             op = await hostPoolCollection.CreateOrUpdateAsync(
@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 hostPoolData);
 
             Assert.IsNotNull(op);
-            Assert.IsTrue(op.HasCompleted);
-            Assert.AreEqual(op.Value.Data.Name, hostPoolName);
-            Assert.AreEqual(op.Value.Data.FriendlyName, "Friendly Name");
-            Assert.AreEqual(hostPoolName, getOp.Value.Data.Name);
-            Assert.AreEqual(hostPoolType, getOp.Value.Data.HostPoolType);
-            Assert.AreEqual(expectedLoadBalancerType, getOp.Value.Data.LoadBalancerType);
-            Assert.AreEqual(preferredAppGroupType, getOp.Value.Data.PreferredAppGroupType);
+            Assert.That(op.HasCompleted, Is.True);
+            Assert.That(hostPoolName, Is.EqualTo(op.Value.Data.Name));
+            Assert.That(op.Value.Data.FriendlyName, Is.EqualTo("Friendly Name"));
+            Assert.That(getOp.Value.Data.Name, Is.EqualTo(hostPoolName));
+            Assert.That(getOp.Value.Data.HostPoolType, Is.EqualTo(hostPoolType));
+            Assert.That(getOp.Value.Data.LoadBalancerType, Is.EqualTo(expectedLoadBalancerType));
+            Assert.That(getOp.Value.Data.PreferredAppGroupType, Is.EqualTo(preferredAppGroupType));
 
             getOp = await hostPoolCollection.GetAsync(
                 hostPoolName);
@@ -97,13 +97,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             Assert.IsNotNull(deleteOp);
 
-            Assert.AreEqual(200, deleteOp.GetRawResponse().Status);
+            Assert.That(deleteOp.GetRawResponse().Status, Is.EqualTo(200));
 
             deleteOp = await hostPool.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 
-            Assert.AreEqual(204, deleteOp.GetRawResponse().Status);
+            Assert.That(deleteOp.GetRawResponse().Status, Is.EqualTo(204));
 
             try
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(404, ex.Status);
+                Assert.That(ex.Status, Is.EqualTo(404));
             }
         }
     }

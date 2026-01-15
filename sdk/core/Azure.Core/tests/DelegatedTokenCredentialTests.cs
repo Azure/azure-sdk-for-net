@@ -25,14 +25,14 @@ namespace Azure.Core.Tests
             staticToken = new AccessToken(expectedToken, expires);
             getToken = (context, token) =>
             {
-                Assert.AreEqual(scopes, context.Scopes);
-                Assert.AreEqual(ctx, token);
+                Assert.That(context.Scopes, Is.EqualTo(scopes));
+                Assert.That(token, Is.EqualTo(ctx));
                 return staticToken;
             };
             getTokenAsync = async (context, token) =>
             {
-                Assert.AreEqual(scopes, context.Scopes);
-                Assert.AreEqual(ctx, token);
+                Assert.That(context.Scopes, Is.EqualTo(scopes));
+                Assert.That(token, Is.EqualTo(ctx));
                 await Task.Yield();
                 return staticToken;
             };
@@ -45,8 +45,8 @@ namespace Azure.Core.Tests
         {
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(scopes), ctx);
 
-            Assert.AreEqual(expectedToken, actualToken.Token);
-            Assert.AreEqual(expires, actualToken.ExpiresOn);
+            Assert.That(actualToken.Token, Is.EqualTo(expectedToken));
+            Assert.That(actualToken.ExpiresOn, Is.EqualTo(expires));
         }
 
         [TestCaseSource(nameof(Credentials))]
@@ -54,8 +54,8 @@ namespace Azure.Core.Tests
         {
             AccessToken actualToken = credential.GetToken(new TokenRequestContext(scopes), ctx);
 
-            Assert.AreEqual(expectedToken, actualToken.Token);
-            Assert.AreEqual(expires, actualToken.ExpiresOn);
+            Assert.That(actualToken.Token, Is.EqualTo(expectedToken));
+            Assert.That(actualToken.ExpiresOn, Is.EqualTo(expires));
         }
 
         [Test]
@@ -73,8 +73,8 @@ namespace Azure.Core.Tests
             var result = credential.CreateTokenOptions(properties);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(scopesMemory, result.Properties[GetTokenOptions.ScopesPropertyName]);
-            Assert.AreEqual("value", result.Properties["additionalProperty"]);
+            Assert.That(result.Properties[GetTokenOptions.ScopesPropertyName], Is.EqualTo(scopesMemory));
+            Assert.That(result.Properties["additionalProperty"], Is.EqualTo("value"));
         }
 
         [Test]
@@ -111,7 +111,7 @@ namespace Azure.Core.Tests
             Assert.DoesNotThrow(() =>
             {
                 var context = TokenRequestContext.FromGetTokenOptions(tokenOptions);
-                Assert.AreEqual(scopesMemory.ToArray(), context.Scopes);
+                Assert.That(context.Scopes, Is.EqualTo(scopesMemory.ToArray()));
             });
         }
     }

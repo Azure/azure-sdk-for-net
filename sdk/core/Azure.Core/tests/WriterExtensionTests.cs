@@ -45,7 +45,7 @@ namespace Azure.Core.Tests
             writer.WriteObjectValue (value);
 
             writer.Flush ();
-            Assert.AreEqual (expectedJson, System.Text.Encoding.UTF8.GetString(stream.ToArray()));
+            Assert.That(System.Text.Encoding.UTF8.GetString(stream.ToArray()), Is.EqualTo(expectedJson));
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace Azure.Core.Tests
             writer.WriteObjectValue (element);
             writer.Flush ();
 
-            Assert.AreEqual (@"[{""TableName"":""TestTable""}]", System.Text.Encoding.UTF8.GetString(stream.ToArray()));
+            Assert.That(System.Text.Encoding.UTF8.GetString(stream.ToArray()), Is.EqualTo(@"[{""TableName"":""TestTable""}]"));
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace Azure.Core.Tests
 
             var content = new TestSerialize ();
             writer.WriteObjectValue (content);
-            Assert.True (content.didWrite);
+            Assert.That(content.didWrite, Is.True);
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace Azure.Core.Tests
             writer.WriteObjectValue(content);
 
             writer.Flush();
-            Assert.AreEqual("null", System.Text.Encoding.UTF8.GetString(stream.ToArray()));
+            Assert.That(System.Text.Encoding.UTF8.GetString(stream.ToArray()), Is.EqualTo("null"));
         }
 
         internal class TestSerialize : IUtf8JsonSerializable

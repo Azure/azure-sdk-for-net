@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             if (shouldBeInList)
             {
-                Assert.IsTrue(policyExists, "Policy not found in the list when it should be.");
+                Assert.That(policyExists, Is.True, "Policy not found in the list when it should be.");
             }
             else
             {
-                Assert.IsFalse(policyExists, "Policy found in the list when it should not be.");
+                Assert.That(policyExists, Is.False, "Policy found in the list when it should not be.");
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             else
             {
                 Assert.IsNotNull(actual);
-                Assert.AreEqual(expected.Count, actual.Count, "Lists do not have the same number of elements.");
+                Assert.That(actual.Count, Is.EqualTo(expected.Count), "Lists do not have the same number of elements.");
 
                 foreach (var expectedPolicy in expected)
                 {

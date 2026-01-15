@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             ResourceIdentifier firewallResourceIdentifier = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, firewallResourceName);
             PaloAltoNetworksFirewallResource.ValidateResourceId(firewallResourceIdentifier);
 
-            Assert.IsTrue(firewallResourceIdentifier.ResourceType.Equals(PaloAltoNetworksFirewallResource.ResourceType));
-            Assert.IsTrue(firewallResourceIdentifier.Equals($"{ResGroup.Id}/providers/{PaloAltoNetworksFirewallResource.ResourceType}/{firewallResourceName}"));
+            Assert.That(firewallResourceIdentifier.ResourceType.Equals(PaloAltoNetworksFirewallResource.ResourceType), Is.True);
+            Assert.That(firewallResourceIdentifier.Equals($"{ResGroup.Id}/providers/{PaloAltoNetworksFirewallResource.ResourceType}/{firewallResourceName}"), Is.True);
             Assert.Throws<ArgumentException>(() => PaloAltoNetworksFirewallResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public void Data()
         {
-            Assert.IsTrue(DefaultResource1.HasData);
+            Assert.That(DefaultResource1.HasData, Is.True);
             Assert.NotNull(DefaultResource1.Data);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             firewallResourcePatch.Tags.Add("Counter", "1");
             PaloAltoNetworksFirewallResource updatedResource =  await DefaultResource1.UpdateAsync(firewallResourcePatch);
 
-            Assert.AreEqual(updatedResource.Data.Tags["Counter"], "1");
+            Assert.That(updatedResource.Data.Tags["Counter"], Is.EqualTo("1"));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await DefaultResource1.UpdateAsync( null)).Value);
         }
 
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             PaloAltoNetworksFirewallResource updatedResource = await DefaultResource1.AddTagAsync("Counter", "2");
             string value = "";
-            Assert.IsTrue(updatedResource.Data.Tags.TryGetValue("Counter", out value));
-            Assert.AreEqual(value, "2");
+            Assert.That(updatedResource.Data.Tags.TryGetValue("Counter", out value), Is.True);
+            Assert.That(value, Is.EqualTo("2"));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await DefaultResource1.AddTagAsync(null, "1")).Value);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await DefaultResource1.AddTagAsync("Counter", null)).Value);
         }
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             PaloAltoNetworksFirewallResource updatedResource = await DefaultResource1.AddTagAsync("Counter1", "3");
             IDictionary<string, string> tags = new Dictionary<string, string>() { { "Counter2", "4" }, { "Counter3", "5"} };
             PaloAltoNetworksFirewallResource updatedResource2 = await updatedResource.SetTagsAsync(tags);
-            Assert.AreEqual(tags.Count, 2);
-            Assert.AreEqual(updatedResource2.Data.Tags, tags);
+            Assert.That(tags.Count, Is.EqualTo(2));
+            Assert.That(tags, Is.EqualTo(updatedResource2.Data.Tags));
             string value = "";
-            Assert.IsFalse(updatedResource2.Data.Tags.TryGetValue("Counter1", out value));
+            Assert.That(updatedResource2.Data.Tags.TryGetValue("Counter1", out value), Is.False);
         }
 
         [TestCase]
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             PaloAltoNetworksFirewallResource updatedResource = await DefaultResource1.AddTagAsync("Counter1", "3");
             PaloAltoNetworksFirewallResource updatedResource2 = await updatedResource.RemoveTagAsync("Counter1");
             string value = "";
-            Assert.IsFalse(updatedResource2.Data.Tags.TryGetValue("Counter1", out value));
+            Assert.That(updatedResource2.Data.Tags.TryGetValue("Counter1", out value), Is.False);
         }
 
         [TestCase]
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             PaloAltoNetworksFirewallResource updatedResource = await ResGroup.GetPaloAltoNetworksFirewalls().GetAsync("dotnetSdkTest-default-1");
             FirewallLogSettings updatedlogProfile = await updatedResource.GetLogProfileAsync();
             Assert.IsNotNull(updatedlogProfile);
-            Assert.AreEqual(updatedlogProfile.CommonDestination.MonitorConfiguration.Id, "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.OperationalInsights/workspaces/dotnetSdkTest-logAnalytics");
+            Assert.That(updatedlogProfile.CommonDestination.MonitorConfiguration.Id, Is.EqualTo("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.OperationalInsights/workspaces/dotnetSdkTest-logAnalytics"));
         }
 
         [TestCase]
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             PaloAltoNetworksFirewallResource updatedResource = await ResGroup.GetPaloAltoNetworksFirewalls().GetAsync("dotnetSdkTest-default-1");
             FirewallLogSettings updatedlogProfile = await updatedResource.GetLogProfileAsync();
             Assert.IsNotNull(updatedlogProfile);
-            Assert.AreEqual(updatedlogProfile.CommonDestination.MonitorConfiguration.Id, "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.OperationalInsights/workspaces/dotnetSdkTest-logAnalytics");
+            Assert.That(updatedlogProfile.CommonDestination.MonitorConfiguration.Id, Is.EqualTo("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.OperationalInsights/workspaces/dotnetSdkTest-logAnalytics"));
         }
 
         [TestCase]
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             PaloAltoNetworksFirewallCollection collection = ResGroup.GetPaloAltoNetworksFirewalls();
             PaloAltoNetworksFirewallResource resourceForDeletion = IsAsync ? (await collection.GetAsync("dotnetSdkTest-default-delAsync")) : (await collection.GetAsync("dotnetSdkTest-default-delSync"));
             await resourceForDeletion.DeleteAsync(WaitUntil.Completed);
-            Assert.IsFalse(await ResGroup.GetPaloAltoNetworksFirewalls().ExistsAsync(resourceForDeletion.Data.Name));
+            Assert.That((bool)await ResGroup.GetPaloAltoNetworksFirewalls().ExistsAsync(resourceForDeletion.Data.Name), Is.False);
         }
 
         [TestCase]
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             FirewallSupportInfo response = await DefaultResource1.GetSupportInfoAsync();
             Assert.NotNull(response);
-            Assert.AreEqual("https://live.paloaltonetworks.com?productSku=PAN-CLOUD-NGFW-AZURE-PAYG", response.HelpURL);
+            Assert.That(response.HelpURL, Is.EqualTo("https://live.paloaltonetworks.com?productSku=PAN-CLOUD-NGFW-AZURE-PAYG"));
         }
     }
 }

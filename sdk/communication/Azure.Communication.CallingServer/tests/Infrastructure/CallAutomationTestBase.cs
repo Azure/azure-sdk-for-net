@@ -89,16 +89,16 @@ namespace Azure.Communication.CallingServer
 
         protected void verifyCallConnectionProperties(CallConnectionProperties callConnectionProperties)
         {
-            Assert.AreEqual(CallConnectionId, callConnectionProperties.CallConnectionId);
-            Assert.AreEqual(ServerCallId, callConnectionProperties.ServerCallId);
+            Assert.That(callConnectionProperties.CallConnectionId, Is.EqualTo(CallConnectionId));
+            Assert.That(callConnectionProperties.ServerCallId, Is.EqualTo(ServerCallId));
             var sourceUser = (CommunicationUserIdentifier)callConnectionProperties.CallSource.Identifier;
-            Assert.AreEqual(SourceId, sourceUser.Id);
-            Assert.AreEqual(callConnectionProperties.Targets.Count, 1);
+            Assert.That(sourceUser.Id, Is.EqualTo(SourceId));
+            Assert.That(callConnectionProperties.Targets.Count, Is.EqualTo(1));
             var targetUser = (CommunicationUserIdentifier)callConnectionProperties.Targets[0];
-            Assert.AreEqual(TargetId, targetUser.Id);
-            Assert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
-            Assert.AreEqual(Subject, callConnectionProperties.Subject);
-            Assert.AreEqual(CallBackUri, callConnectionProperties.CallbackEndpoint.ToString());
+            Assert.That(targetUser.Id, Is.EqualTo(TargetId));
+            Assert.That(callConnectionProperties.CallConnectionState, Is.EqualTo(CallConnectionState.Connecting));
+            Assert.That(callConnectionProperties.Subject, Is.EqualTo(Subject));
+            Assert.That(callConnectionProperties.CallbackEndpoint.ToString(), Is.EqualTo(CallBackUri));
         }
     }
 }

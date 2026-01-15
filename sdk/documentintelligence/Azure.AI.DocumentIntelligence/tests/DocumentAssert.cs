@@ -75,12 +75,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         public static void AreEqual(DocumentClassifierDetails expected, DocumentClassifierDetails actual)
         {
-            Assert.AreEqual(expected.ClassifierId, actual.ClassifierId);
-            Assert.AreEqual(expected.BaseClassifierId, actual.BaseClassifierId);
-            Assert.AreEqual(expected.Description, actual.Description);
-            Assert.AreEqual(expected.ApiVersion, actual.ApiVersion);
-            Assert.AreEqual(expected.CreatedOn, actual.CreatedOn);
-            Assert.AreEqual(expected.ExpiresOn, actual.ExpiresOn);
+            Assert.That(actual.ClassifierId, Is.EqualTo(expected.ClassifierId));
+            Assert.That(actual.BaseClassifierId, Is.EqualTo(expected.BaseClassifierId));
+            Assert.That(actual.Description, Is.EqualTo(expected.Description));
+            Assert.That(actual.ApiVersion, Is.EqualTo(expected.ApiVersion));
+            Assert.That(actual.CreatedOn, Is.EqualTo(expected.CreatedOn));
+            Assert.That(actual.ExpiresOn, Is.EqualTo(expected.ExpiresOn));
 
             AreEquivalent(expected.DocumentTypes, actual.DocumentTypes);
         }

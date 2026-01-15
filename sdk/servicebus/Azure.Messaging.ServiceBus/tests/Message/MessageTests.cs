@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 message.MessageId = id;
             }
             var result = message.ToString();
-            Assert.AreEqual($"{{MessageId:{id}}}", result);
+            Assert.That(result, Is.EqualTo($"{{MessageId:{id}}}"));
         }
 
         [Test]
@@ -113,8 +113,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 PartitionKey = "partition"
             };
             message.SessionId = "session";
-            Assert.AreEqual("session", message.PartitionKey);
-            Assert.AreEqual(message.SessionId, message.PartitionKey);
+            Assert.That(message.PartitionKey, Is.EqualTo("session"));
+            Assert.That(message.PartitionKey, Is.EqualTo(message.SessionId));
 
             message = new ServiceBusMessage
             {
@@ -150,14 +150,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 SessionId = "partition",
                 PartitionKey = "partition"
             };
-            Assert.AreEqual(message.SessionId, message.PartitionKey);
+            Assert.That(message.PartitionKey, Is.EqualTo(message.SessionId));
 
             message = new ServiceBusMessage
             {
                 PartitionKey = "partition",
                 SessionId = "partition"
             };
-            Assert.AreEqual(message.SessionId, message.PartitionKey);
+            Assert.That(message.PartitionKey, Is.EqualTo(message.SessionId));
 
             message = new ServiceBusMessage
             {
@@ -165,7 +165,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 SessionId = "partition"
             };
             message.SessionId = "session";
-            Assert.AreEqual(message.SessionId, message.PartitionKey);
+            Assert.That(message.PartitionKey, Is.EqualTo(message.SessionId));
         }
 
         [Test]
@@ -173,45 +173,45 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             var messageBody = "some message";
             var message = new ServiceBusMessage(messageBody);
-            Assert.AreEqual(message.Body.ToString(), messageBody);
+            Assert.That(messageBody, Is.EqualTo(message.Body.ToString()));
         }
 
         [Test]
         public void CanSetNullBody()
         {
             var message = new ServiceBusMessage();
-            Assert.IsTrue(message.Body.ToMemory().IsEmpty);
+            Assert.That(message.Body.ToMemory().IsEmpty, Is.True);
 
             message = new ServiceBusMessage((BinaryData) null);
-            Assert.IsTrue(message.Body.ToMemory().IsEmpty);
+            Assert.That(message.Body.ToMemory().IsEmpty, Is.True);
         }
 
         [Test]
         public void CreateReceivedMessageViaFactory()
         {
             var receivedMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
-            Assert.IsTrue(receivedMessage.Body.ToMemory().IsEmpty);
-            Assert.AreEqual(default(string), receivedMessage.MessageId);
-            Assert.AreEqual(default(string), receivedMessage.PartitionKey);
-            Assert.AreEqual(default(string), receivedMessage.TransactionPartitionKey);
-            Assert.AreEqual(default(string), receivedMessage.SessionId);
-            Assert.AreEqual(default(string), receivedMessage.ReplyToSessionId);
-            Assert.AreEqual(TimeSpan.MaxValue, receivedMessage.TimeToLive);
-            Assert.AreEqual(default(string), receivedMessage.CorrelationId);
-            Assert.AreEqual(default(string), receivedMessage.Subject);
-            Assert.AreEqual(default(string), receivedMessage.To);
-            Assert.AreEqual(default(string), receivedMessage.ContentType);
-            Assert.AreEqual(default(string), receivedMessage.ReplyTo);
-            Assert.AreEqual(default(DateTimeOffset), receivedMessage.ScheduledEnqueueTime);
+            Assert.That(receivedMessage.Body.ToMemory().IsEmpty, Is.True);
+            Assert.That(receivedMessage.MessageId, Is.EqualTo(default(string)));
+            Assert.That(receivedMessage.PartitionKey, Is.EqualTo(default(string)));
+            Assert.That(receivedMessage.TransactionPartitionKey, Is.EqualTo(default(string)));
+            Assert.That(receivedMessage.SessionId, Is.EqualTo(default(string)));
+            Assert.That(receivedMessage.ReplyToSessionId, Is.EqualTo(default(string)));
+            Assert.That(receivedMessage.TimeToLive, Is.EqualTo(TimeSpan.MaxValue));
+            Assert.That(receivedMessage.CorrelationId, Is.EqualTo(default(string)));
+            Assert.That(receivedMessage.Subject, Is.EqualTo(default(string)));
+            Assert.That(receivedMessage.To, Is.EqualTo(default(string)));
+            Assert.That(receivedMessage.ContentType, Is.EqualTo(default(string)));
+            Assert.That(receivedMessage.ReplyTo, Is.EqualTo(default(string)));
+            Assert.That(receivedMessage.ScheduledEnqueueTime, Is.EqualTo(default(DateTimeOffset)));
             Assert.IsNotNull(receivedMessage.ApplicationProperties);
             Assert.IsEmpty(receivedMessage.ApplicationProperties);
-            Assert.AreEqual(default(Guid), receivedMessage.LockTokenGuid);
-            Assert.AreEqual(default(int), receivedMessage.DeliveryCount);
-            Assert.AreEqual(default(DateTimeOffset), receivedMessage.LockedUntil);
-            Assert.AreEqual(-1, receivedMessage.SequenceNumber);
-            Assert.AreEqual(default(string), receivedMessage.DeadLetterSource);
-            Assert.AreEqual(default(long), receivedMessage.EnqueuedSequenceNumber);
-            Assert.AreEqual(default(DateTimeOffset), receivedMessage.EnqueuedTime);
+            Assert.That(receivedMessage.LockTokenGuid, Is.EqualTo(default(Guid)));
+            Assert.That(receivedMessage.DeliveryCount, Is.EqualTo(default(int)));
+            Assert.That(receivedMessage.LockedUntil, Is.EqualTo(default(DateTimeOffset)));
+            Assert.That(receivedMessage.SequenceNumber, Is.EqualTo(-1));
+            Assert.That(receivedMessage.DeadLetterSource, Is.EqualTo(default(string)));
+            Assert.That(receivedMessage.EnqueuedSequenceNumber, Is.EqualTo(default(long)));
+            Assert.That(receivedMessage.EnqueuedTime, Is.EqualTo(default(DateTimeOffset)));
 
             var fixedDate = new DateTime(2000, 1, 1);
             receivedMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(
@@ -240,30 +240,30 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 7632,
                 new DateTimeOffset(fixedDate, TimeSpan.FromSeconds(120))
             );
-            Assert.AreEqual("binaryData2468", receivedMessage.Body.ToString());
-            Assert.AreEqual("messageId12345", receivedMessage.MessageId);
-            Assert.AreEqual("partitionKey98765", receivedMessage.PartitionKey);
-            Assert.AreEqual("viaPartitionKey8765", receivedMessage.TransactionPartitionKey);
-            Assert.AreEqual("sessionId8877", receivedMessage.SessionId);
-            Assert.AreEqual("replyToSessionId4556", receivedMessage.ReplyToSessionId);
-            Assert.AreEqual(TimeSpan.FromMinutes(5).ToString(), receivedMessage.TimeToLive.ToString());
-            Assert.AreEqual("correlationId8877", receivedMessage.CorrelationId);
-            Assert.AreEqual("label4523", receivedMessage.Subject);
-            Assert.AreEqual("to9887", receivedMessage.To);
-            Assert.AreEqual("contentType0538", receivedMessage.ContentType);
-            Assert.AreEqual("replyTo2598", receivedMessage.ReplyTo);
-            Assert.AreEqual(new DateTimeOffset(fixedDate, TimeSpan.FromHours(2)).UtcDateTime, receivedMessage.ScheduledEnqueueTime.UtcDateTime);
+            Assert.That(receivedMessage.Body.ToString(), Is.EqualTo("binaryData2468"));
+            Assert.That(receivedMessage.MessageId, Is.EqualTo("messageId12345"));
+            Assert.That(receivedMessage.PartitionKey, Is.EqualTo("partitionKey98765"));
+            Assert.That(receivedMessage.TransactionPartitionKey, Is.EqualTo("viaPartitionKey8765"));
+            Assert.That(receivedMessage.SessionId, Is.EqualTo("sessionId8877"));
+            Assert.That(receivedMessage.ReplyToSessionId, Is.EqualTo("replyToSessionId4556"));
+            Assert.That(receivedMessage.TimeToLive.ToString(), Is.EqualTo(TimeSpan.FromMinutes(5).ToString()));
+            Assert.That(receivedMessage.CorrelationId, Is.EqualTo("correlationId8877"));
+            Assert.That(receivedMessage.Subject, Is.EqualTo("label4523"));
+            Assert.That(receivedMessage.To, Is.EqualTo("to9887"));
+            Assert.That(receivedMessage.ContentType, Is.EqualTo("contentType0538"));
+            Assert.That(receivedMessage.ReplyTo, Is.EqualTo("replyTo2598"));
+            Assert.That(receivedMessage.ScheduledEnqueueTime.UtcDateTime, Is.EqualTo(new DateTimeOffset(fixedDate, TimeSpan.FromHours(2)).UtcDateTime));
             Assert.IsNotNull(receivedMessage.ApplicationProperties);
             Assert.IsNotEmpty(receivedMessage.ApplicationProperties);
-            Assert.AreEqual(new[] { "42", "properties0864" }, receivedMessage.ApplicationProperties.Keys);
-            Assert.AreEqual(new object[] { 6420, "testValue" }, receivedMessage.ApplicationProperties.Values);
-            Assert.AreEqual("f5ae57c7-963b-4864-ae19-32b12451e5d8", receivedMessage.LockTokenGuid.ToString());
-            Assert.AreEqual(4321, receivedMessage.DeliveryCount);
-            Assert.AreEqual(new DateTimeOffset(fixedDate, TimeSpan.FromMinutes(18)).UtcDateTime, receivedMessage.LockedUntil.UtcDateTime);
-            Assert.AreEqual(3456, receivedMessage.SequenceNumber);
-            Assert.AreEqual("deadLetterSource5773", receivedMessage.DeadLetterSource);
-            Assert.AreEqual(7632, receivedMessage.EnqueuedSequenceNumber);
-            Assert.AreEqual(new DateTimeOffset(fixedDate, TimeSpan.FromSeconds(120)).UtcDateTime, receivedMessage.EnqueuedTime.UtcDateTime);
+            Assert.That(receivedMessage.ApplicationProperties.Keys, Is.EqualTo(new[] { "42", "properties0864" }));
+            Assert.That(receivedMessage.ApplicationProperties.Values, Is.EqualTo(new object[] { 6420, "testValue" }));
+            Assert.That(receivedMessage.LockTokenGuid.ToString(), Is.EqualTo("f5ae57c7-963b-4864-ae19-32b12451e5d8"));
+            Assert.That(receivedMessage.DeliveryCount, Is.EqualTo(4321));
+            Assert.That(receivedMessage.LockedUntil.UtcDateTime, Is.EqualTo(new DateTimeOffset(fixedDate, TimeSpan.FromMinutes(18)).UtcDateTime));
+            Assert.That(receivedMessage.SequenceNumber, Is.EqualTo(3456));
+            Assert.That(receivedMessage.DeadLetterSource, Is.EqualTo("deadLetterSource5773"));
+            Assert.That(receivedMessage.EnqueuedSequenceNumber, Is.EqualTo(7632));
+            Assert.That(receivedMessage.EnqueuedTime.UtcDateTime, Is.EqualTo(new DateTimeOffset(fixedDate, TimeSpan.FromSeconds(120)).UtcDateTime));
         }
 
         [Test]
@@ -293,19 +293,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             var serialized = message.GetRawAmqpMessage().ToBytes();
 
             var deserialized = new ServiceBusMessage(AmqpAnnotatedMessage.FromBytes(serialized));
-            Assert.AreEqual(message.ContentType, deserialized.ContentType);
-            Assert.AreEqual(message.CorrelationId, deserialized.CorrelationId);
-            Assert.AreEqual(message.Subject, deserialized.Subject);
-            Assert.AreEqual(message.MessageId, deserialized.MessageId);
-            Assert.AreEqual(message.PartitionKey, deserialized.PartitionKey);
-            Assert.AreEqual(message.ApplicationProperties["testProp"], deserialized.ApplicationProperties["testProp"]);
-            Assert.AreEqual(message.ReplyTo, deserialized.ReplyTo);
-            Assert.AreEqual(message.ReplyToSessionId, deserialized.ReplyToSessionId);
+            Assert.That(deserialized.ContentType, Is.EqualTo(message.ContentType));
+            Assert.That(deserialized.CorrelationId, Is.EqualTo(message.CorrelationId));
+            Assert.That(deserialized.Subject, Is.EqualTo(message.Subject));
+            Assert.That(deserialized.MessageId, Is.EqualTo(message.MessageId));
+            Assert.That(deserialized.PartitionKey, Is.EqualTo(message.PartitionKey));
+            Assert.That(deserialized.ApplicationProperties["testProp"], Is.EqualTo(message.ApplicationProperties["testProp"]));
+            Assert.That(deserialized.ReplyTo, Is.EqualTo(message.ReplyTo));
+            Assert.That(deserialized.ReplyToSessionId, Is.EqualTo(message.ReplyToSessionId));
             // because AMQP only has millisecond resolution, allow for up to a 1ms difference when round-tripping
             Assert.That(deserialized.ScheduledEnqueueTime, Is.EqualTo(message.ScheduledEnqueueTime).Within(1).Milliseconds);
-            Assert.AreEqual(message.SessionId, deserialized.SessionId);
-            Assert.AreEqual(message.TimeToLive, deserialized.TimeToLive);
-            Assert.AreEqual(message.To, deserialized.To);
+            Assert.That(deserialized.SessionId, Is.EqualTo(message.SessionId));
+            Assert.That(deserialized.TimeToLive, Is.EqualTo(message.TimeToLive));
+            Assert.That(deserialized.To, Is.EqualTo(message.To));
         }
     }
 }

@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.VoiceServices.Tests
 
             // PUT - Create
             var createOperation = await _communicationsGateway.GetVoiceServicesTestLines().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, DefaultTestLineData());
-            Assert.IsTrue(createOperation.HasCompleted);
-            Assert.IsTrue(createOperation.HasValue);
+            Assert.That(createOperation.HasCompleted, Is.True);
+            Assert.That(createOperation.HasValue, Is.True);
 
             // GET - check it exists
             var getResponse = await _communicationsGateway.GetVoiceServicesTestLineAsync(resourceName);
@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.VoiceServices.Tests
             var updatedTestLineData = DefaultTestLineData();
             updatedTestLineData.PhoneNumber = "123";
             var putOperation = await _communicationsGateway.GetVoiceServicesTestLines().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, updatedTestLineData);
-            Assert.IsTrue(putOperation.HasCompleted);
-            Assert.IsTrue(putOperation.HasValue);
+            Assert.That(putOperation.HasCompleted, Is.True);
+            Assert.That(putOperation.HasValue, Is.True);
 
             // GET - check the updated testLine name
             getResponse = await _communicationsGateway.GetVoiceServicesTestLineAsync(resourceName);
             testLine = getResponse.Value;
             Assert.IsNotNull(testLine);
-            Assert.AreEqual("123", testLine.Data.PhoneNumber);
+            Assert.That(testLine.Data.PhoneNumber, Is.EqualTo("123"));
 
             // PATCH
             var patch = new VoiceServicesTestLinePatch();
@@ -71,18 +71,18 @@ namespace Azure.ResourceManager.VoiceServices.Tests
             getResponse = await _communicationsGateway.GetVoiceServicesTestLineAsync(resourceName);
             testLine = getResponse.Value;
             Assert.IsNotNull(testLine);
-            Assert.AreEqual("tagValue", testLine.Data.Tags["tagKey"]);
+            Assert.That(testLine.Data.Tags["tagKey"], Is.EqualTo("tagValue"));
 
             // List TestLines by CommunicationsGateway
             var testLines = _communicationsGateway.GetVoiceServicesTestLines().GetAllAsync();
             var testLinesResult = await testLines.ToEnumerableAsync();
             Assert.NotNull(testLinesResult);
-            Assert.IsTrue(testLinesResult.Count >= 1);
+            Assert.That(testLinesResult.Count >= 1, Is.True);
 
             // Delete
             var deleteOperation = await testLine.DeleteAsync(WaitUntil.Completed);
             await deleteOperation.WaitForCompletionResponseAsync();
-            Assert.IsTrue(deleteOperation.HasCompleted);
+            Assert.That(deleteOperation.HasCompleted, Is.True);
         }
     }
 }

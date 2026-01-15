@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.Redis.Tests
 
             var responseCreate = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, parameter)).Value;
 
-            Assert.AreEqual(DefaultLocation, responseCreate.Data.Location);
-            Assert.AreEqual(redisCacheName, responseCreate.Data.Name);
-            Assert.AreEqual(RedisSkuName.Basic, responseCreate.Data.Sku.Name);
-            Assert.AreEqual(RedisSkuFamily.BasicOrStandard, responseCreate.Data.Sku.Family);
-            Assert.AreEqual(0, responseCreate.Data.Sku.Capacity);
-            Assert.AreEqual(6379, responseCreate.Data.Port);
-            Assert.AreEqual(6380, responseCreate.Data.SslPort);
-            Assert.AreEqual(UpdateChannel.Stable, responseCreate.Data.UpdateChannel);
+            Assert.That(responseCreate.Data.Location, Is.EqualTo(DefaultLocation));
+            Assert.That(responseCreate.Data.Name, Is.EqualTo(redisCacheName));
+            Assert.That(responseCreate.Data.Sku.Name, Is.EqualTo(RedisSkuName.Basic));
+            Assert.That(responseCreate.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.BasicOrStandard));
+            Assert.That(responseCreate.Data.Sku.Capacity, Is.EqualTo(0));
+            Assert.That(responseCreate.Data.Port, Is.EqualTo(6379));
+            Assert.That(responseCreate.Data.SslPort, Is.EqualTo(6380));
+            Assert.That(responseCreate.Data.UpdateChannel, Is.EqualTo(UpdateChannel.Stable));
 
             var patch = new RedisPatch()
             {
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.Redis.Tests
 
             var responseUpdate = (await responseCreate.UpdateAsync(WaitUntil.Completed, patch)).Value;
             var response = (await ResourceGroup.GetAllRedis().GetAsync(redisCacheName)).Value;
-            Assert.AreEqual(UpdateChannel.Preview, response.Data.UpdateChannel);
+            Assert.That(response.Data.UpdateChannel, Is.EqualTo(UpdateChannel.Preview));
 
             await responseUpdate.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
-            Assert.IsFalse(falseResult);
+            Assert.That(falseResult, Is.False);
         }
     }
 }

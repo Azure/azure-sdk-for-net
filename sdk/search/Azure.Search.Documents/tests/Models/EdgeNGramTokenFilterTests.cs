@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Tests.Models
         public void CreatesEdgeNGramTokenFilterV2()
         {
             EdgeNGramTokenFilter sut = new EdgeNGramTokenFilter("test");
-            Assert.AreEqual(@"#Microsoft.Azure.Search.EdgeNGramTokenFilterV2", sut.ODataType);
+            Assert.That(sut.ODataType, Is.EqualTo(@"#Microsoft.Azure.Search.EdgeNGramTokenFilterV2"));
         }
 
         [TestCase(@"#Microsoft.Azure.Search.EdgeNGramTokenFilter")]
@@ -34,11 +34,11 @@ namespace Azure.Search.Documents.Tests.Models
             EdgeNGramTokenFilter sut = TokenFilter.DeserializeTokenFilter(jsonDoc.RootElement) as EdgeNGramTokenFilter;
 
             Assert.NotNull(sut);
-            Assert.AreEqual(odataType, sut.ODataType);
-            Assert.AreEqual("test", sut.Name);
-            Assert.AreEqual(0, sut.MinGram);
-            Assert.AreEqual(1, sut.MaxGram);
-            Assert.AreEqual(EdgeNGramTokenFilterSide.Front, sut.Side);
+            Assert.That(sut.ODataType, Is.EqualTo(odataType));
+            Assert.That(sut.Name, Is.EqualTo("test"));
+            Assert.That(sut.MinGram, Is.EqualTo(0));
+            Assert.That(sut.MaxGram, Is.EqualTo(1));
+            Assert.That(sut.Side, Is.EqualTo(EdgeNGramTokenFilterSide.Front));
 
             using MemoryStream stream = new MemoryStream();
             using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
@@ -49,8 +49,8 @@ namespace Azure.Search.Documents.Tests.Models
             stream.Position = 0;
 
             jsonDoc = JsonDocument.Parse(stream);
-            Assert.True(jsonDoc.RootElement.TryGetProperty("@odata.type", out JsonElement odataTypeElem));
-            Assert.AreEqual(odataType, odataTypeElem.GetString());
+            Assert.That(jsonDoc.RootElement.TryGetProperty("@odata.type", out JsonElement odataTypeElem), Is.True);
+            Assert.That(odataTypeElem.GetString(), Is.EqualTo(odataType));
             jsonDoc.Dispose();
         }
     }

@@ -69,11 +69,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             QueueProcessorOptions context = new QueueProcessorOptions(_queue, null, options);
             QueueProcessor localProcessor = new QueueProcessor(context);
 
-            Assert.AreEqual(options.BatchSize, localProcessor.QueuesOptions.BatchSize);
-            Assert.AreEqual(options.MaxDequeueCount, localProcessor.QueuesOptions.MaxDequeueCount);
-            Assert.AreEqual(options.NewBatchThreshold, localProcessor.QueuesOptions.NewBatchThreshold);
-            Assert.AreEqual(options.VisibilityTimeout, localProcessor.QueuesOptions.VisibilityTimeout);
-            Assert.AreEqual(options.MaxPollingInterval, localProcessor.QueuesOptions.MaxPollingInterval);
+            Assert.That(localProcessor.QueuesOptions.BatchSize, Is.EqualTo(options.BatchSize));
+            Assert.That(localProcessor.QueuesOptions.MaxDequeueCount, Is.EqualTo(options.MaxDequeueCount));
+            Assert.That(localProcessor.QueuesOptions.NewBatchThreshold, Is.EqualTo(options.NewBatchThreshold));
+            Assert.That(localProcessor.QueuesOptions.VisibilityTimeout, Is.EqualTo(options.VisibilityTimeout));
+            Assert.That(localProcessor.QueuesOptions.MaxPollingInterval, Is.EqualTo(options.MaxPollingInterval));
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             await _processor.CompleteProcessingMessageAsync(message, result, CancellationToken.None);
 
             message = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
-            Assert.Null(message);
+            Assert.That(message, Is.Null);
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             message = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
             Assert.NotNull(message);
-            Assert.AreEqual(id, message.MessageId);
+            Assert.That(message.MessageId, Is.EqualTo(id));
         }
 
         [Test]
@@ -121,8 +121,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             bool poisonMessageHandlerCalled = false;
             localProcessor.MessageAddedToPoisonQueueAsync += (sender, e) =>
                 {
-                    Assert.AreSame(sender, localProcessor);
-                    Assert.AreSame(_poisonQueue, e.PoisonQueue);
+                    Assert.That(localProcessor, Is.SameAs(sender));
+                    Assert.That(e.PoisonQueue, Is.SameAs(_poisonQueue));
                     Assert.NotNull(e.Message);
                     poisonMessageHandlerCalled = true;
                     return Task.CompletedTask;
@@ -140,12 +140,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             }
 
             message = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
-            Assert.Null(message);
+            Assert.That(message, Is.Null);
 
             QueueMessage poisonMessage = (await _poisonQueue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
             Assert.NotNull(poisonMessage);
-            Assert.AreEqual(messageContent, poisonMessage.MessageText);
-            Assert.True(poisonMessageHandlerCalled);
+            Assert.That(poisonMessage.MessageText, Is.EqualTo(messageContent));
+            Assert.That(poisonMessageHandlerCalled, Is.True);
 
             var categories = provider.GetAllLogMessages().Select(p => p.Category);
             CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Host.Queues.QueueProcessor");
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             QueueMessage message = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
             await localProcessor.CompleteProcessingMessageAsync(message, functionResult, CancellationToken.None);
 
-            Assert.AreEqual(queuesOptions.VisibilityTimeout, updatedVisibilityTimeout);
+            Assert.That(updatedVisibilityTimeout, Is.EqualTo(queuesOptions.VisibilityTimeout));
         }
 
         [Test]
@@ -191,8 +191,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             bool poisonMessageHandlerCalled = false;
             localProcessor.MessageAddedToPoisonQueueAsync += (sender, e) =>
             {
-                Assert.AreSame(sender, localProcessor);
-                Assert.AreSame(_poisonQueue, e.PoisonQueue);
+                Assert.That(localProcessor, Is.SameAs(sender));
+                Assert.That(e.PoisonQueue, Is.SameAs(_poisonQueue));
                 Assert.NotNull(e.Message);
                 poisonMessageHandlerCalled = true;
                 return Task.CompletedTask;
@@ -207,14 +207,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 messageFromCloud = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
             }
 
-            Assert.AreEqual(6, messageFromCloud.DequeueCount);
+            Assert.That(messageFromCloud.DequeueCount, Is.EqualTo(6));
             bool continueProcessing = await localProcessor.BeginProcessingMessageAsync(messageFromCloud, CancellationToken.None);
-            Assert.False(continueProcessing);
+            Assert.That(continueProcessing, Is.False);
 
             QueueMessage poisonMessage = (await _poisonQueue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
             Assert.NotNull(poisonMessage);
-            Assert.AreEqual(messageContent, poisonMessage.MessageText);
-            Assert.True(poisonMessageHandlerCalled);
+            Assert.That(poisonMessage.MessageText, Is.EqualTo(messageContent));
+            Assert.That(poisonMessageHandlerCalled, Is.True);
         }
 
         public class TestFixture : IDisposable

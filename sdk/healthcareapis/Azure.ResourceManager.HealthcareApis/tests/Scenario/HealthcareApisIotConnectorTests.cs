@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 
             // Exist
             bool flag = await _iotConnectorCollection.ExistsAsync(iotConnectorName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Get
             var getIotConnector = await _iotConnectorCollection.GetAsync(iotConnectorName);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             // Delete
             await iotConnector.DeleteAsync(WaitUntil.Completed);
             flag = await _iotConnectorCollection.ExistsAsync(iotConnectorName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [TestCase(null)]
@@ -72,15 +72,15 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             // AddTag
             await iotConnector.AddTagAsync("addtagkey", "addtagvalue");
             iotConnector = await _iotConnectorCollection.GetAsync(iotConnectorName);
-            Assert.AreEqual(1, iotConnector.Data.Tags.Count);
+            Assert.That(iotConnector.Data.Tags.Count, Is.EqualTo(1));
             KeyValuePair<string, string> tag = iotConnector.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
 
             // RemoveTag
             await iotConnector.RemoveTagAsync("addtagkey");
             iotConnector = await _iotConnectorCollection.GetAsync(iotConnectorName);
-            Assert.AreEqual(0, iotConnector.Data.Tags.Count);
+            Assert.That(iotConnector.Data.Tags.Count, Is.EqualTo(0));
         }
 
         private void ValidateHealthcareApisIotConnector(HealthcareApisIotConnectorData iotConnector, string iotConnectorName)
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             Assert.IsNotNull(iotConnector);
             Assert.IsNotNull(iotConnector.ETag);
             Assert.IsNotNull(iotConnector.DeviceMappingContent);
-            Assert.AreEqual(iotConnectorName, iotConnector.Id.Name);
-            Assert.AreEqual(DefaultLocation, iotConnector.Location);
-            Assert.AreEqual("Microsoft.HealthcareApis/workspaces/iotconnectors", iotConnector.ResourceType.ToString());
-            Assert.AreEqual("$Default", iotConnector.IngestionEndpointConfiguration.ConsumerGroup);
+            Assert.That(iotConnector.Id.Name, Is.EqualTo(iotConnectorName));
+            Assert.That(iotConnector.Location, Is.EqualTo(DefaultLocation));
+            Assert.That(iotConnector.ResourceType.ToString(), Is.EqualTo("Microsoft.HealthcareApis/workspaces/iotconnectors"));
+            Assert.That(iotConnector.IngestionEndpointConfiguration.ConsumerGroup, Is.EqualTo("$Default"));
         }
     }
 }

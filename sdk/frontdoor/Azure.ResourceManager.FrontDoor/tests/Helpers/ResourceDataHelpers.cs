@@ -29,20 +29,20 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
 
         public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
-            Assert.AreEqual(r1.Location, r2.Location);
-            Assert.AreEqual(r1.Tags, r2.Tags);
+            Assert.That(r2.Name, Is.EqualTo(r1.Name));
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.That(r2.Location, Is.EqualTo(r1.Location));
+            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
         }
 
         #region FrontDoor
         public static void AssertFrontDoor(FrontDoorData data1, FrontDoorData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.AreEqual(data1.FriendlyName, data2.FriendlyName);
-            Assert.AreEqual(data1.ProvisioningState, data2.ProvisioningState);
-            Assert.AreEqual(data2.Cname, data2.Cname);
+            Assert.That(data2.FriendlyName, Is.EqualTo(data1.FriendlyName));
+            Assert.That(data2.ProvisioningState, Is.EqualTo(data1.ProvisioningState));
+            Assert.That(data2.Cname, Is.EqualTo(data2.Cname));
         }
 
         public static FrontDoorData GetFrontDoorData(AzureLocation location, string frontDoorName, string resourceGroupName, string subid)
@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
         public static void AssertFrontDoorExperiment(FrontDoorExperimentData data1, FrontDoorExperimentData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.AreEqual(data1.Description, data2.Description);
-            Assert.AreEqual(data1.Status, data2.Status);
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            Assert.That(data2.Status, Is.EqualTo(data1.Status));
         }
 
         public static FrontDoorExperimentData GetFrontDoorExperimentData(AzureLocation location)
@@ -184,9 +184,9 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
         public static void AssertFrontDoorNetWorkExperiment(FrontDoorNetworkExperimentProfileData data1, FrontDoorNetworkExperimentProfileData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.AreEqual(data1.EnabledState, data2.EnabledState);
-            Assert.AreEqual(data1.ResourceState, data2.ResourceState);
-            Assert.AreEqual(data1.ETag, data2.ETag);
+            Assert.That(data2.EnabledState, Is.EqualTo(data1.EnabledState));
+            Assert.That(data2.ResourceState, Is.EqualTo(data1.ResourceState));
+            Assert.That(data2.ETag, Is.EqualTo(data1.ETag));
         }
 
         public static FrontDoorNetworkExperimentProfileData GetProfileData(AzureLocation location)
@@ -202,10 +202,10 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
         #region RultEngine
         public static void AssertRuleEngine(FrontDoorRulesEngineData data1, FrontDoorRulesEngineData data2)
         {
-            Assert.AreEqual(data1.Name, data2.Name);
-            Assert.AreEqual(data1.Id, data2.Id);
-            Assert.AreEqual(data1.ResourceType, data2.ResourceType);
-            Assert.AreEqual(data1.ResourceState, data2.ResourceState);
+            Assert.That(data2.Name, Is.EqualTo(data1.Name));
+            Assert.That(data2.Id, Is.EqualTo(data1.Id));
+            Assert.That(data2.ResourceType, Is.EqualTo(data1.ResourceType));
+            Assert.That(data2.ResourceState, Is.EqualTo(data1.ResourceState));
         }
         public static FrontDoorRulesEngineData GetRulesEngineData()
         {
@@ -249,8 +249,8 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
         public static void AssertPolicy(FrontDoorWebApplicationFirewallPolicyData data1, FrontDoorWebApplicationFirewallPolicyData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.AreEqual(data1.ProvisioningState, data2.ProvisioningState);
-            Assert.AreEqual(data1.ResourceState, data2.ResourceState);
+            Assert.That(data2.ProvisioningState, Is.EqualTo(data1.ProvisioningState));
+            Assert.That(data2.ResourceState, Is.EqualTo(data1.ResourceState));
         }
 
         public static FrontDoorWebApplicationFirewallPolicyData GetPolicyData(AzureLocation location)

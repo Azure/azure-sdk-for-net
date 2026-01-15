@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             var createResult = await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            Assert.AreEqual(clusterName, createResult.Value.Data.Name);
+            Assert.That(createResult.Value.Data.Name, Is.EqualTo(clusterName));
 
             // Get
             var getResult = await clusterCollection.GetAsync(clusterName);
-            Assert.AreEqual(clusterName, getResult.Value.Data.Name);
+            Assert.That(getResult.Value.Data.Name, Is.EqualTo(clusterName));
             NetworkCloudClusterResource clusterResource = Client.GetNetworkCloudClusterResource(getResult.Value.Data.Id);
 
             // Update cluster location
@@ -127,8 +127,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             var patchResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.AreEqual(patch.Tags, patchResult.Value.Data.Tags);
-            Assert.AreEqual("Foo floor", patchResult.Value.Data.ClusterLocation);
+            Assert.That(patchResult.Value.Data.Tags, Is.EqualTo(patch.Tags));
+            Assert.That(patchResult.Value.Data.ClusterLocation, Is.EqualTo("Foo floor"));
 
             // List by Resource Group
             var listByResourceGroup = new List<NetworkCloudClusterResource>();
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             // Delete
             var deleteResult = await clusterResource.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            Assert.IsTrue(deleteResult.HasCompleted);
+            Assert.That(deleteResult.HasCompleted, Is.True);
         }
     }
 }

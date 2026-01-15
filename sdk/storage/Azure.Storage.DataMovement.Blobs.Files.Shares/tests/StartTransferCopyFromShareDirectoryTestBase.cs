@@ -190,20 +190,20 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
 
             // Assert file and file contents
-            Assert.AreEqual(sourceFileNames.Count, destinationFileNames.Count);
+            Assert.That(destinationFileNames.Count, Is.EqualTo(sourceFileNames.Count));
             sourceFileNames.Sort();
             destinationFileNames.Sort();
             for (int i = 0; i < sourceFileNames.Count; i++)
             {
-                Assert.AreEqual(
-                    sourceFileNames[i],
-                    destinationFileNames[i]);
+                Assert.That(
+                    destinationFileNames[i],
+                    Is.EqualTo(sourceFileNames[i]));
 
                 // Verify contents
                 string destinationFullName = string.Join("/", destinationPrefix, destinationFileNames[i]);
                 using Stream sourceStream = await sourceDirectory.GetFileClient(sourceFileNames[i]).OpenReadAsync(cancellationToken: cancellationToken);
                 using Stream destinationStream = await destinationContainer.GetBlobClient(destinationFullName).OpenReadAsync(cancellationToken: cancellationToken);
-                Assert.AreEqual(sourceStream, destinationStream);
+                Assert.That(destinationStream, Is.EqualTo(sourceStream));
             }
         }
 

@@ -19,11 +19,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var clientConnection = service.GetClientConnection();
 
             Assert.NotNull(clientConnection);
-            Assert.AreEqual(expectedBaseUrl, clientConnection.BaseUri.AbsoluteUri);
+            Assert.That(clientConnection.BaseUri.AbsoluteUri, Is.EqualTo(expectedBaseUrl));
             Assert.NotNull(clientConnection.AccessToken);
 
             var absoluteUrl = $"{expectedBaseUrl}?access_token={clientConnection.AccessToken}";
-            Assert.AreEqual(absoluteUrl, clientConnection.Uri.AbsoluteUri);
+            Assert.That(clientConnection.Uri.AbsoluteUri, Is.EqualTo(absoluteUrl));
         }
 
         [TestCase]
@@ -32,8 +32,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var testconnection = "Endpoint=http://abc;Port=888;AccessKey=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH==A;Version=1.0;";
             var configs = new WebPubSubValidationOptions(testconnection);
 
-            Assert.IsTrue(configs.TryGetKey("abc", out var key));
-            Assert.AreEqual("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH==A", key);
+            Assert.That(configs.TryGetKey("abc", out var key), Is.True);
+            Assert.That(key, Is.EqualTo("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH==A"));
         }
 
         [TestCase]
@@ -42,8 +42,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var testconnection = "Endpoint=http://abc;Version=1.0;";
             var configs = new WebPubSubValidationOptions(testconnection);
 
-            Assert.IsTrue(configs.TryGetKey("abc", out var key));
-            Assert.Null(key);
+            Assert.That(configs.TryGetKey("abc", out var key), Is.True);
+            Assert.That(key, Is.Null);
         }
     }
 }

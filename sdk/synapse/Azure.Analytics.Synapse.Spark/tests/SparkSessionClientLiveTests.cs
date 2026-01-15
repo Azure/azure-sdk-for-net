@@ -53,7 +53,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkSession sessionCreateResponse = await sessionOperation.WaitForCompletionAsync();
 
             // Verify the Spark session completes successfully
-            Assert.True(LivyStates.Idle == sessionCreateResponse.State,
+            Assert.That(LivyStates.Idle == sessionCreateResponse.State,
+                Is.True,
                 string.Format(
                     "Session: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
                     sessionCreateResponse.Id,
@@ -73,7 +74,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             Assert.NotNull(createStatementResponse);
 
             // Verify the Spark statement completes successfully
-            Assert.True(LivyStatementStates.Available == createStatementResponse.State,
+            Assert.That(LivyStatementStates.Available == createStatementResponse.State,
+                Is.True,
                 string.Format(
                     "Spark statement: {0} did not return success. Current job state: {1}. Error (if any): {2}",
                     createStatementResponse.Id,
@@ -83,19 +85,19 @@ namespace Azure.Analytics.Synapse.Spark.Tests
 
             // Verify the output
             Dictionary<string, object> outputData = createStatementResponse.Output.Data as Dictionary<string, object>;
-            Assert.AreEqual("Hello world", outputData["text/plain"] as string);
+            Assert.That(outputData["text/plain"] as string, Is.EqualTo("Hello world"));
 
             // Get the list of Spark statements and check that the executed statement exists
             Response<SparkStatementCollection> listStatementResponse = await client.GetSparkStatementsAsync(sessionCreateResponse.Id);
 
             Assert.NotNull(listStatementResponse.Value);
-            Assert.IsTrue(listStatementResponse.Value.Statements.Any(stmt => stmt.Id == createStatementResponse.Id));
+            Assert.That(listStatementResponse.Value.Statements.Any(stmt => stmt.Id == createStatementResponse.Id), Is.True);
 
             // Get the list of Spark session and check that the created session exists
             List<SparkSession> listSessionResponse = await SparkTestUtilities.ListSparkSessionsAsync(client);
 
             Assert.NotNull(listSessionResponse);
-            Assert.IsTrue(listSessionResponse.Any(session => session.Id == sessionCreateResponse.Id));
+            Assert.That(listSessionResponse.Any(session => session.Id == sessionCreateResponse.Id), Is.True);
         }
 
         /// <summary>
@@ -115,7 +117,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkSession sessionCreateResponse = await anotherSessionOperation.WaitForCompletionAsync();
 
             // Verify the Spark session completes successfully
-            Assert.True(LivyStates.Idle == sessionCreateResponse.State,
+            Assert.That(LivyStates.Idle == sessionCreateResponse.State,
+                Is.True,
                 string.Format(
                     "Session: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
                     sessionCreateResponse.Id,
@@ -136,7 +139,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             Assert.NotNull(createStatementResponse);
 
             // Verify the Spark statement completes successfully
-            Assert.True(LivyStatementStates.Available == createStatementResponse.State,
+            Assert.That(LivyStatementStates.Available == createStatementResponse.State,
+                Is.True,
                 string.Format(
                     "Spark statement: {0} did not return success. Current job state: {1}. Error (if any): {2}",
                     createStatementResponse.Id,
@@ -146,19 +150,19 @@ namespace Azure.Analytics.Synapse.Spark.Tests
 
             // Verify the output
             Dictionary<string, object> outputData = createStatementResponse.Output.Data as Dictionary<string, object>;
-            Assert.AreEqual("Hello world", outputData["text/plain"] as string);
+            Assert.That(outputData["text/plain"] as string, Is.EqualTo("Hello world"));
 
             // Get the list of Spark statements and check that the executed statement exists
             Response<SparkStatementCollection> listStatementResponse = await client.GetSparkStatementsAsync(sessionCreateResponse.Id);
 
             Assert.NotNull(listStatementResponse.Value);
-            Assert.IsTrue(listStatementResponse.Value.Statements.Any(stmt => stmt.Id == createStatementResponse.Id));
+            Assert.That(listStatementResponse.Value.Statements.Any(stmt => stmt.Id == createStatementResponse.Id), Is.True);
 
             // Get the list of Spark session and check that the created session exists
             List<SparkSession> listSessionResponse = await SparkTestUtilities.ListSparkSessionsAsync(client);
 
             Assert.NotNull(listSessionResponse);
-            Assert.IsTrue(listSessionResponse.Any(session => session.Id == sessionCreateResponse.Id));
+            Assert.That(listSessionResponse.Any(session => session.Id == sessionCreateResponse.Id), Is.True);
         }
 
         [RecordedTest]
@@ -176,11 +180,11 @@ namespace Azure.Analytics.Synapse.Spark.Tests
 
         internal void ValidateSparkSession(SparkSession expectedSparkSession, SparkSession actualSparkSession)
         {
-            Assert.AreEqual(expectedSparkSession.Name, actualSparkSession.Name);
-            Assert.AreEqual(expectedSparkSession.Id, actualSparkSession.Id);
-            Assert.AreEqual(expectedSparkSession.AppId, actualSparkSession.AppId);
-            Assert.AreEqual(expectedSparkSession.SubmitterId, actualSparkSession.SubmitterId);
-            Assert.AreEqual(expectedSparkSession.ArtifactId, actualSparkSession.ArtifactId);
+            Assert.That(actualSparkSession.Name, Is.EqualTo(expectedSparkSession.Name));
+            Assert.That(actualSparkSession.Id, Is.EqualTo(expectedSparkSession.Id));
+            Assert.That(actualSparkSession.AppId, Is.EqualTo(expectedSparkSession.AppId));
+            Assert.That(actualSparkSession.SubmitterId, Is.EqualTo(expectedSparkSession.SubmitterId));
+            Assert.That(actualSparkSession.ArtifactId, Is.EqualTo(expectedSparkSession.ArtifactId));
         }
     }
 }

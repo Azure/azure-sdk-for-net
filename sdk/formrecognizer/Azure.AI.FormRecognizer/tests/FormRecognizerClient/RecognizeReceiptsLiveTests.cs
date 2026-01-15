@@ -84,7 +84,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             await operation.WaitForCompletionAsync();
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             var form = operation.Value.Single();
 
@@ -99,38 +99,38 @@ namespace Azure.AI.FormRecognizer.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the receipt. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("prebuilt:receipt", form.FormType);
-            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
-            Assert.AreEqual(1, form.PageRange.LastPageNumber);
+            Assert.That(form.FormType, Is.EqualTo("prebuilt:receipt"));
+            Assert.That(form.PageRange.FirstPageNumber, Is.EqualTo(1));
+            Assert.That(form.PageRange.LastPageNumber, Is.EqualTo(1));
 
             Assert.NotNull(form.Fields);
 
-            Assert.True(form.Fields.ContainsKey("ReceiptType"));
-            Assert.True(form.Fields.ContainsKey("MerchantAddress"));
-            Assert.True(form.Fields.ContainsKey("MerchantName"));
-            Assert.True(form.Fields.ContainsKey("MerchantPhoneNumber"));
-            Assert.True(form.Fields.ContainsKey("TransactionDate"));
-            Assert.True(form.Fields.ContainsKey("TransactionTime"));
-            Assert.True(form.Fields.ContainsKey("Items"));
-            Assert.True(form.Fields.ContainsKey("Subtotal"));
-            Assert.True(form.Fields.ContainsKey("Tax"));
-            Assert.True(form.Fields.ContainsKey("Total"));
+            Assert.That(form.Fields.ContainsKey("ReceiptType"), Is.True);
+            Assert.That(form.Fields.ContainsKey("MerchantAddress"), Is.True);
+            Assert.That(form.Fields.ContainsKey("MerchantName"), Is.True);
+            Assert.That(form.Fields.ContainsKey("MerchantPhoneNumber"), Is.True);
+            Assert.That(form.Fields.ContainsKey("TransactionDate"), Is.True);
+            Assert.That(form.Fields.ContainsKey("TransactionTime"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Items"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Subtotal"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Tax"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Total"), Is.True);
 
-            Assert.AreEqual("Itemized", form.Fields["ReceiptType"].Value.AsString());
-            Assert.AreEqual("Contoso", form.Fields["MerchantName"].Value.AsString());
-            Assert.AreEqual("123 Main Street Redmond, WA 98052", form.Fields["MerchantAddress"].Value.AsString());
-            Assert.AreEqual("123-456-7890", form.Fields["MerchantPhoneNumber"].ValueData.Text);
+            Assert.That(form.Fields["ReceiptType"].Value.AsString(), Is.EqualTo("Itemized"));
+            Assert.That(form.Fields["MerchantName"].Value.AsString(), Is.EqualTo("Contoso"));
+            Assert.That(form.Fields["MerchantAddress"].Value.AsString(), Is.EqualTo("123 Main Street Redmond, WA 98052"));
+            Assert.That(form.Fields["MerchantPhoneNumber"].ValueData.Text, Is.EqualTo("123-456-7890"));
 
             var date = form.Fields["TransactionDate"].Value.AsDate();
             var time = form.Fields["TransactionTime"].Value.AsTime();
 
-            Assert.AreEqual(10, date.Day);
-            Assert.AreEqual(6, date.Month);
-            Assert.AreEqual(2019, date.Year);
+            Assert.That(date.Day, Is.EqualTo(10));
+            Assert.That(date.Month, Is.EqualTo(6));
+            Assert.That(date.Year, Is.EqualTo(2019));
 
-            Assert.AreEqual(13, time.Hours);
-            Assert.AreEqual(59, time.Minutes);
-            Assert.AreEqual(0, time.Seconds);
+            Assert.That(time.Hours, Is.EqualTo(13));
+            Assert.That(time.Minutes, Is.EqualTo(59));
+            Assert.That(time.Seconds, Is.EqualTo(0));
 
             var expectedItems = new List<(int? Quantity, string Name, float? Price, float? TotalPrice)>()
             {
@@ -142,7 +142,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var items = form.Fields["Items"].Value.AsList();
 
-            Assert.AreEqual(expectedItems.Count, items.Count);
+            Assert.That(items.Count, Is.EqualTo(expectedItems.Count));
 
             for (var itemIndex = 0; itemIndex < items.Count; itemIndex++)
             {
@@ -160,8 +160,8 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 var expectedItem = expectedItems[itemIndex];
 
-                Assert.AreEqual(expectedItem.Quantity, quantity, $"Quantity mismatch in item with index {itemIndex}.");
-                Assert.AreEqual(expectedItem.Name, name, $"Name mismatch in item with index {itemIndex}.");
+                Assert.That(quantity, Is.EqualTo(expectedItem.Quantity), $"Quantity mismatch in item with index {itemIndex}.");
+                Assert.That(name, Is.EqualTo(expectedItem.Name), $"Name mismatch in item with index {itemIndex}.");
                 Assert.That(price, Is.EqualTo(expectedItem.Price).Within(0.0001), $"Price mismatch in item with index {itemIndex}.");
                 Assert.That(totalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"Total price mismatch in item with index {itemIndex}.");
             }
@@ -196,7 +196,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             await operation.WaitForCompletionAsync();
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             var form = operation.Value.Single();
 
@@ -211,40 +211,40 @@ namespace Azure.AI.FormRecognizer.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the receipt. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("prebuilt:receipt", form.FormType);
+            Assert.That(form.FormType, Is.EqualTo("prebuilt:receipt"));
 
-            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
-            Assert.AreEqual(1, form.PageRange.LastPageNumber);
+            Assert.That(form.PageRange.FirstPageNumber, Is.EqualTo(1));
+            Assert.That(form.PageRange.LastPageNumber, Is.EqualTo(1));
 
             Assert.NotNull(form.Fields);
 
-            Assert.True(form.Fields.ContainsKey("ReceiptType"));
-            Assert.True(form.Fields.ContainsKey("MerchantAddress"));
-            Assert.True(form.Fields.ContainsKey("MerchantName"));
-            Assert.True(form.Fields.ContainsKey("MerchantPhoneNumber"));
-            Assert.True(form.Fields.ContainsKey("TransactionDate"));
-            Assert.True(form.Fields.ContainsKey("TransactionTime"));
-            Assert.True(form.Fields.ContainsKey("Items"));
-            Assert.True(form.Fields.ContainsKey("Subtotal"));
-            Assert.True(form.Fields.ContainsKey("Tax"));
-            Assert.True(form.Fields.ContainsKey("Tip"));
-            Assert.True(form.Fields.ContainsKey("Total"));
+            Assert.That(form.Fields.ContainsKey("ReceiptType"), Is.True);
+            Assert.That(form.Fields.ContainsKey("MerchantAddress"), Is.True);
+            Assert.That(form.Fields.ContainsKey("MerchantName"), Is.True);
+            Assert.That(form.Fields.ContainsKey("MerchantPhoneNumber"), Is.True);
+            Assert.That(form.Fields.ContainsKey("TransactionDate"), Is.True);
+            Assert.That(form.Fields.ContainsKey("TransactionTime"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Items"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Subtotal"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Tax"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Tip"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Total"), Is.True);
 
-            Assert.AreEqual("Itemized", form.Fields["ReceiptType"].Value.AsString());
-            Assert.AreEqual("Contoso", form.Fields["MerchantName"].Value.AsString());
-            Assert.AreEqual("123 Main Street Redmond, WA 98052", form.Fields["MerchantAddress"].Value.AsString());
-            Assert.AreEqual("987-654-3210", form.Fields["MerchantPhoneNumber"].ValueData.Text);
+            Assert.That(form.Fields["ReceiptType"].Value.AsString(), Is.EqualTo("Itemized"));
+            Assert.That(form.Fields["MerchantName"].Value.AsString(), Is.EqualTo("Contoso"));
+            Assert.That(form.Fields["MerchantAddress"].Value.AsString(), Is.EqualTo("123 Main Street Redmond, WA 98052"));
+            Assert.That(form.Fields["MerchantPhoneNumber"].ValueData.Text, Is.EqualTo("987-654-3210"));
 
             var date = form.Fields["TransactionDate"].Value.AsDate();
             var time = form.Fields["TransactionTime"].Value.AsTime();
 
-            Assert.AreEqual(10, date.Day);
-            Assert.AreEqual(6, date.Month);
-            Assert.AreEqual(2019, date.Year);
+            Assert.That(date.Day, Is.EqualTo(10));
+            Assert.That(date.Month, Is.EqualTo(6));
+            Assert.That(date.Year, Is.EqualTo(2019));
 
-            Assert.AreEqual(13, time.Hours);
-            Assert.AreEqual(59, time.Minutes);
-            Assert.AreEqual(0, time.Seconds);
+            Assert.That(time.Hours, Is.EqualTo(13));
+            Assert.That(time.Minutes, Is.EqualTo(59));
+            Assert.That(time.Seconds, Is.EqualTo(0));
 
             var expectedItems = new List<(int? Quantity, string Name, float? Price, float? TotalPrice)>()
             {
@@ -256,7 +256,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var items = form.Fields["Items"].Value.AsList();
 
-            Assert.AreEqual(expectedItems.Count, items.Count);
+            Assert.That(items.Count, Is.EqualTo(expectedItems.Count));
 
             for (var itemIndex = 0; itemIndex < items.Count; itemIndex++)
             {
@@ -274,8 +274,8 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 var expectedItem = expectedItems[itemIndex];
 
-                Assert.AreEqual(expectedItem.Quantity, quantity, $"Quantity mismatch in item with index {itemIndex}.");
-                Assert.AreEqual(expectedItem.Name, name, $"Name mismatch in item with index {itemIndex}.");
+                Assert.That(quantity, Is.EqualTo(expectedItem.Quantity), $"Quantity mismatch in item with index {itemIndex}.");
+                Assert.That(name, Is.EqualTo(expectedItem.Name), $"Name mismatch in item with index {itemIndex}.");
                 Assert.That(price, Is.EqualTo(expectedItem.Price).Within(0.0001), $"Price mismatch in item with index {itemIndex}.");
                 Assert.That(totalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"Total price mismatch in item with index {itemIndex}.");
             }
@@ -312,7 +312,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
-            Assert.AreEqual(2, recognizedForms.Count);
+            Assert.That(recognizedForms.Count, Is.EqualTo(2));
 
             for (int formIndex = 0; formIndex < recognizedForms.Count; formIndex++)
             {
@@ -333,11 +333,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 if (formIndex == 0)
                 {
-                    Assert.AreEqual("$14.50", sampleField.ValueData.Text);
+                    Assert.That(sampleField.ValueData.Text, Is.EqualTo("$14.50"));
                 }
                 else if (formIndex == 1)
                 {
-                    Assert.AreEqual("$ 1203.39", sampleField.ValueData.Text);
+                    Assert.That(sampleField.ValueData.Text, Is.EqualTo("$ 1203.39"));
                 }
             }
         }
@@ -366,12 +366,12 @@ namespace Azure.AI.FormRecognizer.Tests
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 1);
 
-            Assert.AreEqual(0, blankForm.Fields.Count);
+            Assert.That(blankForm.Fields.Count, Is.EqualTo(0));
 
             var blankPage = blankForm.Pages.Single();
 
-            Assert.AreEqual(0, blankPage.Lines.Count);
-            Assert.AreEqual(0, blankPage.Tables.Count);
+            Assert.That(blankPage.Lines.Count, Is.EqualTo(0));
+            Assert.That(blankPage.Tables.Count, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -390,7 +390,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
-            Assert.AreEqual(3, recognizedForms.Count);
+            Assert.That(recognizedForms.Count, Is.EqualTo(3));
 
             for (int formIndex = 0; formIndex < recognizedForms.Count; formIndex++)
             {
@@ -413,18 +413,18 @@ namespace Azure.AI.FormRecognizer.Tests
                     var expectedValueData = formIndex == 0 ? "$14.50" : "$ 1203.39";
 
                     Assert.IsNotNull(sampleField.ValueData);
-                    Assert.AreEqual(expectedValueData, sampleField.ValueData.Text);
+                    Assert.That(sampleField.ValueData.Text, Is.EqualTo(expectedValueData));
                 }
             }
 
             var blankForm = recognizedForms[1];
 
-            Assert.AreEqual(0, blankForm.Fields.Count);
+            Assert.That(blankForm.Fields.Count, Is.EqualTo(0));
 
             var blankPage = blankForm.Pages.Single();
 
-            Assert.AreEqual(0, blankPage.Lines.Count);
-            Assert.AreEqual(0, blankPage.Tables.Count);
+            Assert.That(blankPage.Lines.Count, Is.EqualTo(0));
+            Assert.That(blankPage.Tables.Count, Is.EqualTo(0));
         }
 
         /// <summary>
@@ -439,7 +439,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var invalidUri = new Uri("https://idont.ex.ist");
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeReceiptsFromUriAsync(invalidUri));
-            Assert.AreEqual("InvalidImage", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("InvalidImage"));
         }
 
         [RecordedTest]
@@ -455,7 +455,7 @@ namespace Azure.AI.FormRecognizer.Tests
             {
                 ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeReceiptsAsync(stream, new RecognizeReceiptsOptions() { Locale = "not-locale" }));
             }
-            Assert.AreEqual("UnsupportedLocale", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("UnsupportedLocale"));
         }
     }
 }

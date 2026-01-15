@@ -163,7 +163,7 @@ namespace Azure.Storage.Files.Shares.Tests
 #pragma warning restore CA2022
 
             // Assert
-            Assert.AreEqual(data.Length, outputStream.Length);
+            Assert.That(outputStream.Length, Is.EqualTo(data.Length));
             TestHelper.AssertSequenceEqual(data, outputBytes);
         }
 
@@ -196,13 +196,13 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.OpenReadAsync(options),
-                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithFileOperation")));
         }
 
         public override async Task AssertExpectedExceptionOpenReadModifiedAsync(Task readTask)
             => await TestHelper.AssertExpectedExceptionAsync<ShareFileModifiedException>(
                 readTask,
-                e => Assert.AreEqual("File has been modified concurrently", e.Message));
+                e => Assert.That(e.Message, Is.EqualTo("File has been modified concurrently")));
         #endregion
     }
 }

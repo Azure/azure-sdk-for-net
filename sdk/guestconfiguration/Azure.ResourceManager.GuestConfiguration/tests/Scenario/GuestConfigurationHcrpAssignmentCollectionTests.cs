@@ -41,24 +41,24 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             // Create a new guest configuration assignment
             ArmOperation<GuestConfigurationHcrpAssignmentResource> createAssignmentOperation = await guestConfigurationHcrpAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, GuestConfigurationManagementUtilities.DefaultAssignmentName, gcAssignmentData);
             await createAssignmentOperation.WaitForCompletionAsync();
-            Assert.IsTrue(createAssignmentOperation.HasCompleted);
-            Assert.IsTrue(createAssignmentOperation.HasValue);
+            Assert.That(createAssignmentOperation.HasCompleted, Is.True);
+            Assert.That(createAssignmentOperation.HasValue, Is.True);
 
             // Get created guest configuration assignment
             Response<GuestConfigurationHcrpAssignmentResource> getGuestAssignmentResponse = await guestConfigurationHcrpAssignmentCollection.GetAsync(GuestConfigurationManagementUtilities.DefaultAssignmentName);
             GuestConfigurationHcrpAssignmentResource guestAssignmentResourceRetrieved = getGuestAssignmentResponse.Value;
             Assert.IsNotNull(guestAssignmentResourceRetrieved);
-            Assert.AreEqual(gcAssignmentData.Location, guestAssignmentResourceRetrieved.Data.Location);
+            Assert.That(guestAssignmentResourceRetrieved.Data.Location, Is.EqualTo(gcAssignmentData.Location));
 
             // Update guest configuration assignment
             string updatedContext = "Azure Policy Updated";
             gcAssignmentData.Properties.Context = updatedContext;
             ArmOperation<GuestConfigurationHcrpAssignmentResource> updateAssignmentOperation = await guestConfigurationHcrpAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, GuestConfigurationManagementUtilities.DefaultAssignmentName, gcAssignmentData);
             await updateAssignmentOperation.WaitForCompletionAsync();
-            Assert.IsTrue(updateAssignmentOperation.HasCompleted);
-            Assert.IsTrue(updateAssignmentOperation.HasValue);
+            Assert.That(updateAssignmentOperation.HasCompleted, Is.True);
+            Assert.That(updateAssignmentOperation.HasValue, Is.True);
             GuestConfigurationHcrpAssignmentResource updatedGuestAssignmentResourceRetrieved = updateAssignmentOperation.Value;
-            Assert.AreEqual(updatedContext, updatedGuestAssignmentResourceRetrieved.Data.Properties.Context);
+            Assert.That(updatedGuestAssignmentResourceRetrieved.Data.Properties.Context, Is.EqualTo(updatedContext));
         }
 
         [TestCase]

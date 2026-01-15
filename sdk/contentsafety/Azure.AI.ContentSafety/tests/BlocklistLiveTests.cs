@@ -68,7 +68,7 @@ namespace Azure.AI.ContentSafety.Tests
 
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Value);
-            Assert.AreEqual(response.Value.Name, blocklistName);
+            Assert.That(blocklistName, Is.EqualTo(response.Value.Name));
         }
 
         [RecordedTest]
@@ -86,7 +86,7 @@ namespace Azure.AI.ContentSafety.Tests
             var response = await client.DeleteTextBlocklistAsync(blocklistName);
 
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.Status, 204);
+            Assert.That(response.Status, Is.EqualTo(204));
         }
 
         [RecordedTest]
@@ -111,8 +111,8 @@ namespace Azure.AI.ContentSafety.Tests
             var response = client.GetTextBlocklistsAsync();
             Assert.IsNotNull(response);
             List<TextBlocklist> blocklist = await response.ToListAsync();
-            Assert.True(blocklist.Any(item => item.Name == blocklistName));
-            Assert.True(blocklist.Any(item => item.Name == blocklistName2));
+            Assert.That(blocklist.Any(item => item.Name == blocklistName), Is.True);
+            Assert.That(blocklist.Any(item => item.Name == blocklistName2), Is.True);
         }
 
         [RecordedTest]
@@ -135,8 +135,8 @@ namespace Azure.AI.ContentSafety.Tests
             Assert.IsNotNull(response.Value);
             Assert.IsNotEmpty(response.Value.BlocklistItems);
             var blocklistItems = new List<TextBlocklistItem>(response.Value.BlocklistItems);
-            Assert.True(blocklistItems.Any(item => item.Text == blocklistItemText1.Text));
-            Assert.True(blocklistItems.Any(item => item.Text == blocklistItemText2.Text));
+            Assert.That(blocklistItems.Any(item => item.Text == blocklistItemText1.Text), Is.True);
+            Assert.That(blocklistItems.Any(item => item.Text == blocklistItemText2.Text), Is.True);
         }
 
         [RecordedTest]
@@ -163,7 +163,7 @@ namespace Azure.AI.ContentSafety.Tests
             var response = await client.GetTextBlocklistItemAsync(blocklistName, blocklistItemId1);
 
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.Value.BlocklistItemId, blocklistItemId1);
+            Assert.That(blocklistItemId1, Is.EqualTo(response.Value.BlocklistItemId));
         }
 
         [RecordedTest]
@@ -239,7 +239,7 @@ namespace Azure.AI.ContentSafety.Tests
             var response = await client.RemoveBlocklistItemsAsync(blocklistName, options);
 
             Assert.IsNotNull(response);
-            Assert.AreEqual(response.Status, 204);
+            Assert.That(response.Status, Is.EqualTo(204));
         }
     }
 }

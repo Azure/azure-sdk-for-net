@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.Network.Tests
 
             ExpressRouteCircuitResource circuit = await CreateDefaultExpressRouteCircuit(resourceGroup, circuitName, location);
 
-            Assert.AreEqual(circuit.Data.Name, circuitName);
-            Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
+            Assert.That(circuitName, Is.EqualTo(circuit.Data.Name));
+            Assert.That(Convert.ToInt32(Circuit_BW), Is.EqualTo(circuit.Data.ServiceProviderProperties.BandwidthInMbps));
 
             circuit = await UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(resourceGroup,circuitName);
 
-            Assert.AreEqual(circuit.Data.Name, circuitName);
-            Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
+            Assert.That(circuitName, Is.EqualTo(circuit.Data.Name));
+            Assert.That(Convert.ToInt32(Circuit_BW), Is.EqualTo(circuit.Data.ServiceProviderProperties.BandwidthInMbps));
             Assert.NotNull(circuit.Data.Peerings);
         }
 
@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.Network.Tests
 
             ExpressRouteCircuitResource circuit = await CreateDefaultExpressRouteCircuit(resourceGroup, circuitName, location);
 
-            Assert.AreEqual(circuit.Data.Name, circuitName);
-            Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
+            Assert.That(circuitName, Is.EqualTo(circuit.Data.Name));
+            Assert.That(Convert.ToInt32(Circuit_BW), Is.EqualTo(circuit.Data.ServiceProviderProperties.BandwidthInMbps));
 
             circuit = await UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(resourceGroup,
                 circuitName);
 
-            Assert.AreEqual(circuit.Data.Name, circuitName);
-            Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
+            Assert.That(circuitName, Is.EqualTo(circuit.Data.Name));
+            Assert.That(Convert.ToInt32(Circuit_BW), Is.EqualTo(circuit.Data.ServiceProviderProperties.BandwidthInMbps));
             Assert.NotNull(circuit.Data.Peerings);
         }
     }

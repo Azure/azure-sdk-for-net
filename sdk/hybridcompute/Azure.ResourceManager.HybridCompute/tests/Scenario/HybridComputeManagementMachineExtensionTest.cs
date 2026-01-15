@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanCreateMachineExtension()
         {
             HybridComputeMachineExtensionData resourceData = await createMachineExtension();
-            Assert.AreEqual(extensionName, resourceData.Name);
+            Assert.That(resourceData.Name, Is.EqualTo(extensionName));
         }
 
         [TestCase]
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanUpdateMachineExtension()
         {
             HybridComputeMachineExtensionData resourceData = await createMachineExtension();
-            Assert.AreEqual(extensionName, resourceData.Name);
+            Assert.That(resourceData.Name, Is.EqualTo(extensionName));
         }
 
         [TestCase]
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanGetMachineExtension()
         {
             HybridComputeMachineExtensionData resourceData = await getMachineExtension();
-            Assert.AreEqual(extensionName, resourceData.Name);
+            Assert.That(resourceData.Name, Is.EqualTo(extensionName));
         }
 
         [TestCase]
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         {
             HybridComputeMachineExtensionCollection resourceCollection = await getMachineExtensionCollection();
             string collectionId = "/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.HybridCompute/machines/" + machineName;
-            Assert.AreEqual(collectionId, resourceCollection.Id.ToString());
+            Assert.That(resourceCollection.Id.ToString(), Is.EqualTo(collectionId));
         }
 
         [TestCase]
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanCreatePrivateLinkScope()
         {
             HybridComputePrivateLinkScopeData resourceData = await createPrivateLinkScope();
-            Assert.AreEqual(scopeName, resourceData.Name);
+            Assert.That(resourceData.Name, Is.EqualTo(scopeName));
         }
 
         [TestCase]
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanUpdatePrivateLinkScope()
         {
             HybridComputePrivateLinkScopeData resourceData = await updatePrivateLinkScope();
-            Assert.AreEqual(scopeName, resourceData.Name);
+            Assert.That(resourceData.Name, Is.EqualTo(scopeName));
         }
 
         [TestCase]
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanGetPrivateLinkScope()
         {
             HybridComputePrivateLinkScopeData resourceData = await getPrivateLinkScope();
-            Assert.AreEqual(scopeName, resourceData.Name);
+            Assert.That(resourceData.Name, Is.EqualTo(scopeName));
         }
 
         [TestCase]
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         {
             HybridComputePrivateLinkScopeCollection resourceCollection = await getPrivateLinkScopeCollection();
             string collectionId = "/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName;
-            Assert.AreEqual(collectionId, resourceCollection.Id.ToString());
+            Assert.That(resourceCollection.Id.ToString(), Is.EqualTo(collectionId));
         }
 
         [TestCase]
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanGetPrivateLinkResource()
         {
             HybridComputePrivateLinkResourceData resourceData = await getPrivateLinkResource();
-            Assert.AreEqual("hybridcompute", resourceData.Name);
+            Assert.That(resourceData.Name, Is.EqualTo("hybridcompute"));
         }
 
         [TestCase]
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         {
             HybridComputePrivateLinkResourceCollection resourceCollection = await getPrivateLinkResourceCollection();
             string collectionId = "/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.HybridCompute/privateLinkScopes/" + scopeName;
-            Assert.AreEqual(collectionId, resourceCollection.Id.ToString());
+            Assert.That(resourceCollection.Id.ToString(), Is.EqualTo(collectionId));
         }
 
         // you might have to create an endpoint connection and get its name before running this function
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         {
             HybridComputePrivateEndpointConnectionCollection resourceCollection = await getPrivateEndpointConnectionCollection();
             string collectionId = "/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.HybridCompute/privateLinkScopes/" + scopeName;
-            Assert.AreEqual(collectionId, resourceCollection.Id.ToString());
+            Assert.That(resourceCollection.Id.ToString(), Is.EqualTo(collectionId));
         }
 
         [TestCase]
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanUpdatePrivateEndpointConnection()
         {
             HybridComputePrivateEndpointConnectionData endpointData = await updatePrivateEndpointConnection();
-            Assert.AreEqual(privateEndpointConnectionName, endpointData.Name);
+            Assert.That(endpointData.Name, Is.EqualTo(privateEndpointConnectionName));
         }
 
         [TestCase]

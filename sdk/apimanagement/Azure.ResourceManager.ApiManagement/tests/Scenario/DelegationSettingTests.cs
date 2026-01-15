@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
             var portalDelegationSettings = (await delegationCollection.CreateOrUpdateAsync(WaitUntil.Completed, portalDelegationSettingsParams)).Value;
             Assert.NotNull(portalDelegationSettings);
-            Assert.AreEqual(urlParameter, portalDelegationSettings.Data.Uri.ToString());
+            Assert.That(portalDelegationSettings.Data.Uri.ToString(), Is.EqualTo(urlParameter));
             //validation key is generated brand new on playback mode and hence validation fails
-            Assert.AreEqual(portalDelegationSettingsParams.ValidationKey, portalDelegationSettings.Data.ValidationKey);
-            Assert.IsTrue(portalDelegationSettings.Data.UserRegistration.IsUserRegistrationDelegationEnabled);
-            Assert.IsTrue(portalDelegationSettings.Data.Subscriptions.IsSubscriptionDelegationEnabled);
+            Assert.That(portalDelegationSettings.Data.ValidationKey, Is.EqualTo(portalDelegationSettingsParams.ValidationKey));
+            Assert.That(portalDelegationSettings.Data.UserRegistration.IsUserRegistrationDelegationEnabled, Is.True);
+            Assert.That(portalDelegationSettings.Data.Subscriptions.IsSubscriptionDelegationEnabled, Is.True);
 
             // update the delegation settings
             var data = portalDelegationSettings.Data;
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             portalDelegationSettings = await portalDelegationSettings.GetAsync();
             Assert.NotNull(portalDelegationSettings);
             //Assert.IsNull(portalDelegationSettings.Data.Uri.ToString());
-            Assert.IsNull(portalDelegationSettings.Data.ValidationKey);
-            Assert.IsFalse(portalDelegationSettings.Data.UserRegistration.IsUserRegistrationDelegationEnabled);
-            Assert.IsFalse(portalDelegationSettings.Data.Subscriptions.IsSubscriptionDelegationEnabled);
+            Assert.That(portalDelegationSettings.Data.ValidationKey, Is.Null);
+            Assert.That(portalDelegationSettings.Data.UserRegistration.IsUserRegistrationDelegationEnabled, Is.False);
+            Assert.That(portalDelegationSettings.Data.Subscriptions.IsSubscriptionDelegationEnabled, Is.False);
         }
     }
 }

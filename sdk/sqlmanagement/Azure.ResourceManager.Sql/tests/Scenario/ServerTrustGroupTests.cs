@@ -91,15 +91,15 @@ namespace Azure.ResourceManager.Sql.Tests
             string serverTrustGroupName = Recording.GenerateAssetName("trust-group-");
             var serverTrustGroup = await CreateServerTrustGroup(locationName, serverTrustGroupName);
             Assert.IsNotNull(serverTrustGroup.Data);
-            Assert.AreEqual(serverTrustGroupName, serverTrustGroup.Data.Name);
+            Assert.That(serverTrustGroup.Data.Name, Is.EqualTo(serverTrustGroupName));
 
             // 2.CheckIfExist
-            Assert.IsTrue(_resourceGroup.GetSqlServerTrustGroups(locationName).Exists(serverTrustGroupName));
+            Assert.That((bool)_resourceGroup.GetSqlServerTrustGroups(locationName).Exists(serverTrustGroupName), Is.True);
 
             // 3.Get
             var getServerTrustGroup = await _resourceGroup.GetSqlServerTrustGroups(locationName).GetAsync(serverTrustGroupName);
             Assert.IsNotNull(getServerTrustGroup.Value.Data);
-            Assert.AreEqual(serverTrustGroupName, getServerTrustGroup.Value.Data.Name);
+            Assert.That(getServerTrustGroup.Value.Data.Name, Is.EqualTo(serverTrustGroupName));
 
             // 4.GetAll
             var list = await _resourceGroup.GetSqlServerTrustGroups(locationName).GetAllAsync().ToEnumerableAsync();

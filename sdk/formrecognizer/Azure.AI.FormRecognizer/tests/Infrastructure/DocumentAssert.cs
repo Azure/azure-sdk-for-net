@@ -11,11 +11,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     {
         public static void AreEqual(DocumentClassifierDetails expected,  DocumentClassifierDetails actual)
         {
-            Assert.AreEqual(expected.ClassifierId, actual.ClassifierId);
-            Assert.AreEqual(expected.Description, actual.Description);
-            Assert.AreEqual(expected.ServiceVersion, actual.ServiceVersion);
-            Assert.AreEqual(expected.CreatedOn, actual.CreatedOn);
-            Assert.AreEqual(expected.ExpiresOn, actual.ExpiresOn);
+            Assert.That(actual.ClassifierId, Is.EqualTo(expected.ClassifierId));
+            Assert.That(actual.Description, Is.EqualTo(expected.Description));
+            Assert.That(actual.ServiceVersion, Is.EqualTo(expected.ServiceVersion));
+            Assert.That(actual.CreatedOn, Is.EqualTo(expected.CreatedOn));
+            Assert.That(actual.ExpiresOn, Is.EqualTo(expected.ExpiresOn));
 
             AreEquivalent(expected.DocumentTypes, actual.DocumentTypes);
         }
@@ -24,15 +24,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             if (expected == null)
             {
-                Assert.Null(actual);
+                Assert.That(actual, Is.Null);
                 return;
             }
 
             Assert.NotNull(actual);
 
-            Assert.AreEqual(expected.Type, actual.Type);
-            Assert.AreEqual(expected.Description, actual.Description);
-            Assert.AreEqual(expected.Example, actual.Example);
+            Assert.That(actual.Type, Is.EqualTo(expected.Type));
+            Assert.That(actual.Description, Is.EqualTo(expected.Description));
+            Assert.That(actual.Example, Is.EqualTo(expected.Example));
 
             AreEqual(expected.Items, actual.Items);
             AreEquivalent(expected.Properties, actual.Properties);
@@ -40,11 +40,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         public static void AreEqual(DocumentModelDetails expected, DocumentModelDetails actual)
         {
-            Assert.AreEqual(expected.ModelId, actual.ModelId);
-            Assert.AreEqual(expected.Description, actual.Description);
-            Assert.AreEqual(expected.ServiceVersion, actual.ServiceVersion);
-            Assert.AreEqual(expected.CreatedOn, actual.CreatedOn);
-            Assert.AreEqual(expected.ExpiresOn, actual.ExpiresOn);
+            Assert.That(actual.ModelId, Is.EqualTo(expected.ModelId));
+            Assert.That(actual.Description, Is.EqualTo(expected.Description));
+            Assert.That(actual.ServiceVersion, Is.EqualTo(expected.ServiceVersion));
+            Assert.That(actual.CreatedOn, Is.EqualTo(expected.CreatedOn));
+            Assert.That(actual.ExpiresOn, Is.EqualTo(expected.ExpiresOn));
 
             CollectionAssert.AreEquivalent(expected.Tags, actual.Tags);
 
@@ -53,8 +53,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         public static void AreEqual(DocumentTypeDetails expected, DocumentTypeDetails actual)
         {
-            Assert.AreEqual(expected.Description, actual.Description);
-            Assert.AreEqual(expected.BuildMode, actual.BuildMode);
+            Assert.That(actual.Description, Is.EqualTo(expected.Description));
+            Assert.That(actual.BuildMode, Is.EqualTo(expected.BuildMode));
 
             CollectionAssert.AreEquivalent(expected.FieldConfidence, actual.FieldConfidence);
 
@@ -63,14 +63,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         public static void AreEquivalent(IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> expected, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> actual)
         {
-            Assert.AreEqual(expected.Count, actual.Count);
+            Assert.That(actual.Count, Is.EqualTo(expected.Count));
 
             foreach (string key in expected.Keys)
             {
                 ClassifierDocumentTypeDetails docType1 = expected[key];
                 ClassifierDocumentTypeDetails docType2 = actual[key];
 
-                Assert.AreEqual(docType1.TrainingDataSource.Kind, docType2.TrainingDataSource.Kind);
+                Assert.That(docType2.TrainingDataSource.Kind, Is.EqualTo(docType1.TrainingDataSource.Kind));
 
                 if (docType1.TrainingDataSource.Kind == DocumentContentSourceKind.Blob)
                 {
@@ -82,8 +82,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                     string uri1 = source1.ContainerUri.GetLeftPart(UriPartial.Path);
                     string uri2 = source2.ContainerUri.GetLeftPart(UriPartial.Path);
 
-                    Assert.AreEqual(uri1, uri2);
-                    Assert.AreEqual(source1.Prefix, source2.Prefix);
+                    Assert.That(uri2, Is.EqualTo(uri1));
+                    Assert.That(source2.Prefix, Is.EqualTo(source1.Prefix));
                 }
                 else if (docType1.TrainingDataSource.Kind == DocumentContentSourceKind.BlobFileList)
                 {
@@ -95,15 +95,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                     string uri1 = source1.ContainerUri.GetLeftPart(UriPartial.Path);
                     string uri2 = source2.ContainerUri.GetLeftPart(UriPartial.Path);
 
-                    Assert.AreEqual(uri1, uri2);
-                    Assert.AreEqual(source1.FileList, source2.FileList);
+                    Assert.That(uri2, Is.EqualTo(uri1));
+                    Assert.That(source2.FileList, Is.EqualTo(source1.FileList));
                 }
             }
         }
 
         public static void AreEquivalent(IReadOnlyDictionary<string, DocumentFieldSchema> expected, IReadOnlyDictionary<string, DocumentFieldSchema> actual)
         {
-            Assert.AreEqual(expected.Count, actual.Count);
+            Assert.That(actual.Count, Is.EqualTo(expected.Count));
 
             foreach (string key in expected.Keys)
             {
@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         public static void AreEquivalent(IReadOnlyDictionary<string, DocumentTypeDetails> expected, IReadOnlyDictionary<string, DocumentTypeDetails> actual)
         {
-            Assert.AreEqual(expected.Count, actual.Count);
+            Assert.That(actual.Count, Is.EqualTo(expected.Count));
 
             foreach (string key in expected.Keys)
             {

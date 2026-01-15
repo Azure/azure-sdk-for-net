@@ -87,8 +87,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             Assert.IsNotNull(resource);
             Assert.IsNotNull(resource.ShareDirectoryClient);
-            Assert.AreEqual(uri, resource.Uri);
-            Assert.AreEqual(uri, resource.ShareDirectoryClient.Uri);
+            Assert.That(resource.Uri, Is.EqualTo(uri));
+            Assert.That(resource.ShareDirectoryClient.Uri, Is.EqualTo(uri));
             AssertCredPresent(resource.ShareDirectoryClient.ClientConfiguration, credType);
         }
 
@@ -116,8 +116,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.IsNotNull(resource);
             ShareFileStorageResource fileResource = resource as ShareFileStorageResource;
             Assert.IsNotNull(fileResource.ShareFileClient);
-            Assert.AreEqual(uri, resource.Uri);
-            Assert.AreEqual(uri, fileResource.ShareFileClient.Uri);
+            Assert.That(resource.Uri, Is.EqualTo(uri));
+            Assert.That(fileResource.ShareFileClient.Uri, Is.EqualTo(uri));
             AssertCredPresent(fileResource.ShareFileClient.ClientConfiguration, credType);
         }
 
@@ -149,11 +149,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             StorageResource resource = await provider.FromFileAsync(uri);
 
             Assert.IsNotNull(resource);
-            Assert.AreEqual(uri, resource.Uri);
+            Assert.That(resource.Uri, Is.EqualTo(uri));
             ShareFileStorageResource fileResource = resource as ShareFileStorageResource;
             Assert.IsNotNull(fileResource.ShareFileClient);
-            Assert.AreEqual(uri, resource.Uri);
-            Assert.AreEqual(uri, fileResource.ShareFileClient.Uri);
+            Assert.That(resource.Uri, Is.EqualTo(uri));
+            Assert.That(fileResource.ShareFileClient.Uri, Is.EqualTo(uri));
             AssertCredPresent(fileResource.ShareFileClient.ClientConfiguration, credType);
         }
     }

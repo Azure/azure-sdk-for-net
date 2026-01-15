@@ -171,16 +171,16 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var activities = listener.Activities.ToList();
-            Assert.AreEqual(eventBatch.Length, activities.Count);
+            Assert.That(activities.Count, Is.EqualTo(eventBatch.Length));
 
             foreach (var activity in activities)
             {
-                Assert.AreEqual(DiagnosticProperty.EventProcessorProcessingActivityName, activity.OperationName);
+                Assert.That(activity.OperationName, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
                 Assert.That(activity.Links, Has.Exactly(1).Items);
                 Assert.That(activity.Links.Select(a => a.Context.SpanId), Has.One.EqualTo(activity.ParentSpanId));
                 Assert.That(expectedTags, Is.SubsetOf(activity.TagObjects.ToList()));
-                Assert.AreEqual(ActivityStatusCode.Unset, activity.Status);
-                Assert.AreEqual(ActivityKind.Consumer, activity.Kind);
+                Assert.That(activity.Status, Is.EqualTo(ActivityStatusCode.Unset));
+                Assert.That(activity.Kind, Is.EqualTo(ActivityKind.Consumer));
             }
             cancellationSource.Cancel();
         }
@@ -224,14 +224,14 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var activities = listener.Activities.ToList();
-            Assert.AreEqual(eventBatch.Length, activities.Count);
+            Assert.That(activities.Count, Is.EqualTo(eventBatch.Length));
 
             foreach (var activity in activities)
             {
-                Assert.AreEqual(DiagnosticProperty.EventProcessorProcessingActivityName, activity.OperationName);
+                Assert.That(activity.OperationName, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
                 Assert.That(expectedTags, Is.SubsetOf(activity.TagObjects.ToList()));
-                Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
-                Assert.AreEqual(ActivityKind.Consumer, activity.Kind);
+                Assert.That(activity.Status, Is.EqualTo(ActivityStatusCode.Error));
+                Assert.That(activity.Kind, Is.EqualTo(ActivityKind.Consumer));
                 Assert.IsEmpty(activity.TagObjects.Where(t => t.Key == DiagnosticProperty.EnqueuedTimeAttribute));
             }
             cancellationSource.Cancel();
@@ -277,14 +277,14 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var activities = listener.Activities.ToList();
-            Assert.AreEqual(eventBatch.Length, activities.Count);
+            Assert.That(activities.Count, Is.EqualTo(eventBatch.Length));
 
             foreach (var activity in activities)
             {
-                Assert.AreEqual(DiagnosticProperty.EventProcessorProcessingActivityName, activity.OperationName);
+                Assert.That(activity.OperationName, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
                 Assert.IsEmpty(activity.Links);
                 Assert.That(expectedTags, Is.SubsetOf(activity.TagObjects.ToList()));
-                Assert.AreEqual(ActivityKind.Consumer, activity.Kind);
+                Assert.That(activity.Kind, Is.EqualTo(ActivityKind.Consumer));
             }
             cancellationSource.Cancel();
         }

@@ -66,7 +66,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             }
 
             Assert.IsNotEmpty(updatedJob1Response.Notes);
-            Assert.IsTrue(updatedJob1Response.Notes.Count == 1);
+            Assert.That(updatedJob1Response.Notes.Count == 1, Is.True);
 
             // in-test cleanup
             if (Mode != RecordedTestMode.Playback)
@@ -103,7 +103,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 job => job.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
 
-            Assert.AreEqual(RouterJobStatus.Queued, job1Result.Value.Status);
+            Assert.That(job1Result.Value.Status, Is.EqualTo(RouterJobStatus.Queued));
 
             // cancel job 1
             var cancelJob1Response = await routerClient.CancelJobAsync(new CancelJobOptions(createJob1.Id));
@@ -122,7 +122,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 job => job.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
 
-            Assert.AreEqual(RouterJobStatus.Queued, job2Result.Value.Status);
+            Assert.That(job2Result.Value.Status, Is.EqualTo(RouterJobStatus.Queued));
 
             // test get jobs
             var getJobsResponse = routerClient.GetJobsAsync(channelId: channelId, queueId: createQueue.Id, status: null, classificationPolicyId: null, scheduledBefore: null, scheduledAfter: null, cancellationToken: default);
@@ -136,8 +136,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 }
             }
 
-            Assert.IsTrue(allJobs.Contains(createJob1.Id));
-            Assert.IsTrue(allJobs.Contains(createJob2.Id));
+            Assert.That(allJobs.Contains(createJob1.Id), Is.True);
+            Assert.That(allJobs.Contains(createJob2.Id), Is.True);
 
             // in-test cleanup
             await routerClient.CancelJobAsync(new CancelJobOptions(jobId2)); // other wise queue deletion will throw error
@@ -178,7 +178,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 }
             }
 
-            Assert.IsTrue(allJobs.Contains(createJob1.Id));
+            Assert.That(allJobs.Contains(createJob1.Id), Is.True);
 
             // in-test cleanup
             if (Mode != RecordedTestMode.Playback)
@@ -234,10 +234,10 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var queuedJob = await Poll(async () => await routerClient.GetJobAsync(createJob.Id),
                 job => job.Value.Status == RouterJobStatus.Queued, TimeSpan.FromSeconds(10));
 
-            Assert.AreEqual(RouterJobStatus.Queued, queuedJob.Value.Status);
-            Assert.AreEqual(createJob.Id, queuedJob.Value.Id);
-            Assert.AreEqual(10, queuedJob.Value.Priority); // from classification policy
-            Assert.AreEqual(createQueue.Id, queuedJob.Value.QueueId); // from direct queue assignment
+            Assert.That(queuedJob.Value.Status, Is.EqualTo(RouterJobStatus.Queued));
+            Assert.That(queuedJob.Value.Id, Is.EqualTo(createJob.Id));
+            Assert.That(queuedJob.Value.Priority, Is.EqualTo(10)); // from classification policy
+            Assert.That(queuedJob.Value.QueueId, Is.EqualTo(createQueue.Id)); // from direct queue assignment
 
             // in-test cleanup
             if (Mode != RecordedTestMode.Playback)
@@ -287,10 +287,10 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var queuedJob = await Poll(async () => await routerClient.GetJobAsync(createJob.Id),
                 job => job.Value.Status == RouterJobStatus.Queued, TimeSpan.FromSeconds(10));
 
-            Assert.AreEqual(RouterJobStatus.Queued, queuedJob.Value.Status);
-            Assert.AreEqual(createJob.Id, queuedJob.Value.Id);
+            Assert.That(queuedJob.Value.Status, Is.EqualTo(RouterJobStatus.Queued));
+            Assert.That(queuedJob.Value.Id, Is.EqualTo(createJob.Id));
             // Assert.AreEqual(1, queuedJob.Value.Priority); // default value TODO: Should be 0 or 1?
-            Assert.AreEqual(createQueue2.Id, queuedJob.Value.QueueId); // from queue selector in classification policy
+            Assert.That(queuedJob.Value.QueueId, Is.EqualTo(createQueue2.Id)); // from queue selector in classification policy
 
             // in-test cleanup
             if (Mode != RecordedTestMode.Playback)
@@ -341,9 +341,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var queuedJob = await Poll(async () => await routerClient.GetJobAsync(createJob.Id),
                 job => job.Value.Status == RouterJobStatus.Queued, TimeSpan.FromSeconds(10));
 
-            Assert.AreEqual(RouterJobStatus.Queued, queuedJob.Value.Status);
-            Assert.AreEqual(1, queuedJob.Value.Priority); // default priority value
-            Assert.AreEqual(createQueue2.Id, queuedJob.Value.QueueId); // from fallback queue of classification policy
+            Assert.That(queuedJob.Value.Status, Is.EqualTo(RouterJobStatus.Queued));
+            Assert.That(queuedJob.Value.Priority, Is.EqualTo(1)); // default priority value
+            Assert.That(queuedJob.Value.QueueId, Is.EqualTo(createQueue2.Id)); // from fallback queue of classification policy
 
             // in-test cleanup
             await routerClient.CancelJobAsync(new CancelJobOptions(createJob.Id)); // other wise queue deletion will throw error
@@ -389,10 +389,10 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var queuedJob = await Poll(async () => await routerClient.GetJobAsync(createJob.Id),
                 job => job.Value.Status == RouterJobStatus.Queued, TimeSpan.FromSeconds(10));
 
-            Assert.AreEqual(RouterJobStatus.Queued, queuedJob.Value.Status);
-            Assert.AreEqual(createJob.Id, queuedJob.Value.Id);
-            Assert.AreEqual(1, queuedJob.Value.Priority); // default value
-            Assert.AreEqual(createQueue1.Id, queuedJob.Value.QueueId); // from queue selector in classification policy
+            Assert.That(queuedJob.Value.Status, Is.EqualTo(RouterJobStatus.Queued));
+            Assert.That(queuedJob.Value.Id, Is.EqualTo(createJob.Id));
+            Assert.That(queuedJob.Value.Priority, Is.EqualTo(1)); // default value
+            Assert.That(queuedJob.Value.QueueId, Is.EqualTo(createQueue1.Id)); // from queue selector in classification policy
 
             // in-test cleanup
             await routerClient.CancelJobAsync(new CancelJobOptions(createJob.Id)); // other wise queue deletion will throw error
@@ -421,7 +421,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createJob1 = createJob1Response.Value;
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
 
-            Assert.IsTrue(createJob1.MatchingMode.GetType() == typeof(QueueAndMatchMode));
+            Assert.That(createJob1.MatchingMode.GetType() == typeof(QueueAndMatchMode), Is.True);
 
             var queuedJob = await Poll(async () => await routerClient.GetJobAsync(createJob1.Id),
                 job => job.Value.Status == RouterJobStatus.Queued, TimeSpan.FromSeconds(10));
@@ -456,7 +456,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createJob1 = createJob1Response.Value;
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
 
-            Assert.IsTrue(createJob1.MatchingMode.GetType() == typeof(SuspendMode));
+            Assert.That(createJob1.MatchingMode.GetType() == typeof(SuspendMode), Is.True);
 
             // in-test cleanup
             if (Mode != RecordedTestMode.Playback)
@@ -489,7 +489,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createJob1 = createJob1Response.Value;
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
 
-            Assert.IsTrue(createJob1.MatchingMode.GetType() == typeof(ScheduleAndSuspendMode));
+            Assert.That(createJob1.MatchingMode.GetType() == typeof(ScheduleAndSuspendMode), Is.True);
 
             var queuedJob = await Poll(async () => await routerClient.GetJobAsync(createJob1.Id),
                 job => job.Value.Status == RouterJobStatus.Scheduled, TimeSpan.FromSeconds(10));
@@ -550,16 +550,16 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var updateJobResponse = await routerClient.UpdateJobAsync(updateOptions);
 
-            Assert.AreEqual(updateJobResponse.Value.Labels, new Dictionary<string, RouterValue?>
+            Assert.That(new Dictionary<string, RouterValue?>
             {
                 ["Label_3"] = new RouterValue("Value_Updated_3"),
                 ["Label_4"] = new RouterValue("Value_4")
-            });
-            Assert.AreEqual(updateJobResponse.Value.Tags, new Dictionary<string, RouterValue?>
+            }, Is.EqualTo(updateJobResponse.Value.Labels));
+            Assert.That(new Dictionary<string, RouterValue?>
             {
                 ["Tag_3"] = new RouterValue("Value_Updated_3"),
                 ["Tag_4"] = new RouterValue("Value_4")
-            });
+            }, Is.EqualTo(updateJobResponse.Value.Tags));
 
             // in-test cleanup
             if (Mode != RecordedTestMode.Playback)
@@ -605,7 +605,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             await routerClient.ReclassifyJobAsync(jobId1, CancellationToken.None);
 
-            Assert.AreEqual(createJob1.QueueId, createQueue.Id);
+            Assert.That(createQueue.Id, Is.EqualTo(createJob1.QueueId));
 
             // in-test cleanup
             if (Mode != RecordedTestMode.Playback)

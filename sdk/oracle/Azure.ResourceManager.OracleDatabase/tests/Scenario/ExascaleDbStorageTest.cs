@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
 
             var createOperation = await _collection.CreateOrUpdateAsync(WaitUntil.Completed, _exascaleDbStorageVaultName, GetDefaultExascaleDbStorageVaultData(_exascaleDbStorageVaultName));
 
-            Assert.IsTrue(createOperation.HasCompleted);
-            Assert.IsTrue(createOperation.HasValue);
+            Assert.That(createOperation.HasCompleted, Is.True);
+            Assert.That(createOperation.HasValue, Is.True);
 
             // Get
             Response<ExascaleDBStorageVaultResource> getExaDbStorageResponse = await _collection.GetAsync(_exascaleDbStorageVaultName);

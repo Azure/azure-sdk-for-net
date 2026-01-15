@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Tests
 
                 AzureLocation locStruct = loc;
 
-                Assert.AreEqual(loc.Name, locStruct.Name);
-                Assert.AreEqual(loc.DisplayName, locStruct.DisplayName);
+                Assert.That(locStruct.Name, Is.EqualTo(loc.Name));
+                Assert.That(locStruct.DisplayName, Is.EqualTo(loc.DisplayName));
             }
         }
     }

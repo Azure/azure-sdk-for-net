@@ -62,16 +62,16 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string connectionName = list.FirstOrDefault().Data.Name;
             var connection = await dataFactory.GetDataFactoryPrivateEndpointConnections().GetAsync(connectionName);
             Assert.IsNotNull(connection);
-            Assert.AreEqual(connectionName, connection.Value.Data.Name);
+            Assert.That(connection.Value.Data.Name, Is.EqualTo(connectionName));
 
             // Exist
             bool flag = await dataFactory.GetDataFactoryPrivateEndpointConnections().ExistsAsync(connectionName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Delete
             await connection.Value.DeleteAsync(WaitUntil.Completed);
             flag = await dataFactory.GetDataFactoryPrivateEndpointConnections().ExistsAsync(connectionName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

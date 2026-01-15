@@ -89,9 +89,9 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             await client.StartAsync();
 
             var connArg = await connectedTcs.Task.OrTimeout();
-            Assert.AreEqual("conn", connArg.ConnectionId);
-            Assert.AreEqual("user", connArg.UserId);
-            Assert.AreEqual("conn", client.ConnectionId);
+            Assert.That(connArg.ConnectionId, Is.EqualTo("conn"));
+            Assert.That(connArg.UserId, Is.EqualTo("user"));
+            Assert.That(client.ConnectionId, Is.EqualTo("conn"));
 
             var serArg = await serverMessageTcs.Task.OrTimeout();
             Assert.NotNull(serArg.Message);
@@ -100,7 +100,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             Assert.NotNull(groupArg.Message);
 
             var disconArg = await disconnectedTcs.Task.OrTimeout();
-            Assert.AreEqual("reason", disconArg.DisconnectedMessage.Reason);
+            Assert.That(disconArg.DisconnectedMessage.Reason, Is.EqualTo("reason"));
 
             var stopArg = await stoppedTcs.Task.OrTimeout();
             Assert.NotNull(stopArg);

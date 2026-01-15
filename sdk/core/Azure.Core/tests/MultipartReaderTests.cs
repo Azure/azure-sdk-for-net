@@ -121,7 +121,7 @@ namespace Azure.Core.Tests
             await section.Body.CopyToAsync(buffer);
             Assert.That(Encoding.ASCII.GetString(buffer.ToArray()), Is.EqualTo("text default"));
 
-            Assert.Null(await reader.ReadNextSectionAsync());
+            Assert.That(await reader.ReadNextSectionAsync(), Is.Null);
         }
 
         [Test]
@@ -164,7 +164,7 @@ namespace Azure.Core.Tests
             await section.Body.CopyToAsync(buffer);
             Assert.That(Encoding.ASCII.GetString(buffer.ToArray()), Is.EqualTo("text default"));
 
-            Assert.Null(await reader.ReadNextSectionAsync());
+            Assert.That(await reader.ReadNextSectionAsync(), Is.Null);
         }
 
         [Test]
@@ -181,7 +181,7 @@ namespace Azure.Core.Tests
             await section.Body.CopyToAsync(buffer);
             Assert.That(Encoding.ASCII.GetString(buffer.ToArray()), Is.EqualTo("text default"));
 
-            Assert.Null(await reader.ReadNextSectionAsync());
+            Assert.That(await reader.ReadNextSectionAsync(), Is.Null);
         }
 
         [Test]
@@ -207,7 +207,7 @@ namespace Azure.Core.Tests
             await section.Body.CopyToAsync(buffer);
             Assert.That(Encoding.ASCII.GetString(buffer.ToArray()), Is.EqualTo("Content of a.txt.\r\n"));
 
-            Assert.Null(await reader.ReadNextSectionAsync());
+            Assert.That(await reader.ReadNextSectionAsync(), Is.Null);
         }
 
         [Test]
@@ -233,7 +233,7 @@ namespace Azure.Core.Tests
             await section.Body.CopyToAsync(buffer);
             Assert.That(Encoding.ASCII.GetString(buffer.ToArray()), Is.EqualTo("Content of a.txt.\r\n"));
 
-            Assert.Null(await reader.ReadNextSectionAsync());
+            Assert.That(await reader.ReadNextSectionAsync(), Is.Null);
         }
 
         [Test]
@@ -268,7 +268,7 @@ namespace Azure.Core.Tests
             await section.Body.CopyToAsync(buffer);
             Assert.That(Encoding.ASCII.GetString(buffer.ToArray()), Is.EqualTo("<!DOCTYPE html><title>Content of a.html.</title>\r\n"));
 
-            Assert.Null(await reader.ReadNextSectionAsync());
+            Assert.That(await reader.ReadNextSectionAsync(), Is.Null);
         }
 
         [Test]
@@ -344,7 +344,7 @@ namespace Azure.Core.Tests
             await section.Body.CopyToAsync(buffer);
             Assert.That(Encoding.ASCII.GetString(buffer.ToArray()), Is.EqualTo("text default"));
 
-            Assert.Null(await reader.ReadNextSectionAsync());
+            Assert.That(await reader.ReadNextSectionAsync(), Is.Null);
         }
 
         [Test]
@@ -384,7 +384,7 @@ namespace Azure.Core.Tests
             await section.Body.CopyToAsync(buffer);
             Assert.That(Encoding.ASCII.GetString(buffer.ToArray()), Is.EqualTo("text default"));
 
-            Assert.Null(await reader.ReadNextSectionAsync());
+            Assert.That(await reader.ReadNextSectionAsync(), Is.Null);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdRuleSetName = Recording.GenerateAssetName("AFDRuleSet");
             FrontDoorRuleSetResource afdRuleSet = await CreateAfdRuleSet(afdProfileResource, afdRuleSetName);
-            Assert.AreEqual(afdRuleSetName, afdRuleSet.Data.Name);
+            Assert.That(afdRuleSet.Data.Name, Is.EqualTo(afdRuleSetName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetFrontDoorRuleSets().CreateOrUpdateAsync(WaitUntil.Completed, null));
         }
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 count++;
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]

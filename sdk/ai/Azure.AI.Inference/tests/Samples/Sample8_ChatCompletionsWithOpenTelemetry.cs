@@ -130,7 +130,7 @@ namespace Azure.AI.Inference.Tests.Samples
                 }
                 if (chatUpdate.Role.HasValue)
                 {
-                    Assert.IsFalse(gotRole);
+                    Assert.That(gotRole, Is.False);
                     Assert.That(chatUpdate.Role.Value, Is.EqualTo(ChatRole.Assistant));
                     gotRole = true;
                 }

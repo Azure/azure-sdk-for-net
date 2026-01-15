@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
                 CreationData = new ElasticSanVolumeDataSourceInfo()
             };
             ElasticSanVolumeResource volume = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, volumeData)).Value;
-            Assert.AreEqual(volume.Id.Name, volumeName);
-            Assert.AreEqual(100, volume.Data.SizeGiB);
-            Assert.AreEqual(ElasticSanVolumeCreateOption.None, volume.Data.CreationData.CreateSource);
+            Assert.That(volumeName, Is.EqualTo(volume.Id.Name));
+            Assert.That(volume.Data.SizeGiB, Is.EqualTo(100));
+            Assert.That(volume.Data.CreationData.CreateSource, Is.EqualTo(ElasticSanVolumeCreateOption.None));
             Assert.IsNull(volume.Data.CreationData.SourceId);
 
             ElasticSanVolumeResource volume2 = (await _collection.GetAsync(volumeName)).Value;
-            Assert.AreEqual(volume2.Id.Name, volume.Id.Name);
-            Assert.AreEqual(100, volume.Data.SizeGiB);
-            Assert.AreEqual(ElasticSanVolumeCreateOption.None, volume.Data.CreationData.CreateSource);
+            Assert.That(volume.Id.Name, Is.EqualTo(volume2.Id.Name));
+            Assert.That(volume.Data.SizeGiB, Is.EqualTo(100));
+            Assert.That(volume.Data.CreationData.CreateSource, Is.EqualTo(ElasticSanVolumeCreateOption.None));
             Assert.IsNull(volume.Data.CreationData.SourceId);
 
             string volumeName2 = Recording.GenerateAssetName("testvolume-");
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             }
             Assert.GreaterOrEqual(count, 2);
 
-            Assert.IsTrue(await _collection.ExistsAsync(volumeName));
-            Assert.IsFalse(await _collection.ExistsAsync(volumeName + "111"));
+            Assert.That((bool)await _collection.ExistsAsync(volumeName), Is.True);
+            Assert.That((bool)await _collection.ExistsAsync(volumeName + "111"), Is.False);
         }
     }
 }

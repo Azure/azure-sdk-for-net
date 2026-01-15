@@ -65,13 +65,13 @@ namespace Azure.Identity.Broker.Tests
                 await client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me"), CancellationToken.None) :
                 client.Get(new Uri("https://graph.microsoft.com/v1.0/me"), CancellationToken.None);
             Assert.IsNotNull(response);
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
 
             response = isAsync ?
                 await client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me"), CancellationToken.None) :
                 client.Get(new Uri("https://graph.microsoft.com/v1.0/me"), CancellationToken.None);
             Assert.IsNotNull(response);
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace Azure.Identity.Broker.Tests
                 await client.GetAsync(resourceUri, CancellationToken.None) :
                 client.Get(resourceUri, CancellationToken.None);
             Assert.IsNotNull(response);
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         }
 
         [Test]

@@ -68,8 +68,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             });
 
             string data = await resultBlob.DownloadTextAsync();
-            Assert.AreEqual("blob1", resultBlob.Name);
-            Assert.AreEqual(TestData, data);
+            Assert.That(resultBlob.Name, Is.EqualTo("blob1"));
+            Assert.That(data, Is.EqualTo(TestData));
         }
 
         [Test]
@@ -90,8 +90,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             });
 
             string data = await resultBlob.DownloadTextAsync();
-            Assert.AreEqual("blob2", resultBlob.Name);
-            Assert.AreEqual(TestData, data);
+            Assert.That(resultBlob.Name, Is.EqualTo("blob2"));
+            Assert.That(data, Is.EqualTo(TestData));
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 return resultMessage != null;
             });
 
-            Assert.AreEqual(TestData, resultMessage.MessageText);
+            Assert.That(resultMessage.MessageText, Is.EqualTo(TestData));
         }
 
         [TestCase("QueueToBlob_DifferentAccounts_PrimaryToSecondary_NameResolver")]
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                     data = reader.ReadToEnd();
                 }
             }
-            Assert.AreEqual(TestData, data);
+            Assert.That(data, Is.EqualTo(TestData));
         }
 
         [Test]
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 return resultMessage != null;
             });
 
-            Assert.AreEqual(TestData, resultMessage.MessageText);
+            Assert.That(resultMessage.MessageText, Is.EqualTo(TestData));
         }
 
         public static void BlobToBlob_DifferentAccounts_PrimaryToSecondary(

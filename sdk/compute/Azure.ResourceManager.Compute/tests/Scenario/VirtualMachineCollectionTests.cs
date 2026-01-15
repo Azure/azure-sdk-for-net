@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             string vmName = Recording.GenerateAssetName("testVM-");
             VirtualMachineResource virtualMachine = await CreateVirtualMachineAsync(vmName);
-            Assert.AreEqual(vmName, virtualMachine.Data.Name);
+            Assert.That(virtualMachine.Data.Name, Is.EqualTo(vmName));
         }
 
         [TestCase]
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
             VirtualMachineResource vm = lro.Value;
-            Assert.IsTrue(await collection.ExistsAsync(vmName));
-            Assert.IsFalse(await collection.ExistsAsync(vmName + "1"));
+            Assert.That((bool)await collection.ExistsAsync(vmName), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(vmName + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }

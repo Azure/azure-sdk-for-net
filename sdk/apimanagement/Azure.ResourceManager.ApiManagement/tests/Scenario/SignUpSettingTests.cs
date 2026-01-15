@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             defaultSignupSettings = (await defaultSignupSettings.CreateOrUpdateAsync(WaitUntil.Completed, defaultSignupSettings.Data)).Value;
 
             Assert.NotNull(defaultSignupSettings);
-            Assert.IsFalse(defaultSignupSettings.Data.IsSignUpDeveloperPortalEnabled);
+            Assert.That(defaultSignupSettings.Data.IsSignUpDeveloperPortalEnabled, Is.False);
 
             defaultSignupSettings = await defaultSignupSettings.GetAsync();
             Assert.NotNull(defaultSignupSettings);
-            Assert.IsFalse(defaultSignupSettings.Data.IsSignUpDeveloperPortalEnabled);
+            Assert.That(defaultSignupSettings.Data.IsSignUpDeveloperPortalEnabled, Is.False);
         }
     }
 }

@@ -122,7 +122,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             UriBuilder builder = new UriBuilder(containerResource.Uri);
             builder.Path = string.Join("/", builder.Path, childPath);
-            Assert.AreEqual(builder.Uri, childContainer.Uri);
+            Assert.That(childContainer.Uri, Is.EqualTo(builder.Uri));
         }
 
         [Test]

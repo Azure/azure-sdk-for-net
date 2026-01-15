@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Tests
                 .OrderBy(h => h.HotelId)
                 .Select(h => h.AsDocument());
 
-            Assert.Null(suggestions.Coverage);
+            Assert.That(suggestions.Coverage, Is.Null);
             Assert.NotNull(suggestions.Results);
             CollectionAssert.AreEqual(
                 expected.Select(d => d["hotelId"]),
@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Tests
                 .Where(h => h.HotelId == "8" || h.HotelId == "10")
                 .OrderBy(h => h.HotelId);
 
-            Assert.Null(suggestions.Coverage);
+            Assert.That(suggestions.Coverage, Is.Null);
             Assert.NotNull(suggestions.Results);
             CollectionAssert.AreEqual(
                 expected.Select(h => h.HotelId),
@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Tests
                     "hotel",
                     "sg",
                     new SuggestOptions { OrderBy = new[] { "This is not a valid orderby." } }));
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
             StringAssert.StartsWith(
                 "Invalid expression: Syntax error at position 7 in 'This is not a valid orderby.'",
                 ex.Message);
@@ -99,7 +99,7 @@ namespace Azure.Search.Documents.Tests
                 async () => await resources.GetQueryClient().SuggestAsync<SearchDocument>(
                     "hotel",
                     invalidName));
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
             StringAssert.StartsWith(
                 $"The specified suggester name '{invalidName}' does not exist in this index definition.",
                 ex.Message);
@@ -127,7 +127,7 @@ namespace Azure.Search.Documents.Tests
                     new SuggestOptions { UseFuzzyMatching = true });
             Assert.NotNull(suggestions);
             Assert.NotNull(suggestions.Results);
-            Assert.AreEqual(5, suggestions.Results.Count);
+            Assert.That(suggestions.Results.Count, Is.EqualTo(5));
         }
 
         [Test]
@@ -223,8 +223,8 @@ namespace Azure.Search.Documents.Tests
                 Rooms = new[] { new HotelRoom() { Type = "Budget Room" }, new HotelRoom() { Type = "Budget Room" } }
             };
 
-            Assert.AreEqual(1, suggestions.Results.Count);
-            Assert.AreEqual(expected, suggestions.Results.First().Document);
+            Assert.That(suggestions.Results.Count, Is.EqualTo(1));
+            Assert.That(suggestions.Results.First().Document, Is.EqualTo(expected));
         }
 
         [Test]
@@ -239,7 +239,7 @@ namespace Azure.Search.Documents.Tests
                     {
                         SearchFields = new[] { "hotelName" }
                     });
-            Assert.AreEqual(0, suggestions.Results.Count);
+            Assert.That(suggestions.Results.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -251,7 +251,7 @@ namespace Azure.Search.Documents.Tests
                     "luxury",
                     "sg",
                     new SuggestOptions { MinimumCoverage = 50 });
-            Assert.AreEqual(100, suggestions.Coverage);
+            Assert.That(suggestions.Coverage, Is.EqualTo(100));
         }
 
         /*

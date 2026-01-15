@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string consumerGroupName = Recording.GenerateAssetName("testconsumergroup");
             EventHubsConsumerGroupResource consumerGroup = (await _consumerGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, consumerGroupName, new EventHubsConsumerGroupData())).Value;
             Assert.NotNull(consumerGroup);
-            Assert.AreEqual(consumerGroup.Id.Name, consumerGroupName);
+            Assert.That(consumerGroupName, Is.EqualTo(consumerGroup.Id.Name));
 
             //validate if created successfully
-            Assert.IsTrue(await _consumerGroupCollection.ExistsAsync(consumerGroupName));
+            Assert.That((bool)await _consumerGroupCollection.ExistsAsync(consumerGroupName), Is.True);
             consumerGroup = await _consumerGroupCollection.GetAsync(consumerGroupName);
 
             //delete consumer group
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //validate
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _consumerGroupCollection.GetAsync(consumerGroupName); });
-            Assert.AreEqual(404, exception.Status);
-            Assert.IsFalse(await _consumerGroupCollection.ExistsAsync(consumerGroupName));
+            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.That((bool)await _consumerGroupCollection.ExistsAsync(consumerGroupName), Is.False);
         }
 
         [Test]
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //validate
             List<EventHubsConsumerGroupResource> list = await _consumerGroupCollection.GetAllAsync().ToEnumerableAsync();
             // the count should be 11 because there is a default consumergroup
-            Assert.AreEqual(list.Count, 11);
+            Assert.That(list.Count, Is.EqualTo(11));
             list = await _consumerGroupCollection.GetAllAsync(5, 5).ToEnumerableAsync();
-            Assert.AreEqual(list.Count, 6);
+            Assert.That(list.Count, Is.EqualTo(6));
         }
 
         [Test]
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string consumerGroupName = Recording.GenerateAssetName("testconsumergroup");
             EventHubsConsumerGroupResource consumerGroup = (await _consumerGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, consumerGroupName, new EventHubsConsumerGroupData())).Value;
             Assert.NotNull(consumerGroup);
-            Assert.AreEqual(consumerGroup.Id.Name, consumerGroupName);
+            Assert.That(consumerGroupName, Is.EqualTo(consumerGroup.Id.Name));
 
             //update consumer group and validate
             consumerGroup.Data.UserMetadata = "update the user meta data";
             consumerGroup = (await _consumerGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, consumerGroupName, consumerGroup.Data)).Value;
-            Assert.AreEqual(consumerGroup.Data.UserMetadata, "update the user meta data");
+            Assert.That(consumerGroup.Data.UserMetadata, Is.EqualTo("update the user meta data"));
         }
     }
 }

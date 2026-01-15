@@ -182,12 +182,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                         resourceName,
                         sviData);
 
-                Assert.AreEqual(resourceName, resource.Value.Data.Name);
+                Assert.That(resource.Value.Data.Name, Is.EqualTo(resourceName));
                 Console.WriteLine("Created resource with Payload " + await getObjectAsString(resource.Value.Data));
 
                 // Get SAP VIS
                 Response<SapVirtualInstanceResource> vis = await rg.GetSapVirtualInstanceAsync(resourceName);
-                Assert.AreEqual(resourceName, vis.Value.Data.Name);
+                Assert.That(vis.Value.Data.Name, Is.EqualTo(resourceName));
                 Console.WriteLine("Fetched resource with Payload " + await getObjectAsString(vis.Value.Data));
 
                 //Patch SAP VIS
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                 Console.WriteLine("Patching resource with Payload " + await getObjectAsString(visPatch));
                 ArmOperation<SapVirtualInstanceResource> updresult =
                     await vis.Value.UpdateAsync(WaitUntil.Completed, visPatch);
-                Assert.AreEqual(resourceName, vis.Value.Data.Name);
+                Assert.That(vis.Value.Data.Name, Is.EqualTo(resourceName));
                 Console.WriteLine("Patched resource with Payload " + await getObjectAsString(vis.Value.Data));
                 result = vis.Value;
             }
@@ -222,12 +222,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                         resourceName,
                         sviData);
 
-                Assert.AreEqual(resourceName, resource.Value.Data.Name);
+                Assert.That(resource.Value.Data.Name, Is.EqualTo(resourceName));
                 Console.WriteLine("Install resource with Payload " + await getObjectAsString(resource.Value.Data));
 
                 // Get SAP VIS
                 Response<SapVirtualInstanceResource> vis = await rg.GetSapVirtualInstanceAsync(resourceName);
-                Assert.AreEqual(resourceName, vis.Value.Data.Name);
+                Assert.That(vis.Value.Data.Name, Is.EqualTo(resourceName));
                 Console.WriteLine("Fetched resource with Payload " + await getObjectAsString(vis.Value.Data));
             }
             catch (Exception ex)

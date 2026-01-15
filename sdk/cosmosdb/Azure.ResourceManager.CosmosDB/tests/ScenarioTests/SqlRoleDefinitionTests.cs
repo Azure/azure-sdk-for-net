@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlRoleDefinitionCreateAndUpdate()
         {
             var definition = await CreateSqlRoleDefinition(SqlDatabaseActionScope, SqlRoleDefinitionCollection);
-            Assert.AreEqual(_roleDefinition.Data.Name, definition.Data.Name);
+            Assert.That(definition.Data.Name, Is.EqualTo(_roleDefinition.Data.Name));
             Assert.That(definition.Data.AssignableScopes, Has.Count.EqualTo(1));
-            Assert.AreEqual(SqlDatabaseActionScope, definition.Data.AssignableScopes[0]);
+            Assert.That(definition.Data.AssignableScopes[0], Is.EqualTo(SqlDatabaseActionScope));
             Assert.That(definition.Data.Permissions, Has.Count.EqualTo(1));
             Assert.That(definition.Data.Permissions[0].DataActions, Has.Count.EqualTo(1));
             Assert.IsEmpty(definition.Data.Permissions[0].NotDataActions);
-            Assert.AreEqual(PermissionDataActionCreate, definition.Data.Permissions[0].DataActions[0]);
+            Assert.That(definition.Data.Permissions[0].DataActions[0], Is.EqualTo(PermissionDataActionCreate));
 
             bool ifExists = await SqlRoleDefinitionCollection.ExistsAsync(RoleDefinitionId);
-            Assert.True(ifExists);
+            Assert.That(ifExists, Is.True);
 
             CosmosDBSqlRoleDefinitionResource definition2 = await SqlRoleDefinitionCollection.GetAsync(RoleDefinitionId);
-            Assert.AreEqual(_roleDefinition.Data.Name, definition2.Data.Name);
+            Assert.That(definition2.Data.Name, Is.EqualTo(_roleDefinition.Data.Name));
             VerifySqlRoleDefinitions(definition, definition2);
 
             var updateParameters = new CosmosDBSqlRoleDefinitionCreateOrUpdateContent
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 Permissions = { new CosmosDBSqlRolePermission { DataActions = { PermissionDataActionRead } } },
             };
             definition = await (await SqlRoleDefinitionCollection.CreateOrUpdateAsync(WaitUntil.Completed, RoleDefinitionId, updateParameters)).WaitForCompletionAsync();
-            Assert.AreEqual(_roleDefinition.Data.Name, definition.Data.Name);
+            Assert.That(definition.Data.Name, Is.EqualTo(_roleDefinition.Data.Name));
             Assert.That(definition.Data.AssignableScopes, Has.Count.EqualTo(1));
-            Assert.AreEqual(SqlDatabaseActionScope, definition.Data.AssignableScopes[0]);
+            Assert.That(definition.Data.AssignableScopes[0], Is.EqualTo(SqlDatabaseActionScope));
             Assert.That(definition.Data.Permissions, Has.Count.EqualTo(1));
             Assert.That(definition.Data.Permissions[0].DataActions, Has.Count.EqualTo(1));
             Assert.IsEmpty(definition.Data.Permissions[0].NotDataActions);
-            Assert.AreEqual(PermissionDataActionRead, definition.Data.Permissions[0].DataActions[0]);
+            Assert.That(definition.Data.Permissions[0].DataActions[0], Is.EqualTo(PermissionDataActionRead));
 
             definition2 = await SqlRoleDefinitionCollection.GetAsync(RoleDefinitionId);
             VerifySqlRoleDefinitions(definition, definition2);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var definitions = await SqlRoleDefinitionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(definitions, Is.Not.Zero);
-            Assert.AreEqual(definition.Data.Name, definitions[0].Data.Name);
+            Assert.That(definitions[0].Data.Name, Is.EqualTo(definition.Data.Name));
 
             VerifySqlRoleDefinitions(definitions[0], definition);
         }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var definition = await CreateSqlRoleDefinition(SqlDatabaseActionScope, SqlRoleDefinitionCollection);
             await definition.DeleteAsync(WaitUntil.Completed);
 
-            Assert.IsFalse(await SqlRoleDefinitionCollection.ExistsAsync(RoleDefinitionId));
+            Assert.That((bool)await SqlRoleDefinitionCollection.ExistsAsync(RoleDefinitionId), Is.False);
         }
 
         private async Task<CosmosDBSqlRoleDefinitionResource> CreateSqlRoleDefinition(string assignableScope, CosmosDBSqlRoleDefinitionCollection definitionCollection)
@@ -152,19 +152,19 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifySqlRoleDefinitions(CosmosDBSqlRoleDefinitionResource expectedValue, CosmosDBSqlRoleDefinitionResource actualValue)
         {
-            Assert.AreEqual(expectedValue.Id, actualValue.Id);
-            Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.ResourceType, actualValue.Data.ResourceType);
+            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+            Assert.That(actualValue.Data.ResourceType, Is.EqualTo(expectedValue.Data.ResourceType));
 
-            Assert.AreEqual(expectedValue.Data.RoleName, actualValue.Data.RoleName);
+            Assert.That(actualValue.Data.RoleName, Is.EqualTo(expectedValue.Data.RoleName));
 
-            Assert.AreEqual(expectedValue.Data.AssignableScopes, actualValue.Data.AssignableScopes);
+            Assert.That(actualValue.Data.AssignableScopes, Is.EqualTo(expectedValue.Data.AssignableScopes));
             VerifyPermissions(expectedValue.Data.Permissions, actualValue.Data.Permissions);
         }
 
         private void VerifyPermissions(IList<CosmosDBSqlRolePermission> expected, IList<CosmosDBSqlRolePermission> actualValue)
         {
-            Assert.AreEqual(expected.Count, actualValue.Count);
+            Assert.That(actualValue.Count, Is.EqualTo(expected.Count));
             for (int i = 0; i < expected.Count; i++)
             {
                 VerifyPermission(expected[i], actualValue[i]);
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyPermission(CosmosDBSqlRolePermission expected, CosmosDBSqlRolePermission actualValue)
         {
-            Assert.AreEqual(expected.DataActions, actualValue.DataActions);
-            Assert.AreEqual(expected.NotDataActions, actualValue.NotDataActions);
+            Assert.That(actualValue.DataActions, Is.EqualTo(expected.DataActions));
+            Assert.That(actualValue.NotDataActions, Is.EqualTo(expected.NotDataActions));
         }
     }
 }

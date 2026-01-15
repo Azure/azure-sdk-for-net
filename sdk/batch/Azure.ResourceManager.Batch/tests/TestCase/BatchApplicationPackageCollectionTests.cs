@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             var input = ResourceDataHelper.GetBatchApplicationPackageData();
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             BatchApplicationPackageResource applicationPackage1 = lro.Value;
-            Assert.AreEqual(name, applicationPackage1.Data.Name);
+            Assert.That(applicationPackage1.Data.Name, Is.EqualTo(name));
             //2.Get
             BatchApplicationPackageResource applicationPackage2 = await container.GetAsync(name);
             ResourceDataHelper.AssertApplicationPckageData(applicationPackage1.Data, applicationPackage2.Data);
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 3);
             //4.Exists
-            Assert.IsTrue(await container.ExistsAsync(name));
-            Assert.IsFalse(await container.ExistsAsync(name + "1"));
+            Assert.That((bool)await container.ExistsAsync(name), Is.True);
+            Assert.That((bool)await container.ExistsAsync(name + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Tests
         {
             ResourceNameValidationContent content = new ResourceNameValidationContent("mysubs", "Microsoft.Resources/subscriptions");
             var result = await Client.GetTenants().CheckResourceNameAsync(content);
-            Assert.AreEqual(result.Value.Status, ResourceNameValidationStatus.Allowed);
+            Assert.That(ResourceNameValidationStatus.Allowed, Is.EqualTo(result.Value.Status));
         }
     }
 }

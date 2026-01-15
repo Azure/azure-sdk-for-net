@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.GraphServices.Tests.Tests
             // Create Account Resource
             var createAccountOperation = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, accountResourceData);
 
-            Assert.IsTrue(createAccountOperation.HasCompleted);
-            Assert.IsTrue(createAccountOperation.HasValue);
-            Assert.AreEqual(resourceName, createAccountOperation.Value.Data.Name);
-            Assert.AreEqual(appId, createAccountOperation.Value.Data.Properties.AppId);
+            Assert.That(createAccountOperation.HasCompleted, Is.True);
+            Assert.That(createAccountOperation.HasValue, Is.True);
+            Assert.That(createAccountOperation.Value.Data.Name, Is.EqualTo(resourceName));
+            Assert.That(createAccountOperation.Value.Data.Properties.AppId, Is.EqualTo(appId));
 
             // Get
             Response<GraphServicesAccountResource> getAccountResponse = await collection.GetAsync(resourceName);
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.GraphServices.Tests.Tests
             // Update
             var updatedAccountResponse = await accountResource.AddTagAsync("Test", "Value");
             Assert.IsNotNull(updatedAccountResponse);
-            Assert.AreEqual(updatedAccountResponse.Value.Data.Tags["Test"], "Value");
+            Assert.That(updatedAccountResponse.Value.Data.Tags["Test"], Is.EqualTo("Value"));
 
             // Delete
             var accountOperation = await accountResource.DeleteAsync(WaitUntil.Completed);
             await accountOperation.WaitForCompletionResponseAsync();
-            Assert.IsTrue(accountOperation.HasCompleted);
+            Assert.That(accountOperation.HasCompleted, Is.True);
         }
     }
 }

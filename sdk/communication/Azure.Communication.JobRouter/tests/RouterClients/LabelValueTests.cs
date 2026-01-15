@@ -13,9 +13,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var labelValue = new RouterValue(null);
             Assert.IsNotNull(labelValue);
             var testValue1 = new RouterValue(null);
-            Assert.AreEqual(labelValue, testValue1);
+            Assert.That(testValue1, Is.EqualTo(labelValue));
             var testValue2 = new RouterValue(null);
-            Assert.AreEqual(labelValue, testValue2);
+            Assert.That(testValue2, Is.EqualTo(labelValue));
         }
 
         [Test]
@@ -25,7 +25,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var labelValue = new RouterValue(input);
             Assert.IsNotNull(labelValue);
             var testValue = new RouterValue(input);
-            Assert.AreEqual(labelValue, testValue);
+            Assert.That(testValue, Is.EqualTo(labelValue));
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var labelValue = new RouterValue(input);
             Assert.IsNotNull(labelValue);
             var testValue = new RouterValue(input);
-            Assert.AreEqual(labelValue, testValue);
+            Assert.That(testValue, Is.EqualTo(labelValue));
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var labelValue = new RouterValue(input);
             Assert.IsNotNull(labelValue);
             var testValue = new RouterValue(input);
-            Assert.AreEqual(labelValue, testValue);
+            Assert.That(testValue, Is.EqualTo(labelValue));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var labelValue = new RouterValue(input);
             Assert.IsNotNull(labelValue);
             var testValue = new RouterValue(input);
-            Assert.AreEqual(labelValue, testValue);
+            Assert.That(testValue, Is.EqualTo(labelValue));
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var labelValue = new RouterValue(input);
             Assert.IsNotNull(labelValue);
             var testValue = new RouterValue(input);
-            Assert.AreEqual(labelValue, testValue);
+            Assert.That(testValue, Is.EqualTo(labelValue));
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var labelValue = new RouterValue(input);
             Assert.IsNotNull(labelValue);
             var testValue = new RouterValue(input);
-            Assert.AreEqual(labelValue, testValue);
+            Assert.That(testValue, Is.EqualTo(labelValue));
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var labelValue = new RouterValue(input);
             Assert.IsNotNull(labelValue);
             var testValue = new RouterValue(input);
-            Assert.AreEqual(labelValue, testValue);
+            Assert.That(testValue, Is.EqualTo(labelValue));
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var labelValue = new RouterValue(input);
             Assert.IsNotNull(labelValue);
             var testValue = new RouterValue(input);
-            Assert.AreEqual(labelValue, testValue);
+            Assert.That(testValue, Is.EqualTo(labelValue));
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         {
             string input = "1";
             var labelValue = new RouterValue(input);
-            Assert.AreEqual(labelValue.ToString(), labelValue.Value.ToString());
+            Assert.That(labelValue.Value.ToString(), Is.EqualTo(labelValue.ToString()));
         }
     }
 }

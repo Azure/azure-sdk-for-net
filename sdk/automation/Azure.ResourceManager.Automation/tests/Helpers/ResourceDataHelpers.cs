@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
 
         public static void AssertResource(ResourceData r1, ResourceData r2)
         {
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
+            Assert.That(r2.Name, Is.EqualTo(r1.Name));
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
         }
 
         #region Credential
         public static void AssertCredential(AutomationCredentialData data1, AutomationCredentialData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.UserName, data2.UserName);
-            Assert.AreEqual(data1.Description, data2.Description);
+            Assert.That(data2.UserName, Is.EqualTo(data1.UserName));
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
         }
 
         public static AutomationCredentialCreateOrUpdateContent GetCredentialData(string name)
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         public static void AssertDscConfiguration(DscConfigurationData data1, DscConfigurationData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Location, data2.Location);
-            Assert.AreEqual(data1.Description, data2.Description);
-            Assert.AreEqual(data1.State, data2.State);
-            Assert.AreEqual(data1.JobCount, data2.JobCount);
+            Assert.That(data2.Location, Is.EqualTo(data1.Location));
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            Assert.That(data2.State, Is.EqualTo(data1.State));
+            Assert.That(data2.JobCount, Is.EqualTo(data1.JobCount));
         }
 
         public static DscConfigurationCreateOrUpdateContent GetDscConfigurationData(string name)
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         public static void AssertDscNodeConfiguration(DscNodeConfigurationData data1, DscNodeConfigurationData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.ConfigurationName, data2.ConfigurationName);
-            Assert.AreEqual(data1.Source, data2.Source);
-            Assert.AreEqual(data1.NodeCount, data2.NodeCount);
+            Assert.That(data2.ConfigurationName, Is.EqualTo(data1.ConfigurationName));
+            Assert.That(data2.Source, Is.EqualTo(data1.Source));
+            Assert.That(data2.NodeCount, Is.EqualTo(data1.NodeCount));
         }
 
         public static DscNodeConfigurationCreateOrUpdateContent GetDscNodeConfigurationData(string dscconfigurationName)
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         public static void AssertRunbook(AutomationRunbookData data1, AutomationRunbookData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Location, data2.Location);
-            Assert.AreEqual(data1.State, data2.State);
-            Assert.AreEqual(data1.Description, data2.Description);
-            Assert.AreEqual(data1.JobCount, data2.JobCount);
+            Assert.That(data2.Location, Is.EqualTo(data1.Location));
+            Assert.That(data2.State, Is.EqualTo(data1.State));
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            Assert.That(data2.JobCount, Is.EqualTo(data1.JobCount));
         }
         #endregion
 
@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         public static void AssertSourceControl(AutomationSourceControlData data1, AutomationSourceControlData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Description, data2.Description);
-            Assert.AreEqual(data1.Branch, data2.Branch);
-            Assert.AreEqual(data1.RepoUri, data2.RepoUri);
-            Assert.AreEqual(data1.FolderPath, data2.FolderPath);
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            Assert.That(data2.Branch, Is.EqualTo(data1.Branch));
+            Assert.That(data2.RepoUri, Is.EqualTo(data1.RepoUri));
+            Assert.That(data2.FolderPath, Is.EqualTo(data1.FolderPath));
         }
         #endregion
 
@@ -175,11 +175,11 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         public static void AssertVariable(AutomationVariableData data1, AutomationVariableData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Value, data2.Value);
-            Assert.AreEqual(data1.IsEncrypted, data2.IsEncrypted);
-            Assert.AreEqual(data1.CreatedOn, data2.CreatedOn);
-            Assert.AreEqual(data1.LastModifiedOn, data2.LastModifiedOn);
-            Assert.AreEqual(data1.Description, data2.Description);
+            Assert.That(data2.Value, Is.EqualTo(data1.Value));
+            Assert.That(data2.IsEncrypted, Is.EqualTo(data1.IsEncrypted));
+            Assert.That(data2.CreatedOn, Is.EqualTo(data1.CreatedOn));
+            Assert.That(data2.LastModifiedOn, Is.EqualTo(data1.LastModifiedOn));
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
         }
         #endregion
 
@@ -196,8 +196,8 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         public static void AssertSchedule(AutomationScheduleData data1, AutomationScheduleData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Frequency, data2.Frequency);
-            Assert.AreEqual(data1.Description, data2.Description);
+            Assert.That(data2.Frequency, Is.EqualTo(data1.Frequency));
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
         }
         #endregion
 
@@ -215,8 +215,8 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         public static void AssertAccount(AutomationAccountData data1, AutomationAccountData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Location, data2.Location);
-            Assert.AreEqual(data1.Description, data2.Description);
+            Assert.That(data2.Location, Is.EqualTo(data1.Location));
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
         }
         #endregion
     }

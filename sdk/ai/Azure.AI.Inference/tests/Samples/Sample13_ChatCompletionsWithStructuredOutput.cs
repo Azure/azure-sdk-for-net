@@ -105,16 +105,16 @@ namespace Azure.AI.Inference.Tests.Samples
             structuredJson.RootElement.TryGetProperty("bake_time", out var bakeTime);
             #endregion
 
-            Assert.AreEqual(ingredients.ValueKind, JsonValueKind.Array);
-            Assert.AreEqual(steps.ValueKind, JsonValueKind.Array);
+            Assert.That(JsonValueKind.Array, Is.EqualTo(ingredients.ValueKind));
+            Assert.That(JsonValueKind.Array, Is.EqualTo(steps.ValueKind));
             foreach (JsonElement stepElement in steps.EnumerateArray())
             {
                 stepElement.TryGetProperty("ingredients", out var stepIngredients);
                 stepElement.TryGetProperty("directions", out var stepDirections);
-                Assert.AreEqual(stepIngredients.ValueKind, JsonValueKind.Array);
-                Assert.AreEqual(stepDirections.ValueKind, JsonValueKind.String);
+                Assert.That(JsonValueKind.Array, Is.EqualTo(stepIngredients.ValueKind));
+                Assert.That(JsonValueKind.String, Is.EqualTo(stepDirections.ValueKind));
             }
-            Assert.AreEqual(bakeTime.ValueKind, JsonValueKind.String);
+            Assert.That(JsonValueKind.String, Is.EqualTo(bakeTime.ValueKind));
 
             #region Snippet:Azure_AI_Inference_SampleStructuredOutputPrintOutput
             var options = new JsonSerializerOptions

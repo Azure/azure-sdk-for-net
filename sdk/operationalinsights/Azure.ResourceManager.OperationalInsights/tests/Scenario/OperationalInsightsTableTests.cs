@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.OperationalInsights.Tests.Scenario
         {
             string tableName = "Alert";
             var table = await _workspace.GetOperationalInsightsTables().GetAsync(tableName);
-            Assert.AreEqual(tableName, table.Value.Data.Name);
-            Assert.IsTrue(table.Value.Data.IsRetentionInDaysAsDefault);
-            Assert.IsTrue(table.Value.Data.IsTotalRetentionInDaysAsDefault);
+            Assert.That(table.Value.Data.Name, Is.EqualTo(tableName));
+            Assert.That(table.Value.Data.IsRetentionInDaysAsDefault, Is.True);
+            Assert.That(table.Value.Data.IsTotalRetentionInDaysAsDefault, Is.True);
         }
 
         [RecordedTest]
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.OperationalInsights.Tests.Scenario
             var tables = await _workspace.GetOperationalInsightsTables().GetAllAsync().ToEnumerableAsync();
             foreach (var table in tables)
             {
-                Assert.IsTrue(table.Data.IsRetentionInDaysAsDefault);
-                Assert.IsTrue(table.Data.IsTotalRetentionInDaysAsDefault);
+                Assert.That(table.Data.IsRetentionInDaysAsDefault, Is.True);
+                Assert.That(table.Data.IsTotalRetentionInDaysAsDefault, Is.True);
             }
         }
     }

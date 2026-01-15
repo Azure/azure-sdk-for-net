@@ -37,11 +37,11 @@ namespace Azure.Communication.CallingServer
                 var targets = new CommunicationIdentifier[] { new CommunicationUserIdentifier(TestEnvironment.TargetUserId) };
                 CreateCallResult response = await client.CreateCallAsync(new CallSource(user), targets, new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
-                Assert.AreEqual(CallConnectionState.Connecting, response.CallConnectionProperties.CallConnectionState);
+                Assert.That(response.CallConnectionProperties.CallConnectionState, Is.EqualTo(CallConnectionState.Connecting));
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-                Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+                Assert.That(properties.Value.CallConnectionState, Is.EqualTo(CallConnectionState.Connected));
                 wasConnected = true;
 
                 await response.CallConnection.HangUpAsync(true).ConfigureAwait(false);
@@ -93,11 +93,11 @@ namespace Azure.Communication.CallingServer
                 var targets = new CommunicationIdentifier[] { new PhoneNumberIdentifier(TestEnvironment.TargetPhoneNumber) };
                 CreateCallResult response = await client.CreateCallAsync(source, targets, new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
-                Assert.AreEqual("connecting", response.CallConnectionProperties.CallConnectionState.ToString());
+                Assert.That(response.CallConnectionProperties.CallConnectionState.ToString(), Is.EqualTo("connecting"));
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-                Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+                Assert.That(properties.Value.CallConnectionState, Is.EqualTo(CallConnectionState.Connected));
                 wasConnected = true;
 
                 await response.CallConnection.HangUpAsync(true).ConfigureAwait(false);

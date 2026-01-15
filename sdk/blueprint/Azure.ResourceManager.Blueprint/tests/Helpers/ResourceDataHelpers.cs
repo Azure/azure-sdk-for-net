@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
     {
         public static void AssertResource(ResourceData r1, ResourceData r2)
         {
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
+            Assert.That(r2.Name, Is.EqualTo(r1.Name));
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
         }
 
         #region ArtifactData
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         public static void AssertArtifactData(ArtifactData data1, ArtifactData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Kind, data2.Kind);
+            Assert.That(data2.Kind, Is.EqualTo(data1.Kind));
         }
         public static ArtifactData GetTemplateArtifactData()
         {
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         public static void AssertTemplateArtifactData(TemplateArtifact data1, TemplateArtifact data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Description, data2.Description);
-            Assert.AreEqual(data1.DisplayName, data2.DisplayName);
-            Assert.AreEqual(data1.Template, data2.Template);
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            Assert.That(data2.DisplayName, Is.EqualTo(data1.DisplayName));
+            Assert.That(data2.Template, Is.EqualTo(data1.Template));
         }
         //PolicyAssignmentArtifact
         public static ArtifactData GetPolicyAssignmentArtifactData()
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         public static void AssertPolicyArtifactData(PolicyAssignmentArtifact data1, PolicyAssignmentArtifact data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Description, data2.Description);
-            Assert.AreEqual(data1.DisplayName, data2.DisplayName);
-            Assert.AreEqual(data1.PolicyDefinitionId, data2.PolicyDefinitionId);
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            Assert.That(data2.DisplayName, Is.EqualTo(data1.DisplayName));
+            Assert.That(data2.PolicyDefinitionId, Is.EqualTo(data1.PolicyDefinitionId));
         }
         //RoleAssignmentArtifact
         public static ArtifactData GetRoleAssignmentData()
@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         public static void AssertRoleAssignmentArtifactData(RoleAssignmentArtifact data1, RoleAssignmentArtifact data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Description, data2.Description);
-            Assert.AreEqual(data1.DisplayName, data2.DisplayName);
-            Assert.AreEqual(data1.RoleDefinitionId, data2.RoleDefinitionId);
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            Assert.That(data2.DisplayName, Is.EqualTo(data1.DisplayName));
+            Assert.That(data2.RoleDefinitionId, Is.EqualTo(data1.RoleDefinitionId));
         }
         #endregion
 
@@ -194,8 +194,8 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         public static void AssertAssignmentData(AssignmentData data1, AssignmentData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Description, data2.Description);
-            Assert.AreEqual(data1.Location, data2.Location);
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
+            Assert.That(data2.Location, Is.EqualTo(data1.Location));
         }
         #endregion
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Blueprint.Tests.Helpers
         {
             AssertResource(data1, data2);
             //Assert.AreEqual(data1.Status , data2.Status);
-            Assert.AreEqual (data1.Description , data2.Description);
+            Assert.That(data2.Description, Is.EqualTo(data1.Description));
             //Assert.AreEqual(data1.Parameters., data2.Parameters.ElementAt(0).Value);
             //Assert.AreEqual(data1.Parameters.ElementAt(1), data2.Parameters.ElementAt(1));
         }

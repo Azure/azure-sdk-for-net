@@ -56,24 +56,24 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests
                 }
             });
             Assert.NotNull(managedPrivateEndpoint);
-            Assert.AreEqual(managedPrivateEndpointName, managedPrivateEndpoint.Name);
-            Assert.AreEqual(privateLinkResourceId, managedPrivateEndpoint.Properties.PrivateLinkResourceId);
-            Assert.AreEqual(groupId, managedPrivateEndpoint.Properties.GroupId);
+            Assert.That(managedPrivateEndpoint.Name, Is.EqualTo(managedPrivateEndpointName));
+            Assert.That(managedPrivateEndpoint.Properties.PrivateLinkResourceId, Is.EqualTo(privateLinkResourceId));
+            Assert.That(managedPrivateEndpoint.Properties.GroupId, Is.EqualTo(groupId));
 
             // List managed private endpoints
             List<ManagedPrivateEndpoint> privateEndpoints = await client.ListAsync(managedVnetName).ToEnumerableAsync();
             Assert.NotNull(privateEndpoints);
             CollectionAssert.IsNotEmpty(privateEndpoints);
-            Assert.IsTrue(privateEndpoints.Any(pe => pe.Name == managedPrivateEndpointName));
+            Assert.That(privateEndpoints.Any(pe => pe.Name == managedPrivateEndpointName), Is.True);
 
             // Get managed private endpoint
             ManagedPrivateEndpoint privateEndpoint = await client.GetAsync(managedVnetName, managedPrivateEndpointName);
-            Assert.AreEqual(managedPrivateEndpointName, privateEndpoint.Name);
+            Assert.That(privateEndpoint.Name, Is.EqualTo(managedPrivateEndpointName));
 
             // Delete managed private endpoint
             await client.DeleteAsync(managedVnetName, managedPrivateEndpointName);
             privateEndpoints = await client.ListAsync(managedVnetName).ToEnumerableAsync();
-            Assert.IsFalse(privateEndpoints.Any(pe => pe.Name == managedPrivateEndpointName));
+            Assert.That(privateEndpoints.Any(pe => pe.Name == managedPrivateEndpointName), Is.False);
         }
     }
 }

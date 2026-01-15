@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
                 Assert.IsNotNull(item.SkuName);
                 Assert.IsNotNull(item.Model);
             }
-            Assert.IsTrue(hasValue);
+            Assert.That(hasValue, Is.True);
         }
 
         [TestCase]
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
                 Assert.IsNotNull(item.Name);
                 Assert.IsNotNull(item.CurrentValue);
             }
-            Assert.IsTrue(hasValue);
+            Assert.That(hasValue, Is.True);
         }
     }
 }

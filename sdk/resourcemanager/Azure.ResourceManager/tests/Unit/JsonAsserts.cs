@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Tests
 
             var text = Encoding.UTF8.GetString(memoryStream.ToArray());
 
-            Assert.AreEqual(expected, text);
+            Assert.That(text, Is.EqualTo(expected));
         }
 
         public static void AssertConverterSerialization<T>(string expected, T model, ModelReaderWriterOptions? options = null)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Tests
 
             var text = Encoding.UTF8.GetString(memoryStream.ToArray());
 
-            Assert.AreEqual(expected, text);
+            Assert.That(text, Is.EqualTo(expected));
         }
 
         public static JsonElement AssertSerializes(IUtf8JsonSerializable serializable)

@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Network.Tests
         {
             BastionHostResource bastionHost = await CreateBastionHost(_bastionName);
             Assert.IsNotNull(bastionHost.Data);
-            Assert.AreEqual(_bastionName, bastionHost.Data.Name);
-            Assert.AreEqual(AzureLocation.WestUS2, bastionHost.Data.Location);
-            Assert.AreEqual(0, bastionHost.Data.Tags.Count);
+            Assert.That(bastionHost.Data.Name, Is.EqualTo(_bastionName));
+            Assert.That(bastionHost.Data.Location, Is.EqualTo(AzureLocation.WestUS2));
+            Assert.That(bastionHost.Data.Tags.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.Network.Tests
             BastionHostResource bastionHost = await CreateBastionHost(_bastionName);
             var bastion = await _resourceGroup.GetBastionHosts().GetAsync(_bastionName);
             Assert.IsNotNull(bastion.Value.Data);
-            Assert.AreEqual(_bastionName, bastion.Value.Data.Name);
-            Assert.AreEqual(AzureLocation.WestUS2, bastion.Value.Data.Location);
-            Assert.AreEqual(0, bastion.Value.Data.Tags.Count);
+            Assert.That(bastion.Value.Data.Name, Is.EqualTo(_bastionName));
+            Assert.That(bastion.Value.Data.Location, Is.EqualTo(AzureLocation.WestUS2));
+            Assert.That(bastion.Value.Data.Tags.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network.Tests
             BastionHostResource bastionHost = await CreateBastionHost(_bastionName);
             List<BastionHostResource> BastionList = await _resourceGroup.GetBastionHosts().GetAllAsync().ToEnumerableAsync();
             Has.One.EqualTo(BastionList);
-            Assert.AreEqual(_bastionName, BastionList[0].Data.Name);
+            Assert.That(BastionList[0].Data.Name, Is.EqualTo(_bastionName));
         }
 
         [Test]
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task Exists()
         {
             BastionHostResource bastionHost = await CreateBastionHost(_bastionName);
-            Assert.IsTrue(await _resourceGroup.GetBastionHosts().ExistsAsync(_bastionName));
-            Assert.IsFalse(await _resourceGroup.GetBastionHosts().ExistsAsync(_bastionName + "1"));
+            Assert.That((bool)await _resourceGroup.GetBastionHosts().ExistsAsync(_bastionName), Is.True);
+            Assert.That((bool)await _resourceGroup.GetBastionHosts().ExistsAsync(_bastionName + "1"), Is.False);
         }
 
         [Test]

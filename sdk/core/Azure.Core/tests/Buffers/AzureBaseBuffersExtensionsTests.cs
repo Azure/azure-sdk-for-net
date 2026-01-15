@@ -33,7 +33,7 @@ namespace Azure.Core.Tests.Buffers
             ReadOnlyMemory<byte> buffer = new byte[0];
             await AzureBaseBuffersExtensions.WriteAsync(ms, buffer);
 
-            Assert.AreEqual(0, ms.Length);
+            Assert.That(ms.Length, Is.EqualTo(0));
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Azure.Core.Tests.Buffers
             await AzureBaseBuffersExtensions.WriteAsync(ms, buffer);
 
             // Check that nothing was written
-            Assert.AreEqual(0, ms.Length);
+            Assert.That(ms.Length, Is.EqualTo(0));
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace Azure.Core.Tests.Buffers
             ms.Seek(0, SeekOrigin.Begin);
             for (byte i = 0; i < ms.Length; i++)
             {
-                Assert.AreEqual(i, ms.ReadByte());
+                Assert.That(ms.ReadByte(), Is.EqualTo(i));
             }
         }
 

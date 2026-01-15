@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Retrieve that one PEC directly
             var getSpecificPecResponse = await pecCollection.GetAsync(testPec.Data.Name);
-            Assert.AreEqual(testPec.Data.Name, getSpecificPecResponse.Value.Data.Name, "Fetched PEC name mismatch.");
+            Assert.That(getSpecificPecResponse.Value.Data.Name, Is.EqualTo(testPec.Data.Name), "Fetched PEC name mismatch.");
 
             // Check its ConnectionState details
             var connectionState = getSpecificPecResponse.Value.Data.ConnectionState;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Fetch it by name
             var getPecResponse = await pecCollection.GetAsync(targetPec.Data.Name);
-            Assert.AreEqual(targetPec.Data.Name, getPecResponse.Value.Data.Name, "Fetched PEC name mismatch.");
+            Assert.That(getPecResponse.Value.Data.Name, Is.EqualTo(targetPec.Data.Name), "Fetched PEC name mismatch.");
 
             // Prepare the update payload (approve)
             var approvePayload = new EventGridPrivateEndpointConnectionData
@@ -104,15 +104,15 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Send the update
             var updatePecResponse = await getPecResponse.Value.UpdateAsync(WaitUntil.Completed, approvePayload);
-            Assert.AreEqual(targetPec.Data.Name, updatePecResponse.Value.Data.Name, "PEC name changed after update.");
-            Assert.AreEqual(
-                EventGridPrivateEndpointPersistedConnectionStatus.Approved,
+            Assert.That(updatePecResponse.Value.Data.Name, Is.EqualTo(targetPec.Data.Name), "PEC name changed after update.");
+            Assert.That(
                 updatePecResponse.Value.Data.ConnectionState.Status,
+                Is.EqualTo(EventGridPrivateEndpointPersistedConnectionStatus.Approved),
                 "PEC ConnectionState.Status was not set to Approved."
             );
-            Assert.AreEqual(
-                "Re-approved via SDK test",
+            Assert.That(
                 updatePecResponse.Value.Data.ConnectionState.Description,
+                Is.EqualTo("Re-approved via SDK test"),
                 "PEC ConnectionState.Description did not match."
             );
         }

@@ -39,7 +39,7 @@ public class FileTests : AoaiTestBase<OpenAIFileClient>
         Validate(file);
         FileDeletionResult deletionResult = await client.DeleteFileAsync(file.Id);
         Assert.That(deletionResult.FileId, Is.EqualTo(file.Id));
-        Assert.IsTrue(deletionResult.Deleted);
+        Assert.That(deletionResult.Deleted, Is.True);
 
         file = await client.UploadFileAsync(
             BinaryData.FromString(@"{""text"":""hello, world!""}"),

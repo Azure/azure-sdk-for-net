@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.NotNull(eventHubNamespace.Data.Sku);
             if (useDefaults)
             {
-                Assert.AreEqual(DefaultLocation, eventHubNamespace.Data.Location);
-                Assert.AreEqual(EventHubsSkuTier.Standard, eventHubNamespace.Data.Sku.Tier);
+                Assert.That(eventHubNamespace.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(eventHubNamespace.Data.Sku.Tier, Is.EqualTo(EventHubsSkuTier.Standard));
             }
         }
     }

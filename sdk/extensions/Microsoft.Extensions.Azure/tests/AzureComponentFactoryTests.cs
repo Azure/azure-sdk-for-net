@@ -26,7 +26,7 @@ namespace Azure.Core.Extensions.Tests
             AzureComponentFactory factory = provider.GetService<AzureComponentFactory>();
             TestClientWithCredentials client = (TestClientWithCredentials) factory.CreateClient(typeof(TestClientWithCredentials), configuration.GetSection("TestClient"), new EnvironmentCredential(), new TestClientOptions());
 
-            Assert.AreEqual("http://localhost/", client.Uri.ToString());
+            Assert.That(client.Uri.ToString(), Is.EqualTo("http://localhost/"));
             Assert.IsInstanceOf<EnvironmentCredential>(client.Credential);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<ClientSecretCredential>(credential);
             var clientSecretCredential = (ClientSecretCredential)credential;
 
-            Assert.AreEqual("ConfigurationClientId", clientSecretCredential.ClientId);
-            Assert.AreEqual("ConfigurationClientSecret", clientSecretCredential.ClientSecret);
-            Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
+            Assert.That(clientSecretCredential.ClientId, Is.EqualTo("ConfigurationClientId"));
+            Assert.That(clientSecretCredential.ClientSecret, Is.EqualTo("ConfigurationClientSecret"));
+            Assert.That(clientSecretCredential.TenantId, Is.EqualTo("ConfigurationTenantId"));
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace Azure.Core.Extensions.Tests
             AzureComponentFactory factory = provider.GetService<AzureComponentFactory>();
             TestClient client = (TestClient) factory.CreateClient(typeof(TestClient), configuration.GetSection("TestClient"), null, new TestClientOptions());
 
-            Assert.AreEqual("http://localhost/", client.ConnectionString);
+            Assert.That(client.ConnectionString, Is.EqualTo("http://localhost/"));
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace Azure.Core.Extensions.Tests
             AzureComponentFactory factory = provider.GetService<AzureComponentFactory>();
             TestClientOptions options = (TestClientOptions)factory.CreateClientOptions(typeof(TestClientOptions), null, configuration.GetSection("TestClient"));
 
-            Assert.AreEqual("client option value", options.Property);
+            Assert.That(options.Property, Is.EqualTo("client option value"));
         }
 
         [Test]
@@ -131,8 +131,8 @@ namespace Azure.Core.Extensions.Tests
             AzureComponentFactory factory = provider.GetService<AzureComponentFactory>();
             TestClientOptions options = (TestClientOptions)factory.CreateClientOptions(typeof(TestClientOptions), TestClientOptions.ServiceVersion.B, configuration.GetSection("TestClient"));
 
-            Assert.AreEqual("client option value", options.Property);
-            Assert.AreEqual(TestClientOptions.ServiceVersion.B, options.Version);
+            Assert.That(options.Property, Is.EqualTo("client option value"));
+            Assert.That(options.Version, Is.EqualTo(TestClientOptions.ServiceVersion.B));
         }
 
         [Test]
@@ -147,7 +147,7 @@ namespace Azure.Core.Extensions.Tests
             AzureComponentFactory factory = provider.GetService<AzureComponentFactory>();
             TestClientOptions options = (TestClientOptions)factory.CreateClientOptions(typeof(TestClientOptions), configuration["TestClient"], null);
 
-            Assert.AreEqual("AppId", options.Diagnostics.ApplicationId);
+            Assert.That(options.Diagnostics.ApplicationId, Is.EqualTo("AppId"));
         }
 
         [Test]
@@ -165,7 +165,7 @@ namespace Azure.Core.Extensions.Tests
             AzureComponentFactory factory = provider.GetService<AzureComponentFactory>();
             TestClientWithCredentials client = (TestClientWithCredentials) factory.CreateClient(typeof(TestClientWithCredentials), configuration.GetSection("TestClient"), new EnvironmentCredential(), new TestClientOptions());
 
-            Assert.AreEqual("http://localhost/", client.Uri.ToString());
+            Assert.That(client.Uri.ToString(), Is.EqualTo("http://localhost/"));
             Assert.IsInstanceOf<EnvironmentCredential>(client.Credential);
 
             AzureEventSourceLogForwarder forwarder = provider.GetService<AzureEventSourceLogForwarder>();
@@ -173,7 +173,7 @@ namespace Azure.Core.Extensions.Tests
                     "_listener",
                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
                 .GetValue(forwarder);
-            Assert.AreEqual(enableLogging, listener != null);
+            Assert.That(listener != null, Is.EqualTo(enableLogging));
         }
 
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)

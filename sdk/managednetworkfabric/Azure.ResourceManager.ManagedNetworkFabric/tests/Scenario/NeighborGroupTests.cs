@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             ArmOperation<NetworkFabricNeighborGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.NeighborGroupName, data);
             NetworkFabricNeighborGroupResource result = lro.Value;
             NetworkFabricNeighborGroupData resourceData = result.Data;
-            Assert.AreEqual(resourceData.Name, TestEnvironment.NeighborGroupName);
+            Assert.That(TestEnvironment.NeighborGroupName, Is.EqualTo(resourceData.Name));
 
             // Update
             NetworkFabricNeighborGroupPatch patch = new NetworkFabricNeighborGroupPatch()
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             ArmOperation<NetworkFabricNeighborGroupResource> lroPatch = await networkFabricNeighborGroup.UpdateAsync(WaitUntil.Completed, patch);
             NetworkFabricNeighborGroupResource resultPatch = lroPatch.Value;
             NetworkFabricNeighborGroupData resourcePatchData = resultPatch.Data;
-            Assert.AreEqual(resourcePatchData.Destination.IPv6Addresses.Count, 2);
+            Assert.That(resourcePatchData.Destination.IPv6Addresses.Count, Is.EqualTo(2));
             TestContext.Out.WriteLine($"PATCH - test completed.");
 
             NetworkFabricNeighborGroupResource ntpResource = Client.GetNetworkFabricNeighborGroupResource(neighborGroupResourceId);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....");
             NetworkFabricNeighborGroupResource getResult = await ntpResource.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, TestEnvironment.NeighborGroupName);
+            Assert.That(TestEnvironment.NeighborGroupName, Is.EqualTo(getResult.Data.Name));
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             var deleteResponse = await networkFabricNeighborGroup.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteResponse.HasCompleted);
+            Assert.That(deleteResponse.HasCompleted, Is.True);
         }
     }
 }

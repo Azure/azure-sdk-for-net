@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement.Tests
 
             // Exist
             var flag = await _exportCollection.ExistsAsync(exportName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             // Get
             var getexport = await _exportCollection.GetAsync(exportName);
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.CostManagement.Tests
         {
             Assert.IsNotNull(export);
             Assert.IsNotEmpty(export.Id);
-            Assert.AreEqual(exportName, export.Name);
-            Assert.AreEqual(ExportFormatType.Csv, export.Format);
+            Assert.That(export.Name, Is.EqualTo(exportName));
+            Assert.That(export.Format, Is.EqualTo(ExportFormatType.Csv));
         }
     }
 }

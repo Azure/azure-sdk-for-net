@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             // Assert
             Assert.IsNotNull(options.WebPubSubAccess);
-            Assert.AreEqual(new System.Uri(TestServiceUri), options.WebPubSubAccess.ServiceEndpoint);
+            Assert.That(options.WebPubSubAccess.ServiceEndpoint, Is.EqualTo(new System.Uri(TestServiceUri)));
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             // Assert
             Assert.IsNotNull(options.WebPubSubAccess);
-            Assert.AreEqual(new System.Uri(TestServiceUri), options.WebPubSubAccess.ServiceEndpoint);
+            Assert.That(options.WebPubSubAccess.ServiceEndpoint, Is.EqualTo(new System.Uri(TestServiceUri)));
         }
 
         [Test]
@@ -97,9 +97,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             // Assert
             Assert.IsNotNull(options.WebPubSubAccess);
-            Assert.AreEqual(new System.Uri(TestServiceUri), options.WebPubSubAccess.ServiceEndpoint);
+            Assert.That(options.WebPubSubAccess.ServiceEndpoint, Is.EqualTo(new System.Uri(TestServiceUri)));
             Assert.IsInstanceOf<IdentityCredential>(options.WebPubSubAccess.Credential);
-            Assert.AreEqual(mockCredential, ((IdentityCredential)options.WebPubSubAccess.Credential).TokenCredential);
+            Assert.That(((IdentityCredential)options.WebPubSubAccess.Credential).TokenCredential, Is.EqualTo(mockCredential));
         }
 
         [Test]
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             // Assert
             Assert.IsNotNull(options.WebPubSubAccess);
-            Assert.AreEqual(new System.Uri(TestServiceUri), options.WebPubSubAccess.ServiceEndpoint);
+            Assert.That(options.WebPubSubAccess.ServiceEndpoint, Is.EqualTo(new System.Uri(TestServiceUri)));
             Assert.IsInstanceOf<KeyCredential>(options.WebPubSubAccess.Credential);
         }
 
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             setup.Configure(options);
 
             // Assert
-            Assert.AreEqual(TestHub, options.Hub);
+            Assert.That(options.Hub, Is.EqualTo(TestHub));
         }
 
         [Test]
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             setup.Configure(options);
 
             // Assert
-            Assert.AreEqual(TestHub, options.Hub);
+            Assert.That(options.Hub, Is.EqualTo(TestHub));
         }
 
         [Test]
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             setup.Configure(options);
 
             // Assert
-            Assert.AreEqual(TestHub, options.Hub);
+            Assert.That(options.Hub, Is.EqualTo(TestHub));
         }
 
         private static IConfiguration CreateConfiguration(Dictionary<string, string> values = null)

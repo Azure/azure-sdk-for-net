@@ -178,7 +178,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         FineTuningJob job = await client.GetJobsAsync().GetFirstOrDefaultAsync(j => j.Status == FineTuningStatus.Succeeded)!;
 
         Assert.NotNull(job);
-        Assert.AreEqual(job.Status, "succeeded");
+        Assert.That(job.Status, Is.EqualTo("succeeded"));
 
         var evt = await job.GetEventsAsync(new() { PageSize = 1 }).GetFirstOrDefaultAsync();
 
@@ -222,7 +222,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         Assert.That(job.Status, Is.EqualTo("cancelled"), "Fine tuning did not cancel");
 
         bool deleted = await DeleteJobAndVerifyAsync((AzureFineTuningJob)job, job.JobId, client);
-        Assert.True(deleted, "Failed to delete fine tuning model: {0}", job.Value);
+        Assert.That(deleted, Is.True, $"Failed to delete fine tuning model: {job.Value}");
 
         FileDeletionResult success = await fileClient.DeleteFileAsync(uploadedFile.Id);
         Assert.That(success.Deleted, Is.True);

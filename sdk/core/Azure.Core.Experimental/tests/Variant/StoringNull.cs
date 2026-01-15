@@ -18,9 +18,9 @@ namespace Azure.Core.Experimental.Tests
             Assert.Throws<InvalidCastException>(() => _ = nullFastValue.As<int>());
 
             bool success = nullFastValue.TryGetValue(out int result);
-            Assert.False(success);
+            Assert.That(success, Is.False);
 
-            Assert.AreEqual(default(int), result);
+            Assert.That(result, Is.EqualTo(default(int)));
         }
     }
 }

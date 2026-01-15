@@ -118,21 +118,21 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             ServiceBusListener.ConcurrencyUpdateManager concurrencyUpdateManager = new ServiceBusListener.ConcurrencyUpdateManager(concurrencyManager, messageProcessor, null, false, _functionId, logger);
 
             // when no messages are being processed, concurrency is not adjusted
-            Assert.AreEqual(1, processor.MaxConcurrentCalls);
+            Assert.That(processor.MaxConcurrentCalls, Is.EqualTo(1));
             SetFunctionCurrentConcurrency(concurrencyManager, _functionId, 10);
             concurrencyUpdateManager.UpdateConcurrency();
-            Assert.AreEqual(1, processor.MaxConcurrentCalls);
+            Assert.That(processor.MaxConcurrentCalls, Is.EqualTo(1));
 
             // ensure processor concurrency is adjusted up
             concurrencyUpdateManager.MessageProcessed();
             concurrencyUpdateManager.UpdateConcurrency();
-            Assert.AreEqual(10, processor.MaxConcurrentCalls);
+            Assert.That(processor.MaxConcurrentCalls, Is.EqualTo(10));
 
             // ensure processor concurrency is adjusted down
             SetFunctionCurrentConcurrency(concurrencyManager, _functionId, 5);
             concurrencyUpdateManager.MessageProcessed();
             concurrencyUpdateManager.UpdateConcurrency();
-            Assert.AreEqual(5, processor.MaxConcurrentCalls);
+            Assert.That(processor.MaxConcurrentCalls, Is.EqualTo(5));
         }
 
         [Test]
@@ -148,25 +148,25 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             ServiceBusListener.ConcurrencyUpdateManager concurrencyUpdateManager = new ServiceBusListener.ConcurrencyUpdateManager(concurrencyManager, null, sessionMessageProcessor, true, _functionId, logger);
 
             // when no messages are being processed, concurrency is not adjusted
-            Assert.AreEqual(1, sessionProcessor.MaxConcurrentSessions);
-            Assert.AreEqual(1, sessionProcessor.MaxConcurrentCallsPerSession);
+            Assert.That(sessionProcessor.MaxConcurrentSessions, Is.EqualTo(1));
+            Assert.That(sessionProcessor.MaxConcurrentCallsPerSession, Is.EqualTo(1));
             SetFunctionCurrentConcurrency(concurrencyManager, _functionId, 10);
             concurrencyUpdateManager.UpdateConcurrency();
-            Assert.AreEqual(1, sessionProcessor.MaxConcurrentSessions);
-            Assert.AreEqual(1, sessionProcessor.MaxConcurrentCallsPerSession);
+            Assert.That(sessionProcessor.MaxConcurrentSessions, Is.EqualTo(1));
+            Assert.That(sessionProcessor.MaxConcurrentCallsPerSession, Is.EqualTo(1));
 
             // ensure processor concurrency is adjusted up
             concurrencyUpdateManager.MessageProcessed();
             concurrencyUpdateManager.UpdateConcurrency();
-            Assert.AreEqual(10, sessionProcessor.MaxConcurrentSessions);
-            Assert.AreEqual(1, sessionProcessor.MaxConcurrentCallsPerSession);
+            Assert.That(sessionProcessor.MaxConcurrentSessions, Is.EqualTo(10));
+            Assert.That(sessionProcessor.MaxConcurrentCallsPerSession, Is.EqualTo(1));
 
             // ensure processor concurrency is adjusted down
             SetFunctionCurrentConcurrency(concurrencyManager, _functionId, 5);
             concurrencyUpdateManager.MessageProcessed();
             concurrencyUpdateManager.UpdateConcurrency();
-            Assert.AreEqual(5, sessionProcessor.MaxConcurrentSessions);
-            Assert.AreEqual(1, sessionProcessor.MaxConcurrentCallsPerSession);
+            Assert.That(sessionProcessor.MaxConcurrentSessions, Is.EqualTo(5));
+            Assert.That(sessionProcessor.MaxConcurrentCallsPerSession, Is.EqualTo(1));
         }
 
         [Test]
@@ -313,12 +313,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         {
             IScaleMonitor scaleMonitor = _listener.GetMonitor();
 
-            Assert.AreEqual(typeof(ServiceBusScaleMonitor), scaleMonitor.GetType());
-            Assert.AreEqual(scaleMonitor.Descriptor.Id, $"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower());
+            Assert.That(scaleMonitor.GetType(), Is.EqualTo(typeof(ServiceBusScaleMonitor)));
+            Assert.That($"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower(), Is.EqualTo(scaleMonitor.Descriptor.Id));
 
             var scaleMonitor2 = _listener.GetMonitor();
 
-            Assert.AreSame(scaleMonitor, scaleMonitor2);
+            Assert.That(scaleMonitor2, Is.SameAs(scaleMonitor));
         }
 
         [Test]

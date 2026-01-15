@@ -26,7 +26,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             var response = client.GetDiscoveryTemplatesAsync(PartialName);
             await foreach (var template in response)
             {
-                Assert.IsTrue(template.Name.ToLower().Contains(PartialName));
+                Assert.That(template.Name.ToLower().Contains(PartialName), Is.True);
             }
         }
         [RecordedTest]

@@ -58,7 +58,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             _blobServiceClient = new BlobServiceClient(TestEnvironment.PrimaryStorageAccountConnectionString);
             _queueServiceClient = new QueueServiceClient(TestEnvironment.PrimaryStorageAccountConnectionString); // No encoding
             _testContainer = _blobServiceClient.GetBlobContainerClient(_nameResolver.ResolveInString(SingleTriggerContainerName));
-            Assert.False(_testContainer.ExistsAsync().Result);
+            Assert.That((bool)_testContainer.ExistsAsync().Result, Is.False);
             _testContainer.CreateAsync().Wait();
         }
 
@@ -235,11 +235,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 DateTime startTime = DateTime.Now;
 
                 host.Start();
-                Assert.True(prog._completedEvent.WaitOne(TimeSpan.FromSeconds(60)));
+                Assert.That(prog._completedEvent.WaitOne(TimeSpan.FromSeconds(60)), Is.True);
 
                 timeToProcess = (int)(DateTime.Now - startTime).TotalMilliseconds;
 
-                Assert.AreEqual(1, prog._timesProcessed);
+                Assert.That(prog._timesProcessed, Is.EqualTo(1));
 
                 string[] loggerOutputLines = host.GetTestLoggerProvider().GetAllLogMessages()
                     .Where(p => p.FormattedMessage != null)
@@ -247,7 +247,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                     .ToArray();
 
                 var executions = loggerOutputLines.Where(p => p.Contains("Executing"));
-                Assert.AreEqual(1, executions.Count());
+                Assert.That(executions.Count(), Is.EqualTo(1));
                 StringAssert.StartsWith(string.Format("Executing 'BlobGetsProcessedOnlyOnce_SingleHost_Program.SingleBlobTrigger' (Reason='New blob detected({2}): {0}/{1}', Id=", blob.BlobContainerName, blob.Name, BlobTriggerSource.LogsAndContainerScan), executions.Single());
 
                 await host.StopAsync();
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 Assert.Throws<InvalidOperationException>(() => host.Start());
             }
 
-            Assert.AreEqual(1, prog._timesProcessed);
+            Assert.That(prog._timesProcessed, Is.EqualTo(1));
         } // host
 
         [Test]
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             using (host)
             {
                 host.Start();
-                Assert.True(prog._completedEvent.WaitOne(TimeSpan.FromSeconds(60)));
+                Assert.That(prog._completedEvent.WaitOne(TimeSpan.FromSeconds(60)), Is.True);
             }
         }
 
@@ -304,7 +304,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             using (host)
             {
                 host.Start();
-                Assert.True(prog._completedEvent.WaitOne(TimeSpan.FromSeconds(60)));
+                Assert.That(prog._completedEvent.WaitOne(TimeSpan.FromSeconds(60)), Is.True);
 
                 // make sure it was logged.
                 string invalidMessageLog = host.GetTestLoggerProvider().GetAllLogMessages()
@@ -338,10 +338,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 host1.Start();
                 host2.Start();
 
-                Assert.True(prog._completedEvent.WaitOne(TimeSpan.FromSeconds(60)));
+                Assert.That(prog._completedEvent.WaitOne(TimeSpan.FromSeconds(60)), Is.True);
             }
 
-            Assert.AreEqual(1, prog._timesProcessed);
+            Assert.That(prog._timesProcessed, Is.EqualTo(1));
         }
 
         public void Dispose()

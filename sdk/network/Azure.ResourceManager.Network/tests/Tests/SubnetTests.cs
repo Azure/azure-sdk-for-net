@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.Network.Tests
             var putSubnetResponseOperation = await vnetResponse.Value.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, subnet2Name, subnet);
             await putSubnetResponseOperation.WaitForCompletionAsync();;
             Response<VirtualNetworkResource> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
-            Assert.AreEqual(2, getVnetResponse.Value.Data.Subnets.Count());
+            Assert.That(getVnetResponse.Value.Data.Subnets.Count(), Is.EqualTo(2));
 
             Response<SubnetResource> getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnet2Name);
 
             // Verify the getSubnetResponse
-            Assert.True(AreSubnetsEqual(getVnetResponse.Value.Data.Subnets[1], getSubnetResponse.Value.Data));
+            Assert.That(AreSubnetsEqual(getVnetResponse.Value.Data.Subnets[1], getSubnetResponse.Value.Data), Is.True);
 
             AsyncPageable<SubnetResource> getSubnetListResponseAP = vnetResponse.Value.GetSubnets().GetAllAsync();
             List<SubnetResource> getSubnetListResponse = await getSubnetListResponseAP.ToEnumerableAsync();
             // Verify ListSubnets
-            Assert.True(AreSubnetListsEqual(getVnetResponse.Value.Data.Subnets, getSubnetListResponse));
+            Assert.That(AreSubnetListsEqual(getVnetResponse.Value.Data.Subnets, getSubnetListResponse), Is.True);
 
             // Delete the subnet "subnet1"
             await getSubnetResponse.Value.DeleteAsync(WaitUntil.Completed);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Tests
             getSubnetListResponseAP = vnetResponse.Value.GetSubnets().GetAllAsync();
             getSubnetListResponse = await getSubnetListResponseAP.ToEnumerableAsync();
             Has.One.EqualTo(getSubnetListResponse);
-            Assert.AreEqual(subnet1Name, getSubnetListResponse.ElementAt(0).Data.Name);
+            Assert.That(getSubnetListResponse.ElementAt(0).Data.Name, Is.EqualTo(subnet1Name));
             #endregion
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Tests
             var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
             var vnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Response<SubnetResource> getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnetName);
-            Assert.Null(getSubnetResponse.Value.Data.ResourceNavigationLinks);
+            Assert.That(getSubnetResponse.Value.Data.ResourceNavigationLinks, Is.Null);
 
             //TODO:Need RedisManagementClient
             //redisClient.Redis.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, redisName, parameters: new RedisCreateOrUpdateParameters
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network.Tests
             //}
 
             getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnetName);
-            Assert.AreEqual(1, getSubnetResponse.Value.Data.ResourceNavigationLinks.Count);
+            Assert.That(getSubnetResponse.Value.Data.ResourceNavigationLinks.Count, Is.EqualTo(1));
         }
 
         private bool AreSubnetsEqual(SubnetData subnet1, SubnetData subnet2)

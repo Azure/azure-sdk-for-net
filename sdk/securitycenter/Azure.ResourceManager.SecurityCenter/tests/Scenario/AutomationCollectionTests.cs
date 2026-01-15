@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             string automationName = Recording.GenerateAssetName("automation");
             var automation = await CreateSecurityAutomation(automationName);
             bool flag = await _automationCollection.ExistsAsync(automationName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             string automationName = Recording.GenerateAssetName("automation");
             var automation = await CreateSecurityAutomation(automationName);
             bool flag = await _automationCollection.ExistsAsync(automationName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await automation.DeleteAsync(WaitUntil.Completed);
             flag = await _automationCollection.ExistsAsync(automationName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [TestCase(null)]
@@ -135,24 +135,24 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             // AddTag
             await automation.AddTagAsync("addtagkey", "addtagvalue");
             automation = await _automationCollection.GetAsync(automationName);
-            Assert.AreEqual(1, automation.Data.Tags.Count);
+            Assert.That(automation.Data.Tags.Count, Is.EqualTo(1));
             KeyValuePair<string, string> tag = automation.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
 
             // RemoveTag
             await automation.RemoveTagAsync("addtagkey");
             automation = await _automationCollection.GetAsync(automationName);
-            Assert.AreEqual(0, automation.Data.Tags.Count);
+            Assert.That(automation.Data.Tags.Count, Is.EqualTo(0));
         }
 
         private void ValidateAutomation(SecurityAutomationResource automation, string automationName)
         {
             Assert.IsNotNull(automation);
             Assert.IsNotNull(automation.Data.Id);
-            Assert.AreEqual(automationName, automation.Data.Name);
-            Assert.AreEqual(DefaultLocation, automation.Data.Location);
-            Assert.AreEqual("Assessments", automation.Data.Sources.First().EventSource.ToString());
+            Assert.That(automation.Data.Name, Is.EqualTo(automationName));
+            Assert.That(automation.Data.Location, Is.EqualTo(DefaultLocation));
+            Assert.That(automation.Data.Sources.First().EventSource.ToString(), Is.EqualTo("Assessments"));
             Assert.AreEqual("Microsoft.Security/automations", automation.Data.ResourceType.ToString());
         }
     }

@@ -62,16 +62,16 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 w => w.Value.Offers.Any(x => x.JobId == createJob.Value.Id),
                 TimeSpan.FromSeconds(10));
 
-            Assert.IsTrue(worker.Value.Offers.Any(x => x.JobId == createJob.Value.Id));
+            Assert.That(worker.Value.Offers.Any(x => x.JobId == createJob.Value.Id), Is.True);
 
             var offer = worker.Value.Offers.Single(x => x.JobId == createJob.Value.Id);
-            Assert.AreEqual(1, offer.CapacityCost);
+            Assert.That(offer.CapacityCost, Is.EqualTo(1));
             Assert.IsNotNull(offer.OfferedAt);
             Assert.IsNotNull(offer.ExpiresAt);
 
             var accept = await client.AcceptJobOfferAsync(worker.Value.Id, offer.OfferId);
-            Assert.AreEqual(createJob.Value.Id, accept.Value.JobId);
-            Assert.AreEqual(worker.Value.Id, accept.Value.WorkerId);
+            Assert.That(accept.Value.JobId, Is.EqualTo(createJob.Value.Id));
+            Assert.That(accept.Value.WorkerId, Is.EqualTo(worker.Value.Id));
 
             Assert.ThrowsAsync<RequestFailedException>(async () =>
                 await client.DeclineJobOfferAsync(
@@ -84,21 +84,21 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             {
                 Note = $"Job completed by {workerId1}"
             });
-            Assert.AreEqual(200, complete.Status);
+            Assert.That(complete.Status, Is.EqualTo(200));
 
             var close = await client.CloseJobAsync(new CloseJobOptions(createJob.Value.Id, accept.Value.AssignmentId)
             {
                 Note = $"Job closed by {workerId1}"
             });
-            Assert.AreEqual(200, complete.Status);
+            Assert.That(complete.Status, Is.EqualTo(200));
 
             var finalJobState = await client.GetJobAsync(createJob.Value.Id);
             Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].AssignedAt);
-            Assert.AreEqual(worker.Value.Id, finalJobState.Value.Assignments[accept.Value.AssignmentId].WorkerId);
+            Assert.That(finalJobState.Value.Assignments[accept.Value.AssignmentId].WorkerId, Is.EqualTo(worker.Value.Id));
             Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].CompletedAt);
             Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].ClosedAt);
             Assert.IsNotEmpty(finalJobState.Value.Notes);
-            Assert.IsTrue(finalJobState.Value.Notes.Count == 2);
+            Assert.That(finalJobState.Value.Notes.Count == 2, Is.True);
 
             // in-test cleanup
             worker.Value.AvailableForOffers = false;

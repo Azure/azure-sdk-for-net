@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Tests
             await foreach (var peI in peCollection.GetAllAsync())
             {
                 count++;
-                Assert.IsTrue(peI.Data.Name.StartsWith(privateEndpointName), $"PrivateEndpointConnection ({peI.Data.Name}) name should start with {privateEndpointName}.");
+                Assert.That(peI.Data.Name.StartsWith(privateEndpointName), Is.True, $"PrivateEndpointConnection ({peI.Data.Name}) name should start with {privateEndpointName}.");
             }
 
-            Assert.AreEqual(1, count, "Should only have one PrivateEndpointConnection.");
+            Assert.That(count, Is.EqualTo(1), "Should only have one PrivateEndpointConnection.");
         }
 
         protected async Task<PrivateEndpointResource> CreatePrivateEndpoint(string name, ResourceGroupResource rg, ResourceIdentifier DeidServiceId)

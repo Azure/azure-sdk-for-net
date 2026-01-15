@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ContainerService.Tests
             string clusterName = Recording.GenerateAssetName("akscluster");
             // Create cluster
             ContainerServiceManagedClusterResource cluster = await CreateContainerServiceAsync(rg, clusterName, rg.Data.Location);
-            Assert.AreEqual(clusterName, cluster.Data.Name);
-            Assert.AreEqual(DnsPrefix, cluster.Data.DnsPrefix);
+            Assert.That(cluster.Data.Name, Is.EqualTo(clusterName));
+            Assert.That(cluster.Data.DnsPrefix, Is.EqualTo(DnsPrefix));
             // Create agent pool
             ContainerServiceAgentPoolCollection collection = cluster.GetContainerServiceAgentPools();
             string agentPoolName = Recording.GenerateAssetName("ap");
@@ -40,22 +40,22 @@ namespace Azure.ResourceManager.ContainerService.Tests
             };
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data).ConfigureAwait(false);
             ContainerServiceAgentPoolResource agentPool = lro.Value;
-            Assert.AreEqual(agentPoolName, agentPool.Data.Name);
+            Assert.That(agentPool.Data.Name, Is.EqualTo(agentPoolName));
             // List Agent Pool
             int count = 0;
             await foreach (var pool in collection.GetAllAsync())
             {
                 if (pool.Data.Name == agentPoolName)
                 {
-                    Assert.AreEqual(pool.Data.Name, agentPoolName);
+                    Assert.That(agentPoolName, Is.EqualTo(pool.Data.Name));
                     count++;
                     break;
                 }
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
             // Get Agent Pool
             ContainerServiceAgentPoolResource agentPoolGet = await agentPool.GetAsync();
-            Assert.AreEqual(agentPoolGet.Data.Name, agentPoolName);
+            Assert.That(agentPoolName, Is.EqualTo(agentPoolGet.Data.Name));
             // Delete Agent Pool
             await agentPoolGet.DeleteAsync(WaitUntil.Completed);
             // Delete Cluster

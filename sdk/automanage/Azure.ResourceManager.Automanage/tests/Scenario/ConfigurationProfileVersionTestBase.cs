@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         protected void AssertValues(AutomanageConfigurationProfileVersionResource version, string versionName)
         {
             Assert.NotNull(version);
-            Assert.True(version.HasData);
-            Assert.AreEqual(versionName, version.Id.Name);
+            Assert.That(version.HasData, Is.True);
+            Assert.That(version.Id.Name, Is.EqualTo(versionName));
             Assert.NotNull(version.Id);
             Assert.NotNull(version.Data);
             Assert.NotNull(version.Data.Configuration);

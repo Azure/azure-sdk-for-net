@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Tests
             ManagementLockResource mgmtLockObject = await CreateManagementLockObject(subscription, mgmtLockObjectName);
             await mgmtLockObject.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await mgmtLockObject.GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
     }
 }

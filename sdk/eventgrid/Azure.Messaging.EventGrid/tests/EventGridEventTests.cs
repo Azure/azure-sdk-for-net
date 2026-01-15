@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventGrid.Tests
                         DerivedProperty = 5
                     });
 
-            Assert.AreEqual(5, egEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.That(egEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty, Is.EqualTo(5));
 
             List<EventGridEvent> eventsList = new List<EventGridEvent>()
             {
@@ -92,7 +92,7 @@ namespace Azure.Messaging.EventGrid.Tests
             await client.SendEventsAsync(eventsList);
 
             egEvent = DeserializeRequest(mockTransport.SingleRequest).First();
-            Assert.AreEqual(5, egEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
+            Assert.That(egEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty, Is.EqualTo(5));
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             var mockTransport = new MockTransport((request) =>
             {
-                Assert.AreEqual(100, request.Uri.Port);
+                Assert.That(request.Uri.Port, Is.EqualTo(100));
                 return new MockResponse(200);
             });
             var options = new EventGridPublisherClientOptions

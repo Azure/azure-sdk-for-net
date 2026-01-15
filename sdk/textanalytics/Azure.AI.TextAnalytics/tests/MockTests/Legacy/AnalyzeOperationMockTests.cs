@@ -73,7 +73,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
             var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
+            Assert.That(logging, Is.EqualTo(expectedContent));
         }
 
         [Test]
@@ -173,7 +173,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
             var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
+            Assert.That(logging, Is.EqualTo(expectedContent));
         }
 
         [Test]
@@ -273,7 +273,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
             var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
+            Assert.That(logging, Is.EqualTo(expectedContent));
         }
 
         [Test]
@@ -373,7 +373,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
             var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
+            Assert.That(logging, Is.EqualTo(expectedContent));
         }
 
         [Test]
@@ -403,8 +403,8 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             var contentString = GetString(mockTransport.Requests.Single().Content);
             ValidateRequestOptions(contentString);
-            Assert.AreEqual(-1, contentString.IndexOf("domain"));
-            Assert.AreEqual(-1, contentString.IndexOf("piiCategories"));
+            Assert.That(contentString.IndexOf("domain"), Is.EqualTo(-1));
+            Assert.That(contentString.IndexOf("piiCategories"), Is.EqualTo(-1));
         }
 
         [Test]
@@ -445,12 +445,12 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             string domaintFilter = contentString.Substring(contentString.IndexOf("domain"), 13);
 
             var expectedDomainFilterContent = "domain\":\"phi\"";
-            Assert.AreEqual(expectedDomainFilterContent, domaintFilter);
+            Assert.That(domaintFilter, Is.EqualTo(expectedDomainFilterContent));
 
             string piiCategories = contentString.Substring(contentString.IndexOf("piiCategories"), 41);
 
             var expectedPiiCategoriesContent = "piiCategories\":[\"USSocialSecurityNumber\"]";
-            Assert.AreEqual(expectedPiiCategoriesContent, piiCategories);
+            Assert.That(piiCategories, Is.EqualTo(expectedPiiCategoriesContent));
         }
 
         #endregion Pii entities
@@ -487,7 +487,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
             var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
+            Assert.That(logging, Is.EqualTo(expectedContent));
         }
 
         [Test]
@@ -517,7 +517,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             var contentString = GetString(mockTransport.Requests.Single().Content);
             ValidateRequestOptions(contentString);
-            Assert.AreEqual(-1, contentString.IndexOf("opinionMining"));
+            Assert.That(contentString.IndexOf("opinionMining"), Is.EqualTo(-1));
         }
 
         [Test]
@@ -557,7 +557,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             string opinionMining = contentString.Substring(contentString.IndexOf("opinionMining"), 19);
 
             var expectedOpinionMiningContent = "opinionMining\":true";
-            Assert.AreEqual(expectedOpinionMiningContent, opinionMining);
+            Assert.That(opinionMining, Is.EqualTo(expectedOpinionMiningContent));
         }
 
         #endregion Analyze sentiment
@@ -656,10 +656,10 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             AnalyzeActionsOperation operation = CreateOperation(client);
             await operation.UpdateStatusAsync();
 
-            Assert.AreEqual(9, operation.ActionsFailed);
-            Assert.AreEqual(0, operation.ActionsSucceeded);
-            Assert.AreEqual(0, operation.ActionsInProgress);
-            Assert.AreEqual(9, operation.ActionsTotal);
+            Assert.That(operation.ActionsFailed, Is.EqualTo(9));
+            Assert.That(operation.ActionsSucceeded, Is.EqualTo(0));
+            Assert.That(operation.ActionsInProgress, Is.EqualTo(0));
+            Assert.That(operation.ActionsTotal, Is.EqualTo(9));
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -673,19 +673,19 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             SingleLabelClassifyActionResult singleLabelClassifyActionResult = resultCollection.SingleLabelClassifyResults.FirstOrDefault();
             MultiLabelClassifyActionResult multiLabelClassifyActionResult = resultCollection.MultiLabelClassifyResults.FirstOrDefault();
 
-            Assert.IsTrue(entitiesActionsResults.HasError);
+            Assert.That(entitiesActionsResults.HasError, Is.True);
             Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
 
-            Assert.IsTrue(keyPhrasesActionsResults.HasError);
+            Assert.That(keyPhrasesActionsResults.HasError, Is.True);
             Assert.Throws<InvalidOperationException>(() => keyPhrasesActionsResults.DocumentsResults.GetType());
 
-            Assert.IsTrue(piiActionsResults.HasError);
+            Assert.That(piiActionsResults.HasError, Is.True);
             Assert.Throws<InvalidOperationException>(() => piiActionsResults.DocumentsResults.GetType());
 
-            Assert.IsTrue(entityLinkingActionsResults.HasError);
+            Assert.That(entityLinkingActionsResults.HasError, Is.True);
             Assert.Throws<InvalidOperationException>(() => entityLinkingActionsResults.DocumentsResults.GetType());
 
-            Assert.IsTrue(analyzeSentimentActionsResults.HasError);
+            Assert.That(analyzeSentimentActionsResults.HasError, Is.True);
             Assert.Throws<InvalidOperationException>(() => analyzeSentimentActionsResults.DocumentsResults.GetType());
         }
 
@@ -734,8 +734,8 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             var operation = CreateOperation(client);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
-            Assert.AreEqual("InternalServerError", ex.ErrorCode);
-            Assert.IsTrue(ex.Message.Contains("Some error"));
+            Assert.That(ex.ErrorCode, Is.EqualTo("InternalServerError"));
+            Assert.That(ex.Message.Contains("Some error"), Is.True);
         }
 
         [Test]
@@ -754,11 +754,11 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             if (IsAsync)
             {
-                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeActionsAsync is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+                Assert.That(ex.Message, Is.EqualTo("TextAnalyticsClient.StartAnalyzeActionsAsync is not available in API version v3.0. Use service API version v3.1 or newer."));
             }
             else
             {
-                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeActions is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+                Assert.That(ex.Message, Is.EqualTo("TextAnalyticsClient.StartAnalyzeActions is not available in API version v3.0. Use service API version v3.1 or newer."));
             }
         }
 
@@ -772,11 +772,11 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             if (IsAsync)
             {
-                Assert.AreEqual("TextAnalyticsClient.RecognizePiiEntitiesAsync is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+                Assert.That(ex.Message, Is.EqualTo("TextAnalyticsClient.RecognizePiiEntitiesAsync is not available in API version v3.0. Use service API version v3.1 or newer."));
             }
             else
             {
-                Assert.AreEqual("TextAnalyticsClient.RecognizePiiEntities is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+                Assert.That(ex.Message, Is.EqualTo("TextAnalyticsClient.RecognizePiiEntities is not available in API version v3.0. Use service API version v3.1 or newer."));
             }
         }
 
@@ -790,11 +790,11 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             if (IsAsync)
             {
-                Assert.AreEqual("TextAnalyticsClient.RecognizePiiEntitiesBatchAsync is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+                Assert.That(ex.Message, Is.EqualTo("TextAnalyticsClient.RecognizePiiEntitiesBatchAsync is not available in API version v3.0. Use service API version v3.1 or newer."));
             }
             else
             {
-                Assert.AreEqual("TextAnalyticsClient.RecognizePiiEntitiesBatch is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+                Assert.That(ex.Message, Is.EqualTo("TextAnalyticsClient.RecognizePiiEntitiesBatch is not available in API version v3.0. Use service API version v3.1 or newer."));
             }
         }
 
@@ -808,11 +808,11 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             if (IsAsync)
             {
-                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeHealthcareEntitiesAsync is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+                Assert.That(ex.Message, Is.EqualTo("TextAnalyticsClient.StartAnalyzeHealthcareEntitiesAsync is not available in API version v3.0. Use service API version v3.1 or newer."));
             }
             else
             {
-                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeHealthcareEntities is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+                Assert.That(ex.Message, Is.EqualTo("TextAnalyticsClient.StartAnalyzeHealthcareEntities is not available in API version v3.0. Use service API version v3.1 or newer."));
             }
         }
 
@@ -828,23 +828,23 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         {
             if (!full)
             {
-                Assert.AreEqual(-1, contentString.IndexOf("loggingOptOut"));
-                Assert.AreEqual(-1, contentString.IndexOf("model-version"));
-                Assert.AreEqual(-1, contentString.IndexOf("show-stats"));
+                Assert.That(contentString.IndexOf("loggingOptOut"), Is.EqualTo(-1));
+                Assert.That(contentString.IndexOf("model-version"), Is.EqualTo(-1));
+                Assert.That(contentString.IndexOf("show-stats"), Is.EqualTo(-1));
             }
             else
             {
                 string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
                 var expectedContent = "loggingOptOut\":true";
-                Assert.AreEqual(expectedContent, logging);
+                Assert.That(logging, Is.EqualTo(expectedContent));
 
                 string modelVersion = contentString.Substring(contentString.IndexOf("model-version"), 23);
 
                 var expectedModelVersionContent = "model-version\":\"latest\"";
-                Assert.AreEqual(expectedModelVersionContent, modelVersion);
+                Assert.That(modelVersion, Is.EqualTo(expectedModelVersionContent));
 
-                Assert.AreEqual(-1, contentString.IndexOf("show-stats"));
+                Assert.That(contentString.IndexOf("show-stats"), Is.EqualTo(-1));
             }
         }
 

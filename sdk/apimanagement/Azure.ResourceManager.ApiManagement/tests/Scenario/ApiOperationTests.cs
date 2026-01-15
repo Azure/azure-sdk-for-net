@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var firstOperation = operations.First();
             var getResponse = (await collection.GetAsync(firstOperation.Data.Name)).Value;
             Assert.NotNull(getResponse);
-            Assert.AreEqual(firstOperation.Data.Name, getResponse.Data.Name);
-            Assert.AreEqual(firstOperation.Data.Method, getResponse.Data.Method);
-            Assert.AreEqual(firstOperation.Data.UriTemplate, getResponse.Data.UriTemplate);
+            Assert.That(getResponse.Data.Name, Is.EqualTo(firstOperation.Data.Name));
+            Assert.That(getResponse.Data.Method, Is.EqualTo(firstOperation.Data.Method));
+            Assert.That(getResponse.Data.UriTemplate, Is.EqualTo(firstOperation.Data.UriTemplate));
 
             // Add new operation
             string newOperationId = Recording.GenerateAssetName("operationid");
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(createResponse);
             var apiOperationResponse = (await collection.GetAsync(newOperationId)).Value;
             Assert.NotNull(apiOperationResponse);
-            Assert.AreEqual(newOperationId, apiOperationResponse.Data.Name);
+            Assert.That(apiOperationResponse.Data.Name, Is.EqualTo(newOperationId));
 
             // Get the Api Operation Etag
             var operationTag = (await apiOperationResponse.GetEntityTagAsync()).Value;
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
             getResponse = (await apiOperationResponse.UpdateAsync(ETag.All, patchOperation)).Value;
             Assert.NotNull(getResponse);
-            Assert.AreEqual(getResponse.Data.Method, patchedMethod);
+            Assert.That(patchedMethod, Is.EqualTo(getResponse.Data.Method));
 
             // Delete the operation
             await apiOperationResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
             var exsits = (await collection.ExistsAsync(newOperationId)).Value;
-            Assert.IsFalse(exsits);
+            Assert.That(exsits, Is.False);
         }
     }
 }

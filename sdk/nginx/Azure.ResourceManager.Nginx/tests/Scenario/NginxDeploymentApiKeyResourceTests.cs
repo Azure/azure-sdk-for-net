@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             ResourceIdentifier nginxDeploymentApiKeyResourceIdentifier = NginxDeploymentApiKeyResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResGroup.Data.Name, nginxDeploymentName, nginxDeploymentApiKeyName);
             NginxDeploymentApiKeyResource.ValidateResourceId(nginxDeploymentApiKeyResourceIdentifier);
 
-            Assert.IsTrue(nginxDeploymentApiKeyResourceIdentifier.ResourceType.Equals(NginxDeploymentApiKeyResource.ResourceType));
+            Assert.That(nginxDeploymentApiKeyResourceIdentifier.ResourceType.Equals(NginxDeploymentApiKeyResource.ResourceType), Is.True);
         }
 
         [TestCase]
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentApiKeyResource nginxDeploymentApiKey = await CreateNginxDeploymentApiKey(nginxDeployment, nginxDeploymentApiKeyName);
             ResourceIdentifier nginxDeploymentApiKeyResourceIdentifier = NginxDeploymentApiKeyResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResGroup.Data.Name, nginxDeploymentName, nginxDeploymentApiKeyName);
 
-            Assert.IsTrue(nginxDeploymentApiKey.HasData);
+            Assert.That(nginxDeploymentApiKey.HasData, Is.True);
             Assert.NotNull(nginxDeploymentApiKey.Data);
-            Assert.IsTrue(nginxDeploymentApiKey.Data.Name.Equals(nginxDeploymentApiKeyName, StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(nginxDeploymentApiKey.Data.Id.Equals(nginxDeploymentApiKeyResourceIdentifier));
-            Assert.IsTrue(nginxDeploymentApiKey.Data.Id.ResourceType.Equals(NginxDeploymentApiKeyResource.ResourceType));
-            Assert.Null(nginxDeploymentApiKey.Data.SystemData);
+            Assert.That(nginxDeploymentApiKey.Data.Name.Equals(nginxDeploymentApiKeyName, StringComparison.InvariantCultureIgnoreCase), Is.True);
+            Assert.That(nginxDeploymentApiKey.Data.Id.Equals(nginxDeploymentApiKeyResourceIdentifier), Is.True);
+            Assert.That(nginxDeploymentApiKey.Data.Id.ResourceType.Equals(NginxDeploymentApiKeyResource.ResourceType), Is.True);
+            Assert.That(nginxDeploymentApiKey.Data.SystemData, Is.Null);
             Assert.NotNull(nginxDeploymentApiKey.Data.Properties.Hint);
             Assert.NotNull(nginxDeploymentApiKey.Data.Properties.EndOn);
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentApiKeyResource response = await nginxDeploymentApiKey.GetAsync();
 
             Assert.NotNull(response);
-            Assert.IsTrue(response.Data.Name.Equals(nginxDeploymentApiKeyName, StringComparison.InvariantCultureIgnoreCase));
+            Assert.That(response.Data.Name.Equals(nginxDeploymentApiKeyName, StringComparison.InvariantCultureIgnoreCase), Is.True);
             ResourceDataHelper.AssertResourceData(nginxDeploymentApiKey.Data, response.Data);
         }
 
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
             string nginxDeploymentApiKeyName = Recording.GenerateAssetName("testDeploymentApiKey-");
             NginxDeploymentApiKeyResource nginxDeploymentApiKey = await CreateNginxDeploymentApiKey(nginxDeployment, nginxDeploymentApiKeyName);
-            Assert.IsTrue(await collection.ExistsAsync(nginxDeploymentApiKeyName));
+            Assert.That((bool)await collection.ExistsAsync(nginxDeploymentApiKeyName), Is.True);
 
             await nginxDeploymentApiKey.DeleteAsync(WaitUntil.Completed);
-            Assert.IsFalse(await collection.ExistsAsync(nginxDeploymentApiKeyName));
+            Assert.That((bool)await collection.ExistsAsync(nginxDeploymentApiKeyName), Is.False);
         }
 
         [TestCase]
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
                 Properties = apiKeyProperties
             };
             NginxDeploymentApiKeyResource updatedNginxDeploymentApiKey = (await nginxDeploymentApiKey.UpdateAsync(WaitUntil.Completed, nginxDeploymentApiKeyCreateOrUpdateContent)).Value;
-            Assert.AreEqual(apiKeyProperties.SecretText.Substring(0, 3), updatedNginxDeploymentApiKey.Data.Properties.Hint);
+            Assert.That(updatedNginxDeploymentApiKey.Data.Properties.Hint, Is.EqualTo(apiKeyProperties.SecretText.Substring(0, 3)));
         }
     }
 }

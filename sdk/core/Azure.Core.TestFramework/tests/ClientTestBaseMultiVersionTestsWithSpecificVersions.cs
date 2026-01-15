@@ -36,11 +36,11 @@ namespace Azure.Core.TestFramework.Tests
             await client.GetAsync(default);
             if (Mode == RecordedTestMode.Playback || Mode == RecordedTestMode.Record)
             {
-                Assert.IsTrue(_version == TestClientOptions.ServiceVersion.V2);
+                Assert.That(_version == TestClientOptions.ServiceVersion.V2, Is.True);
             }
             else
             {
-                Assert.IsTrue(_version == TestClientOptions.ServiceVersion.V1 || _version == TestClientOptions.ServiceVersion.V0);
+                Assert.That(_version == TestClientOptions.ServiceVersion.V1 || _version == TestClientOptions.ServiceVersion.V0, Is.True);
             }
         }
 

@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.ExtendedLocations.Tests
             };
             var customLocation = (await LocationCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, parameters)).Value;
 
-            Assert.AreEqual(customLocation.Data.DisplayName, resourceName);
-            Assert.AreEqual(customLocation.Data.ProvisioningState, "Succeeded");
-            Assert.IsFalse(String.IsNullOrEmpty(customLocation.Data.Identity.PrincipalId.ToString()));
-            Assert.AreEqual(customLocation.Data.Identity.ManagedServiceIdentityType, ManagedServiceIdentityType.SystemAssigned);
+            Assert.That(resourceName, Is.EqualTo(customLocation.Data.DisplayName));
+            Assert.That(customLocation.Data.ProvisioningState, Is.EqualTo("Succeeded"));
+            Assert.That(String.IsNullOrEmpty(customLocation.Data.Identity.PrincipalId.ToString()), Is.False);
+            Assert.That(ManagedServiceIdentityType.SystemAssigned, Is.EqualTo(customLocation.Data.Identity.ManagedServiceIdentityType));
 
             // GET ON CREATED CL
             customLocation = await LocationCollection.GetAsync(resourceName);
-            Assert.AreEqual(customLocation.Data.DisplayName, resourceName);
+            Assert.That(resourceName, Is.EqualTo(customLocation.Data.DisplayName));
 
             // PATCH CL
             var patchData = new CustomLocationPatch()
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.ExtendedLocations.Tests
             };
             customLocation = await customLocation.UpdateAsync(patchData);
             customLocation = await customLocation.GetAsync();
-            Assert.AreEqual(CassandraTest, customLocation.Data.ClusterExtensionIds[0].ToString());
-            Assert.AreEqual(AnsibleTest, customLocation.Data.ClusterExtensionIds[1].ToString());
+            Assert.That(customLocation.Data.ClusterExtensionIds[0].ToString(), Is.EqualTo(CassandraTest));
+            Assert.That(customLocation.Data.ClusterExtensionIds[1].ToString(), Is.EqualTo(AnsibleTest));
 
             // LIST BY SUBSCRIPTION
             var listResult = await DefaultSubscription.GetCustomLocationsAsync().ToEnumerableAsync();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Tests
             // DELETE CREATED CL
             await customLocation.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await LocationCollection.ExistsAsync(resourceName)).Value;
-            Assert.IsFalse(falseResult);
+            Assert.That(falseResult, Is.False);
         }
     }
 }

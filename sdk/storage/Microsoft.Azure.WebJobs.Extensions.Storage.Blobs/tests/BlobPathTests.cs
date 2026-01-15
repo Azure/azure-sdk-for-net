@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests
             string uriStr = "https://account.blob.core.windows.net/container/" + blobName;
             if (BlobPath.TryParseAbsUrl(uriStr, out BlobPath path))
             {
-                Assert.AreEqual(blobName, path.BlobName);
+                Assert.That(path.BlobName, Is.EqualTo(blobName));
             }
             else
             {

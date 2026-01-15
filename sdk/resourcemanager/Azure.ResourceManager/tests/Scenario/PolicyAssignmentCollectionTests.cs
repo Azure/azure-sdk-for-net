@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Tests
             ManagementGroupResource mgmtGroup = await GetCreatedManagementGroup();
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
             PolicyAssignmentResource policyAssignment = await CreatePolicyAssignment(mgmtGroup, policyAssignmentName);
-            Assert.AreEqual(policyAssignmentName, policyAssignment.Data.Name);
+            Assert.That(policyAssignment.Data.Name, Is.EqualTo(policyAssignmentName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyAssignments().CreateOrUpdateAsync(WaitUntil.Completed, null, policyAssignment.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyAssignments().CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, null));
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Tests
             ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName);
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
             PolicyAssignmentResource policyAssignment = await CreatePolicyAssignment(rg, policyAssignmentName);
-            Assert.AreEqual(policyAssignmentName, policyAssignment.Data.Name);
+            Assert.That(policyAssignment.Data.Name, Is.EqualTo(policyAssignmentName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyAssignments().CreateOrUpdateAsync(WaitUntil.Completed, null, policyAssignment.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyAssignments().CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, null));
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
             PolicyAssignmentResource policyAssignment = await CreatePolicyAssignment(subscription, policyAssignmentName);
-            Assert.AreEqual(policyAssignmentName, policyAssignment.Data.Name);
+            Assert.That(policyAssignment.Data.Name, Is.EqualTo(policyAssignmentName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetPolicyAssignments().CreateOrUpdateAsync(WaitUntil.Completed, null, policyAssignment.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetPolicyAssignments().CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, null));
         }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Tests
             GenericResource vn = await CreateGenericVirtualNetwork(subscription, rg, vnName);
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
             PolicyAssignmentResource policyAssignment = await CreatePolicyAssignment(vn, policyAssignmentName);
-            Assert.AreEqual(policyAssignmentName, policyAssignment.Data.Name);
+            Assert.That(policyAssignment.Data.Name, Is.EqualTo(policyAssignmentName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetPolicyAssignments().CreateOrUpdateAsync(WaitUntil.Completed, null, policyAssignment.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetPolicyAssignments().CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, null));
         }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Tests
             {
                 count++;
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]
@@ -111,37 +111,37 @@ namespace Azure.ResourceManager.Tests
 
         private void AssertValidPolicyAssignment(PolicyAssignmentResource model, PolicyAssignmentResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.Location, getResult.Data.Location);
-            Assert.AreEqual(model.Data.DisplayName, getResult.Data.DisplayName);
-            Assert.AreEqual(model.Data.PolicyDefinitionId, getResult.Data.PolicyDefinitionId);
-            Assert.AreEqual(model.Data.Scope, getResult.Data.Scope);
-            Assert.AreEqual(model.Data.ExcludedScopes, getResult.Data.ExcludedScopes);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.Location, Is.EqualTo(model.Data.Location));
+            Assert.That(getResult.Data.DisplayName, Is.EqualTo(model.Data.DisplayName));
+            Assert.That(getResult.Data.PolicyDefinitionId, Is.EqualTo(model.Data.PolicyDefinitionId));
+            Assert.That(getResult.Data.Scope, Is.EqualTo(model.Data.Scope));
+            Assert.That(getResult.Data.ExcludedScopes, Is.EqualTo(model.Data.ExcludedScopes));
             if (model.Data.Parameters != null || getResult.Data.Parameters != null)
             {
                 Assert.NotNull(model.Data.Parameters);
                 Assert.NotNull(getResult.Data.Parameters);
-                Assert.AreEqual(model.Data.Parameters.Count, getResult.Data.Parameters.Count);
+                Assert.That(getResult.Data.Parameters.Count, Is.EqualTo(model.Data.Parameters.Count));
                 foreach (KeyValuePair<string, ArmPolicyParameterValue> kv in model.Data.Parameters)
                 {
-                    Assert.True(getResult.Data.Parameters.ContainsKey(kv.Key));
-                    Assert.AreEqual(kv.Value.Value, getResult.Data.Parameters[kv.Key]);
+                    Assert.That(getResult.Data.Parameters.ContainsKey(kv.Key), Is.True);
+                    Assert.That(getResult.Data.Parameters[kv.Key], Is.EqualTo(kv.Value.Value));
                 }
             }
-            Assert.AreEqual(model.Data.Description, getResult.Data.Description);
-            Assert.AreEqual(model.Data.Metadata.ToArray(), getResult.Data.Metadata.ToArray());
-            Assert.AreEqual(model.Data.EnforcementMode, getResult.Data.EnforcementMode);
+            Assert.That(getResult.Data.Description, Is.EqualTo(model.Data.Description));
+            Assert.That(getResult.Data.Metadata.ToArray(), Is.EqualTo(model.Data.Metadata.ToArray()));
+            Assert.That(getResult.Data.EnforcementMode, Is.EqualTo(model.Data.EnforcementMode));
             if (model.Data.NonComplianceMessages != null || getResult.Data.NonComplianceMessages != null)
             {
                 Assert.NotNull(model.Data.NonComplianceMessages);
                 Assert.NotNull(getResult.Data.NonComplianceMessages);
-                Assert.AreEqual(model.Data.NonComplianceMessages.Count, getResult.Data.NonComplianceMessages.Count);
+                Assert.That(getResult.Data.NonComplianceMessages.Count, Is.EqualTo(model.Data.NonComplianceMessages.Count));
                 for (int i = 0; i < model.Data.NonComplianceMessages.Count; ++i)
                 {
-                    Assert.AreEqual(model.Data.NonComplianceMessages[i].Message, getResult.Data.NonComplianceMessages[i].Message);
-                    Assert.AreEqual(model.Data.NonComplianceMessages[i].PolicyDefinitionReferenceId, getResult.Data.NonComplianceMessages[i].PolicyDefinitionReferenceId);
+                    Assert.That(getResult.Data.NonComplianceMessages[i].Message, Is.EqualTo(model.Data.NonComplianceMessages[i].Message));
+                    Assert.That(getResult.Data.NonComplianceMessages[i].PolicyDefinitionReferenceId, Is.EqualTo(model.Data.NonComplianceMessages[i].PolicyDefinitionReferenceId));
                 }
             }
         }

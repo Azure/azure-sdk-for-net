@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Tests
             {
                 await foreach (var tempDataPolicyManifest in tenant.GetDataPolicyManifests().GetAllAsync())
                 {
-                    Assert.AreEqual(tempDataPolicyManifest.Data.ResourceType, "Microsoft.Authorization/dataPolicyManifests");
+                    Assert.That(tempDataPolicyManifest.Data.ResourceType, Is.EqualTo("Microsoft.Authorization/dataPolicyManifests"));
                 }
             }
         }
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Tests
             await foreach (var tenant in Client.GetTenants().GetAllAsync())
             {
                 DataPolicyManifestResource dataPolicyManifest = await tenant.GetDataPolicyManifests().GetAsync("Microsoft.Network.Data");
-                Assert.AreEqual(dataPolicyManifest.Data.ResourceType, "Microsoft.Authorization/dataPolicyManifests");
-                Assert.AreEqual(dataPolicyManifest.Data.PolicyMode, "Microsoft.Network.Data");
+                Assert.That(dataPolicyManifest.Data.ResourceType, Is.EqualTo("Microsoft.Authorization/dataPolicyManifests"));
+                Assert.That(dataPolicyManifest.Data.PolicyMode, Is.EqualTo("Microsoft.Network.Data"));
             }
         }
     }

@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // get policy to check it was removed
             var resultFalse = (await collection.ExistsAsync("policy")).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
 
             await collection.CreateOrUpdateAsync(WaitUntil.Completed, "policy", policyContract);
 
@@ -183,13 +183,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var getApiPolicyRawXml = (await apiPolicyCollection.GetAsync("policy", PolicyExportFormat.RawXml)).Value;
 
             Assert.NotNull(getApiPolicyRawXml);
-            Assert.AreEqual(PolicyContentFormat.RawXml, getApiPolicyRawXml.Data.Format);
+            Assert.That(getApiPolicyRawXml.Data.Format, Is.EqualTo(PolicyContentFormat.RawXml));
             Assert.NotNull(getApiPolicyRawXml.Data.Value);
 
             // remove policy
             await getApiPolicy.DeleteAsync(WaitUntil.Completed, ETag.All);
             resultFalse = (await apiPolicyCollection.ExistsAsync("policy")).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
 
             // test api operation policy
             var getOperationResponse = await api.GetApiOperations().GetAllAsync().ToEnumerableAsync();
@@ -229,14 +229,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var getOperationPolicy = (await operationPolicyCollection.GetAsync("policy", PolicyExportFormat.Xml)).Value;
 
             Assert.NotNull(getOperationPolicy);
-            Assert.AreEqual(PolicyContentFormat.Xml, getOperationPolicy.Data.Format);
+            Assert.That(getOperationPolicy.Data.Format, Is.EqualTo(PolicyContentFormat.Xml));
             Assert.NotNull(getOperationPolicy.Data.Value);
 
             // remove policy
             await getOperationPolicy.DeleteAsync(WaitUntil.Completed, ETag.All);
 
             resultFalse = (await operationPolicyCollection.ExistsAsync("policy")).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
 
             // test product policy
 
@@ -285,14 +285,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var getProductPolicyXml = (await productPolicyCollection.GetAsync("policy", PolicyExportFormat.Xml)).Value;
 
             Assert.NotNull(getProductPolicyXml);
-            Assert.AreEqual(PolicyContentFormat.Xml, getProductPolicyXml.Data.Format);
+            Assert.That(getProductPolicyXml.Data.Format, Is.EqualTo(PolicyContentFormat.Xml));
             Assert.NotNull(getProductPolicyXml.Data.Value);
 
             // remove policy
             await getProductPolicy.DeleteAsync(WaitUntil.Completed, ETag.All);
 
             resultFalse = (await productPolicyCollection.ExistsAsync("policy")).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
         }
     }
 }

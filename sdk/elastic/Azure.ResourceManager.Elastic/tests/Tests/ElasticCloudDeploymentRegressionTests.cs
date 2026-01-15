@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.Elastic.Tests
 
             if (root.TryGetProperty("elasticsearchServiceUrl", out var esElement))
             {
-                Assert.AreEqual("https://elasticsearch.example.com:9200/", esElement.GetString());
+                Assert.That(esElement.GetString(), Is.EqualTo("https://elasticsearch.example.com:9200/"));
             }
             if (root.TryGetProperty("kibanaServiceUrl", out var kibanaElement))
             {
-                Assert.AreEqual("https://kibana.example.com:5601/", kibanaElement.GetString());
+                Assert.That(kibanaElement.GetString(), Is.EqualTo("https://kibana.example.com:5601/"));
             }
             if (root.TryGetProperty("kibanaSsoUrl", out var kibanaSsoElement))
             {
-                Assert.AreEqual("https://kibana.example.com:5601/sso", kibanaSsoElement.GetString());
+                Assert.That(kibanaSsoElement.GetString(), Is.EqualTo("https://kibana.example.com:5601/sso"));
             }
 
             // Act - Deserialize
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.Elastic.Tests
 
             // Assert
             Assert.NotNull(deserialized);
-            Assert.AreEqual(elasticsearchServiceUri, deserialized.ElasticsearchServiceUri);
-            Assert.AreEqual(kibanaServiceUri, deserialized.KibanaServiceUri);
-            Assert.AreEqual(kibanaSsoUri, deserialized.KibanaSsoUri);
+            Assert.That(deserialized.ElasticsearchServiceUri, Is.EqualTo(elasticsearchServiceUri));
+            Assert.That(deserialized.KibanaServiceUri, Is.EqualTo(kibanaServiceUri));
+            Assert.That(deserialized.KibanaSsoUri, Is.EqualTo(kibanaSsoUri));
 
             // Verify all URIs are absolute
-            Assert.IsTrue(deserialized.ElasticsearchServiceUri.IsAbsoluteUri);
-            Assert.IsTrue(deserialized.KibanaServiceUri.IsAbsoluteUri);
-            Assert.IsTrue(deserialized.KibanaSsoUri.IsAbsoluteUri);
+            Assert.That(deserialized.ElasticsearchServiceUri.IsAbsoluteUri, Is.True);
+            Assert.That(deserialized.KibanaServiceUri.IsAbsoluteUri, Is.True);
+            Assert.That(deserialized.KibanaSsoUri.IsAbsoluteUri, Is.True);
         }
 
         [Test]
@@ -101,15 +101,15 @@ namespace Azure.ResourceManager.Elastic.Tests
 
             if (root.TryGetProperty("elasticsearchServiceUrl", out var esElement))
             {
-                Assert.AreEqual("elasticsearch", esElement.GetString());
+                Assert.That(esElement.GetString(), Is.EqualTo("elasticsearch"));
             }
             if (root.TryGetProperty("kibanaServiceUrl", out var kibanaElement))
             {
-                Assert.AreEqual("kibana", kibanaElement.GetString());
+                Assert.That(kibanaElement.GetString(), Is.EqualTo("kibana"));
             }
             if (root.TryGetProperty("kibanaSsoUrl", out var kibanaSsoElement))
             {
-                Assert.AreEqual("kibana/sso", kibanaSsoElement.GetString());
+                Assert.That(kibanaSsoElement.GetString(), Is.EqualTo("kibana/sso"));
             }
 
             // Act - Deserialize
@@ -117,19 +117,19 @@ namespace Azure.ResourceManager.Elastic.Tests
 
             // Assert
             Assert.NotNull(deserialized);
-            Assert.AreEqual(elasticsearchServiceUri, deserialized.ElasticsearchServiceUri);
-            Assert.AreEqual(kibanaServiceUri, deserialized.KibanaServiceUri);
-            Assert.AreEqual(kibanaSsoUri, deserialized.KibanaSsoUri);
+            Assert.That(deserialized.ElasticsearchServiceUri, Is.EqualTo(elasticsearchServiceUri));
+            Assert.That(deserialized.KibanaServiceUri, Is.EqualTo(kibanaServiceUri));
+            Assert.That(deserialized.KibanaSsoUri, Is.EqualTo(kibanaSsoUri));
 
             // Verify all URIs are relative
-            Assert.IsFalse(deserialized.ElasticsearchServiceUri.IsAbsoluteUri);
-            Assert.IsFalse(deserialized.KibanaServiceUri.IsAbsoluteUri);
-            Assert.IsFalse(deserialized.KibanaSsoUri.IsAbsoluteUri);
+            Assert.That(deserialized.ElasticsearchServiceUri.IsAbsoluteUri, Is.False);
+            Assert.That(deserialized.KibanaServiceUri.IsAbsoluteUri, Is.False);
+            Assert.That(deserialized.KibanaSsoUri.IsAbsoluteUri, Is.False);
 
             // Verify original strings are preserved
-            Assert.AreEqual("elasticsearch", deserialized.ElasticsearchServiceUri.OriginalString);
-            Assert.AreEqual("kibana", deserialized.KibanaServiceUri.OriginalString);
-            Assert.AreEqual("kibana/sso", deserialized.KibanaSsoUri.OriginalString);
+            Assert.That(deserialized.ElasticsearchServiceUri.OriginalString, Is.EqualTo("elasticsearch"));
+            Assert.That(deserialized.KibanaServiceUri.OriginalString, Is.EqualTo("kibana"));
+            Assert.That(deserialized.KibanaSsoUri.OriginalString, Is.EqualTo("kibana/sso"));
         }
     }
 }

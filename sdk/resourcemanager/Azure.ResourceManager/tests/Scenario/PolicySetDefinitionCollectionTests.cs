@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Tests
             SubscriptionPolicyDefinitionResource policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
             string policySetDefinitionName = Recording.GenerateAssetName("polSetDef-");
             SubscriptionPolicySetDefinitionResource policySetDefinition = await CreatePolicySetDefinitionAtSubscription(subscription, policyDefinition, policySetDefinitionName);
-            Assert.AreEqual(policySetDefinitionName, policySetDefinition.Data.Name);
+            Assert.That(policySetDefinition.Data.Name, Is.EqualTo(policySetDefinitionName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetSubscriptionPolicySetDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, null, policySetDefinition.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetSubscriptionPolicySetDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policySetDefinitionName, null));
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Tests
             ManagementGroupPolicyDefinitionResource policyDefinition = await CreatePolicyDefinitionAtMgmtGroup(mgmtGroup, policyDefinitionName);
             string policySetDefinitionName = Recording.GenerateAssetName("polSetDef-");
             ManagementGroupPolicySetDefinitionResource policySetDefinition = await CreatePolicySetDefinitionAtMgmtGroup(mgmtGroup, policyDefinition, policySetDefinitionName);
-            Assert.AreEqual(policySetDefinitionName, policySetDefinition.Data.Name);
+            Assert.That(policySetDefinition.Data.Name, Is.EqualTo(policySetDefinitionName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetManagementGroupPolicySetDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, null, policySetDefinition.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetManagementGroupPolicySetDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policySetDefinitionName, null));
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Tests
             {
                 await foreach (var builtInPolicySetDefinition in tenant.GetTenantPolicySetDefinitions().GetAllAsync())
                 {
-                    Assert.AreEqual(builtInPolicySetDefinition.Data.PolicyType, PolicyType.BuiltIn);
+                    Assert.That(PolicyType.BuiltIn, Is.EqualTo(builtInPolicySetDefinition.Data.PolicyType));
                 }
             }
         }
@@ -103,19 +103,19 @@ namespace Azure.ResourceManager.Tests
             await foreach (var tenant in Client.GetTenants().GetAllAsync())
             {
                 TenantPolicySetDefinitionResource getBuiltInPolicySetDefinition = await tenant.GetTenantPolicySetDefinitions().GetAsync("75714362-cae7-409e-9b99-a8e5075b7fad");
-                Assert.AreEqual(getBuiltInPolicySetDefinition.Data.DisplayName, "Enable Azure Monitor for Virtual Machine Scale Sets");
+                Assert.That(getBuiltInPolicySetDefinition.Data.DisplayName, Is.EqualTo("Enable Azure Monitor for Virtual Machine Scale Sets"));
             }
         }
 
         private static void AssertValidPolicySetDefinition(SubscriptionPolicySetDefinitionResource model, SubscriptionPolicySetDefinitionResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.PolicyType, getResult.Data.PolicyType);
-            Assert.AreEqual(model.Data.DisplayName, getResult.Data.DisplayName);
-            Assert.AreEqual(model.Data.Description, getResult.Data.Description);
-            Assert.AreEqual(model.Data.Metadata.ToArray(), getResult.Data.Metadata.ToArray());
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.PolicyType, Is.EqualTo(model.Data.PolicyType));
+            Assert.That(getResult.Data.DisplayName, Is.EqualTo(model.Data.DisplayName));
+            Assert.That(getResult.Data.Description, Is.EqualTo(model.Data.Description));
+            Assert.That(getResult.Data.Metadata.ToArray(), Is.EqualTo(model.Data.Metadata.ToArray()));
             if (model.Data.Parameters != null || getResult.Data.Parameters != null)
             {
                 Assert.NotNull(model.Data.Parameters);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Tests
                 Assert.AreEqual(model.Data.Parameters.Count, getResult.Data.Parameters.Count);
                 foreach (KeyValuePair<string, ArmPolicyParameter> kvp in model.Data.Parameters)
                 {
-                    Assert.AreEqual(getResult.Data.Parameters.ContainsKey(kvp.Key), true);
+                    Assert.AreEqual(true, getResult.Data.Parameters.ContainsKey(kvp.Key));
                     ArmPolicyParameter getParameterDefinitionsValue = getResult.Data.Parameters[kvp.Key];
                     Assert.AreEqual(kvp.Value.ParameterType, getParameterDefinitionsValue.ParameterType);
                     if (kvp.Value.AllowedValues != null || getParameterDefinitionsValue.AllowedValues != null)
@@ -153,16 +153,16 @@ namespace Azure.ResourceManager.Tests
             foreach (var expectedDefinition in model.Data.PolicyDefinitions)
             {
                 var resultDefinitions = getResult.Data.PolicyDefinitions.Where(def => def.PolicyDefinitionId.Equals(expectedDefinition.PolicyDefinitionId));
-                Assert.True(resultDefinitions.Count() > 0);
+                Assert.That(resultDefinitions.Count() > 0, Is.True);
                 var resultDefinition = resultDefinitions.Single(def => expectedDefinition.PolicyDefinitionReferenceId == null || expectedDefinition.PolicyDefinitionReferenceId.Equals(def.PolicyDefinitionReferenceId, StringComparison.Ordinal));
                 if (expectedDefinition.GroupNames != null)
                 {
-                    Assert.AreEqual(expectedDefinition.GroupNames.Count(), resultDefinition.GroupNames.Count());
-                    Assert.AreEqual(expectedDefinition.GroupNames.Count(), expectedDefinition.GroupNames.Intersect(resultDefinition.GroupNames).Count());
+                    Assert.That(resultDefinition.GroupNames.Count(), Is.EqualTo(expectedDefinition.GroupNames.Count()));
+                    Assert.That(expectedDefinition.GroupNames.Intersect(resultDefinition.GroupNames).Count(), Is.EqualTo(expectedDefinition.GroupNames.Count()));
                 }
                 else
                 {
-                    Assert.Null(resultDefinition.GroupNames);
+                    Assert.That(resultDefinition.GroupNames, Is.Null);
                 }
             }
 
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.Tests
             {
                 foreach (var group in model.Data.PolicyDefinitionGroups)
                 {
-                    Assert.AreEqual(1, getResult.Data.PolicyDefinitionGroups.Count(resultGroup => resultGroup.Name.Equals(group.Name, StringComparison.Ordinal)));
+                    Assert.That(getResult.Data.PolicyDefinitionGroups.Count(resultGroup => resultGroup.Name.Equals(group.Name, StringComparison.Ordinal)), Is.EqualTo(1));
                 }
             }
             else
             {
-                Assert.Null(getResult.Data.PolicyDefinitionGroups);
+                Assert.That(getResult.Data.PolicyDefinitionGroups, Is.Null);
             }
         }
     }

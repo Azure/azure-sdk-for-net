@@ -21,15 +21,15 @@ namespace Azure.Maps.Rendering.Tests
             var client = CreateClient();
             var copyright = await client.GetCopyrightFromBoundingBoxAsync(new GeoBoundingBox(4.84228, 52.41064, 4.84923, 52.41762));
 
-            Assert.AreEqual("0.0.1", copyright.Value.FormatVersion);
-            Assert.AreEqual(3, copyright.Value.GeneralCopyrights.Count);
-            Assert.AreEqual(2, copyright.Value.RegionalCopyrights.Count);
-            Assert.AreEqual("NLD", copyright.Value.RegionalCopyrights[0].Country.Iso3);
-            Assert.AreEqual("Netherlands", copyright.Value.RegionalCopyrights[0].Country.Label);
-            Assert.AreEqual(9, copyright.Value.RegionalCopyrights[0].Copyrights.Count);
-            Assert.AreEqual("ONL", copyright.Value.RegionalCopyrights[1].Country.Iso3);
-            Assert.AreEqual(string.Empty, copyright.Value.RegionalCopyrights[1].Country.Label);
-            Assert.AreEqual(4, copyright.Value.RegionalCopyrights[1].Copyrights.Count);
+            Assert.That(copyright.Value.FormatVersion, Is.EqualTo("0.0.1"));
+            Assert.That(copyright.Value.GeneralCopyrights.Count, Is.EqualTo(3));
+            Assert.That(copyright.Value.RegionalCopyrights.Count, Is.EqualTo(2));
+            Assert.That(copyright.Value.RegionalCopyrights[0].Country.Iso3, Is.EqualTo("NLD"));
+            Assert.That(copyright.Value.RegionalCopyrights[0].Country.Label, Is.EqualTo("Netherlands"));
+            Assert.That(copyright.Value.RegionalCopyrights[0].Copyrights.Count, Is.EqualTo(9));
+            Assert.That(copyright.Value.RegionalCopyrights[1].Country.Iso3, Is.EqualTo("ONL"));
+            Assert.That(copyright.Value.RegionalCopyrights[1].Country.Label, Is.Empty);
+            Assert.That(copyright.Value.RegionalCopyrights[1].Copyrights.Count, Is.EqualTo(4));
         }
 
         [RecordedTest]
@@ -38,15 +38,15 @@ namespace Azure.Maps.Rendering.Tests
             var client = CreateClient();
             var copyright = await client.GetCopyrightForTileAsync(new MapTileIndex(17439, 17439, 15));
 
-            Assert.AreEqual("0.0.1", copyright.Value.FormatVersion);
-            Assert.AreEqual(3, copyright.Value.GeneralCopyrights.Count);
-            Assert.AreEqual(2, copyright.Value.RegionalCopyrights.Count);
-            Assert.AreEqual("AGO", copyright.Value.RegionalCopyrights[0].Country.Iso3);
-            Assert.AreEqual("Angola", copyright.Value.RegionalCopyrights[0].Country.Label);
-            Assert.AreEqual(4, copyright.Value.RegionalCopyrights[0].Copyrights.Count);
-            Assert.AreEqual("OAT", copyright.Value.RegionalCopyrights[1].Country.Iso3);
-            Assert.AreEqual(string.Empty, copyright.Value.RegionalCopyrights[1].Country.Label);
-            Assert.AreEqual(4, copyright.Value.RegionalCopyrights[1].Copyrights.Count);
+            Assert.That(copyright.Value.FormatVersion, Is.EqualTo("0.0.1"));
+            Assert.That(copyright.Value.GeneralCopyrights.Count, Is.EqualTo(3));
+            Assert.That(copyright.Value.RegionalCopyrights.Count, Is.EqualTo(2));
+            Assert.That(copyright.Value.RegionalCopyrights[0].Country.Iso3, Is.EqualTo("AGO"));
+            Assert.That(copyright.Value.RegionalCopyrights[0].Country.Label, Is.EqualTo("Angola"));
+            Assert.That(copyright.Value.RegionalCopyrights[0].Copyrights.Count, Is.EqualTo(4));
+            Assert.That(copyright.Value.RegionalCopyrights[1].Country.Iso3, Is.EqualTo("OAT"));
+            Assert.That(copyright.Value.RegionalCopyrights[1].Country.Label, Is.Empty);
+            Assert.That(copyright.Value.RegionalCopyrights[1].Copyrights.Count, Is.EqualTo(4));
         }
 
         [RecordedTest]
@@ -55,12 +55,12 @@ namespace Azure.Maps.Rendering.Tests
             var client = CreateClient();
             var copyright = await client.GetCopyrightForWorldAsync();
 
-            Assert.AreEqual("0.0.1", copyright.Value.FormatVersion);
-            Assert.AreEqual(3, copyright.Value.GeneralCopyrights.Count);
-            Assert.IsTrue(copyright.Value.RegionalCopyrights.Count >= 287);
-            Assert.AreEqual("ABW", copyright.Value.RegionalCopyrights[0].Country.Iso3);
-            Assert.AreEqual("Aruba", copyright.Value.RegionalCopyrights[0].Country.Label);
-            Assert.AreEqual(4, copyright.Value.RegionalCopyrights[0].Copyrights.Count);
+            Assert.That(copyright.Value.FormatVersion, Is.EqualTo("0.0.1"));
+            Assert.That(copyright.Value.GeneralCopyrights.Count, Is.EqualTo(3));
+            Assert.That(copyright.Value.RegionalCopyrights.Count >= 287, Is.True);
+            Assert.That(copyright.Value.RegionalCopyrights[0].Country.Iso3, Is.EqualTo("ABW"));
+            Assert.That(copyright.Value.RegionalCopyrights[0].Country.Label, Is.EqualTo("Aruba"));
+            Assert.That(copyright.Value.RegionalCopyrights[0].Copyrights.Count, Is.EqualTo(4));
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace Azure.Maps.Rendering.Tests
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await client.GetCopyrightForTileAsync(new MapTileIndex(9999, 9999, 4))
             );
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
         }
     }
 }

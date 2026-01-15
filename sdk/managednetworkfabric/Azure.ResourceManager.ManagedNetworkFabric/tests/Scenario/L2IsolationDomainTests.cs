@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             };
 
             ArmOperation<NetworkFabricL2IsolationDomainResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.L2IsolationDomainName, data);
-            Assert.AreEqual(createResult.Value.Data.Name, TestEnvironment.L2IsolationDomainName);
+            Assert.That(TestEnvironment.L2IsolationDomainName, Is.EqualTo(createResult.Value.Data.Name));
 
             NetworkFabricL2IsolationDomainResource l2IsolationDomain = Client.GetNetworkFabricL2IsolationDomainResource(l2DomainResourceId);
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....");
             NetworkFabricL2IsolationDomainResource getResult = await l2IsolationDomain.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, TestEnvironment.L2IsolationDomainName);
+            Assert.That(TestEnvironment.L2IsolationDomainName, Is.EqualTo(getResult.Data.Name));
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             ArmOperation deleteResponse = await l2IsolationDomain.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteResponse.HasCompleted);
+            Assert.That(deleteResponse.HasCompleted, Is.True);
         }
     }
 }

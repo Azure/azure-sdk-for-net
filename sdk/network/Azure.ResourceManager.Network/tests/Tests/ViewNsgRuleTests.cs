@@ -82,75 +82,75 @@ namespace Azure.ResourceManager.Network.Tests
 
             //Verify effective security rule defined earlier
             IEnumerable<EffectiveNetworkSecurityRule> getEffectiveSecurityRule = viewNSGRules.Value.NetworkInterfaces.FirstOrDefault().SecurityRuleAssociations.EffectiveSecurityRules.Where(x => x.Name == "UserRule_" + securityRule1);
-            Assert.AreEqual("Tcp", getEffectiveSecurityRule.FirstOrDefault().Protocol);
-            Assert.AreEqual(501, getEffectiveSecurityRule.FirstOrDefault().Priority);
-            Assert.AreEqual("Deny", getEffectiveSecurityRule.FirstOrDefault().Access);
-            Assert.AreEqual("Outbound", getEffectiveSecurityRule.FirstOrDefault().Direction);
-            Assert.AreEqual("0.0.0.0/0", getEffectiveSecurityRule.FirstOrDefault().DestinationAddressPrefix);
-            Assert.AreEqual("80-80", getEffectiveSecurityRule.FirstOrDefault().DestinationPortRange);
-            Assert.AreEqual("0.0.0.0/0", getEffectiveSecurityRule.FirstOrDefault().SourceAddressPrefix);
-            Assert.AreEqual("0-65535", getEffectiveSecurityRule.FirstOrDefault().SourcePortRange);
+            Assert.That(getEffectiveSecurityRule.FirstOrDefault().Protocol, Is.EqualTo("Tcp"));
+            Assert.That(getEffectiveSecurityRule.FirstOrDefault().Priority, Is.EqualTo(501));
+            Assert.That(getEffectiveSecurityRule.FirstOrDefault().Access, Is.EqualTo("Deny"));
+            Assert.That(getEffectiveSecurityRule.FirstOrDefault().Direction, Is.EqualTo("Outbound"));
+            Assert.That(getEffectiveSecurityRule.FirstOrDefault().DestinationAddressPrefix, Is.EqualTo("0.0.0.0/0"));
+            Assert.That(getEffectiveSecurityRule.FirstOrDefault().DestinationPortRange, Is.EqualTo("80-80"));
+            Assert.That(getEffectiveSecurityRule.FirstOrDefault().SourceAddressPrefix, Is.EqualTo("0.0.0.0/0"));
+            Assert.That(getEffectiveSecurityRule.FirstOrDefault().SourcePortRange, Is.EqualTo("0-65535"));
 
             //Verify 6 default rules
             IEnumerable<SecurityRuleData> getDefaultSecurityRule1 = viewNSGRules.Value.NetworkInterfaces.FirstOrDefault().SecurityRuleAssociations.DefaultSecurityRules.Where(x => x.Name == "AllowVnetInBound");
-            Assert.AreEqual("*", getDefaultSecurityRule1.FirstOrDefault().Protocol);
-            Assert.AreEqual(65000, getDefaultSecurityRule1.FirstOrDefault().Priority);
-            Assert.AreEqual("Allow", getDefaultSecurityRule1.FirstOrDefault().Access);
-            Assert.AreEqual("Inbound", getDefaultSecurityRule1.FirstOrDefault().Direction);
-            Assert.AreEqual("VirtualNetwork", getDefaultSecurityRule1.FirstOrDefault().DestinationAddressPrefix);
-            Assert.AreEqual("*", getDefaultSecurityRule1.FirstOrDefault().DestinationPortRange);
-            Assert.AreEqual("VirtualNetwork", getDefaultSecurityRule1.FirstOrDefault().SourceAddressPrefix);
-            Assert.AreEqual("*", getDefaultSecurityRule1.FirstOrDefault().SourcePortRange);
+            Assert.That(getDefaultSecurityRule1.FirstOrDefault().Protocol, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRule1.FirstOrDefault().Priority, Is.EqualTo(65000));
+            Assert.That(getDefaultSecurityRule1.FirstOrDefault().Access, Is.EqualTo("Allow"));
+            Assert.That(getDefaultSecurityRule1.FirstOrDefault().Direction, Is.EqualTo("Inbound"));
+            Assert.That(getDefaultSecurityRule1.FirstOrDefault().DestinationAddressPrefix, Is.EqualTo("VirtualNetwork"));
+            Assert.That(getDefaultSecurityRule1.FirstOrDefault().DestinationPortRange, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRule1.FirstOrDefault().SourceAddressPrefix, Is.EqualTo("VirtualNetwork"));
+            Assert.That(getDefaultSecurityRule1.FirstOrDefault().SourcePortRange, Is.EqualTo("*"));
 
             IEnumerable<SecurityRuleData> getDefaultSecurityRule2 = viewNSGRules.Value.NetworkInterfaces.FirstOrDefault().SecurityRuleAssociations.DefaultSecurityRules.Where(x => x.Name == "AllowAzureLoadBalancerInBound");
-            Assert.AreEqual("*", getDefaultSecurityRule2.FirstOrDefault().Protocol);
-            Assert.AreEqual(65001, getDefaultSecurityRule2.FirstOrDefault().Priority);
-            Assert.AreEqual("Allow", getDefaultSecurityRule2.FirstOrDefault().Access);
-            Assert.AreEqual("Inbound", getDefaultSecurityRule2.FirstOrDefault().Direction);
-            Assert.AreEqual("*", getDefaultSecurityRule2.FirstOrDefault().DestinationAddressPrefix);
-            Assert.AreEqual("*", getDefaultSecurityRule2.FirstOrDefault().DestinationPortRange);
-            Assert.AreEqual("AzureLoadBalancer", getDefaultSecurityRule2.FirstOrDefault().SourceAddressPrefix);
-            Assert.AreEqual("*", getDefaultSecurityRule2.FirstOrDefault().SourcePortRange);
+            Assert.That(getDefaultSecurityRule2.FirstOrDefault().Protocol, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRule2.FirstOrDefault().Priority, Is.EqualTo(65001));
+            Assert.That(getDefaultSecurityRule2.FirstOrDefault().Access, Is.EqualTo("Allow"));
+            Assert.That(getDefaultSecurityRule2.FirstOrDefault().Direction, Is.EqualTo("Inbound"));
+            Assert.That(getDefaultSecurityRule2.FirstOrDefault().DestinationAddressPrefix, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRule2.FirstOrDefault().DestinationPortRange, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRule2.FirstOrDefault().SourceAddressPrefix, Is.EqualTo("AzureLoadBalancer"));
+            Assert.That(getDefaultSecurityRule2.FirstOrDefault().SourcePortRange, Is.EqualTo("*"));
 
             IEnumerable<SecurityRuleData> getDefaultSecurityRule3 = viewNSGRules.Value.NetworkInterfaces.FirstOrDefault().SecurityRuleAssociations.DefaultSecurityRules.Where(x => x.Name == "DenyAllInBound");
-            Assert.AreEqual("*", getDefaultSecurityRule3.FirstOrDefault().Protocol);
-            Assert.AreEqual(65500, getDefaultSecurityRule3.FirstOrDefault().Priority);
-            Assert.AreEqual("Deny", getDefaultSecurityRule3.FirstOrDefault().Access);
-            Assert.AreEqual("Inbound", getDefaultSecurityRule3.FirstOrDefault().Direction);
-            Assert.AreEqual("*", getDefaultSecurityRule3.FirstOrDefault().DestinationAddressPrefix);
-            Assert.AreEqual("*", getDefaultSecurityRule3.FirstOrDefault().DestinationPortRange);
-            Assert.AreEqual("*", getDefaultSecurityRule3.FirstOrDefault().SourceAddressPrefix);
-            Assert.AreEqual("*", getDefaultSecurityRule3.FirstOrDefault().SourcePortRange);
+            Assert.That(getDefaultSecurityRule3.FirstOrDefault().Protocol, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRule3.FirstOrDefault().Priority, Is.EqualTo(65500));
+            Assert.That(getDefaultSecurityRule3.FirstOrDefault().Access, Is.EqualTo("Deny"));
+            Assert.That(getDefaultSecurityRule3.FirstOrDefault().Direction, Is.EqualTo("Inbound"));
+            Assert.That(getDefaultSecurityRule3.FirstOrDefault().DestinationAddressPrefix, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRule3.FirstOrDefault().DestinationPortRange, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRule3.FirstOrDefault().SourceAddressPrefix, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRule3.FirstOrDefault().SourcePortRange, Is.EqualTo("*"));
 
             IEnumerable<SecurityRuleData> getDefaultSecurityRuleData4 = viewNSGRules.Value.NetworkInterfaces.FirstOrDefault().SecurityRuleAssociations.DefaultSecurityRules.Where(x => x.Name == "AllowVnetOutBound");
-            Assert.AreEqual("*", getDefaultSecurityRuleData4.FirstOrDefault().Protocol);
-            Assert.AreEqual(65000, getDefaultSecurityRuleData4.FirstOrDefault().Priority);
-            Assert.AreEqual("Allow", getDefaultSecurityRuleData4.FirstOrDefault().Access);
-            Assert.AreEqual("Outbound", getDefaultSecurityRuleData4.FirstOrDefault().Direction);
-            Assert.AreEqual("VirtualNetwork", getDefaultSecurityRuleData4.FirstOrDefault().DestinationAddressPrefix);
-            Assert.AreEqual("*", getDefaultSecurityRuleData4.FirstOrDefault().DestinationPortRange);
-            Assert.AreEqual("VirtualNetwork", getDefaultSecurityRuleData4.FirstOrDefault().SourceAddressPrefix);
-            Assert.AreEqual("*", getDefaultSecurityRuleData4.FirstOrDefault().SourcePortRange);
+            Assert.That(getDefaultSecurityRuleData4.FirstOrDefault().Protocol, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRuleData4.FirstOrDefault().Priority, Is.EqualTo(65000));
+            Assert.That(getDefaultSecurityRuleData4.FirstOrDefault().Access, Is.EqualTo("Allow"));
+            Assert.That(getDefaultSecurityRuleData4.FirstOrDefault().Direction, Is.EqualTo("Outbound"));
+            Assert.That(getDefaultSecurityRuleData4.FirstOrDefault().DestinationAddressPrefix, Is.EqualTo("VirtualNetwork"));
+            Assert.That(getDefaultSecurityRuleData4.FirstOrDefault().DestinationPortRange, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRuleData4.FirstOrDefault().SourceAddressPrefix, Is.EqualTo("VirtualNetwork"));
+            Assert.That(getDefaultSecurityRuleData4.FirstOrDefault().SourcePortRange, Is.EqualTo("*"));
 
             IEnumerable<SecurityRuleData> getDefaultSecurityRuleData5 = viewNSGRules.Value.NetworkInterfaces.FirstOrDefault().SecurityRuleAssociations.DefaultSecurityRules.Where(x => x.Name == "AllowInternetOutBound");
-            Assert.AreEqual("*", getDefaultSecurityRuleData5.FirstOrDefault().Protocol);
-            Assert.AreEqual(65001, getDefaultSecurityRuleData5.FirstOrDefault().Priority);
-            Assert.AreEqual("Allow", getDefaultSecurityRuleData5.FirstOrDefault().Access);
-            Assert.AreEqual("Outbound", getDefaultSecurityRuleData5.FirstOrDefault().Direction);
-            Assert.AreEqual("Internet", getDefaultSecurityRuleData5.FirstOrDefault().DestinationAddressPrefix);
-            Assert.AreEqual("*", getDefaultSecurityRuleData5.FirstOrDefault().DestinationPortRange);
-            Assert.AreEqual("*", getDefaultSecurityRuleData5.FirstOrDefault().SourceAddressPrefix);
-            Assert.AreEqual("*", getDefaultSecurityRuleData5.FirstOrDefault().SourcePortRange);
+            Assert.That(getDefaultSecurityRuleData5.FirstOrDefault().Protocol, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRuleData5.FirstOrDefault().Priority, Is.EqualTo(65001));
+            Assert.That(getDefaultSecurityRuleData5.FirstOrDefault().Access, Is.EqualTo("Allow"));
+            Assert.That(getDefaultSecurityRuleData5.FirstOrDefault().Direction, Is.EqualTo("Outbound"));
+            Assert.That(getDefaultSecurityRuleData5.FirstOrDefault().DestinationAddressPrefix, Is.EqualTo("Internet"));
+            Assert.That(getDefaultSecurityRuleData5.FirstOrDefault().DestinationPortRange, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRuleData5.FirstOrDefault().SourceAddressPrefix, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRuleData5.FirstOrDefault().SourcePortRange, Is.EqualTo("*"));
 
             IEnumerable<SecurityRuleData> getDefaultSecurityRuleData6 = viewNSGRules.Value.NetworkInterfaces.FirstOrDefault().SecurityRuleAssociations.DefaultSecurityRules.Where(x => x.Name == "DenyAllOutBound");
-            Assert.AreEqual("*", getDefaultSecurityRuleData6.FirstOrDefault().Protocol);
-            Assert.AreEqual(65500, getDefaultSecurityRuleData6.FirstOrDefault().Priority);
-            Assert.AreEqual("Deny", getDefaultSecurityRuleData6.FirstOrDefault().Access);
-            Assert.AreEqual("Outbound", getDefaultSecurityRuleData6.FirstOrDefault().Direction);
-            Assert.AreEqual("*", getDefaultSecurityRuleData6.FirstOrDefault().DestinationAddressPrefix);
-            Assert.AreEqual("*", getDefaultSecurityRuleData6.FirstOrDefault().DestinationPortRange);
-            Assert.AreEqual("*", getDefaultSecurityRuleData6.FirstOrDefault().SourceAddressPrefix);
-            Assert.AreEqual("*", getDefaultSecurityRuleData6.FirstOrDefault().SourcePortRange);
+            Assert.That(getDefaultSecurityRuleData6.FirstOrDefault().Protocol, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRuleData6.FirstOrDefault().Priority, Is.EqualTo(65500));
+            Assert.That(getDefaultSecurityRuleData6.FirstOrDefault().Access, Is.EqualTo("Deny"));
+            Assert.That(getDefaultSecurityRuleData6.FirstOrDefault().Direction, Is.EqualTo("Outbound"));
+            Assert.That(getDefaultSecurityRuleData6.FirstOrDefault().DestinationAddressPrefix, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRuleData6.FirstOrDefault().DestinationPortRange, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRuleData6.FirstOrDefault().SourceAddressPrefix, Is.EqualTo("*"));
+            Assert.That(getDefaultSecurityRuleData6.FirstOrDefault().SourcePortRange, Is.EqualTo("*"));
         }
     }
 }

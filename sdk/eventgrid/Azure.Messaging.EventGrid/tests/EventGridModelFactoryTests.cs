@@ -24,9 +24,9 @@ namespace Azure.Messaging.EventGrid.Tests
             var model = EventGridModelFactory.MediaJobError(MediaJobErrorCode.ConfigurationUnsupported, "message", MediaJobErrorCategory.Configuration,
                 MediaJobRetry.MayRetry, new MediaJobErrorDetail[] { });
 
-            Assert.AreEqual(MediaJobErrorCode.ConfigurationUnsupported, model.Code);
-            Assert.AreEqual("message", model.Message);
-            Assert.AreEqual(MediaJobErrorCategory.Configuration, model.Category);
+            Assert.That(model.Code, Is.EqualTo(MediaJobErrorCode.ConfigurationUnsupported));
+            Assert.That(model.Message, Is.EqualTo("message"));
+            Assert.That(model.Category, Is.EqualTo(MediaJobErrorCategory.Configuration));
         }
 
         [Test]
@@ -34,8 +34,8 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             var model = EventGridModelFactory.MediaJobFinishedEventData(MediaJobState.Canceling, MediaJobState.Canceled, null, null);
 
-            Assert.AreEqual(MediaJobState.Canceling, model.PreviousState);
-            Assert.AreEqual(MediaJobState.Canceled, model.State);
+            Assert.That(model.PreviousState, Is.EqualTo(MediaJobState.Canceling));
+            Assert.That(model.State, Is.EqualTo(MediaJobState.Canceled));
         }
 
         [Test]
@@ -43,8 +43,8 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             var model = EventGridModelFactory.MediaJobCanceledEventData(MediaJobState.Canceling, MediaJobState.Canceled, null, null);
 
-            Assert.AreEqual(MediaJobState.Canceling, model.PreviousState);
-            Assert.AreEqual(MediaJobState.Canceled, model.State);
+            Assert.That(model.PreviousState, Is.EqualTo(MediaJobState.Canceling));
+            Assert.That(model.State, Is.EqualTo(MediaJobState.Canceled));
         }
 
         [Test]
@@ -52,8 +52,8 @@ namespace Azure.Messaging.EventGrid.Tests
         {
             var model = EventGridModelFactory.MediaJobErroredEventData(MediaJobState.Canceling, MediaJobState.Canceled, null, null);
 
-            Assert.AreEqual(MediaJobState.Canceling, model.PreviousState);
-            Assert.AreEqual(MediaJobState.Canceled, model.State);
+            Assert.That(model.PreviousState, Is.EqualTo(MediaJobState.Canceling));
+            Assert.That(model.State, Is.EqualTo(MediaJobState.Canceled));
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventGrid.Tests
             var model = EventGridModelFactory.MapsGeofenceEventProperties(new[]{"geometry"}, Array.Empty<MapsGeofenceGeometry>(), Array.Empty<string>(), true);
 
             CollectionAssert.Contains(model.ExpiredGeofenceGeometryId, "geometry");
-            Assert.True(model.IsEventPublished);
+            Assert.That(model.IsEventPublished, Is.True);
         }
 
         [Test]
@@ -78,9 +78,9 @@ namespace Azure.Messaging.EventGrid.Tests
                 new Dictionary<string, object>(),
                 new List<AcsChatThreadParticipantProperties>());
 
-            Assert.AreEqual("transaction", model.TransactionId);
-            Assert.AreEqual("thread", model.ThreadId);
-            Assert.AreEqual(1, model.Version);
+            Assert.That(model.TransactionId, Is.EqualTo("transaction"));
+            Assert.That(model.ThreadId, Is.EqualTo("thread"));
+            Assert.That(model.Version, Is.EqualTo(1));
         }
 
         [Test]
@@ -95,9 +95,9 @@ namespace Azure.Messaging.EventGrid.Tests
                 new Dictionary<string, object>(),
                 new List<AcsChatThreadParticipantProperties>());
 
-            Assert.AreEqual("transaction", model.TransactionId);
-            Assert.AreEqual("thread", model.ThreadId);
-            Assert.AreEqual(1, model.Version);
+            Assert.That(model.TransactionId, Is.EqualTo("transaction"));
+            Assert.That(model.ThreadId, Is.EqualTo("thread"));
+            Assert.That(model.Version, Is.EqualTo(1));
         }
 
         [Test]
@@ -113,12 +113,12 @@ namespace Azure.Messaging.EventGrid.Tests
                 DateTimeOffset.Now,
                 "tag");
 
-            Assert.AreEqual("message", model.MessageId);
-            Assert.AreEqual("from", model.From);
-            Assert.AreEqual("to", model.To);
-            Assert.AreEqual("status", model.DeliveryStatus);
-            Assert.AreEqual("details", model.DeliveryStatusDetails);
-            Assert.AreEqual("tag", model.Tag);
+            Assert.That(model.MessageId, Is.EqualTo("message"));
+            Assert.That(model.From, Is.EqualTo("from"));
+            Assert.That(model.To, Is.EqualTo("to"));
+            Assert.That(model.DeliveryStatus, Is.EqualTo("status"));
+            Assert.That(model.DeliveryStatusDetails, Is.EqualTo("details"));
+            Assert.That(model.Tag, Is.EqualTo("tag"));
         }
 
         [Test]
@@ -130,11 +130,11 @@ namespace Azure.Messaging.EventGrid.Tests
                     EventGridModelFactory.AcsRecordingChunkInfoProperties("document", 0, "reason", "location", "content")
                 });
 
-            Assert.AreEqual("document", model.RecordingChunks.First().DocumentId);
-            Assert.AreEqual(0, model.RecordingChunks.First().Index);
-            Assert.AreEqual("reason", model.RecordingChunks.First().EndReason);
-            Assert.AreEqual("location", model.RecordingChunks.First().MetadataLocation);
-            Assert.AreEqual("content", model.RecordingChunks.First().ContentLocation);
+            Assert.That(model.RecordingChunks.First().DocumentId, Is.EqualTo("document"));
+            Assert.That(model.RecordingChunks.First().Index, Is.EqualTo(0));
+            Assert.That(model.RecordingChunks.First().EndReason, Is.EqualTo("reason"));
+            Assert.That(model.RecordingChunks.First().MetadataLocation, Is.EqualTo("location"));
+            Assert.That(model.RecordingChunks.First().ContentLocation, Is.EqualTo("content"));
         }
 
         [Test]
@@ -152,13 +152,13 @@ namespace Azure.Messaging.EventGrid.Tests
                 "body",
                 new Dictionary<string, string>());
 
-                Assert.AreEqual("transaction", model.TransactionId);
-                Assert.AreEqual("thread", model.ThreadId);
-                Assert.AreEqual("message", model.MessageId);
-                Assert.AreEqual("sender", model.SenderDisplayName);
-                Assert.AreEqual("type", model.Type);
-                Assert.AreEqual(1, model.Version);
-                Assert.AreEqual("body", model.MessageBody);
+            Assert.That(model.TransactionId, Is.EqualTo("transaction"));
+            Assert.That(model.ThreadId, Is.EqualTo("thread"));
+            Assert.That(model.MessageId, Is.EqualTo("message"));
+            Assert.That(model.SenderDisplayName, Is.EqualTo("sender"));
+            Assert.That(model.Type, Is.EqualTo("type"));
+            Assert.That(model.Version, Is.EqualTo(1));
+            Assert.That(model.MessageBody, Is.EqualTo("body"));
         }
 
         [Test]
@@ -174,12 +174,12 @@ namespace Azure.Messaging.EventGrid.Tests
                 "type",
                 1);
 
-            Assert.AreEqual("transaction", model.TransactionId);
-            Assert.AreEqual("thread", model.ThreadId);
-            Assert.AreEqual("message", model.MessageId);
-            Assert.AreEqual("sender", model.SenderDisplayName);
-            Assert.AreEqual("type", model.Type);
-            Assert.AreEqual(1, model.Version);
+            Assert.That(model.TransactionId, Is.EqualTo("transaction"));
+            Assert.That(model.ThreadId, Is.EqualTo("thread"));
+            Assert.That(model.MessageId, Is.EqualTo("message"));
+            Assert.That(model.SenderDisplayName, Is.EqualTo("sender"));
+            Assert.That(model.Type, Is.EqualTo("type"));
+            Assert.That(model.Version, Is.EqualTo(1));
         }
 
         [Test]
@@ -189,8 +189,8 @@ namespace Azure.Messaging.EventGrid.Tests
                 "transaction",
                 "thread");
 
-            Assert.AreEqual("transaction", model.TransactionId);
-            Assert.AreEqual("thread", model.ThreadId);
+            Assert.That(model.TransactionId, Is.EqualTo("transaction"));
+            Assert.That(model.ThreadId, Is.EqualTo("thread"));
         }
 
         [Test]
@@ -210,13 +210,13 @@ namespace Azure.Messaging.EventGrid.Tests
                 new Dictionary<string, string>(),
                 DateTimeOffset.Now);
 
-            Assert.AreEqual("transaction", model.TransactionId);
-            Assert.AreEqual("thread", model.ThreadId);
-            Assert.AreEqual("message", model.MessageId);
-            Assert.AreEqual("sender", model.SenderDisplayName);
-            Assert.AreEqual("type", model.Type);
-            Assert.AreEqual(1, model.Version);
-            Assert.AreEqual("body", model.MessageBody);
+            Assert.That(model.TransactionId, Is.EqualTo("transaction"));
+            Assert.That(model.ThreadId, Is.EqualTo("thread"));
+            Assert.That(model.MessageId, Is.EqualTo("message"));
+            Assert.That(model.SenderDisplayName, Is.EqualTo("sender"));
+            Assert.That(model.Type, Is.EqualTo("type"));
+            Assert.That(model.Version, Is.EqualTo(1));
+            Assert.That(model.MessageBody, Is.EqualTo("body"));
         }
 
         [Test]
@@ -235,13 +235,13 @@ namespace Azure.Messaging.EventGrid.Tests
                 new Dictionary<string, string>(),
                 DateTimeOffset.Now);
 
-            Assert.AreEqual("transaction", model.TransactionId);
-            Assert.AreEqual("thread", model.ThreadId);
-            Assert.AreEqual("message", model.MessageId);
-            Assert.AreEqual("sender", model.SenderDisplayName);
-            Assert.AreEqual("type", model.Type);
-            Assert.AreEqual(1, model.Version);
-            Assert.AreEqual("body", model.MessageBody);
+            Assert.That(model.TransactionId, Is.EqualTo("transaction"));
+            Assert.That(model.ThreadId, Is.EqualTo("thread"));
+            Assert.That(model.MessageId, Is.EqualTo("message"));
+            Assert.That(model.SenderDisplayName, Is.EqualTo("sender"));
+            Assert.That(model.Type, Is.EqualTo("type"));
+            Assert.That(model.Version, Is.EqualTo(1));
+            Assert.That(model.MessageBody, Is.EqualTo("body"));
         }
 
         [Test]
@@ -261,18 +261,18 @@ namespace Azure.Messaging.EventGrid.Tests
                 "state",
                 true);
 
-                Assert.AreEqual("type", model.TrackType);
-                Assert.AreEqual("name", model.TrackName);
-                Assert.AreEqual(5, model.Bitrate);
-                Assert.AreEqual(10, model.IncomingBitrate);
-                Assert.AreEqual("stamp", model.LastTimestamp);
-                Assert.AreEqual("scale", model.Timescale);
-                Assert.AreEqual(1, model.OverlapCount);
-                Assert.AreEqual(1, model.DiscontinuityCount);
-                Assert.AreEqual(1, model.NonincreasingCount);
-                Assert.IsTrue(model.UnexpectedBitrate);
-                Assert.AreEqual("state", model.State);
-                Assert.IsTrue(model.Healthy);
+            Assert.That(model.TrackType, Is.EqualTo("type"));
+            Assert.That(model.TrackName, Is.EqualTo("name"));
+            Assert.That(model.Bitrate, Is.EqualTo(5));
+            Assert.That(model.IncomingBitrate, Is.EqualTo(10));
+            Assert.That(model.LastTimestamp, Is.EqualTo("stamp"));
+            Assert.That(model.Timescale, Is.EqualTo("scale"));
+            Assert.That(model.OverlapCount, Is.EqualTo(1));
+            Assert.That(model.DiscontinuityCount, Is.EqualTo(1));
+            Assert.That(model.NonincreasingCount, Is.EqualTo(1));
+            Assert.That(model.UnexpectedBitrate, Is.True);
+            Assert.That(model.State, Is.EqualTo("state"));
+            Assert.That(model.Healthy, Is.True);
         }
 
         [Test]
@@ -282,8 +282,8 @@ namespace Azure.Messaging.EventGrid.Tests
                 TimeSpan.Zero,
                 "result");
 
-            Assert.AreEqual(TimeSpan.Zero, model.ChannelLatency);
-            Assert.AreEqual("result", model.LatencyResultCode);
+            Assert.That(model.ChannelLatency, Is.EqualTo(TimeSpan.Zero));
+            Assert.That(model.LatencyResultCode, Is.EqualTo("result"));
         }
 
         [Test]
@@ -295,8 +295,8 @@ namespace Azure.Messaging.EventGrid.Tests
                 10,
                 "reason");
 
-            Assert.AreEqual(10, model.RecordingDurationMs);
-            Assert.AreEqual("reason", model.SessionEndReason);
+            Assert.That(model.RecordingDurationMs, Is.EqualTo(10));
+            Assert.That(model.SessionEndReason, Is.EqualTo("reason"));
 
             model = EventGridModelFactory.AcsRecordingFileStatusUpdatedEventData(
                 EventGridModelFactory.AcsRecordingStorageInfoProperties(),
@@ -306,15 +306,15 @@ namespace Azure.Messaging.EventGrid.Tests
                 RecordingChannelType.Mixed,
                 RecordingFormatType.Mp3);
 
-            Assert.AreEqual(10, model.RecordingDurationMs);
-            Assert.AreEqual(AcsRecordingContentType.Audio, model.ContentType);
-            Assert.AreEqual(AcsRecordingChannelType.Mixed, model.ChannelType);
-            Assert.AreEqual(AcsRecordingFormatType.Mp3, model.FormatType);
+            Assert.That(model.RecordingDurationMs, Is.EqualTo(10));
+            Assert.That(model.ContentType, Is.EqualTo(AcsRecordingContentType.Audio));
+            Assert.That(model.ChannelType, Is.EqualTo(AcsRecordingChannelType.Mixed));
+            Assert.That(model.FormatType, Is.EqualTo(AcsRecordingFormatType.Mp3));
 
             // back compat
-            Assert.AreEqual(RecordingContentType.Audio, model.RecordingContentType);
-            Assert.AreEqual(RecordingChannelType.Mixed, model.RecordingChannelType);
-            Assert.AreEqual(RecordingFormatType.Mp3, model.RecordingFormatType);
+            Assert.That(model.RecordingContentType, Is.EqualTo(RecordingContentType.Audio));
+            Assert.That(model.RecordingChannelType, Is.EqualTo(RecordingChannelType.Mixed));
+            Assert.That(model.RecordingFormatType, Is.EqualTo(RecordingFormatType.Mp3));
 
             // empty params
             model = EventGridModelFactory.AcsRecordingFileStatusUpdatedEventData(contentType: "contentTypeIsRequired");
@@ -332,12 +332,12 @@ namespace Azure.Messaging.EventGrid.Tests
                 "contentLocation",
                 "delete");
 
-            Assert.AreEqual("document", model.DocumentId);
-            Assert.AreEqual(0, model.Index);
-            Assert.AreEqual("reason", model.EndReason);
-            Assert.AreEqual("location", model.MetadataLocation);
-            Assert.AreEqual("contentLocation", model.ContentLocation);
-            Assert.AreEqual("delete", model.DeleteLocation);
+            Assert.That(model.DocumentId, Is.EqualTo("document"));
+            Assert.That(model.Index, Is.EqualTo(0));
+            Assert.That(model.EndReason, Is.EqualTo("reason"));
+            Assert.That(model.MetadataLocation, Is.EqualTo("location"));
+            Assert.That(model.ContentLocation, Is.EqualTo("contentLocation"));
+            Assert.That(model.DeleteLocation, Is.EqualTo("delete"));
         }
 
         [Test]
@@ -352,8 +352,8 @@ namespace Azure.Messaging.EventGrid.Tests
                 EventGridModelFactory.ContainerRegistryEventActor(),
                 EventGridModelFactory.ContainerRegistryEventSource());
 
-            Assert.AreEqual("id", model.Id);
-            Assert.AreEqual("action", model.Action);
+            Assert.That(model.Id, Is.EqualTo("id"));
+            Assert.That(model.Action, Is.EqualTo("action"));
         }
 
         [Test]
@@ -365,8 +365,8 @@ namespace Azure.Messaging.EventGrid.Tests
                 "action",
                 EventGridModelFactory.ContainerRegistryArtifactEventTarget());
 
-            Assert.AreEqual("id", model.Id);
-            Assert.AreEqual("action", model.Action);
+            Assert.That(model.Id, Is.EqualTo("id"));
+            Assert.That(model.Action, Is.EqualTo("action"));
         }
     }
 }

@@ -254,7 +254,7 @@ public class BatchTests : AoaiTestBase<BatchClient>
                 }
                 if (documentProperty.NameEquals("error"u8))
                 {
-                    Assert.IsTrue(documentProperty.Value.ValueKind == JsonValueKind.Null);
+                    Assert.That(documentProperty.Value.ValueKind == JsonValueKind.Null, Is.True);
                     foundNullError = true;
                 }
                 if (documentProperty.NameEquals("response"u8))
@@ -282,7 +282,7 @@ public class BatchTests : AoaiTestBase<BatchClient>
             {
                 Assert.That(expectedCustomIds.Any(expectedId => expectedId == customId));
             }
-            Assert.True(foundNullError);
+            Assert.That(foundNullError, Is.True);
             Assert.That(requestId, Is.Not.Null.And.Not.Empty);
             Assert.That(statusCode, Is.EqualTo(200));
             Assert.That(deserializedResponseBody, Is.Not.Null);

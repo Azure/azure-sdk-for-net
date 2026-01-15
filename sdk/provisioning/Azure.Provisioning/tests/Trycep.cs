@@ -92,7 +92,7 @@ public class Trycep : IAsyncDisposable
     public Trycep Compare(string expectedBicep)
     {
         BicepModules = GetPlan().Compile();
-        Assert.AreEqual(1, BicepModules.Count, $"Expected exactly one bicep module, not <{string.Join(", ", BicepModules.Keys)}>");
+        Assert.That(BicepModules.Count, Is.EqualTo(1), $"Expected exactly one bicep module, not <{string.Join(", ", BicepModules.Keys)}>");
 
         Assert.IsNotNull(Bicep, "The produced Bicep module was null!");
         if (!CompareBicepContent(expectedBicep, Bicep!, "main.bicep"))
@@ -106,9 +106,9 @@ public class Trycep : IAsyncDisposable
     public Trycep Compare(IDictionary<string, string> expectedBicepModules)
     {
         BicepModules = GetPlan().Compile();
-        Assert.AreEqual(
-            expectedBicepModules.Count,
+        Assert.That(
             BicepModules.Count,
+            Is.EqualTo(expectedBicepModules.Count),
             $"Expected {expectedBicepModules.Count} modules but found {BicepModules.Count}.  " +
                 $"Expected: <{string.Join(", ", expectedBicepModules.Keys)}>  " +
                 $"Actual: <{string.Join(", ", BicepModules.Keys)}>");
@@ -233,7 +233,7 @@ public class Trycep : IAsyncDisposable
             Console.WriteLine("Actual:");
             Console.WriteLine(arm);
         }
-        Assert.AreEqual(expectedArm, arm);
+        Assert.That(arm, Is.EqualTo(expectedArm));
         return this;
     }
 

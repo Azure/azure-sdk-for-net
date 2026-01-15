@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Tests
             ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName);
             string mgmtLockObjectName = Recording.GenerateAssetName("mgmtLock-");
             ManagementLockResource mgmtLockObject = await CreateManagementLockObject(rg, mgmtLockObjectName);
-            Assert.AreEqual(mgmtLockObjectName, mgmtLockObject.Data.Name);
+            Assert.That(mgmtLockObject.Data.Name, Is.EqualTo(mgmtLockObjectName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetManagementLocks().CreateOrUpdateAsync(WaitUntil.Completed, null, mgmtLockObject.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetManagementLocks().CreateOrUpdateAsync(WaitUntil.Completed, mgmtLockObjectName, null));
             await mgmtLockObject.DeleteAsync(WaitUntil.Completed);
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string mgmtLockObjectName = Recording.GenerateAssetName("mgmtLock-");
             ManagementLockResource mgmtLockObject = await CreateManagementLockObject(subscription, mgmtLockObjectName);
-            Assert.AreEqual(mgmtLockObjectName, mgmtLockObject.Data.Name);
+            Assert.That(mgmtLockObject.Data.Name, Is.EqualTo(mgmtLockObjectName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetManagementLocks().CreateOrUpdateAsync(WaitUntil.Completed, null, mgmtLockObject.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetManagementLocks().CreateOrUpdateAsync(WaitUntil.Completed, mgmtLockObjectName, null));
             await mgmtLockObject.DeleteAsync(WaitUntil.Completed);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Tests
             GenericResource vn = await CreateGenericVirtualNetwork(subscription, rg, vnName);
             string mgmtLockObjectName = Recording.GenerateAssetName("mgmtLock-");
             ManagementLockResource mgmtLockObject = await CreateManagementLockObject(vn, mgmtLockObjectName);
-            Assert.AreEqual(mgmtLockObjectName, mgmtLockObject.Data.Name);
+            Assert.That(mgmtLockObject.Data.Name, Is.EqualTo(mgmtLockObjectName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetManagementLocks().CreateOrUpdateAsync(WaitUntil.Completed, null, mgmtLockObject.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetManagementLocks().CreateOrUpdateAsync(WaitUntil.Completed, mgmtLockObjectName, null));
             await mgmtLockObject.DeleteAsync(WaitUntil.Completed);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Tests
             {
                 count++;
             }
-            Assert.AreEqual(count, 2);
+            Assert.That(count, Is.EqualTo(2));
             await mgmtLockObject1.DeleteAsync(WaitUntil.Completed);
             await mgmtLockObject2.DeleteAsync(WaitUntil.Completed);
         }
@@ -98,19 +98,19 @@ namespace Azure.ResourceManager.Tests
         }
         private void AssertValidManagementLockObject(ManagementLockResource model, ManagementLockResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.Level, getResult.Data.Level);
-            Assert.AreEqual(model.Data.Notes, getResult.Data.Notes);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.Level, Is.EqualTo(model.Data.Level));
+            Assert.That(getResult.Data.Notes, Is.EqualTo(model.Data.Notes));
             if(model.Data.Owners != null || getResult.Data.Owners != null)
             {
                 Assert.NotNull(model.Data.Owners);
                 Assert.NotNull(getResult.Data.Owners);
-                Assert.AreEqual(model.Data.Owners.Count, getResult.Data.Owners.Count);
+                Assert.That(getResult.Data.Owners.Count, Is.EqualTo(model.Data.Owners.Count));
                 for(int i = 0; i < model.Data.Owners.Count; ++i)
                 {
-                    Assert.AreEqual(model.Data.Owners[i].ApplicationId, getResult.Data.Owners[i].ApplicationId);
+                    Assert.That(getResult.Data.Owners[i].ApplicationId, Is.EqualTo(model.Data.Owners[i].ApplicationId));
                 }
             }
         }

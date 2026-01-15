@@ -23,16 +23,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Tests
             };
 
             var bindingData = EventHubExtensionConfigProvider.ConvertEventDataToBindingData(input);
-            Assert.AreEqual("application/octet-stream", bindingData.ContentType);
-            Assert.AreEqual("1.0", bindingData.Version);
-            Assert.AreEqual("AzureEventHubsEventData", bindingData.Source);
+            Assert.That(bindingData.ContentType, Is.EqualTo("application/octet-stream"));
+            Assert.That(bindingData.Version, Is.EqualTo("1.0"));
+            Assert.That(bindingData.Source, Is.EqualTo("AzureEventHubsEventData"));
 
             var output = new EventData(AmqpAnnotatedMessage.FromBytes(bindingData.Content));
 
-            Assert.AreEqual(input.Body.ToArray(), output.Body.ToArray());
-            Assert.AreEqual(input.MessageId, output.MessageId);
-            Assert.AreEqual(input.CorrelationId, output.CorrelationId);
-            Assert.AreEqual(input.Properties["key"], output.Properties["key"]);
+            Assert.That(output.Body.ToArray(), Is.EqualTo(input.Body.ToArray()));
+            Assert.That(output.MessageId, Is.EqualTo(input.MessageId));
+            Assert.That(output.CorrelationId, Is.EqualTo(input.CorrelationId));
+            Assert.That(output.Properties["key"], Is.EqualTo(input.Properties["key"]));
         }
     }
 }

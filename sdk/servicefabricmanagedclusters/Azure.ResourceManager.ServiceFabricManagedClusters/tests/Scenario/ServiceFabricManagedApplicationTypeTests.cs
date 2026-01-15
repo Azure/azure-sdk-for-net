@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
             // Exist
             var flag = await _appTypeCollection.ExistsAsync(appTypeName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             // Get
             var getAppType = await _appTypeCollection.GetAsync(appTypeName);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             // Delete
             await appType.DeleteAsync(WaitUntil.Completed);
             flag = await _appTypeCollection.ExistsAsync(appTypeName);
-            Assert.IsFalse(flag);
+            Assert.That((bool)flag, Is.False);
         }
 
         //[TestCase(null)] // 405: The HTTP method 'GET' is not supported at scope 'Microsoft.ServiceFabric/managedclusters/sfmctest3040/applicationTypes/appType111'
@@ -68,24 +68,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             // AddTag
             await appType.AddTagAsync("addtagkey", "addtagvalue");
             appType = await _appTypeCollection.GetAsync(appTypeName);
-            Assert.AreEqual(1, appType.Data.Tags.Count);
+            Assert.That(appType.Data.Tags.Count, Is.EqualTo(1));
             KeyValuePair<string, string> tag = appType.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
 
             // RemoveTag
             await appType.RemoveTagAsync("addtagkey");
             appType = await _appTypeCollection.GetAsync(appTypeName);
-            Assert.AreEqual(0, appType.Data.Tags.Count);
+            Assert.That(appType.Data.Tags.Count, Is.EqualTo(0));
         }
 
         private void ValidateServiceFabricManagedApplicationType(ServiceFabricManagedApplicationTypeData appType, string appTypeName)
         {
             Assert.IsNotNull(appType);
             Assert.IsNotEmpty(appType.Id);
-            Assert.AreEqual(appTypeName, appType.Name);
-            Assert.AreEqual(DefaultLocation, appType.Location);
-            Assert.AreEqual("Succeeded", appType.ProvisioningState);
+            Assert.That(appType.Name, Is.EqualTo(appTypeName));
+            Assert.That(appType.Location, Is.EqualTo(DefaultLocation));
+            Assert.That(appType.ProvisioningState, Is.EqualTo("Succeeded"));
         }
     }
 }

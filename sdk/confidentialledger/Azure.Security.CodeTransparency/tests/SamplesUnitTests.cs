@@ -120,8 +120,8 @@ namespace Azure.Security.CodeTransparency.Tests
             #endregion Snippet:CodeTransparencySample2_GetEntryStatement
             #endregion Snippet:CodeTransparencyDownloadTransparentStatement
 
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasCompleted, Is.True);
+            Assert.That(operation.HasValue, Is.True);
 
             #region Snippet:CodeTransparencySample2_GetRawReceipt
 #if SNIPPET
@@ -191,7 +191,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             #endregion Snippet:CodeTransparencyVerification_StoreForOfflineUse
 
-            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
 
             #region Snippet:CodeTransparencyVerification_Offline
             var transparentStatement = File.ReadAllBytes(filePath);

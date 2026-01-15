@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Tests
             var adoAuth = await collection.CreateOrUpdateAsync(WaitUntil.Completed, AuthenticationName.Default, data);
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.Exists(adoAuthName));
+            Assert.That((bool)collection.Exists(adoAuthName), Is.True);
 
             // 3.Get
             var getadoAuth = await collection.GetAsync(adoAuthName);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Tests
             Assert.IsNotEmpty(list);
 
             // 5.GetIfExist
-            Assert.IsTrue(await collection.ExistsAsync(adoAuthName));
+            Assert.That((bool)await collection.ExistsAsync(adoAuthName), Is.True);
         }
     }
 }

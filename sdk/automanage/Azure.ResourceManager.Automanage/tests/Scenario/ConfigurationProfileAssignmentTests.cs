@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var assignment = await ArmClient.GetAutomanageVmConfigurationProfileAssignmentAsync(vmId, "default");
 
             // assert
-            Assert.True(assignment.Value.HasData);
+            Assert.That(assignment.Value.HasData, Is.True);
             Assert.NotNull(assignment.Value.Data.Name);
             Assert.NotNull(assignment.Value.Data.Id);
-            Assert.AreEqual(vmId, assignment.Value.Data.Properties.TargetId);
+            Assert.That(assignment.Value.Data.Properties.TargetId, Is.EqualTo(vmId));
         }
 
         [TestCase]
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var assignment = await CreateAssignment(vmId, profileId);
 
             // assert
-            Assert.True(assignment.HasData);
+            Assert.That(assignment.HasData, Is.True);
             Assert.NotNull(assignment.Data.Name);
             Assert.NotNull(assignment.Data.Id);
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var assignment = await CreateAssignment(vmId, profile.Id);
 
             // assert
-            Assert.True(assignment.HasData);
+            Assert.That(assignment.HasData, Is.True);
             Assert.NotNull(assignment.Data.Name);
             Assert.NotNull(assignment.Data.Id);
         }

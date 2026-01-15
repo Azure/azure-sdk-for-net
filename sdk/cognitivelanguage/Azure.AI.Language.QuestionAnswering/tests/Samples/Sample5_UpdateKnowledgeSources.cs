@@ -54,9 +54,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(source);
             }
-#endregion
+            #endregion
 
-            Assert.True(updateSourcesOperation.HasCompleted);
+            Assert.That(updateSourcesOperation.HasCompleted, Is.True);
             Assert.That(sources.Any(source => source.ToString().Contains(sourceUri)));
 
 #region Snippet:QuestionAnsweringAuthoringClient_UpdateQnas
@@ -92,10 +92,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(qna);
             }
-#endregion
+            #endregion
 
-            Assert.True(updateQnasOperation.HasCompleted);
-            Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
+            Assert.That(updateQnasOperation.HasCompleted, Is.True);
+            Assert.That(updateQnasOperation.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(qnas.Any(qna => qna.ToString().Contains(question)));
             Assert.That(qnas.Any(qna => qna.ToString().Contains(answer)));
 
@@ -131,9 +131,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(synonym);
             }
-#endregion
+            #endregion
 
-            Assert.AreEqual(204, updateSynonymsResponse.Status);
+            Assert.That(updateSynonymsResponse.Status, Is.EqualTo(204));
             Assert.That(synonyms.Any(synonym => synonym.ToString().Contains("qnamaker")));
             Assert.That(synonyms.Any(synonym => synonym.ToString().Contains("qna maker")));
 
@@ -153,9 +153,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 });
 
             Response addFeedbackResponse = Client.AddFeedback(testProjectName, addFeedbackRequestContent);
-#endregion
+            #endregion
 
-            Assert.AreEqual(204, addFeedbackResponse.Status);
+            Assert.That(addFeedbackResponse.Status, Is.EqualTo(204));
         }
 
         [RecordedTest]
@@ -199,9 +199,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(source);
             }
-#endregion
+            #endregion
 
-            Assert.True(updateSourcesOperation.HasCompleted);
+            Assert.That(updateSourcesOperation.HasCompleted, Is.True);
             Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(sourceUri)));
 
 #region Snippet:QuestionAnsweringAuthoringClient_UpdateQnasAsync
@@ -236,10 +236,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(qna);
             }
-#endregion
+            #endregion
 
-            Assert.True(updateQnasOperation.HasCompleted);
-            Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
+            Assert.That(updateQnasOperation.HasCompleted, Is.True);
+            Assert.That(updateQnasOperation.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That((await qnas.ToEnumerableAsync()).Any(source => source.ToString().Contains(question)));
             Assert.That((await qnas.ToEnumerableAsync()).Any(source => source.ToString().Contains(answer)));
 
@@ -275,9 +275,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(synonym);
             }
-#endregion
+            #endregion
 
-            Assert.AreEqual(204, updateSynonymsResponse.Status);
+            Assert.That(updateSynonymsResponse.Status, Is.EqualTo(204));
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qnamaker")));
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qna maker")));
 
@@ -297,9 +297,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 });
 
             Response addFeedbackResponse = await Client.AddFeedbackAsync(testProjectName, addFeedbackRequestContent);
-#endregion
+            #endregion
 
-            Assert.AreEqual(204, addFeedbackResponse.Status);
+            Assert.That(addFeedbackResponse.Status, Is.EqualTo(204));
         }
     }
 }

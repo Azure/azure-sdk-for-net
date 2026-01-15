@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             var input = ResourceDataHelper.GetBatchApplicationData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             BatchApplicationResource application1 = lro.Value;
-            Assert.AreEqual(name, application1.Data.Name);
+            Assert.That(application1.Data.Name, Is.EqualTo(name));
             //2.Get
             BatchApplicationResource application2 = await collection.GetAsync(name);
             ResourceDataHelper.AssertApplicationData(application1.Data, application2.Data);
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 3);
             //4.Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }

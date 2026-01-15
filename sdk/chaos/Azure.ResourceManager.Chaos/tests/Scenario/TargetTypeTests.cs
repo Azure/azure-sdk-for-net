@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Chaos.Tests
         public async Task List()
         {
             var list = await this.TargetTypeCollection.GetAllAsync().ToListAsync().ConfigureAwait(false);
-            Assert.IsTrue(list.Any());
+            Assert.That(list.Any(), Is.True);
         }
 
         [TestCase]
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Chaos.Tests
         public async Task Get()
         {
             var targetTypeResponse = await this.TargetTypeCollection.GetAsync(TestConstants.VmssTargetName).ConfigureAwait(false);
-            Assert.AreEqual(TestConstants.VmssTargetName, targetTypeResponse.Value.Data.Name);
-            Assert.AreEqual(200, targetTypeResponse.GetRawResponse().Status);
+            Assert.That(targetTypeResponse.Value.Data.Name, Is.EqualTo(TestConstants.VmssTargetName));
+            Assert.That(targetTypeResponse.GetRawResponse().Status, Is.EqualTo(200));
         }
     }
 }

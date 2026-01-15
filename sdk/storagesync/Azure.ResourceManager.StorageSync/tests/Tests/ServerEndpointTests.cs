@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
             // List ServerEndpoints
             List<StorageSyncServerEndpointResource> serverEndpointResources = await _storageSyncGroupResource.GetStorageSyncServerEndpoints().ToEnumerableAsync();
             Assert.NotNull(serverEndpointResources);
-            Assert.AreEqual(serverEndpointResources.Count(), 1);
+            Assert.That(serverEndpointResources.Count(), Is.EqualTo(1));
             StorageSyncManagementTestUtilities.VerifyServerEndpointProperties(serverEndpointResources.First(), false);
 
             // Recall ServerEndpoint
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // Delete ServerEndpoint
             await serverEndpointResource.DeleteAsync(WaitUntil.Completed);
-            Assert.IsFalse((await _storageSyncGroupResource.GetStorageSyncServerEndpoints().ExistsAsync(_serverEndpointName)).Value);
+            Assert.That((await _storageSyncGroupResource.GetStorageSyncServerEndpoints().ExistsAsync(_serverEndpointName)).Value, Is.False);
 
             await _cloudEndpointResource.DeleteAsync(WaitUntil.Completed);
             await registeredServerResource.DeleteAsync(WaitUntil.Completed);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // For Record :  PLACE A BREAKPOINT HERE , REGISTER SERVER AND CONTINUE.
             List<StorageSyncRegisteredServerResource> registeredServerResources = await storageSyncServiceResource.GetStorageSyncRegisteredServers().ToEnumerableAsync();
-            Assert.AreEqual(registeredServerResources.Count(), 1);
+            Assert.That(registeredServerResources.Count(), Is.EqualTo(1));
 
             return registeredServerResources.Single();
         }

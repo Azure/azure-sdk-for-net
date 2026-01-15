@@ -82,7 +82,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private async Task UploadPagesAsync(PageBlobClient blobClient, Stream contents)
         {
             long size = contents.Length;
-            Assert.IsTrue(size % (KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
+            Assert.That(size % (KB / 2) == 0, Is.True, "Cannot create page blob that's not a multiple of 512");
             await blobClient.CreateIfNotExistsAsync(size).ConfigureAwait(false);
             long offset = 0;
             long blockSize = Math.Min(DefaultBufferSize, size);

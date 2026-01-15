@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             Assert.IsNotNull(allowedConnections);
             Assert.IsNotNull(allowedConnections.Id);
-            Assert.AreEqual("Internal", allowedConnections.Name);
-            Assert.AreEqual("centralus", allowedConnections.Location.ToString());
-            Assert.AreEqual("Microsoft.Security/locations/allowedConnections", allowedConnections.ResourceType.ToString());
+            Assert.That(allowedConnections.Name, Is.EqualTo("Internal"));
+            Assert.That(allowedConnections.Location.ToString(), Is.EqualTo("centralus"));
+            Assert.That(allowedConnections.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/locations/allowedConnections"));
         }
     }
 }

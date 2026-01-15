@@ -161,8 +161,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 #endregion
 
                 Assert.IsNotNull(dlqMessage);
-                Assert.AreEqual("sample reason", reason);
-                Assert.AreEqual("sample description", description);
+                Assert.That(reason, Is.EqualTo("sample reason"));
+                Assert.That(description, Is.EqualTo("sample description"));
             }
         }
 

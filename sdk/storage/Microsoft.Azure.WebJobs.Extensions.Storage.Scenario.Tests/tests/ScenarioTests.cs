@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             // Assert
             var outputBlob = container.GetBlockBlobClient(OutputBlobName);
             string content = await outputBlob.DownloadTextAsync();
-            Assert.AreEqual("16", content);
+            Assert.That(content, Is.EqualTo("16"));
         }
 
         private static async Task<BlobContainerClient> CreateContainerAsync(BlobServiceClient blobServiceClient, string containerName)
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             public static void StepTwo([QueueTrigger(QueueName)] Payload input, int value,
                 [Blob(ContainerName + "/{Output}")] TextWriter output, [Queue(CommittedQueueName)] out string committed)
             {
-                Assert.AreEqual(input.Value, value);
+                Assert.That(value, Is.EqualTo(input.Value));
                 output.Write(value);
                 committed = string.Empty;
             }

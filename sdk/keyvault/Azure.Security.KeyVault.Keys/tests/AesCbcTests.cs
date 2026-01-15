@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
                 // Assert: we only compare the first 16 bytes as this library uses PKCS7 padding
                 var unpadded = encrypted.Take( 16 ).ToArray();
-                Assert.True( unpadded.SequenceEqual( ED ) );
+                Assert.That(unpadded.SequenceEqual(ED), Is.True);
             }
 
             using ( var decryptor = algo.CreateDecryptor( CEK, IV ) )
@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 var decrypted = decryptor.TransformFinalBlock( encrypted, 0, encrypted.Length );
 
                 // Assert
-                Assert.True( decrypted.SequenceEqual( PLAIN ) );
+                Assert.That(decrypted.SequenceEqual(PLAIN), Is.True);
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
                 // Assert: we only compare the first 32 bytes as this library uses PKCS7 padding
                 var unpadded = encrypted.Take( 32 ).ToArray();
-                Assert.True( unpadded.SequenceEqual( ED ) );
+                Assert.That(unpadded.SequenceEqual(ED), Is.True);
             }
 
             using ( var decryptor = algo.CreateDecryptor( CEK, IV ) )
@@ -79,7 +79,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 var decrypted = decryptor.TransformFinalBlock( encrypted, 0, encrypted.Length );
 
                 // Assert
-                Assert.True( decrypted.SequenceEqual( PLAIN ) );
+                Assert.That(decrypted.SequenceEqual(PLAIN), Is.True);
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
                 // Assert: we only compare the first 16 bytes as this library uses PKCS7 padding
                 var unpadded = encrypted.Take( 16 ).ToArray();
-                Assert.True( unpadded.SequenceEqual( ED ) );
+                Assert.That(unpadded.SequenceEqual(ED), Is.True);
             }
 
             using ( var decryptor = algo.CreateDecryptor( CEK, IV ) )
@@ -114,7 +114,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 var decrypted = decryptor.TransformFinalBlock( encrypted, 0, encrypted.Length );
 
                 // Assert
-                Assert.True( decrypted.SequenceEqual( PLAIN ) );
+                Assert.That(decrypted.SequenceEqual(PLAIN), Is.True);
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
                 // Assert: we only compare the first 32 bytes as this library uses PKCS7 padding
                 var unpadded = encrypted.Take( 32 ).ToArray();
-                Assert.True( unpadded.SequenceEqual( ED ) );
+                Assert.That(unpadded.SequenceEqual(ED), Is.True);
             }
 
             using ( var decryptor = algo.CreateDecryptor( CEK, IV ) )
@@ -149,7 +149,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 var decrypted = decryptor.TransformFinalBlock( encrypted, 0, encrypted.Length );
 
                 // Assert
-                Assert.True( decrypted.SequenceEqual( PLAIN ) );
+                Assert.That(decrypted.SequenceEqual(PLAIN), Is.True);
             }
         }
     }

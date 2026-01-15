@@ -29,8 +29,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
             #endregion
 
-            Assert.True(exportOperation.HasCompleted);
-            Assert.True(!string.IsNullOrEmpty(exportedFileUrl));
+            Assert.That(exportOperation.HasCompleted, Is.True);
+            Assert.That(!string.IsNullOrEmpty(exportedFileUrl), Is.True);
 
             #region Snippet:QuestionAnsweringAuthoringClient_ImportProject
             // Set import project name and request content
@@ -60,8 +60,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
             #endregion
 
-            Assert.True(importOperation.HasCompleted);
-            Assert.AreEqual(200, importOperation.GetRawResponse().Status);
+            Assert.That(importOperation.HasCompleted, Is.True);
+            Assert.That(importOperation.GetRawResponse().Status, Is.EqualTo(200));
 
             #region Snippet:QuestionAnsweringAuthoringClient_GetProjectDetails
             Response projectDetails = client.GetProjectDetails(importedProjectName);
@@ -69,7 +69,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Console.WriteLine(projectDetails.Content);
             #endregion
 
-            Assert.AreEqual(200, projectDetails.Status);
+            Assert.That(projectDetails.Status, Is.EqualTo(200));
         }
 
         [RecordedTest]
@@ -88,8 +88,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
             #endregion
 
-            Assert.True(exportOperation.HasCompleted);
-            Assert.True(!string.IsNullOrEmpty(exportedFileUrl));
+            Assert.That(exportOperation.HasCompleted, Is.True);
+            Assert.That(!string.IsNullOrEmpty(exportedFileUrl), Is.True);
 
             #region Snippet:QuestionAnsweringAuthoringClient_ImportProjectAsync
             // Set import project name and request content
@@ -119,8 +119,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
             #endregion
 
-            Assert.True(importOperation.HasCompleted);
-            Assert.AreEqual(200, importOperation.GetRawResponse().Status);
+            Assert.That(importOperation.HasCompleted, Is.True);
+            Assert.That(importOperation.GetRawResponse().Status, Is.EqualTo(200));
 
             #region Snippet:QuestionAnsweringAuthoringClient_GetProjectDetailsAsync
             Response projectDetails = await client.GetProjectDetailsAsync(importedProjectName);
@@ -128,7 +128,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Console.WriteLine(projectDetails.Content);
             #endregion
 
-            Assert.AreEqual(200, projectDetails.Status);
+            Assert.That(projectDetails.Status, Is.EqualTo(200));
         }
     }
 }

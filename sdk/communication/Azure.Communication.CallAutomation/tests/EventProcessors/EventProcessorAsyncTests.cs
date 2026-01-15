@@ -32,8 +32,8 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 
             // Assert
             Assert.NotNull(returnedBaseEvent);
-            Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
-            Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
+            Assert.That(returnedBaseEvent.GetType(), Is.EqualTo(typeof(CallConnected)));
+            Assert.That(returnedBaseEvent.CallConnectionId, Is.EqualTo(CallConnectionId));
         }
 
         [Test]
@@ -53,8 +53,8 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 
             // Assert
             Assert.NotNull(returnedBaseEvent);
-            Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
-            Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
+            Assert.That(returnedBaseEvent.GetType(), Is.EqualTo(typeof(CallConnected)));
+            Assert.That(returnedBaseEvent.CallConnectionId, Is.EqualTo(CallConnectionId));
         }
 
         [Test]
@@ -113,8 +113,8 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 // assert
                 CallAutomationEventBase returnedBaseEvent = await task;
                 Assert.NotNull(returnedBaseEvent);
-                Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
-                Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
+                Assert.That(returnedBaseEvent.GetType(), Is.EqualTo(typeof(CallConnected)));
+                Assert.That(returnedBaseEvent.CallConnectionId, Is.EqualTo(CallConnectionId));
             }
         }
 
@@ -142,8 +142,8 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 // Assert
                 CallAutomationEventBase returnedBaseEvent = await eventAwaiter;
                 Assert.NotNull(returnedBaseEvent);
-                Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
-                Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
+                Assert.That(returnedBaseEvent.GetType(), Is.EqualTo(typeof(CallConnected)));
+                Assert.That(returnedBaseEvent.CallConnectionId, Is.EqualTo(CallConnectionId));
 
                 if (i < eventsSent - 1)
                 {

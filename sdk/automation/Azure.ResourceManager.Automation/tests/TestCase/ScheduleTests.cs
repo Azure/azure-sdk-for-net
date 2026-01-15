@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             var input = ResourceDataHelpers.GetScheduleData(name, Recording.UtcNow.AddDays(1));
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             AutomationScheduleResource schedule = lro.Value;
-            Assert.AreEqual(name, schedule.Data.Name);
+            Assert.That(schedule.Data.Name, Is.EqualTo(name));
             //2.Get
             AutomationScheduleResource schedule2 = await schedule.GetAsync();
             ResourceDataHelpers.AssertSchedule(schedule.Data, schedule2.Data);
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 3);
             //4.Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resource

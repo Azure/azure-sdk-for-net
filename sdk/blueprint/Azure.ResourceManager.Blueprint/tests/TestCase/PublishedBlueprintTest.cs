@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.Blueprint.Tests
             var collection = blueprintResource.GetPublishedBlueprints();
             var input = ResourceDataHelpers.GetPublishedBlueprintData(blueprintResource.Data.Name);
             var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, version, input)).Value;
-            Assert.AreEqual(version, resource.Data.Name);
+            Assert.That(resource.Data.Name, Is.EqualTo(version));
             //Get
             var resource2 = (await collection.GetAsync(version)).Value;
             ResourceDataHelpers.AssertPublishedBlueprintData(resource.Data, resource2.Data);
             //Exist
-            Assert.IsTrue(await collection.ExistsAsync(version));
-            Assert.IsFalse(await collection.ExistsAsync(version + "1"));
+            Assert.That((bool)await collection.ExistsAsync(version), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(version + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resouece operation

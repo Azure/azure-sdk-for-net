@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
             };
             ArmOperation<IscsiPathResource> lro = await getIscsiPathResource().CreateOrUpdateAsync(WaitUntil.Completed, data);
             IscsiPathResource result = lro.Value;
-            Assert.AreEqual(result.Data.Name, ISCSI_PATH_NAME);
+            Assert.That(result.Data.Name, Is.EqualTo(ISCSI_PATH_NAME));
         }
 
         [TestCase, Order(2)]
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
         public async Task Get()
         {
             IscsiPathResource iscsiPath = await getIscsiPathResource().GetAsync();
-            Assert.AreEqual(iscsiPath.Data.Name, ISCSI_PATH_NAME);
+            Assert.That(iscsiPath.Data.Name, Is.EqualTo(ISCSI_PATH_NAME));
         }
 
         [TestCase, Order(3)]

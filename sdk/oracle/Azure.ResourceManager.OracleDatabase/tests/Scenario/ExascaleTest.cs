@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
             var createExadbVmClusterOperation = await _exadbVmClusterCollection.CreateOrUpdateAsync(WaitUntil.Completed,
                 _exadbVmClusterName, GetDefaultExadbVmClusterData(_exadbVmClusterName));
             await createExadbVmClusterOperation.WaitForCompletionAsync();
-            Assert.IsTrue(createExadbVmClusterOperation.HasCompleted);
-            Assert.IsTrue(createExadbVmClusterOperation.HasValue);
+            Assert.That(createExadbVmClusterOperation.HasCompleted, Is.True);
+            Assert.That(createExadbVmClusterOperation.HasValue, Is.True);
 
             // Get
             Response<ExadbVmClusterResource> getExadbVmClusterResponse = await _exadbVmClusterCollection.GetAsync(_exadbVmClusterName);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
             {
                 var deleteExadbVmClusterOperation = await exadbVmClusterResource.DeleteAsync(WaitUntil.Completed);
                 await deleteExadbVmClusterOperation.WaitForCompletionResponseAsync();
-                Assert.IsTrue(deleteExadbVmClusterOperation.HasCompleted);
+                Assert.That(deleteExadbVmClusterOperation.HasCompleted, Is.True);
             }
         }
 

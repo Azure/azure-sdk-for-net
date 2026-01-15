@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Tests
         {
             ResourceIdentifier id = new ResourceIdentifier(resourceId);
             string result = id.SubstringAfterProviderNamespace();
-            Assert.AreEqual(expected, result);
+            Assert.That(result, Is.EqualTo(expected));
         }
 
         [TestCase("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm", false)]

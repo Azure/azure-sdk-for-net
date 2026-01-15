@@ -13,14 +13,14 @@ namespace Azure.Core.Tests
         {
             string message = "Work was not cleaned up.";
             var ex = new ObjectNotDisposedException(message);
-            Assert.AreEqual(message, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(message));
         }
 
         [Test]
         public void IsInvalidOperationException()
         {
             var ex = new ObjectNotDisposedException("Work was not cleaned up.");
-            Assert.True(ex is InvalidOperationException);
+            Assert.That(ex is InvalidOperationException, Is.True);
         }
     }
 }

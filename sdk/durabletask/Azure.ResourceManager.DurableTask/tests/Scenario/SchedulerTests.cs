@@ -66,24 +66,24 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
         string resourceId = resource.Id;
 
         resource = await longRunningOperation.WaitForCompletionAsync();
-        Assert.AreEqual(resourceName, resource.Data.Name);
-        Assert.AreEqual(DurableTaskSchedulerSkuName.Dedicated, resource.Data.Properties.Sku.Name);
-        Assert.AreEqual(DurableTaskResourceRedundancyState.None, resource.Data.Properties.Sku.RedundancyState);
+        Assert.That(resource.Data.Name, Is.EqualTo(resourceName));
+        Assert.That(resource.Data.Properties.Sku.Name, Is.EqualTo(DurableTaskSchedulerSkuName.Dedicated));
+        Assert.That(resource.Data.Properties.Sku.RedundancyState, Is.EqualTo(DurableTaskResourceRedundancyState.None));
         Assert.Contains(IpRange1, resource.Data.Properties.IPAllowlist as IList);
         Assert.Contains(IpRange2, resource.Data.Properties.IPAllowlist as IList);
         Assert.Contains(IpRange3, resource.Data.Properties.IPAllowlist as IList);
-        Assert.AreEqual(DurableTaskProvisioningState.Succeeded, resource.Data.Properties.ProvisioningState);
+        Assert.That(resource.Data.Properties.ProvisioningState, Is.EqualTo(DurableTaskProvisioningState.Succeeded));
 
         // Get Scheduler
         resource = await rg.GetDurableTaskSchedulerAsync(resourceName);
         Assert.NotNull(resource);
-        Assert.AreEqual(resourceName, resource.Data.Name);
-        Assert.AreEqual(DurableTaskSchedulerSkuName.Dedicated, resource.Data.Properties.Sku.Name);
-        Assert.AreEqual(DurableTaskResourceRedundancyState.None, resource.Data.Properties.Sku.RedundancyState);
+        Assert.That(resource.Data.Name, Is.EqualTo(resourceName));
+        Assert.That(resource.Data.Properties.Sku.Name, Is.EqualTo(DurableTaskSchedulerSkuName.Dedicated));
+        Assert.That(resource.Data.Properties.Sku.RedundancyState, Is.EqualTo(DurableTaskResourceRedundancyState.None));
         Assert.Contains(IpRange1, resource.Data.Properties.IPAllowlist as IList);
         Assert.Contains(IpRange2, resource.Data.Properties.IPAllowlist as IList);
         Assert.Contains(IpRange3, resource.Data.Properties.IPAllowlist as IList);
-        Assert.AreEqual(DurableTaskProvisioningState.Succeeded, resource.Data.Properties.ProvisioningState);
+        Assert.That(resource.Data.Properties.ProvisioningState, Is.EqualTo(DurableTaskProvisioningState.Succeeded));
 
         DurableTaskSchedulerData updateSchedulerData = new(AzureLocation.NorthCentralUS)
         {
@@ -98,40 +98,40 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
             await rg.GetDurableTaskSchedulers().CreateOrUpdateAsync(WaitUntil.Started, resourceName, updateSchedulerData);
         // While the update is in progress the resource is in updating state
         resource = await rg.GetDurableTaskSchedulerAsync(resourceName);
-        Assert.AreEqual(DurableTaskProvisioningState.Updating, resource.Data.Properties.ProvisioningState);
+        Assert.That(resource.Data.Properties.ProvisioningState, Is.EqualTo(DurableTaskProvisioningState.Updating));
 
         // Wait for the update to complete
         resource = await longRunningOperation.WaitForCompletionAsync();
-        Assert.AreEqual(resourceName, resource.Data.Name);
-        Assert.AreEqual(DurableTaskSchedulerSkuName.Dedicated, resource.Data.Properties.Sku.Name);
-        Assert.AreEqual(DurableTaskResourceRedundancyState.None, resource.Data.Properties.Sku.RedundancyState);
+        Assert.That(resource.Data.Name, Is.EqualTo(resourceName));
+        Assert.That(resource.Data.Properties.Sku.Name, Is.EqualTo(DurableTaskSchedulerSkuName.Dedicated));
+        Assert.That(resource.Data.Properties.Sku.RedundancyState, Is.EqualTo(DurableTaskResourceRedundancyState.None));
         Assert.Contains(UpdatedIpRange1, resource.Data.Properties.IPAllowlist as IList);
         Assert.Contains(UpdatedIpRange2, resource.Data.Properties.IPAllowlist as IList);
         Assert.Contains(IpRange3, resource.Data.Properties.IPAllowlist as IList);
-        Assert.AreEqual(2, resource.Data.Tags.Count);
+        Assert.That(resource.Data.Tags.Count, Is.EqualTo(2));
         Assert.That(resource.Data.Tags.Keys, Does.Contain(TagKeyOrg));
         Assert.That(resource.Data.Tags.Keys, Does.Contain(TagKeyEnv));
-        Assert.AreEqual(TagValueOrg, resource.Data.Tags[TagKeyOrg]);
-        Assert.AreEqual(TagValueEnv, resource.Data.Tags[TagKeyEnv]);
-        Assert.AreEqual(DurableTaskProvisioningState.Succeeded, resource.Data.Properties.ProvisioningState);
+        Assert.That(resource.Data.Tags[TagKeyOrg], Is.EqualTo(TagValueOrg));
+        Assert.That(resource.Data.Tags[TagKeyEnv], Is.EqualTo(TagValueEnv));
+        Assert.That(resource.Data.Properties.ProvisioningState, Is.EqualTo(DurableTaskProvisioningState.Succeeded));
 
         // List all schedulers and verify the updated scheduler is present
         List<DurableTaskSchedulerResource> schedulers = await rg.GetDurableTaskSchedulers().GetAllAsync().ToEnumerableAsync();
         // Look for the scheduler with the ARM resource ID matching our resource
         resource = schedulers.FirstOrDefault(s => s.Data.Id == resourceId);
         Assert.NotNull(resource);
-        Assert.AreEqual(resourceName, resource.Data.Name);
-        Assert.AreEqual(DurableTaskSchedulerSkuName.Dedicated, resource.Data.Properties.Sku.Name);
-        Assert.AreEqual(DurableTaskResourceRedundancyState.None, resource.Data.Properties.Sku.RedundancyState);
+        Assert.That(resource.Data.Name, Is.EqualTo(resourceName));
+        Assert.That(resource.Data.Properties.Sku.Name, Is.EqualTo(DurableTaskSchedulerSkuName.Dedicated));
+        Assert.That(resource.Data.Properties.Sku.RedundancyState, Is.EqualTo(DurableTaskResourceRedundancyState.None));
         Assert.Contains(UpdatedIpRange1, resource.Data.Properties.IPAllowlist as IList);
         Assert.Contains(UpdatedIpRange2, resource.Data.Properties.IPAllowlist as IList);
         Assert.Contains(IpRange3, resource.Data.Properties.IPAllowlist as IList);
-        Assert.AreEqual(2, resource.Data.Tags.Count);
+        Assert.That(resource.Data.Tags.Count, Is.EqualTo(2));
         Assert.That(resource.Data.Tags.Keys, Does.Contain(TagKeyOrg));
         Assert.That(resource.Data.Tags.Keys, Does.Contain(TagKeyEnv));
-        Assert.AreEqual(TagValueOrg, resource.Data.Tags[TagKeyOrg]);
-        Assert.AreEqual(TagValueEnv, resource.Data.Tags[TagKeyEnv]);
-        Assert.AreEqual(DurableTaskProvisioningState.Succeeded, resource.Data.Properties.ProvisioningState);
+        Assert.That(resource.Data.Tags[TagKeyOrg], Is.EqualTo(TagValueOrg));
+        Assert.That(resource.Data.Tags[TagKeyEnv], Is.EqualTo(TagValueEnv));
+        Assert.That(resource.Data.Properties.ProvisioningState, Is.EqualTo(DurableTaskProvisioningState.Succeeded));
 
         // Update select Scheduler properties (Patch)
         DurableTaskSchedulerPatch patchSchedulerData = new()
@@ -151,15 +151,15 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
         longRunningOperation = await resource.UpdateAsync(waitUntil: WaitUntil.Completed, patchSchedulerData);
         resource = longRunningOperation.Value;
 
-        Assert.AreEqual(resourceName, resource.Data.Name);
-        Assert.AreEqual(DurableTaskSchedulerSkuName.Dedicated, resource.Data.Properties.Sku.Name);
-        Assert.AreEqual(DurableTaskResourceRedundancyState.None, resource.Data.Properties.Sku.RedundancyState);
-        Assert.AreEqual(1, resource.Data.Properties.IPAllowlist.Count);
+        Assert.That(resource.Data.Name, Is.EqualTo(resourceName));
+        Assert.That(resource.Data.Properties.Sku.Name, Is.EqualTo(DurableTaskSchedulerSkuName.Dedicated));
+        Assert.That(resource.Data.Properties.Sku.RedundancyState, Is.EqualTo(DurableTaskResourceRedundancyState.None));
+        Assert.That(resource.Data.Properties.IPAllowlist.Count, Is.EqualTo(1));
         Assert.Contains(PatchIpRange, resource.Data.Properties.IPAllowlist as IList);
-        Assert.AreEqual(1, resource.Data.Tags.Count);
+        Assert.That(resource.Data.Tags.Count, Is.EqualTo(1));
         Assert.That(resource.Data.Tags.Keys, Does.Contain(TagKeyEnv));
-        Assert.AreEqual(TagValueEnv, resource.Data.Tags[TagKeyEnv]);
-        Assert.AreEqual(DurableTaskProvisioningState.Succeeded, resource.Data.Properties.ProvisioningState);
+        Assert.That(resource.Data.Tags[TagKeyEnv], Is.EqualTo(TagValueEnv));
+        Assert.That(resource.Data.Properties.ProvisioningState, Is.EqualTo(DurableTaskProvisioningState.Succeeded));
 
         // Delete Scheduler
         await resource.DeleteAsync(WaitUntil.Completed);

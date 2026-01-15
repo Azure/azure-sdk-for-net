@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.Qumulo.Tests
             ResourceIdentifier fileResourceIdentifier = QumuloFileSystemResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, fileResourceName);
             QumuloFileSystemResource.ValidateResourceId(fileResourceIdentifier);
 
-            Assert.IsTrue(fileResourceIdentifier.ResourceType.Equals(QumuloFileSystemResource.ResourceType));
-            Assert.IsTrue(fileResourceIdentifier.Equals($"{ResGroup.Id}/providers/{QumuloFileSystemResource.ResourceType}/{fileResourceName}"));
+            Assert.That(fileResourceIdentifier.ResourceType.Equals(QumuloFileSystemResource.ResourceType), Is.True);
+            Assert.That(fileResourceIdentifier.Equals($"{ResGroup.Id}/providers/{QumuloFileSystemResource.ResourceType}/{fileResourceName}"), Is.True);
             Assert.Throws<ArgumentException>(() => QumuloFileSystemResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Qumulo.Tests
             string fileResourceName = Recording.GenerateAssetName("testResource-");
             QumuloFileSystemResource fileSystemResource = await CreateQumuloFileSystemResource(ResGroup, Location, fileResourceName);
 
-            Assert.IsTrue(fileSystemResource.HasData);
+            Assert.That(fileSystemResource.HasData, Is.True);
             Assert.NotNull(fileSystemResource.Data);
-            Assert.IsTrue(fileSystemResource.Data.Name.Equals(fileResourceName));
+            Assert.That(fileSystemResource.Data.Name.Equals(fileResourceName), Is.True);
         }
 
         [RecordedTest]
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Qumulo.Tests
             QumuloFileSystemResource fileSystemResource = await CreateQumuloFileSystemResource(ResGroup, Location, fileResourceName);
             await fileSystemResource.DeleteAsync(WaitUntil.Completed);
 
-            Assert.IsFalse(await collection.ExistsAsync(fileResourceName));
+            Assert.That((bool)await collection.ExistsAsync(fileResourceName), Is.False);
         }
 
         [RecordedTest]
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Qumulo.Tests
             fileSystemResourcePatch.Tags.Add("Counter", "1");
             QumuloFileSystemResource fileSystemResource2 = (await fileSystemResource.UpdateAsync(fileSystemResourcePatch)).Value;
 
-            Assert.AreEqual(fileSystemResource2.Data.Tags["Counter"], "1");
+            Assert.That(fileSystemResource2.Data.Tags["Counter"], Is.EqualTo("1"));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await fileSystemResource.UpdateAsync( null)).Value);
         }
 
@@ -96,18 +96,18 @@ namespace Azure.ResourceManager.Qumulo.Tests
             QumuloFileSystemResource fileSystemResource = await CreateQumuloFileSystemResource(ResGroup, Location, fileResourceName);
             QumuloFileSystemResource fileSystemResource2 = await fileSystemResource.AddTagAsync("Counter", "1");
 
-            Assert.AreEqual(fileSystemResource2.Data.Tags["Counter"], "1");
+            Assert.That(fileSystemResource2.Data.Tags["Counter"], Is.EqualTo("1"));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await fileSystemResource.AddTagAsync(null, "1")).Value);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await fileSystemResource.AddTagAsync("Counter", null)).Value);
         }
 
         private void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
-            Assert.AreEqual(r1.Location, r2.Location);
-            Assert.AreEqual(r1.Tags, r2.Tags);
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.Name, Is.EqualTo(r1.Name));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.That(r2.Location, Is.EqualTo(r1.Location));
+            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
         }
     }
 }

@@ -24,9 +24,9 @@ namespace Azure.Storage.Test
 
         public static void AssertSequenceEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual)
         {
-            Assert.AreEqual(expected.Count(), actual.Count(), "Actual sequence length does not match expected sequence length");
+            Assert.That(actual.Count(), Is.EqualTo(expected.Count()), "Actual sequence length does not match expected sequence length");
             (int Index, T Expected, T Actual)[] firstErrors = expected.Zip(actual, (e, a) => (Expected: e, Actual: a)).Select((x, i) => (Index: i, x.Expected, x.Actual)).Where(x => !x.Expected.Equals(x.Actual)).Take(5).ToArray();
-            Assert.IsFalse(firstErrors.Any(), $"Actual sequence does not match expected sequence at locations\n{string.Join("\n", firstErrors.Select(e => $"{e.Index} => expected = {e.Expected}, actual = {e.Actual}"))}");
+            Assert.That(firstErrors.Any(), Is.False, $"Actual sequence does not match expected sequence at locations\n{string.Join("\n", firstErrors.Select(e => $"{e.Index} => expected = {e.Expected}, actual = {e.Actual}"))}");
         }
 
         public static IEnumerable<byte> AsBytes(this Stream s)
@@ -47,7 +47,7 @@ namespace Azure.Storage.Test
                 {
                     if (predicate(e, a))
                     {
-                        Assert.AreEqual(e.Message, a.Message);
+                        Assert.That(a.Message, Is.EqualTo(e.Message));
                     }
                     else
                     {
@@ -148,8 +148,8 @@ namespace Azure.Storage.Test
         public static void AssertCacheableProperty<T>(T expected, Func<T> property)
         {
             T actual = property();
-            Assert.AreEqual(expected, actual); // first call calculates and caches value
-            Assert.AreSame(actual, property()); // subsequent calls use cached value
+            Assert.That(actual, Is.EqualTo(expected)); // first call calculates and caches value
+            Assert.That(property(), Is.SameAs(actual)); // subsequent calls use cached value
         }
 
         public static void AssertInconclusiveRecordingFriendly(RecordedTestMode mode, string message = default)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 
             var checkNameAvailabilityData = await Client.CheckSelfHelpNameAvailabilityAsync(checkNameScope, resourceData);
             Assert.NotNull(checkNameAvailabilityData);
-            Assert.IsTrue(checkNameAvailabilityData.Value.IsNameAvailable);
+            Assert.That(checkNameAvailabilityData.Value.IsNameAvailable, Is.True);
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 
             var checkNameAvailabilityData = await Client.CheckSelfHelpNameAvailabilityAsync(checkNameScope, data);
             Assert.NotNull(checkNameAvailabilityData);
-            Assert.IsFalse(checkNameAvailabilityData.Value.IsNameAvailable);
+            Assert.That(checkNameAvailabilityData.Value.IsNameAvailable, Is.False);
         }
 
         private SelfHelpNameAvailabilityContent CreateNameAvailabilityResource(string name)

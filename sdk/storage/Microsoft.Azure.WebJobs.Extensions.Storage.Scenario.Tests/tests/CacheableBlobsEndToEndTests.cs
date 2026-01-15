@@ -75,8 +75,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             await _fixture.JobHost.CallAsync(typeof(CacheableBlobsEndToEndTests).GetMethod("ByteArrayBindingCacheMissAsync"));
 
             // Verify that it was a cache miss
-            Assert.AreEqual(1, _numCacheMisses);
-            Assert.AreEqual(0, _numCacheHits);
+            Assert.That(_numCacheMisses, Is.EqualTo(1));
+            Assert.That(_numCacheHits, Is.EqualTo(0));
             // Verify that TryGet was called on the cache
             _fixture.CacheMock.Verify();
         }
@@ -109,8 +109,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             await _fixture.JobHost.CallAsync(typeof(CacheableBlobsEndToEndTests).GetMethod("ByteArrayBindingCacheHit"));
 
             // Verify that it was a cache hit
-            Assert.AreEqual(1, _numCacheHits);
-            Assert.AreEqual(0, _numCacheMisses);
+            Assert.That(_numCacheHits, Is.EqualTo(1));
+            Assert.That(_numCacheMisses, Is.EqualTo(0));
             // Verify that TryGet was called on the cache
             _fixture.CacheMock.Verify();
         }
@@ -164,13 +164,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         public static async Task ByteArrayBindingCacheMissAsync(
             [Blob(ContainerName + "/" + InputBlobName, FileAccess.Read)] ICacheAwareReadObject blob)
         {
-            Assert.IsFalse(blob.IsCacheHit);
+            Assert.That(blob.IsCacheHit, Is.False);
 
             using (Stream blobStream = blob.BlobStream)
             using (StreamReader reader = new StreamReader(blobStream))
             {
                 string result = await reader.ReadToEndAsync();
-                Assert.AreEqual(TestData, result);
+                Assert.That(result, Is.EqualTo(TestData));
                 _numCacheMisses = 1;
             }
         }
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         public static void ByteArrayBindingCacheHit(
             [Blob(ContainerName + "/" + InputBlobName, FileAccess.Read)] ICacheAwareReadObject blob)
         {
-            Assert.IsTrue(blob.IsCacheHit);
+            Assert.That(blob.IsCacheHit, Is.True);
 
             SharedMemoryMetadata cacheObj = blob.CacheObject;
             Assert.NotNull(cacheObj);
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         public static void ByteArrayBindingCacheHitVerifyFunctionDataCacheKey(
             [Blob(ContainerName + "/" + InputBlobName, FileAccess.Read)] ICacheAwareReadObject blob)
         {
-            Assert.AreEqual(_expectedBlobCacheKey, blob.CacheKey);
+            Assert.That(blob.CacheKey, Is.EqualTo(_expectedBlobCacheKey));
         }
 
         public class TestFixture
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 BlobServiceClient = new BlobServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
 
                 BlobContainer = BlobServiceClient.GetBlobContainerClient(nameResolver.ResolveInString(ContainerName));
-                Assert.False(await BlobContainer.ExistsAsync());
+                Assert.That((bool)await BlobContainer.ExistsAsync(), Is.False);
                 await BlobContainer.CreateAsync();
 
                 OutputBlobContainer = BlobServiceClient.GetBlobContainerClient(nameResolver.ResolveInString(OutputContainerName));
@@ -313,11 +313,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 string blobName = string.Format("locks/{0}/{1}", HostId, lockId);
                 var lockBlob = container.GetBlockBlobClient(blobName);
 
-                Assert.True(await lockBlob.ExistsAsync());
+                Assert.That((bool)await lockBlob.ExistsAsync(), Is.True);
                 BlobProperties blobProperties = await lockBlob.GetPropertiesAsync();
 
-                Assert.AreEqual(state, blobProperties.LeaseState);
-                Assert.AreEqual(status, blobProperties.LeaseStatus);
+                Assert.That(blobProperties.LeaseState, Is.EqualTo(state));
+                Assert.That(blobProperties.LeaseStatus, Is.EqualTo(status));
             }
 
             public async Task DisposeAsync()

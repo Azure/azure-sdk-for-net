@@ -30,7 +30,7 @@ namespace Azure.Core.Tests
             await mockTransport.RequestGate.Cycle(new MockResponse(200));
 
             Response response = await task.TimeoutAfterDefault();
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace Azure.Core.Tests
             }
 
             Response response = await task.TimeoutAfterDefault();
-            Assert.AreEqual(500, response.Status);
+            Assert.That(response.Status, Is.EqualTo(500));
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace Azure.Core.Tests
             }
 
             Response response = await task.TimeoutAfterDefault();
-            Assert.AreEqual(500, response.Status);
+            Assert.That(response.Status, Is.EqualTo(500));
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace Azure.Core.Tests
             }
 
             Response response = await task.TimeoutAfterDefault();
-            Assert.AreEqual(500, response.Status);
+            Assert.That(response.Status, Is.EqualTo(500));
         }
 
         [Theory]
@@ -125,7 +125,7 @@ namespace Azure.Core.Tests
             Response response = await task.TimeoutAfterDefault();
 
             AssertExponentialDelay(TimeSpan.FromSeconds(expected), retryDelay);
-            Assert.AreEqual(501, response.Status);
+            Assert.That(response.Status, Is.EqualTo(501));
         }
 
         private void AssertExponentialDelay(TimeSpan expected, TimeSpan actual)

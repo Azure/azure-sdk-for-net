@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             VMwareDatastoreResource datastore = lro.Value;
             Assert.IsNotNull(datastore);
             VMwareDatastoreData resourceData = datastore.Data;
-            Assert.AreEqual(resourceData.Name, datastoreName);
+            Assert.That(datastoreName, Is.EqualTo(resourceData.Name));
 
             // Get
             VMwareDatastoreResource result = await collection.GetAsync(datastoreName);
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 
             // Check exists
             bool isExist = await collection.ExistsAsync(datastoreName);
-            Assert.IsTrue(isExist);
+            Assert.That(isExist, Is.True);
 
             // Get if exists
             NullableResponse<VMwareDatastoreResource> response = await collection.GetIfExistsAsync(datastoreName);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
                 if (item.Data.Name == datastoreName)
                     isExist = true;
             }
-            Assert.IsTrue(isExist);
+            Assert.That(isExist, Is.True);
 
             // Delete
             await datastore.DeleteAsync(WaitUntil.Completed);

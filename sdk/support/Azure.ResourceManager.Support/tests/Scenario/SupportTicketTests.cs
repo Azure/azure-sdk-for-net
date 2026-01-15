@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task Exist()
         {
             var flag = await _supportAzureServiceCollection.ExistsAsync(_existSupportTicketName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
         }
 
         [RecordedTest]
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Support.Tests
             var content = new SupportNameAvailabilityContent(supportTicketName, SupportResourceType.MicrosoftSupportSupportTickets);
             var result = await supportTicket.Value.CheckCommunicationNameAvailabilityAsync(content);
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.Value.IsNameAvailable, true);
+            Assert.That(result.Value.IsNameAvailable, Is.EqualTo(true));
         }
 
         [RecordedTest]
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Support.Tests
             var supportTicket = await _supportAzureServiceCollection.GetAsync(supportTicketName);
             Assert.IsNotNull(supportTicket);
             Assert.IsNotEmpty(supportTicket.Value.Data.Id);
-            Assert.AreEqual(supportTicket.Value.Data.Name, supportTicketName);
-            Assert.AreEqual(supportTicket.Value.Data.Title, "dotnet sdk unit test, please close");
+            Assert.That(supportTicketName, Is.EqualTo(supportTicket.Value.Data.Name));
+            Assert.That(supportTicket.Value.Data.Title, Is.EqualTo("dotnet sdk unit test, please close"));
         }
 
         [RecordedTest]
@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.Support.Tests
             supportTicket = await _supportAzureServiceCollection.GetAsync(_existSupportTicketName);
             Assert.IsNotNull(supportTicket);
             Assert.IsNotEmpty(supportTicket.Value.Data.Id);
-            Assert.AreEqual(supportTicket.Value.Data.Name, _existSupportTicketName);
-            Assert.AreNotEqual(supportTicket.Value.Data.ContactDetails.FirstName, firstName);
+            Assert.That(supportTicket.Value.Data.Name, Is.EqualTo(_existSupportTicketName));
+            Assert.That(firstName, Is.Not.EqualTo(supportTicket.Value.Data.ContactDetails.FirstName));
         }
 
         private void ValidateGetSupportTicket(SupportTicketData supportTicket, string supportTicketName)
         {
             Assert.IsNotNull(supportTicket);
             Assert.IsNotEmpty(supportTicket.Id);
-            Assert.AreEqual(supportTicket.Name, supportTicketName);
+            Assert.That(supportTicketName, Is.EqualTo(supportTicket.Name));
         }
 
         private SupportTicketData BuildSupportTicketData()

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             List<EventHubsPrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             EventHubsPrivateEndpointConnectionResource privateEndpointConnection = privateEndpointConnections[0];
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
-            Assert.AreEqual(EventHubsPrivateLinkConnectionStatus.Pending, privateEndpointConnection.Data.ConnectionState.Status);
+            Assert.That(privateEndpointConnection.Data.ConnectionState.Status, Is.EqualTo(EventHubsPrivateLinkConnectionStatus.Pending));
 
             _ = await _privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnection.Data.Name, new EventHubsPrivateEndpointConnectionData()
             {
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.EventHubs.Tests
             privateEndpoint = await privateEndpoint.GetAsync();
             privateEndpointConnection = await _privateEndpointConnectionCollection.GetAsync(privateEndpointConnection.Data.Name);
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
-            Assert.AreEqual(EventHubsPrivateLinkConnectionStatus.Approved, privateEndpointConnection.Data.ConnectionState.Status);
+            Assert.That(privateEndpointConnection.Data.ConnectionState.Status, Is.EqualTo(EventHubsPrivateLinkConnectionStatus.Approved));
         }
 
         [RecordedTest]
         public async Task GetAllPrivateEndpointConnection()
         {
             PrivateEndpointResource privateEndpoint1 = await CreatePrivateEndpoint();
-            Assert.AreEqual(privateEndpoint1.Data.ManualPrivateLinkServiceConnections.Count, 1);
+            Assert.That(privateEndpoint1.Data.ManualPrivateLinkServiceConnections.Count, Is.EqualTo(1));
 
             List<EventHubsPrivateEndpointConnectionResource> privateEndpointConnections1 = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, privateEndpointConnections1.Count);
+            Assert.That(privateEndpointConnections1.Count, Is.EqualTo(1));
             VerifyPrivateEndpointConnections(privateEndpoint1.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnections1[0]);
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             List<EventHubsPrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             string name = privateEndpointConnections[0].Data.Name;
-            Assert.IsTrue(await _privateEndpointConnectionCollection.ExistsAsync(name));
+            Assert.That((bool)await _privateEndpointConnectionCollection.ExistsAsync(name), Is.True);
             var id = _privateEndpointConnectionCollection.Id;
             id = EventHubsPrivateEndpointConnectionResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, name);
             EventHubsPrivateEndpointConnectionResource privateEndpointConnection = Client.GetEventHubsPrivateEndpointConnectionResource(id);
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             await privateEndpointConnection.DeleteAsync(WaitUntil.Completed);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _privateEndpointConnectionCollection.GetAsync(name); });
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
             privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(0, privateEndpointConnections.Count);
+            Assert.That(privateEndpointConnections.Count, Is.EqualTo(0));
         }
 
         protected async Task<PrivateEndpointResource> CreatePrivateEndpoint()
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             // Services will give diffferent ids and names for the incoming private endpoint connections, so comparing them is meaningless
             //Assert.AreEqual(expectedValue.Id, actualValue.Id);
             //Assert.AreEqual(expectedValue.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.ConnectionState.Status, actualValue.Data.ConnectionState.Status.ToString());
-            Assert.AreEqual(expectedValue.ConnectionState.Description, actualValue.Data.ConnectionState.Description);
+            Assert.That(actualValue.Data.ConnectionState.Status.ToString(), Is.EqualTo(expectedValue.ConnectionState.Status));
+            Assert.That(actualValue.Data.ConnectionState.Description, Is.EqualTo(expectedValue.ConnectionState.Description));
         }
     }
 }

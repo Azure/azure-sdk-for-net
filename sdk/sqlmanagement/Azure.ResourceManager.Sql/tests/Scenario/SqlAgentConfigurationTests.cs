@@ -53,16 +53,16 @@ namespace Azure.ResourceManager.Sql.Tests
             };
             var agentConfig = await collection.CreateOrUpdateAsync(WaitUntil.Completed, data);
             Assert.IsNotNull(agentConfig);
-            Assert.AreEqual("current", agentConfig.Value.Data.Name);
-            Assert.AreEqual("Enabled", agentConfig.Value.Data.State.ToString());
-            Assert.AreEqual("Microsoft.Sql/managedInstances/sqlAgent", agentConfig.Value.Data.ResourceType.ToString());
+            Assert.That(agentConfig.Value.Data.Name, Is.EqualTo("current"));
+            Assert.That(agentConfig.Value.Data.State.ToString(), Is.EqualTo("Enabled"));
+            Assert.That(agentConfig.Value.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Sql/managedInstances/sqlAgent"));
 
             // 3.Get
             var getAgentConfig = await collection.GetAsync();
             Assert.IsNotNull(getAgentConfig);
-            Assert.AreEqual("current", getAgentConfig.Value.Data.Name);
-            Assert.AreEqual("Enabled", getAgentConfig.Value.Data.State.ToString());
-            Assert.AreEqual("Microsoft.Sql/managedInstances/sqlAgent", getAgentConfig.Value.Data.ResourceType.ToString());
+            Assert.That(getAgentConfig.Value.Data.Name, Is.EqualTo("current"));
+            Assert.That(getAgentConfig.Value.Data.State.ToString(), Is.EqualTo("Enabled"));
+            Assert.That(getAgentConfig.Value.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Sql/managedInstances/sqlAgent"));
 
             // 4.GetAvailableLocations
             var getAvailableLocationsAgentConf = await collection.GetAvailableLocationsAsync();

@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Console.WriteLine($"Delete Trained Model Response Status: {response.Status}");
             #endregion
 
-            Assert.AreEqual(204, response.Status); // Assuming a 204 No Content response indicates successful deletion
+            Assert.That(response.Status, Is.EqualTo(204)); // Assuming a 204 No Content response indicates successful deletion
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Console.WriteLine($"Delete Trained Model Async Response Status: {response.Status}");
             #endregion
 
-            Assert.AreEqual(204, response.Status); // Assuming a 204 No Content response indicates successful deletion
+            Assert.That(response.Status, Is.EqualTo(204)); // Assuming a 204 No Content response indicates successful deletion
         }
     }
 }

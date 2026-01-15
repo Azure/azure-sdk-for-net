@@ -49,7 +49,7 @@ namespace Azure.Communication.CallingServer.Tests
             var response = await callConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
 
             Assert.NotNull(response);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyCallConnectionProperties(response);
         }
 
@@ -62,7 +62,7 @@ namespace Azure.Communication.CallingServer.Tests
             var response = callConnection.GetCallConnectionProperties();
 
             Assert.NotNull(response);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyCallConnectionProperties(response);
         }
         [Test]
@@ -73,7 +73,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.GetCallConnectionProperties());
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(204);
 
             var response = await callConnection.HangUpAsync(false).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(204);
 
             var response = callConnection.HangUp(false);
-            Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.HangUpAsync(false).ConfigureAwait(false));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.HangUp(false));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
@@ -136,7 +136,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
 
             var response = await callConnection.TransferCallToParticipantAsync(targetParticipant).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             verifyOperationContext(response);
         }
 
@@ -147,7 +147,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
 
             var response = callConnection.TransferCallToParticipant(targetParticipant);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             verifyOperationContext(response);
         }
 
@@ -159,7 +159,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferCallToParticipantAsync(targetParticipant).ConfigureAwait(false));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
@@ -170,7 +170,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferCallToParticipant(targetParticipant));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
@@ -180,7 +180,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(202, AddParticipantsPayload);
 
             var response = await callConnection.AddParticipantsAsync(participantsToAdd).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             verifyAddParticipantsResult(response);
         }
 
@@ -191,7 +191,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(202, AddParticipantsPayload);
 
             var response = callConnection.AddParticipants(participantsToAdd);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             verifyAddParticipantsResult(response);
         }
 
@@ -203,7 +203,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.AddParticipantsAsync(participantsToAdd).ConfigureAwait(false));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
@@ -214,7 +214,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.AddParticipants(participantsToAdd));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_GetParticipant))]
@@ -224,7 +224,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(200, GetParticipantPayload);
 
             var response = await callConnection.GetParticipantAsync(participantMri).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyGetParticipantResult(response);
         }
 
@@ -235,7 +235,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(200, GetParticipantPayload);
 
             var response = callConnection.GetParticipant(participantMri);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyGetParticipantResult(response);
         }
 
@@ -247,7 +247,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.GetParticipantAsync(participantMri).ConfigureAwait(false));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_GetParticipant))]
@@ -258,7 +258,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.GetParticipant(participantMri));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -268,7 +268,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(200, GetParticipantsPayload);
 
             var response = await callConnection.GetParticipantsAsync().ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyGetParticipantsResult(response.Value);
         }
 
@@ -279,7 +279,7 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(200, GetParticipantsPayload);
 
             var response = callConnection.GetParticipants();
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyGetParticipantsResult(response.Value);
         }
 
@@ -291,7 +291,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.GetParticipantsAsync().ConfigureAwait(false));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -302,7 +302,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.GetParticipants());
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
@@ -312,8 +312,8 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
 
             var response = await callConnection.RemoveParticipantsAsync(participants).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
-            Assert.AreEqual(OperationContext, response.Value.OperationContext);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            Assert.That(response.Value.OperationContext, Is.EqualTo(OperationContext));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
@@ -323,8 +323,8 @@ namespace Azure.Communication.CallingServer.Tests
             var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
 
             var response = callConnection.RemoveParticipants(participants);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
-            Assert.AreEqual(OperationContext, response.Value.OperationContext);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            Assert.That(response.Value.OperationContext, Is.EqualTo(OperationContext));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
@@ -335,7 +335,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.RemoveParticipantsAsync(participants).ConfigureAwait(false));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
@@ -346,7 +346,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.RemoveParticipants(participants));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -358,7 +358,7 @@ namespace Azure.Communication.CallingServer.Tests
 
             var response = callConnection.GetCallMedia();
             Assert.IsNotNull(response);
-            Assert.AreEqual(connectionId, response.CallConnectionId);
+            Assert.That(response.CallConnectionId, Is.EqualTo(connectionId));
         }
 
         private CallConnection CreateMockCallConnection(int responseCode, string? responseContent = null, string callConnectionId = "9ec7da16-30be-4e74-a941-285cfc4bffc5")
@@ -401,38 +401,38 @@ namespace Azure.Communication.CallingServer.Tests
 
         private void verifyOperationContext(TransferCallToParticipantResult result)
         {
-            Assert.AreEqual(OperationContext, result.OperationContext);
+            Assert.That(result.OperationContext, Is.EqualTo(OperationContext));
         }
 
         private void verifyAddParticipantsResult(AddParticipantsResult result)
         {
-            Assert.AreEqual(2, result.Participants.Count);
+            Assert.That(result.Participants.Count, Is.EqualTo(2));
             var identifier = (CommunicationUserIdentifier) result.Participants[0].Identifier;
-            Assert.AreEqual(ParticipantUserId, identifier.Id);
-            Assert.IsFalse(result.Participants[0].IsMuted);
+            Assert.That(identifier.Id, Is.EqualTo(ParticipantUserId));
+            Assert.That(result.Participants[0].IsMuted, Is.False);
             var identifier2 = (PhoneNumberIdentifier) result.Participants[1].Identifier;
-            Assert.AreEqual(PhoneNumber, identifier2.PhoneNumber);
-            Assert.IsTrue(result.Participants[1].IsMuted);
+            Assert.That(identifier2.PhoneNumber, Is.EqualTo(PhoneNumber));
+            Assert.That(result.Participants[1].IsMuted, Is.True);
 
-            Assert.AreEqual(OperationContext, result.OperationContext);
+            Assert.That(result.OperationContext, Is.EqualTo(OperationContext));
         }
 
         private void verifyGetParticipantResult(CallParticipant participant)
         {
             var identifier = (CommunicationUserIdentifier)participant.Identifier;
-            Assert.AreEqual(ParticipantUserId, identifier.Id);
-            Assert.IsFalse(participant.IsMuted);
+            Assert.That(identifier.Id, Is.EqualTo(ParticipantUserId));
+            Assert.That(participant.IsMuted, Is.False);
         }
 
         private void verifyGetParticipantsResult(IReadOnlyList<CallParticipant> participants)
         {
-            Assert.AreEqual(2, participants.Count);
+            Assert.That(participants.Count, Is.EqualTo(2));
             var identifier = (CommunicationUserIdentifier)participants[0].Identifier;
-            Assert.AreEqual(ParticipantUserId, identifier.Id);
-            Assert.IsFalse(participants[0].IsMuted);
+            Assert.That(identifier.Id, Is.EqualTo(ParticipantUserId));
+            Assert.That(participants[0].IsMuted, Is.False);
             var identifier2 = (PhoneNumberIdentifier)participants[1].Identifier;
-            Assert.AreEqual(PhoneNumber, identifier2.PhoneNumber);
-            Assert.IsTrue(participants[1].IsMuted);
+            Assert.That(identifier2.PhoneNumber, Is.EqualTo(PhoneNumber));
+            Assert.That(participants[1].IsMuted, Is.True);
         }
     }
 }

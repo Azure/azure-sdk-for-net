@@ -347,7 +347,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
         EventWrittenEventArgs logEvent = listener.GetAndValidateSingleEvent(RequestContentEvent, "RequestContent", EventLevel.Verbose, SystemClientModelEventSourceName); // RequestContentEvent
-        Assert.AreEqual(requestContentLimited, logEvent.GetProperty<byte[]>("content"));
+        Assert.That(logEvent.GetProperty<byte[]>("content"), Is.EqualTo(requestContentLimited));
         CollectionAssert.IsEmpty(listener.EventsById(RequestContentTextEvent));
     }
 
@@ -384,7 +384,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
 
         TestLogger logger = factory!.GetLogger(LoggingPolicyCategoryName);
         LoggerEvent logEvent = logger.GetAndValidateSingleEvent(RequestContentEvent, "RequestContent", LogLevel.Debug);
-        Assert.AreEqual(requestContentLimited, logEvent.GetValueFromArguments<byte[]>("content"));
+        Assert.That(logEvent.GetValueFromArguments<byte[]>("content"), Is.EqualTo(requestContentLimited));
         CollectionAssert.IsEmpty(logger.EventsById(RequestContentTextEvent));
     }
 
@@ -418,7 +418,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
         EventWrittenEventArgs requestEvent = listener!.GetAndValidateSingleEvent(RequestContentTextEvent, "RequestContentText", EventLevel.Verbose, SystemClientModelEventSourceName);
-        Assert.AreEqual("Hello", requestEvent.GetProperty<string>("content"));
+        Assert.That(requestEvent.GetProperty<string>("content"), Is.EqualTo("Hello"));
 
         CollectionAssert.IsEmpty(listener!.EventsById(RequestContentEvent));
     }
@@ -455,7 +455,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
 
         TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
         LoggerEvent logEvent = logger.GetAndValidateSingleEvent(RequestContentTextEvent, "RequestContentText", LogLevel.Debug);
-        Assert.AreEqual("Hello", logEvent.GetValueFromArguments<string>("content"));
+        Assert.That(logEvent.GetValueFromArguments<string>("content"), Is.EqualTo("Hello"));
         CollectionAssert.IsEmpty(logger.EventsById(RequestContentEvent)); // RequestContentEvent
     }
 
@@ -474,7 +474,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
         await SendRequestWithStreamingResponseSyncOrAsync(response, true, loggingOptions);
 
         EventWrittenEventArgs contentEvent = listener.GetAndValidateSingleEvent(ResponseContentTextEvent, "ResponseContentText", EventLevel.Verbose, SystemClientModelEventSourceName);
-        Assert.AreEqual("Hello", contentEvent.GetProperty<string>("content"));
+        Assert.That(contentEvent.GetProperty<string>("content"), Is.EqualTo("Hello"));
     }
 
     [Test]
@@ -493,7 +493,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
 
         TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
         LoggerEvent contentEvent = logger.GetAndValidateSingleEvent(13, "ResponseContentText", LogLevel.Debug);
-        Assert.AreEqual("Hello", contentEvent.GetValueFromArguments<string>("content"));
+        Assert.That(contentEvent.GetValueFromArguments<string>("content"), Is.EqualTo("Hello"));
     }
 
     [Test]
@@ -510,7 +510,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
         await SendRequestWithStreamingResponseSyncOrAsync(response, false, loggingOptions);
 
         EventWrittenEventArgs responseEvent = listener.GetAndValidateSingleEvent(11, "ResponseContentBlock", EventLevel.Verbose, SystemClientModelEventSourceName);
-        Assert.AreEqual(Encoding.UTF8.GetBytes("Hello"), responseEvent.GetProperty<byte[]>("content"));
+        Assert.That(responseEvent.GetProperty<byte[]>("content"), Is.EqualTo(Encoding.UTF8.GetBytes("Hello")));
     }
 
     [Test]
@@ -529,7 +529,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
 
         TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
         LoggerEvent responseEvent = logger.GetAndValidateSingleEvent(11, "ResponseContentBlock", LogLevel.Debug);
-        Assert.AreEqual(Encoding.UTF8.GetBytes("Hello"), responseEvent.GetValueFromArguments<byte[]>("content"));
+        Assert.That(responseEvent.GetValueFromArguments<byte[]>("content"), Is.EqualTo(Encoding.UTF8.GetBytes("Hello")));
     }
 
     #region Helpers
@@ -586,20 +586,20 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
         if (IsAsync)
         {
 #if NET462
-            Assert.AreEqual(6, await response.ContentStream.ReadAsync(buffer, 5, 6));
-            Assert.AreEqual(5, await response.ContentStream.ReadAsync(buffer, 6, 5));
-            Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer, 0, 5));
+            Assert.That(await response.ContentStream.ReadAsync(buffer, 5, 6), Is.EqualTo(6));
+            Assert.That(await response.ContentStream.ReadAsync(buffer, 6, 5), Is.EqualTo(5));
+            Assert.That(await response.ContentStream.ReadAsync(buffer, 0, 5), Is.EqualTo(0));
 #else
-            Assert.AreEqual(6, await response.ContentStream.ReadAsync(buffer.AsMemory(5, 6)));
-            Assert.AreEqual(5, await response.ContentStream.ReadAsync(buffer.AsMemory(6, 5)));
-            Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer.AsMemory(0, 5)));
+            Assert.That(await response.ContentStream.ReadAsync(buffer.AsMemory(5, 6)), Is.EqualTo(6));
+            Assert.That(await response.ContentStream.ReadAsync(buffer.AsMemory(6, 5)), Is.EqualTo(5));
+            Assert.That(await response.ContentStream.ReadAsync(buffer.AsMemory(0, 5)), Is.EqualTo(0));
 #endif
         }
         else
         {
-            Assert.AreEqual(6, response.ContentStream.Read(buffer, 5, 6));
-            Assert.AreEqual(5, response.ContentStream.Read(buffer, 6, 5));
-            Assert.AreEqual(0, response.ContentStream.Read(buffer, 0, 5));
+            Assert.That(response.ContentStream.Read(buffer, 5, 6), Is.EqualTo(6));
+            Assert.That(response.ContentStream.Read(buffer, 6, 5), Is.EqualTo(5));
+            Assert.That(response.ContentStream.Read(buffer, 0, 5), Is.EqualTo(0));
         }
     }
 

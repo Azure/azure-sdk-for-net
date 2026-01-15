@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             };
             ArmOperation<NetworkFabricIPPrefixResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.IpPrefixName, data);
             NetworkFabricIPPrefixResource createResult = lro.Value;
-            Assert.AreEqual(TestEnvironment.IpPrefixName, createResult.Data.Name);
+            Assert.That(createResult.Data.Name, Is.EqualTo(TestEnvironment.IpPrefixName));
 
             NetworkFabricIPPrefixResource ipPrefix = Client.GetNetworkFabricIPPrefixResource(ipPrefixResourceId);
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....");
             NetworkFabricIPPrefixResource getResult = await ipPrefix.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(TestEnvironment.IpPrefixName, getResult.Data.Name);
+            Assert.That(getResult.Data.Name, Is.EqualTo(TestEnvironment.IpPrefixName));
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             var deleteResponse = await ipPrefix.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteResponse.HasCompleted);
+            Assert.That(deleteResponse.HasCompleted, Is.True);
         }
     }
 }

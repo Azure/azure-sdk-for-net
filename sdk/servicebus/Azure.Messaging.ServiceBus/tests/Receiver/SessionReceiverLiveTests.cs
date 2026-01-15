@@ -55,14 +55,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     var sentMsg = sentMessageIdToMsg[peekedMessage.MessageId];
 
                     sentMessageIdToMsg.Remove(peekedMessage.MessageId);
-                    Assert.AreEqual(sentMsg.Body.ToString(), peekedText);
-                    Assert.AreEqual(sentMsg.SessionId, peekedMessage.SessionId);
-                    Assert.IsTrue(peekedMessage.SequenceNumber >= sequenceNumber);
+                    Assert.That(peekedText, Is.EqualTo(sentMsg.Body.ToString()));
+                    Assert.That(peekedMessage.SessionId, Is.EqualTo(sentMsg.SessionId));
+                    Assert.That(peekedMessage.SequenceNumber >= sequenceNumber, Is.True);
                     ct++;
                 }
                 if (sequenceNumber == 1)
                 {
-                    Assert.AreEqual(messageCt, ct);
+                    Assert.That(ct, Is.EqualTo(messageCt));
                 }
             }
         }
@@ -121,10 +121,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     foreach (ServiceBusReceivedMessage msg in await receiver.PeekMessagesAsync(
                         maxMessages: peekCt))
                     {
-                        Assert.IsTrue(msg.SequenceNumber > seq);
+                        Assert.That(msg.SequenceNumber > seq, Is.True);
                         if (seq > 0)
                         {
-                            Assert.IsTrue(msg.SequenceNumber == seq + 1);
+                            Assert.That(msg.SequenceNumber == seq + 1, Is.True);
                         }
                         seq = msg.SequenceNumber;
                     }
@@ -154,10 +154,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 for (int i = 0; i < messageCt; i++)
                 {
                     ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync();
-                    Assert.IsTrue(msg.SequenceNumber > seq);
+                    Assert.That(msg.SequenceNumber > seq, Is.True);
                     if (seq > 0)
                     {
-                        Assert.IsTrue(msg.SequenceNumber == seq + 1);
+                        Assert.That(msg.SequenceNumber == seq + 1, Is.True);
                     }
                     seq = msg.SequenceNumber;
                 }
@@ -191,7 +191,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         maxMessages: 10))
                     {
                         var sessionId = receiver.SessionId;
-                        Assert.AreEqual(sessionId, peekedMessage.SessionId);
+                        Assert.That(peekedMessage.SessionId, Is.EqualTo(sessionId));
                     }
 
                     // Close the receiver client when we are done with it. Since the sessionClient doesn't own the underlying connection, the connection remains open, but the session link will be closed.
@@ -275,17 +275,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 foreach (var item in await receiver.ReceiveMessagesAsync(messageCount))
                 {
                     messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                    Assert.AreEqual(item.DeliveryCount, 1);
+                    Assert.That(item.MessageId, Is.EqualTo(messageEnum.Current.MessageId));
+                    Assert.That(item.SessionId, Is.EqualTo(messageEnum.Current.SessionId));
+                    Assert.That(item.DeliveryCount, Is.EqualTo(1));
                 }
 
                 messageEnum.Reset();
                 foreach (var item in await receiver.PeekMessagesAsync(messageCount))
                 {
                     messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
+                    Assert.That(item.MessageId, Is.EqualTo(messageEnum.Current.MessageId));
+                    Assert.That(item.SessionId, Is.EqualTo(messageEnum.Current.SessionId));
                 }
             }
         }
@@ -323,12 +323,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     foreach (var item in await receiver.ReceiveMessagesAsync(remainingMessages))
                     {
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
+                        Assert.That(item.MessageId, Is.EqualTo(messageEnum.Current.MessageId));
+                        Assert.That(item.SessionId, Is.EqualTo(messageEnum.Current.SessionId));
                         remainingMessages--;
                     }
                 }
-                Assert.AreEqual(0, remainingMessages);
+                Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var peekedMessage = receiver.PeekMessageAsync();
                 Assert.IsNull(peekedMessage.Result);
@@ -422,12 +422,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
+                        Assert.That(item.MessageId, Is.EqualTo(messageEnum.Current.MessageId));
+                        Assert.That(item.SessionId, Is.EqualTo(messageEnum.Current.SessionId));
                         await receiver.CompleteMessageAsync(item);
                     }
                 }
-                Assert.AreEqual(0, remainingMessages);
+                Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var peekedMessage = receiver.PeekMessageAsync();
                 Assert.IsNull(peekedMessage.Result);
@@ -464,13 +464,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId, msg.MessageId);
-                        Assert.AreEqual(messageEnum.Current.SessionId, msg.SessionId);
+                        Assert.That(msg.MessageId, Is.EqualTo(messageEnum.Current.MessageId));
+                        Assert.That(msg.SessionId, Is.EqualTo(messageEnum.Current.SessionId));
                         receivedMessages.Add(msg);
-                        Assert.AreEqual(msg.DeliveryCount, 1);
+                        Assert.That(msg.DeliveryCount, Is.EqualTo(1));
                     }
                 }
-                Assert.AreEqual(0, remainingMessages);
+                Assert.That(remainingMessages, Is.EqualTo(0));
 
                 // don't abandon in the receive loop
                 // as this would make the message available to be immediately received again
@@ -485,10 +485,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     receivedMessageCount++;
                     messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
+                    Assert.That(item.MessageId, Is.EqualTo(messageEnum.Current.MessageId));
+                    Assert.That(item.SessionId, Is.EqualTo(messageEnum.Current.SessionId));
                 }
-                Assert.AreEqual(messageCount, receivedMessageCount);
+                Assert.That(receivedMessageCount, Is.EqualTo(messageCount));
             }
         }
 
@@ -520,12 +520,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
+                        Assert.That(item.MessageId, Is.EqualTo(messageEnum.Current.MessageId));
+                        Assert.That(item.SessionId, Is.EqualTo(messageEnum.Current.SessionId));
                         await receiver.DeadLetterMessageAsync(item, "testReason", "testDescription");
                     }
                 }
-                Assert.AreEqual(0, remainingMessages);
+                Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var peekedMessage = receiver.PeekMessageAsync();
                 Assert.IsNull(peekedMessage.Result);
@@ -543,14 +543,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId, msg.MessageId);
-                        Assert.AreEqual(messageEnum.Current.SessionId, msg.SessionId);
-                        Assert.AreEqual("testReason", msg.DeadLetterReason);
-                        Assert.AreEqual("testDescription", msg.DeadLetterErrorDescription);
+                        Assert.That(msg.MessageId, Is.EqualTo(messageEnum.Current.MessageId));
+                        Assert.That(msg.SessionId, Is.EqualTo(messageEnum.Current.SessionId));
+                        Assert.That(msg.DeadLetterReason, Is.EqualTo("testReason"));
+                        Assert.That(msg.DeadLetterErrorDescription, Is.EqualTo("testDescription"));
                         await deadLetterReceiver.CompleteMessageAsync(msg);
                     }
                 }
-                Assert.AreEqual(0, remainingMessages);
+                Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var deadLetterMessage = await deadLetterReceiver.PeekMessageAsync();
                 Assert.IsNull(deadLetterMessage);
@@ -588,8 +588,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
+                        Assert.That(item.MessageId, Is.EqualTo(messageEnum.Current.MessageId));
+                        Assert.That(item.SessionId, Is.EqualTo(messageEnum.Current.SessionId));
                         var props = new Dictionary<string, object>();
                         // these should be ignored by DeadLetter property getters as they are not strings
                         props[AmqpMessageConstants.DeadLetterReasonHeader] = DateTime.UtcNow;
@@ -598,7 +598,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         await receiver.DeadLetterMessageAsync(item, props);
                     }
                 }
-                Assert.AreEqual(0, remainingMessages);
+                Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var peekedMessage = receiver.PeekMessageAsync();
                 Assert.IsNull(peekedMessage.Result);
@@ -616,8 +616,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId, msg.MessageId);
-                        Assert.AreEqual(messageEnum.Current.SessionId, msg.SessionId);
+                        Assert.That(msg.MessageId, Is.EqualTo(messageEnum.Current.MessageId));
+                        Assert.That(msg.SessionId, Is.EqualTo(messageEnum.Current.SessionId));
                         Assert.IsNull(msg.DeadLetterErrorDescription);
                         Assert.IsNull(msg.DeadLetterReason);
                         Assert.IsNotNull(msg.ApplicationProperties[AmqpMessageConstants.DeadLetterReasonHeader]);
@@ -625,7 +625,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         await deadLetterReceiver.CompleteMessageAsync(msg);
                     }
                 }
-                Assert.AreEqual(0, remainingMessages);
+                Assert.That(remainingMessages, Is.EqualTo(0));
 
                 var deadLetterMessage = await deadLetterReceiver.PeekMessageAsync();
                 Assert.IsNull(deadLetterMessage);
@@ -661,20 +661,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId.ToString(), item.MessageId);
-                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
+                        Assert.That(item.MessageId, Is.EqualTo(messageEnum.Current.MessageId.ToString()));
+                        Assert.That(item.SessionId, Is.EqualTo(messageEnum.Current.SessionId));
                         sequenceNumbers.Add(item.SequenceNumber);
                         await receiver.DeferMessageAsync(item);
                     }
                 }
-                Assert.AreEqual(0, remainingMessages);
+                Assert.That(remainingMessages, Is.EqualTo(0));
                 IReadOnlyList<ServiceBusReceivedMessage> deferedMessages = await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers);
 
                 var messageList = messages.ToList();
-                Assert.AreEqual(messageList.Count, deferedMessages.Count);
+                Assert.That(deferedMessages.Count, Is.EqualTo(messageList.Count));
                 for (int i = 0; i < messageList.Count; i++)
                 {
-                    Assert.AreEqual(messageList[i].MessageId, deferedMessages[i].MessageId);
+                    Assert.That(deferedMessages[i].MessageId, Is.EqualTo(messageList[i].MessageId));
                 }
             }
         }
@@ -701,7 +701,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     isSessionSpecified ? sessionId1 : null);
                 if (isSessionSpecified)
                 {
-                    Assert.AreEqual(sessionId1, receiver.SessionId);
+                    Assert.That(receiver.SessionId, Is.EqualTo(sessionId1));
                 }
                 ServiceBusReceivedMessage[] receivedMessages = (await receiver.ReceiveMessagesAsync(messageCount)).ToArray();
 
@@ -718,10 +718,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // Complete Messages
                 await receiver.CompleteMessageAsync(receivedMessage);
 
-                Assert.AreEqual(messageCount, receivedMessages.Length);
+                Assert.That(receivedMessages.Length, Is.EqualTo(messageCount));
                 if (isSessionSpecified)
                 {
-                    Assert.AreEqual(message.MessageId, receivedMessage.MessageId);
+                    Assert.That(receivedMessage.MessageId, Is.EqualTo(message.MessageId));
                 }
 
                 var peekedMessage = receiver.PeekMessageAsync();
@@ -748,15 +748,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     isSessionSpecified ? "sessionId1" : null);
                 if (isSessionSpecified)
                 {
-                    Assert.AreEqual("sessionId1", receiver.SessionId);
+                    Assert.That(receiver.SessionId, Is.EqualTo("sessionId1"));
                 }
 
                 var message = await receiver.ReceiveMessageAsync();
-                Assert.AreEqual(receiver.SessionId, message.SessionId);
+                Assert.That(message.SessionId, Is.EqualTo(receiver.SessionId));
                 var sessionId = receiver.SessionId;
                 await Task.Delay((receiver.SessionLockedUntil - DateTime.UtcNow) + TimeSpan.FromSeconds(5));
 
-                Assert.IsTrue(receiver.IsClosed);
+                Assert.That(receiver.IsClosed, Is.True);
 
                 Assert.That(async () => await receiver.ReceiveMessageAsync(),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
@@ -854,9 +854,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     scope.QueueName,
                     isSessionSpecified ? sessionId : null);
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
-                Assert.AreEqual(message.MessageId, receivedMessage.MessageId);
-                Assert.AreEqual(message.SessionId, receivedMessage.SessionId);
-                Assert.AreEqual(message.Body.ToArray(), receivedMessage.Body.ToArray());
+                Assert.That(receivedMessage.MessageId, Is.EqualTo(message.MessageId));
+                Assert.That(receivedMessage.SessionId, Is.EqualTo(message.SessionId));
+                Assert.That(receivedMessage.Body.ToArray(), Is.EqualTo(message.Body.ToArray()));
 
                 var sessionStateString = "Received Message From Session!";
                 var sessionState = new BinaryData(sessionStateString);
@@ -864,7 +864,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var returnedSessionState = await receiver.GetSessionStateAsync();
                 var returnedSessionStateString = returnedSessionState.ToString();
-                Assert.AreEqual(sessionStateString, returnedSessionStateString);
+                Assert.That(returnedSessionStateString, Is.EqualTo(sessionStateString));
 
                 // Complete message using Session Receiver
                 await receiver.CompleteMessageAsync(receivedMessage);
@@ -878,7 +878,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 returnedSessionState = await receiver.GetSessionStateAsync();
                 returnedSessionStateString = returnedSessionState.ToString();
-                Assert.AreEqual(sessionStateString, returnedSessionStateString);
+                Assert.That(returnedSessionStateString, Is.EqualTo(sessionStateString));
 
                 // Can clear the session state by setting to null
                 await receiver.SetSessionStateAsync(null);
@@ -927,7 +927,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     await foreach (var msg in receiver.ReceiveMessagesAsync(cts.Token))
                     {
-                        Assert.AreEqual(messages[ct].MessageId, msg.MessageId);
+                        Assert.That(msg.MessageId, Is.EqualTo(messages[ct].MessageId));
                         await receiver.CompleteMessageAsync(msg);
                         ct++;
                         if (ct == messageCount)
@@ -937,7 +937,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     }
                 }
                 catch (TaskCanceledException) { }
-                Assert.AreEqual(messageCount * 2, ct);
+                Assert.That(ct, Is.EqualTo(messageCount * 2));
             }
         }
 
@@ -1050,7 +1050,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     await receiver.ReceiveMessageAsync();
                     received++;
                 }
-                Assert.AreEqual(messageCount, received);
+                Assert.That(received, Is.EqualTo(messageCount));
             }
         }
 
@@ -1075,7 +1075,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));
                 var msg = await receiver.ReceiveMessageAsync();
-                Assert.AreEqual(1, msg.DeliveryCount);
+                Assert.That(msg.DeliveryCount, Is.EqualTo(1));
                 var end = DateTime.UtcNow;
                 Assert.NotNull(msg);
                 Assert.Less(end - start, TimeSpan.FromSeconds(10));
@@ -1090,10 +1090,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = CreateClient();
 
                 var receiver = await client.AcceptSessionAsync(scope.QueueName, "sessionId");
-                Assert.IsFalse(receiver.IsClosed);
+                Assert.That(receiver.IsClosed, Is.False);
 
                 SimulateNetworkFailure(client);
-                Assert.IsTrue(receiver.IsClosed);
+                Assert.That(receiver.IsClosed, Is.True);
             }
         }
 

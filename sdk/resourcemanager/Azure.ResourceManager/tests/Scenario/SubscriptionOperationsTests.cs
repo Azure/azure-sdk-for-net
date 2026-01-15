@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Tests
         {
             var subOps = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var locations = await subOps.GetLocationsAsync().ToEnumerableAsync();
-            Assert.IsTrue(locations.Count != 0);
+            Assert.That(locations.Count != 0, Is.True);
             var location = locations.First();
             Assert.IsNotNull(location.Metadata, "Metadata was null");
             Assert.IsNotNull(location.Id, "Id was null");
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Tests
             Assert.NotNull(subscription.Value.Data.Id);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{new Guid()}")).GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         private string GetLongString(int length)

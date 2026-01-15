@@ -74,9 +74,9 @@ namespace Azure.AI.VoiceLive.Tests
             var loggerLoggingDisabled = new VoiceLiveWebSocketContentLogger(optionsLoggingDisabled.Diagnostics);
 
             // Assert
-            Assert.IsTrue(loggerEnabled?.IsContentLoggingEnabled);
-            Assert.IsFalse(loggerContentDisabled?.IsContentLoggingEnabled);
-            Assert.IsFalse(loggerLoggingDisabled?.IsContentLoggingEnabled);
+            Assert.That(loggerEnabled?.IsContentLoggingEnabled, Is.True);
+            Assert.That(loggerContentDisabled?.IsContentLoggingEnabled, Is.False);
+            Assert.That(loggerLoggingDisabled?.IsContentLoggingEnabled, Is.False);
         }
 
         [Test]
@@ -94,8 +94,8 @@ namespace Azure.AI.VoiceLive.Tests
             var loggerDisabled = new VoiceLiveWebSocketContentLogger(optionsDisabled.Diagnostics);
 
             // Assert
-            Assert.IsTrue(loggerEnabled.IsLoggingEnabled);
-            Assert.IsFalse(loggerDisabled.IsLoggingEnabled);
+            Assert.That(loggerEnabled.IsLoggingEnabled, Is.True);
+            Assert.That(loggerDisabled.IsLoggingEnabled, Is.False);
         }
 
         [LiveOnly]
@@ -117,8 +117,8 @@ namespace Azure.AI.VoiceLive.Tests
 
             Assert.IsNotNull(connectionOpenEvent, "Connection open event should be logged");
 
-            Assert.AreEqual(EventLevel.Informational, connectionOpenEvent?.Level);
-            Assert.IsTrue(connectionOpenEvent is not null && connectionOpenEvent.Message is not null && connectionOpenEvent.Message.Contains("WebSocket") && connectionOpenEvent.Message.Contains("opening"));
+            Assert.That(connectionOpenEvent?.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(connectionOpenEvent is not null && connectionOpenEvent.Message is not null && connectionOpenEvent.Message.Contains("WebSocket") && connectionOpenEvent.Message.Contains("opening"), Is.True);
         }
 
         [Test]
@@ -144,8 +144,8 @@ namespace Azure.AI.VoiceLive.Tests
                 e.EventSource.Name == "Azure-VoiceLive" && e.EventId == AzureVoiceLiveEventSource.WebSocketConnectionClosedEvent);
 
             Assert.IsNotNull(connectionCloseEvent, "Connection close event should be logged");
-            Assert.AreEqual(EventLevel.Informational, connectionCloseEvent?.Level);
-            Assert.IsTrue(connectionCloseEvent is not null && connectionCloseEvent.Message is not null && connectionCloseEvent.Message.Contains("WebSocket") && connectionCloseEvent.Message.Contains("closed"));
+            Assert.That(connectionCloseEvent?.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(connectionCloseEvent is not null && connectionCloseEvent.Message is not null && connectionCloseEvent.Message.Contains("WebSocket") && connectionCloseEvent.Message.Contains("closed"), Is.True);
         }
 
         [Test]
@@ -176,11 +176,11 @@ namespace Azure.AI.VoiceLive.Tests
                 e.EventSource.Name == "Azure-VoiceLive" && e.EventId == AzureVoiceLiveEventSource.WebSocketMessageSentContentTextEvent);
 
             Assert.IsNotNull(messageSentEvent, "Message sent event should be logged");
-            Assert.AreEqual(EventLevel.Informational, messageSentEvent?.Level);
+            Assert.That(messageSentEvent?.Level, Is.EqualTo(EventLevel.Informational));
 
             Assert.IsNotNull(contentSentEvent, "Content sent event should be logged");
-            Assert.AreEqual(EventLevel.Verbose, contentSentEvent?.Level);
-            Assert.IsTrue(contentSentEvent?.Message?.Contains("sent content"));
+            Assert.That(contentSentEvent?.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(contentSentEvent?.Message?.Contains("sent content"), Is.True);
         }
 
         [Test]
@@ -214,11 +214,11 @@ namespace Azure.AI.VoiceLive.Tests
                 e.EventSource.Name == "Azure-VoiceLive" && e.EventId == AzureVoiceLiveEventSource.WebSocketMessageReceivedContentTextEvent);
 
             Assert.IsNotNull(messageReceivedEvent, "Message received event should be logged");
-            Assert.AreEqual(EventLevel.Informational, messageReceivedEvent?.Level);
+            Assert.That(messageReceivedEvent?.Level, Is.EqualTo(EventLevel.Informational));
 
             Assert.IsNotNull(contentReceivedEvent, "Content received event should be logged");
-            Assert.AreEqual(EventLevel.Verbose, contentReceivedEvent?.Level);
-            Assert.IsTrue(contentReceivedEvent?.Message?.Contains("received content"));
+            Assert.That(contentReceivedEvent?.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(contentReceivedEvent?.Message?.Contains("received content"), Is.True);
         }
 
         [Test]
@@ -249,7 +249,7 @@ namespace Azure.AI.VoiceLive.Tests
                 e.EventSource.Name == "Azure-VoiceLive" && e.EventId == AzureVoiceLiveEventSource.WebSocketMessageSentContentTextEvent);
 
             Assert.IsNotNull(messageSentEvent, "Message sent event should still be logged");
-            Assert.IsNull(contentSentEvent, "Content sent event should NOT be logged when content logging is disabled");
+            Assert.That(contentSentEvent, Is.Null, "Content sent event should NOT be logged when content logging is disabled");
         }
 
         [Test]
@@ -277,9 +277,9 @@ namespace Azure.AI.VoiceLive.Tests
 
             Assert.IsNotNull(contentEvent, "Content event should be logged");
             Assert.IsNotNull(contentEvent?.Payload, "Event payload should not be null");
-            Assert.IsTrue(contentEvent?.Payload?.Count > 1, "Event payload should have at least 2 items");
+            Assert.That(contentEvent?.Payload?.Count > 1, Is.True, "Event payload should have at least 2 items");
             var loggedContent = (byte[])contentEvent?.Payload?[1]!;
-            Assert.AreEqual(100, loggedContent?.Length, "Content should be truncated to the specified limit");
+            Assert.That(loggedContent?.Length, Is.EqualTo(100), "Content should be truncated to the specified limit");
         }
 
         [Test]
@@ -303,10 +303,10 @@ namespace Azure.AI.VoiceLive.Tests
                 e.EventSource.Name == "Azure-VoiceLive" && e.EventId == AzureVoiceLiveEventSource.WebSocketMessageErrorContentTextEvent);
 
             Assert.IsNotNull(errorEvent, "Error event should be logged");
-            Assert.AreEqual(EventLevel.Warning, errorEvent?.Level);
+            Assert.That(errorEvent?.Level, Is.EqualTo(EventLevel.Warning));
 
             Assert.IsNotNull(errorContentEvent, "Error content event should be logged");
-            Assert.AreEqual(EventLevel.Informational, errorContentEvent?.Level, "Error content should be logged at Informational level");
+            Assert.That(errorContentEvent?.Level, Is.EqualTo(EventLevel.Informational), "Error content should be logged at Informational level");
         }
 
         [Test]
@@ -316,7 +316,7 @@ namespace Azure.AI.VoiceLive.Tests
             var eventSource = AzureVoiceLiveEventSource.Singleton;
 
             // Assert
-            Assert.AreEqual("Azure-VoiceLive", eventSource?.Name);
+            Assert.That(eventSource?.Name, Is.EqualTo("Azure-VoiceLive"));
         }
 
         [Test]
@@ -341,10 +341,10 @@ namespace Azure.AI.VoiceLive.Tests
             };
 
             // Assert all IDs are unique
-            Assert.AreEqual(eventIds.Length, eventIds.Distinct().Count(), "All event IDs should be unique");
+            Assert.That(eventIds.Distinct().Count(), Is.EqualTo(eventIds.Length), "All event IDs should be unique");
 
             // Assert all IDs are positive (simple range check)
-            Assert.IsTrue(eventIds.All(id => id > 0), "All event IDs should be positive");
+            Assert.That(eventIds.All(id => id > 0), Is.True, "All event IDs should be positive");
         }
 
         [LiveOnly] // Easier to run live than to fake the connection.
@@ -374,17 +374,17 @@ namespace Azure.AI.VoiceLive.Tests
                 .OrderBy(e => e.TimeStamp)
                 .ToList();
 
-            Assert.IsTrue(voiceLiveEvents.Count >= 3, $"Should have at least connection open, message sent, and connection close events, instead had {voiceLiveEvents.Count}");
+            Assert.That(voiceLiveEvents.Count >= 3, Is.True, $"Should have at least connection open, message sent, and connection close events, instead had {voiceLiveEvents.Count}");
 
             // First event should be connection open
-            Assert.AreEqual(AzureVoiceLiveEventSource.WebSocketConnectionOpeningEvent, voiceLiveEvents[0].EventId, "First event should be connection open");
+            Assert.That(voiceLiveEvents[0].EventId, Is.EqualTo(AzureVoiceLiveEventSource.WebSocketConnectionOpeningEvent), "First event should be connection open");
 
             // Should have message sent events
-            Assert.IsTrue(voiceLiveEvents.Any(e => e.EventId == AzureVoiceLiveEventSource.WebSocketMessageSentEvent), "Should have message sent event");
+            Assert.That(voiceLiveEvents.Any(e => e.EventId == AzureVoiceLiveEventSource.WebSocketMessageSentEvent), Is.True, "Should have message sent event");
 
             // Last event should be connection close
             var lastEvent = voiceLiveEvents.Last();
-            Assert.AreEqual(AzureVoiceLiveEventSource.WebSocketConnectionClosedEvent, lastEvent?.EventId, $"Last event should be connection close, but was {lastEvent?.EventName}");
+            Assert.That(lastEvent?.EventId, Is.EqualTo(AzureVoiceLiveEventSource.WebSocketConnectionClosedEvent), $"Last event should be connection close, but was {lastEvent?.EventName}");
 #endif
         }
     }

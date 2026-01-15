@@ -50,7 +50,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             }
             #endregion
 
-            Assert.AreEqual(201, creationResponse.Status);
+            Assert.That(creationResponse.Status, Is.EqualTo(201));
             Assert.That(projects.Any(project => project.ToString().Contains(newProjectName)));
 
             #region Snippet:QuestionAnsweringAuthoringClient_UpdateSources
@@ -86,9 +86,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(source);
             }
-#endregion
+            #endregion
 
-            Assert.True(updateSourcesOperation.HasCompleted);
+            Assert.That(updateSourcesOperation.HasCompleted, Is.True);
             Assert.That(sources.Any(source => source.ToString().Contains(sourceUri)));
 
 #region Snippet:QuestionAnsweringAuthoringClient_DeployProject
@@ -107,9 +107,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(deployment);
             }
-#endregion
+            #endregion
 
-            Assert.True(deploymentOperation.HasCompleted);
+            Assert.That(deploymentOperation.HasCompleted, Is.True);
             Assert.That(deployments.Any(deployment => deployment.ToString().Contains(newDeploymentName)));
         }
 
@@ -151,9 +151,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(project);
             }
-#endregion
+            #endregion
 
-            Assert.AreEqual(201, creationResponse.Status);
+            Assert.That(creationResponse.Status, Is.EqualTo(201));
             Assert.That((await projects.ToEnumerableAsync()).Any(project => project.ToString().Contains(newProjectName)));
 
 #region Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync
@@ -189,9 +189,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(source);
             }
-#endregion
+            #endregion
 
-            Assert.True(updateSourcesOperation.HasCompleted);
+            Assert.That(updateSourcesOperation.HasCompleted, Is.True);
             Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(sourceUri)));
 
 #region Snippet:QuestionAnsweringAuthoringClient_DeployProjectAsync
@@ -210,9 +210,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(deployment);
             }
-#endregion
+            #endregion
 
-            Assert.True(deploymentOperation.HasCompleted);
+            Assert.That(deploymentOperation.HasCompleted, Is.True);
             Assert.That((await deployments.ToEnumerableAsync()).Any(deployment => deployment.ToString().Contains(newDeploymentName)));
         }
     }

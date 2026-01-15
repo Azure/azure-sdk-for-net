@@ -34,7 +34,7 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
         // User-Agent header should not be present when user agent policy is not added
-        Assert.IsFalse(message.Request.Headers.TryGetValue("User-Agent", out _));
+        Assert.That(message.Request.Headers.TryGetValue("User-Agent", out _), Is.False);
     }
 
     [Test]
@@ -68,7 +68,7 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
 
         // User-Agent header should be present when user agent policy is included
         Assert.IsNotNull(capturedRequest);
-        Assert.IsTrue(capturedRequest!.Headers.TryGetValue("User-Agent", out string? userAgent));
+        Assert.That(capturedRequest!.Headers.TryGetValue("User-Agent", out string? userAgent), Is.True);
         Assert.IsNotNull(userAgent);
 
         // Should contain assembly name and version
@@ -108,7 +108,7 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         pipeline.Send(message);
 
         Assert.IsNotNull(capturedRequest);
-        Assert.IsTrue(capturedRequest!.Headers.TryGetValue("User-Agent", out string? userAgent));
+        Assert.That(capturedRequest!.Headers.TryGetValue("User-Agent", out string? userAgent), Is.True);
         Assert.IsNotNull(userAgent);
         Assert.IsNotEmpty(userAgent);
 
@@ -129,7 +129,7 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         UserAgentPolicy userAgentPolicy = new(assembly, applicationId);
 
         // Verify the application ID is used by checking the properties
-        Assert.AreEqual(applicationId, userAgentPolicy.ApplicationId);
+        Assert.That(userAgentPolicy.ApplicationId, Is.EqualTo(applicationId));
 
         // Also verify by processing a message and checking the header through the pipeline
         MockPipelineTransport transport = new("Transport", 200);
@@ -157,7 +157,7 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         pipeline.Send(message);
 
         Assert.IsNotNull(capturedRequest);
-        Assert.IsTrue(capturedRequest!.Headers.TryGetValue("User-Agent", out string? userAgent));
+        Assert.That(capturedRequest!.Headers.TryGetValue("User-Agent", out string? userAgent), Is.True);
         Assert.That(userAgent, Does.StartWith(applicationId));
     }
 
@@ -185,7 +185,7 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         var policy = new UserAgentPolicy(assembly);
         Assert.IsNotNull(policy);
         Assert.IsNull(policy.ApplicationId);
-        Assert.AreEqual(assembly, policy.Assembly);
+        Assert.That(policy.Assembly, Is.EqualTo(assembly));
 
         // Should contain assembly name and version
         var userAgent = policy.UserAgentValue;
@@ -205,8 +205,8 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
 
         var policy = new UserAgentPolicy(assembly, applicationId);
         Assert.IsNotNull(policy);
-        Assert.AreEqual(applicationId, policy.ApplicationId);
-        Assert.AreEqual(assembly, policy.Assembly);
+        Assert.That(policy.ApplicationId, Is.EqualTo(applicationId));
+        Assert.That(policy.Assembly, Is.EqualTo(assembly));
         var userAgent = policy.UserAgentValue;
 
         // Should start with application ID
@@ -249,9 +249,9 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         string userAgent = UserAgentPolicy.GenerateUserAgentString(assembly, null, mockRuntimeInformation);
         string assemblyName = assembly.GetName().Name!;
 
-        Assert.AreEqual(
-                $"{assemblyName}/{version} ({mockRuntimeInformation.FrameworkDescription}; {output})",
-                userAgent);
+        Assert.That(
+                userAgent,
+                Is.EqualTo($"{assemblyName}/{version} ({mockRuntimeInformation.FrameworkDescription}; {output})"));
     }
 
     [Test]
@@ -278,9 +278,9 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         string userAgent = UserAgentPolicy.GenerateUserAgentString(assembly, null, mockRuntimeInformation);
         string assemblyName = assembly.GetName().Name!;
 
-        Assert.AreEqual(
-                $"{assemblyName}/{version} ({mockRuntimeInformation.FrameworkDescription}; {output})",
-                userAgent);
+        Assert.That(
+                userAgent,
+                Is.EqualTo($"{assemblyName}/{version} ({mockRuntimeInformation.FrameworkDescription}; {output})"));
     }
 
     [Test]
@@ -305,9 +305,9 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         string userAgent = UserAgentPolicy.GenerateUserAgentString(assembly, null, mockRuntimeInformation);
         string assemblyName = assembly.GetName().Name!;
 
-        Assert.AreEqual(
-                $"{assemblyName}/{version} ({mockRuntimeInformation.FrameworkDescription}; {output})",
-                userAgent);
+        Assert.That(
+                userAgent,
+                Is.EqualTo($"{assemblyName}/{version} ({mockRuntimeInformation.FrameworkDescription}; {output})"));
     }
 
     [Test]
@@ -333,7 +333,7 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         }
 
         string expectedUserAgent = $"{assemblyName}/{version} ({mockRuntimeInfo.FrameworkDescriptionMock}; {mockRuntimeInfo.OSDescriptionMock})";
-        Assert.AreEqual(expectedUserAgent, userAgent);
+        Assert.That(userAgent, Is.EqualTo(expectedUserAgent));
     }
 
     [Test]
@@ -360,6 +360,6 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         }
 
         string expectedUserAgent = $"{applicationId} {assemblyName}/{version} ({mockRuntimeInfo.FrameworkDescriptionMock}; {mockRuntimeInfo.OSDescriptionMock})";
-        Assert.AreEqual(expectedUserAgent, userAgent);
+        Assert.That(userAgent, Is.EqualTo(expectedUserAgent));
     }
 }

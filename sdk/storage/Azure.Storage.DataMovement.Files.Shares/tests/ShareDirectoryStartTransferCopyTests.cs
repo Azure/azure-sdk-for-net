@@ -185,12 +185,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             }
 
             // Assert subdirectories
-            Assert.AreEqual(sourceDirectoryNames.Count, destinationDirectoryNames.Count);
+            Assert.That(destinationDirectoryNames.Count, Is.EqualTo(sourceDirectoryNames.Count));
             for (int i = 0; i < sourceDirectoryNames.Count; i++)
             {
-                Assert.AreEqual(
-                    sourceDirectoryNames[i],
-                    destinationDirectoryNames[i]);
+                Assert.That(
+                    destinationDirectoryNames[i],
+                    Is.EqualTo(sourceDirectoryNames[i]));
 
                 // Verify Preservation
                 ShareDirectoryClient sourceClient = sourceDirectory.GetSubdirectoryClient(sourceDirectoryNames[i]);
@@ -202,12 +202,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             }
 
             // Assert file and file contents
-            Assert.AreEqual(sourceFileNames.Count, destinationFileNames.Count);
+            Assert.That(destinationFileNames.Count, Is.EqualTo(sourceFileNames.Count));
             for (int i = 0; i < sourceFileNames.Count; i++)
             {
-                Assert.AreEqual(
-                    sourceFileNames[i],
-                    destinationFileNames[i]);
+                Assert.That(
+                    destinationFileNames[i],
+                    Is.EqualTo(sourceFileNames[i]));
 
                 // Verify Download
                 string sourceFileName = Path.Combine(sourcePrefix, sourceFileNames[i]);
@@ -215,7 +215,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareFileClient destinationClient = destinationDirectory.GetFileClient(destinationFileNames[i]);
                 using Stream sourceStream = await sourceClient.OpenReadAsync(cancellationToken: cancellationToken);
                 using Stream destinationStream = await destinationClient.OpenReadAsync(cancellationToken: cancellationToken);
-                Assert.IsTrue(StreamsAreEqual(sourceStream, destinationStream));
+                Assert.That(StreamsAreEqual(sourceStream, destinationStream), Is.True);
                 await VerifyPropertiesCopyAsync(
                     propertiesTestType,
                     sourceClient,
@@ -366,8 +366,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert hardlink was successfully created
             ShareFileProperties properties = await hardlinkClient.GetPropertiesAsync();
-            Assert.AreEqual(2, properties.PosixProperties.LinkCount);
-            Assert.AreEqual(NfsFileType.Regular, properties.PosixProperties.FileType);
+            Assert.That(properties.PosixProperties.LinkCount, Is.EqualTo(2));
+            Assert.That(properties.PosixProperties.FileType, Is.EqualTo(NfsFileType.Regular));
         }
 
         private async Task CreateShareFileNfsAndSymLinkAsync(
@@ -395,8 +395,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert symlink was successfully created
             ShareFileProperties properties = await symlinkClient.GetPropertiesAsync();
-            Assert.AreEqual(1, properties.PosixProperties.LinkCount);
-            Assert.AreEqual(NfsFileType.SymLink, properties.PosixProperties.FileType);
+            Assert.That(properties.PosixProperties.LinkCount, Is.EqualTo(1));
+            Assert.That(properties.PosixProperties.FileType, Is.EqualTo(NfsFileType.SymLink));
         }
 
         private async Task CreateDirectoryAsync(ShareClient container,
@@ -471,14 +471,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(_defaultContentLanguage, destinationProperties.ContentLanguage);
-                Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
-                Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
-                Assert.AreEqual(_defaultFileAttributes, destinationProperties.SmbProperties.FileAttributes);
-                Assert.AreEqual(_defaultFileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                Assert.AreEqual(_defaultFileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
-                Assert.AreEqual(_defaultFileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+                Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(_defaultContentDisposition));
+                Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(_defaultContentLanguage));
+                Assert.That(destinationProperties.CacheControl, Is.EqualTo(_defaultCacheControl));
+                Assert.That(destinationProperties.ContentType, Is.EqualTo(_defaultContentType));
+                Assert.That(destinationProperties.SmbProperties.FileAttributes, Is.EqualTo(_defaultFileAttributes));
+                Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(_defaultFileCreatedOn));
+                Assert.That(destinationProperties.SmbProperties.FileLastWrittenOn, Is.EqualTo(_defaultFileLastWrittenOn));
+                Assert.That(destinationProperties.SmbProperties.FileChangedOn, Is.EqualTo(_defaultFileChangedOn));
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.Preserve)
             {
@@ -486,14 +486,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
-                Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
-                Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileAttributes, destinationProperties.SmbProperties.FileAttributes);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+                Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(sourceProperties.ContentDisposition));
+                Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(sourceProperties.ContentLanguage));
+                Assert.That(destinationProperties.CacheControl, Is.EqualTo(sourceProperties.CacheControl));
+                Assert.That(destinationProperties.ContentType, Is.EqualTo(sourceProperties.ContentType));
+                Assert.That(destinationProperties.SmbProperties.FileAttributes, Is.EqualTo(sourceProperties.SmbProperties.FileAttributes));
+                Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(sourceProperties.SmbProperties.FileCreatedOn));
+                Assert.That(destinationProperties.SmbProperties.FileLastWrittenOn, Is.EqualTo(sourceProperties.SmbProperties.FileLastWrittenOn));
+                Assert.That(destinationProperties.SmbProperties.FileChangedOn, Is.EqualTo(sourceProperties.SmbProperties.FileChangedOn));
 
                 // Check if the permissions are the same. Permission Keys will be different as they are defined by the share service.
                 ShareClient sourceShareClient = sourceClient.GetParentShareClient();
@@ -504,7 +504,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
                 string sourcePermissionStr = RemoveSacl(sourcePermission.Permission);
                 string destPermissionStr = RemoveSacl(fullPermission.Permission);
-                Assert.AreEqual(sourcePermissionStr, destPermissionStr);
+                Assert.That(destPermissionStr, Is.EqualTo(sourcePermissionStr));
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.PreserveNoPermissions)
             {
@@ -512,14 +512,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
-                Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
-                Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileAttributes, destinationProperties.SmbProperties.FileAttributes);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+                Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(sourceProperties.ContentDisposition));
+                Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(sourceProperties.ContentLanguage));
+                Assert.That(destinationProperties.CacheControl, Is.EqualTo(sourceProperties.CacheControl));
+                Assert.That(destinationProperties.ContentType, Is.EqualTo(sourceProperties.ContentType));
+                Assert.That(destinationProperties.SmbProperties.FileAttributes, Is.EqualTo(sourceProperties.SmbProperties.FileAttributes));
+                Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(sourceProperties.SmbProperties.FileCreatedOn));
+                Assert.That(destinationProperties.SmbProperties.FileLastWrittenOn, Is.EqualTo(sourceProperties.SmbProperties.FileLastWrittenOn));
+                Assert.That(destinationProperties.SmbProperties.FileChangedOn, Is.EqualTo(sourceProperties.SmbProperties.FileChangedOn));
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.PreserveNfs)
             {
@@ -527,15 +527,15 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
-                Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
-                Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
-                Assert.AreEqual(sourceProperties.PosixProperties.Owner, destinationProperties.PosixProperties.Owner);
-                Assert.AreEqual(sourceProperties.PosixProperties.Group, destinationProperties.PosixProperties.Group);
-                Assert.AreEqual(sourceProperties.PosixProperties.FileMode.ToString(), destinationProperties.PosixProperties.FileMode.ToString());
+                Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(sourceProperties.ContentDisposition));
+                Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(sourceProperties.ContentLanguage));
+                Assert.That(destinationProperties.CacheControl, Is.EqualTo(sourceProperties.CacheControl));
+                Assert.That(destinationProperties.ContentType, Is.EqualTo(sourceProperties.ContentType));
+                Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(sourceProperties.SmbProperties.FileCreatedOn));
+                Assert.That(destinationProperties.SmbProperties.FileLastWrittenOn, Is.EqualTo(sourceProperties.SmbProperties.FileLastWrittenOn));
+                Assert.That(destinationProperties.PosixProperties.Owner, Is.EqualTo(sourceProperties.PosixProperties.Owner));
+                Assert.That(destinationProperties.PosixProperties.Group, Is.EqualTo(sourceProperties.PosixProperties.Group));
+                Assert.That(destinationProperties.PosixProperties.FileMode.ToString(), Is.EqualTo(sourceProperties.PosixProperties.FileMode.ToString()));
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.PreserveNfsNoPermissions)
             {
@@ -543,12 +543,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
-                Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
-                Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
+                Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(sourceProperties.ContentDisposition));
+                Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(sourceProperties.ContentLanguage));
+                Assert.That(destinationProperties.CacheControl, Is.EqualTo(sourceProperties.CacheControl));
+                Assert.That(destinationProperties.ContentType, Is.EqualTo(sourceProperties.ContentType));
+                Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(sourceProperties.SmbProperties.FileCreatedOn));
+                Assert.That(destinationProperties.SmbProperties.FileLastWrittenOn, Is.EqualTo(sourceProperties.SmbProperties.FileLastWrittenOn));
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.PreserveNfsToSmb)
             {
@@ -556,12 +556,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
-                Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
-                Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
+                Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(sourceProperties.ContentDisposition));
+                Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(sourceProperties.ContentLanguage));
+                Assert.That(destinationProperties.CacheControl, Is.EqualTo(sourceProperties.CacheControl));
+                Assert.That(destinationProperties.ContentType, Is.EqualTo(sourceProperties.ContentType));
+                Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(sourceProperties.SmbProperties.FileCreatedOn));
+                Assert.That(destinationProperties.SmbProperties.FileLastWrittenOn, Is.EqualTo(sourceProperties.SmbProperties.FileLastWrittenOn));
                 // FileChangedOn is not preserved for NFS -> SMB transfers
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.PreserveSmbToNfs)
@@ -570,12 +570,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
-                Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
-                Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
+                Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(sourceProperties.ContentDisposition));
+                Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(sourceProperties.ContentLanguage));
+                Assert.That(destinationProperties.CacheControl, Is.EqualTo(sourceProperties.CacheControl));
+                Assert.That(destinationProperties.ContentType, Is.EqualTo(sourceProperties.ContentType));
+                Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(sourceProperties.SmbProperties.FileCreatedOn));
+                Assert.That(destinationProperties.SmbProperties.FileLastWrittenOn, Is.EqualTo(sourceProperties.SmbProperties.FileLastWrittenOn));
             }
             else // Default properties
             {
@@ -583,14 +583,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
-                Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
-                Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileAttributes, destinationProperties.SmbProperties.FileAttributes);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+                Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(sourceProperties.ContentDisposition));
+                Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(sourceProperties.ContentLanguage));
+                Assert.That(destinationProperties.CacheControl, Is.EqualTo(sourceProperties.CacheControl));
+                Assert.That(destinationProperties.ContentType, Is.EqualTo(sourceProperties.ContentType));
+                Assert.That(destinationProperties.SmbProperties.FileAttributes, Is.EqualTo(sourceProperties.SmbProperties.FileAttributes));
+                Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(sourceProperties.SmbProperties.FileCreatedOn));
+                Assert.That(destinationProperties.SmbProperties.FileLastWrittenOn, Is.EqualTo(sourceProperties.SmbProperties.FileLastWrittenOn));
+                Assert.That(destinationProperties.SmbProperties.FileChangedOn, Is.EqualTo(sourceProperties.SmbProperties.FileChangedOn));
             }
         }
 
@@ -609,10 +609,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
-                Assert.AreEqual(_defaultDirectoryAttributes, destinationProperties.SmbProperties.FileAttributes);
-                Assert.AreEqual(_defaultFileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                Assert.AreEqual(_defaultFileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
-                Assert.AreEqual(_defaultFileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+                Assert.That(destinationProperties.SmbProperties.FileAttributes, Is.EqualTo(_defaultDirectoryAttributes));
+                Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(_defaultFileCreatedOn));
+                Assert.That(destinationProperties.SmbProperties.FileLastWrittenOn, Is.EqualTo(_defaultFileLastWrittenOn));
+                Assert.That(destinationProperties.SmbProperties.FileChangedOn, Is.EqualTo(_defaultFileChangedOn));
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.Preserve)
             {
@@ -620,10 +620,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.SmbProperties.FileAttributes, destinationProperties.SmbProperties.FileAttributes);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+                Assert.That(destinationProperties.SmbProperties.FileAttributes, Is.EqualTo(sourceProperties.SmbProperties.FileAttributes));
+                Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(sourceProperties.SmbProperties.FileCreatedOn));
+                Assert.That(destinationProperties.SmbProperties.FileLastWrittenOn, Is.EqualTo(sourceProperties.SmbProperties.FileLastWrittenOn));
+                Assert.That(destinationProperties.SmbProperties.FileChangedOn, Is.EqualTo(sourceProperties.SmbProperties.FileChangedOn));
 
                 // Check if the permissions are the same. Permission Keys will be different as they are defined by the share service.
                 ShareClient sourceShareClient = sourceClient.GetParentShareClient();
@@ -634,7 +634,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
                 string sourcePermissionStr = RemoveSacl(sourcePermission.Permission);
                 string destPermissionStr = RemoveSacl(fullPermission.Permission);
-                Assert.AreEqual(sourcePermissionStr, destPermissionStr);
+                Assert.That(destPermissionStr, Is.EqualTo(sourcePermissionStr));
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.PreserveNoPermissions)
             {
@@ -642,10 +642,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.SmbProperties.FileAttributes, destinationProperties.SmbProperties.FileAttributes);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+                Assert.That(destinationProperties.SmbProperties.FileAttributes, Is.EqualTo(sourceProperties.SmbProperties.FileAttributes));
+                Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(sourceProperties.SmbProperties.FileCreatedOn));
+                Assert.That(destinationProperties.SmbProperties.FileLastWrittenOn, Is.EqualTo(sourceProperties.SmbProperties.FileLastWrittenOn));
+                Assert.That(destinationProperties.SmbProperties.FileChangedOn, Is.EqualTo(sourceProperties.SmbProperties.FileChangedOn));
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.PreserveNfs)
             {
@@ -653,10 +653,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                Assert.AreEqual(sourceProperties.PosixProperties.Owner, destinationProperties.PosixProperties.Owner);
-                Assert.AreEqual(sourceProperties.PosixProperties.Group, destinationProperties.PosixProperties.Group);
-                Assert.AreEqual(sourceProperties.PosixProperties.FileMode.ToString(), destinationProperties.PosixProperties.FileMode.ToString());
+                Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(sourceProperties.SmbProperties.FileCreatedOn));
+                Assert.That(destinationProperties.PosixProperties.Owner, Is.EqualTo(sourceProperties.PosixProperties.Owner));
+                Assert.That(destinationProperties.PosixProperties.Group, Is.EqualTo(sourceProperties.PosixProperties.Group));
+                Assert.That(destinationProperties.PosixProperties.FileMode.ToString(), Is.EqualTo(sourceProperties.PosixProperties.FileMode.ToString()));
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.PreserveNfsNoPermissions)
             {
@@ -664,7 +664,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
+                Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(sourceProperties.SmbProperties.FileCreatedOn));
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.PreserveNfsToSmb)
             {
@@ -672,8 +672,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
+                Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(sourceProperties.SmbProperties.FileCreatedOn));
+                Assert.That(destinationProperties.SmbProperties.FileLastWrittenOn, Is.EqualTo(sourceProperties.SmbProperties.FileLastWrittenOn));
                 // FileChangedOn is not preserved for NFS -> SMB transfers
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.PreserveSmbToNfs)
@@ -682,7 +682,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
+                Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(sourceProperties.SmbProperties.FileCreatedOn));
             }
             else // Default properties
             {
@@ -690,9 +690,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareDirectoryProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
-                Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+                Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(sourceProperties.SmbProperties.FileCreatedOn));
+                Assert.That(destinationProperties.SmbProperties.FileLastWrittenOn, Is.EqualTo(sourceProperties.SmbProperties.FileLastWrittenOn));
+                Assert.That(destinationProperties.SmbProperties.FileChangedOn, Is.EqualTo(sourceProperties.SmbProperties.FileChangedOn));
             }
         }
 
@@ -810,8 +810,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
             TransferPropertiesTestType testType = filePermissions == true
                 ? TransferPropertiesTestType.Preserve
@@ -904,8 +904,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
             TransferPropertiesTestType testType = filePermissions == true
                 ? TransferPropertiesTestType.Preserve
@@ -991,10 +991,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 testEventsRaised,
                 cancellationTokenSource.Token);
 
-            Assert.AreEqual(1, testEventsRaised.FailedEvents.Count);
-            Assert.AreEqual(
-                $"Share Directory `{destination.Container.GetDirectoryClient(destPrefix + "/bar").Path}` already exists. Cannot overwrite directory.",
-                testEventsRaised.FailedEvents.FirstOrDefault().Exception.Message);
+            Assert.That(testEventsRaised.FailedEvents.Count, Is.EqualTo(1));
+            Assert.That(
+                testEventsRaised.FailedEvents.FirstOrDefault().Exception.Message,
+                Is.EqualTo($"Share Directory `{destination.Container.GetDirectoryClient(destPrefix + "/bar").Path}` already exists. Cannot overwrite directory."));
         }
 
         [RecordedTest]
@@ -1062,8 +1062,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
             TransferPropertiesTestType testType = filePermissions == true
                 ? TransferPropertiesTestType.Preserve
@@ -1144,8 +1144,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
             TransferPropertiesTestType testType = filePermissions == true
                 ? TransferPropertiesTestType.PreserveNfs
@@ -1244,8 +1244,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
             TransferPropertiesTestType testType = filePermissions == true
                 ? TransferPropertiesTestType.PreserveNfs
@@ -1342,10 +1342,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 cancellationTokenSource.Token);
 
             // Assert
-            Assert.AreEqual(1, testEventsRaised.FailedEvents.Count);
-            Assert.AreEqual(
-                $"Share Directory `{destination.Container.GetDirectoryClient(destPrefix + "/bar").Path}` already exists. Cannot overwrite directory.",
-                testEventsRaised.FailedEvents.FirstOrDefault().Exception.Message);
+            Assert.That(testEventsRaised.FailedEvents.Count, Is.EqualTo(1));
+            Assert.That(
+                testEventsRaised.FailedEvents.FirstOrDefault().Exception.Message,
+                Is.EqualTo($"Share Directory `{destination.Container.GetDirectoryClient(destPrefix + "/bar").Path}` already exists. Cannot overwrite directory."));
         }
 
         [RecordedTest]
@@ -1416,8 +1416,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
             TransferPropertiesTestType testType = filePermissions == true
                 ? TransferPropertiesTestType.PreserveNfs
@@ -1500,8 +1500,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
             // Get destination directory properties
             string destSubDirPath = string.Join("/", destPrefix, "bar");
@@ -1510,10 +1510,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert destination properties are as set in options
             Assert.That(destOptions.DirectoryMetadata, Is.EqualTo(destDirProps.Metadata));
-            Assert.AreEqual(destOptions.FileAttributes, destDirProps.SmbProperties.FileAttributes);
-            Assert.AreEqual(destOptions.FileCreatedOn, destDirProps.SmbProperties.FileCreatedOn);
-            Assert.AreEqual(destOptions.FileLastWrittenOn, destDirProps.SmbProperties.FileLastWrittenOn);
-            Assert.AreEqual(destOptions.FileChangedOn, destDirProps.SmbProperties.FileChangedOn);
+            Assert.That(destDirProps.SmbProperties.FileAttributes, Is.EqualTo(destOptions.FileAttributes));
+            Assert.That(destDirProps.SmbProperties.FileCreatedOn, Is.EqualTo(destOptions.FileCreatedOn));
+            Assert.That(destDirProps.SmbProperties.FileLastWrittenOn, Is.EqualTo(destOptions.FileLastWrittenOn));
+            Assert.That(destDirProps.SmbProperties.FileChangedOn, Is.EqualTo(destOptions.FileChangedOn));
         }
 
         [RecordedTest]
@@ -1593,8 +1593,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
             // Get destination directory properties
             string destSubDirPath = string.Join("/", destPrefix, "bar");
@@ -1603,24 +1603,24 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert destination properties are as set in options
             Assert.That(destOptions.DirectoryMetadata, Is.EqualTo(destDirProps.Metadata));
-            Assert.AreEqual(destOptions.FileCreatedOn, destDirProps.SmbProperties.FileCreatedOn);
-            Assert.AreEqual(destOptions.FileLastWrittenOn, destDirProps.SmbProperties.FileLastWrittenOn);
+            Assert.That(destDirProps.SmbProperties.FileCreatedOn, Is.EqualTo(destOptions.FileCreatedOn));
+            Assert.That(destDirProps.SmbProperties.FileLastWrittenOn, Is.EqualTo(destOptions.FileLastWrittenOn));
 
             if (filePermissions == true)
             {
                 // Should preserve NFS properties from source
                 ShareDirectoryClient sourceDirClient = source.Container.GetDirectoryClient(sourceSubDirPath);
                 ShareDirectoryProperties sourceDirProps = await sourceDirClient.GetPropertiesAsync();
-                Assert.AreEqual(sourceDirProps.PosixProperties.Owner, destDirProps.PosixProperties.Owner);
-                Assert.AreEqual(sourceDirProps.PosixProperties.Group, destDirProps.PosixProperties.Group);
-                Assert.AreEqual(sourceDirProps.PosixProperties.FileMode.ToOctalFileMode(), destDirProps.PosixProperties.FileMode.ToOctalFileMode());
+                Assert.That(destDirProps.PosixProperties.Owner, Is.EqualTo(sourceDirProps.PosixProperties.Owner));
+                Assert.That(destDirProps.PosixProperties.Group, Is.EqualTo(sourceDirProps.PosixProperties.Group));
+                Assert.That(destDirProps.PosixProperties.FileMode.ToOctalFileMode(), Is.EqualTo(sourceDirProps.PosixProperties.FileMode.ToOctalFileMode()));
             }
             else
             {
                 // Should use default NFS properties
-                Assert.AreEqual("0", destDirProps.PosixProperties.Owner);
-                Assert.AreEqual("0", destDirProps.PosixProperties.Group);
-                Assert.AreEqual("0755", destDirProps.PosixProperties.FileMode.ToOctalFileMode());
+                Assert.That(destDirProps.PosixProperties.Owner, Is.EqualTo("0"));
+                Assert.That(destDirProps.PosixProperties.Group, Is.EqualTo("0"));
+                Assert.That(destDirProps.PosixProperties.FileMode.ToOctalFileMode(), Is.EqualTo("0755"));
             }
         }
 
@@ -1693,8 +1693,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 // Assert
                 testEventsRaised.AssertUnexpectedFailureCheck();
                 Assert.NotNull(transfer);
-                Assert.IsTrue(transfer.HasCompleted);
-                Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+                Assert.That(transfer.HasCompleted, Is.True);
+                Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
                 await VerifyResultsAsync(
                     sourceContainer: source.Container,
@@ -1707,7 +1707,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 var ex = Assert.ThrowsAsync<ArgumentException>(async () =>
                     await transferManager.StartTransferAsync(sourceResource, destinationResource, options));
-                Assert.AreEqual($"The Protocol set on the source '{ShareProtocols.Nfs}' does not match the actual Protocol of the share '{ShareProtocols.Smb}'.", ex.Message);
+                Assert.That(ex.Message, Is.EqualTo($"The Protocol set on the source '{ShareProtocols.Nfs}' does not match the actual Protocol of the share '{ShareProtocols.Smb}'."));
             }
         }
 
@@ -1781,8 +1781,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 // Assert
                 testEventsRaised.AssertUnexpectedFailureCheck();
                 Assert.NotNull(transfer);
-                Assert.IsTrue(transfer.HasCompleted);
-                Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+                Assert.That(transfer.HasCompleted, Is.True);
+                Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
                 await VerifyResultsAsync(
                     sourceContainer: source.Container,
@@ -1795,7 +1795,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 var ex = Assert.ThrowsAsync<ArgumentException>(async () =>
                     await transferManager.StartTransferAsync(sourceResource, destinationResource, options));
-                Assert.AreEqual($"The Protocol set on the source '{ShareProtocols.Smb}' does not match the actual Protocol of the share '{ShareProtocols.Nfs}'.", ex.Message);
+                Assert.That(ex.Message, Is.EqualTo($"The Protocol set on the source '{ShareProtocols.Smb}' does not match the actual Protocol of the share '{ShareProtocols.Nfs}'."));
             }
         }
 
@@ -1866,8 +1866,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
             await VerifyResultsAsync(
                 sourceContainer: source.Container,
@@ -1880,8 +1880,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileClient destinationClient = destinationDirectory.GetFileClient("item1-hardlink");
             ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
             // Assert the hardlink was copied as regular file
-            Assert.AreEqual(1, destinationProperties.PosixProperties.LinkCount);
-            Assert.AreEqual(NfsFileType.Regular, destinationProperties.PosixProperties.FileType);
+            Assert.That(destinationProperties.PosixProperties.LinkCount, Is.EqualTo(1));
+            Assert.That(destinationProperties.PosixProperties.FileType, Is.EqualTo(NfsFileType.Regular));
         }
 
         [RecordedTest]
@@ -1935,8 +1935,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
             // List all files in source folder path
             List<string> sourceFileNames = new List<string>();
@@ -1959,14 +1959,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             }
 
             // Assert subdirectories
-            Assert.AreEqual(sourceDirectoryNames.Count, destinationDirectoryNames.Count);
-            Assert.AreEqual(sourceDirectoryNames, destinationDirectoryNames);
+            Assert.That(destinationDirectoryNames.Count, Is.EqualTo(sourceDirectoryNames.Count));
+            Assert.That(destinationDirectoryNames, Is.EqualTo(sourceDirectoryNames));
             // Ensure the Symlink file was skipped and not copied
-            Assert.AreEqual(2, sourceFileNames.Count);
-            Assert.AreEqual(1, destinationFileNames.Count);
+            Assert.That(sourceFileNames.Count, Is.EqualTo(2));
+            Assert.That(destinationFileNames.Count, Is.EqualTo(1));
             Assert.Contains("item1-symlink", sourceFileNames);
-            Assert.False(destinationFileNames.Contains("item1-symlink"));
-            Assert.AreEqual("item1", destinationFileNames[0]);
+            Assert.That(destinationFileNames.Contains("item1-symlink"), Is.False);
+            Assert.That(destinationFileNames[0], Is.EqualTo("item1"));
         }
 
         [RecordedTest]
@@ -2022,7 +2022,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 var ex = Assert.ThrowsAsync<NotSupportedException>(async () =>
                     await transferManager.StartTransferAsync(sourceResource, destinationResource, options));
-                Assert.AreEqual("Permission preservation is not supported in NFS -> SMB or SMB -> NFS transfers", ex.Message);
+                Assert.That(ex.Message, Is.EqualTo("Permission preservation is not supported in NFS -> SMB or SMB -> NFS transfers"));
             }
             else
             {
@@ -2042,8 +2042,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 // Assert
                 testEventsRaised.AssertUnexpectedFailureCheck();
                 Assert.NotNull(transfer);
-                Assert.IsTrue(transfer.HasCompleted);
-                Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+                Assert.That(transfer.HasCompleted, Is.True);
+                Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
                 await VerifyResultsAsync(
                     sourceContainer: source.Container,
@@ -2104,7 +2104,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 var ex = Assert.ThrowsAsync<NotSupportedException>(async () =>
                     await transferManager.StartTransferAsync(sourceResource, destinationResource, options));
-                Assert.AreEqual("Permission preservation is not supported in NFS -> SMB or SMB -> NFS transfers", ex.Message);
+                Assert.That(ex.Message, Is.EqualTo("Permission preservation is not supported in NFS -> SMB or SMB -> NFS transfers"));
             }
             else
             {
@@ -2124,8 +2124,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 // Assert
                 testEventsRaised.AssertUnexpectedFailureCheck();
                 Assert.NotNull(transfer);
-                Assert.IsTrue(transfer.HasCompleted);
-                Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+                Assert.That(transfer.HasCompleted, Is.True);
+                Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
                 await VerifyResultsAsync(
                     sourceContainer: source.Container,
@@ -2204,8 +2204,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
             TransferPropertiesTestType testType = filePermissions == true
                 ? TransferPropertiesTestType.PreserveNfs

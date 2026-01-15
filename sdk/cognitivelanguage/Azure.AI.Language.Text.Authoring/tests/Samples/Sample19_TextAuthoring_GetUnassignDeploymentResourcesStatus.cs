@@ -65,7 +65,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             }
             #endregion
 
-            Assert.AreEqual("Succeeded", response.Value.Status, "Expected the unassign operation to succeed.");
+            Assert.That(response.Value.Status, Is.EqualTo("Succeeded"), "Expected the unassign operation to succeed.");
         }
 
         [Test]

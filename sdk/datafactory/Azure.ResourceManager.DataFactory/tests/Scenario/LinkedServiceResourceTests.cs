@@ -40,22 +40,22 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string linkedServiceName = Recording.GenerateAssetName("adf_linkedservice_");
             var linkedService = await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
             Assert.IsNotNull(linkedService);
-            Assert.AreEqual(linkedServiceName, linkedService.Data.Name);
+            Assert.That(linkedService.Data.Name, Is.EqualTo(linkedServiceName));
             //Exist
             bool flag = await dataFactory.GetDataFactoryLinkedServices().ExistsAsync(linkedServiceName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
             //Get
             var linkedServiceGet = await dataFactory.GetDataFactoryLinkedServices().GetAsync(linkedServiceName);
             Assert.IsNotNull(linkedServiceGet);
-            Assert.AreEqual(linkedServiceName, linkedServiceGet.Value.Data.Name);
+            Assert.That(linkedServiceGet.Value.Data.Name, Is.EqualTo(linkedServiceName));
             //Get All
             var list = await dataFactory.GetDataFactoryLinkedServices().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(1, list.Count);
+            Assert.That(list.Count, Is.EqualTo(1));
             //Delete
             await linkedService.DeleteAsync(WaitUntil.Completed);
             flag = await dataFactory.GetDataFactoryDatasets().ExistsAsync(linkedServiceName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         public async Task LinkedSerivceCreate(string name, Func<DataFactoryResource, string, string, DataFactoryLinkedServiceData> linkedServiceFunc)

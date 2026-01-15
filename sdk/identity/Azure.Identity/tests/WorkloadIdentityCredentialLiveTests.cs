@@ -64,7 +64,7 @@ namespace Azure.Identity.Tests
             // ensure subsequent calls before the token expires are served from the token cache
             AccessToken cachedToken = await credential.GetTokenAsync(tokenRequestContext);
 
-            Assert.AreEqual(token.Token, cachedToken.Token);
+            Assert.That(cachedToken.Token, Is.EqualTo(token.Token));
         }
 
         [TearDown]

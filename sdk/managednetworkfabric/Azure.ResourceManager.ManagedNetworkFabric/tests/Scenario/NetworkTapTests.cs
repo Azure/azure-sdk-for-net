@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             ArmOperation<NetworkTapResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.NetworkTapName, data);
             NetworkTapResource createResult = lro.Value;
-            Assert.AreEqual(createResult.Data.Name, TestEnvironment.NetworkTapName);
+            Assert.That(TestEnvironment.NetworkTapName, Is.EqualTo(createResult.Data.Name));
             TestContext.Out.WriteLine($"Created.....{createResult.Data.Id}");
 
             // Update
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....{networkTapRuleResourceId.ToString()}");
             NetworkTapResource getResult = await ntResource.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, TestEnvironment.NetworkTapName);
+            Assert.That(TestEnvironment.NetworkTapName, Is.EqualTo(getResult.Data.Name));
 
             // Post
             //TODO: uncomment this once post action issue fixed in southbound side.
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             var deleteResponse = await ntResource.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteResponse.HasCompleted);
+            Assert.That(deleteResponse.HasCompleted, Is.True);
         }
     }
 }

@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Hci.Tests
             var arcExtensionCollection = arcSetting.GetArcExtensions();
             var arcExtensionName = "MicrosoftMonitoringAgent";
             var arcExtension = await CreateArcExtensionAsync(arcSetting, arcExtensionName);
-            Assert.AreEqual(arcExtension.Data.Name, arcExtensionName);
+            Assert.That(arcExtensionName, Is.EqualTo(arcExtension.Data.Name));
 
             ArcExtensionResource arcExtensionFromGet = await arcExtensionCollection.GetAsync(arcExtensionName);
-            Assert.AreEqual(arcExtensionFromGet.Data.Name, arcExtensionName);
+            Assert.That(arcExtensionName, Is.EqualTo(arcExtensionFromGet.Data.Name));
 
             await foreach (ArcExtensionResource arcExtensionFromList in arcExtensionCollection)
             {
-                Assert.AreEqual(arcExtensionFromList.Data.Name, arcExtensionName);
+                Assert.That(arcExtensionName, Is.EqualTo(arcExtensionFromList.Data.Name));
             }
         }
     }

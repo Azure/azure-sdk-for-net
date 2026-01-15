@@ -75,11 +75,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
             catch (FunctionIndexingException e)
             {
                 string functionName = typeof(TProgram).Name + "." + methodName;
-                Assert.AreEqual("Error indexing method '" + functionName + "'", e.Message);
+                Assert.That(e.Message, Is.EqualTo("Error indexing method '" + functionName + "'"));
                 StringAssert.Contains(expectedErrorMessage, e.InnerException.Message);
                 return;
             }
-            Assert.True(false, "Invoker should have failed");
+            Assert.That(false, Is.True, "Invoker should have failed");
         }
     }
 

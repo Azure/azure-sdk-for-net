@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
             var project = Client.GetDevCenterProjectResource(projectId);
 
             List<ProjectDevBoxDefinitionResource> devBoxDefinitions = await project.GetProjectDevBoxDefinitions().GetAllAsync().ToEnumerableAsync();
-            Assert.IsTrue(devBoxDefinitions.Count > 0);
+            Assert.That(devBoxDefinitions.Count > 0, Is.True);
 
             // Get one of the definitions
             var network = (await project.GetProjectDevBoxDefinitionAsync(devBoxDefinitions.First().Data.Name)).Value;

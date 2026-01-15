@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                         resourceName,
                         sapMonitorData);
 
-                Assert.AreEqual(resourceName, resource.Value.Data.Name);
+                Assert.That(resource.Value.Data.Name, Is.EqualTo(resourceName));
                 Console.WriteLine("Created resource with Payload " + await getObjectAsString(resource.Value.Data));
 
                 // Get SAP monitor
                 Response<SapMonitorResource> monitor = await rg.GetSapMonitorAsync(resourceName);
-                Assert.AreEqual(resourceName, monitor.Value.Data.Name);
+                Assert.That(monitor.Value.Data.Name, Is.EqualTo(resourceName));
                 Console.WriteLine("Fetched resource with Payload " + await getObjectAsString(monitor.Value.Data));
 
                 //Patch SAP Monitor
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 sapMonitorPatch.Tags.Add("DateTime", "dotNetSdkTest");
                 Console.WriteLine("Patching resource with Payload " + await getObjectAsString(sapMonitorPatch));
                 monitor = await monitor.Value.UpdateAsync(sapMonitorPatch);
-                Assert.AreEqual(resourceName, monitor.Value.Data.Name);
+                Assert.That(monitor.Value.Data.Name, Is.EqualTo(resourceName));
                 Console.WriteLine("Patched resource with Payload " + await getObjectAsString(monitor.Value.Data));
                 result = monitor.Value;
             }
@@ -203,13 +203,13 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                         WaitUntil.Completed,
                         providerName,
                         sapProviderInstanceData);
-                Assert.AreEqual(providerName, providerResource.Value.Data.Name);
+                Assert.That(providerResource.Value.Data.Name, Is.EqualTo(providerName));
                 Console.WriteLine("Created resource with Payload " + await getObjectAsString(providerResource.Value.Data));
 
                 // Create provider
                 Response<SapProviderInstanceResource> response =
                     await providerInstanceCollection.GetAsync(providerName);
-                Assert.AreEqual(providerName, response.Value.Data.Name);
+                Assert.That(response.Value.Data.Name, Is.EqualTo(providerName));
                 Console.WriteLine("Fetched resource with Payload " + await getObjectAsString(response.Value.Data));
 
                 Console.WriteLine("Done Provider Resource Tests for providerType" + providerType);

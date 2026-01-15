@@ -55,24 +55,24 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(2, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(2));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
 
             var jsonModel = result.GenerationSpec.TypeBuilders[0];
-            Assert.AreEqual("internal", jsonModel.Modifier);
+            Assert.That(jsonModel.Modifier, Is.EqualTo("internal"));
             AssertJsonModel(jsonModel.Type);
-            Assert.AreEqual(TypeBuilderKind.IPersistableModel, jsonModel.Kind);
-            Assert.AreEqual(s_modelExpectations[jsonModel.Type.Name].Context, jsonModel.ContextType);
+            Assert.That(jsonModel.Kind, Is.EqualTo(TypeBuilderKind.IPersistableModel));
+            Assert.That(jsonModel.ContextType, Is.EqualTo(s_modelExpectations[jsonModel.Type.Name].Context));
             Assert.IsNotNull(jsonModel.PersistableModelProxy);
             var unknownJsonModel = jsonModel.PersistableModelProxy;
-            Assert.AreEqual("UnknownJsonModel", unknownJsonModel!.Name);
-            Assert.AreEqual("TestProject", unknownJsonModel.Namespace);
+            Assert.That(unknownJsonModel!.Name, Is.EqualTo("UnknownJsonModel"));
+            Assert.That(unknownJsonModel.Namespace, Is.EqualTo("TestProject"));
 
-            Assert.AreEqual("UnknownJsonModel", result.GenerationSpec.TypeBuilders[1].Type.Name);
+            Assert.That(result.GenerationSpec.TypeBuilders[1].Type.Name, Is.EqualTo("UnknownJsonModel"));
         }
 
         [TestCase("private", true)]
@@ -112,25 +112,25 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
 
             if (expectedDiag)
             {
-                Assert.AreEqual(1, result.Diagnostics.Length);
-                Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.TypeMustHaveParameterlessConstructor.Id, result.Diagnostics[0].Id);
+                Assert.That(result.Diagnostics.Length, Is.EqualTo(1));
+                Assert.That(result.Diagnostics[0].Id, Is.EqualTo(ModelReaderWriterContextGenerator.DiagnosticDescriptors.TypeMustHaveParameterlessConstructor.Id));
 
-                Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
+                Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(0));
             }
             else
             {
-                Assert.AreEqual(0, result.Diagnostics.Length);
+                Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
 
-                Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
-                Assert.AreEqual("PersistableModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
-                Assert.AreEqual("internal", result.GenerationSpec.TypeBuilders[0].Modifier);
+                Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
+                Assert.That(result.GenerationSpec.TypeBuilders[0].Type.Name, Is.EqualTo("PersistableModel"));
+                Assert.That(result.GenerationSpec.TypeBuilders[0].Modifier, Is.EqualTo("internal"));
             }
         }
 
@@ -176,16 +176,16 @@ namespace TestProject2
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(2, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(2));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
 
             var dict = result.GenerationSpec.TypeBuilders.ToDictionary(t => $"{t.Type.Namespace}.{t.Type.Name}", t => t);
-            Assert.IsTrue(dict.ContainsKey("TestProject.JsonModel"));
-            Assert.IsTrue(dict.ContainsKey("TestProject2.JsonModel"));
+            Assert.That(dict.ContainsKey("TestProject.JsonModel"), Is.True);
+            Assert.That(dict.ContainsKey("TestProject2.JsonModel"), Is.True);
             var jsonModel = dict["TestProject.JsonModel"];
             InvocationTestBase.AssertJsonModel(jsonModel.Type);
             var jsonModel2 = dict["TestProject2.JsonModel"];
@@ -231,14 +231,14 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(1, result.Diagnostics.Length);
-            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.AbstractTypeWithoutProxy.Id, result.Diagnostics[0].Id);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
-            Assert.AreEqual("UnknownJsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(1));
+            Assert.That(result.Diagnostics[0].Id, Is.EqualTo(ModelReaderWriterContextGenerator.DiagnosticDescriptors.AbstractTypeWithoutProxy.Id));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.Name, Is.EqualTo("UnknownJsonModel"));
         }
 
         [Test]
@@ -277,12 +277,12 @@ namespace _Type.Foo
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("_Type.Foo", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("_Type.Foo"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
 
             InvocationTestBase.AssertJsonModel(result.GenerationSpec.TypeBuilders[0].Type, "_Type.Foo");
         }
@@ -295,7 +295,7 @@ namespace _Type.Foo
             Version? actualVersion = roslynAssembly.GetName().Version;
 
             //This version is required for the source generator to work correctly.
-            Assert.AreEqual(expectedVersion, actualVersion,
+            Assert.That(actualVersion, Is.EqualTo(expectedVersion),
                 $"Expected Roslyn version {expectedVersion}, but got {actualVersion}");
         }
 
@@ -354,12 +354,12 @@ namespace TestProject
 
             var result = CompilationHelper.RunSourceGenerator(compilation);
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("MyLocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("MyLocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -413,12 +413,12 @@ namespace TestProject
 
             var result = CompilationHelper.RunSourceGenerator(compilation);
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -448,12 +448,12 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -474,7 +474,7 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Null);
         }
 
         [Test]
@@ -504,7 +504,7 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNull(result.GenerationSpec);
+            Assert.That(result.GenerationSpec, Is.Null);
         }
 
         [TestCase("public")]
@@ -526,12 +526,12 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual(modifier, result.GenerationSpec!.Modifier);
-            Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo(modifier));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
         }
 
         [TestCase("public")]
@@ -568,20 +568,20 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual(modifier, result.GenerationSpec!.Modifier);
-            Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual("TestClientModelReaderWriterContext", result.GenerationSpec.TypeBuilders[0].ContextType.Name);
-            Assert.AreEqual("AvailabilitySetData", result.GenerationSpec.TypeBuilders[0].Type.Name);
-            Assert.AreEqual("System.ClientModel.Tests.Client.Models.ResourceManager.Compute", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
-            Assert.AreEqual(1, result.GenerationSpec.ReferencedContexts.Count);
-            Assert.AreEqual("TestClientModelReaderWriterContext", result.GenerationSpec.ReferencedContexts[0].Name);
-            Assert.AreEqual("System.ClientModel.Tests.ModelReaderWriterTests", result.GenerationSpec.ReferencedContexts[0].Namespace);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo(modifier));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].ContextType.Name, Is.EqualTo("TestClientModelReaderWriterContext"));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.Name, Is.EqualTo("AvailabilitySetData"));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.Namespace, Is.EqualTo("System.ClientModel.Tests.Client.Models.ResourceManager.Compute"));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(1));
+            Assert.That(result.GenerationSpec.ReferencedContexts[0].Name, Is.EqualTo("TestClientModelReaderWriterContext"));
+            Assert.That(result.GenerationSpec.ReferencedContexts[0].Namespace, Is.EqualTo("System.ClientModel.Tests.ModelReaderWriterTests"));
 
             //we shouldn't make a builder just add the reference to forward to TestClientModelReaderWriterContext
-            Assert.IsNull(newCompilation.GetTypeByMetadataName($"{result.GenerationSpec.TypeBuilders[0].Type.TypeCaseName}Builder"));
+            Assert.That(newCompilation.GetTypeByMetadataName($"{result.GenerationSpec.TypeBuilders[0].Type.TypeCaseName}Builder"), Is.Null);
         }
 
         [Test]
@@ -621,9 +621,9 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNull(result.GenerationSpec);
-            Assert.AreEqual(1, result.Diagnostics.Length);
-            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.MultipleContextsNotSupported.Id, result.Diagnostics[0].Id);
+            Assert.That(result.GenerationSpec, Is.Null);
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(1));
+            Assert.That(result.Diagnostics[0].Id, Is.EqualTo(ModelReaderWriterContextGenerator.DiagnosticDescriptors.MultipleContextsNotSupported.Id));
         }
 
         [Test]
@@ -663,8 +663,8 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNull(result.GenerationSpec);
-            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.That(result.GenerationSpec, Is.Null);
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
         }
 
         [Test]
@@ -684,9 +684,9 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNull(result.GenerationSpec);
-            Assert.AreEqual(1, result.Diagnostics.Length);
-            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.ContextMustBePartial.Id, result.Diagnostics[0].Id);
+            Assert.That(result.GenerationSpec, Is.Null);
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(1));
+            Assert.That(result.Diagnostics[0].Id, Is.EqualTo(ModelReaderWriterContextGenerator.DiagnosticDescriptors.ContextMustBePartial.Id));
         }
 
         [Test]
@@ -710,12 +710,12 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
-            Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(1, result.Diagnostics.Length);
-            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext.Id, result.Diagnostics[0].Id);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(0));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(1));
+            Assert.That(result.Diagnostics[0].Id, Is.EqualTo(ModelReaderWriterContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext.Id));
         }
 
         [Test]
@@ -760,19 +760,19 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
-            Assert.AreEqual(2, result.GenerationSpec.TypeBuilders.Count);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(2));
 
             var dict = result.GenerationSpec.TypeBuilders.ToDictionary(t => $"{t.Type.GetInnerItemType().Namespace}.{t.Type.Name}", t => t);
             ListTests.AssertList(s_modelExpectations[JsonModel], false, dict);
 
-            Assert.IsTrue(dict.TryGetValue($"TestProject.{JsonModel}", out var item));
+            Assert.That(dict.TryGetValue($"TestProject.{JsonModel}", out var item), Is.True);
             AssertJsonModel(item!.Type);
 
-            Assert.AreEqual(1, result.Diagnostics.Length);
-            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext.Id, result.Diagnostics[0].Id);
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(1));
+            Assert.That(result.Diagnostics[0].Id, Is.EqualTo(ModelReaderWriterContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext.Id));
         }
 
         [Test]
@@ -804,11 +804,11 @@ namespace TestDependency
             var depResult = CompilationHelper.RunSourceGenerator(depCompilation, out var newDepCompilation);
 
             Assert.IsNotNull(depResult.GenerationSpec);
-            Assert.AreEqual("LocalContext", depResult.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestDependency", depResult.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, depResult.Diagnostics.Length);
-            Assert.AreEqual("public", depResult.GenerationSpec!.Modifier);
-            Assert.AreEqual(1, depResult.GenerationSpec.TypeBuilders.Count);
+            Assert.That(depResult.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(depResult.GenerationSpec.Type.Namespace, Is.EqualTo("TestDependency"));
+            Assert.That(depResult.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(depResult.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(depResult.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
 
             string source =
 $$"""
@@ -839,12 +839,12 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("MyLocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(1, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("MyLocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(1));
 
             var myLocalContext = newCompilation.GetTypeByMetadataName("TestProject.MyLocalContext");
             Assert.IsNotNull(myLocalContext, "MyLocalContext should not be null.");
@@ -865,7 +865,7 @@ namespace TestProject
                     break;
                 }
             }
-            Assert.IsTrue(foundInitializer, "s_referenceContexts should be initialized with TestDependency.LocalContext.Default");
+            Assert.That(foundInitializer, Is.True, "s_referenceContexts should be initialized with TestDependency.LocalContext.Default");
         }
 
         [TestCase(true)]
@@ -902,18 +902,18 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, additionalSuppress: additionalSuppress);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(isError ? 0 : 1, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(isError ? 0 : 1));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
 
             if (!isError)
             {
-                Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
-                Assert.AreEqual("internal", result.GenerationSpec.TypeBuilders[0].Modifier);
-                Assert.AreEqual(ObsoleteLevel.Warning, result.GenerationSpec.TypeBuilders[0].Type.ObsoleteLevel);
+                Assert.That(result.GenerationSpec.TypeBuilders[0].Type.Name, Is.EqualTo("JsonModel"));
+                Assert.That(result.GenerationSpec.TypeBuilders[0].Modifier, Is.EqualTo("internal"));
+                Assert.That(result.GenerationSpec.TypeBuilders[0].Type.ObsoleteLevel, Is.EqualTo(ObsoleteLevel.Warning));
             }
         }
 
@@ -977,59 +977,59 @@ namespace TestProject
                 additionalSuppress: isError ? ["CS0619"] : null);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(isError ? 0 : collectionType == "JsonModel[][]" ? 3 : 2, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(isError ? 0 : collectionType == "JsonModel[][]" ? 3 : 2));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
 
             if (!isError)
             {
                 var dict = result.GenerationSpec.TypeBuilders.ToDictionary(t => t.Type.Name, t => t);
 
-                Assert.IsTrue(dict.TryGetValue("JsonModel", out var jsonModelBuilder));
-                Assert.AreEqual("JsonModel", jsonModelBuilder!.Type.Name);
-                Assert.AreEqual("TestProject", jsonModelBuilder.Type.Namespace);
-                Assert.AreEqual("internal", jsonModelBuilder.Modifier);
-                Assert.AreEqual(ObsoleteLevel.Warning, jsonModelBuilder.Type.ObsoleteLevel);
+                Assert.That(dict.TryGetValue("JsonModel", out var jsonModelBuilder), Is.True);
+                Assert.That(jsonModelBuilder!.Type.Name, Is.EqualTo("JsonModel"));
+                Assert.That(jsonModelBuilder.Type.Namespace, Is.EqualTo("TestProject"));
+                Assert.That(jsonModelBuilder.Modifier, Is.EqualTo("internal"));
+                Assert.That(jsonModelBuilder.Type.ObsoleteLevel, Is.EqualTo(ObsoleteLevel.Warning));
 
-                Assert.IsTrue(dict.TryGetValue(collectionType, out var collectionBuilder));
-                Assert.AreEqual(collectionType, collectionBuilder!.Type.Name);
+                Assert.That(dict.TryGetValue(collectionType, out var collectionBuilder), Is.True);
+                Assert.That(collectionBuilder!.Type.Name, Is.EqualTo(collectionType));
                 if (collectionType == "JsonModel[]" || collectionType == "JsonModel[,]" || collectionType == "JsonModel[][]")
                 {
-                    Assert.AreEqual("TestProject", collectionBuilder.Type.Namespace);
+                    Assert.That(collectionBuilder.Type.Namespace, Is.EqualTo("TestProject"));
                 }
                 else if (collectionType == "ReadOnlyMemory<JsonModel>")
                 {
-                    Assert.AreEqual("System", collectionBuilder.Type.Namespace);
+                    Assert.That(collectionBuilder.Type.Namespace, Is.EqualTo("System"));
                 }
                 else
                 {
-                    Assert.AreEqual("System.Collections.Generic", collectionBuilder.Type.Namespace);
+                    Assert.That(collectionBuilder.Type.Namespace, Is.EqualTo("System.Collections.Generic"));
                 }
-                Assert.AreEqual("internal", collectionBuilder.Modifier);
-                Assert.AreEqual(ObsoleteLevel.Warning, collectionBuilder.Type.ObsoleteLevel);
+                Assert.That(collectionBuilder.Modifier, Is.EqualTo("internal"));
+                Assert.That(collectionBuilder.Type.ObsoleteLevel, Is.EqualTo(ObsoleteLevel.Warning));
                 if (collectionType == "JsonModel[][]")
                 {
-                    Assert.AreEqual("JsonModel[]", collectionBuilder.Type.ItemType!.Name);
-                    Assert.AreEqual("TestProject", collectionBuilder.Type.ItemType!.Namespace);
+                    Assert.That(collectionBuilder.Type.ItemType!.Name, Is.EqualTo("JsonModel[]"));
+                    Assert.That(collectionBuilder.Type.ItemType!.Namespace, Is.EqualTo("TestProject"));
 
-                    Assert.IsTrue(dict.TryGetValue("JsonModel[]", out var jsonModelArrayBuilder));
-                    Assert.AreEqual("JsonModel[]", jsonModelArrayBuilder!.Type.Name);
-                    Assert.AreEqual("TestProject", jsonModelArrayBuilder.Type.Namespace);
-                    Assert.AreEqual("internal", jsonModelArrayBuilder.Modifier);
-                    Assert.AreEqual(ObsoleteLevel.Warning, jsonModelArrayBuilder.Type.ObsoleteLevel);
+                    Assert.That(dict.TryGetValue("JsonModel[]", out var jsonModelArrayBuilder), Is.True);
+                    Assert.That(jsonModelArrayBuilder!.Type.Name, Is.EqualTo("JsonModel[]"));
+                    Assert.That(jsonModelArrayBuilder.Type.Namespace, Is.EqualTo("TestProject"));
+                    Assert.That(jsonModelArrayBuilder.Modifier, Is.EqualTo("internal"));
+                    Assert.That(jsonModelArrayBuilder.Type.ObsoleteLevel, Is.EqualTo(ObsoleteLevel.Warning));
 
-                    Assert.AreEqual("JsonModel", jsonModelArrayBuilder.Type.ItemType!.Name);
-                    Assert.AreEqual("TestProject", jsonModelArrayBuilder.Type.ItemType!.Namespace);
-                    Assert.AreEqual(ObsoleteLevel.Warning, jsonModelArrayBuilder.Type.ItemType!.ObsoleteLevel);
+                    Assert.That(jsonModelArrayBuilder.Type.ItemType!.Name, Is.EqualTo("JsonModel"));
+                    Assert.That(jsonModelArrayBuilder.Type.ItemType!.Namespace, Is.EqualTo("TestProject"));
+                    Assert.That(jsonModelArrayBuilder.Type.ItemType!.ObsoleteLevel, Is.EqualTo(ObsoleteLevel.Warning));
                 }
                 else
                 {
-                    Assert.AreEqual("JsonModel", collectionBuilder.Type.ItemType!.Name);
-                    Assert.AreEqual("TestProject", collectionBuilder.Type.ItemType!.Namespace);
-                    Assert.AreEqual(ObsoleteLevel.Warning, collectionBuilder.Type.ItemType!.ObsoleteLevel);
+                    Assert.That(collectionBuilder.Type.ItemType!.Name, Is.EqualTo("JsonModel"));
+                    Assert.That(collectionBuilder.Type.ItemType!.Namespace, Is.EqualTo("TestProject"));
+                    Assert.That(collectionBuilder.Type.ItemType!.ObsoleteLevel, Is.EqualTo(ObsoleteLevel.Warning));
                 }
             }
         }
@@ -1085,22 +1085,22 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, out var generatedSources);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(3, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
-            Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
-            Assert.AreEqual("Jsonmodel", result.GenerationSpec.TypeBuilders[1].Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[1].Type.Namespace);
-            Assert.AreEqual("JsonmodeL", result.GenerationSpec.TypeBuilders[2].Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[2].Type.Namespace);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(3));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.Name, Is.EqualTo("JsonModel"));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.GenerationSpec.TypeBuilders[1].Type.Name, Is.EqualTo("Jsonmodel"));
+            Assert.That(result.GenerationSpec.TypeBuilders[1].Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.GenerationSpec.TypeBuilders[2].Type.Name, Is.EqualTo("JsonmodeL"));
+            Assert.That(result.GenerationSpec.TypeBuilders[2].Type.Namespace, Is.EqualTo("TestProject"));
 
-            Assert.AreEqual("TestProject_JsonModel_Builder.g.cs", generatedSources[1].HintName);
-            Assert.AreEqual("TestProject_Jsonmodel_Builder_1.g.cs", generatedSources[2].HintName);
-            Assert.AreEqual("TestProject_JsonmodeL_Builder_2.g.cs", generatedSources[3].HintName);
+            Assert.That(generatedSources[1].HintName, Is.EqualTo("TestProject_JsonModel_Builder.g.cs"));
+            Assert.That(generatedSources[2].HintName, Is.EqualTo("TestProject_Jsonmodel_Builder_1.g.cs"));
+            Assert.That(generatedSources[3].HintName, Is.EqualTo("TestProject_JsonmodeL_Builder_2.g.cs"));
         }
 
         [Test]
@@ -1136,14 +1136,14 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
-            Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.Name, Is.EqualTo("JsonModel"));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.Namespace, Is.EqualTo("TestProject"));
         }
 
         [Test]
@@ -1209,18 +1209,18 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(2, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(2));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
 
             // Order should match the discovery order (first JsonModel, then JsonModel2).
-            Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
-            Assert.AreEqual("JsonModel2", result.GenerationSpec.TypeBuilders[1].Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[1].Type.Namespace);
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.Name, Is.EqualTo("JsonModel"));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.GenerationSpec.TypeBuilders[1].Type.Name, Is.EqualTo("JsonModel2"));
+            Assert.That(result.GenerationSpec.TypeBuilders[1].Type.Namespace, Is.EqualTo("TestProject"));
         }
 
         [Test]
@@ -1265,16 +1265,16 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(2, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
-            Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
-            Assert.AreEqual("JsonModel2", result.GenerationSpec.TypeBuilders[1].Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[1].Type.Namespace);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(2));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.Name, Is.EqualTo("JsonModel"));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.GenerationSpec.TypeBuilders[1].Type.Name, Is.EqualTo("JsonModel2"));
+            Assert.That(result.GenerationSpec.TypeBuilders[1].Type.Namespace, Is.EqualTo("TestProject"));
         }
 
 #if NET8_0_OR_GREATER
@@ -1328,12 +1328,12 @@ namespace TestProject
             // Verify the new compilation still has warnings for direct usage but not for generated code
             var diagnostics = newCompilation.GetDiagnostics();
             var errors = diagnostics.Where(d => d.Severity == DiagnosticSeverity.Error).ToArray();
-            Assert.AreEqual(0, errors.Length, "Compilation should not have errors");
+            Assert.That(errors.Length, Is.EqualTo(0), "Compilation should not have errors");
 
             // Check for experimental warnings - should still have them for direct usage in TestUsage class
             var experimentalWarnings = diagnostics
                 .Where(d => (d.Id == "TEST001" || d.Id == "TEST002") && !d.Location.IsInSource).ToArray();
-            Assert.AreEqual(0, experimentalWarnings.Length, "Generated code should not produce experimental warnings");
+            Assert.That(experimentalWarnings.Length, Is.EqualTo(0), "Generated code should not produce experimental warnings");
 
             // Check the context file for pragma suppressions in the constructor
             var contextSource = generatedSources.First(s => s.HintName == "LocalContext.g.cs");
@@ -1342,14 +1342,14 @@ namespace TestProject
                 .ToList();
 
             var startIndex = contextText.FindIndex(line => line.Contains("#pragma warning disable TEST001"));
-            Assert.IsTrue(startIndex >= 0, "Could not find #pragma warning disable TEST001");
+            Assert.That(startIndex >= 0, Is.True, "Could not find #pragma warning disable TEST001");
 
-            Assert.IsTrue(startIndex + 2 < contextText.Count, "Not enough lines after pragma disable");
+            Assert.That(startIndex + 2 < contextText.Count, Is.True, "Not enough lines after pragma disable");
             StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)", contextText[startIndex + 1]);
             StringAssert.Contains("#pragma warning restore TEST001", contextText[startIndex + 2]);
 
             startIndex = contextText.FindIndex(line => line.Contains("#pragma warning disable TEST002"));
-            Assert.IsTrue(startIndex >= 0, "Could not find #pragma warning disable TEST002");
+            Assert.That(startIndex >= 0, Is.True, "Could not find #pragma warning disable TEST002");
             StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.OtherModel)", contextText[startIndex + 1]);
             StringAssert.Contains("#pragma warning restore TEST002", contextText[startIndex + 2]);
 
@@ -1364,9 +1364,9 @@ namespace TestProject
             StringAssert.Contains("#pragma warning disable TEST002", otherModelText);
             StringAssert.Contains("#pragma warning restore TEST002", otherModelText);
 
-            Assert.AreEqual(2, result.GenerationSpec!.TypeBuilders.Count);
-            Assert.AreEqual("TEST001", result.GenerationSpec.TypeBuilders[0].Type.ExperimentalDiagnosticId);
-            Assert.AreEqual("TEST002", result.GenerationSpec.TypeBuilders[1].Type.ExperimentalDiagnosticId);
+            Assert.That(result.GenerationSpec!.TypeBuilders.Count, Is.EqualTo(2));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.ExperimentalDiagnosticId, Is.EqualTo("TEST001"));
+            Assert.That(result.GenerationSpec.TypeBuilders[1].Type.ExperimentalDiagnosticId, Is.EqualTo("TEST002"));
         }
 
         [Test]
@@ -1416,12 +1416,12 @@ namespace TestProject
             // Verify the new compilation still has warnings for direct usage but not for generated code
             var diagnostics = newCompilation.GetDiagnostics();
             var errors = diagnostics.Where(d => d.Severity == DiagnosticSeverity.Error).ToArray();
-            Assert.AreEqual(0, errors.Length, "Compilation should not have errors");
+            Assert.That(errors.Length, Is.EqualTo(0), "Compilation should not have errors");
 
             // Check for experimental warnings - should still have them for direct usage in TestUsage class
             var experimentalWarnings = diagnostics
                 .Where(d => (d.Id == "TEST001") && !d.Location.IsInSource).ToArray();
-            Assert.AreEqual(0, experimentalWarnings.Length, "Generated code should not produce experimental warnings");
+            Assert.That(experimentalWarnings.Length, Is.EqualTo(0), "Generated code should not produce experimental warnings");
 
             // Check the context file for pragma suppressions in the constructor
             var contextSource = generatedSources.First(s => s.HintName == "LocalContext.g.cs");
@@ -1430,9 +1430,9 @@ namespace TestProject
                 .ToList();
 
             var startIndex = contextText.FindIndex(line => line.Contains("#pragma warning disable TEST001"));
-            Assert.IsTrue(startIndex >= 0, "Could not find #pragma warning disable TEST001");
+            Assert.That(startIndex >= 0, Is.True, "Could not find #pragma warning disable TEST001");
 
-            Assert.IsTrue(startIndex + 2 < contextText.Count, "Not enough lines after pragma disable");
+            Assert.That(startIndex + 2 < contextText.Count, Is.True, "Not enough lines after pragma disable");
             StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)", contextText[startIndex + 1]);
             StringAssert.Contains("#pragma warning restore TEST001", contextText[startIndex + 2]);
 
@@ -1447,9 +1447,9 @@ namespace TestProject
             StringAssert.DoesNotContain("#pragma warning disable", otherModelText);
             StringAssert.DoesNotContain("#pragma warning restore", otherModelText);
 
-            Assert.AreEqual(2, result.GenerationSpec!.TypeBuilders.Count);
-            Assert.AreEqual("TEST001", result.GenerationSpec.TypeBuilders[0].Type.ExperimentalDiagnosticId);
-            Assert.IsNull(result.GenerationSpec.TypeBuilders[1].Type.ExperimentalDiagnosticId);
+            Assert.That(result.GenerationSpec!.TypeBuilders.Count, Is.EqualTo(2));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.ExperimentalDiagnosticId, Is.EqualTo("TEST001"));
+            Assert.That(result.GenerationSpec.TypeBuilders[1].Type.ExperimentalDiagnosticId, Is.Null);
         }
 
         [Test]
@@ -1502,12 +1502,12 @@ $$"""
             // Verify the new compilation still has warnings for direct usage but not for generated code
             var diagnostics = newCompilation.GetDiagnostics();
             var errors = diagnostics.Where(d => d.Severity == DiagnosticSeverity.Error).ToArray();
-            Assert.AreEqual(0, errors.Length, "Compilation should not have errors");
+            Assert.That(errors.Length, Is.EqualTo(0), "Compilation should not have errors");
 
             // Check for experimental warnings - should still have them for direct usage in TestUsage class
             var experimentalWarnings = diagnostics
                 .Where(d => (d.Id == "TEST001") && !d.Location.IsInSource).ToArray();
-            Assert.AreEqual(0, experimentalWarnings.Length, "Generated code should not produce experimental warnings");
+            Assert.That(experimentalWarnings.Length, Is.EqualTo(0), "Generated code should not produce experimental warnings");
 
             // Check the context file for pragma suppressions in the constructor
             var contextSource = generatedSources.First(s => s.HintName == "LocalContext.g.cs");
@@ -1516,9 +1516,9 @@ $$"""
                 .ToList();
 
             var startIndex = contextText.FindIndex(line => line.Contains("#pragma warning disable TEST001"));
-            Assert.IsTrue(startIndex >= 0, "Could not find #pragma warning disable TEST001");
+            Assert.That(startIndex >= 0, Is.True, "Could not find #pragma warning disable TEST001");
 
-            Assert.IsTrue(startIndex + 2 < contextText.Count, "Not enough lines after pragma disable");
+            Assert.That(startIndex + 2 < contextText.Count, Is.True, "Not enough lines after pragma disable");
             StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)", contextText[startIndex + 1]);
             StringAssert.Contains("#pragma warning restore TEST001", contextText[startIndex + 2]);
 
@@ -1533,11 +1533,11 @@ $$"""
             StringAssert.Contains("#pragma warning disable CS0618", otherModelText);
             StringAssert.Contains("#pragma warning restore CS0618", otherModelText);
 
-            Assert.AreEqual(2, result.GenerationSpec!.TypeBuilders.Count);
-            Assert.AreEqual("TEST001", result.GenerationSpec.TypeBuilders[0].Type.ExperimentalDiagnosticId);
-            Assert.IsNull(result.GenerationSpec.TypeBuilders[1].Type.ExperimentalDiagnosticId);
+            Assert.That(result.GenerationSpec!.TypeBuilders.Count, Is.EqualTo(2));
+            Assert.That(result.GenerationSpec.TypeBuilders[0].Type.ExperimentalDiagnosticId, Is.EqualTo("TEST001"));
+            Assert.That(result.GenerationSpec.TypeBuilders[1].Type.ExperimentalDiagnosticId, Is.Null);
 
-            Assert.AreEqual(ObsoleteLevel.Warning, result.GenerationSpec.TypeBuilders[1].Type.ObsoleteLevel);
+            Assert.That(result.GenerationSpec.TypeBuilders[1].Type.ObsoleteLevel, Is.EqualTo(ObsoleteLevel.Warning));
         }
 
         [Test]
@@ -1574,11 +1574,11 @@ $$"""
             var depResult = CompilationHelper.RunSourceGenerator(depCompilation, out var newDepCompilation);
 
             Assert.IsNotNull(depResult.GenerationSpec);
-            Assert.AreEqual("LocalContext", depResult.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestDependency", depResult.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, depResult.Diagnostics.Length);
-            Assert.AreEqual("public", depResult.GenerationSpec!.Modifier);
-            Assert.AreEqual(1, depResult.GenerationSpec.TypeBuilders.Count);
+            Assert.That(depResult.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(depResult.GenerationSpec.Type.Namespace, Is.EqualTo("TestDependency"));
+            Assert.That(depResult.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(depResult.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(depResult.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
 
             string source =
 $$"""
@@ -1613,12 +1613,12 @@ $$"""
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("MyLocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(1, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("MyLocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count, Is.EqualTo(1));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(1));
 
             var myLocalContext = newCompilation.GetTypeByMetadataName("TestProject.MyLocalContext");
             Assert.IsNotNull(myLocalContext, "MyLocalContext should not be null.");
@@ -1683,62 +1683,62 @@ $$"""
                 out var generatedSources);
 
             Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(collectionType == "JsonModel[][]" ? 3 : 2,
-                result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.That(result.GenerationSpec!.Type.Name, Is.EqualTo("LocalContext"));
+            Assert.That(result.GenerationSpec.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(result.Diagnostics.Length, Is.EqualTo(0));
+            Assert.That(result.GenerationSpec!.Modifier, Is.EqualTo("public"));
+            Assert.That(result.GenerationSpec.TypeBuilders.Count,
+                Is.EqualTo(collectionType == "JsonModel[][]" ? 3 : 2));
+            Assert.That(result.GenerationSpec.ReferencedContexts.Count, Is.EqualTo(0));
 
             var dict = result.GenerationSpec.TypeBuilders.ToDictionary(t => t.Type.Name, t => t);
 
-            Assert.IsTrue(dict.TryGetValue("JsonModel", out var jsonModelBuilder));
-            Assert.AreEqual("JsonModel", jsonModelBuilder!.Type.Name);
-            Assert.AreEqual("TestProject", jsonModelBuilder.Type.Namespace);
-            Assert.AreEqual("internal", jsonModelBuilder.Modifier);
-            Assert.AreEqual(ObsoleteLevel.None, jsonModelBuilder.Type.ObsoleteLevel);
-            Assert.AreEqual("TEST001", jsonModelBuilder.Type.ExperimentalDiagnosticId);
+            Assert.That(dict.TryGetValue("JsonModel", out var jsonModelBuilder), Is.True);
+            Assert.That(jsonModelBuilder!.Type.Name, Is.EqualTo("JsonModel"));
+            Assert.That(jsonModelBuilder.Type.Namespace, Is.EqualTo("TestProject"));
+            Assert.That(jsonModelBuilder.Modifier, Is.EqualTo("internal"));
+            Assert.That(jsonModelBuilder.Type.ObsoleteLevel, Is.EqualTo(ObsoleteLevel.None));
+            Assert.That(jsonModelBuilder.Type.ExperimentalDiagnosticId, Is.EqualTo("TEST001"));
 
-            Assert.IsTrue(dict.TryGetValue(collectionType, out var collectionBuilder));
-            Assert.AreEqual(collectionType, collectionBuilder!.Type.Name);
+            Assert.That(dict.TryGetValue(collectionType, out var collectionBuilder), Is.True);
+            Assert.That(collectionBuilder!.Type.Name, Is.EqualTo(collectionType));
             if (collectionType == "JsonModel[]" || collectionType == "JsonModel[,]" ||
                 collectionType == "JsonModel[][]")
             {
-                Assert.AreEqual("TestProject", collectionBuilder.Type.Namespace);
+                Assert.That(collectionBuilder.Type.Namespace, Is.EqualTo("TestProject"));
             }
             else if (collectionType == "ReadOnlyMemory<JsonModel>")
             {
-                Assert.AreEqual("System", collectionBuilder.Type.Namespace);
+                Assert.That(collectionBuilder.Type.Namespace, Is.EqualTo("System"));
             }
             else
             {
-                Assert.AreEqual("System.Collections.Generic", collectionBuilder.Type.Namespace);
+                Assert.That(collectionBuilder.Type.Namespace, Is.EqualTo("System.Collections.Generic"));
             }
 
-            Assert.AreEqual("internal", collectionBuilder.Modifier);
-            Assert.AreEqual(ObsoleteLevel.None, collectionBuilder.Type.ObsoleteLevel);
-            Assert.AreEqual("TEST001", collectionBuilder.Type.ExperimentalDiagnosticId);
+            Assert.That(collectionBuilder.Modifier, Is.EqualTo("internal"));
+            Assert.That(collectionBuilder.Type.ObsoleteLevel, Is.EqualTo(ObsoleteLevel.None));
+            Assert.That(collectionBuilder.Type.ExperimentalDiagnosticId, Is.EqualTo("TEST001"));
             if (collectionType == "JsonModel[][]")
             {
-                Assert.AreEqual("JsonModel[]", collectionBuilder.Type.ItemType!.Name);
-                Assert.AreEqual("TestProject", collectionBuilder.Type.ItemType!.Namespace);
+                Assert.That(collectionBuilder.Type.ItemType!.Name, Is.EqualTo("JsonModel[]"));
+                Assert.That(collectionBuilder.Type.ItemType!.Namespace, Is.EqualTo("TestProject"));
 
-                Assert.IsTrue(dict.TryGetValue("JsonModel[]", out var jsonModelArrayBuilder));
-                Assert.AreEqual("JsonModel[]", jsonModelArrayBuilder!.Type.Name);
-                Assert.AreEqual("TestProject", jsonModelArrayBuilder.Type.Namespace);
-                Assert.AreEqual("internal", jsonModelArrayBuilder.Modifier);
-                Assert.AreEqual("TEST001", jsonModelArrayBuilder.Type.ExperimentalDiagnosticId);
+                Assert.That(dict.TryGetValue("JsonModel[]", out var jsonModelArrayBuilder), Is.True);
+                Assert.That(jsonModelArrayBuilder!.Type.Name, Is.EqualTo("JsonModel[]"));
+                Assert.That(jsonModelArrayBuilder.Type.Namespace, Is.EqualTo("TestProject"));
+                Assert.That(jsonModelArrayBuilder.Modifier, Is.EqualTo("internal"));
+                Assert.That(jsonModelArrayBuilder.Type.ExperimentalDiagnosticId, Is.EqualTo("TEST001"));
 
-                Assert.AreEqual("JsonModel", jsonModelArrayBuilder.Type.ItemType!.Name);
-                Assert.AreEqual("TestProject", jsonModelArrayBuilder.Type.ItemType!.Namespace);
-                Assert.AreEqual("TEST001", jsonModelArrayBuilder.Type.ExperimentalDiagnosticId);
+                Assert.That(jsonModelArrayBuilder.Type.ItemType!.Name, Is.EqualTo("JsonModel"));
+                Assert.That(jsonModelArrayBuilder.Type.ItemType!.Namespace, Is.EqualTo("TestProject"));
+                Assert.That(jsonModelArrayBuilder.Type.ExperimentalDiagnosticId, Is.EqualTo("TEST001"));
             }
             else
             {
-                Assert.AreEqual("JsonModel", collectionBuilder.Type.ItemType!.Name);
-                Assert.AreEqual("TestProject", collectionBuilder.Type.ItemType!.Namespace);
-                Assert.AreEqual("TEST001", collectionBuilder.Type.ExperimentalDiagnosticId);
+                Assert.That(collectionBuilder.Type.ItemType!.Name, Is.EqualTo("JsonModel"));
+                Assert.That(collectionBuilder.Type.ItemType!.Namespace, Is.EqualTo("TestProject"));
+                Assert.That(collectionBuilder.Type.ExperimentalDiagnosticId, Is.EqualTo("TEST001"));
             }
 
             // Also check the builder files

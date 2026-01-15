@@ -263,7 +263,7 @@ namespace Azure.Data.Tables.Tests
 
             // Initialize a property to an DateTime value
             entity["DT"] = dateNow;
-            Assert.AreEqual(typeof(DateTime), entity["DT"].GetType());
+            Assert.That(entity["DT"].GetType(), Is.EqualTo(typeof(DateTime)));
             DateTimeOffset dtoffset = (DateTime)entity["DT"];
             Assert.That(entity["DT"], Is.EqualTo(dateNow));
             Assert.That(entity.GetDateTime("DT"), Is.EqualTo(dateNow));

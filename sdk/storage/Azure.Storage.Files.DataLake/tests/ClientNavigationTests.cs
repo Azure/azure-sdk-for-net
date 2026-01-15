@@ -33,8 +33,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             var containerProperties = await filesystemClient.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(fileClient.FileSystemName, filesystemClient.Name);
-            Assert.AreEqual(fileClient.AccountName, filesystemClient.AccountName);
+            Assert.That(filesystemClient.Name, Is.EqualTo(fileClient.FileSystemName));
+            Assert.That(filesystemClient.AccountName, Is.EqualTo(fileClient.AccountName));
             Assert.IsNotNull(containerProperties);
         }
 
@@ -57,8 +57,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             var fileSystemProperties = await fileSystemClient.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(fileClient.FileSystemName, fileSystemClient.Name);
-            Assert.AreEqual(fileClient.AccountName, fileSystemClient.AccountName);
+            Assert.That(fileSystemClient.Name, Is.EqualTo(fileClient.FileSystemName));
+            Assert.That(fileSystemClient.AccountName, Is.EqualTo(fileClient.AccountName));
             Assert.IsNotNull(fileSystemProperties);
         }
 
@@ -80,8 +80,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             var pathItems = await fileSystemClient.GetPathsAsync().ToListAsync();
 
             // Assert
-            Assert.AreEqual(fileClient.FileSystemName, fileSystemClient.Name);
-            Assert.AreEqual(fileClient.AccountName, fileSystemClient.AccountName);
+            Assert.That(fileSystemClient.Name, Is.EqualTo(fileClient.FileSystemName));
+            Assert.That(fileSystemClient.AccountName, Is.EqualTo(fileClient.AccountName));
             Assert.IsNotNull(pathItems);
         }
 
@@ -98,7 +98,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(fileSystemClient);
-            Assert.AreSame(fileSystemClientMock.Object, fileSystemClient);
+            Assert.That(fileSystemClient, Is.SameAs(fileSystemClientMock.Object));
         }
 
         [RecordedTest]
@@ -119,8 +119,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             var dirProperties = await parentDirClient.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(fileClient.Path.GetParentPath(), parentDirClient.Path);
-            Assert.AreEqual(fileClient.AccountName, parentDirClient.AccountName);
+            Assert.That(parentDirClient.Path, Is.EqualTo(fileClient.Path.GetParentPath()));
+            Assert.That(parentDirClient.AccountName, Is.EqualTo(fileClient.AccountName));
             Assert.IsNotNull(dirProperties);
         }
 
@@ -146,8 +146,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             var dirProperties = await parentDirClient.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(fileClient.Path.GetParentPath(), parentDirClient.Path);
-            Assert.AreEqual(fileClient.AccountName, parentDirClient.AccountName);
+            Assert.That(parentDirClient.Path, Is.EqualTo(fileClient.Path.GetParentPath()));
+            Assert.That(parentDirClient.AccountName, Is.EqualTo(fileClient.AccountName));
             Assert.IsNotNull(dirProperties);
         }
 
@@ -172,8 +172,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             var pathItems = await parentDirClient.GetPathsAsync().ToListAsync();
 
             // Assert
-            Assert.AreEqual(fileClient.Path.GetParentPath(), parentDirClient.Path);
-            Assert.AreEqual(fileClient.AccountName, parentDirClient.AccountName);
+            Assert.That(parentDirClient.Path, Is.EqualTo(fileClient.Path.GetParentPath()));
+            Assert.That(parentDirClient.AccountName, Is.EqualTo(fileClient.AccountName));
             Assert.IsNotNull(pathItems);
         }
 
@@ -190,7 +190,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(fileSystemClient);
-            Assert.AreSame(fileSystemClientMock.Object, fileSystemClient);
+            Assert.That(fileSystemClient, Is.SameAs(fileSystemClientMock.Object));
         }
 
         [RecordedTest]
@@ -209,7 +209,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 GetNewFileSystemName(),
                 $"{GetNewDirectoryName()}/{GetNewFileName()}"));
             DataLakeFileSystemClient fileSystem = file.GetParentFileSystemClient();
-            Assert.IsTrue(fileSystem.CanGenerateSasUri);
+            Assert.That(fileSystem.CanGenerateSasUri, Is.True);
 
             // Act - BlobBaseClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
             DataLakeFileClient file2 = InstrumentClient(new DataLakeFileClient(
@@ -218,14 +218,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                 $"{GetNewDirectoryName()}/{GetNewFileName()}",
                 GetOptions()));
             DataLakeFileSystemClient fileSystem2 = file2.GetParentFileSystemClient();
-            Assert.IsTrue(fileSystem2.CanGenerateSasUri);
+            Assert.That(fileSystem2.CanGenerateSasUri, Is.True);
 
             // Act - BlobBaseClient(Uri blobContainerUri, BlobClientOptions options = default)
             DataLakeFileClient file3 = InstrumentClient(new DataLakeFileClient(
                 endpoint,
                 GetOptions()));
             DataLakeFileSystemClient container3 = file3.GetParentFileSystemClient();
-            Assert.IsFalse(container3.CanGenerateSasUri);
+            Assert.That(container3.CanGenerateSasUri, Is.False);
 
             // Act - BlobBaseClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             DataLakeFileClient file4 = InstrumentClient(new DataLakeFileClient(
@@ -233,7 +233,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
             DataLakeFileSystemClient container4 = file4.GetParentFileSystemClient();
-            Assert.IsTrue(container4.CanGenerateSasUri);
+            Assert.That(container4.CanGenerateSasUri, Is.True);
 
             // Act - BlobBaseClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
             var tokenCredentials = new DefaultAzureCredential();
@@ -242,7 +242,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 tokenCredentials,
                 GetOptions()));
             DataLakeFileSystemClient container5 = file5.GetParentFileSystemClient();
-            Assert.IsFalse(container5.CanGenerateSasUri);
+            Assert.That(container5.CanGenerateSasUri, Is.False);
         }
     }
 }

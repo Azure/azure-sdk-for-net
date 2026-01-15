@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string mapName = Recording.GenerateAssetName("map");
             var map = await CreateMap(mapName);
             Assert.IsNotNull(map);
-            Assert.AreEqual(mapName, map.Data.Name);
+            Assert.That(map.Data.Name, Is.EqualTo(mapName));
         }
 
         [RecordedTest]
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string mapName = Recording.GenerateAssetName("map");
             await CreateMap(mapName);
             bool flag = await _mapCollection.ExistsAsync(mapName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Tests
             await CreateMap(mapName);
             var map = await _mapCollection.GetAsync(mapName);
             Assert.IsNotNull(map);
-            Assert.AreEqual(mapName, map.Value.Data.Name);
+            Assert.That(map.Value.Data.Name, Is.EqualTo(mapName));
         }
 
         [RecordedTest]
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Logic.Tests
             string mapName = Recording.GenerateAssetName("map");
             var map = await CreateMap(mapName);
             bool flag = await _mapCollection.ExistsAsync(mapName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await map.DeleteAsync(WaitUntil.Completed);
             flag = await _mapCollection.ExistsAsync(mapName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

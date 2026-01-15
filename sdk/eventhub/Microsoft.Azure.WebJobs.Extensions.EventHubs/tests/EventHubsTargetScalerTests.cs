@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [Test]
         public void TargetScalerDescriptor_ReturnsExpectedValue()
         {
-            Assert.AreEqual($"{_functionId}", _targetScaler.TargetScalerDescriptor.FunctionId);
+            Assert.That(_targetScaler.TargetScalerDescriptor.FunctionId, Is.EqualTo($"{_functionId}"));
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             TargetScalerResult finalResult = EventHubsTargetScaler.ThrottleScaleDownIfNecessaryInternal(currrentResult, previousResult, lastScaleUp, _loggerFactory.CreateLogger<EventHubsTargetScalerTests>());
 
-            Assert.AreEqual(finalResult.TargetWorkerCount, expectedTarget);
+            Assert.That(expectedTarget, Is.EqualTo(finalResult.TargetWorkerCount));
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         public void GetScaleResultInternal_ReturnsExpected(long eventCount, int partitionCount, int? concurrency, int expectedTargetWorkerCount)
         {
             TargetScalerResult result = _targetScaler.GetScaleResultInternal(new TargetScalerContext { InstanceConcurrency = concurrency }, eventCount, partitionCount);
-            Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
+            Assert.That(result.TargetWorkerCount, Is.EqualTo(expectedTargetWorkerCount));
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             if (targetUnprocessedEventThreshold != null) _options.TargetUnprocessedEventThreshold = targetUnprocessedEventThreshold.Value;
 
             int actualConcurrency = _targetScaler.GetDesiredConcurrencyInternal(context);
-            Assert.AreEqual(expectedConcurrency, actualConcurrency);
+            Assert.That(actualConcurrency, Is.EqualTo(expectedConcurrency));
         }
 
         [Test]
@@ -115,12 +115,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         public void TestGetSortedValidWorkerCountsForPartitionCount(int partitionCount, int[] expectedValidWorkerCountsOrdered)
         {
             int[] actualWorkerCounts = EventHubsTargetScaler.GetSortedValidWorkerCountsForPartitionCount(partitionCount);
-            Assert.AreEqual(expectedValidWorkerCountsOrdered.Length, actualWorkerCounts.Length);
+            Assert.That(actualWorkerCounts.Length, Is.EqualTo(expectedValidWorkerCountsOrdered.Length));
 
             // Checking the ordering of the lists
             for (int i = 0; i < expectedValidWorkerCountsOrdered.Length; i++)
             {
-                Assert.AreEqual(expectedValidWorkerCountsOrdered[i], actualWorkerCounts[i]);
+                Assert.That(actualWorkerCounts[i], Is.EqualTo(expectedValidWorkerCountsOrdered[i]));
             }
         }
 
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         public void GetSortedValidWorkerCountsForPartitionCount_ReturnsExpected(int workerCount, int[] sortedWorkerCountList, int expectedValidWorkerCount)
         {
             int actualValidWorkerCount = EventHubsTargetScaler.GetValidWorkerCount(workerCount, sortedWorkerCountList);
-            Assert.AreEqual(expectedValidWorkerCount, actualValidWorkerCount);
+            Assert.That(actualValidWorkerCount, Is.EqualTo(expectedValidWorkerCount));
         }
     }
 }

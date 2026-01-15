@@ -41,16 +41,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
 
             var lro = await clusters.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             CosmosDBForPostgreSqlClusterResource cluster = lro.Value;
-            Assert.AreEqual(clusterName, cluster.Data.Name);
+            Assert.That(cluster.Data.Name, Is.EqualTo(clusterName));
 
             // Get
             CosmosDBForPostgreSqlClusterResource clusterFromGet = await clusters.GetAsync(clusterName);
-            Assert.AreEqual(clusterName, clusterFromGet.Data.Name);
+            Assert.That(clusterFromGet.Data.Name, Is.EqualTo(clusterName));
 
             // List
             await foreach (CosmosDBForPostgreSqlClusterResource clusterFromList in clusters)
             {
-                Assert.AreEqual(clusterName, clusterFromList.Data.Name);
+                Assert.That(clusterFromList.Data.Name, Is.EqualTo(clusterName));
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
 
             var lro = await clusters.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             CosmosDBForPostgreSqlClusterResource cluster = lro.Value;
-            Assert.AreEqual(clusterName, cluster.Data.Name);
+            Assert.That(cluster.Data.Name, Is.EqualTo(clusterName));
 
             // Update
             var updatedData = new CosmosDBForPostgreSqlClusterData(rg.Data.Location)
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
             };
             lro = await clusters.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, updatedData);
             CosmosDBForPostgreSqlClusterResource clusterFromUpdate = lro.Value;
-            Assert.AreEqual(clusterName, clusterFromUpdate.Data.Name);
-            Assert.AreEqual(true, clusterFromUpdate.Data.IsHAEnabled);
+            Assert.That(clusterFromUpdate.Data.Name, Is.EqualTo(clusterName));
+            Assert.That(clusterFromUpdate.Data.IsHAEnabled, Is.EqualTo(true));
 
             // Get
             CosmosDBForPostgreSqlClusterResource clusterFromGet = await clusterFromUpdate.GetAsync();
-            Assert.AreEqual(clusterName, clusterFromGet.Data.Name);
+            Assert.That(clusterFromGet.Data.Name, Is.EqualTo(clusterName));
 
             // Delete
             await clusterFromGet.DeleteAsync(WaitUntil.Completed);

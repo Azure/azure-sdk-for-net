@@ -130,7 +130,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         [Test]
         public void ScaleMonitorDescriptor_ReturnsExpectedValue()
         {
-            Assert.AreEqual($"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower(), _scaleMonitor.Descriptor.Id);
+            Assert.That(_scaleMonitor.Descriptor.Id, Is.EqualTo($"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower()));
         }
 
         [Test]
@@ -150,10 +150,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(0, metrics.MessageCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+            Assert.That(metrics.MessageCount, Is.EqualTo(0));
+            Assert.That(metrics.QueueTime, Is.EqualTo(TimeSpan.FromSeconds(0)));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
         }
 
         [Test]
@@ -172,10 +172,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(0, metrics.MessageCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+            Assert.That(metrics.MessageCount, Is.EqualTo(0));
+            Assert.That(metrics.QueueTime, Is.EqualTo(TimeSpan.FromSeconds(0)));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
         }
 
         [Test]
@@ -192,10 +192,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(1, metrics.MessageCount);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+            Assert.That(metrics.MessageCount, Is.EqualTo(1));
             Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(30)));
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
         }
 
         [Test]
@@ -210,10 +210,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(0, metrics.MessageCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+            Assert.That(metrics.MessageCount, Is.EqualTo(0));
+            Assert.That(metrics.QueueTime, Is.EqualTo(TimeSpan.FromSeconds(0)));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
         }
 
         [Test]
@@ -231,10 +231,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(0, metrics.MessageCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+            Assert.That(metrics.MessageCount, Is.EqualTo(0));
+            Assert.That(metrics.QueueTime, Is.EqualTo(TimeSpan.FromSeconds(0)));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
         }
 
         [Test]
@@ -253,10 +253,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(1, metrics.MessageCount);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+            Assert.That(metrics.MessageCount, Is.EqualTo(1));
             Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(30)));
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
         }
 
         [Test]
@@ -275,10 +275,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(1, metrics.MessageCount);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+            Assert.That(metrics.MessageCount, Is.EqualTo(1));
             Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(30)));
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
         }
 
         [Test]
@@ -299,10 +299,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             var serviceBusScaleMonitor = (ServiceBusScaleMonitor)listener.GetMonitor();
             var metrics = await serviceBusScaleMonitor.GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(1, metrics.MessageCount);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+            Assert.That(metrics.MessageCount, Is.EqualTo(1));
             Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(30)));
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
         }
 
         [Test]
@@ -323,10 +323,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             var serviceBusScaleMonitor = (ServiceBusScaleMonitor)listener.GetMonitor();
             var metrics = await serviceBusScaleMonitor.GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(0, metrics.MessageCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+            Assert.That(metrics.MessageCount, Is.EqualTo(0));
+            Assert.That(metrics.QueueTime, Is.EqualTo(TimeSpan.FromSeconds(0)));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
         }
 
         [Test]
@@ -341,10 +341,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(1, metrics.MessageCount);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+            Assert.That(metrics.MessageCount, Is.EqualTo(1));
             Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(30)));
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
         }
 
         [Test]
@@ -394,10 +394,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             _mockAdminClient.VerifyAll();
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(10, metrics.MessageCount);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+            Assert.That(metrics.MessageCount, Is.EqualTo(10));
             Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(30)));
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
         }
 
         [Test]
@@ -447,10 +447,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             _mockAdminClient.VerifyAll();
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(5, metrics.MessageCount);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+            Assert.That(metrics.MessageCount, Is.EqualTo(5));
             Assert.That(metrics.QueueTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(30)));
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
         }
 
         [Test]
@@ -465,13 +465,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(0, metrics.MessageCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+            Assert.That(metrics.MessageCount, Is.EqualTo(0));
+            Assert.That(metrics.QueueTime, Is.EqualTo(TimeSpan.FromSeconds(0)));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
 
             var warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
-            Assert.AreEqual($"ServiceBus {_entityTypeName} '{_entityPath}' was not found.", warning.FormattedMessage);
+            Assert.That(warning.FormattedMessage, Is.EqualTo($"ServiceBus {_entityTypeName} '{_entityPath}' was not found."));
             _loggerProvider.ClearAllLogMessages();
 
             // UnauthorizedAccessException
@@ -482,15 +482,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(0, metrics.MessageCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+            Assert.That(metrics.MessageCount, Is.EqualTo(0));
+            Assert.That(metrics.QueueTime, Is.EqualTo(TimeSpan.FromSeconds(0)));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
 
             warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
-            Assert.AreEqual($"Connection string does not have Manage claim for {_entityTypeName} '{_entityPath}'. Failed to get {_entityTypeName} description to derive {_entityTypeName} length metrics. " +
-                        $"Falling back to using first message enqueued time.",
-                        warning.FormattedMessage);
+            Assert.That(warning.FormattedMessage,
+                        Is.EqualTo($"Connection string does not have Manage claim for {_entityTypeName} '{_entityPath}'. Failed to get {_entityTypeName} description to derive {_entityTypeName} length metrics. " +
+                        $"Falling back to using first message enqueued time."));
             _loggerProvider.ClearAllLogMessages();
 
             // Generic Exception
@@ -501,13 +501,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(0, metrics.MessageCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.PartitionCount, Is.EqualTo(0));
+            Assert.That(metrics.MessageCount, Is.EqualTo(0));
+            Assert.That(metrics.QueueTime, Is.EqualTo(TimeSpan.FromSeconds(0)));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
 
             warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
-            Assert.AreEqual($"Error querying for Service Bus {_entityTypeName} scale status: Uh oh", warning.FormattedMessage);
+            Assert.That(warning.FormattedMessage, Is.EqualTo($"Error querying for Service Bus {_entityTypeName} scale status: Uh oh"));
         }
 
         private ServiceBusListener CreateListener(bool useDeadletterQueue = false)
@@ -555,11 +555,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             };
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.None, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.None));
 
             // verify the non-generic implementation works properly
             status = ((IScaleMonitor)_scaleMonitor).GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.None, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.None));
         }
 
         [Test]
@@ -582,15 +582,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             context.Metrics = serviceBusTriggerMetrics;
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.ScaleIn, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleIn));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual("WorkerCount (17) > PartitionCount (16).", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo("WorkerCount (17) > PartitionCount (16)."));
             log = logs[1];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual($"Number of instances (17) is too high relative to number of partitions for Service Bus entity ({_entityPath}, 16).", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo($"Number of instances (17) is too high relative to number of partitions for Service Bus entity ({_entityPath}, 16)."));
 
             // verify again with a non generic context instance
             var context2 = new ScaleStatusContext
@@ -599,7 +599,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 Metrics = serviceBusTriggerMetrics
             };
             status = ((IScaleMonitor)_scaleMonitor).GetScaleStatus(context2);
-            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleOut));
         }
 
         [Test]
@@ -622,16 +622,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             context.Metrics = serviceBusTriggerMetrics;
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleOut));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual("MessageCount (2900) > WorkerCount (1) * 1,000.", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo("MessageCount (2900) > WorkerCount (1) * 1,000."));
             log = logs[1];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual($"Message count for Service Bus Entity ({_entityPath}, 2900) " +
-                         $"is too high relative to the number of instances (1).", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo($"Message count for Service Bus Entity ({_entityPath}, 2900) " +
+                         $"is too high relative to the number of instances (1)."));
 
             // verify again with a non generic context instance
             var context2 = new ScaleStatusContext
@@ -640,7 +640,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 Metrics = serviceBusTriggerMetrics
             };
             status = ((IScaleMonitor)_scaleMonitor).GetScaleStatus(context2);
-            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleOut));
         }
 
         [Test]
@@ -662,12 +662,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 };
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleOut));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual($"Message count is increasing for '{_entityPath}'.", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo($"Message count is increasing for '{_entityPath}'."));
         }
 
         [Test]
@@ -689,12 +689,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 };
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleOut));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual($"Queue time is increasing for '{_entityPath}'.", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo($"Queue time is increasing for '{_entityPath}'."));
         }
 
         [Test]
@@ -716,12 +716,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 };
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.None, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.None));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual($"Queue time is increasing for '{_entityPath}' but we do not scale out unless queue latency is greater than {ServiceBusScaleMonitor.MinimumLastQueueMessageInSecondsThreshold.TotalSeconds}s. Current queue latency is {lastQueueTime}s.", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo($"Queue time is increasing for '{_entityPath}' but we do not scale out unless queue latency is greater than {ServiceBusScaleMonitor.MinimumLastQueueMessageInSecondsThreshold.TotalSeconds}s. Current queue latency is {lastQueueTime}s."));
         }
 
         [Test]
@@ -743,12 +743,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 };
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.ScaleIn, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleIn));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual($"Message count is decreasing for '{_entityPath}'.", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo($"Message count is decreasing for '{_entityPath}'."));
         }
 
         [Test]
@@ -770,12 +770,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 };
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.ScaleIn, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleIn));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual($"Queue time is decreasing for '{_entityPath}'.", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo($"Queue time is decreasing for '{_entityPath}'."));
         }
 
         [Test]
@@ -797,12 +797,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 };
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.None, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.None));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual($"Service Bus entity '{_entityPath}' is steady.", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo($"Service Bus entity '{_entityPath}' is steady."));
         }
 
         [Test]
@@ -824,12 +824,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 };
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.ScaleIn, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.ScaleIn));
 
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
-            Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual($"'{_entityPath}' is idle.", log.FormattedMessage);
+            Assert.That(log.Level, Is.EqualTo(LogLevel.Information));
+            Assert.That(log.FormattedMessage, Is.EqualTo($"'{_entityPath}' is idle."));
         }
 
         [Test]
@@ -847,7 +847,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 };
 
             var status = _scaleMonitor.GetScaleStatus(context);
-            Assert.AreEqual(ScaleVote.None, status.Vote);
+            Assert.That(status.Vote, Is.EqualTo(ScaleVote.None));
         }
     }
 }

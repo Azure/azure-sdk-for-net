@@ -60,7 +60,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             Console.WriteLine(response.Value.VerificationResult);
             #endregion Snippet:APC_Sample_SimSwapVerifyTest
 
-            Assert.IsFalse(response.Value.VerificationResult);
+            Assert.That(response.Value.VerificationResult, Is.False);
         }
 
         [RecordedTest]
@@ -127,7 +127,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
                 Console.WriteLine(ex.ToString());
                 Console.WriteLine($"Caught exception of type: {ex.GetType()}");
 #if !SNIPPET
-                Assert.AreEqual(400, ex.Status);
+                Assert.That(ex.Status, Is.EqualTo(400));
 #endif
             }
         }
@@ -161,7 +161,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             DateTimeOffset expectedDate = DateTimeOffset.Parse(
                 "2023-11-16 14:43:05+00:00", null, System.Globalization.DateTimeStyles.RoundtripKind);
 
-            Assert.AreEqual(expectedDate, response.Value.Date, "The dates should match.");
+            Assert.That(response.Value.Date, Is.EqualTo(expectedDate), "The dates should match.");
         }
 
         [RecordedTest]
@@ -196,7 +196,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             Console.WriteLine(result.Value.VerificationResult);
             #endregion Snippet:APC_Sample_LocationVerifyTest
 
-            Assert.IsFalse(result.Value.VerificationResult);
+            Assert.That(result.Value.VerificationResult, Is.False);
         }
 
         [RecordedTest]
@@ -221,7 +221,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             Console.WriteLine(response.Value.NetworkCode);
             #endregion Snippet:APC_Sample_NetworkRetrievalTest
 
-            Assert.AreEqual(response.Value.NetworkCode, "Claro_Brazil");
+            Assert.That(response.Value.NetworkCode, Is.EqualTo("Claro_Brazil"));
         }
 
         [RecordedTest]
@@ -251,7 +251,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
                 Console.WriteLine($"Status Code: {ex.Status}");
                 Console.WriteLine($"Error Code: {ex.ErrorCode}");
 #if !SNIPPET
-                Assert.AreEqual(400, ex.Status);
+                Assert.That(ex.Status, Is.EqualTo(400));
 #endif
             }
             #endregion Snippet:APC_Sample_NetworkRetrievalBadIdentifierTest
@@ -285,14 +285,14 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
 
             Response response = await client.VerifyWithoutCodeAsync(apcGatewayId, content);
 #if !SNIPPET
-            Assert.AreEqual(response.Status, 302);
+            Assert.That(response.Status, Is.EqualTo(302));
 #endif
             string locationUrl = response.Headers.TryGetValue("location", out var location) ? location : "Not found";
 
             Console.WriteLine(locationUrl);
 
             #endregion Snippet:APC_Sample_NumberVerificationWithoutCodeTest
-            Assert.AreEqual(locationUrl, "https://test/.../authcallback");
+            Assert.That(locationUrl, Is.EqualTo("https://test/.../authcallback"));
         }
 
         [RecordedTest]
@@ -314,7 +314,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             Response<NumberVerificationResult> response = await client.VerifyWithCodeAsync(apcGatewayId, content);
             Console.WriteLine(response.Value.VerificationResult);
             #endregion Snippet:APC_Sample_NumberVerificationWithCodeTest
-            Assert.IsTrue(response.Value.VerificationResult);
+            Assert.That(response.Value.VerificationResult, Is.True);
         }
     }
 }

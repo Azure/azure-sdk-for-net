@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataShare.Tests.TestCase
             var input = ResourceDataHelpers.GetSynchronizationData(Recording.UtcNow);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             DataShareSynchronizationSettingResource hronization1 = lro.Value;
-            Assert.AreEqual(name, hronization1.Data.Name);
+            Assert.That(hronization1.Data.Name, Is.EqualTo(name));
             //2.Get
             DataShareSynchronizationSettingResource hronization2 = await collection.GetAsync(name);
             ResourceDataHelpers.AssertSynchronizationData(hronization1.Data, hronization2.Data);
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.DataShare.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 3);*/
             //4Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //ResourceTests

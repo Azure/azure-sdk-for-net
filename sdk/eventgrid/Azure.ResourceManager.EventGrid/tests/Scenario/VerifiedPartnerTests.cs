@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         public async Task Exists()
         {
             bool flag = await _verifiedPartnerCollection.ExistsAsync(_existPartnerName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [Test]
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
         {
             Assert.IsNotNull(verifiedPartner);
             Assert.IsNotNull(verifiedPartner.Data.PartnerRegistrationImmutableId);
-            Assert.AreEqual(_existPartnerName, verifiedPartner.Data.Name);
-            Assert.AreEqual(_existPartnerName, verifiedPartner.Data.PartnerDisplayName);
-            Assert.AreEqual("Auth0, Inc.", verifiedPartner.Data.OrganizationName);
-            Assert.AreEqual("Succeeded", verifiedPartner.Data.ProvisioningState.ToString());
-            Assert.AreEqual("Microsoft.EventGrid/verifiedPartners", verifiedPartner.Data.ResourceType.ToString());
+            Assert.That(verifiedPartner.Data.Name, Is.EqualTo(_existPartnerName));
+            Assert.That(verifiedPartner.Data.PartnerDisplayName, Is.EqualTo(_existPartnerName));
+            Assert.That(verifiedPartner.Data.OrganizationName, Is.EqualTo("Auth0, Inc."));
+            Assert.That(verifiedPartner.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(verifiedPartner.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EventGrid/verifiedPartners"));
         }
     }
 }

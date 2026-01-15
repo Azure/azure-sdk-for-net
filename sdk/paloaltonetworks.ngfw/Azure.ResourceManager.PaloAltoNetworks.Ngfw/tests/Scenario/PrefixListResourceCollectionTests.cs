@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             LocalRulestackPrefixData data = new LocalRulestackPrefixData(prefixList);
             var response = await LocalRulestack.GetLocalRulestackPrefixes().CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             LocalRulestackPrefixResource list = response.Value;
-            Assert.IsTrue((name).Equals(list.Data.Name));
+            Assert.That((name).Equals(list.Data.Name), Is.True);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await LocalRulestack.GetLocalRulestackPrefixes().CreateOrUpdateAsync(WaitUntil.Completed, "3", null)).Value);
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             LocalRulestackPrefixCollection collection = LocalRulestack.GetLocalRulestackPrefixes();
             LocalRulestackPrefixResource listsResource = await collection.GetAsync(DefaultResource1.Data.Name);
             Assert.IsNotNull(listsResource);
-            Assert.AreEqual(listsResource.Data.Name, DefaultResource1.Data.Name);
+            Assert.That(DefaultResource1.Data.Name, Is.EqualTo(listsResource.Data.Name));
         }
 
         [TestCase]
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Exists()
         {
             LocalRulestackPrefixCollection collection = LocalRulestack.GetLocalRulestackPrefixes();
-            Assert.IsTrue(await collection.ExistsAsync(DefaultResource1.Data.Name));
-            Assert.IsFalse(await collection.ExistsAsync("invalidName"));
+            Assert.That((bool)await collection.ExistsAsync(DefaultResource1.Data.Name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync("invalidName"), Is.False);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             {
                 count++;
             }
-            Assert.AreEqual(count, 3);
+            Assert.That(count, Is.EqualTo(3));
         }
     }
 }

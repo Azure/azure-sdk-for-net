@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
             // Verify CloundEndpointCollection contains a single CloudEndpoint
             List<CloudEndpointResource> cloudEndpointResources = await cloudEndpointCollection.ToEnumerableAsync();
             Assert.NotNull(cloudEndpointResources);
-            Assert.AreEqual(cloudEndpointResources.Count(), 1);
+            Assert.That(cloudEndpointResources.Count(), Is.EqualTo(1));
 
             StorageSyncManagementTestUtilities.VerifyCloudEndpointProperties(cloudEndpointResources.First(), false);
         }
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // Delete CloudEndpoint before its created.
             var deleteException = Assert.ThrowsAsync<RequestFailedException>(async () => (await _storageSyncGroupResource.GetCloudEndpointAsync(_cloudEndpointName)).Value?.Delete(WaitUntil.Completed));
-            Assert.AreEqual(404, deleteException.Status);
-            Assert.IsFalse((await cloundEndpointCollection.ExistsAsync(_cloudEndpointName)).Value);
+            Assert.That(deleteException.Status, Is.EqualTo(404));
+            Assert.That((await cloundEndpointCollection.ExistsAsync(_cloudEndpointName)).Value, Is.False);
 
             // Create CloudEndpoint
             CloudEndpointResource cloudEndpointResource = (await cloundEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, _cloudEndpointName, _cloudEndpointCreateOrUpdateContent)).Value;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
             await cloudEndpointResource.DeleteAsync(WaitUntil.Completed);
 
             // Verify cloudendpoint has been deleted.
-            Assert.IsFalse((await cloundEndpointCollection.ExistsAsync(_cloudEndpointName)).Value);
+            Assert.That((await cloundEndpointCollection.ExistsAsync(_cloudEndpointName)).Value, Is.False);
         }
 
         [Test]

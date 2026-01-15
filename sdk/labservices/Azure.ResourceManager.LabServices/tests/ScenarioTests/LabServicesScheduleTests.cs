@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.LabServices.Tests
 
             // Exists test
             bool boolResult = await scheduleCollection.ExistsAsync(scheduleName);
-            Assert.IsTrue(boolResult);
+            Assert.That(boolResult, Is.True);
 
             // GetAll test
             var list = await scheduleCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, list.Count);
+            Assert.That(list.Count, Is.EqualTo(1));
             AssertSchedule(scheduleData, list[0].Data);
 
             // Delete test
             await schedule.DeleteAsync(WaitUntil.Completed);
             boolResult = await scheduleCollection.ExistsAsync(scheduleName);
-            Assert.IsFalse(boolResult);
+            Assert.That(boolResult, Is.False);
         }
 
         public LabServicesScheduleData GetScheduleData()
@@ -136,13 +136,13 @@ namespace Azure.ResourceManager.LabServices.Tests
 
         public void AssertSchedule(LabServicesScheduleData expected, LabServicesScheduleData actual)
         {
-            Assert.AreEqual(expected.StartOn, actual.StartOn);
-            Assert.AreEqual(expected.StopOn, actual.StopOn);
-            Assert.AreEqual(expected.RecurrencePattern.Frequency, actual.RecurrencePattern.Frequency);
-            Assert.AreEqual(expected.RecurrencePattern.ExpireOn, actual.RecurrencePattern.ExpireOn);
-            Assert.AreEqual(expected.RecurrencePattern.Interval, actual.RecurrencePattern.Interval);
-            Assert.AreEqual(expected.TimeZoneId, actual.TimeZoneId);
-            Assert.AreEqual(expected.Notes.ToString(), actual.Notes.ToString());
+            Assert.That(actual.StartOn, Is.EqualTo(expected.StartOn));
+            Assert.That(actual.StopOn, Is.EqualTo(expected.StopOn));
+            Assert.That(actual.RecurrencePattern.Frequency, Is.EqualTo(expected.RecurrencePattern.Frequency));
+            Assert.That(actual.RecurrencePattern.ExpireOn, Is.EqualTo(expected.RecurrencePattern.ExpireOn));
+            Assert.That(actual.RecurrencePattern.Interval, Is.EqualTo(expected.RecurrencePattern.Interval));
+            Assert.That(actual.TimeZoneId, Is.EqualTo(expected.TimeZoneId));
+            Assert.That(actual.Notes.ToString(), Is.EqualTo(expected.Notes.ToString()));
         }
     }
 }

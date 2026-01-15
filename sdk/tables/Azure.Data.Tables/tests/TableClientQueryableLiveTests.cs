@@ -102,7 +102,7 @@ namespace Azure.Data.Tables.Tests
 
             foreach (ComplexEntity ent in results)
             {
-                Assert.IsTrue(ent.Int32 == 4 || ent.Int32 == 2);
+                Assert.That(ent.Int32 == 4 || ent.Int32 == 2, Is.True);
             }
 
             Assert.That(results.Count, Is.EqualTo(2));
@@ -122,7 +122,7 @@ namespace Azure.Data.Tables.Tests
 
             foreach (ComplexEntity ent in results)
             {
-                Assert.IsTrue(ent.Int32 == 4 || ent.Int32 == 2);
+                Assert.That(ent.Int32 == 4 || ent.Int32 == 2, Is.True);
             }
 
             Assert.That(results.Count, Is.EqualTo(2));
@@ -144,7 +144,7 @@ namespace Azure.Data.Tables.Tests
 
             foreach (ComplexEntity ent in results)
             {
-                Assert.IsTrue(ent.Int32 == 4 || ent.Int32 == 2);
+                Assert.That(ent.Int32 == 4 || ent.Int32 == 2, Is.True);
             }
 
             Assert.That(results.Count, Is.EqualTo(2));

@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Kusto.Tests
             );
 
             var exists = (await existsAsync(expectedResourceName)).Value;
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
             exists = (await existsAsync("nonExistent")).Value;
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
         }
 
         protected static async Task DeletionTest<T>(
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Kusto.Tests
             await (Task<ArmOperation>)result;
 
             var exists = await existsAsync(resourceName);
-            Assert.IsFalse(exists);
+            Assert.That((bool)exists, Is.False);
         }
 
         // Utility Methods
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.Kusto.Tests
         {
             if (expectedData is null)
             {
-                Assert.IsTrue(actualData is null || string.IsNullOrEmpty(actualData.ToString()));
+                Assert.That(actualData is null || string.IsNullOrEmpty(actualData.ToString()), Is.True);
             }
             else
             {
-                Assert.AreEqual(expectedData, expectedData);
+                Assert.That(expectedData, Is.EqualTo(expectedData));
             }
         }
 

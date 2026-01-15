@@ -31,11 +31,11 @@ namespace Azure.Identity.Tests
             {
                 var options = new DefaultAzureCredentialOptions();
 
-                Assert.AreEqual(options.TenantId, expValue);
-                Assert.AreEqual(options.InteractiveBrowserTenantId, expValue);
-                Assert.AreEqual(options.SharedTokenCacheTenantId, expValue);
-                Assert.AreEqual(options.VisualStudioTenantId, expValue);
-                Assert.AreEqual(options.VisualStudioCodeTenantId, expValue);
+                Assert.That(expValue, Is.EqualTo(options.TenantId));
+                Assert.That(expValue, Is.EqualTo(options.InteractiveBrowserTenantId));
+                Assert.That(expValue, Is.EqualTo(options.SharedTokenCacheTenantId));
+                Assert.That(expValue, Is.EqualTo(options.VisualStudioTenantId));
+                Assert.That(expValue, Is.EqualTo(options.VisualStudioCodeTenantId));
             }
         }
 
@@ -49,7 +49,7 @@ namespace Azure.Identity.Tests
             {
                 var options = new DefaultAzureCredentialOptions();
 
-                Assert.AreEqual(options.SharedTokenCacheUsername, expValue);
+                Assert.That(expValue, Is.EqualTo(options.SharedTokenCacheUsername));
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.Identity.Tests
             {
                 var options = new DefaultAzureCredentialOptions();
 
-                Assert.AreEqual(options.ManagedIdentityClientId, expValue);
+                Assert.That(expValue, Is.EqualTo(options.ManagedIdentityClientId));
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.Identity.Tests
                 }
                 else
                 {
-                    Assert.AreEqual(propInfo.GetValue(orig), propInfo.GetValue(clone), $"Cloned {propInfo.Name} does not match original");
+                    Assert.That(propInfo.GetValue(clone), Is.EqualTo(propInfo.GetValue(orig)), $"Cloned {propInfo.Name} does not match original");
                 }
             }
         }

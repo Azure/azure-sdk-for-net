@@ -52,22 +52,22 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string datasetName = Recording.GenerateAssetName("adf-dataset-");
             var dataset = await CreateDefaultDataset(dataFactory, datasetName, linkedServiceName);
             Assert.IsNotNull(dataset);
-            Assert.AreEqual(datasetName, dataset.Data.Name);
+            Assert.That(dataset.Data.Name, Is.EqualTo(datasetName));
             // Exists
             bool flag = await dataFactory.GetDataFactoryDatasets().ExistsAsync(datasetName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
             // Get
             var datasetGet = await dataFactory.GetDataFactoryDatasets().GetAsync(datasetName);
             Assert.IsNotNull(dataset);
-            Assert.AreEqual(datasetName, datasetGet.Value.Data.Name);
+            Assert.That(datasetGet.Value.Data.Name, Is.EqualTo(datasetName));
             // GetAll
             var list = await dataFactory.GetDataFactoryDatasets().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(1, list.Count);
+            Assert.That(list.Count, Is.EqualTo(1));
             // Delete
             await dataset.DeleteAsync(WaitUntil.Completed);
             flag = await dataFactory.GetDataFactoryDatasets().ExistsAsync(datasetName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         public async Task DatasetCreate(string name, Func<DataFactoryResource, string, Task<DataFactoryLinkedServiceResource>> linkedServiceFunc, Func<string, DataFactoryDatasetData> dataFunc)

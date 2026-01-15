@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             var containerGroupProfileData = CreateContainerGroupProfileData(containerGroupProfileName, "Regular");
             var containerGroupProfiles = rg.GetContainerGroupProfiles();
             ContainerGroupProfileResource containerGroupProfile = CreateContainerGroupProfileAsync(containerGroupProfileName, containerGroupProfileData, rg).Result;
-            Assert.AreEqual(containerGroupProfileName, containerGroupProfile.Data.Name);
+            Assert.That(containerGroupProfile.Data.Name, Is.EqualTo(containerGroupProfileName));
             VerifyContainerGroupProfileProperties(containerGroupProfileData, containerGroupProfile.Data);
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             var containerGroupProfileData = CreateContainerGroupProfileData(containerGroupProfileName, "Spot");
             var containerGroupProfiles = rg.GetContainerGroupProfiles();
             ContainerGroupProfileResource containerGroupProfile = CreateContainerGroupProfileAsync(containerGroupProfileName, containerGroupProfileData, rg).Result;
-            Assert.AreEqual(containerGroupProfileName, containerGroupProfile.Data.Name);
+            Assert.That(containerGroupProfile.Data.Name, Is.EqualTo(containerGroupProfileName));
             VerifyContainerGroupProfileProperties(containerGroupProfileData, containerGroupProfile.Data);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             var containerGroupProfileData = CreateContainerGroupProfileData(containerGroupProfileName, isConfidentialSku: true, ccepolicy: null);
             var containerGroupProfiles = rg.GetContainerGroupProfiles();
             ContainerGroupProfileResource containerGroupProfile = CreateContainerGroupProfileAsync(containerGroupProfileName, containerGroupProfileData, rg).Result;
-            Assert.AreEqual(containerGroupProfileName, containerGroupProfile.Data.Name);
+            Assert.That(containerGroupProfile.Data.Name, Is.EqualTo(containerGroupProfileName));
             VerifyContainerGroupProfileProperties(containerGroupProfileData, containerGroupProfile.Data);
         }
 
@@ -177,9 +177,9 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             ContainerGroupProfileRevisionCollection result = containerGroupProfile.GetContainerGroupProfileRevisions();
             Assert.IsNotNull(result);
             bool revision1exists = await result.ExistsAsync("1");
-            Assert.IsTrue(revision1exists);
+            Assert.That(revision1exists, Is.True);
             bool revision2exists = await result.ExistsAsync("2");
-            Assert.IsTrue(revision2exists);
+            Assert.That(revision2exists, Is.True);
         }
     }
 }

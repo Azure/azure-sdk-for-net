@@ -515,10 +515,10 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(completion.Content?.Count, Is.EqualTo(1));
         JsonDocument contentDocument = null!;
         Assert.DoesNotThrow(() => contentDocument = JsonDocument.Parse(completion!.Content![0].Text));
-        Assert.IsTrue(contentDocument.RootElement.TryGetProperty("answer", out JsonElement answerProperty));
-        Assert.IsTrue(answerProperty.ValueKind == JsonValueKind.String);
-        Assert.IsTrue(contentDocument.RootElement.TryGetProperty("steps", out JsonElement stepsProperty));
-        Assert.IsTrue(stepsProperty.ValueKind == JsonValueKind.Array);
+        Assert.That(contentDocument.RootElement.TryGetProperty("answer", out JsonElement answerProperty), Is.True);
+        Assert.That(answerProperty.ValueKind == JsonValueKind.String, Is.True);
+        Assert.That(contentDocument.RootElement.TryGetProperty("steps", out JsonElement stepsProperty), Is.True);
+        Assert.That(stepsProperty.ValueKind == JsonValueKind.Array, Is.True);
     }
 
     [RecordedTest]

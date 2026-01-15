@@ -40,7 +40,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
         {
             var result = await client.GetAssetResourceAsync(assetId);
             AssetResource resource = result.Value;
-            Assert.AreEqual(assetName, resource.Name);
+            Assert.That(resource.Name, Is.EqualTo(assetName));
         }
 
         [Test]
@@ -51,8 +51,8 @@ namespace Azure.Analytics.Defender.Easm.Tests
 
             Response<TaskResource> result = await client.UpdateAssetsAsync(filter, assetUpdateData);
             TaskResource task = result.Value;
-            Assert.AreEqual(TaskResourceState.Complete, task.State);
-            Assert.AreEqual(TaskResourcePhase.Complete, task.Phase);
+            Assert.That(task.State, Is.EqualTo(TaskResourceState.Complete));
+            Assert.That(task.Phase, Is.EqualTo(TaskResourcePhase.Complete));
             Assert.IsNotEmpty(UUID_REGEX.Matches(task.Id));
         }
     }

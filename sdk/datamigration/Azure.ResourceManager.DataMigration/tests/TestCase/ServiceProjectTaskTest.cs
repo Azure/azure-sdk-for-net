@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Tests
             var collection = projectResource.GetDataMigrationServiceTasks();
             var input = ResourceDataHelpers.GetProjectTaskData();
             var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, taskName, input)).Value;
-            Assert.AreEqual(taskName, resource.Data.Name);
+            Assert.That(resource.Data.Name, Is.EqualTo(taskName));
             //Get
             var resource2 = (await collection.GetAsync(taskName)).Value;
             ResourceDataHelpers.AssertMySqlOfflineTaskData(resource.Data, resource2.Data);
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.DataMigration.Tests
             }
             Assert.GreaterOrEqual(count, 2);
             //4.Exist
-            Assert.IsTrue(await collection.ExistsAsync(taskName));
-            Assert.IsFalse(await collection.ExistsAsync(taskName + "1"));
+            Assert.That((bool)await collection.ExistsAsync(taskName), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(taskName + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resouece operation

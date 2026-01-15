@@ -38,7 +38,7 @@ namespace Azure.Communication.CallingServer
                     new FileSource(new Uri(playAudioUri)) { PlaySourceId = "playSourceId"},
                     new CommunicationUserIdentifier[] { targetUser });
                 Assert.NotNull(playResponse);
-                Assert.AreEqual(202, playResponse.Status);
+                Assert.That(playResponse.Status, Is.EqualTo(202));
             }
             catch (RequestFailedException ex)
             {

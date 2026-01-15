@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             // List ProjectEnvironmentTypes
             List<DevCenterProjectEnvironmentResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
+            Assert.That(resources.Any(r => r.Id == createdResource.Id), Is.True);
 
             // Get
             Response<DevCenterProjectEnvironmentResource> retrievedProjectEnvironmentType = await resourceCollection.GetAsync(ProjectEnvironmentTypeName);

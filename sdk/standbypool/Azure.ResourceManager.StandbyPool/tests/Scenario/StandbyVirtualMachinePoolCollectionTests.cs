@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             List<StandbyVirtualMachinePoolResource> standbyVirtualMachinePoolResults = await standbyVirtualMachinePools.ToEnumerableAsync();
 
             Assert.NotNull(standbyVirtualMachinePoolResults);
-            Assert.IsTrue(standbyVirtualMachinePoolResults.Count > 0);
+            Assert.That(standbyVirtualMachinePoolResults.Count > 0, Is.True);
         }
 
         [TestCase]
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             await this.CreateResources(resourceGroup);
             await this.CreateResources(resourceGroup);
             List<StandbyVirtualMachinePoolResource> standbyVirtualMachinePoolCollection = await resourceGroup.GetStandbyVirtualMachinePools().ToEnumerableAsync();
-            Assert.AreEqual(2, standbyVirtualMachinePoolCollection.Count);
+            Assert.That(standbyVirtualMachinePoolCollection.Count, Is.EqualTo(2));
         }
     }
 }

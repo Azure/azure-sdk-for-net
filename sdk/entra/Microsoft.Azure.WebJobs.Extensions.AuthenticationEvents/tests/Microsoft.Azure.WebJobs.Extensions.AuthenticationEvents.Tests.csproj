@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -37,6 +37,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.NET.Test.Sdk" />
 		<PackageReference Include="nunit" />
+    <PackageReference Include="NUnit.Analyzers" />
 		<PackageReference Include="Moq" />
 		<PackageReference Include="NUnit3TestAdapter" />
 		<ProjectReference Include="$(AzureCoreTestFramework)" />

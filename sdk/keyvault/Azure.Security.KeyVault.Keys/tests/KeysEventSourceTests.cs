@@ -53,8 +53,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Type eventSourceType = typeof(KeysEventSource);
 
             Assert.NotNull(eventSourceType);
-            Assert.AreEqual("Azure-Security-KeyVault-Keys", EventSource.GetName(eventSourceType));
-            Assert.AreEqual(Guid.Parse("657a121e-762e-50da-b233-05d7cdb24eb8"), EventSource.GetGuid(eventSourceType));
+            Assert.That(EventSource.GetName(eventSourceType), Is.EqualTo("Azure-Security-KeyVault-Keys"));
+            Assert.That(EventSource.GetGuid(eventSourceType), Is.EqualTo(Guid.Parse("657a121e-762e-50da-b233-05d7cdb24eb8")));
             Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
         }
 
@@ -80,9 +80,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsNotNull(result);
 
             EventWrittenEventArgs e = _listener.SingleEventById(KeysEventSource.AlgorithmNotSupportedEvent);
-            Assert.AreEqual(EventLevel.Verbose, e.Level);
-            Assert.AreEqual("AlgorithmNotSupported", e.EventName);
-            Assert.AreEqual("invalid", e.GetProperty<string>("algorithm"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(e.EventName, Is.EqualTo("AlgorithmNotSupported"));
+            Assert.That(e.GetProperty<string>("algorithm"), Is.EqualTo("invalid"));
         }
 
         [TestCaseSource(nameof(GetEcOperations), new object[] { true, true })]
@@ -107,10 +107,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsNotNull(result);
 
             EventWrittenEventArgs e = _listener.SingleEventById(KeysEventSource.AlgorithmNotSupportedEvent);
-            Assert.AreEqual(EventLevel.Verbose, e.Level);
-            Assert.AreEqual("AlgorithmNotSupported", e.EventName);
-            Assert.AreEqual(operation, e.GetProperty<string>("operation"));
-            Assert.AreEqual("invalid", e.GetProperty<string>("algorithm"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(e.EventName, Is.EqualTo("AlgorithmNotSupported"));
+            Assert.That(e.GetProperty<string>("operation"), Is.EqualTo(operation));
+            Assert.That(e.GetProperty<string>("algorithm"), Is.EqualTo("invalid"));
         }
 
         [TestCaseSource(nameof(GetRsaOperations), new object[] { true, true })]
@@ -134,10 +134,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsNotNull(result);
 
             EventWrittenEventArgs e = _listener.SingleEventById(KeysEventSource.AlgorithmNotSupportedEvent);
-            Assert.AreEqual(EventLevel.Verbose, e.Level);
-            Assert.AreEqual("AlgorithmNotSupported", e.EventName);
-            Assert.AreEqual(operation, e.GetProperty<string>("operation"));
-            Assert.AreEqual("invalid", e.GetProperty<string>("algorithm"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(e.EventName, Is.EqualTo("AlgorithmNotSupported"));
+            Assert.That(e.GetProperty<string>("operation"), Is.EqualTo(operation));
+            Assert.That(e.GetProperty<string>("algorithm"), Is.EqualTo("invalid"));
         }
 
         [TestCaseSource(nameof(GetRsaOperations), new object[] { true, true })]
@@ -162,10 +162,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsNotNull(result);
 
             EventWrittenEventArgs e = _listener.SingleEventById(KeysEventSource.KeyTypeNotSupportedEvent);
-            Assert.AreEqual(EventLevel.Verbose, e.Level);
-            Assert.AreEqual("KeyTypeNotSupported", e.EventName);
-            Assert.AreEqual(operation, e.GetProperty<string>("operation"));
-            Assert.AreEqual("invalid", e.GetProperty<string>("keyType"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(e.EventName, Is.EqualTo("KeyTypeNotSupported"));
+            Assert.That(e.GetProperty<string>("operation"), Is.EqualTo(operation));
+            Assert.That(e.GetProperty<string>("keyType"), Is.EqualTo("invalid"));
         }
 
         [TestCaseSource(nameof(GetEcOperations), new object[] { false, true })]
@@ -199,9 +199,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsNotNull(result);
 
             EventWrittenEventArgs e = _listener.SingleEventById(KeysEventSource.PrivateKeyRequiredEvent);
-            Assert.AreEqual(EventLevel.Verbose, e.Level);
-            Assert.AreEqual("PrivateKeyRequired", e.EventName);
-            Assert.AreEqual(operation, e.GetProperty<string>("operation"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(e.EventName, Is.EqualTo("PrivateKeyRequired"));
+            Assert.That(e.GetProperty<string>("operation"), Is.EqualTo(operation));
         }
 
         [TestCaseSource(nameof(GetRsaOperations), new object[] { false, true })]
@@ -235,9 +235,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsNotNull(result);
 
             EventWrittenEventArgs e = _listener.SingleEventById(KeysEventSource.PrivateKeyRequiredEvent);
-            Assert.AreEqual(EventLevel.Verbose, e.Level);
-            Assert.AreEqual("PrivateKeyRequired", e.EventName);
-            Assert.AreEqual(operation, e.GetProperty<string>("operation"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(e.EventName, Is.EqualTo("PrivateKeyRequired"));
+            Assert.That(e.GetProperty<string>("operation"), Is.EqualTo(operation));
         }
 
         [TestCaseSource(nameof(GetRsaOperations), new object[] { true, true })]
@@ -264,9 +264,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsNotNull(result);
 
             EventWrittenEventArgs e = _listener.SingleEventById(KeysEventSource.CryptographicExceptionEvent);
-            Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual("CryptographicException", e.EventName);
-            Assert.AreEqual(operation, e.GetProperty<string>("operation"));
+            Assert.That(e.Level, Is.EqualTo(EventLevel.Informational));
+            Assert.That(e.EventName, Is.EqualTo("CryptographicException"));
+            Assert.That(e.GetProperty<string>("operation"), Is.EqualTo(operation));
             StringAssert.StartsWith("System.Security.Cryptography.CryptographicException (0x80092006):", e.GetProperty<string>("message"));
         }
 

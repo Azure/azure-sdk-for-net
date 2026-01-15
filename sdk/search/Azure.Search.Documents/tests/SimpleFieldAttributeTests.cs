@@ -32,13 +32,13 @@ namespace Azure.Search.Documents.Tests
             SearchField field = new SearchField("test", type);
             ((ISearchFieldAttribute)sut).SetField(field);
 
-            Assert.AreEqual("test", field.Name);
-            Assert.AreEqual(type, field.Type);
-            Assert.AreEqual(key, field.IsKey ?? false);
-            Assert.AreEqual(hidden, field.IsHidden ?? false);
-            Assert.AreEqual(filterable, field.IsFilterable ?? false);
-            Assert.AreEqual(facetable, field.IsFacetable ?? false);
-            Assert.AreEqual(sortable, field.IsSortable ?? false);
+            Assert.That(field.Name, Is.EqualTo("test"));
+            Assert.That(field.Type, Is.EqualTo(type));
+            Assert.That(field.IsKey ?? false, Is.EqualTo(key));
+            Assert.That(field.IsHidden ?? false, Is.EqualTo(hidden));
+            Assert.That(field.IsFilterable ?? false, Is.EqualTo(filterable));
+            Assert.That(field.IsFacetable ?? false, Is.EqualTo(facetable));
+            Assert.That(field.IsSortable ?? false, Is.EqualTo(sortable));
         }
 
         [Test]
@@ -56,18 +56,18 @@ namespace Azure.Search.Documents.Tests
 
             attribute.SetField(field);
 
-            Assert.AreEqual("test", field.Name);
-            Assert.AreEqual(SearchFieldDataType.String, field.Type);
-            Assert.IsFalse(field.IsFacetable);
-            Assert.IsTrue(field.IsFilterable);
-            Assert.IsFalse(field.IsHidden);
-            Assert.IsFalse(field.IsKey);
-            Assert.IsTrue(field.IsSearchable);
-            Assert.IsTrue(field.IsSortable);
-            Assert.AreEqual(LexicalAnalyzerName.EnLucene.ToString(), field.AnalyzerName?.ToString());
+            Assert.That(field.Name, Is.EqualTo("test"));
+            Assert.That(field.Type, Is.EqualTo(SearchFieldDataType.String));
+            Assert.That(field.IsFacetable, Is.False);
+            Assert.That(field.IsFilterable, Is.True);
+            Assert.That(field.IsHidden, Is.False);
+            Assert.That(field.IsKey, Is.False);
+            Assert.That(field.IsSearchable, Is.True);
+            Assert.That(field.IsSortable, Is.True);
+            Assert.That(field.AnalyzerName?.ToString(), Is.EqualTo(LexicalAnalyzerName.EnLucene.ToString()));
             Assert.IsNull(field.IndexAnalyzerName);
             Assert.IsNull(field.SearchAnalyzerName);
-            Assert.AreEqual(LexicalNormalizerName.Lowercase.ToString(), field.NormalizerName?.ToString());
+            Assert.That(field.NormalizerName?.ToString(), Is.EqualTo(LexicalNormalizerName.Lowercase.ToString()));
             Assert.IsEmpty(field.SynonymMapNames);
 
             // Make sure that if a SimpleFieldAttribute were also specified, it does not overwrite IsSearchable
@@ -79,18 +79,18 @@ namespace Azure.Search.Documents.Tests
 
             attribute.SetField(field);
 
-            Assert.AreEqual("test", field.Name);
-            Assert.AreEqual(SearchFieldDataType.String, field.Type);
-            Assert.IsFalse(field.IsFacetable);
-            Assert.IsFalse(field.IsFilterable);
-            Assert.IsFalse(field.IsHidden);
-            Assert.IsTrue(field.IsKey);
-            Assert.IsTrue(field.IsSearchable);
-            Assert.IsFalse(field.IsSortable);
-            Assert.AreEqual(LexicalAnalyzerName.EnLucene.ToString(), field.AnalyzerName?.ToString());
+            Assert.That(field.Name, Is.EqualTo("test"));
+            Assert.That(field.Type, Is.EqualTo(SearchFieldDataType.String));
+            Assert.That(field.IsFacetable, Is.False);
+            Assert.That(field.IsFilterable, Is.False);
+            Assert.That(field.IsHidden, Is.False);
+            Assert.That(field.IsKey, Is.True);
+            Assert.That(field.IsSearchable, Is.True);
+            Assert.That(field.IsSortable, Is.False);
+            Assert.That(field.AnalyzerName?.ToString(), Is.EqualTo(LexicalAnalyzerName.EnLucene.ToString()));
             Assert.IsNull(field.IndexAnalyzerName);
             Assert.IsNull(field.SearchAnalyzerName);
-            Assert.AreEqual(LexicalNormalizerName.Lowercase.ToString(), field.NormalizerName?.ToString());
+            Assert.That(field.NormalizerName?.ToString(), Is.EqualTo(LexicalNormalizerName.Lowercase.ToString()));
             Assert.IsEmpty(field.SynonymMapNames);
         }
     }

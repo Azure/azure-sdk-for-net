@@ -196,13 +196,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             // Verify completion
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             // Verify Copy - using original source File and Copying the destination
             await testEventsRaised.AssertSingleCompletedCheck();
             using Stream sourceStream = await sourceClient.OpenReadAsync();
             using Stream destinationStream = await destinationClient.OpenReadAsync();
-            Assert.AreEqual(sourceStream, destinationStream);
+            Assert.That(destinationStream, Is.EqualTo(sourceStream));
 
             if (transferPropertiesTestType == TransferPropertiesTestType.NoPreserve)
             {
@@ -214,7 +214,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 Assert.IsNull(destinationProperties.CacheControl);
                 // Because AccessTier is not preserved, the access tier value on the destination will
                 // default to what the storage account sets (normally AccessTier.Hot)
-                Assert.AreNotEqual(_defaultAccessTier.ToString(), destinationProperties.AccessTier);
+                Assert.That(destinationProperties.AccessTier, Is.Not.EqualTo(_defaultAccessTier.ToString()));
                 Assert.That(destinationProperties.ContentType, Is.Not.EqualTo(_defaultContentType));
 
                 GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
@@ -225,11 +225,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(_defaultAccessTier.ToString(), destinationProperties.AccessTier);
-                Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(_defaultContentLanguage, destinationProperties.ContentLanguage);
-                Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
-                Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
+                Assert.That(destinationProperties.AccessTier, Is.EqualTo(_defaultAccessTier.ToString()));
+                Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(_defaultContentDisposition));
+                Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(_defaultContentLanguage));
+                Assert.That(destinationProperties.CacheControl, Is.EqualTo(_defaultCacheControl));
+                Assert.That(destinationProperties.ContentType, Is.EqualTo(_defaultContentType));
             }
             else //(transferPropertiesTestType == TransferPropertiesTestType.Default ||
                  //transferPropertiesTestType == TransferPropertiesTestType.Preserve)
@@ -238,11 +238,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(sourceProperties.AccessTier, destinationProperties.AccessTier);
-                Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
-                Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
-                Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
+                Assert.That(destinationProperties.AccessTier, Is.EqualTo(sourceProperties.AccessTier));
+                Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(sourceProperties.ContentDisposition));
+                Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(sourceProperties.ContentLanguage));
+                Assert.That(destinationProperties.CacheControl, Is.EqualTo(sourceProperties.CacheControl));
+                Assert.That(destinationProperties.ContentType, Is.EqualTo(sourceProperties.ContentType));
             }
         }
 

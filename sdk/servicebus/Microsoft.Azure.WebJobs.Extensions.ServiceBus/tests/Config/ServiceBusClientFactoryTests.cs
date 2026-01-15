@@ -61,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Tests.Config
 
             Assert.NotNull(client);
             Assert.NotNull(adminClient);
-            Assert.AreEqual("test89123-ns-x.servicebus.windows.net", client.FullyQualifiedNamespace);
+            Assert.That(client.FullyQualifiedNamespace, Is.EqualTo("test89123-ns-x.servicebus.windows.net"));
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Tests.Config
 
             Assert.NotNull(client);
             Assert.NotNull(adminClient);
-            Assert.AreEqual("test89123-ns-x.servicebus.windows.net", client.FullyQualifiedNamespace);
+            Assert.That(client.FullyQualifiedNamespace, Is.EqualTo("test89123-ns-x.servicebus.windows.net"));
         }
 
         [Test]

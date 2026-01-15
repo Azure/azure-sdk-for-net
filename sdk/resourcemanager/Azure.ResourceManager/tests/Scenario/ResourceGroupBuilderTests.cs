@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.Tests
             };
             var managedBy = "managedBy";
             var rgData = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(location, tags, managedBy).Build();
-            Assert.AreEqual(location, rgData.Location);
-            Assert.AreEqual(tags, rgData.Tags);
-            Assert.AreEqual(managedBy, rgData.ManagedBy);
+            Assert.That(rgData.Location, Is.EqualTo(location));
+            Assert.That(rgData.Tags, Is.EqualTo(tags));
+            Assert.That(rgData.ManagedBy, Is.EqualTo(managedBy));
         }
     }
 }

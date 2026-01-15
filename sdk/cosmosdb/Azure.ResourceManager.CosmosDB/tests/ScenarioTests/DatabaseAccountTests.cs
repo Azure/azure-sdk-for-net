@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB);
 
             bool ifExists = await DatabaseAccountCollection.ExistsAsync(_databaseAccountName);
-            Assert.AreEqual(true, ifExists);
+            Assert.That(ifExists, Is.EqualTo(true));
 
             CosmosDBAccountResource account2 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
             VerifyCosmosDBAccount(account, account2);
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             CosmosDBAccountKeyList regeneratedKeys = await account.GetKeysAsync();
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreNotEqual(keys.PrimaryMasterKey, regeneratedKeys.PrimaryMasterKey);
-                Assert.AreNotEqual(keys.PrimaryReadonlyMasterKey, regeneratedKeys.PrimaryReadonlyMasterKey);
-                Assert.AreNotEqual(keys.SecondaryMasterKey, regeneratedKeys.SecondaryMasterKey);
-                Assert.AreNotEqual(keys.SecondaryReadonlyMasterKey, regeneratedKeys.SecondaryReadonlyMasterKey);
+                Assert.That(regeneratedKeys.PrimaryMasterKey, Is.Not.EqualTo(keys.PrimaryMasterKey));
+                Assert.That(regeneratedKeys.PrimaryReadonlyMasterKey, Is.Not.EqualTo(keys.PrimaryReadonlyMasterKey));
+                Assert.That(regeneratedKeys.SecondaryMasterKey, Is.Not.EqualTo(keys.SecondaryMasterKey));
+                Assert.That(regeneratedKeys.SecondaryReadonlyMasterKey, Is.Not.EqualTo(keys.SecondaryReadonlyMasterKey));
             }
         }
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             List<CosmosDBAccountResource> accounts = await DatabaseAccountCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(accounts);
-            Assert.False(accounts.Any(a => a.Id == account.Id));
+            Assert.That(accounts.Any(a => a.Id == account.Id), Is.False);
         }
 
         private void VerifyCosmosDBAccount(CosmosDBAccountResource expectedValue, CosmosDBAccountResource actualValue)
@@ -209,57 +209,57 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var expectedData = expectedValue.Data;
             var actualData = actualValue.Data;
 
-            Assert.AreEqual(expectedData.Name, actualData.Name);
-            Assert.AreEqual(expectedData.Location, actualData.Location);
-            Assert.True(expectedData.Tags.SequenceEqual(actualData.Tags));
-            Assert.AreEqual(expectedData.Kind, actualData.Kind);
-            Assert.AreEqual(expectedData.ProvisioningState, actualData.ProvisioningState);
-            Assert.AreEqual(expectedData.DocumentEndpoint, actualData.DocumentEndpoint);
-            Assert.AreEqual(expectedData.DatabaseAccountOfferType, actualData.DatabaseAccountOfferType);
-            Assert.AreEqual(expectedData.IPRules.Count, actualData.IPRules.Count);
-            Assert.AreEqual(expectedData.IPRules[0].IPAddressOrRange, actualData.IPRules[0].IPAddressOrRange);
-            Assert.AreEqual(expectedData.IsVirtualNetworkFilterEnabled, actualData.IsVirtualNetworkFilterEnabled);
-            Assert.AreEqual(expectedData.EnableAutomaticFailover, actualData.EnableAutomaticFailover);
+            Assert.That(actualData.Name, Is.EqualTo(expectedData.Name));
+            Assert.That(actualData.Location, Is.EqualTo(expectedData.Location));
+            Assert.That(expectedData.Tags.SequenceEqual(actualData.Tags), Is.True);
+            Assert.That(actualData.Kind, Is.EqualTo(expectedData.Kind));
+            Assert.That(actualData.ProvisioningState, Is.EqualTo(expectedData.ProvisioningState));
+            Assert.That(actualData.DocumentEndpoint, Is.EqualTo(expectedData.DocumentEndpoint));
+            Assert.That(actualData.DatabaseAccountOfferType, Is.EqualTo(expectedData.DatabaseAccountOfferType));
+            Assert.That(actualData.IPRules.Count, Is.EqualTo(expectedData.IPRules.Count));
+            Assert.That(actualData.IPRules[0].IPAddressOrRange, Is.EqualTo(expectedData.IPRules[0].IPAddressOrRange));
+            Assert.That(actualData.IsVirtualNetworkFilterEnabled, Is.EqualTo(expectedData.IsVirtualNetworkFilterEnabled));
+            Assert.That(actualData.EnableAutomaticFailover, Is.EqualTo(expectedData.EnableAutomaticFailover));
             VerifyConsistencyPolicy(expectedData.ConsistencyPolicy, actualData.ConsistencyPolicy);
-            Assert.AreEqual(expectedData.Capabilities.Count, actualData.Capabilities.Count);
+            Assert.That(actualData.Capabilities.Count, Is.EqualTo(expectedData.Capabilities.Count));
             VerifyLocations(expectedData.WriteLocations, actualData.WriteLocations);
             VerifyLocations(expectedData.ReadLocations, actualData.ReadLocations);
             VerifyLocations(expectedData.Locations, actualData.Locations);
             VerifyFailoverPolicies(expectedData.FailoverPolicies, actualData.FailoverPolicies);
-            Assert.AreEqual(expectedData.VirtualNetworkRules.Count, actualData.VirtualNetworkRules.Count);
-            Assert.AreEqual(expectedData.PrivateEndpointConnections.Count, actualData.PrivateEndpointConnections.Count);
-            Assert.AreEqual(expectedData.EnableMultipleWriteLocations, actualData.EnableMultipleWriteLocations);
-            Assert.AreEqual(expectedData.EnableCassandraConnector, actualData.EnableCassandraConnector);
-            Assert.AreEqual(expectedData.ConnectorOffer, actualData.ConnectorOffer);
-            Assert.AreEqual(expectedData.DisableKeyBasedMetadataWriteAccess, actualData.DisableKeyBasedMetadataWriteAccess);
-            Assert.AreEqual(expectedData.KeyVaultKeyUri, actualData.KeyVaultKeyUri);
-            Assert.AreEqual(expectedData.CustomerManagedKeyStatus, actualData.CustomerManagedKeyStatus);
-            Assert.AreEqual(expectedData.PublicNetworkAccess, actualData.PublicNetworkAccess);
-            Assert.AreEqual(expectedData.IsFreeTierEnabled, actualData.IsFreeTierEnabled);
-            Assert.AreEqual(expectedData.ApiProperties.ServerVersion.ToString(), actualData.ApiProperties.ServerVersion.ToString());
-            Assert.AreEqual(expectedData.IsAnalyticalStorageEnabled, actualData.IsAnalyticalStorageEnabled);
-            Assert.AreEqual(expectedData.Cors.Count, actualData.Cors.Count);
-            Assert.AreEqual(expectedData.EnableBurstCapacity, actualData.EnableBurstCapacity);
-            Assert.AreEqual(expectedData.EnablePriorityBasedExecution, actualData.EnablePriorityBasedExecution);
-            Assert.AreEqual(expectedData.DefaultPriorityLevel, actualData.DefaultPriorityLevel);
-            Assert.AreEqual(expectedData.EnablePerRegionPerPartitionAutoscale, actualData.EnablePerRegionPerPartitionAutoscale);
+            Assert.That(actualData.VirtualNetworkRules.Count, Is.EqualTo(expectedData.VirtualNetworkRules.Count));
+            Assert.That(actualData.PrivateEndpointConnections.Count, Is.EqualTo(expectedData.PrivateEndpointConnections.Count));
+            Assert.That(actualData.EnableMultipleWriteLocations, Is.EqualTo(expectedData.EnableMultipleWriteLocations));
+            Assert.That(actualData.EnableCassandraConnector, Is.EqualTo(expectedData.EnableCassandraConnector));
+            Assert.That(actualData.ConnectorOffer, Is.EqualTo(expectedData.ConnectorOffer));
+            Assert.That(actualData.DisableKeyBasedMetadataWriteAccess, Is.EqualTo(expectedData.DisableKeyBasedMetadataWriteAccess));
+            Assert.That(actualData.KeyVaultKeyUri, Is.EqualTo(expectedData.KeyVaultKeyUri));
+            Assert.That(actualData.CustomerManagedKeyStatus, Is.EqualTo(expectedData.CustomerManagedKeyStatus));
+            Assert.That(actualData.PublicNetworkAccess, Is.EqualTo(expectedData.PublicNetworkAccess));
+            Assert.That(actualData.IsFreeTierEnabled, Is.EqualTo(expectedData.IsFreeTierEnabled));
+            Assert.That(actualData.ApiProperties.ServerVersion.ToString(), Is.EqualTo(expectedData.ApiProperties.ServerVersion.ToString()));
+            Assert.That(actualData.IsAnalyticalStorageEnabled, Is.EqualTo(expectedData.IsAnalyticalStorageEnabled));
+            Assert.That(actualData.Cors.Count, Is.EqualTo(expectedData.Cors.Count));
+            Assert.That(actualData.EnableBurstCapacity, Is.EqualTo(expectedData.EnableBurstCapacity));
+            Assert.That(actualData.EnablePriorityBasedExecution, Is.EqualTo(expectedData.EnablePriorityBasedExecution));
+            Assert.That(actualData.DefaultPriorityLevel, Is.EqualTo(expectedData.DefaultPriorityLevel));
+            Assert.That(actualData.EnablePerRegionPerPartitionAutoscale, Is.EqualTo(expectedData.EnablePerRegionPerPartitionAutoscale));
         }
 
         private void VerifyCosmosDBAccount(CosmosDBAccountResource databaseAccount, CosmosDBAccountPatch parameters)
         {
-            Assert.True(databaseAccount.Data.Tags.SequenceEqual(parameters.Tags));
-            Assert.AreEqual(databaseAccount.Data.IsVirtualNetworkFilterEnabled, parameters.IsVirtualNetworkFilterEnabled);
-            Assert.AreEqual(databaseAccount.Data.EnableAutomaticFailover, parameters.EnableAutomaticFailover);
-            Assert.AreEqual(databaseAccount.Data.DisableKeyBasedMetadataWriteAccess, parameters.DisableKeyBasedMetadataWriteAccess);
-            Assert.AreEqual(databaseAccount.Data.EnableBurstCapacity, parameters.EnableBurstCapacity);
-            Assert.AreEqual(databaseAccount.Data.EnablePriorityBasedExecution, parameters.EnablePriorityBasedExecution);
-            Assert.AreEqual(databaseAccount.Data.DefaultPriorityLevel, parameters.DefaultPriorityLevel);
-            Assert.AreEqual(databaseAccount.Data.EnablePerRegionPerPartitionAutoscale, parameters.EnablePerRegionPerPartitionAutoscale);
+            Assert.That(databaseAccount.Data.Tags.SequenceEqual(parameters.Tags), Is.True);
+            Assert.That(parameters.IsVirtualNetworkFilterEnabled, Is.EqualTo(databaseAccount.Data.IsVirtualNetworkFilterEnabled));
+            Assert.That(parameters.EnableAutomaticFailover, Is.EqualTo(databaseAccount.Data.EnableAutomaticFailover));
+            Assert.That(parameters.DisableKeyBasedMetadataWriteAccess, Is.EqualTo(databaseAccount.Data.DisableKeyBasedMetadataWriteAccess));
+            Assert.That(parameters.EnableBurstCapacity, Is.EqualTo(databaseAccount.Data.EnableBurstCapacity));
+            Assert.That(parameters.EnablePriorityBasedExecution, Is.EqualTo(databaseAccount.Data.EnablePriorityBasedExecution));
+            Assert.That(parameters.DefaultPriorityLevel, Is.EqualTo(databaseAccount.Data.DefaultPriorityLevel));
+            Assert.That(parameters.EnablePerRegionPerPartitionAutoscale, Is.EqualTo(databaseAccount.Data.EnablePerRegionPerPartitionAutoscale));
         }
 
         private void VerifyLocations(IReadOnlyList<CosmosDBAccountLocation> expectedData, IReadOnlyList<CosmosDBAccountLocation> actualData)
         {
-            Assert.AreEqual(expectedData.Count, actualData.Count);
+            Assert.That(actualData.Count, Is.EqualTo(expectedData.Count));
             if (expectedData.Count != 0)
             {
                 foreach (CosmosDBAccountLocation expexctedLocation in expectedData)
@@ -268,11 +268,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     {
                         if (expexctedLocation.Id == actualLocation.Id)
                         {
-                            Assert.AreEqual(expexctedLocation.DocumentEndpoint, actualLocation.DocumentEndpoint);
-                            Assert.AreEqual(expexctedLocation.FailoverPriority, actualLocation.FailoverPriority);
-                            Assert.AreEqual(expexctedLocation.IsZoneRedundant, actualLocation.IsZoneRedundant);
-                            Assert.AreEqual(expexctedLocation.LocationName, actualLocation.LocationName);
-                            Assert.AreEqual(expexctedLocation.ProvisioningState, actualLocation.ProvisioningState);
+                            Assert.That(actualLocation.DocumentEndpoint, Is.EqualTo(expexctedLocation.DocumentEndpoint));
+                            Assert.That(actualLocation.FailoverPriority, Is.EqualTo(expexctedLocation.FailoverPriority));
+                            Assert.That(actualLocation.IsZoneRedundant, Is.EqualTo(expexctedLocation.IsZoneRedundant));
+                            Assert.That(actualLocation.LocationName, Is.EqualTo(expexctedLocation.LocationName));
+                            Assert.That(actualLocation.ProvisioningState, Is.EqualTo(expexctedLocation.ProvisioningState));
                         }
                     }
                 }
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyFailoverPolicies(IReadOnlyList<CosmosDBFailoverPolicy> expectedData, IReadOnlyList<CosmosDBFailoverPolicy> actualData)
         {
-            Assert.AreEqual(expectedData.Count, actualData.Count);
+            Assert.That(actualData.Count, Is.EqualTo(expectedData.Count));
             if (expectedData.Count != 0)
             {
                 foreach (CosmosDBFailoverPolicy expexctedFailoverPolicy in expectedData)
@@ -290,8 +290,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     {
                         if (expexctedFailoverPolicy.Id == actualFailoverPolicy.Id)
                         {
-                            Assert.AreEqual(expexctedFailoverPolicy.FailoverPriority, actualFailoverPolicy.FailoverPriority);
-                            Assert.AreEqual(expexctedFailoverPolicy.LocationName, actualFailoverPolicy.LocationName);
+                            Assert.That(actualFailoverPolicy.FailoverPriority, Is.EqualTo(expexctedFailoverPolicy.FailoverPriority));
+                            Assert.That(actualFailoverPolicy.LocationName, Is.EqualTo(expexctedFailoverPolicy.LocationName));
                         }
                     }
                 }
@@ -300,12 +300,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyConsistencyPolicy(ConsistencyPolicy expected, ConsistencyPolicy actual)
         {
-            Assert.AreEqual(expected.DefaultConsistencyLevel, actual.DefaultConsistencyLevel);
+            Assert.That(actual.DefaultConsistencyLevel, Is.EqualTo(expected.DefaultConsistencyLevel));
 
             if (actual.DefaultConsistencyLevel == DefaultConsistencyLevel.BoundedStaleness)
             {
-                Assert.AreEqual(expected.MaxIntervalInSeconds, actual.MaxIntervalInSeconds);
-                Assert.AreEqual(expected.MaxStalenessPrefix, actual.MaxStalenessPrefix);
+                Assert.That(actual.MaxIntervalInSeconds, Is.EqualTo(expected.MaxIntervalInSeconds));
+                Assert.That(actual.MaxStalenessPrefix, Is.EqualTo(expected.MaxStalenessPrefix));
             }
         }
     }

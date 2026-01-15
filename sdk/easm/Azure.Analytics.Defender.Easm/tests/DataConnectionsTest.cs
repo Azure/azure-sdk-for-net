@@ -44,8 +44,8 @@ namespace Azure.Analytics.Defender.Easm.Tests
         {
             var result = await client.GetDataConnectionAsync(DataConnectionName);
             DataConnection dataConnection = result.Value;
-            Assert.AreEqual(DataConnectionName, dataConnection.Name);
-            Assert.AreEqual(DataConnectionName, dataConnection.DisplayName);
+            Assert.That(dataConnection.Name, Is.EqualTo(DataConnectionName));
+            Assert.That(dataConnection.DisplayName, Is.EqualTo(DataConnectionName));
             Assert.IsNotNull(dataConnection.Active);
             Assert.IsNotNull(dataConnection.Content);
         }
@@ -78,10 +78,10 @@ namespace Azure.Analytics.Defender.Easm.Tests
             request.Content = DataConnectionContent.Assets;
             request.Frequency = DataConnectionFrequency.Daily;
             var response = await client.CreateOrReplaceDataConnectionAsync(NewDataConnectionName, request).ConfigureAwait(false);
-            Assert.AreEqual(NewDataConnectionName, response.Value.Name);
-            Assert.AreEqual(NewDataConnectionName, response.Value.DisplayName);
-            Assert.True(response.Value.GetType() == typeof(AzureDataExplorerDataConnection));
-            Assert.AreEqual(DataConnectionFrequency.Daily, response.Value.Frequency);
+            Assert.That(response.Value.Name, Is.EqualTo(NewDataConnectionName));
+            Assert.That(response.Value.DisplayName, Is.EqualTo(NewDataConnectionName));
+            Assert.That(response.Value.GetType() == typeof(AzureDataExplorerDataConnection), Is.True);
+            Assert.That(response.Value.Frequency, Is.EqualTo(DataConnectionFrequency.Daily));
         }
     }
 }

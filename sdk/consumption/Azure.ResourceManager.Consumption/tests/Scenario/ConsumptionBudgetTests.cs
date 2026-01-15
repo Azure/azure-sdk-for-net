@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Consumption.Tests
         public async Task Exist()
         {
             var flag = await _consumptionBudgetCollection.ExistsAsync(_budgetName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
         }
 
         [RecordedTest]
@@ -82,21 +82,21 @@ namespace Azure.ResourceManager.Consumption.Tests
         public async Task Delete()
         {
             var flag = await _consumptionBudgetCollection.ExistsAsync(_budgetName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             await _budget.DeleteAsync(WaitUntil.Completed);
             flag = await _consumptionBudgetCollection.ExistsAsync(_budgetName);
-            Assert.IsFalse(flag);
+            Assert.That((bool)flag, Is.False);
         }
 
         private void ValidateConsumptionBudget(ConsumptionBudgetData budget)
         {
             Assert.IsNotNull(budget);
             Assert.IsNotEmpty(budget.Id);
-            Assert.AreEqual(_budgetName, budget.Name);
-            Assert.AreEqual(100, budget.Amount);
-            Assert.AreEqual(BudgetTimeGrainType.Monthly, budget.TimeGrain);
-            Assert.AreEqual(BudgetCategory.Cost, budget.Category);
+            Assert.That(budget.Name, Is.EqualTo(_budgetName));
+            Assert.That(budget.Amount, Is.EqualTo(100));
+            Assert.That(budget.TimeGrain, Is.EqualTo(BudgetTimeGrainType.Monthly));
+            Assert.That(budget.Category, Is.EqualTo(BudgetCategory.Cost));
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             var input = ResourceDataHelpers.GetSourceControlData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             AutomationSourceControlResource sourcecontrol = lro.Value;
-            Assert.AreEqual(name, sourcecontrol.Data.Name);
+            Assert.That(sourcecontrol.Data.Name, Is.EqualTo(name));
             //2.Get
             AutomationSourceControlResource sourcecontrol2 = await sourcecontrol.GetAsync();
             ResourceDataHelpers.AssertSourceControl(sourcecontrol.Data, sourcecontrol2.Data);
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 3);
             //4.Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resource

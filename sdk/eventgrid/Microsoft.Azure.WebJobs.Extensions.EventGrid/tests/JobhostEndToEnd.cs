@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var host = TestHelpers.NewHost<EventGridParams>();
 
             await host.GetJobHost().CallAsync(functionName, args);
-            Assert.AreEqual(_functionOut, expectOut);
+            Assert.That(expectOut, Is.EqualTo(_functionOut));
 
             var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
             CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Extensions.EventGrid.Config.EventGridExtensionConfigProvider");
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var host = TestHelpers.NewHost<CloudEventParams>();
 
             await host.GetJobHost().CallAsync(functionName, args);
-            Assert.AreEqual(_functionOut, expectOut);
+            Assert.That(expectOut, Is.EqualTo(_functionOut));
             _functionOut = null;
         }
 
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var host = TestHelpers.NewHost<EventGridParams>();
 
             await host.GetJobHost().CallAsync(functionName, args);
-            Assert.AreEqual(_functionOut, expectOut);
+            Assert.That(expectOut, Is.EqualTo(_functionOut));
             _functionOut = null;
         }
 
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var host = TestHelpers.NewHost<CloudEventParams>();
 
             await host.GetJobHost().CallAsync(functionName, args);
-            Assert.AreEqual(_functionOut, expectOut);
+            Assert.That(expectOut, Is.EqualTo(_functionOut));
             _functionOut = null;
         }
 
@@ -135,12 +135,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             // when invoked
             var invocationException = Assert.ThrowsAsync<FunctionInvocationException>(() => host.GetJobHost().CallAsync("EventGridParams.TestEventGridToCustom", args));
-            Assert.AreEqual(@"Exception binding parameter 'value'", invocationException.InnerException.Message);
+            Assert.That(invocationException.InnerException.Message, Is.EqualTo(@"Exception binding parameter 'value'"));
 
             // when indexed
             host = TestHelpers.NewHost<InvalidParam>();
             var indexException = Assert.ThrowsAsync<FunctionIndexingException>(() => host.StartAsync());
-            Assert.AreEqual($"Can't bind EventGridTrigger to type '{typeof(int)}'.", indexException.InnerException.Message);
+            Assert.That(indexException.InnerException.Message, Is.EqualTo($"Can't bind EventGridTrigger to type '{typeof(int)}'."));
         }
 
         [Theory]
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var host = TestHelpers.NewHost<CloudEventParamsBackCompat>();
 
             await host.GetJobHost().CallAsync(functionName, args);
-            Assert.AreEqual(_functionOut, expectOut);
+            Assert.That(expectOut, Is.EqualTo(_functionOut));
             _functionOut = null;
         }
 
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var host = TestHelpers.NewHost<DirectInvocation>();
 
             await host.GetJobHost().CallAsync(functionName, args);
-            Assert.AreEqual(_functionOut, expectOut);
+            Assert.That(expectOut, Is.EqualTo(_functionOut));
             _functionOut = null;
         }
 
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             };
 
             await host.GetJobHost().CallAsync(functionName, args);
-            Assert.AreEqual(expectedOutput, _functionOut);
+            Assert.That(_functionOut, Is.EqualTo(expectedOutput));
             _functionOut = null;
         }
 
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             };
 
             await host.GetJobHost().CallAsync(functionName, args);
-            Assert.AreEqual(expectedOutput, _functionOut);
+            Assert.That(_functionOut, Is.EqualTo(expectedOutput));
             _functionOut = null;
         }
 
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var host = TestHelpers.NewHost<OutputBindingParams>();
             // appsetting is missing
             var indexException = Assert.ThrowsAsync<FunctionIndexingException>(() => host.StartAsync());
-            Assert.AreEqual($"Unable to resolve the value for property '{nameof(EventGridAttribute)}.{nameof(EventGridAttribute.TopicEndpointUri)}'. Make sure the setting exists and has a valid value.", indexException.InnerException.Message);
+            Assert.That(indexException.InnerException.Message, Is.EqualTo($"Unable to resolve the value for property '{nameof(EventGridAttribute)}.{nameof(EventGridAttribute.TopicEndpointUri)}'. Make sure the setting exists and has a valid value."));
 
             var configuration = new Dictionary<string, string>
                 {
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             host = TestHelpers.NewHost<OutputBindingParams>(configuration: configuration);
             indexException = Assert.ThrowsAsync<FunctionIndexingException>(() => host.StartAsync());
-            Assert.AreEqual($"The '{nameof(EventGridAttribute.TopicEndpointUri)}' property must be a valid absolute Uri.", indexException.InnerException.Message);
+            Assert.That(indexException.InnerException.Message, Is.EqualTo($"The '{nameof(EventGridAttribute.TopicEndpointUri)}' property must be a valid absolute Uri."));
 
             configuration = new Dictionary<string, string>
                 {
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             host = TestHelpers.NewHost<OutputBindingParams>(configuration: configuration);
             indexException = Assert.ThrowsAsync<FunctionIndexingException>(() => host.StartAsync());
-            Assert.AreEqual($"The '{nameof(EventGridAttribute.TopicKeySetting)}' property must be the name of an application setting containing the Topic Key.", indexException.InnerException.Message);
+            Assert.That(indexException.InnerException.Message, Is.EqualTo($"The '{nameof(EventGridAttribute.TopicKeySetting)}' property must be the name of an application setting containing the Topic Key."));
         }
 
         [Theory]
@@ -307,9 +307,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var expectedEvents = new HashSet<string>(expectedCollection.Split(' '));
             foreach (EventGridEvent eve in egOutput)
             {
-                Assert.True(expectedEvents.Remove(eve.Data.ToObjectFromJson<string>()));
+                Assert.That(expectedEvents.Remove(eve.Data.ToObjectFromJson<string>()), Is.True);
             }
-            Assert.True(expectedEvents.Count == 0);
+            Assert.That(expectedEvents.Count == 0, Is.True);
         }
 
         private class MockComponentFactory : AzureComponentFactory
@@ -449,9 +449,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var expectedEvents = new HashSet<string>(expectedCollection.Split(' '));
             foreach (CloudEvent eve in cloudEvents)
             {
-                Assert.True(expectedEvents.Remove(eve.Data.ToObjectFromJson<string>()));
+                Assert.That(expectedEvents.Remove(eve.Data.ToObjectFromJson<string>()), Is.True);
             }
-            Assert.AreEqual(0, expectedEvents.Count);
+            Assert.That(expectedEvents.Count, Is.EqualTo(0));
         }
 
         [Test]

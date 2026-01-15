@@ -27,7 +27,7 @@ namespace Azure.Identity.Tests
 
             AssertOptionsHonored(new InteractiveBrowserCredentialOptions(), credential);
 
-            Assert.AreEqual(CredentialPipeline.GetInstance(null), credential.Pipeline);
+            Assert.That(credential.Pipeline, Is.EqualTo(CredentialPipeline.GetInstance(null)));
 
             // with options
             var options = new InteractiveBrowserCredentialOptions
@@ -65,7 +65,7 @@ namespace Azure.Identity.Tests
 
             AssertOptionsHonored(options, credential);
 
-            Assert.AreEqual(CredentialPipeline.GetInstance(null), credential.Pipeline);
+            Assert.That(credential.Pipeline, Is.EqualTo(CredentialPipeline.GetInstance(null)));
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace Azure.Identity.Tests
 
             AssertOptionsHonored(options, credential);
 
-            Assert.AreEqual(CredentialPipeline.GetInstance(null), credential.Pipeline);
+            Assert.That(credential.Pipeline, Is.EqualTo(CredentialPipeline.GetInstance(null)));
 
             // str, str
             options.TenantId = Guid.NewGuid().ToString();
@@ -99,7 +99,7 @@ namespace Azure.Identity.Tests
 
             AssertOptionsHonored(options, credential);
 
-            Assert.AreEqual(CredentialPipeline.GetInstance(null), credential.Pipeline);
+            Assert.That(credential.Pipeline, Is.EqualTo(CredentialPipeline.GetInstance(null)));
 
             // str, str, options
             options.AuthorityHost = new Uri("https://login.myauthority.com/");
@@ -111,18 +111,18 @@ namespace Azure.Identity.Tests
 
         public void AssertOptionsHonored(InteractiveBrowserCredentialOptions options, InteractiveBrowserCredential credential)
         {
-            Assert.AreEqual(options.ClientId, credential.ClientId);
-            Assert.AreEqual(options.TenantId, credential.Client.TenantId);
-            Assert.AreEqual(options.DisableAutomaticAuthentication, credential.DisableAutomaticAuthentication);
-            Assert.AreEqual(options.AuthenticationRecord, credential.Record);
+            Assert.That(credential.ClientId, Is.EqualTo(options.ClientId));
+            Assert.That(credential.Client.TenantId, Is.EqualTo(options.TenantId));
+            Assert.That(credential.DisableAutomaticAuthentication, Is.EqualTo(options.DisableAutomaticAuthentication));
+            Assert.That(credential.Record, Is.EqualTo(options.AuthenticationRecord));
 
             if (options.RedirectUri != null)
             {
-                Assert.AreEqual(options.RedirectUri, new Uri(credential.Client.RedirectUrl));
+                Assert.That(new Uri(credential.Client.RedirectUrl), Is.EqualTo(options.RedirectUri));
             }
             else
             {
-                Assert.AreEqual(Constants.DefaultRedirectUrl, credential.Client.RedirectUrl);
+                Assert.That(credential.Client.RedirectUrl, Is.EqualTo(Constants.DefaultRedirectUrl));
             }
         }
     }

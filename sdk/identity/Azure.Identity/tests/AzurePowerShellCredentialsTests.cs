@@ -66,8 +66,8 @@ namespace Azure.Identity.Tests
                 new AzurePowerShellCredential(options, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
             AccessToken actualToken = await credential.GetTokenAsync(context);
 
-            Assert.AreEqual(expectedToken, actualToken.Token);
-            Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
+            Assert.That(actualToken.Token, Is.EqualTo(expectedToken));
+            Assert.That(actualToken.ExpiresOn, Is.EqualTo(expectedExpiresOn));
 
             var iStart = testProcess.StartInfo.Arguments.IndexOf("EncodedCommand");
             iStart = testProcess.StartInfo.Arguments.IndexOf('\"', iStart) + 1;
@@ -169,7 +169,7 @@ namespace Azure.Identity.Tests
             AzurePowerShellCredential credential = InstrumentClient(
                 new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcesses)));
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            Assert.AreEqual(expectedError, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(expectedError));
         }
 
         [Test]
@@ -218,7 +218,7 @@ namespace Azure.Identity.Tests
                     CredentialPipeline.GetInstance(null),
                     new TestProcessService(testProcess, true)));
             await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
-            Assert.IsTrue(fellBackToPowerShell);
+            Assert.That(fellBackToPowerShell, Is.True);
         }
 
         [Test]
@@ -231,7 +231,7 @@ namespace Azure.Identity.Tests
                     CredentialPipeline.GetInstance(null),
                     new TestProcessService(testProcess)));
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            Assert.AreEqual(AzurePowerShellCredential.AzurePowerShellTimeoutError, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(AzurePowerShellCredential.AzurePowerShellTimeoutError));
         }
 
         [Test]
@@ -247,7 +247,7 @@ namespace Azure.Identity.Tests
                     UseLegacyPowerShell = true
                 });
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            Assert.AreEqual(AzurePowerShellCredential.PowerShellNotInstalledError, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(AzurePowerShellCredential.PowerShellNotInstalledError));
         }
 
         [Test]
@@ -310,8 +310,8 @@ namespace Azure.Identity.Tests
             var credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
 
             var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { Scope }, claims: claims));
-            Assert.AreEqual(expectedToken, token.Token);
-            Assert.AreEqual(expectedExpiresOn, token.ExpiresOn);
+            Assert.That(token.Token, Is.EqualTo(expectedToken));
+            Assert.That(token.ExpiresOn, Is.EqualTo(expectedExpiresOn));
         }
 
         [Test]
@@ -391,8 +391,8 @@ namespace Azure.Identity.Tests
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expectedToken, actualToken.Token);
-            Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
+            Assert.That(actualToken.Token, Is.EqualTo(expectedToken));
+            Assert.That(actualToken.ExpiresOn, Is.EqualTo(expectedExpiresOn));
 
             // Verify PowerShell script checks for and handles Az.Accounts module version 5.0.0+
             var match = System.Text.RegularExpressions.Regex.Match(testProcess.StartInfo.Arguments, "EncodedCommand\\s*\"([^\"]+)\"");

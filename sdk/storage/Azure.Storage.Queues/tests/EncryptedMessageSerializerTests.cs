@@ -118,7 +118,7 @@ namespace Azure.Storage.Queues.Test
 
             var parsedEncryptedMessage = EncryptedMessageSerializer.Deserialize(serializedMessage);
 
-            Assert.IsTrue(AreEqual(encryptedMessage, parsedEncryptedMessage));
+            Assert.That(AreEqual(encryptedMessage, parsedEncryptedMessage), Is.True);
         }
 
         [Test]
@@ -141,8 +141,8 @@ namespace Azure.Storage.Queues.Test
 
             bool tryResult = EncryptedMessageSerializer.TryDeserialize(serializedMessage, out var parsedEncryptedMessage);
 
-            Assert.AreEqual(true, tryResult);
-            Assert.IsTrue(AreEqual(encryptedMessage, parsedEncryptedMessage));
+            Assert.That(tryResult, Is.EqualTo(true));
+            Assert.That(AreEqual(encryptedMessage, parsedEncryptedMessage), Is.True);
         }
 
         [TestCase("")]
@@ -156,7 +156,7 @@ namespace Azure.Storage.Queues.Test
         {
             bool tryResult = EncryptedMessageSerializer.TryDeserialize(new BinaryData(input), out var parsedEncryptedMessage);
 
-            Assert.AreEqual(false, tryResult);
+            Assert.That(tryResult, Is.EqualTo(false));
             Assert.IsNull(parsedEncryptedMessage?.EncryptedMessageText);
             Assert.IsNull(parsedEncryptedMessage?.EncryptionData);
             Assert.IsNull(parsedEncryptedMessage);

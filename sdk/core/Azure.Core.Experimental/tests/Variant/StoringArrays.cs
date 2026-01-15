@@ -17,9 +17,9 @@ namespace Azure.Core.Experimental.Tests
             Variant value = Variant.Create(b);
             watch.Validate();
 
-            Assert.AreEqual(typeof(byte[]), value.Type);
-            Assert.AreSame(b, value.As<byte[]>());
-            Assert.AreEqual(b, (byte[])value.As<object>());
+            Assert.That(value.Type, Is.EqualTo(typeof(byte[])));
+            Assert.That(value.As<byte[]>(), Is.SameAs(b));
+            Assert.That((byte[])value.As<object>(), Is.EqualTo(b));
 
             Assert.Throws<InvalidCastException>(() => value.As<ArraySegment<byte>>());
         }
@@ -33,9 +33,9 @@ namespace Azure.Core.Experimental.Tests
             Variant value = Variant.Create(b);
             watch.Validate();
 
-            Assert.AreEqual(typeof(char[]), value.Type);
-            Assert.AreSame(b, value.As<char[]>());
-            Assert.AreEqual(b, (char[])value.As<object>());
+            Assert.That(value.Type, Is.EqualTo(typeof(char[])));
+            Assert.That(value.As<char[]>(), Is.SameAs(b));
+            Assert.That((char[])value.As<object>(), Is.EqualTo(b));
 
             Assert.Throws<InvalidCastException>(() => value.As<ArraySegment<char>>());
         }
@@ -50,23 +50,23 @@ namespace Azure.Core.Experimental.Tests
             Variant value = Variant.Create(segment);
             watch.Validate();
 
-            Assert.AreEqual(typeof(ArraySegment<byte>), value.Type);
-            Assert.AreEqual(segment, value.As<ArraySegment<byte>>());
-            Assert.AreEqual(segment, (ArraySegment<byte>)value.As<object>());
+            Assert.That(value.Type, Is.EqualTo(typeof(ArraySegment<byte>)));
+            Assert.That(value.As<ArraySegment<byte>>(), Is.EqualTo(segment));
+            Assert.That((ArraySegment<byte>)value.As<object>(), Is.EqualTo(segment));
             Assert.Throws<InvalidCastException>(() => value.As<byte[]>());
 
             segment = new(b, 0, 0);
             value = Variant.Create(segment);
-            Assert.AreEqual(typeof(ArraySegment<byte>), value.Type);
-            Assert.AreEqual(segment, value.As<ArraySegment<byte>>());
-            Assert.AreEqual(segment, (ArraySegment<byte>)value.As<object>());
+            Assert.That(value.Type, Is.EqualTo(typeof(ArraySegment<byte>)));
+            Assert.That(value.As<ArraySegment<byte>>(), Is.EqualTo(segment));
+            Assert.That((ArraySegment<byte>)value.As<object>(), Is.EqualTo(segment));
             Assert.Throws<InvalidCastException>(() => value.As<byte[]>());
 
             segment = new(b, 1, 1);
             value = Variant.Create(segment);
-            Assert.AreEqual(typeof(ArraySegment<byte>), value.Type);
-            Assert.AreEqual(segment, value.As<ArraySegment<byte>>());
-            Assert.AreEqual(segment, (ArraySegment<byte>)value.As<object>());
+            Assert.That(value.Type, Is.EqualTo(typeof(ArraySegment<byte>)));
+            Assert.That(value.As<ArraySegment<byte>>(), Is.EqualTo(segment));
+            Assert.That((ArraySegment<byte>)value.As<object>(), Is.EqualTo(segment));
             Assert.Throws<InvalidCastException>(() => value.As<byte[]>());
         }
 
@@ -80,23 +80,23 @@ namespace Azure.Core.Experimental.Tests
             Variant value = Variant.Create(segment);
             watch.Validate();
 
-            Assert.AreEqual(typeof(ArraySegment<char>), value.Type);
-            Assert.AreEqual(segment, value.As<ArraySegment<char>>());
-            Assert.AreEqual(segment, (ArraySegment<char>)value.As<object>());
+            Assert.That(value.Type, Is.EqualTo(typeof(ArraySegment<char>)));
+            Assert.That(value.As<ArraySegment<char>>(), Is.EqualTo(segment));
+            Assert.That((ArraySegment<char>)value.As<object>(), Is.EqualTo(segment));
             Assert.Throws<InvalidCastException>(() => value.As<char[]>());
 
             segment = new(b, 0, 0);
             value = Variant.Create(segment);
-            Assert.AreEqual(typeof(ArraySegment<char>), value.Type);
-            Assert.AreEqual(segment, value.As<ArraySegment<char>>());
-            Assert.AreEqual(segment, (ArraySegment<char>)value.As<object>());
+            Assert.That(value.Type, Is.EqualTo(typeof(ArraySegment<char>)));
+            Assert.That(value.As<ArraySegment<char>>(), Is.EqualTo(segment));
+            Assert.That((ArraySegment<char>)value.As<object>(), Is.EqualTo(segment));
             Assert.Throws<InvalidCastException>(() => value.As<char[]>());
 
             segment = new(b, 1, 1);
             value = Variant.Create(segment);
-            Assert.AreEqual(typeof(ArraySegment<char>), value.Type);
-            Assert.AreEqual(segment, value.As<ArraySegment<char>>());
-            Assert.AreEqual(segment, (ArraySegment<char>)value.As<object>());
+            Assert.That(value.Type, Is.EqualTo(typeof(ArraySegment<char>)));
+            Assert.That(value.As<ArraySegment<char>>(), Is.EqualTo(segment));
+            Assert.That((ArraySegment<char>)value.As<object>(), Is.EqualTo(segment));
             Assert.Throws<InvalidCastException>(() => value.As<char[]>());
         }
     }

@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
             var gitHubConnector = (await gitHubConnectorCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectorName, connectorData)).Value;
 
             Assert.IsNotNull(gitHubConnector);
-            Assert.AreEqual(ProvisioningState.Succeeded, gitHubConnector.Data.Properties.ProvisioningState);
-            Assert.AreEqual(connectorName, gitHubConnector.Data.Name);
-            Assert.AreEqual(TestEnvironment.Location, gitHubConnector.Data.Location.Name);
+            Assert.That(gitHubConnector.Data.Properties.ProvisioningState, Is.EqualTo(ProvisioningState.Succeeded));
+            Assert.That(gitHubConnector.Data.Name, Is.EqualTo(connectorName));
+            Assert.That(gitHubConnector.Data.Location.Name, Is.EqualTo(TestEnvironment.Location));
         }
 
         [Test]
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
         {
             var connectors = await DefaultSubscription.GetGitHubConnectorsAsync().ToEnumerableAsync();
             Assert.IsNotNull(connectors);
-            Assert.AreEqual(1, connectors.Count);
+            Assert.That(connectors.Count, Is.EqualTo(1));
 
             var connector = connectors[0];
-            Assert.AreEqual("securitydevops-ghconnector5440", connector.Data.Name);
-            Assert.AreEqual(TestEnvironment.Location, connector.Data.Location.Name);
+            Assert.That(connector.Data.Name, Is.EqualTo("securitydevops-ghconnector5440"));
+            Assert.That(connector.Data.Location.Name, Is.EqualTo(TestEnvironment.Location));
         }
 
         [Test]
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
             GitHubConnectorResource gitHubConnector = await Client.GetGitHubConnectorResource(gitHubConnectorId).GetAsync();
 
             Assert.IsNotNull(gitHubConnector);
-            Assert.AreEqual(gitHubConnectorId.Name, gitHubConnector.Data.Name);
-            Assert.AreEqual(TestEnvironment.Location, gitHubConnector.Data.Location.Name);
+            Assert.That(gitHubConnector.Data.Name, Is.EqualTo(gitHubConnectorId.Name));
+            Assert.That(gitHubConnector.Data.Location.Name, Is.EqualTo(TestEnvironment.Location));
         }
 
         [Test]
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
 
             var gitHubRepos = await gitHubConnector.GetGitHubReposByConnectorAsync().ToEnumerableAsync();
 
-            Assert.AreEqual(1, gitHubRepos.Count);
+            Assert.That(gitHubRepos.Count, Is.EqualTo(1));
             var repo = gitHubRepos[0];
-            Assert.AreEqual("azure-sdk-for-net", repo.Data.Name);
-            Assert.AreEqual("https://github.com/Azure/azure-sdk-for-net", repo.Data.Properties.RepoUri.ToString());
+            Assert.That(repo.Data.Name, Is.EqualTo("azure-sdk-for-net"));
+            Assert.That(repo.Data.Properties.RepoUri.ToString(), Is.EqualTo("https://github.com/Azure/azure-sdk-for-net"));
         }
 
         [Test]
@@ -127,8 +127,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
             }
             catch (RequestFailedException e)
             {
-                Assert.AreEqual(404, e.Status);
-                Assert.AreEqual("ResourceNotFound", e.ErrorCode);
+                Assert.That(e.Status, Is.EqualTo(404));
+                Assert.That(e.ErrorCode, Is.EqualTo("ResourceNotFound"));
             }
         }
 
@@ -153,14 +153,14 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
             var originalTags = gitHubConnector.Data.Tags;
 
             // Verify test tags do not already exist
-            Assert.IsFalse(gitHubConnector.Data.Tags.ContainsKey("test1"));
-            Assert.IsFalse(gitHubConnector.Data.Tags.ContainsKey("test2"));
+            Assert.That(gitHubConnector.Data.Tags.ContainsKey("test1"), Is.False);
+            Assert.That(gitHubConnector.Data.Tags.ContainsKey("test2"), Is.False);
 
             // Add tags
             gitHubConnector = await gitHubConnector.AddTagAsync("test1", "value1");
 
             // Verify test tags were added
-            Assert.AreEqual("value1", gitHubConnector.Data.Tags["test1"]);
+            Assert.That(gitHubConnector.Data.Tags["test1"], Is.EqualTo("value1"));
 
             // Replace all tags
             gitHubConnector = await gitHubConnector.SetTagsAsync(new Dictionary<string, string>
@@ -170,17 +170,17 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
             });
 
             // Verify all tags are replaced with test tags
-            Assert.AreEqual(2, gitHubConnector.Data.Tags.Count);
-            Assert.AreEqual("value2", gitHubConnector.Data.Tags["test2"]);
-            Assert.AreEqual("value3", gitHubConnector.Data.Tags["test3"]);
+            Assert.That(gitHubConnector.Data.Tags.Count, Is.EqualTo(2));
+            Assert.That(gitHubConnector.Data.Tags["test2"], Is.EqualTo("value2"));
+            Assert.That(gitHubConnector.Data.Tags["test3"], Is.EqualTo("value3"));
 
             // Delete tag
             gitHubConnector = await gitHubConnector.RemoveTagAsync("test3");
 
             // Verify test tag no longer exists
-            Assert.AreEqual(1, gitHubConnector.Data.Tags.Count);
-            Assert.IsFalse(gitHubConnector.Data.Tags.ContainsKey("test3"));
-            Assert.AreEqual("value2", gitHubConnector.Data.Tags["test2"]);
+            Assert.That(gitHubConnector.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(gitHubConnector.Data.Tags.ContainsKey("test3"), Is.False);
+            Assert.That(gitHubConnector.Data.Tags["test2"], Is.EqualTo("value2"));
 
             // Replace original tags
             await gitHubConnector.SetTagsAsync(originalTags);

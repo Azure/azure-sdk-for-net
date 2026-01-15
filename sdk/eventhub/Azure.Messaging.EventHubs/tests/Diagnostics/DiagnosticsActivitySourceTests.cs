@@ -106,11 +106,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Activity messageActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.EventActivityName);
             AssertCommonTags(messageActivity, eventHubName, endpoint, default, 1);
-            Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".Message", messageActivity.Source.Name);
+            Assert.That(messageActivity.Source.Name, Is.EqualTo(DiagnosticProperty.DiagnosticNamespace + ".Message"));
 
             Activity sendActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.ProducerActivityName);
             AssertCommonTags(sendActivity, eventHubName, endpoint, MessagingDiagnosticOperation.Publish, 1);
-            Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".EventHubProducerClient", sendActivity.Source.Name);
+            Assert.That(sendActivity.Source.Name, Is.EqualTo(DiagnosticProperty.DiagnosticNamespace + ".EventHubProducerClient"));
 
             Assert.That(eventData.Properties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.EqualTo(messageActivity.Id), "The diagnostics identifier should match.");
             // Kind attribute is not set for the OTel path as this is handled by the OTel exporter SDK
@@ -459,7 +459,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventBatch.Count; ++index)
             {
-                Assert.IsTrue(MessagingClientDiagnostics.TryExtractTraceContext(eventBatch[index].Properties, out var targetId, out var _));
+                Assert.That(MessagingClientDiagnostics.TryExtractTraceContext(eventBatch[index].Properties, out var targetId, out var _), Is.True);
                 var targetSpanId = ActivityContext.Parse(targetId, null).SpanId;
                 Assert.That(activities.SelectMany(scope => scope.Links.Select(l => l.Context.SpanId)), Has.One.EqualTo(targetSpanId), $"There should have been a link for the diagnostic identifier: { targetId }");
             }
@@ -507,7 +507,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(processingActivity.ParentId, Is.EqualTo(diagnosticId), "The parent of the processing scope should have been equal to the diagnosticId.");
             AssertCommonTags(processingActivity, eventHubName, fullyQualifiedNamespace, MessagingDiagnosticOperation.Process, 1);
-            Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".EventProcessor", processingActivity.Source.Name);
+            Assert.That(processingActivity.Source.Name, Is.EqualTo(DiagnosticProperty.DiagnosticNamespace + ".EventProcessor"));
 
             var expectedTag =
                 new KeyValuePair<string, object>(DiagnosticProperty.EnqueuedTimeAttribute,

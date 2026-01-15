@@ -16,8 +16,8 @@ namespace Azure.Maps.Rendering.Tests
             var pushpinPosition = new PushpinPosition(12.56, 22.56);
             var pushpinPositionWithLabel = new PushpinPosition(12.56, 22.56, "A label");
 
-            Assert.AreEqual("12.56 22.56", pushpinPosition.ToQueryString());
-            Assert.AreEqual("'A label'12.56 22.56", pushpinPositionWithLabel.ToQueryString());
+            Assert.That(pushpinPosition.ToQueryString(), Is.EqualTo("12.56 22.56"));
+            Assert.That(pushpinPositionWithLabel.ToQueryString(), Is.EqualTo("'A label'12.56 22.56"));
         }
 
         [Test]
@@ -60,9 +60,9 @@ namespace Azure.Maps.Rendering.Tests
                 CustomPushpinImageUri = new Uri("http://contoso.com/pushpins/red.png"),
             };
 
-            Assert.AreEqual("default||12.56 22.56|14.561 19.801|'A label'7.9 44|'B label'11.73 25.02", simplePinStyle.ToQueryString());
-            Assert.AreEqual("default|coF5F5DC|sc1.75|ro-47|ls1.1||'B label'11.73 25.02|14.561 19.801|12.56 22.56|'A label'7.9 44", complexPinStyle1.ToQueryString());
-            Assert.AreEqual("custom|sc1.05|an4 -5|lc802DDF|ls0.9|la5 -6||'B label'11.73 25.02|'A label'7.9 44||http://contoso.com/pushpins/red.png", complexPinStyle2.ToQueryString());
+            Assert.That(simplePinStyle.ToQueryString(), Is.EqualTo("default||12.56 22.56|14.561 19.801|'A label'7.9 44|'B label'11.73 25.02"));
+            Assert.That(complexPinStyle1.ToQueryString(), Is.EqualTo("default|coF5F5DC|sc1.75|ro-47|ls1.1||'B label'11.73 25.02|14.561 19.801|12.56 22.56|'A label'7.9 44"));
+            Assert.That(complexPinStyle2.ToQueryString(), Is.EqualTo("custom|sc1.05|an4 -5|lc802DDF|ls0.9|la5 -6||'B label'11.73 25.02|'A label'7.9 44||http://contoso.com/pushpins/red.png"));
         }
     }
 }

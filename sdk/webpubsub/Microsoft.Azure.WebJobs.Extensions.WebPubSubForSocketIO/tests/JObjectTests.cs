@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
             var converted = WebPubSubForSocketIOConfigProvider.ConvertToSocketIOAction(jObject);
 
-            Assert.AreEqual(actionName, converted.ActionName.ToString());
+            Assert.That(converted.ActionName.ToString(), Is.EqualTo(actionName));
         }
 
         [TestCase("SocketIOAction")]
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
             // Throws excpetion of not able to de-serialize to abstract class.
             var ex = Assert.Throws<ArgumentException>(() => WebPubSubForSocketIOConfigProvider.ConvertToSocketIOAction(jObject));
-            Assert.AreEqual($"Not supported SocketIOAction: {actionName}.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo($"Not supported SocketIOAction: {actionName}."));
         }
 
         [TestCase]
@@ -63,9 +63,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var input = @"{ actionName : ""sendToNamespace"", eventName: ""event"", parameters: [""data1"", ""data2""]}";
             var converted = (SendToNamespaceAction)WebPubSubForSocketIOConfigProvider.ConvertToSocketIOAction(JObject.Parse(input));
 
-            Assert.AreEqual("event", converted.EventName);
-            Assert.AreEqual("data1", converted.Parameters[0]);
-            Assert.AreEqual("data2", converted.Parameters[1]);
+            Assert.That(converted.EventName, Is.EqualTo("event"));
+            Assert.That(converted.Parameters[0], Is.EqualTo("data1"));
+            Assert.That(converted.Parameters[1], Is.EqualTo("data2"));
         }
 
         [TestCase]
@@ -74,10 +74,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var input = @"{ actionName : ""sendToNamespace"",  eventName: ""event"", parameters: [1, ""2"", {""a"":true}]}";
             var converted = (SendToNamespaceAction)WebPubSubForSocketIOConfigProvider.ConvertToSocketIOAction(JObject.Parse(input));
 
-            Assert.AreEqual("event", converted.EventName);
-            Assert.AreEqual(1, converted.Parameters[0]);
-            Assert.AreEqual("2", converted.Parameters[1]);
-            Assert.AreEqual(true, (bool)((JObject)converted.Parameters[2])["a"]);
+            Assert.That(converted.EventName, Is.EqualTo("event"));
+            Assert.That(converted.Parameters[0], Is.EqualTo(1));
+            Assert.That(converted.Parameters[1], Is.EqualTo("2"));
+            Assert.That((bool)((JObject)converted.Parameters[2])["a"], Is.EqualTo(true));
         }
 
         [TestCase]
@@ -95,12 +95,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var input = @"{ actionName : ""sendToRooms"", rooms: [""rma"", ""rmb""], eventName: ""event"", parameters: [1, ""2"", {""a"":true}]}";
             var converted = (SendToRoomsAction)WebPubSubForSocketIOConfigProvider.ConvertToSocketIOAction(JObject.Parse(input));
 
-            Assert.AreEqual("event", converted.EventName);
-            Assert.AreEqual("rma", converted.Rooms[0]);
-            Assert.AreEqual("rmb", converted.Rooms[1]);
-            Assert.AreEqual(1, converted.Parameters[0]);
-            Assert.AreEqual("2", converted.Parameters[1]);
-            Assert.AreEqual(true, (bool)((JObject)converted.Parameters[2])["a"]);
+            Assert.That(converted.EventName, Is.EqualTo("event"));
+            Assert.That(converted.Rooms[0], Is.EqualTo("rma"));
+            Assert.That(converted.Rooms[1], Is.EqualTo("rmb"));
+            Assert.That(converted.Parameters[0], Is.EqualTo(1));
+            Assert.That(converted.Parameters[1], Is.EqualTo("2"));
+            Assert.That((bool)((JObject)converted.Parameters[2])["a"], Is.EqualTo(true));
         }
 
         [TestCase]
@@ -117,10 +117,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var input = @"{ actionName : ""sendToSocket"", socketId: ""sid"", eventName: ""event"", parameters: [""data1"", ""data2""]}";
             var converted = (SendToSocketAction)WebPubSubForSocketIOConfigProvider.ConvertToSocketIOAction(JObject.Parse(input));
 
-            Assert.AreEqual("event", converted.EventName);
-            Assert.AreEqual("sid", converted.SocketId);
-            Assert.AreEqual("data1", converted.Parameters[0]);
-            Assert.AreEqual("data2", converted.Parameters[1]);
+            Assert.That(converted.EventName, Is.EqualTo("event"));
+            Assert.That(converted.SocketId, Is.EqualTo("sid"));
+            Assert.That(converted.Parameters[0], Is.EqualTo("data1"));
+            Assert.That(converted.Parameters[1], Is.EqualTo("data2"));
         }
 
         [TestCase]
@@ -129,9 +129,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var input = @"{ actionName : ""addSocketToRoom"", socketId: ""sid"", room: ""rm1"", namespace: ""ns""}";
             var converted = (AddSocketToRoomAction)WebPubSubForSocketIOConfigProvider.ConvertToSocketIOAction(JObject.Parse(input));
 
-            Assert.AreEqual("sid", converted.SocketId);
-            Assert.AreEqual("rm1", converted.Room);
-            Assert.AreEqual("ns", converted.Namespace);
+            Assert.That(converted.SocketId, Is.EqualTo("sid"));
+            Assert.That(converted.Room, Is.EqualTo("rm1"));
+            Assert.That(converted.Namespace, Is.EqualTo("ns"));
         }
 
         [TestCase]
@@ -140,9 +140,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var input = @"{ actionName : ""removeSocketFromRoom"", socketId: ""sid"", room: ""rm1"", namespace: ""ns""}";
             var converted = (RemoveSocketFromRoomAction)WebPubSubForSocketIOConfigProvider.ConvertToSocketIOAction(JObject.Parse(input));
 
-            Assert.AreEqual("sid", converted.SocketId);
-            Assert.AreEqual("rm1", converted.Room);
-            Assert.AreEqual("ns", converted.Namespace);
+            Assert.That(converted.SocketId, Is.EqualTo("sid"));
+            Assert.That(converted.Room, Is.EqualTo("rm1"));
+            Assert.That(converted.Namespace, Is.EqualTo("ns"));
         }
 
         [TestCase]
@@ -151,9 +151,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var input = @"{ actionName : ""disconnectSockets"", rooms: [ ""rm1"", ""rm2""], namespace: ""ns""}";
             var converted = (DisconnectSocketsAction)WebPubSubForSocketIOConfigProvider.ConvertToSocketIOAction(JObject.Parse(input));
 
-            Assert.AreEqual("ns", converted.Namespace);
-            Assert.AreEqual("rm1", converted.Rooms[0]);
-            Assert.AreEqual("rm2", converted.Rooms[1]);
+            Assert.That(converted.Namespace, Is.EqualTo("ns"));
+            Assert.That(converted.Rooms[0], Is.EqualTo("rm1"));
+            Assert.That(converted.Rooms[1], Is.EqualTo("rm2"));
         }
     }
 }

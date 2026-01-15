@@ -24,12 +24,12 @@ namespace Azure.Maps.Routing.Tests
             var query = new RouteDirectionQuery(routePoints);
             var result = await client.GetDirectionsAsync(query);
 
-            Assert.AreEqual("0.0.12", result.Value.FormatVersion);
-            Assert.AreEqual(1, result.Value.Routes.Count);
-            Assert.AreEqual(14128, result.Value.Routes[0].Summary.LengthInMeters);
-            Assert.AreEqual(1404, result.Value.Routes[0].Summary.TravelTimeInSeconds);
-            Assert.AreEqual(1, result.Value.Routes[0].Sections.Count);
-            Assert.AreEqual(0, result.Value.OptimizedWaypoints.Count);
+            Assert.That(result.Value.FormatVersion, Is.EqualTo("0.0.12"));
+            Assert.That(result.Value.Routes.Count, Is.EqualTo(1));
+            Assert.That(result.Value.Routes[0].Summary.LengthInMeters, Is.EqualTo(14128));
+            Assert.That(result.Value.Routes[0].Summary.TravelTimeInSeconds, Is.EqualTo(1404));
+            Assert.That(result.Value.Routes[0].Sections.Count, Is.EqualTo(1));
+            Assert.That(result.Value.OptimizedWaypoints.Count, Is.EqualTo(0));
             Assert.IsNull(result.Value.Report);
         }
 
@@ -50,12 +50,12 @@ namespace Azure.Maps.Routing.Tests
             queries.Add(new RouteDirectionQuery(new List<GeoPosition>() { new GeoPosition(123.751, 45.9375), new GeoPosition(123.767, 45.90625) }));
             var result = await client.GetDirectionsImmediateBatchAsync(queries);
 
-            Assert.AreEqual(2, result.Value.Results.Count);
-            Assert.AreEqual(1, result.Value.Results[0].Routes.Count);
-            Assert.AreEqual(1, result.Value.Results[1].Routes.Count);
-            Assert.AreEqual(14128, result.Value.Results[0].Routes[0].Summary.LengthInMeters);
-            Assert.AreEqual(2549, result.Value.Results[0].Routes[0].Summary.TravelTimeInSeconds);
-            Assert.AreEqual(2, result.Value.Results[0].Routes[0].Legs.Count);
+            Assert.That(result.Value.Results.Count, Is.EqualTo(2));
+            Assert.That(result.Value.Results[0].Routes.Count, Is.EqualTo(1));
+            Assert.That(result.Value.Results[1].Routes.Count, Is.EqualTo(1));
+            Assert.That(result.Value.Results[0].Routes[0].Summary.LengthInMeters, Is.EqualTo(14128));
+            Assert.That(result.Value.Results[0].Routes[0].Summary.TravelTimeInSeconds, Is.EqualTo(2549));
+            Assert.That(result.Value.Results[0].Routes[0].Legs.Count, Is.EqualTo(2));
         }
 
         [RecordedTest]
@@ -65,7 +65,7 @@ namespace Azure.Maps.Routing.Tests
             IList<RouteDirectionQuery> queries = new List<RouteDirectionQuery>();
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetDirectionsImmediateBatchAsync(queries));
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
         }
 
         [RecordedTest]
@@ -87,10 +87,10 @@ namespace Azure.Maps.Routing.Tests
             var operation = await client.GetDirectionsBatchAsync(WaitUntil.Completed, queries);
             var result = operation.WaitForCompletion();
 
-            Assert.AreEqual(2, result.Value.Results.Count);
-            Assert.AreEqual(14128, result.Value.Results[0].Routes[0].Summary.LengthInMeters);
-            Assert.AreEqual(2549, result.Value.Results[0].Routes[0].Summary.TravelTimeInSeconds);
-            Assert.AreEqual(2, result.Value.Results[0].Routes[0].Legs.Count);
+            Assert.That(result.Value.Results.Count, Is.EqualTo(2));
+            Assert.That(result.Value.Results[0].Routes[0].Summary.LengthInMeters, Is.EqualTo(14128));
+            Assert.That(result.Value.Results[0].Routes[0].Summary.TravelTimeInSeconds, Is.EqualTo(2549));
+            Assert.That(result.Value.Results[0].Routes[0].Legs.Count, Is.EqualTo(2));
         }
     }
 }

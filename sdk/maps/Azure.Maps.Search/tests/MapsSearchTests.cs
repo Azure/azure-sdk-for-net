@@ -22,9 +22,9 @@ namespace Azure.Maps.Search.Tests
             var client = CreateClient();
             var query = "1 Microsoft Way, Redmond, WA 98052";
             var response = await client.GetGeocodingAsync(query);
-            Assert.AreEqual("1 Microsoft Way", response.Value.Features[0].Properties.Address.AddressLine);
-            Assert.AreEqual("98052", response.Value.Features[0].Properties.Address.PostalCode);
-            Assert.AreEqual("Redmond", response.Value.Features[0].Properties.Address.Locality);
+            Assert.That(response.Value.Features[0].Properties.Address.AddressLine, Is.EqualTo("1 Microsoft Way"));
+            Assert.That(response.Value.Features[0].Properties.Address.PostalCode, Is.EqualTo("98052"));
+            Assert.That(response.Value.Features[0].Properties.Address.Locality, Is.EqualTo("Redmond"));
         }
 
         [RecordedTest]
@@ -33,7 +33,7 @@ namespace Azure.Maps.Search.Tests
             var client = CreateClient();
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                    async () => await client.GetGeocodingAsync());
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
         }
 
         [RecordedTest]
@@ -56,8 +56,8 @@ namespace Azure.Maps.Search.Tests
                         },
                     };
             var response = await client.GetGeocodingBatchAsync(queries);
-            Assert.AreEqual(3, response.Value.Summary.SuccessfulRequests);
-            Assert.AreEqual(3, response.Value.Summary.TotalRequests);
+            Assert.That(response.Value.Summary.SuccessfulRequests, Is.EqualTo(3));
+            Assert.That(response.Value.Summary.TotalRequests, Is.EqualTo(3));
         }
 
         [RecordedTest]
@@ -84,8 +84,8 @@ namespace Azure.Maps.Search.Tests
                         },
                     };
             var response = await client.GetGeocodingBatchAsync(queries);
-            Assert.AreEqual(4, response.Value.Summary.TotalRequests);
-            Assert.AreEqual(3, response.Value.Summary.SuccessfulRequests);
+            Assert.That(response.Value.Summary.TotalRequests, Is.EqualTo(4));
+            Assert.That(response.Value.Summary.SuccessfulRequests, Is.EqualTo(3));
         }
 
         [RecordedTest]
@@ -94,7 +94,7 @@ namespace Azure.Maps.Search.Tests
             var client = CreateClient();
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                    async () => await client.GetGeocodingBatchAsync(new List<GeocodingQuery>()));
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
         }
 
         [RecordedTest]
@@ -103,11 +103,11 @@ namespace Azure.Maps.Search.Tests
             var client = CreateClient();
             GeoPosition coordinates = new GeoPosition(-122.34255, 47.0);
             var response = await client.GetReverseGeocodingAsync(coordinates);
-            Assert.AreEqual("Graham", response.Value.Features[0].Properties.Address.Locality);
-            Assert.AreEqual("United States", response.Value.Features[0].Properties.Address.CountryRegion.Name);
-            Assert.AreEqual("68th Ave E", response.Value.Features[0].Properties.Address.StreetName);
-            Assert.AreEqual("28218", response.Value.Features[0].Properties.Address.StreetNumber);
-            Assert.AreEqual("US", response.Value.Features[0].Properties.Address.CountryRegion.Iso);
+            Assert.That(response.Value.Features[0].Properties.Address.Locality, Is.EqualTo("Graham"));
+            Assert.That(response.Value.Features[0].Properties.Address.CountryRegion.Name, Is.EqualTo("United States"));
+            Assert.That(response.Value.Features[0].Properties.Address.StreetName, Is.EqualTo("68th Ave E"));
+            Assert.That(response.Value.Features[0].Properties.Address.StreetNumber, Is.EqualTo("28218"));
+            Assert.That(response.Value.Features[0].Properties.Address.CountryRegion.Iso, Is.EqualTo("US"));
         }
 
         [RecordedTest]
@@ -118,7 +118,7 @@ namespace Azure.Maps.Search.Tests
             GeoPosition coordinates = new GeoPosition(121.0, -100.0);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                    async () => await client.GetReverseGeocodingAsync(coordinates));
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
         }
 
         [RecordedTest]
@@ -137,8 +137,8 @@ namespace Azure.Maps.Search.Tests
                         },
                     };
             var response = await client.GetReverseGeocodingBatchAsync(items);
-            Assert.AreEqual(2, response.Value.Summary.SuccessfulRequests);
-            Assert.AreEqual(2, response.Value.Summary.TotalRequests);
+            Assert.That(response.Value.Summary.SuccessfulRequests, Is.EqualTo(2));
+            Assert.That(response.Value.Summary.TotalRequests, Is.EqualTo(2));
         }
 
         [RecordedTest]
@@ -161,8 +161,8 @@ namespace Azure.Maps.Search.Tests
                         },
                     };
             var response = await client.GetReverseGeocodingBatchAsync(items);
-            Assert.AreEqual(2, response.Value.Summary.SuccessfulRequests);
-            Assert.AreEqual(3, response.Value.Summary.TotalRequests);
+            Assert.That(response.Value.Summary.SuccessfulRequests, Is.EqualTo(2));
+            Assert.That(response.Value.Summary.TotalRequests, Is.EqualTo(3));
         }
     }
 }

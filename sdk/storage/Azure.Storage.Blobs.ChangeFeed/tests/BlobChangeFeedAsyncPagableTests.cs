@@ -162,7 +162,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             // All pages except the last should have a count == pageSize.
             for (int i = 0; i < pageSizes.Count - 1; i++)
             {
-                Assert.AreEqual(pageSize, pageSizes[i]);
+                Assert.That(pageSizes[i], Is.EqualTo(pageSize));
             }
         }
 
@@ -307,7 +307,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.Greater(EventIdsPart1.Count, 0);
             Assert.Greater(EventIdsPart2.Count, 0);
             Assert.Greater(EventIdsTail.Count, 0);
-            Assert.AreEqual(AllEventIds.Count, EventIdsPart1.Count + EventIdsPart2.Count + EventIdsTail.Count);
+            Assert.That(EventIdsPart1.Count + EventIdsPart2.Count + EventIdsTail.Count, Is.EqualTo(AllEventIds.Count));
             CollectionAssert.AreEqual(AllEventIds, AllEventIdsFromResumingIteration);
         }
 
@@ -365,7 +365,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             string continuation = lastPage.ContinuationToken;
 
             var currentSegmentCursor = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor).CurrentSegmentCursor;
-            Assert.AreEqual(expectedNonEmptyShards, currentSegmentCursor.ShardCursors.Count);
+            Assert.That(currentSegmentCursor.ShardCursors.Count, Is.EqualTo(expectedNonEmptyShards));
             Assert.IsNotNull(currentSegmentCursor.ShardCursors.Find(x => x.BlockOffset > 0), "Making sure we actually finish some shard in the middle of chunk, if this fails play with test data to make it pass");
 
             // Iterate over next two pages
@@ -390,7 +390,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             continuation = lastPage.ContinuationToken;
             currentSegmentCursor = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor).CurrentSegmentCursor;
-            Assert.AreEqual(expectedNonEmptyShards, currentSegmentCursor.ShardCursors.Count);
+            Assert.That(currentSegmentCursor.ShardCursors.Count, Is.EqualTo(expectedNonEmptyShards));
             Assert.IsNotNull(currentSegmentCursor.ShardCursors.Find(x => x.BlockOffset > 0), "Making sure we actually finish some shard in the middle of chunk, if this fails play with test data to make it pass");
 
             // Iterate over remaining
@@ -413,7 +413,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.Greater(EventIdsPart1.Count, 0);
             Assert.Greater(EventIdsPart2.Count, 0);
             Assert.Greater(EventIdsTail.Count, 0);
-            Assert.AreEqual(AllEventIds.Count, EventIdsPart1.Count + EventIdsPart2.Count + EventIdsTail.Count);
+            Assert.That(EventIdsPart1.Count + EventIdsPart2.Count + EventIdsTail.Count, Is.EqualTo(AllEventIds.Count));
             CollectionAssert.AreEqual(AllEventIds, AllEventIdsFromResumingIteration);
         }
 
@@ -470,7 +470,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             string continuation = lastPage.ContinuationToken;
 
             var currentSegmentCursor = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor).CurrentSegmentCursor;
-            Assert.AreEqual(currentSegmentCursor.ShardCursors.Count, expectedShardCount);
+            Assert.That(expectedShardCount, Is.EqualTo(currentSegmentCursor.ShardCursors.Count));
             Assert.IsNotNull(currentSegmentCursor.ShardCursors.Find(x => x.BlockOffset > 0), "Making sure we actually finish some shard in the middle of chunk, if this fails play with test data to make it pass");
 
             // Iterate over next two pages
@@ -495,7 +495,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             continuation = lastPage.ContinuationToken;
             currentSegmentCursor = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor).CurrentSegmentCursor;
-            Assert.AreEqual(currentSegmentCursor.ShardCursors.Count, expectedShardCount);
+            Assert.That(expectedShardCount, Is.EqualTo(currentSegmentCursor.ShardCursors.Count));
             Assert.IsNotNull(currentSegmentCursor.ShardCursors.Find(x => x.BlockOffset > 0), "Making sure we actually finish some shard in the middle of chunk, if this fails play with test data to make it pass");
 
             // Iterate over remaining
@@ -518,7 +518,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.Greater(EventIdsPart1.Count, 0);
             Assert.Greater(EventIdsPart2.Count, 0);
             Assert.Greater(EventIdsTail.Count, 0);
-            Assert.AreEqual(AllEventIds.Count, EventIdsPart1.Count + EventIdsPart2.Count + EventIdsTail.Count);
+            Assert.That(EventIdsPart1.Count + EventIdsPart2.Count + EventIdsTail.Count, Is.EqualTo(AllEventIds.Count));
             CollectionAssert.AreEqual(AllEventIds, AllEventIdsFromResumingIteration);
         }
 
@@ -557,7 +557,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             IList<BlobChangeFeedEvent> tail = await blobChangeFeedAsyncPagable.ToListAsync();
 
             // Assert
-            Assert.AreEqual(0, tail.Count);
+            Assert.That(tail.Count, Is.EqualTo(0));
             Assert.Greater(AllEventIds.Count, 0);
         }
 
@@ -597,7 +597,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             IList<BlobChangeFeedEvent> tail = await blobChangeFeedAsyncPagable.ToListAsync();
 
             // Assert
-            Assert.AreEqual(0, tail.Count);
+            Assert.That(tail.Count, Is.EqualTo(0));
             Assert.Greater(AllEventIds.Count, 0);
         }
 
@@ -702,17 +702,17 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             // Verify
             // You may need to update expected values when re-recording
             var cursor = (JsonSerializer.Deserialize(continuation, typeof(ChangeFeedCursor)) as ChangeFeedCursor);
-            Assert.AreEqual(new DateTimeOffset(2020, 7, 31, 00, 00, 00, TimeSpan.Zero), cursor.EndTime);
-            Assert.AreEqual(1, cursor.CursorVersion);
-            Assert.AreEqual("emilydevtest.blob.core.windows.net", cursor.UrlHost);
+            Assert.That(cursor.EndTime, Is.EqualTo(new DateTimeOffset(2020, 7, 31, 00, 00, 00, TimeSpan.Zero)));
+            Assert.That(cursor.CursorVersion, Is.EqualTo(1));
+            Assert.That(cursor.UrlHost, Is.EqualTo("emilydevtest.blob.core.windows.net"));
             var currentSegmentCursor = cursor.CurrentSegmentCursor;
-            Assert.AreEqual("idx/segments/2020/07/30/2300/meta.json", currentSegmentCursor.SegmentPath);
-            Assert.AreEqual("log/00/2020/07/30/2300/", currentSegmentCursor.CurrentShardPath);
-            Assert.AreEqual(1, currentSegmentCursor.ShardCursors.Count);
+            Assert.That(currentSegmentCursor.SegmentPath, Is.EqualTo("idx/segments/2020/07/30/2300/meta.json"));
+            Assert.That(currentSegmentCursor.CurrentShardPath, Is.EqualTo("log/00/2020/07/30/2300/"));
+            Assert.That(currentSegmentCursor.ShardCursors.Count, Is.EqualTo(1));
             var shardCursor = currentSegmentCursor.ShardCursors.First();
-            Assert.AreEqual("log/00/2020/07/30/2300/00000.avro", shardCursor.CurrentChunkPath);
-            Assert.AreEqual(96253, shardCursor.BlockOffset);
-            Assert.AreEqual(0, shardCursor.EventIndex);
+            Assert.That(shardCursor.CurrentChunkPath, Is.EqualTo("log/00/2020/07/30/2300/00000.avro"));
+            Assert.That(shardCursor.BlockOffset, Is.EqualTo(96253));
+            Assert.That(shardCursor.EventIndex, Is.EqualTo(0));
         }
     }
 }

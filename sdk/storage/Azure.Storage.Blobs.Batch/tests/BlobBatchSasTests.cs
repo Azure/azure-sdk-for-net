@@ -50,7 +50,7 @@ namespace Azure.Storage.Blobs.Test
             BlobBatchClient batchClient = serviceClient.GetBlobBatchClient();
 
             // Assert
-            Assert.AreEqual(serviceClient.Uri.Query, batchClient.Uri.Query);
+            Assert.That(batchClient.Uri.Query, Is.EqualTo(serviceClient.Uri.Query));
         }
 
         [RecordedTest]
@@ -91,7 +91,7 @@ namespace Azure.Storage.Blobs.Test
             BlobBatchClient batchClient = containerClient.GetBlobBatchClient();
 
             // Assert
-            Assert.AreEqual(containerClient.Uri.Query, batchClient.Uri.Query);
+            Assert.That(batchClient.Uri.Query, Is.EqualTo(containerClient.Uri.Query));
         }
 
         [RecordedTest]

@@ -49,8 +49,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             var builder = new ShareUriBuilder(file.Uri);
 
-            Assert.AreEqual(shareName, builder.ShareName);
-            Assert.AreEqual(filePath, builder.DirectoryOrFilePath);
+            Assert.That(builder.ShareName, Is.EqualTo(shareName));
+            Assert.That(builder.DirectoryOrFilePath, Is.EqualTo(filePath));
             //Assert.AreEqual("accountName", builder.AccountName);
         }
 
@@ -75,7 +75,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileProperties> propertiesResponse = await file.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
+            Assert.That(propertiesResponse.Value.ETag, Is.EqualTo(createResponse.Value.ETag));
         }
 
         [Test]
@@ -96,9 +96,9 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileClient fileClient = new ShareFileClient(connectionString.ToString(true), shareName, filePath);
 
-            Assert.AreEqual(accountName, fileClient.AccountName);
-            Assert.AreEqual(shareName, fileClient.ShareName);
-            Assert.AreEqual(filePath, fileClient.Path);
+            Assert.That(fileClient.AccountName, Is.EqualTo(accountName));
+            Assert.That(fileClient.ShareName, Is.EqualTo(shareName));
+            Assert.That(fileClient.Path, Is.EqualTo(filePath));
         }
 
         [Test]
@@ -116,9 +116,9 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareDirectoryClient ShareDirectoryClient = new ShareDirectoryClient(shareEndpoint, credentials);
 
-            Assert.AreEqual(accountName, ShareDirectoryClient.AccountName);
-            Assert.AreEqual(shareName, ShareDirectoryClient.ShareName);
-            Assert.AreEqual(filePath, ShareDirectoryClient.Path);
+            Assert.That(ShareDirectoryClient.AccountName, Is.EqualTo(accountName));
+            Assert.That(ShareDirectoryClient.ShareName, Is.EqualTo(shareName));
+            Assert.That(ShareDirectoryClient.Path, Is.EqualTo(filePath));
         }
 
         [RecordedTest]
@@ -187,7 +187,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void Ctor_DevelopmentThrows()
         {
             var ex = Assert.Throws<ArgumentException>(() => new ShareFileClient("UseDevelopmentStorage=true", "share", "dir/file"));
-            Assert.AreEqual("connectionString", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("connectionString"));
         }
 
         [RecordedTest]
@@ -279,9 +279,9 @@ namespace Azure.Storage.Files.Shares.Tests
                 options));
 
             // Assert
-            Assert.AreEqual(fileName, freshFileClient.Name);
+            Assert.That(freshFileClient.Name, Is.EqualTo(fileName));
             ShareFileProperties propertiesResponse = await freshFileClient.GetPropertiesAsync();
-            Assert.AreEqual(originalEtag, propertiesResponse.ETag);
+            Assert.That(propertiesResponse.ETag, Is.EqualTo(originalEtag));
         }
 
         [RecordedTest]
@@ -311,7 +311,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadFileClient.ExistsAsync(),
-                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("InvalidAuthenticationInfo")));
         }
 
         [RecordedTest]
@@ -323,7 +323,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var fileClient1 = new ShareFileClient(uri1);
             TestHelper.AssertCacheableProperty("file.txt", () => fileClient1.Name);
             TestHelper.AssertCacheableProperty("dir1/dir2/file.txt", () => fileClient1.Path);
-            Assert.AreEqual("file.txt", builder1.LastDirectoryOrFileName);
+            Assert.That(builder1.LastDirectoryOrFileName, Is.EqualTo("file.txt"));
 
             // one directory
             Uri uri2 = new Uri("http://dummyaccount.file.core.windows.net/share/dir1/file.txt");
@@ -331,7 +331,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var fileClient2 = new ShareFileClient(uri2);
             TestHelper.AssertCacheableProperty("file.txt", () => fileClient2.Name);
             TestHelper.AssertCacheableProperty("dir1/file.txt", () => fileClient2.Path);
-            Assert.AreEqual("file.txt", builder2.LastDirectoryOrFileName);
+            Assert.That(builder2.LastDirectoryOrFileName, Is.EqualTo("file.txt"));
 
             // trailing slash
             Uri uri3 = new Uri("http://dummyaccount.file.core.windows.net/share/dir1/file.txt/");
@@ -339,7 +339,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var fileClient3 = new ShareFileClient(uri3);
             TestHelper.AssertCacheableProperty("file.txt", () => fileClient3.Name);
             TestHelper.AssertCacheableProperty("dir1/file.txt", () => fileClient3.Path);
-            Assert.AreEqual("file.txt", builder3.LastDirectoryOrFileName);
+            Assert.That(builder3.LastDirectoryOrFileName, Is.EqualTo("file.txt"));
 
             // no directories
             Uri uri4 = new Uri("http://dummyaccount.file.core.windows.net/share/file.txt");
@@ -347,7 +347,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var fileClient4 = new ShareFileClient(uri4);
             TestHelper.AssertCacheableProperty("file.txt", () => fileClient4.Name);
             TestHelper.AssertCacheableProperty("file.txt", () => fileClient4.Path);
-            Assert.AreEqual("file.txt", builder4.LastDirectoryOrFileName);
+            Assert.That(builder4.LastDirectoryOrFileName, Is.EqualTo("file.txt"));
 
             // no directories or files
             Uri uri5 = new Uri("http://dummyaccount.file.core.windows.net/share");
@@ -355,7 +355,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var fileClient5 = new ShareFileClient(uri5);
             TestHelper.AssertCacheableProperty(string.Empty, () => fileClient5.Name);
             TestHelper.AssertCacheableProperty(string.Empty, () => fileClient5.Path);
-            Assert.AreEqual(string.Empty, builder5.LastDirectoryOrFileName);
+            Assert.That(builder5.LastDirectoryOrFileName, Is.Empty);
         }
 
         [RecordedTest]
@@ -379,7 +379,7 @@ namespace Azure.Storage.Files.Shares.Tests
             TestHelper.AssertCacheableProperty(shareName, () => file.ShareName);
             TestHelper.AssertCacheableProperty(name, () => file.Name);
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
         }
 
         [RecordedTest]
@@ -409,7 +409,7 @@ namespace Azure.Storage.Files.Shares.Tests
             TestHelper.AssertCacheableProperty(shareName, () => file.ShareName);
             TestHelper.AssertCacheableProperty(name, () => file.Name);
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
         }
 
         [RecordedTest]
@@ -453,7 +453,7 @@ namespace Azure.Storage.Files.Shares.Tests
             file.CreateAsync(
                     maxSize: Constants.MB,
                     conditions: conditions),
-                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithFileOperation")));
         }
 
         [RecordedTest]
@@ -544,7 +544,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 file.CreateAsync(
                     maxSize: Constants.MB,
                     options: options),
-                e => Assert.AreEqual("filePermission and filePermissionKey cannot both be set", e.Message));
+                e => Assert.That(e.Message, Is.EqualTo("filePermission and filePermissionKey cannot both be set")));
         }
 
         [RecordedTest]
@@ -571,7 +571,7 @@ namespace Azure.Storage.Files.Shares.Tests
                     options: options),
                 e =>
                 {
-                    Assert.AreEqual("filePermission", e.ParamName);
+                    Assert.That(e.ParamName, Is.EqualTo("filePermission"));
                     StringAssert.StartsWith("Value must be less than or equal to 8192", e.Message);
                 });
         }
@@ -612,9 +612,9 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             AssertValidStorageFileInfo(response);
-            Assert.AreEqual(options.SmbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
-            Assert.AreEqual(options.SmbProperties.FileCreatedOn, response.Value.SmbProperties.FileCreatedOn);
-            Assert.AreEqual(options.SmbProperties.FileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
+            Assert.That(response.Value.SmbProperties.FileAttributes, Is.EqualTo(options.SmbProperties.FileAttributes));
+            Assert.That(response.Value.SmbProperties.FileCreatedOn, Is.EqualTo(options.SmbProperties.FileCreatedOn));
+            Assert.That(response.Value.SmbProperties.FileLastWrittenOn, Is.EqualTo(options.SmbProperties.FileLastWrittenOn));
         }
 
         [RecordedTest]
@@ -641,7 +641,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             AssertValidStorageFileInfo(response);
-            Assert.AreEqual(options.SmbProperties.FileChangedOn, response.Value.SmbProperties.FileChangedOn);
+            Assert.That(response.Value.SmbProperties.FileChangedOn, Is.EqualTo(options.SmbProperties.FileChangedOn));
         }
 
         [RecordedTest]
@@ -697,14 +697,14 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<ShareFileProperties> response = await file.GetPropertiesAsync();
-            Assert.AreEqual(constants.ContentType, response.Value.ContentType);
+            Assert.That(response.Value.ContentType, Is.EqualTo(constants.ContentType));
             TestHelper.AssertSequenceEqual(constants.ContentMD5.ToList(), response.Value.ContentHash.ToList());
-            Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-            Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding.First());
-            Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-            Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage.First());
-            Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
-            Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
+            Assert.That(response.Value.ContentEncoding.Count(), Is.EqualTo(1));
+            Assert.That(response.Value.ContentEncoding.First(), Is.EqualTo(constants.ContentEncoding));
+            Assert.That(response.Value.ContentLanguage.Count(), Is.EqualTo(1));
+            Assert.That(response.Value.ContentLanguage.First(), Is.EqualTo(constants.ContentLanguage));
+            Assert.That(response.Value.ContentDisposition, Is.EqualTo(constants.ContentDisposition));
+            Assert.That(response.Value.CacheControl, Is.EqualTo(constants.CacheControl));
         }
 
         [RecordedTest]
@@ -737,7 +737,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.CreateAsync(maxSize: Constants.KB),
-                e => Assert.AreEqual("ParentNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ParentNotFound")));
         }
 
         [RecordedTest]
@@ -765,15 +765,15 @@ namespace Azure.Storage.Files.Shares.Tests
             {
                 shareFileItems.Add(item);
             }
-            Assert.AreEqual(1, shareFileItems.Count);
+            Assert.That(shareFileItems.Count, Is.EqualTo(1));
 
             if (allowTrailingDot == true)
             {
-                Assert.AreEqual(fileNameWithDot, shareFileItems[0].Name);
+                Assert.That(shareFileItems[0].Name, Is.EqualTo(fileNameWithDot));
             }
             else
             {
-                Assert.AreEqual(fileName, shareFileItems[0].Name);
+                Assert.That(shareFileItems[0].Name, Is.EqualTo(fileName));
             }
         }
 
@@ -808,10 +808,10 @@ namespace Azure.Storage.Files.Shares.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(NfsFileType.Regular, response.Value.PosixProperties.FileType);
-            Assert.AreEqual(owner, response.Value.PosixProperties.Owner);
-            Assert.AreEqual(group, response.Value.PosixProperties.Group);
-            Assert.AreEqual(fileMode, response.Value.PosixProperties.FileMode.ToOctalFileMode());
+            Assert.That(response.Value.PosixProperties.FileType, Is.EqualTo(NfsFileType.Regular));
+            Assert.That(response.Value.PosixProperties.Owner, Is.EqualTo(owner));
+            Assert.That(response.Value.PosixProperties.Group, Is.EqualTo(group));
+            Assert.That(response.Value.PosixProperties.FileMode.ToOctalFileMode(), Is.EqualTo(fileMode));
 
             Assert.IsNull(response.Value.SmbProperties.FileAttributes);
             Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
@@ -968,7 +968,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<bool> response = await file.ExistsAsync();
 
             // Assert
-            Assert.IsTrue(response.Value);
+            Assert.That(response.Value, Is.True);
         }
 
         [RecordedTest]
@@ -983,7 +983,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<bool> response = await file.ExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -998,7 +998,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<bool> response = await file.ExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -1013,7 +1013,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<bool> response = await file.ExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -1053,7 +1053,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<bool> response = await file.DeleteIfExistsAsync();
 
             // Assert
-            Assert.IsTrue(response.Value);
+            Assert.That(response.Value, Is.True);
         }
 
         [RecordedTest]
@@ -1068,7 +1068,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<bool> response = await file.DeleteIfExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -1083,7 +1083,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<bool> response = await file.DeleteIfExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -1098,7 +1098,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<bool> response = await file.DeleteIfExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -1141,7 +1141,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileProperties> response = await file.GetPropertiesAsync();
             AssertDictionaryEquality(metadata, response.Value.Metadata);
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
         }
 
         [RecordedTest]
@@ -1169,7 +1169,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileProperties> response = await file.GetPropertiesAsync();
             AssertDictionaryEquality(metadata, response.Value.Metadata);
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
         }
 
         [RecordedTest]
@@ -1214,7 +1214,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 file.SetMetadataAsync(
                     metadata: metadata,
                     conditions: conditions),
-                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithFileOperation")));
         }
 
         [RecordedTest]
@@ -1230,7 +1230,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.SetMetadataAsync(metadata),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ResourceNotFound")));
         }
 
         [RecordedTest]
@@ -1264,10 +1264,10 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(getPropertiesResponse.Value.ETag.ToString(), $"\"{getPropertiesResponse.GetRawResponse().Headers.ETag}\"");
-            Assert.AreEqual(createResponse.Value.ETag, getPropertiesResponse.Value.ETag);
-            Assert.AreEqual(createResponse.Value.LastModified, getPropertiesResponse.Value.LastModified);
-            Assert.AreEqual(createResponse.Value.IsServerEncrypted, getPropertiesResponse.Value.IsServerEncrypted);
+            Assert.That($"\"{getPropertiesResponse.GetRawResponse().Headers.ETag}\"", Is.EqualTo(getPropertiesResponse.Value.ETag.ToString()));
+            Assert.That(getPropertiesResponse.Value.ETag, Is.EqualTo(createResponse.Value.ETag));
+            Assert.That(getPropertiesResponse.Value.LastModified, Is.EqualTo(createResponse.Value.LastModified));
+            Assert.That(getPropertiesResponse.Value.IsServerEncrypted, Is.EqualTo(createResponse.Value.IsServerEncrypted));
             AssertPropertiesEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
         }
 
@@ -1293,10 +1293,10 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(getPropertiesResponse.Value.ETag.ToString(), $"\"{getPropertiesResponse.GetRawResponse().Headers.ETag}\"");
-            Assert.AreEqual(createResponse.Value.ETag, getPropertiesResponse.Value.ETag);
-            Assert.AreEqual(createResponse.Value.LastModified, getPropertiesResponse.Value.LastModified);
-            Assert.AreEqual(createResponse.Value.IsServerEncrypted, getPropertiesResponse.Value.IsServerEncrypted);
+            Assert.That($"\"{getPropertiesResponse.GetRawResponse().Headers.ETag}\"", Is.EqualTo(getPropertiesResponse.Value.ETag.ToString()));
+            Assert.That(getPropertiesResponse.Value.ETag, Is.EqualTo(createResponse.Value.ETag));
+            Assert.That(getPropertiesResponse.Value.LastModified, Is.EqualTo(createResponse.Value.LastModified));
+            Assert.That(getPropertiesResponse.Value.IsServerEncrypted, Is.EqualTo(createResponse.Value.IsServerEncrypted));
             AssertPropertiesEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
         }
 
@@ -1337,7 +1337,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 snapshotFileClient.GetPropertiesAsync(),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -1356,7 +1356,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileProperties> getPropertiesResponse = await file.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(createResponse.Value.ETag, getPropertiesResponse.Value.ETag);
+            Assert.That(getPropertiesResponse.Value.ETag, Is.EqualTo(createResponse.Value.ETag));
         }
 
         [RecordedTest]
@@ -1381,9 +1381,9 @@ namespace Azure.Storage.Files.Shares.Tests
                 conditions: conditions);
 
             // Assert
-            Assert.AreEqual(ShareLeaseDuration.Infinite, getPropertiesResponse.Value.LeaseDuration);
-            Assert.AreEqual(ShareLeaseState.Leased, getPropertiesResponse.Value.LeaseState);
-            Assert.AreEqual(ShareLeaseStatus.Locked, getPropertiesResponse.Value.LeaseStatus);
+            Assert.That(getPropertiesResponse.Value.LeaseDuration, Is.EqualTo(ShareLeaseDuration.Infinite));
+            Assert.That(getPropertiesResponse.Value.LeaseState, Is.EqualTo(ShareLeaseState.Leased));
+            Assert.That(getPropertiesResponse.Value.LeaseStatus, Is.EqualTo(ShareLeaseStatus.Locked));
         }
 
         [RecordedTest]
@@ -1406,7 +1406,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.GetPropertiesAsync(
                     conditions: conditions),
-                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithFileOperation")));
         }
 
         [RecordedTest]
@@ -1523,12 +1523,12 @@ namespace Azure.Storage.Files.Shares.Tests
                 file.GetPropertiesAsync(),
                 e =>
                 {
-                    Assert.AreEqual("ResourceNotFound", e.ErrorCode);
+                    Assert.That(e.ErrorCode, Is.EqualTo("ResourceNotFound"));
                     if (Mode != RecordedTestMode.Playback)
                     {
                         // The MockResponse type doesn't supply the ReasonPhrase we're
                         // checking for with this test
-                        Assert.AreEqual("The specified resource does not exist.", e.Message.Split('(')[1].Split(')')[0].Trim());
+                        Assert.That(e.Message.Split('(')[1].Split(')')[0].Trim(), Is.EqualTo("The specified resource does not exist."));
                     }
                 });
         }
@@ -1550,9 +1550,9 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileProperties> getPropertiesResponse = await file.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(createResponse.Value.ETag, getPropertiesResponse.Value.ETag);
-            Assert.AreEqual(createResponse.Value.LastModified, getPropertiesResponse.Value.LastModified);
-            Assert.AreEqual(createResponse.Value.IsServerEncrypted, getPropertiesResponse.Value.IsServerEncrypted);
+            Assert.That(getPropertiesResponse.Value.ETag, Is.EqualTo(createResponse.Value.ETag));
+            Assert.That(getPropertiesResponse.Value.LastModified, Is.EqualTo(createResponse.Value.LastModified));
+            Assert.That(getPropertiesResponse.Value.IsServerEncrypted, Is.EqualTo(createResponse.Value.IsServerEncrypted));
             AssertPropertiesEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
         }
 
@@ -1566,11 +1566,11 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileProperties> response = await test.File.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(NfsFileType.Regular, response.Value.PosixProperties.FileType);
-            Assert.AreEqual("0", response.Value.PosixProperties.Owner);
-            Assert.AreEqual("0", response.Value.PosixProperties.Group);
-            Assert.AreEqual("0664", response.Value.PosixProperties.FileMode.ToOctalFileMode());
-            Assert.AreEqual(1, response.Value.PosixProperties.LinkCount);
+            Assert.That(response.Value.PosixProperties.FileType, Is.EqualTo(NfsFileType.Regular));
+            Assert.That(response.Value.PosixProperties.Owner, Is.EqualTo("0"));
+            Assert.That(response.Value.PosixProperties.Group, Is.EqualTo("0"));
+            Assert.That(response.Value.PosixProperties.FileMode.ToOctalFileMode(), Is.EqualTo("0664"));
+            Assert.That(response.Value.PosixProperties.LinkCount, Is.EqualTo(1));
 
             Assert.IsNull(response.Value.SmbProperties.FileAttributes);
             Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
@@ -1602,18 +1602,18 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
             // Ensure the correct values are set by calling GetProperties
             Response<ShareFileProperties> propertiesResponse = await file.GetPropertiesAsync();
-            Assert.AreEqual(constants.ContentType, propertiesResponse.Value.ContentType);
+            Assert.That(propertiesResponse.Value.ContentType, Is.EqualTo(constants.ContentType));
             TestHelper.AssertSequenceEqual(constants.ContentMD5.ToList(), propertiesResponse.Value.ContentHash.ToList());
-            Assert.AreEqual(1, propertiesResponse.Value.ContentEncoding.Count());
-            Assert.AreEqual(constants.ContentEncoding, propertiesResponse.Value.ContentEncoding.First());
-            Assert.AreEqual(1, propertiesResponse.Value.ContentLanguage.Count());
-            Assert.AreEqual(constants.ContentLanguage, propertiesResponse.Value.ContentLanguage.First());
-            Assert.AreEqual(constants.ContentDisposition, propertiesResponse.Value.ContentDisposition);
-            Assert.AreEqual(constants.CacheControl, propertiesResponse.Value.CacheControl);
+            Assert.That(propertiesResponse.Value.ContentEncoding.Count(), Is.EqualTo(1));
+            Assert.That(propertiesResponse.Value.ContentEncoding.First(), Is.EqualTo(constants.ContentEncoding));
+            Assert.That(propertiesResponse.Value.ContentLanguage.Count(), Is.EqualTo(1));
+            Assert.That(propertiesResponse.Value.ContentLanguage.First(), Is.EqualTo(constants.ContentLanguage));
+            Assert.That(propertiesResponse.Value.ContentDisposition, Is.EqualTo(constants.ContentDisposition));
+            Assert.That(propertiesResponse.Value.CacheControl, Is.EqualTo(constants.CacheControl));
         }
 
         [RecordedTest]
@@ -1684,18 +1684,18 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
             // Ensure the correct values are set by calling GetProperties
             Response<ShareFileProperties> propertiesResponse = await file.GetPropertiesAsync();
-            Assert.AreEqual(constants.ContentType, propertiesResponse.Value.ContentType);
+            Assert.That(propertiesResponse.Value.ContentType, Is.EqualTo(constants.ContentType));
             TestHelper.AssertSequenceEqual(constants.ContentMD5.ToList(), propertiesResponse.Value.ContentHash.ToList());
-            Assert.AreEqual(1, propertiesResponse.Value.ContentEncoding.Count());
-            Assert.AreEqual(constants.ContentEncoding, propertiesResponse.Value.ContentEncoding.First());
-            Assert.AreEqual(1, propertiesResponse.Value.ContentLanguage.Count());
-            Assert.AreEqual(constants.ContentLanguage, propertiesResponse.Value.ContentLanguage.First());
-            Assert.AreEqual(constants.ContentDisposition, propertiesResponse.Value.ContentDisposition);
-            Assert.AreEqual(constants.CacheControl, propertiesResponse.Value.CacheControl);
+            Assert.That(propertiesResponse.Value.ContentEncoding.Count(), Is.EqualTo(1));
+            Assert.That(propertiesResponse.Value.ContentEncoding.First(), Is.EqualTo(constants.ContentEncoding));
+            Assert.That(propertiesResponse.Value.ContentLanguage.Count(), Is.EqualTo(1));
+            Assert.That(propertiesResponse.Value.ContentLanguage.First(), Is.EqualTo(constants.ContentLanguage));
+            Assert.That(propertiesResponse.Value.ContentDisposition, Is.EqualTo(constants.ContentDisposition));
+            Assert.That(propertiesResponse.Value.CacheControl, Is.EqualTo(constants.CacheControl));
         }
 
         [RecordedTest]
@@ -1727,7 +1727,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<ShareFileProperties> response = await file.GetPropertiesAsync();
-            Assert.AreEqual(constants.ContentType, response.Value.ContentType);
+            Assert.That(response.Value.ContentType, Is.EqualTo(constants.ContentType));
         }
 
         [RecordedTest]
@@ -1756,7 +1756,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 file.SetHttpHeadersAsync(
                     options: options,
                     conditions: conditions),
-                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithFileOperation")));
         }
 
         [RecordedTest]
@@ -1820,9 +1820,9 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             AssertValidStorageFileInfo(response);
-            Assert.AreEqual(options?.SmbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
-            Assert.AreEqual(options?.SmbProperties.FileCreatedOn, response.Value.SmbProperties.FileCreatedOn);
-            Assert.AreEqual(options?.SmbProperties.FileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
+            Assert.That(response.Value.SmbProperties.FileAttributes, Is.EqualTo(options?.SmbProperties.FileAttributes));
+            Assert.That(response.Value.SmbProperties.FileCreatedOn, Is.EqualTo(options?.SmbProperties.FileCreatedOn));
+            Assert.That(response.Value.SmbProperties.FileLastWrittenOn, Is.EqualTo(options?.SmbProperties.FileLastWrittenOn));
         }
 
         [RecordedTest]
@@ -1850,7 +1850,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             AssertValidStorageFileInfo(response);
-            Assert.AreEqual(options.SmbProperties.FileChangedOn, response.Value.SmbProperties.FileChangedOn);
+            Assert.That(response.Value.SmbProperties.FileChangedOn, Is.EqualTo(options.SmbProperties.FileChangedOn));
         }
 
         [RecordedTest]
@@ -1904,7 +1904,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 file.SetHttpHeadersAsync(options),
-                e => Assert.AreEqual("filePermission and filePermissionKey cannot both be set", e.Message));
+                e => Assert.That(e.Message, Is.EqualTo("filePermission and filePermissionKey cannot both be set")));
         }
 
         [RecordedTest]
@@ -1933,7 +1933,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.SetHttpHeadersAsync(options),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ResourceNotFound")));
         }
 
         [RecordedTest]
@@ -1987,10 +1987,10 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileInfo> response = await test.File.SetHttpHeadersAsync(options);
 
             // Assert
-            Assert.AreEqual(owner, response.Value.PosixProperties.Owner);
-            Assert.AreEqual(group, response.Value.PosixProperties.Group);
-            Assert.AreEqual(fileMode, response.Value.PosixProperties.FileMode.ToOctalFileMode());
-            Assert.AreEqual(1, response.Value.PosixProperties.LinkCount);
+            Assert.That(response.Value.PosixProperties.Owner, Is.EqualTo(owner));
+            Assert.That(response.Value.PosixProperties.Group, Is.EqualTo(group));
+            Assert.That(response.Value.PosixProperties.FileMode.ToOctalFileMode(), Is.EqualTo(fileMode));
+            Assert.That(response.Value.PosixProperties.LinkCount, Is.EqualTo(1));
 
             Assert.IsNull(response.Value.SmbProperties.FileAttributes);
             Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
@@ -2064,7 +2064,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.DeleteAsync(conditions: conditions),
-                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithFileOperation")));
         }
 
         [RecordedTest]
@@ -2079,7 +2079,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.DeleteAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ResourceNotFound")));
         }
 
         [RecordedTest]
@@ -2119,7 +2119,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
         }
 
         [RecordedTest]
@@ -2153,7 +2153,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
         }
 
         [RecordedTest]
@@ -2231,9 +2231,9 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileProperties> propertiesResponse = await dest.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(smbProperties.FileAttributes, propertiesResponse.Value.SmbProperties.FileAttributes);
-            Assert.AreEqual(smbProperties.FileCreatedOn, propertiesResponse.Value.SmbProperties.FileCreatedOn);
-            Assert.AreEqual(smbProperties.FileLastWrittenOn, propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+            Assert.That(propertiesResponse.Value.SmbProperties.FileAttributes, Is.EqualTo(smbProperties.FileAttributes));
+            Assert.That(propertiesResponse.Value.SmbProperties.FileCreatedOn, Is.EqualTo(smbProperties.FileCreatedOn));
+            Assert.That(propertiesResponse.Value.SmbProperties.FileLastWrittenOn, Is.EqualTo(smbProperties.FileLastWrittenOn));
         }
 
         [RecordedTest]
@@ -2321,7 +2321,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileProperties> propertiesResponse = await dest.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(smbProperties.FileChangedOn, propertiesResponse.Value.SmbProperties.FileChangedOn);
+            Assert.That(propertiesResponse.Value.SmbProperties.FileChangedOn, Is.EqualTo(smbProperties.FileChangedOn));
         }
 
         [RecordedTest]
@@ -2371,9 +2371,9 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileProperties> propertiesResponse = await dest.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(smbProperties.FileAttributes, propertiesResponse.Value.SmbProperties.FileAttributes);
-            Assert.AreEqual(smbProperties.FileCreatedOn, propertiesResponse.Value.SmbProperties.FileCreatedOn);
-            Assert.AreEqual(smbProperties.FileLastWrittenOn, propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+            Assert.That(propertiesResponse.Value.SmbProperties.FileAttributes, Is.EqualTo(smbProperties.FileAttributes));
+            Assert.That(propertiesResponse.Value.SmbProperties.FileCreatedOn, Is.EqualTo(smbProperties.FileCreatedOn));
+            Assert.That(propertiesResponse.Value.SmbProperties.FileLastWrittenOn, Is.EqualTo(smbProperties.FileLastWrittenOn));
         }
 
         [RecordedTest]
@@ -2447,7 +2447,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 dest.StartCopyAsync(
                     sourceUri: source.Uri,
                     options: options),
-                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithFileOperation")));
         }
 
         [RecordedTest]
@@ -2520,7 +2520,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.StartCopyAsync(sourceUri: s_invalidUri),
-                e => Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("CannotVerifyCopySource")));
         }
 
         [RecordedTest]
@@ -2539,9 +2539,9 @@ namespace Azure.Storage.Files.Shares.Tests
                 destFile.StartCopyAsync(sourceUri: sourceUri),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 403"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: AuthorizationPermissionMismatch"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: This request is not authorized to perform this operation using this permission."));
+                    Assert.That(e.Message.Contains("CopySourceStatusCode: 403"), Is.True);
+                    Assert.That(e.Message.Contains("CopySourceErrorCode: AuthorizationPermissionMismatch"), Is.True);
+                    Assert.That(e.Message.Contains("CopySourceErrorMessage: This request is not authorized to perform this operation using this permission."), Is.True);
                 });
         }
 
@@ -2568,8 +2568,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 dest.StartCopyAsync(
                     sourceUri: source.Uri,
                     options: options),
-                e => Assert.AreEqual($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileCreatedOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.CreatedOn)} cannot both be set.",
-                e.Message));
+                e => Assert.That(e.Message,
+                Is.EqualTo($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileCreatedOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.CreatedOn)} cannot both be set.")));
         }
 
         [RecordedTest]
@@ -2595,8 +2595,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 dest.StartCopyAsync(
                     sourceUri: source.Uri,
                     options: options),
-                e => Assert.AreEqual($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileLastWrittenOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.LastWrittenOn)} cannot both be set.",
-                e.Message));
+                e => Assert.That(e.Message,
+                Is.EqualTo($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileLastWrittenOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.LastWrittenOn)} cannot both be set.")));
         }
 
         [RecordedTest]
@@ -2622,8 +2622,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 dest.StartCopyAsync(
                     sourceUri: source.Uri,
                     options: options),
-                e => Assert.AreEqual($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileChangedOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.ChangedOn)} cannot both be set.",
-                e.Message));
+                e => Assert.That(e.Message,
+                Is.EqualTo($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileChangedOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.ChangedOn)} cannot both be set.")));
         }
 
         [RecordedTest]
@@ -2649,8 +2649,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 dest.StartCopyAsync(
                     sourceUri: source.Uri,
                     options: options),
-                e => Assert.AreEqual($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileAttributes)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.FileAttributes)} cannot both be set.",
-                e.Message));
+                e => Assert.That(e.Message,
+                Is.EqualTo($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileAttributes)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.FileAttributes)} cannot both be set.")));
         }
 
         [RecordedTest]
@@ -2677,21 +2677,21 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileProperties> sourcePropertiesResponse = await source.GetPropertiesAsync();
             Response<ShareFileProperties> destPropertiesResponse = await dest.GetPropertiesAsync();
 
-            Assert.AreEqual(
-                sourcePropertiesResponse.Value.SmbProperties.FileCreatedOn,
-                destPropertiesResponse.Value.SmbProperties.FileCreatedOn);
+            Assert.That(
+                destPropertiesResponse.Value.SmbProperties.FileCreatedOn,
+                Is.EqualTo(sourcePropertiesResponse.Value.SmbProperties.FileCreatedOn));
 
-            Assert.AreEqual(
-                sourcePropertiesResponse.Value.SmbProperties.FileLastWrittenOn,
-                destPropertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+            Assert.That(
+                destPropertiesResponse.Value.SmbProperties.FileLastWrittenOn,
+                Is.EqualTo(sourcePropertiesResponse.Value.SmbProperties.FileLastWrittenOn));
 
-            Assert.AreEqual(
-                sourcePropertiesResponse.Value.SmbProperties.FileAttributes,
-                destPropertiesResponse.Value.SmbProperties.FileAttributes);
+            Assert.That(
+                destPropertiesResponse.Value.SmbProperties.FileAttributes,
+                Is.EqualTo(sourcePropertiesResponse.Value.SmbProperties.FileAttributes));
 
-            Assert.AreEqual(
-                sourcePropertiesResponse.Value.SmbProperties.FileChangedOn,
-                destPropertiesResponse.Value.SmbProperties.FileChangedOn);
+            Assert.That(
+                destPropertiesResponse.Value.SmbProperties.FileChangedOn,
+                Is.EqualTo(sourcePropertiesResponse.Value.SmbProperties.FileChangedOn));
         }
 
         [RecordedTest]
@@ -2729,7 +2729,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     dest.StartCopyAsync(source.Uri),
-                    e => Assert.AreEqual(e.ErrorCode, "ResourceNotFound"));
+                    e => Assert.That(e.ErrorCode, Is.EqualTo("ResourceNotFound")));
             }
         }
 
@@ -2802,9 +2802,9 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileProperties> destinationProperties = await destination.File.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(owner, destinationProperties.Value.PosixProperties.Owner);
-            Assert.AreEqual(group, destinationProperties.Value.PosixProperties.Group);
-            Assert.AreEqual(fileMode.ToOctalFileMode(), destinationProperties.Value.PosixProperties.FileMode.ToOctalFileMode());
+            Assert.That(destinationProperties.Value.PosixProperties.Owner, Is.EqualTo(owner));
+            Assert.That(destinationProperties.Value.PosixProperties.Group, Is.EqualTo(group));
+            Assert.That(destinationProperties.Value.PosixProperties.FileMode.ToOctalFileMode(), Is.EqualTo(fileMode.ToOctalFileMode()));
         }
 
         [RecordedTest]
@@ -2981,7 +2981,7 @@ namespace Azure.Storage.Files.Shares.Tests
             dest.AbortCopyAsync(
                     copyId: copyResponse.Value.CopyId,
                     conditions: conditions),
-                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithFileOperation")));
         }
 
         [RecordedTest]
@@ -2997,7 +2997,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.AbortCopyAsync("id"),
-                e => Assert.AreEqual("InvalidQueryParameterValue", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("InvalidQueryParameterValue")));
         }
 
         [RecordedTest]
@@ -3058,19 +3058,19 @@ namespace Azure.Storage.Files.Shares.Tests
 
             var builder = new ShareUriBuilder(file.Uri);
 
-            Assert.AreEqual("", builder.Snapshot);
+            Assert.That(builder.Snapshot, Is.Empty);
 
             file = InstrumentClient(file.WithSnapshot("foo"));
 
             builder = new ShareUriBuilder(file.Uri);
 
-            Assert.AreEqual("foo", builder.Snapshot);
+            Assert.That(builder.Snapshot, Is.EqualTo("foo"));
 
             file = InstrumentClient(file.WithSnapshot(null));
 
             builder = new ShareUriBuilder(file.Uri);
 
-            Assert.AreEqual("", builder.Snapshot);
+            Assert.That(builder.Snapshot, Is.Empty);
         }
 
         [RecordedTest]
@@ -3099,29 +3099,29 @@ namespace Azure.Storage.Files.Shares.Tests
                 // Assert
 
                 // Content is equal
-                Assert.AreEqual(data.Length, downloadResponse.Value.ContentLength);
+                Assert.That(downloadResponse.Value.ContentLength, Is.EqualTo(data.Length));
                 var actual = new MemoryStream();
                 await downloadResponse.Value.Content.CopyToAsync(actual);
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
                 // Ensure that we grab the whole ETag value from the service without removing the quotes
-                Assert.AreEqual(downloadResponse.Value.Details.ETag.ToString(), $"\"{downloadResponse.GetRawResponse().Headers.ETag}\"");
+                Assert.That($"\"{downloadResponse.GetRawResponse().Headers.ETag}\"", Is.EqualTo(downloadResponse.Value.Details.ETag.ToString()));
 
                 // Properties are equal
-                Assert.AreEqual(getPropertiesResponse.Value.LastModified, downloadResponse.Value.Details.LastModified);
+                Assert.That(downloadResponse.Value.Details.LastModified, Is.EqualTo(getPropertiesResponse.Value.LastModified));
                 AssertDictionaryEquality(getPropertiesResponse.Value.Metadata, downloadResponse.Value.Details.Metadata);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentType, downloadResponse.Value.ContentType);
-                Assert.AreEqual(getPropertiesResponse.Value.ETag, downloadResponse.Value.Details.ETag);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentEncoding, downloadResponse.Value.Details.ContentEncoding);
-                Assert.AreEqual(getPropertiesResponse.Value.CacheControl, downloadResponse.Value.Details.CacheControl);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentDisposition, downloadResponse.Value.Details.ContentDisposition);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentLanguage, downloadResponse.Value.Details.ContentLanguage);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyCompletedOn, downloadResponse.Value.Details.CopyCompletedOn);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyStatusDescription, downloadResponse.Value.Details.CopyStatusDescription);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyId, downloadResponse.Value.Details.CopyId);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyProgress, downloadResponse.Value.Details.CopyProgress);
-                Assert.AreEqual(getPropertiesResponse.Value.CopySource, downloadResponse.Value.Details.CopySource);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyStatus, downloadResponse.Value.Details.CopyStatus);
-                Assert.AreEqual(getPropertiesResponse.Value.IsServerEncrypted, downloadResponse.Value.Details.IsServerEncrypted);
+                Assert.That(downloadResponse.Value.ContentType, Is.EqualTo(getPropertiesResponse.Value.ContentType));
+                Assert.That(downloadResponse.Value.Details.ETag, Is.EqualTo(getPropertiesResponse.Value.ETag));
+                Assert.That(downloadResponse.Value.Details.ContentEncoding, Is.EqualTo(getPropertiesResponse.Value.ContentEncoding));
+                Assert.That(downloadResponse.Value.Details.CacheControl, Is.EqualTo(getPropertiesResponse.Value.CacheControl));
+                Assert.That(downloadResponse.Value.Details.ContentDisposition, Is.EqualTo(getPropertiesResponse.Value.ContentDisposition));
+                Assert.That(downloadResponse.Value.Details.ContentLanguage, Is.EqualTo(getPropertiesResponse.Value.ContentLanguage));
+                Assert.That(downloadResponse.Value.Details.CopyCompletedOn, Is.EqualTo(getPropertiesResponse.Value.CopyCompletedOn));
+                Assert.That(downloadResponse.Value.Details.CopyStatusDescription, Is.EqualTo(getPropertiesResponse.Value.CopyStatusDescription));
+                Assert.That(downloadResponse.Value.Details.CopyId, Is.EqualTo(getPropertiesResponse.Value.CopyId));
+                Assert.That(downloadResponse.Value.Details.CopyProgress, Is.EqualTo(getPropertiesResponse.Value.CopyProgress));
+                Assert.That(downloadResponse.Value.Details.CopySource, Is.EqualTo(getPropertiesResponse.Value.CopySource));
+                Assert.That(downloadResponse.Value.Details.CopyStatus, Is.EqualTo(getPropertiesResponse.Value.CopyStatus));
+                Assert.That(downloadResponse.Value.Details.IsServerEncrypted, Is.EqualTo(getPropertiesResponse.Value.IsServerEncrypted));
                 AssertPropertiesEqual(getPropertiesResponse.Value.SmbProperties, downloadResponse.Value.Details.SmbProperties);
             }
         }
@@ -3163,29 +3163,29 @@ namespace Azure.Storage.Files.Shares.Tests
                 // Assert
 
                 // Content is equal
-                Assert.AreEqual(data.Length, downloadResponse.Value.ContentLength);
+                Assert.That(downloadResponse.Value.ContentLength, Is.EqualTo(data.Length));
                 var actual = new MemoryStream();
                 await downloadResponse.Value.Content.CopyToAsync(actual);
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
                 // Ensure that we grab the whole ETag value from the service without removing the quotes
-                Assert.AreEqual(downloadResponse.Value.Details.ETag.ToString(), $"\"{downloadResponse.GetRawResponse().Headers.ETag}\"");
+                Assert.That($"\"{downloadResponse.GetRawResponse().Headers.ETag}\"", Is.EqualTo(downloadResponse.Value.Details.ETag.ToString()));
 
                 // Properties are equal
-                Assert.AreEqual(getPropertiesResponse.Value.LastModified, downloadResponse.Value.Details.LastModified);
+                Assert.That(downloadResponse.Value.Details.LastModified, Is.EqualTo(getPropertiesResponse.Value.LastModified));
                 AssertDictionaryEquality(getPropertiesResponse.Value.Metadata, downloadResponse.Value.Details.Metadata);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentType, downloadResponse.Value.ContentType);
-                Assert.AreEqual(getPropertiesResponse.Value.ETag, downloadResponse.Value.Details.ETag);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentEncoding, downloadResponse.Value.Details.ContentEncoding);
-                Assert.AreEqual(getPropertiesResponse.Value.CacheControl, downloadResponse.Value.Details.CacheControl);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentDisposition, downloadResponse.Value.Details.ContentDisposition);
-                Assert.AreEqual(getPropertiesResponse.Value.ContentLanguage, downloadResponse.Value.Details.ContentLanguage);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyCompletedOn, downloadResponse.Value.Details.CopyCompletedOn);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyStatusDescription, downloadResponse.Value.Details.CopyStatusDescription);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyId, downloadResponse.Value.Details.CopyId);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyProgress, downloadResponse.Value.Details.CopyProgress);
-                Assert.AreEqual(getPropertiesResponse.Value.CopySource, downloadResponse.Value.Details.CopySource);
-                Assert.AreEqual(getPropertiesResponse.Value.CopyStatus, downloadResponse.Value.Details.CopyStatus);
-                Assert.AreEqual(getPropertiesResponse.Value.IsServerEncrypted, downloadResponse.Value.Details.IsServerEncrypted);
+                Assert.That(downloadResponse.Value.ContentType, Is.EqualTo(getPropertiesResponse.Value.ContentType));
+                Assert.That(downloadResponse.Value.Details.ETag, Is.EqualTo(getPropertiesResponse.Value.ETag));
+                Assert.That(downloadResponse.Value.Details.ContentEncoding, Is.EqualTo(getPropertiesResponse.Value.ContentEncoding));
+                Assert.That(downloadResponse.Value.Details.CacheControl, Is.EqualTo(getPropertiesResponse.Value.CacheControl));
+                Assert.That(downloadResponse.Value.Details.ContentDisposition, Is.EqualTo(getPropertiesResponse.Value.ContentDisposition));
+                Assert.That(downloadResponse.Value.Details.ContentLanguage, Is.EqualTo(getPropertiesResponse.Value.ContentLanguage));
+                Assert.That(downloadResponse.Value.Details.CopyCompletedOn, Is.EqualTo(getPropertiesResponse.Value.CopyCompletedOn));
+                Assert.That(downloadResponse.Value.Details.CopyStatusDescription, Is.EqualTo(getPropertiesResponse.Value.CopyStatusDescription));
+                Assert.That(downloadResponse.Value.Details.CopyId, Is.EqualTo(getPropertiesResponse.Value.CopyId));
+                Assert.That(downloadResponse.Value.Details.CopyProgress, Is.EqualTo(getPropertiesResponse.Value.CopyProgress));
+                Assert.That(downloadResponse.Value.Details.CopySource, Is.EqualTo(getPropertiesResponse.Value.CopySource));
+                Assert.That(downloadResponse.Value.Details.CopyStatus, Is.EqualTo(getPropertiesResponse.Value.CopyStatus));
+                Assert.That(downloadResponse.Value.Details.IsServerEncrypted, Is.EqualTo(getPropertiesResponse.Value.IsServerEncrypted));
                 AssertPropertiesEqual(getPropertiesResponse.Value.SmbProperties, downloadResponse.Value.Details.SmbProperties);
             }
         }
@@ -3205,8 +3205,8 @@ namespace Azure.Storage.Files.Shares.Tests
             await downloadResponse.Value.Content.CopyToAsync(targetStream);
 
             // Assert
-            Assert.AreEqual(0, downloadResponse.Value.ContentLength);
-            Assert.AreEqual(0, targetStream.Length);
+            Assert.That(downloadResponse.Value.ContentLength, Is.EqualTo(0));
+            Assert.That(targetStream.Length, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -3270,9 +3270,9 @@ namespace Azure.Storage.Files.Shares.Tests
                 });
 
                 // Assert
-                Assert.AreEqual(ShareLeaseDuration.Infinite, downloadResponse.Value.Details.LeaseDuration);
-                Assert.AreEqual(ShareLeaseState.Leased, downloadResponse.Value.Details.LeaseState);
-                Assert.AreEqual(ShareLeaseStatus.Locked, downloadResponse.Value.Details.LeaseStatus);
+                Assert.That(downloadResponse.Value.Details.LeaseDuration, Is.EqualTo(ShareLeaseDuration.Infinite));
+                Assert.That(downloadResponse.Value.Details.LeaseState, Is.EqualTo(ShareLeaseState.Leased));
+                Assert.That(downloadResponse.Value.Details.LeaseStatus, Is.EqualTo(ShareLeaseStatus.Locked));
             }
         }
 
@@ -3305,7 +3305,7 @@ namespace Azure.Storage.Files.Shares.Tests
                         Range = new HttpRange(Constants.KB, data.LongLength),
                         Conditions = conditions
                     }),
-                    e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+                    e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithFileOperation")));
             }
         }
 
@@ -3394,8 +3394,8 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<ShareFileModifiedException>(
                 downloadInfo.Content.CopyToAsync(actual, 4 * Constants.KB),
                 e => {
-                    Assert.AreEqual(e.ResourceUri, file.Uri);
-                    Assert.AreNotEqual(e.ExpectedETag, e.ActualETag);
+                    Assert.That(file.Uri, Is.EqualTo(e.ResourceUri));
+                    Assert.That(e.ActualETag, Is.Not.EqualTo(e.ExpectedETag));
                     Assert.IsNotNull(e.Range);
                 });
         }
@@ -3427,7 +3427,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 // Assert
 
                 // Content is equal
-                Assert.AreEqual(data.Length, downloadResponse.Value.ContentLength);
+                Assert.That(downloadResponse.Value.ContentLength, Is.EqualTo(data.Length));
                 var actual = new MemoryStream();
                 await downloadResponse.Value.Content.CopyToAsync(actual);
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
@@ -3456,10 +3456,10 @@ namespace Azure.Storage.Files.Shares.Tests
             });
 
             // Assert
-            Assert.AreEqual("0", response.Value.Details.PosixProperties.Owner);
-            Assert.AreEqual("0", response.Value.Details.PosixProperties.Group);
-            Assert.AreEqual("0664", response.Value.Details.PosixProperties.FileMode.ToOctalFileMode());
-            Assert.AreEqual(1, response.Value.Details.PosixProperties.LinkCount);
+            Assert.That(response.Value.Details.PosixProperties.Owner, Is.EqualTo("0"));
+            Assert.That(response.Value.Details.PosixProperties.Group, Is.EqualTo("0"));
+            Assert.That(response.Value.Details.PosixProperties.FileMode.ToOctalFileMode(), Is.EqualTo("0664"));
+            Assert.That(response.Value.Details.PosixProperties.LinkCount, Is.EqualTo(1));
 
             Assert.IsNull(response.Value.Details.SmbProperties.FileAttributes);
             Assert.IsNull(response.Value.Details.SmbProperties.FilePermissionKey);
@@ -3478,9 +3478,9 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
             Assert.IsNotNull(response.Value.LastModified);
-            Assert.IsTrue(response.Value.FileContentLength > 0);
+            Assert.That(response.Value.FileContentLength > 0, Is.True);
         }
 
         [RecordedTest]
@@ -3505,9 +3505,9 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
             Assert.IsNotNull(response.Value.LastModified);
-            Assert.IsTrue(response.Value.FileContentLength > 0);
+            Assert.That(response.Value.FileContentLength > 0, Is.True);
         }
 
         [RecordedTest]
@@ -3578,7 +3578,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.GetRangeListAsync(options),
-                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithFileOperation")));
         }
 
         [RecordedTest]
@@ -3598,7 +3598,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.GetRangeListAsync(options),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ResourceNotFound")));
         }
 
         [RecordedTest]
@@ -3620,8 +3620,8 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileRangeInfo> response = await file.GetRangeListAsync();
 
             // Assert
-            Assert.AreEqual(1, response.Value.Ranges.Count());
-            Assert.AreEqual(range, response.Value.Ranges.First());
+            Assert.That(response.Value.Ranges.Count(), Is.EqualTo(1));
+            Assert.That(response.Value.Ranges.First(), Is.EqualTo(range));
         }
 
         [RecordedTest]
@@ -3650,8 +3650,8 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileRangeInfo> response = await file.GetRangeListAsync(options);
 
             // Assert
-            Assert.AreEqual(1, response.Value.Ranges.Count());
-            Assert.AreEqual(range, response.Value.Ranges.First());
+            Assert.That(response.Value.Ranges.Count(), Is.EqualTo(1));
+            Assert.That(response.Value.Ranges.First(), Is.EqualTo(range));
         }
 
         [RecordedTest]
@@ -3669,7 +3669,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.GetRangeListAsync(options),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -3688,9 +3688,9 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
             Assert.IsNotNull(response.Value.LastModified);
-            Assert.IsTrue(response.Value.FileContentLength > 0);
+            Assert.That(response.Value.FileContentLength > 0, Is.True);
         }
 
         [RecordedTest]
@@ -3732,13 +3732,13 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
             // Ensure the ranges list is correct after the clear call by doing a GetRangeListDiff call
-            Assert.AreEqual(1, rangeListResponse.Value.Ranges.Count());
-            Assert.AreEqual(range2, rangeListResponse.Value.Ranges.First());
-            Assert.AreEqual(1, rangeListResponse.Value.ClearRanges.Count());
-            Assert.AreEqual(range3, rangeListResponse.Value.ClearRanges.First());
+            Assert.That(rangeListResponse.Value.Ranges.Count(), Is.EqualTo(1));
+            Assert.That(rangeListResponse.Value.Ranges.First(), Is.EqualTo(range2));
+            Assert.That(rangeListResponse.Value.ClearRanges.Count(), Is.EqualTo(1));
+            Assert.That(rangeListResponse.Value.ClearRanges.First(), Is.EqualTo(range3));
         }
 
         [RecordedTest]
@@ -3793,20 +3793,20 @@ namespace Azure.Storage.Files.Shares.Tests
                     Response<ShareFileRangeInfo> rangeListResponse = await destFile.GetRangeListDiffAsync(options);
                     // Assert
                     // Ensure that we grab the whole ETag value from the service without removing the quotes
-                    Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+                    Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
                     // Ensure the ranges list is correct after the clear call by doing a GetRangeListDiff call
-                    Assert.AreEqual(1, rangeListResponse.Value.Ranges.Count());
-                    Assert.AreEqual(range2, rangeListResponse.Value.Ranges.First());
-                    Assert.AreEqual(1, rangeListResponse.Value.ClearRanges.Count());
-                    Assert.AreEqual(range3, rangeListResponse.Value.ClearRanges.First());
+                    Assert.That(rangeListResponse.Value.Ranges.Count(), Is.EqualTo(1));
+                    Assert.That(rangeListResponse.Value.Ranges.First(), Is.EqualTo(range2));
+                    Assert.That(rangeListResponse.Value.ClearRanges.Count(), Is.EqualTo(1));
+                    Assert.That(rangeListResponse.Value.ClearRanges.First(), Is.EqualTo(range3));
                 }
                 else
                 {
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         destFile.GetRangeListDiffAsync(options),
-                        e => Assert.AreEqual(ShareErrorCode.PreviousSnapshotNotFound.ToString(), e.ErrorCode));
+                        e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.PreviousSnapshotNotFound.ToString())));
                 }
             }
             finally
@@ -3862,13 +3862,13 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
             // Ensure the ranges list is correct after the clear call by doing a GetRangeListDiff call
-            Assert.AreEqual(1, rangeListResponse.Value.Ranges.Count());
-            Assert.AreEqual(range2, rangeListResponse.Value.Ranges.First());
-            Assert.AreEqual(1, rangeListResponse.Value.ClearRanges.Count());
-            Assert.AreEqual(range3, rangeListResponse.Value.ClearRanges.First());
+            Assert.That(rangeListResponse.Value.Ranges.Count(), Is.EqualTo(1));
+            Assert.That(rangeListResponse.Value.Ranges.First(), Is.EqualTo(range2));
+            Assert.That(rangeListResponse.Value.ClearRanges.Count(), Is.EqualTo(1));
+            Assert.That(rangeListResponse.Value.ClearRanges.First(), Is.EqualTo(range3));
         }
 
         [RecordedTest]
@@ -3887,7 +3887,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.GetRangeListDiffAsync(options),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -3936,7 +3936,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.GetRangeListDiffAsync(options),
-                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithFileOperation")));
         }
 
         [RecordedTest]
@@ -3980,13 +3980,13 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
             // Ensure the ranges list is correct after the clear call by doing a GetRangeListDiff call
-            Assert.AreEqual(1, rangeListResponse.Value.Ranges.Count());
-            Assert.AreEqual(range2, rangeListResponse.Value.Ranges.First());
-            Assert.AreEqual(1, rangeListResponse.Value.ClearRanges.Count());
-            Assert.AreEqual(range3, rangeListResponse.Value.ClearRanges.First());
+            Assert.That(rangeListResponse.Value.Ranges.Count(), Is.EqualTo(1));
+            Assert.That(rangeListResponse.Value.Ranges.First(), Is.EqualTo(range2));
+            Assert.That(rangeListResponse.Value.ClearRanges.Count(), Is.EqualTo(1));
+            Assert.That(rangeListResponse.Value.ClearRanges.First(), Is.EqualTo(range3));
         }
 
         [RecordedTest]
@@ -4004,10 +4004,10 @@ namespace Azure.Storage.Files.Shares.Tests
                     range: new HttpRange(Constants.KB, Constants.KB),
                     content: stream);
 
-                Assert.AreNotEqual(new ETag(""), response.Value.ETag);
-                Assert.AreNotEqual(DateTimeOffset.MinValue, response.Value.LastModified);
+                Assert.That(response.Value.ETag, Is.Not.EqualTo(new ETag("")));
+                Assert.That(response.Value.LastModified, Is.Not.EqualTo(DateTimeOffset.MinValue));
                 Assert.IsNotNull(response.Value.ContentHash);
-                Assert.IsTrue(response.Value.IsServerEncrypted);
+                Assert.That(response.Value.IsServerEncrypted, Is.True);
             }
         }
 
@@ -4043,15 +4043,15 @@ namespace Azure.Storage.Files.Shares.Tests
 
             if (fileLastWrittenMode == FileLastWrittenMode.Preserve)
             {
-                Assert.AreEqual(
-                    initalPropertiesResponse.Value.SmbProperties.FileLastWrittenOn,
-                    propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+                Assert.That(
+                    propertiesResponse.Value.SmbProperties.FileLastWrittenOn,
+                    Is.EqualTo(initalPropertiesResponse.Value.SmbProperties.FileLastWrittenOn));
             }
             else
             {
-                Assert.AreNotEqual(
-                    initalPropertiesResponse.Value.SmbProperties.FileLastWrittenOn,
-                    propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+                Assert.That(
+                    propertiesResponse.Value.SmbProperties.FileLastWrittenOn,
+                    Is.Not.EqualTo(initalPropertiesResponse.Value.SmbProperties.FileLastWrittenOn));
             }
         }
 
@@ -4079,10 +4079,10 @@ namespace Azure.Storage.Files.Shares.Tests
                     range: new HttpRange(Constants.KB, Constants.KB),
                     content: stream);
 
-                Assert.AreNotEqual(new ETag(""), response.Value.ETag);
-                Assert.AreNotEqual(DateTimeOffset.MinValue, response.Value.LastModified);
+                Assert.That(response.Value.ETag, Is.Not.EqualTo(new ETag("")));
+                Assert.That(response.Value.LastModified, Is.Not.EqualTo(DateTimeOffset.MinValue));
                 Assert.IsNotNull(response.Value.ContentHash);
-                Assert.IsTrue(response.Value.IsServerEncrypted);
+                Assert.That(response.Value.IsServerEncrypted, Is.True);
             }
         }
 
@@ -4109,7 +4109,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(md5, response.Value.ContentHash);
+            Assert.That(response.Value.ContentHash, Is.EqualTo(md5));
         }
 
         [RecordedTest]
@@ -4167,7 +4167,7 @@ namespace Azure.Storage.Files.Shares.Tests
                         range: new HttpRange(Constants.KB, Constants.KB),
                         content: stream,
                         options: options),
-                    e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+                    e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithFileOperation")));
             }
         }
 
@@ -4188,7 +4188,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 file.UploadRangeAsync(
                     range: new HttpRange(Constants.KB, Constants.KB),
                     content: stream),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ResourceNotFound")));
             }
         }
 
@@ -4215,7 +4215,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 file.UploadRangeAsync(
                 range: range,
                 content: stream),
-                e => Assert.AreEqual("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.", e.Message));
+                e => Assert.That(e.Message, Is.EqualTo("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.")));
         }
 
         [RecordedTest]
@@ -4410,7 +4410,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 {
                     Conditions = conditions
                 }),
-                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithFileOperation")));
         }
 
         [RecordedTest]
@@ -4472,7 +4472,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 file.UploadAsync(
                 stream),
-                e => Assert.AreEqual("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.", e.Message));
+                e => Assert.That(e.Message, Is.EqualTo("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.")));
         }
 
         [RecordedTest]
@@ -4641,7 +4641,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.ClearRangeAsync(
                     range: new HttpRange(Constants.KB, Constants.KB)),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ResourceNotFound")));
         }
 
         [RecordedTest]
@@ -4772,7 +4772,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Assert.IsNotNull(version);
 
                 await WaitForProgressAsync(progressBag, data.LongLength);
-                Assert.IsTrue(progressBag.Count > 1, "Too few progress received");
+                Assert.That(progressBag.Count > 1, Is.True, "Too few progress received");
                 Assert.GreaterOrEqual(data.LongLength, progressBag.Max(), "Final progress has unexpected value");
             }
 
@@ -4784,7 +4784,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
-            Assert.AreNotEqual(0, timesFaulted);
+            Assert.That(timesFaulted, Is.Not.EqualTo(0));
         }
 
         [Test]
@@ -4826,7 +4826,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
             // Ensure the contents of the source and destination Files after the UploadRangeFromUri call
             var sourceDownloadResponse = await sourceFile.DownloadAsync(new ShareFileDownloadOptions
@@ -4949,7 +4949,7 @@ namespace Azure.Storage.Files.Shares.Tests
                     range: destRange,
                     sourceRange: sourceRange,
                     options: options),
-                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithFileOperation")));
         }
 
         [Test]
@@ -5037,7 +5037,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 sourceUri: destFile.Uri,
                 range: destRange,
                 sourceRange: sourceRange),
-                e => Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("CannotVerifyCopySource")));
         }
 
         [RecordedTest]
@@ -5066,9 +5066,9 @@ namespace Azure.Storage.Files.Shares.Tests
                 sourceRange: range),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 401"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: NoAuthenticationInformation"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Server failed to authenticate the request. Please refer to the information in the www-authenticate header."));
+                    Assert.That(e.Message.Contains("CopySourceStatusCode: 401"), Is.True);
+                    Assert.That(e.Message.Contains("CopySourceErrorCode: NoAuthenticationInformation"), Is.True);
+                    Assert.That(e.Message.Contains("CopySourceErrorMessage: Server failed to authenticate the request. Please refer to the information in the www-authenticate header."), Is.True);
                 });
         }
 
@@ -5108,15 +5108,15 @@ namespace Azure.Storage.Files.Shares.Tests
 
             if (fileLastWrittenMode == FileLastWrittenMode.Preserve)
             {
-                Assert.AreEqual(
-                    initalPropertiesResponse.Value.SmbProperties.FileLastWrittenOn,
-                    propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+                Assert.That(
+                    propertiesResponse.Value.SmbProperties.FileLastWrittenOn,
+                    Is.EqualTo(initalPropertiesResponse.Value.SmbProperties.FileLastWrittenOn));
             }
             else
             {
-                Assert.AreNotEqual(
-                    initalPropertiesResponse.Value.SmbProperties.FileLastWrittenOn,
-                    propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+                Assert.That(
+                    propertiesResponse.Value.SmbProperties.FileLastWrittenOn,
+                    Is.Not.EqualTo(initalPropertiesResponse.Value.SmbProperties.FileLastWrittenOn));
             }
         }
 
@@ -5164,7 +5164,7 @@ namespace Azure.Storage.Files.Shares.Tests
                         sourceUri: sourceUri,
                         range: destRange,
                         sourceRange: sourceRange),
-                    e => Assert.AreEqual(e.ErrorCode, "CannotVerifyCopySource"));
+                    e => Assert.That(e.ErrorCode, Is.EqualTo("CannotVerifyCopySource")));
             }
         }
 
@@ -5211,7 +5211,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
             // Ensure the contents of the source and destination Files after the UploadRangeFromUri call
             var sourceDownloadResponse = await sourceFile.DownloadAsync(new ShareFileDownloadOptions
@@ -5243,7 +5243,7 @@ namespace Azure.Storage.Files.Shares.Tests
             IList<ShareFileHandle> handles = await file.GetHandlesAsync().ToListAsync();
 
             // Assert
-            Assert.AreEqual(0, handles.Count);
+            Assert.That(handles.Count, Is.EqualTo(0));
         }
 
         [PlaybackOnly("Not possible to make this test live")]
@@ -5270,7 +5270,7 @@ namespace Azure.Storage.Files.Shares.Tests
             IList<ShareFileHandle> handles = await file.GetHandlesAsync().ToListAsync();
 
             // Assert
-            Assert.AreEqual(0, handles.Count);
+            Assert.That(handles.Count, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -5293,7 +5293,7 @@ namespace Azure.Storage.Files.Shares.Tests
             IList<ShareFileHandle> handles = await file.GetHandlesAsync().ToListAsync();
 
             // Assert
-            Assert.AreEqual(0, handles.Count);
+            Assert.That(handles.Count, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -5308,7 +5308,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.GetHandlesAsync().ToListAsync(),
-                actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
+                actualException => Assert.That(actualException.ErrorCode, Is.EqualTo("ResourceNotFound")));
         }
 
         [RecordedTest]
@@ -5325,7 +5325,7 @@ namespace Azure.Storage.Files.Shares.Tests
             IList<ShareFileHandle> handles = await file.GetHandlesAsync().ToListAsync();
 
             // Assert
-            Assert.AreEqual(0, handles.Count);
+            Assert.That(handles.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -5338,7 +5338,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient("directory");
             ShareFileClient fileClient = directoryClient.GetFileClient("file");
             IList<ShareFileHandle> handles = await fileClient.GetHandlesAsync().ToListAsync();
-            Assert.AreEqual(ShareFileHandleAccessRights.Write, handles[0].AccessRights);
+            Assert.That(handles[0].AccessRights, Is.EqualTo(ShareFileHandleAccessRights.Write));
         }
 
         [RecordedTest]
@@ -5352,8 +5352,8 @@ namespace Azure.Storage.Files.Shares.Tests
             CloseHandlesResult reponse = await file.ForceCloseAllHandlesAsync();
 
             // Assert
-            Assert.AreEqual(0, reponse.ClosedHandlesCount);
-            Assert.AreEqual(0, reponse.FailedHandlesCount);
+            Assert.That(reponse.ClosedHandlesCount, Is.EqualTo(0));
+            Assert.That(reponse.FailedHandlesCount, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -5376,8 +5376,8 @@ namespace Azure.Storage.Files.Shares.Tests
             CloseHandlesResult reponse = await file.ForceCloseAllHandlesAsync();
 
             // Assert
-            Assert.AreEqual(0, reponse.ClosedHandlesCount);
-            Assert.AreEqual(0, reponse.FailedHandlesCount);
+            Assert.That(reponse.ClosedHandlesCount, Is.EqualTo(0));
+            Assert.That(reponse.FailedHandlesCount, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -5392,7 +5392,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.ForceCloseAllHandlesAsync(),
-                actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
+                actualException => Assert.That(actualException.ErrorCode, Is.EqualTo("ResourceNotFound")));
         }
 
         [RecordedTest]
@@ -5407,7 +5407,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.ForceCloseHandleAsync("nonExistantHandleId"),
-                actualException => Assert.AreEqual("InvalidHeaderValue", actualException.ErrorCode));
+                actualException => Assert.That(actualException.ErrorCode, Is.EqualTo("InvalidHeaderValue")));
         }
 
         [RecordedTest]
@@ -5424,8 +5424,8 @@ namespace Azure.Storage.Files.Shares.Tests
             CloseHandlesResult reponse = await file.ForceCloseAllHandlesAsync();
 
             // Assert
-            Assert.AreEqual(0, reponse.ClosedHandlesCount);
-            Assert.AreEqual(0, reponse.FailedHandlesCount);
+            Assert.That(reponse.ClosedHandlesCount, Is.EqualTo(0));
+            Assert.That(reponse.FailedHandlesCount, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -5447,10 +5447,10 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
-            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
-            Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
+            Assert.That(leaseClient.LeaseId, Is.EqualTo(response.Value.LeaseId));
+            Assert.That(response.Value.LastModified, Is.Not.EqualTo(new DateTimeOffset()));
             Assert.IsNotNull(response.Value.LeaseId);
             Assert.IsNull(response.Value.LeaseTime);
         }
@@ -5480,10 +5480,10 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
-            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
-            Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
+            Assert.That(leaseClient.LeaseId, Is.EqualTo(response.Value.LeaseId));
+            Assert.That(response.Value.LastModified, Is.Not.EqualTo(new DateTimeOffset()));
             Assert.IsNotNull(response.Value.LeaseId);
             Assert.IsNull(response.Value.LeaseTime);
         }
@@ -5502,7 +5502,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(file.GetShareLeaseClient(leaseId)).AcquireAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ResourceNotFound")));
         }
 
         [RecordedTest]
@@ -5543,7 +5543,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
             Assert.IsNotNull(response.Value.LastModified);
         }
 
@@ -5571,7 +5571,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
             Assert.IsNotNull(response.Value.LastModified);
         }
 
@@ -5589,7 +5589,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(file.GetShareLeaseClient(leaseId)).ReleaseAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ResourceNotFound")));
         }
 
         [RecordedTest]
@@ -5613,7 +5613,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
             Assert.IsNotNull(response.Value.LastModified);
         }
 
@@ -5638,11 +5638,11 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
-            Assert.AreEqual(response.Value.LeaseId, newLeaseId);
-            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
-            Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
+            Assert.That(newLeaseId, Is.EqualTo(response.Value.LeaseId));
+            Assert.That(leaseClient.LeaseId, Is.EqualTo(response.Value.LeaseId));
+            Assert.That(response.Value.LastModified, Is.Not.EqualTo(new DateTimeOffset()));
             Assert.IsNotNull(response.Value.LeaseId);
             Assert.IsNull(response.Value.LeaseTime);
         }
@@ -5674,11 +5674,11 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
-            Assert.AreEqual(response.Value.LeaseId, newLeaseId);
-            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
-            Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
+            Assert.That(newLeaseId, Is.EqualTo(response.Value.LeaseId));
+            Assert.That(leaseClient.LeaseId, Is.EqualTo(response.Value.LeaseId));
+            Assert.That(response.Value.LastModified, Is.Not.EqualTo(new DateTimeOffset()));
             Assert.IsNotNull(response.Value.LeaseId);
             Assert.IsNull(response.Value.LeaseTime);
         }
@@ -5698,7 +5698,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(file.GetShareLeaseClient(leaseId)).ChangeAsync(newLeaseId),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ResourceNotFound")));
         }
 
         [RecordedTest]
@@ -5724,11 +5724,11 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
-            Assert.AreEqual(response.Value.LeaseId, newLeaseId);
-            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
-            Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
+            Assert.That(newLeaseId, Is.EqualTo(response.Value.LeaseId));
+            Assert.That(leaseClient.LeaseId, Is.EqualTo(response.Value.LeaseId));
+            Assert.That(response.Value.LastModified, Is.Not.EqualTo(new DateTimeOffset()));
             Assert.IsNotNull(response.Value.LeaseId);
             Assert.IsNull(response.Value.LeaseTime);
         }
@@ -5748,7 +5748,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<InvalidOperationException>(
                 leaseClient.RenewAsync(),
-                e => Assert.AreEqual(e.Message, "Renew only supports Share Leases"));
+                e => Assert.That(e.Message, Is.EqualTo("Renew only supports Share Leases")));
         }
 
         [RecordedTest]
@@ -5770,10 +5770,10 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
-            Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
+            Assert.That(response.Value.LastModified, Is.Not.EqualTo(new DateTimeOffset()));
             Assert.IsNull(response.Value.LeaseId);
-            Assert.AreEqual(0, response.Value.LeaseTime);
+            Assert.That(response.Value.LeaseTime, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -5801,10 +5801,10 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
-            Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
+            Assert.That(response.Value.LastModified, Is.Not.EqualTo(new DateTimeOffset()));
             Assert.IsNull(response.Value.LeaseId);
-            Assert.AreEqual(0, response.Value.LeaseTime);
+            Assert.That(response.Value.LeaseTime, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -5821,7 +5821,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(file.GetShareLeaseClient(leaseId)).BreakAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ResourceNotFound")));
         }
 
         [RecordedTest]
@@ -5861,7 +5861,7 @@ namespace Azure.Storage.Files.Shares.Tests
             {
                 names.Add(item.Name);
             }
-            Assert.AreEqual(1, names.Count);
+            Assert.That(names.Count, Is.EqualTo(1));
             Assert.Contains(name, names);
         }
 
@@ -5883,7 +5883,7 @@ namespace Azure.Storage.Files.Shares.Tests
             {
                 names.Add(item.Name);
             }
-            Assert.AreEqual(1, names.Count);
+            Assert.That(names.Count, Is.EqualTo(1));
             Assert.Contains(name, names);
         }
 
@@ -5921,7 +5921,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileDownloadInfo> result = await file.DownloadAsync();
             var dataResult = new MemoryStream();
             await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(data.Length, dataResult.Length);
+            Assert.That(dataResult.Length, Is.EqualTo(data.Length));
             TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
         }
 
@@ -5967,7 +5967,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileDownloadInfo> result = await file.DownloadAsync();
             var dataResult = new MemoryStream();
             await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(data.Length, dataResult.Length);
+            Assert.That(dataResult.Length, Is.EqualTo(data.Length));
             TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
         }
 
@@ -6005,7 +6005,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileDownloadInfo> result = await file.DownloadAsync();
             var dataResult = new MemoryStream();
             await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(data.Length, dataResult.Length);
+            Assert.That(dataResult.Length, Is.EqualTo(data.Length));
             TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
         }
 
@@ -6043,7 +6043,7 @@ namespace Azure.Storage.Files.Shares.Tests
             });
             MemoryStream dataResult = new MemoryStream();
             await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(expectedData.Length, dataResult.Length);
+            Assert.That(dataResult.Length, Is.EqualTo(expectedData.Length));
             TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
         }
 
@@ -6076,7 +6076,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileDownloadInfo> result = await file.DownloadAsync();
             MemoryStream dataResult = new MemoryStream();
             await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(expectedData.Length, dataResult.Length);
+            Assert.That(dataResult.Length, Is.EqualTo(expectedData.Length));
             TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
         }
 
@@ -6094,7 +6094,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 file.OpenWriteAsync(
                     overwrite: false,
                     position: 0),
-                e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ShareNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -6123,8 +6123,8 @@ namespace Azure.Storage.Files.Shares.Tests
             await stream.CopyToAsync(openWriteStream);
             await openWriteStream.FlushAsync();
 
-            Assert.IsTrue(progress.List.Count > 0);
-            Assert.AreEqual(Constants.KB, progress.List[progress.List.Count - 1]);
+            Assert.That(progress.List.Count > 0, Is.True);
+            Assert.That(progress.List[progress.List.Count - 1], Is.EqualTo(Constants.KB));
         }
 
         [RecordedTest]
@@ -6160,7 +6160,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileDownloadInfo> result = await file.DownloadAsync();
             var dataResult = new MemoryStream();
             await result.Value.Content.CopyToAsync(dataResult);
-            Assert.AreEqual(expectedData.Length, dataResult.Length);
+            Assert.That(dataResult.Length, Is.EqualTo(expectedData.Length));
             TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
         }
 
@@ -6176,7 +6176,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 file.OpenWriteAsync(
                     overwrite: true,
                     position: 0),
-                e => Assert.AreEqual("options.MaxSize must be set if overwrite is set to true", e.Message));
+                e => Assert.That(e.Message, Is.EqualTo("options.MaxSize must be set if overwrite is set to true")));
         }
 
         [RecordedTest]
@@ -6191,7 +6191,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 file.OpenWriteAsync(
                     overwrite: false,
                     position: 0),
-                e => Assert.AreEqual("options.MaxSize must be set if the File is being created for the first time", e.Message));
+                e => Assert.That(e.Message, Is.EqualTo("options.MaxSize must be set if the File is being created for the first time")));
         }
 
         [RecordedTest]
@@ -6260,7 +6260,7 @@ namespace Azure.Storage.Files.Shares.Tests
                      overwrite: overwrite,
                      position: 0,
                      options: options),
-                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithFileOperation")));
         }
 
         [RecordedTest]
@@ -6286,7 +6286,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Range = new HttpRange(0, Constants.KB)
             });
 
-            Assert.AreEqual(data.Length, downloadResponse.Value.ContentLength);
+            Assert.That(downloadResponse.Value.ContentLength, Is.EqualTo(data.Length));
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
@@ -6376,7 +6376,7 @@ namespace Azure.Storage.Files.Shares.Tests
                     sourceFile.RenameAsync(
                     destinationPath: test.Directory.Name + "/" + destFile.Name,
                     options: options),
-                    e => Assert.AreEqual(ShareErrorCode.ResourceAlreadyExists.ToString(), e.ErrorCode));
+                    e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ResourceAlreadyExists.ToString())));
             }
         }
 
@@ -6424,7 +6424,7 @@ namespace Azure.Storage.Files.Shares.Tests
                     sourceFile.RenameAsync(
                     destinationPath: test.Directory.Name + "/" + destFile.Name,
                     options: options),
-                    e => Assert.AreEqual(ShareErrorCode.ReadOnlyAttribute.ToString(), e.ErrorCode));
+                    e => Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.ReadOnlyAttribute.ToString())));
             }
         }
 
@@ -6466,7 +6466,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     sourceFile.RenameAsync(
                     destinationPath: test.Directory.Name + "/" + destFileName),
-                    e => Assert.AreEqual("LeaseIdMissing", e.ErrorCode));
+                    e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseIdMissing")));
             }
         }
 
@@ -6511,7 +6511,7 @@ namespace Azure.Storage.Files.Shares.Tests
                     sourceFile.RenameAsync(
                     destinationPath: test.Directory.Name + "/" + destFile.Name,
                     options: options),
-                    e => Assert.AreEqual("LeaseIdMissing", e.ErrorCode));
+                    e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseIdMissing")));
             }
         }
 
@@ -6623,7 +6623,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 sourceFile.RenameAsync(
                     destinationPath: test.Directory.Name + "/" + destFileName,
                     options: options),
-                e => Assert.AreEqual("filePermission and filePermissionKey cannot both be set", e.Message));
+                e => Assert.That(e.Message, Is.EqualTo("filePermission and filePermissionKey cannot both be set")));
         }
 
         [RecordedTest]
@@ -6650,7 +6650,7 @@ namespace Azure.Storage.Files.Shares.Tests
                     options: options),
                 e =>
                 {
-                    Assert.AreEqual("filePermission", e.ParamName);
+                    Assert.That(e.ParamName, Is.EqualTo("filePermission"));
                     StringAssert.StartsWith("Value must be less than or equal to 8192", e.Message);
                 });
         }
@@ -6694,10 +6694,10 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileProperties> propertiesResponse = await destFile.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(smbProperties.FileAttributes, propertiesResponse.Value.SmbProperties.FileAttributes);
-            Assert.AreEqual(smbProperties.FileCreatedOn, propertiesResponse.Value.SmbProperties.FileCreatedOn);
-            Assert.AreEqual(smbProperties.FileLastWrittenOn, propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
-            Assert.AreEqual(smbProperties.FileChangedOn, propertiesResponse.Value.SmbProperties.FileChangedOn);
+            Assert.That(propertiesResponse.Value.SmbProperties.FileAttributes, Is.EqualTo(smbProperties.FileAttributes));
+            Assert.That(propertiesResponse.Value.SmbProperties.FileCreatedOn, Is.EqualTo(smbProperties.FileCreatedOn));
+            Assert.That(propertiesResponse.Value.SmbProperties.FileLastWrittenOn, Is.EqualTo(smbProperties.FileLastWrittenOn));
+            Assert.That(propertiesResponse.Value.SmbProperties.FileChangedOn, Is.EqualTo(smbProperties.FileChangedOn));
         }
 
         [RecordedTest]
@@ -6764,7 +6764,7 @@ namespace Azure.Storage.Files.Shares.Tests
                     Range = new HttpRange(0, Constants.KB)
                 });
 
-            Assert.AreEqual(data.Length, downloadResponse.Value.ContentLength);
+            Assert.That(downloadResponse.Value.ContentLength, Is.EqualTo(data.Length));
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
@@ -6800,7 +6800,7 @@ namespace Azure.Storage.Files.Shares.Tests
                     Range = new HttpRange(0, Constants.KB)
                 });
 
-            Assert.AreEqual(data.Length, downloadResponse.Value.ContentLength);
+            Assert.That(downloadResponse.Value.ContentLength, Is.EqualTo(data.Length));
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
@@ -6830,7 +6830,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<ShareFileProperties> response = await destFile.GetPropertiesAsync();
-            Assert.AreEqual(contentType, response.Value.ContentType);
+            Assert.That(response.Value.ContentType, Is.EqualTo(contentType));
         }
 
         [LiveOnly]
@@ -6962,7 +6962,7 @@ namespace Azure.Storage.Files.Shares.Tests
                     Range = new HttpRange(0, Constants.KB)
                 });
 
-                Assert.AreEqual(data.Length, downloadResponse.Value.ContentLength);
+                Assert.That(downloadResponse.Value.ContentLength, Is.EqualTo(data.Length));
                 var actual = new MemoryStream();
                 await downloadResponse.Value.Content.CopyToAsync(actual);
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
@@ -6972,7 +6972,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     sourceFile.RenameAsync(destinationPath: test.Directory.Name + "/" + destFileName),
-                    e => Assert.AreEqual(e.ErrorCode, "ResourceNotFound"));
+                    e => Assert.That(e.ErrorCode, Is.EqualTo("ResourceNotFound")));
             }
         }
 
@@ -7007,7 +7007,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Range = new HttpRange(0, Constants.KB)
             });
 
-            Assert.AreEqual(data.Length, downloadResponse.Value.ContentLength);
+            Assert.That(downloadResponse.Value.ContentLength, Is.EqualTo(data.Length));
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
@@ -7045,11 +7045,11 @@ namespace Azure.Storage.Files.Shares.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(NfsFileType.SymLink, response.Value.PosixProperties.FileType);
-            Assert.AreEqual(owner, response.Value.PosixProperties.Owner);
-            Assert.AreEqual(group, response.Value.PosixProperties.Group);
-            Assert.AreEqual(fileCreatedOn, response.Value.SmbProperties.FileCreatedOn);
-            Assert.AreEqual(fileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
+            Assert.That(response.Value.PosixProperties.FileType, Is.EqualTo(NfsFileType.SymLink));
+            Assert.That(response.Value.PosixProperties.Owner, Is.EqualTo(owner));
+            Assert.That(response.Value.PosixProperties.Group, Is.EqualTo(group));
+            Assert.That(response.Value.SmbProperties.FileCreatedOn, Is.EqualTo(fileCreatedOn));
+            Assert.That(response.Value.SmbProperties.FileLastWrittenOn, Is.EqualTo(fileLastWrittenOn));
 
             Assert.IsNull(response.Value.SmbProperties.FileAttributes);
             Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
@@ -7061,9 +7061,9 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileSymbolicLinkInfo> getSymLinkResponse = await symlink.GetSymbolicLinkAsync();
 
             // Assert
-            Assert.AreNotEqual(default, getSymLinkResponse.Value.ETag);
-            Assert.AreNotEqual(default, getSymLinkResponse.Value.LastModified);
-            Assert.AreEqual(WebUtility.UrlEncode(source.Uri.ToString()), getSymLinkResponse.Value.LinkText);
+            Assert.That(getSymLinkResponse.Value.ETag, Is.Not.EqualTo(default));
+            Assert.That(getSymLinkResponse.Value.LastModified, Is.Not.EqualTo(default));
+            Assert.That(getSymLinkResponse.Value.LinkText, Is.EqualTo(WebUtility.UrlEncode(source.Uri.ToString())));
         }
 
         [RecordedTest]
@@ -7081,11 +7081,11 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 symlink.CreateSymbolicLinkAsync(linkText: source.Uri.ToString()),
-                e => Assert.AreEqual("ParentNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ParentNotFound")));
 
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 symlink.GetSymbolicLinkAsync(),
-                e => Assert.AreEqual("ParentNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ParentNotFound")));
         }
 
         [RecordedTest]
@@ -7128,11 +7128,11 @@ namespace Azure.Storage.Files.Shares.Tests
                     conditions: new ShareFileRequestConditions() { LeaseId = lease.LeaseId });
 
                 // Assert
-                Assert.AreEqual(NfsFileType.Regular, response.Value.PosixProperties.FileType);
-                Assert.AreEqual("0", response.Value.PosixProperties.Owner);
-                Assert.AreEqual("0", response.Value.PosixProperties.Group);
-                Assert.AreEqual("0664", response.Value.PosixProperties.FileMode.ToOctalFileMode());
-                Assert.AreEqual(2, response.Value.PosixProperties.LinkCount);
+                Assert.That(response.Value.PosixProperties.FileType, Is.EqualTo(NfsFileType.Regular));
+                Assert.That(response.Value.PosixProperties.Owner, Is.EqualTo("0"));
+                Assert.That(response.Value.PosixProperties.Group, Is.EqualTo("0"));
+                Assert.That(response.Value.PosixProperties.FileMode.ToOctalFileMode(), Is.EqualTo("0664"));
+                Assert.That(response.Value.PosixProperties.LinkCount, Is.EqualTo(2));
 
                 Assert.IsNotNull(response.Value.SmbProperties.FileCreatedOn);
                 Assert.IsNotNull(response.Value.SmbProperties.FileLastWrittenOn);
@@ -7183,7 +7183,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 hardLink.CreateHardLinkAsync(targetFile: $"{directory.Name}/{source.Name}"),
-                e => Assert.AreEqual("ParentNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ParentNotFound")));
         }
 
         #region GenerateSasTests
@@ -7202,7 +7202,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 connectionString,
                 GetNewShareName(),
                 GetNewDirectoryName()));
-            Assert.IsTrue(directory.CanGenerateSasUri);
+            Assert.That(directory.CanGenerateSasUri, Is.True);
 
             // Act - ShareFileClient(string connectionString, string ShareContainerName, string ShareName, ShareClientOptions options)
             ShareFileClient directory2 = InstrumentClient(new ShareFileClient(
@@ -7210,20 +7210,20 @@ namespace Azure.Storage.Files.Shares.Tests
                 GetNewShareName(),
                 GetNewDirectoryName(),
                 GetOptions()));
-            Assert.IsTrue(directory2.CanGenerateSasUri);
+            Assert.That(directory2.CanGenerateSasUri, Is.True);
 
             // Act - ShareFileClient(Uri ShareContainerUri, ShareClientOptions options = default)
             ShareFileClient directory3 = InstrumentClient(new ShareFileClient(
                 ShareEndpoint,
                 GetOptions()));
-            Assert.IsFalse(directory3.CanGenerateSasUri);
+            Assert.That(directory3.CanGenerateSasUri, Is.False);
 
             // Act - ShareFileClient(Uri ShareContainerUri, StorageSharedKeyCredential credential, ShareClientOptions options = default)
             ShareFileClient directory4 = InstrumentClient(new ShareFileClient(
                 ShareEndpoint,
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
-            Assert.IsTrue(directory4.CanGenerateSasUri);
+            Assert.That(directory4.CanGenerateSasUri, Is.True);
         }
 
         [RecordedTest]
@@ -7234,13 +7234,13 @@ namespace Azure.Storage.Files.Shares.Tests
             directory.Setup(x => x.CanGenerateSasUri).Returns(false);
 
             // Assert
-            Assert.IsFalse(directory.Object.CanGenerateSasUri);
+            Assert.That(directory.Object.CanGenerateSasUri, Is.False);
 
             // Act
             directory.Setup(x => x.CanGenerateSasUri).Returns(true);
 
             // Assert
-            Assert.IsTrue(directory.Object.CanGenerateSasUri);
+            Assert.That(directory.Object.CanGenerateSasUri, Is.True);
         }
 
         [RecordedTest]
@@ -7280,7 +7280,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 DirectoryOrFilePath = fileName,
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
             Assert.IsNotNull(stringToSign);
         }
 
@@ -7328,7 +7328,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 DirectoryOrFilePath = fileName,
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
             Assert.IsNotNull(stringToSign);
         }
 
@@ -7374,7 +7374,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 DirectoryOrFilePath = fileName,
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
         }
 
         [RecordedTest]
@@ -7449,7 +7449,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 DirectoryOrFilePath = fileName,
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
         }
 
         [RecordedTest]

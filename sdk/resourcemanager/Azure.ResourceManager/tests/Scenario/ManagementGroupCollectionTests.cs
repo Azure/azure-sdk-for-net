@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.Tests
             ManagementGroupResource mgmtGroup = await Client.GetManagementGroups().GetAsync(_mgmtGroupName, cacheControl: "no-cache");
             CompareMgmtGroups(_mgmtGroup, mgmtGroup);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroups().GetAsync("NotThere", cacheControl: "no-cache"));
-            Assert.AreEqual(403, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(403));
         }
 
         [RecordedTest]
         public async Task Exists()
         {
-            Assert.IsTrue(await Client.GetManagementGroups().ExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache"));
+            Assert.That((bool)await Client.GetManagementGroups().ExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache"), Is.True);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetManagementGroups().ExistsAsync(_mgmtGroup.Data.Name + "x", cacheControl: "no-cache"));
-            Assert.AreEqual(403, ex.Status); //you get forbidden vs not found here for some reason by the service
+            Assert.That(ex.Status, Is.EqualTo(403)); //you get forbidden vs not found here for some reason by the service
         }
 
         [RecordedTest]
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Tests
             string mgmtGroupName = Recording.GenerateAssetName("mgmt-group-");
             var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(WaitUntil.Started, mgmtGroupName, new ManagementGroupCreateOrUpdateContent());
             ManagementGroupResource mgmtGroup = await mgmtGroupOp.WaitForCompletionAsync();
-            Assert.AreEqual($"/providers/Microsoft.Management/managementGroups/{mgmtGroupName}", mgmtGroup.Data.Id.ToString());
-            Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.Name);
-            Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.DisplayName);
-            Assert.AreEqual(ManagementGroupResource.ResourceType, mgmtGroup.Data.ResourceType);
+            Assert.That(mgmtGroup.Data.Id.ToString(), Is.EqualTo($"/providers/Microsoft.Management/managementGroups/{mgmtGroupName}"));
+            Assert.That(mgmtGroup.Data.Name, Is.EqualTo(mgmtGroupName));
+            Assert.That(mgmtGroup.Data.DisplayName, Is.EqualTo(mgmtGroupName));
+            Assert.That(mgmtGroup.Data.ResourceType, Is.EqualTo(ManagementGroupResource.ResourceType));
         }
 
         [RecordedTest]
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Tests
             string mgmtGroupName = Recording.GenerateAssetName("mgmt-group-");
             var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(WaitUntil.Started, mgmtGroupName, new ManagementGroupCreateOrUpdateContent());
             ManagementGroupResource mgmtGroup = await mgmtGroupOp.WaitForCompletionAsync();
-            Assert.AreEqual($"/providers/Microsoft.Management/managementGroups/{mgmtGroupName}", mgmtGroup.Data.Id.ToString());
-            Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.Name);
-            Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.DisplayName);
-            Assert.AreEqual(ManagementGroupResource.ResourceType, mgmtGroup.Data.ResourceType);
+            Assert.That(mgmtGroup.Data.Id.ToString(), Is.EqualTo($"/providers/Microsoft.Management/managementGroups/{mgmtGroupName}"));
+            Assert.That(mgmtGroup.Data.Name, Is.EqualTo(mgmtGroupName));
+            Assert.That(mgmtGroup.Data.DisplayName, Is.EqualTo(mgmtGroupName));
+            Assert.That(mgmtGroup.Data.ResourceType, Is.EqualTo(ManagementGroupResource.ResourceType));
         }
 
         [RecordedTest]
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Tests
             var rq = new ManagementGroupNameAvailabilityContent();
             rq.Name = "this-should-not-exist";
             var rs = await Client.GetManagementGroups().CheckNameAvailabilityAsync(rq);
-            Assert.IsTrue(rs.Value.NameAvailable);
+            Assert.That(rs.Value.NameAvailable, Is.True);
         }
 
         [RecordedTest]

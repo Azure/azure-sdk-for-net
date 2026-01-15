@@ -36,26 +36,26 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             var strategy = new ServiceBusTriggerBindingStrategy();
             var bindingDataContract = strategy.GetBindingContract(false);
 
-            Assert.AreEqual(BindingContractCount, bindingDataContract.Count);
-            Assert.AreEqual(typeof(int[]), bindingDataContract["DeliveryCountArray"]);
-            Assert.AreEqual(typeof(string[]), bindingDataContract["DeadLetterSourceArray"]);
-            Assert.AreEqual(typeof(string[]), bindingDataContract["LockTokenArray"]);
-            Assert.AreEqual(typeof(DateTime[]), bindingDataContract["ExpiresAtUtcArray"]);
-            Assert.AreEqual(typeof(DateTime[]), bindingDataContract["EnqueuedTimeUtcArray"]);
-            Assert.AreEqual(typeof(string[]), bindingDataContract["MessageIdArray"]);
-            Assert.AreEqual(typeof(string[]), bindingDataContract["ContentTypeArray"]);
-            Assert.AreEqual(typeof(string[]), bindingDataContract["ReplyToArray"]);
-            Assert.AreEqual(typeof(long[]), bindingDataContract["SequenceNumberArray"]);
-            Assert.AreEqual(typeof(string[]), bindingDataContract["ToArray"]);
-            Assert.AreEqual(typeof(string[]), bindingDataContract["LabelArray"]);
-            Assert.AreEqual(typeof(string[]), bindingDataContract["CorrelationIdArray"]);
-            Assert.AreEqual(typeof(string[]), bindingDataContract["ReplyToSessionIdArray"]);
-            Assert.AreEqual(typeof(string[]), bindingDataContract["SessionIdArray"]);
-            Assert.AreEqual(typeof(IDictionary<string, object>[]), bindingDataContract["ApplicationPropertiesArray"]);
-            Assert.AreEqual(typeof(ServiceBusMessageActions), bindingDataContract["MessageReceiver"]);
-            Assert.AreEqual(typeof(ServiceBusSessionMessageActions), bindingDataContract["MessageSession"]);
-            Assert.AreEqual(typeof(ServiceBusMessageActions), bindingDataContract["MessageActions"]);
-            Assert.AreEqual(typeof(ServiceBusSessionMessageActions), bindingDataContract["SessionActions"]);
+            Assert.That(bindingDataContract.Count, Is.EqualTo(BindingContractCount));
+            Assert.That(bindingDataContract["DeliveryCountArray"], Is.EqualTo(typeof(int[])));
+            Assert.That(bindingDataContract["DeadLetterSourceArray"], Is.EqualTo(typeof(string[])));
+            Assert.That(bindingDataContract["LockTokenArray"], Is.EqualTo(typeof(string[])));
+            Assert.That(bindingDataContract["ExpiresAtUtcArray"], Is.EqualTo(typeof(DateTime[])));
+            Assert.That(bindingDataContract["EnqueuedTimeUtcArray"], Is.EqualTo(typeof(DateTime[])));
+            Assert.That(bindingDataContract["MessageIdArray"], Is.EqualTo(typeof(string[])));
+            Assert.That(bindingDataContract["ContentTypeArray"], Is.EqualTo(typeof(string[])));
+            Assert.That(bindingDataContract["ReplyToArray"], Is.EqualTo(typeof(string[])));
+            Assert.That(bindingDataContract["SequenceNumberArray"], Is.EqualTo(typeof(long[])));
+            Assert.That(bindingDataContract["ToArray"], Is.EqualTo(typeof(string[])));
+            Assert.That(bindingDataContract["LabelArray"], Is.EqualTo(typeof(string[])));
+            Assert.That(bindingDataContract["CorrelationIdArray"], Is.EqualTo(typeof(string[])));
+            Assert.That(bindingDataContract["ReplyToSessionIdArray"], Is.EqualTo(typeof(string[])));
+            Assert.That(bindingDataContract["SessionIdArray"], Is.EqualTo(typeof(string[])));
+            Assert.That(bindingDataContract["ApplicationPropertiesArray"], Is.EqualTo(typeof(IDictionary<string, object>[])));
+            Assert.That(bindingDataContract["MessageReceiver"], Is.EqualTo(typeof(ServiceBusMessageActions)));
+            Assert.That(bindingDataContract["MessageSession"], Is.EqualTo(typeof(ServiceBusSessionMessageActions)));
+            Assert.That(bindingDataContract["MessageActions"], Is.EqualTo(typeof(ServiceBusMessageActions)));
+            Assert.That(bindingDataContract["SessionActions"], Is.EqualTo(typeof(ServiceBusSessionMessageActions)));
         }
 
         [Test]
@@ -70,34 +70,34 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             var strategy = new ServiceBusTriggerBindingStrategy();
             var bindingData = strategy.GetBindingData(input);
 
-            Assert.AreEqual(BindingContractCount, bindingData.Count);
+            Assert.That(bindingData.Count, Is.EqualTo(BindingContractCount));
 
-            Assert.AreSame(input.MessageActions, bindingData["MessageReceiver"]);
-            Assert.AreSame(input.MessageActions, bindingData["MessageSession"]);
-            Assert.AreSame(input.MessageActions, bindingData["MessageActions"]);
-            Assert.AreSame(input.MessageActions, bindingData["SessionActions"]);
-            Assert.AreSame(input.ReceiveActions, bindingData["ReceiveActions"]);
-            Assert.AreEqual(message.LockToken, bindingData["LockToken"]);
-            Assert.AreEqual(message.SequenceNumber, bindingData["SequenceNumber"]);
-            Assert.AreEqual(message.DeliveryCount, bindingData["DeliveryCount"]);
-            Assert.AreSame(message.DeadLetterSource, bindingData["DeadLetterSource"]);
-            Assert.AreEqual(message.ExpiresAt.DateTime, bindingData["ExpiresAtUtc"]);
-            Assert.AreEqual(message.EnqueuedTime.DateTime, bindingData["EnqueuedTimeUtc"]);
-            Assert.AreSame(message.MessageId, bindingData["MessageId"]);
-            Assert.AreSame(message.ContentType, bindingData["ContentType"]);
-            Assert.AreSame(message.ReplyTo, bindingData["ReplyTo"]);
-            Assert.AreSame(message.To, bindingData["To"]);
-            Assert.AreSame(message.Subject, bindingData["Label"]);
-            Assert.AreSame(message.CorrelationId, bindingData["CorrelationId"]);
-            Assert.AreSame(message.SessionId, bindingData["SessionId"]);
-            Assert.AreSame(message.ReplyToSessionId, bindingData["ReplyToSessionId"]);
-            Assert.AreSame(message.PartitionKey, bindingData["PartitionKey"]);
-            Assert.AreSame(message.TransactionPartitionKey, bindingData["TransactionPartitionKey"]);
+            Assert.That(bindingData["MessageReceiver"], Is.SameAs(input.MessageActions));
+            Assert.That(bindingData["MessageSession"], Is.SameAs(input.MessageActions));
+            Assert.That(bindingData["MessageActions"], Is.SameAs(input.MessageActions));
+            Assert.That(bindingData["SessionActions"], Is.SameAs(input.MessageActions));
+            Assert.That(bindingData["ReceiveActions"], Is.SameAs(input.ReceiveActions));
+            Assert.That(bindingData["LockToken"], Is.EqualTo(message.LockToken));
+            Assert.That(bindingData["SequenceNumber"], Is.EqualTo(message.SequenceNumber));
+            Assert.That(bindingData["DeliveryCount"], Is.EqualTo(message.DeliveryCount));
+            Assert.That(bindingData["DeadLetterSource"], Is.SameAs(message.DeadLetterSource));
+            Assert.That(bindingData["ExpiresAtUtc"], Is.EqualTo(message.ExpiresAt.DateTime));
+            Assert.That(bindingData["EnqueuedTimeUtc"], Is.EqualTo(message.EnqueuedTime.DateTime));
+            Assert.That(bindingData["MessageId"], Is.SameAs(message.MessageId));
+            Assert.That(bindingData["ContentType"], Is.SameAs(message.ContentType));
+            Assert.That(bindingData["ReplyTo"], Is.SameAs(message.ReplyTo));
+            Assert.That(bindingData["To"], Is.SameAs(message.To));
+            Assert.That(bindingData["Label"], Is.SameAs(message.Subject));
+            Assert.That(bindingData["CorrelationId"], Is.SameAs(message.CorrelationId));
+            Assert.That(bindingData["SessionId"], Is.SameAs(message.SessionId));
+            Assert.That(bindingData["ReplyToSessionId"], Is.SameAs(message.ReplyToSessionId));
+            Assert.That(bindingData["PartitionKey"], Is.SameAs(message.PartitionKey));
+            Assert.That(bindingData["TransactionPartitionKey"], Is.SameAs(message.TransactionPartitionKey));
 
             IDictionary<string, object> bindingDataUserProps = bindingData["ApplicationProperties"] as IDictionary<string, object>;
             Assert.NotNull(bindingDataUserProps);
-            Assert.AreEqual("value1", bindingDataUserProps["prop1"]);
-            Assert.AreEqual("value2", bindingDataUserProps["prop2"]);
+            Assert.That(bindingDataUserProps["prop1"], Is.EqualTo("value1"));
+            Assert.That(bindingDataUserProps["prop2"], Is.EqualTo("value2"));
         }
 
         [Test]
@@ -114,31 +114,31 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             var strategy = new ServiceBusTriggerBindingStrategy();
             var bindingData = strategy.GetBindingData(input);
 
-            Assert.AreEqual(BindingContractCount, bindingData.Count);
-            Assert.AreSame(input.MessageActions, bindingData["MessageReceiver"]);
-            Assert.AreSame(input.MessageActions, bindingData["MessageSession"]);
-            Assert.AreSame(input.MessageActions, bindingData["MessageActions"]);
-            Assert.AreSame(input.MessageActions, bindingData["SessionActions"]);
-            Assert.AreSame(input.ReceiveActions, bindingData["ReceiveActions"]);
+            Assert.That(bindingData.Count, Is.EqualTo(BindingContractCount));
+            Assert.That(bindingData["MessageReceiver"], Is.SameAs(input.MessageActions));
+            Assert.That(bindingData["MessageSession"], Is.SameAs(input.MessageActions));
+            Assert.That(bindingData["MessageActions"], Is.SameAs(input.MessageActions));
+            Assert.That(bindingData["SessionActions"], Is.SameAs(input.MessageActions));
+            Assert.That(bindingData["ReceiveActions"], Is.SameAs(input.ReceiveActions));
 
             // verify an array was created for each binding data type
-            Assert.AreEqual(messages.Length, ((int[])bindingData["DeliveryCountArray"]).Length);
-            Assert.AreEqual(messages.Length, ((string[])bindingData["DeadLetterSourceArray"]).Length);
-            Assert.AreEqual(messages.Length, ((string[])bindingData["LockTokenArray"]).Length);
-            Assert.AreEqual(messages.Length, ((DateTime[])bindingData["ExpiresAtUtcArray"]).Length);
-            Assert.AreEqual(messages.Length, ((DateTime[])bindingData["EnqueuedTimeUtcArray"]).Length);
-            Assert.AreEqual(messages.Length, ((string[])bindingData["MessageIdArray"]).Length);
-            Assert.AreEqual(messages.Length, ((string[])bindingData["ContentTypeArray"]).Length);
-            Assert.AreEqual(messages.Length, ((string[])bindingData["ReplyToArray"]).Length);
-            Assert.AreEqual(messages.Length, ((long[])bindingData["SequenceNumberArray"]).Length);
-            Assert.AreEqual(messages.Length, ((string[])bindingData["ToArray"]).Length);
-            Assert.AreEqual(messages.Length, ((string[])bindingData["SubjectArray"]).Length);
-            Assert.AreEqual(messages.Length, ((string[])bindingData["CorrelationIdArray"]).Length);
-            Assert.AreEqual(messages.Length, ((string[])bindingData["SessionIdArray"]).Length);
-            Assert.AreEqual(messages.Length, ((string[])bindingData["ReplyToSessionIdArray"]).Length);
-            Assert.AreEqual(messages.Length, ((string[])bindingData["PartitionKeyArray"]).Length);
-            Assert.AreEqual(messages.Length, ((string[])bindingData["TransactionPartitionKeyArray"]).Length);
-            Assert.AreEqual(messages.Length, ((IDictionary<string, object>[])bindingData["ApplicationPropertiesArray"]).Length);
+            Assert.That(((int[])bindingData["DeliveryCountArray"]).Length, Is.EqualTo(messages.Length));
+            Assert.That(((string[])bindingData["DeadLetterSourceArray"]).Length, Is.EqualTo(messages.Length));
+            Assert.That(((string[])bindingData["LockTokenArray"]).Length, Is.EqualTo(messages.Length));
+            Assert.That(((DateTime[])bindingData["ExpiresAtUtcArray"]).Length, Is.EqualTo(messages.Length));
+            Assert.That(((DateTime[])bindingData["EnqueuedTimeUtcArray"]).Length, Is.EqualTo(messages.Length));
+            Assert.That(((string[])bindingData["MessageIdArray"]).Length, Is.EqualTo(messages.Length));
+            Assert.That(((string[])bindingData["ContentTypeArray"]).Length, Is.EqualTo(messages.Length));
+            Assert.That(((string[])bindingData["ReplyToArray"]).Length, Is.EqualTo(messages.Length));
+            Assert.That(((long[])bindingData["SequenceNumberArray"]).Length, Is.EqualTo(messages.Length));
+            Assert.That(((string[])bindingData["ToArray"]).Length, Is.EqualTo(messages.Length));
+            Assert.That(((string[])bindingData["SubjectArray"]).Length, Is.EqualTo(messages.Length));
+            Assert.That(((string[])bindingData["CorrelationIdArray"]).Length, Is.EqualTo(messages.Length));
+            Assert.That(((string[])bindingData["SessionIdArray"]).Length, Is.EqualTo(messages.Length));
+            Assert.That(((string[])bindingData["ReplyToSessionIdArray"]).Length, Is.EqualTo(messages.Length));
+            Assert.That(((string[])bindingData["PartitionKeyArray"]).Length, Is.EqualTo(messages.Length));
+            Assert.That(((string[])bindingData["TransactionPartitionKeyArray"]).Length, Is.EqualTo(messages.Length));
+            Assert.That(((IDictionary<string, object>[])bindingData["ApplicationPropertiesArray"]).Length, Is.EqualTo(messages.Length));
         }
 
         [Test]
@@ -154,37 +154,37 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             ServiceBusReceivedMessage single = strategy.BindSingle(triggerInput, null);
             string body = single.Body.ToString();
 
-            Assert.AreEqual(data, body);
-            Assert.Null(contract["MessageReceiver"]);
-            Assert.Null(contract["MessageSession"]);
+            Assert.That(body, Is.EqualTo(data));
+            Assert.That(contract["MessageReceiver"], Is.Null);
+            Assert.That(contract["MessageSession"], Is.Null);
         }
 
         private static void CheckBindingContract(Dictionary<string, Type> bindingDataContract)
         {
-            Assert.AreEqual(BindingContractCount, bindingDataContract.Count);
-            Assert.AreEqual(typeof(int), bindingDataContract["DeliveryCount"]);
-            Assert.AreEqual(typeof(string), bindingDataContract["DeadLetterSource"]);
-            Assert.AreEqual(typeof(string), bindingDataContract["LockToken"]);
-            Assert.AreEqual(typeof(DateTime), bindingDataContract["ExpiresAtUtc"]);
-            Assert.AreEqual(typeof(DateTime), bindingDataContract["EnqueuedTimeUtc"]);
-            Assert.AreEqual(typeof(string), bindingDataContract["MessageId"]);
-            Assert.AreEqual(typeof(string), bindingDataContract["ContentType"]);
-            Assert.AreEqual(typeof(string), bindingDataContract["ReplyTo"]);
-            Assert.AreEqual(typeof(long), bindingDataContract["SequenceNumber"]);
-            Assert.AreEqual(typeof(string), bindingDataContract["To"]);
-            Assert.AreEqual(typeof(string), bindingDataContract["Label"]);
-            Assert.AreEqual(typeof(string), bindingDataContract["CorrelationId"]);
-            Assert.AreEqual(typeof(string), bindingDataContract["SessionId"]);
-            Assert.AreEqual(typeof(string), bindingDataContract["ReplyToSessionId"]);
-            Assert.AreEqual(typeof(string), bindingDataContract["PartitionKey"]);
-            Assert.AreEqual(typeof(string), bindingDataContract["TransactionPartitionKey"]);
-            Assert.AreEqual(typeof(IDictionary<string, object>), bindingDataContract["ApplicationProperties"]);
-            Assert.AreEqual(typeof(ServiceBusMessageActions), bindingDataContract["MessageReceiver"]);
-            Assert.AreEqual(typeof(ServiceBusSessionMessageActions), bindingDataContract["MessageSession"]);
-            Assert.AreEqual(typeof(ServiceBusMessageActions), bindingDataContract["MessageActions"]);
-            Assert.AreEqual(typeof(ServiceBusSessionMessageActions), bindingDataContract["SessionActions"]);
-            Assert.AreEqual(typeof(ServiceBusReceiveActions), bindingDataContract["ReceiveActions"]);
-            Assert.AreEqual(typeof(ServiceBusClient), bindingDataContract["Client"]);
+            Assert.That(bindingDataContract.Count, Is.EqualTo(BindingContractCount));
+            Assert.That(bindingDataContract["DeliveryCount"], Is.EqualTo(typeof(int)));
+            Assert.That(bindingDataContract["DeadLetterSource"], Is.EqualTo(typeof(string)));
+            Assert.That(bindingDataContract["LockToken"], Is.EqualTo(typeof(string)));
+            Assert.That(bindingDataContract["ExpiresAtUtc"], Is.EqualTo(typeof(DateTime)));
+            Assert.That(bindingDataContract["EnqueuedTimeUtc"], Is.EqualTo(typeof(DateTime)));
+            Assert.That(bindingDataContract["MessageId"], Is.EqualTo(typeof(string)));
+            Assert.That(bindingDataContract["ContentType"], Is.EqualTo(typeof(string)));
+            Assert.That(bindingDataContract["ReplyTo"], Is.EqualTo(typeof(string)));
+            Assert.That(bindingDataContract["SequenceNumber"], Is.EqualTo(typeof(long)));
+            Assert.That(bindingDataContract["To"], Is.EqualTo(typeof(string)));
+            Assert.That(bindingDataContract["Label"], Is.EqualTo(typeof(string)));
+            Assert.That(bindingDataContract["CorrelationId"], Is.EqualTo(typeof(string)));
+            Assert.That(bindingDataContract["SessionId"], Is.EqualTo(typeof(string)));
+            Assert.That(bindingDataContract["ReplyToSessionId"], Is.EqualTo(typeof(string)));
+            Assert.That(bindingDataContract["PartitionKey"], Is.EqualTo(typeof(string)));
+            Assert.That(bindingDataContract["TransactionPartitionKey"], Is.EqualTo(typeof(string)));
+            Assert.That(bindingDataContract["ApplicationProperties"], Is.EqualTo(typeof(IDictionary<string, object>)));
+            Assert.That(bindingDataContract["MessageReceiver"], Is.EqualTo(typeof(ServiceBusMessageActions)));
+            Assert.That(bindingDataContract["MessageSession"], Is.EqualTo(typeof(ServiceBusSessionMessageActions)));
+            Assert.That(bindingDataContract["MessageActions"], Is.EqualTo(typeof(ServiceBusMessageActions)));
+            Assert.That(bindingDataContract["SessionActions"], Is.EqualTo(typeof(ServiceBusSessionMessageActions)));
+            Assert.That(bindingDataContract["ReceiveActions"], Is.EqualTo(typeof(ServiceBusReceiveActions)));
+            Assert.That(bindingDataContract["Client"], Is.EqualTo(typeof(ServiceBusClient)));
         }
 
         private static ServiceBusReceivedMessage CreateMessageWithSystemProperties(string body = default, IDictionary<string, object> applicationProperties = default)

@@ -25,10 +25,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
             CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document, "en");
 
-            Assert.AreEqual(1, entities.Count);
-            Assert.AreEqual("Microsoft", entities.FirstOrDefault().Text);
-            Assert.AreEqual(3, entities.FirstOrDefault().Offset);
-            Assert.AreEqual(9, entities.FirstOrDefault().Length);
+            Assert.That(entities.Count, Is.EqualTo(1));
+            Assert.That(entities.FirstOrDefault().Text, Is.EqualTo("Microsoft"));
+            Assert.That(entities.FirstOrDefault().Offset, Is.EqualTo(3));
+            Assert.That(entities.FirstOrDefault().Length, Is.EqualTo(9));
         }
 
         [RecordedTest]
@@ -40,10 +40,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
             CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document, "es");
 
-            Assert.AreEqual(1, entities.Count);
-            Assert.AreEqual("Microsoft", entities.FirstOrDefault().Text);
-            Assert.AreEqual(4, entities.FirstOrDefault().Offset);
-            Assert.AreEqual(9, entities.FirstOrDefault().Length);
+            Assert.That(entities.Count, Is.EqualTo(1));
+            Assert.That(entities.FirstOrDefault().Text, Is.EqualTo("Microsoft"));
+            Assert.That(entities.FirstOrDefault().Offset, Is.EqualTo(4));
+            Assert.That(entities.FirstOrDefault().Length, Is.EqualTo(9));
         }
 
         [RecordedTest]
@@ -55,10 +55,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
             CategorizedEntityCollection entities = await client.RecognizeEntitiesAsync(document);
 
-            Assert.AreEqual(1, entities.Count);
-            Assert.AreEqual("Bill Gates", entities.FirstOrDefault().Text);
-            Assert.AreEqual(3, entities.FirstOrDefault().Offset);
-            Assert.AreEqual(10, entities.FirstOrDefault().Length);
+            Assert.That(entities.Count, Is.EqualTo(1));
+            Assert.That(entities.FirstOrDefault().Text, Is.EqualTo("Bill Gates"));
+            Assert.That(entities.FirstOrDefault().Offset, Is.EqualTo(3));
+            Assert.That(entities.FirstOrDefault().Length, Is.EqualTo(10));
         }
 
         [RecordedTest]
@@ -70,11 +70,11 @@ namespace Azure.AI.TextAnalytics.Tests
             RecognizeEntitiesResultCollection response = await client.RecognizeEntitiesBatchAsync(new List<string>() { document }, "en");
             var entities = response.FirstOrDefault().Entities.ToList();
 
-            Assert.AreEqual(4, entities.Count);
-            Assert.AreEqual(EntityCategory.Person, entities[0].Category);
-            Assert.AreEqual(EntityCategory.Organization, entities[1].Category);
-            Assert.AreEqual(EntityCategory.Location, entities[2].Category);
-            Assert.AreEqual(EntityCategory.IPAddress, entities[3].Category);
+            Assert.That(entities.Count, Is.EqualTo(4));
+            Assert.That(entities[0].Category, Is.EqualTo(EntityCategory.Person));
+            Assert.That(entities[1].Category, Is.EqualTo(EntityCategory.Organization));
+            Assert.That(entities[2].Category, Is.EqualTo(EntityCategory.Location));
+            Assert.That(entities[3].Category, Is.EqualTo(EntityCategory.IPAddress));
         }
 
         [RecordedTest]

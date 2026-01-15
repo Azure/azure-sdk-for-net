@@ -161,10 +161,10 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
                     Name = distributionPolicyName,
                 });
 
-            Assert.AreEqual(distributionId, createDistributionPolicyResponse.Value.Id);
-            Assert.AreEqual(distributionPolicyName, createDistributionPolicyResponse.Value.Name);
+            Assert.That(createDistributionPolicyResponse.Value.Id, Is.EqualTo(distributionId));
+            Assert.That(createDistributionPolicyResponse.Value.Name, Is.EqualTo(distributionPolicyName));
             Assert.IsNotNull(createDistributionPolicyResponse.Value.Mode);
-            Assert.IsTrue(createDistributionPolicyResponse.Value.Mode.GetType() == typeof(LongestIdleMode));
+            Assert.That(createDistributionPolicyResponse.Value.Mode.GetType() == typeof(LongestIdleMode), Is.True);
             AddForCleanup(new Task(async () => await routerClient.DeleteDistributionPolicyAsync(createDistributionPolicyResponse.Value.Id)));
             return createDistributionPolicyResponse;
         }
@@ -177,9 +177,9 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
         {
             var response = upsertQueueResponse.Value;
 
-            Assert.AreEqual(queueId, response.Id);
-            Assert.AreEqual(queueName, response.Name);
-            Assert.AreEqual(distributionPolicyId, response.DistributionPolicyId);
+            Assert.That(response.Id, Is.EqualTo(queueId));
+            Assert.That(response.Name, Is.EqualTo(queueName));
+            Assert.That(response.DistributionPolicyId, Is.EqualTo(distributionPolicyId));
             if (queueLabels != default)
             {
                 var labelsWithID = queueLabels.ToDictionary(k => k.Key, k => k.Value);
@@ -189,12 +189,12 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
                     labelsWithID.Add("Id", new RouterValue(queueId));
                 }
 
-                Assert.AreEqual(labelsWithID.ToDictionary(x => x.Key, x => x.Value?.Value), response.Labels.ToDictionary(x => x.Key, x => x.Value?.Value));
+                Assert.That(response.Labels.ToDictionary(x => x.Key, x => x.Value?.Value), Is.EqualTo(labelsWithID.ToDictionary(x => x.Key, x => x.Value?.Value)));
             }
 
             if (exceptionPolicyId != default)
             {
-                Assert.AreEqual(exceptionPolicyId, response.ExceptionPolicyId);
+                Assert.That(response.ExceptionPolicyId, Is.EqualTo(exceptionPolicyId));
             }
         }
 
@@ -206,26 +206,26 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
         {
             var response = routerWorkerResponse.Value;
 
-            Assert.AreEqual(workerId, response.Id);
-            Assert.AreEqual(queues.Count(), response.Queues.Count);
-            Assert.AreEqual(capacity, response.Capacity);
+            Assert.That(response.Id, Is.EqualTo(workerId));
+            Assert.That(response.Queues.Count, Is.EqualTo(queues.Count()));
+            Assert.That(response.Capacity, Is.EqualTo(capacity));
 
             if (workerLabels != default)
             {
                 var labelsWithID = workerLabels.ToDictionary(k => k.Key, k => k.Value);
                 labelsWithID.Add("Id", new RouterValue(workerId));
-                Assert.AreEqual(labelsWithID, response.Labels);
+                Assert.That(response.Labels, Is.EqualTo(labelsWithID));
             }
 
             if (workerTags != default)
             {
                 var tags = workerTags.ToDictionary(k => k.Key, k => k.Value);
-                Assert.AreEqual(tags, response.Tags);
+                Assert.That(response.Tags, Is.EqualTo(tags));
             }
 
             if (channelsList != default)
             {
-                Assert.AreEqual(channelsList.Count, response.Channels.Count);
+                Assert.That(response.Channels.Count, Is.EqualTo(channelsList.Count));
             }
         }
 

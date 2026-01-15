@@ -43,18 +43,18 @@ namespace Azure.ResourceManager.DependencyMap.Tests
             var createMapsOperations = await mapsCollection.CreateOrUpdateAsync(WaitUntil.Completed, mapName, new DependencyMapData(location));
             await createMapsOperations.WaitForCompletionAsync();
 
-            Assert.IsTrue(createMapsOperations.HasCompleted);
-            Assert.IsTrue(createMapsOperations.HasValue);
-            Assert.IsTrue(createMapsOperations.GetRawResponse().Status == 200);
+            Assert.That(createMapsOperations.HasCompleted, Is.True);
+            Assert.That(createMapsOperations.HasValue, Is.True);
+            Assert.That(createMapsOperations.GetRawResponse().Status == 200, Is.True);
 
             var mapsResource = await mapsCollection.GetAsync(mapName);
             Assert.IsNotNull(mapsResource);
-            Assert.AreEqual(mapName, mapsResource.Value.Data.Name);
-            Assert.IsTrue(mapsResource.GetRawResponse().Status == 200);
+            Assert.That(mapsResource.Value.Data.Name, Is.EqualTo(mapName));
+            Assert.That(mapsResource.GetRawResponse().Status == 200, Is.True);
 
             var deleteOperation = await mapsResource.Value.DeleteAsync(WaitUntil.Completed);
             await deleteOperation.WaitForCompletionResponseAsync();
-            Assert.IsTrue(deleteOperation.HasCompleted);
+            Assert.That(deleteOperation.HasCompleted, Is.True);
         }
     }
 }

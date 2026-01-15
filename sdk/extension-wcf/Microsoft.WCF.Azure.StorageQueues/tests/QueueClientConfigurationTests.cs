@@ -22,7 +22,7 @@ namespace Microsoft.WCF.Azure.StorageQueues.Tests
             bool configureQueueClientCalled = false;
             Task assertionChecks = null;
             channel.Open();
-            Assert.IsTrue(configureQueueClientCalled);
+            Assert.That(configureQueueClientCalled, Is.True);
             Assert.IsNotNull(assertionChecks);
             assertionChecks.RunSynchronously();
             await assertionChecks;
@@ -32,8 +32,8 @@ namespace Microsoft.WCF.Azure.StorageQueues.Tests
                 configureQueueClientCalled = true;
                 assertionChecks = new Task(() =>
                 {
-                    Assert.AreEqual(queueName, queueClient.Name);
-                    Assert.AreEqual(AzuriteNUnitFixture.Instance.GetAzureAccount().Name, queueClient.AccountName);
+                    Assert.That(queueClient.Name, Is.EqualTo(queueName));
+                    Assert.That(queueClient.AccountName, Is.EqualTo(AzuriteNUnitFixture.Instance.GetAzureAccount().Name));
                 });
                 return queueClient;
             }

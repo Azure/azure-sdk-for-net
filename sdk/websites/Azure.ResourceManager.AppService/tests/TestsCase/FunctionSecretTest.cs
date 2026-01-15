@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
                 keyName: keyNameVar,
                 info: infoVar,
                 cancellationToken: cancellationTokenVar);
-            Assert.AreEqual(keyNameVar, result.Properties.Name);
-            Assert.AreEqual(infoVar.Properties.Value, result.Properties.Value);
+            Assert.That(result.Properties.Name, Is.EqualTo(keyNameVar));
+            Assert.That(result.Properties.Value, Is.EqualTo(infoVar.Properties.Value));
         }
     }
 }

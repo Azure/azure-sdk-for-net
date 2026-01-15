@@ -11,13 +11,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
         public static void ThrowsArgumentNull(Action action, string expectedParameterName)
         {
             ArgumentNullException exception = Assert.Throws<ArgumentNullException>(() => action.Invoke());
-            Assert.AreEqual(expectedParameterName, exception.ParamName);
+            Assert.That(exception.ParamName, Is.EqualTo(expectedParameterName));
         }
 
         public static void ThrowsInvalidOperation(Action action, string expectedMessage)
         {
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => action.Invoke());
-            Assert.AreEqual(expectedMessage, exception.Message);
+            Assert.That(exception.Message, Is.EqualTo(expectedMessage));
         }
     }
 }

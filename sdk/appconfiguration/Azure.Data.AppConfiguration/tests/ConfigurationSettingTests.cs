@@ -38,21 +38,21 @@ namespace Azure.Data.AppConfiguration.Tests
 
             ConfigurationSetting testSettingLowerCase = s_testSetting.Clone();
             testSettingLowerCase.Key = testSettingLowerCase.Key.ToLower();
-            Assert.IsFalse(comparer.Equals(testSettingUpperCase, testSettingLowerCase));
+            Assert.That(comparer.Equals(testSettingUpperCase, testSettingLowerCase), Is.False);
 
             ConfigurationSetting testSettingsameCase = s_testSetting.Clone();
-            Assert.IsTrue(comparer.Equals(s_testSetting, testSettingsameCase));
+            Assert.That(comparer.Equals(s_testSetting, testSettingsameCase), Is.True);
 
             //Etag tests
             ConfigurationSetting testSettingEtagDiff = testSettingsameCase.Clone();
             testSettingsameCase.ETag = new ETag(Guid.NewGuid().ToString());
             testSettingEtagDiff.ETag = new ETag(Guid.NewGuid().ToString());
-            Assert.IsFalse(comparer.Equals(testSettingsameCase, testSettingEtagDiff));
+            Assert.That(comparer.Equals(testSettingsameCase, testSettingEtagDiff), Is.False);
 
             // Different tags
             ConfigurationSetting testSettingDiffTags = s_testSetting.Clone();
             testSettingDiffTags.Tags.Add("tag3", "test_value3");
-            Assert.IsFalse(comparer.Equals(s_testSetting, testSettingDiffTags));
+            Assert.That(comparer.Equals(s_testSetting, testSettingDiffTags), Is.False);
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var comparer = ConfigurationSettingEqualityComparer.Instance;
             var serialized = JsonSerializer.Serialize(s_testSetting);
             var deserialized = JsonSerializer.Deserialize<ConfigurationSetting>(serialized);
-            Assert.IsTrue(comparer.Equals(s_testSetting, deserialized));
+            Assert.That(comparer.Equals(s_testSetting, deserialized), Is.True);
         }
 
         [Test]
@@ -78,18 +78,18 @@ namespace Azure.Data.AppConfiguration.Tests
             var deserialized = JsonSerializer.Deserialize<IDictionary<string, ConfigurationSetting>>(serialized);
             CollectionAssert.IsNotEmpty(deserialized);
 
-            Assert.IsTrue(comparer.Equals(s_testSetting, deserialized[s_testSetting.Key]));
-            Assert.IsNull(deserialized["null_key"]);
+            Assert.That(comparer.Equals(s_testSetting, deserialized[s_testSetting.Key]), Is.True);
+            Assert.That(deserialized["null_key"], Is.Null);
         }
 
         [Test]
         public void ConfigurationSettingEtagConstructor()
         {
             var configurationSetting = new ConfigurationSetting("key", "value", "label", new ETag("etag"));
-            Assert.AreEqual("key", configurationSetting.Key);
-            Assert.AreEqual("value", configurationSetting.Value);
-            Assert.AreEqual("label", configurationSetting.Label);
-            Assert.AreEqual("etag", configurationSetting.ETag.ToString());
+            Assert.That(configurationSetting.Key, Is.EqualTo("key"));
+            Assert.That(configurationSetting.Value, Is.EqualTo("value"));
+            Assert.That(configurationSetting.Label, Is.EqualTo("label"));
+            Assert.That(configurationSetting.ETag.ToString(), Is.EqualTo("etag"));
         }
     }
 }

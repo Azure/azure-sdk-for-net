@@ -25,7 +25,7 @@ namespace Azure.Maps.TimeZones.Tests
                 AdditionalTimeZoneReturnInformation = AdditionalTimeZoneReturnInformation.All
             };
             var response = await client.GetTimeZoneByIdAsync("Asia/Bahrain", options);
-            Assert.AreEqual("Asia/Qatar", response.Value.TimeZones[0].Id);
+            Assert.That(response.Value.TimeZones[0].Id, Is.EqualTo("Asia/Qatar"));
         }
 
         [RecordedTest]
@@ -35,7 +35,7 @@ namespace Azure.Maps.TimeZones.Tests
             GetTimeZoneOptions options = new GetTimeZoneOptions();
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await client.GetTimeZoneByIdAsync("", options));
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
         }
 
         [RecordedTest]
@@ -48,8 +48,8 @@ namespace Azure.Maps.TimeZones.Tests
             };
             GeoPosition coordinates = new GeoPosition(121.5640089, 25.0338053);
             var response = await client.GetTimeZoneByCoordinatesAsync(coordinates, options);
-            Assert.AreEqual(1, response.Value.TimeZones.Count);
-            Assert.AreEqual("Asia/Taipei", response.Value.TimeZones[0].Id);
+            Assert.That(response.Value.TimeZones.Count, Is.EqualTo(1));
+            Assert.That(response.Value.TimeZones[0].Id, Is.EqualTo("Asia/Taipei"));
         }
 
         [RecordedTest]
@@ -64,7 +64,7 @@ namespace Azure.Maps.TimeZones.Tests
             GeoPosition coordinates = new GeoPosition(121.0, -100.0);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await client.GetTimeZoneByCoordinatesAsync(coordinates, options));
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
         }
 
         [RecordedTest]
@@ -72,7 +72,7 @@ namespace Azure.Maps.TimeZones.Tests
         {
             var client = CreateClient();
             var response = await client.GetWindowsTimeZoneIdsAsync();
-            Assert.AreEqual(505, response.Value.WindowsTimeZones.Count);
+            Assert.That(response.Value.WindowsTimeZones.Count, Is.EqualTo(505));
         }
 
         [RecordedTest]
@@ -80,7 +80,7 @@ namespace Azure.Maps.TimeZones.Tests
         {
             var client = CreateClient();
             var response = await client.GetTimeZoneIanaIdsAsync();
-            Assert.AreEqual(596, response.Value.IanaIds.Count);
+            Assert.That(response.Value.IanaIds.Count, Is.EqualTo(596));
         }
 
         [RecordedTest]
@@ -96,8 +96,8 @@ namespace Azure.Maps.TimeZones.Tests
         {
             var client = CreateClient();
             var response = await client.ConvertWindowsTimeZoneToIanaAsync("Dateline Standard Time");
-            Assert.AreEqual(1, response.Value.IanaIds.Count);
-            Assert.AreEqual("Etc/GMT+12", response.Value.IanaIds[0].Id);
+            Assert.That(response.Value.IanaIds.Count, Is.EqualTo(1));
+            Assert.That(response.Value.IanaIds[0].Id, Is.EqualTo("Etc/GMT+12"));
         }
 
         [RecordedTest]
@@ -106,7 +106,7 @@ namespace Azure.Maps.TimeZones.Tests
             var client = CreateClient();
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await client.ConvertWindowsTimeZoneToIanaAsync(""));
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
         }
     }
 }

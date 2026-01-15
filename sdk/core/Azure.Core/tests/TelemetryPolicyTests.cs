@@ -22,7 +22,7 @@ namespace Azure.Core.Tests
 
             await SendGetRequest(transport, telemetryPolicy);
 
-            Assert.True(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
+            Assert.That(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent), Is.True);
 
             AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             string version = versionAttribute.InformationalVersion;
@@ -31,7 +31,7 @@ namespace Azure.Core.Tests
             {
                 version = version.Substring(0, hashSeparator);
             }
-            Assert.AreEqual(userAgent, $"azsdk-net-Core.Tests/{version} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
+            Assert.That($"azsdk-net-Core.Tests/{version} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})", Is.EqualTo(userAgent));
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Azure.Core.Tests
 
             await SendGetRequest(transport, telemetryPolicy);
 
-            Assert.True(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
+            Assert.That(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent), Is.True);
             StringAssert.StartsWith("application-id ", userAgent);
         }
 

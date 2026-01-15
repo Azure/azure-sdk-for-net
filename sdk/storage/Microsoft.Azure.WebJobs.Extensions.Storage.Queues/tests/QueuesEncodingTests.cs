@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 (s) => OriginQueueToDestinationQueueStringProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual(content, result);
+            Assert.That(result, Is.EqualTo(content));
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 QueueMessageEncoding.Base64);
 
             // Assert
-            Assert.AreEqual(content, result);
+            Assert.That(result, Is.EqualTo(content));
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 QueueMessageEncoding.None);
 
             // Assert
-            Assert.AreEqual(content, result);
+            Assert.That(result, Is.EqualTo(content));
         }
 
         private async Task<TResult> RunTriggerAsync<TResult>(Type programType,

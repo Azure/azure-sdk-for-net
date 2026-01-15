@@ -44,57 +44,57 @@ namespace Azure.ResourceManager.Redis.Tests
             var parameter = new RedisCreateOrUpdateContent(AzureLocation.NorthCentralUS, new RedisSku(RedisSkuName.Premium, RedisSkuFamily.Premium, 1));
             var ncResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName1, parameter)).Value;
 
-            Assert.AreEqual(redisCacheName1, ncResponse.Data.Name);
-            Assert.AreEqual(AzureLocation.NorthCentralUS, ncResponse.Data.Location);
-            Assert.AreEqual(RedisSkuName.Premium, ncResponse.Data.Sku.Name);
-            Assert.AreEqual(RedisSkuFamily.Premium, ncResponse.Data.Sku.Family);
+            Assert.That(ncResponse.Data.Name, Is.EqualTo(redisCacheName1));
+            Assert.That(ncResponse.Data.Location, Is.EqualTo(AzureLocation.NorthCentralUS));
+            Assert.That(ncResponse.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
+            Assert.That(ncResponse.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
 
             // Create cache in scus
             parameter = new RedisCreateOrUpdateContent(AzureLocation.SouthCentralUS, new RedisSku(RedisSkuName.Premium, RedisSkuFamily.Premium, 1));
             var scResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName2, parameter)).Value;
 
-            Assert.AreEqual(redisCacheName2, scResponse.Data.Name);
-            Assert.AreEqual(AzureLocation.SouthCentralUS, scResponse.Data.Location);
-            Assert.AreEqual(RedisSkuName.Premium, scResponse.Data.Sku.Name);
-            Assert.AreEqual(RedisSkuFamily.Premium, scResponse.Data.Sku.Family);
+            Assert.That(scResponse.Data.Name, Is.EqualTo(redisCacheName2));
+            Assert.That(scResponse.Data.Location, Is.EqualTo(AzureLocation.SouthCentralUS));
+            Assert.That(scResponse.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
+            Assert.That(scResponse.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
 
             // Set up replication link
             var linkCollection = ncResponse.GetRedisLinkedServerWithProperties();
             var linkContent = new RedisLinkedServerWithPropertyCreateOrUpdateContent(scResponse.Id, AzureLocation.SouthCentralUS, RedisLinkedServerRole.Secondary);
             var linkServerWithProperties = (await linkCollection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName2, linkContent)).Value;
 
-            Assert.AreEqual(redisCacheName2, linkServerWithProperties.Data.Name);
-            Assert.AreEqual(scResponse.Id, linkServerWithProperties.Data.LinkedRedisCacheId);
-            Assert.AreEqual(AzureLocation.SouthCentralUS, linkServerWithProperties.Data.LinkedRedisCacheLocation);
-            Assert.AreEqual(RedisLinkedServerRole.Secondary, linkServerWithProperties.Data.ServerRole);
-            Assert.False(string.IsNullOrEmpty(linkServerWithProperties.Data.GeoReplicatedPrimaryHostName));
-            Assert.False(string.IsNullOrEmpty(linkServerWithProperties.Data.PrimaryHostName));
+            Assert.That(linkServerWithProperties.Data.Name, Is.EqualTo(redisCacheName2));
+            Assert.That(linkServerWithProperties.Data.LinkedRedisCacheId, Is.EqualTo(scResponse.Id));
+            Assert.That(linkServerWithProperties.Data.LinkedRedisCacheLocation, Is.EqualTo(AzureLocation.SouthCentralUS));
+            Assert.That(linkServerWithProperties.Data.ServerRole, Is.EqualTo(RedisLinkedServerRole.Secondary));
+            Assert.That(string.IsNullOrEmpty(linkServerWithProperties.Data.GeoReplicatedPrimaryHostName), Is.False);
+            Assert.That(string.IsNullOrEmpty(linkServerWithProperties.Data.PrimaryHostName), Is.False);
 
             // test get response from primary
             var primaryLinkProperties = (await linkCollection.GetAsync(redisCacheName2)).Value;
-            Assert.AreEqual(scResponse.Id, primaryLinkProperties.Data.LinkedRedisCacheId);
-            Assert.AreEqual(AzureLocation.SouthCentralUS, primaryLinkProperties.Data.LinkedRedisCacheLocation);
-            Assert.AreEqual(RedisLinkedServerRole.Secondary, primaryLinkProperties.Data.ServerRole);
+            Assert.That(primaryLinkProperties.Data.LinkedRedisCacheId, Is.EqualTo(scResponse.Id));
+            Assert.That(primaryLinkProperties.Data.LinkedRedisCacheLocation, Is.EqualTo(AzureLocation.SouthCentralUS));
+            Assert.That(primaryLinkProperties.Data.ServerRole, Is.EqualTo(RedisLinkedServerRole.Secondary));
 
             // test list response from primary
             var allPrimaryLinkProperties = await linkCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(allPrimaryLinkProperties.Count, 1);
+            Assert.That(allPrimaryLinkProperties.Count, Is.EqualTo(1));
 
             // test get response from secondary
             var linkCollection2 = scResponse.GetRedisLinkedServerWithProperties();
             var secondaryLinkProperties = (await linkCollection2.GetAsync(redisCacheName1)).Value;
-            Assert.AreEqual(ncResponse.Id, secondaryLinkProperties.Data.LinkedRedisCacheId);
-            Assert.AreEqual(AzureLocation.NorthCentralUS, secondaryLinkProperties.Data.LinkedRedisCacheLocation);
-            Assert.AreEqual(RedisLinkedServerRole.Primary, secondaryLinkProperties.Data.ServerRole);
+            Assert.That(secondaryLinkProperties.Data.LinkedRedisCacheId, Is.EqualTo(ncResponse.Id));
+            Assert.That(secondaryLinkProperties.Data.LinkedRedisCacheLocation, Is.EqualTo(AzureLocation.NorthCentralUS));
+            Assert.That(secondaryLinkProperties.Data.ServerRole, Is.EqualTo(RedisLinkedServerRole.Primary));
 
             // test list response from secondary
             allPrimaryLinkProperties = await linkCollection2.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(allPrimaryLinkProperties.Count, 1);
+            Assert.That(allPrimaryLinkProperties.Count, Is.EqualTo(1));
 
             // Delete link on primary
             await primaryLinkProperties.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await linkCollection2.ExistsAsync("redisCacheName1")).Value;
-            Assert.IsFalse(falseResult);
+            Assert.That(falseResult, Is.False);
         }
     }
 }

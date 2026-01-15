@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             // Exist
             bool flag = await secretCollection.ExistsAsync( secretName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Get
             var getsecret = await secretCollection.GetAsync(secretName);
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
         private void ValidateSecret(KeyVaultSecretData secret, string secretName)
         {
             Assert.IsNotNull(secret);
-            Assert.AreEqual(secretName, secret.Name);
-            Assert.AreEqual(Location, secret.Location);
+            Assert.That(secret.Name, Is.EqualTo(secretName));
+            Assert.That(secret.Location, Is.EqualTo(Location));
         }
     }
 }

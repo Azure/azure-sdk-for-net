@@ -69,7 +69,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
             var sessionUpdated = await GetNextUpdate<SessionUpdateError>(updatesEnum).ConfigureAwait(false);
-            Assert.IsFalse(await updatesEnum.MoveNextAsync().ConfigureAwait(false));
+            Assert.That(await updatesEnum.MoveNextAsync().ConfigureAwait(false), Is.False);
         }
 
         [TestCase]

@@ -48,18 +48,18 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
 
             var firstItem = (ResourceCarbonEmissionItemDetail)result.Value.First();
             Assert.IsNotNull(firstItem.LatestMonthEmissions);
-            Assert.IsTrue(firstItem.DataType == CarbonEmissionDataType.ResourceItemDetailsData);
+            Assert.That(firstItem.DataType == CarbonEmissionDataType.ResourceItemDetailsData, Is.True);
             Assert.IsNotNull(firstItem.ItemName);
-            Assert.IsTrue(firstItem.CategoryType == CarbonEmissionCategoryType.Resource);
+            Assert.That(firstItem.CategoryType == CarbonEmissionCategoryType.Resource, Is.True);
             Assert.IsNotNull(firstItem.ResourceGroup);
             Assert.IsNotNull(firstItem.SubscriptionId);
             Assert.IsNotNull(firstItem.ResourceId);
 
             var lastItem = (ResourceCarbonEmissionItemDetail)result.Value.Last();
             Assert.IsNotNull(lastItem.LatestMonthEmissions);
-            Assert.IsTrue(lastItem.DataType == CarbonEmissionDataType.ResourceItemDetailsData);
+            Assert.That(lastItem.DataType == CarbonEmissionDataType.ResourceItemDetailsData, Is.True);
             Assert.IsNotNull(lastItem.ItemName);
-            Assert.IsTrue(lastItem.CategoryType == CarbonEmissionCategoryType.Resource);
+            Assert.That(lastItem.CategoryType == CarbonEmissionCategoryType.Resource, Is.True);
             Assert.IsNotNull(lastItem.ResourceGroup);
             Assert.IsNotNull(lastItem.SubscriptionId);
             Assert.IsNotNull(lastItem.ResourceId);
@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
 
             var firstItem = (ResourceGroupCarbonEmissionItemDetail)result.Value.First();
             Assert.IsNotNull(firstItem.LatestMonthEmissions);
-            Assert.IsTrue(firstItem.DataType == CarbonEmissionDataType.ResourceGroupItemDetailsData);
+            Assert.That(firstItem.DataType == CarbonEmissionDataType.ResourceGroupItemDetailsData, Is.True);
             Assert.IsNotNull(firstItem.ItemName);
-            Assert.IsTrue(firstItem.CategoryType == CarbonEmissionCategoryType.ResourceGroup);
+            Assert.That(firstItem.CategoryType == CarbonEmissionCategoryType.ResourceGroup, Is.True);
             Assert.IsNotNull(firstItem.ResourceGroupId);
             Assert.IsNotNull(firstItem.SubscriptionId);
 
             var lastItem = (ResourceGroupCarbonEmissionItemDetail)result.Value.Last();
             Assert.IsNotNull(lastItem.LatestMonthEmissions);
-            Assert.IsTrue(lastItem.DataType == CarbonEmissionDataType.ResourceGroupItemDetailsData);
+            Assert.That(lastItem.DataType == CarbonEmissionDataType.ResourceGroupItemDetailsData, Is.True);
             Assert.IsNotNull(lastItem.ItemName);
-            Assert.IsTrue(lastItem.CategoryType == CarbonEmissionCategoryType.ResourceGroup);
+            Assert.That(lastItem.CategoryType == CarbonEmissionCategoryType.ResourceGroup, Is.True);
             Assert.IsNotNull(lastItem.ResourceGroupId);
             Assert.IsNotNull(lastItem.SubscriptionId);
         }
@@ -171,15 +171,15 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
 
             var firstItem = (CarbonEmissionItemDetail) result.Value.First();
             Assert.IsNotNull(firstItem.LatestMonthEmissions);
-            Assert.IsTrue(firstItem.DataType == CarbonEmissionDataType.ItemDetailsData);
+            Assert.That(firstItem.DataType == CarbonEmissionDataType.ItemDetailsData, Is.True);
             Assert.IsNotNull(firstItem.ItemName);
-            Assert.IsTrue(firstItem.CategoryType == categoryType);
+            Assert.That(firstItem.CategoryType == categoryType, Is.True);
 
             var lastItem = (CarbonEmissionItemDetail) result.Value.Last();
             Assert.IsNotNull(lastItem.LatestMonthEmissions);
-            Assert.IsTrue(lastItem.DataType == CarbonEmissionDataType.ItemDetailsData);
+            Assert.That(lastItem.DataType == CarbonEmissionDataType.ItemDetailsData, Is.True);
             Assert.IsNotNull(lastItem.ItemName);
-            Assert.IsTrue(lastItem.CategoryType == categoryType);
+            Assert.That(lastItem.CategoryType == categoryType, Is.True);
         }
     }
 }

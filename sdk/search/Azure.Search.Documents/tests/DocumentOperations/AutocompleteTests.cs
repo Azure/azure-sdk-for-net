@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Tests
                 async () => await resources.GetQueryClient().AutocompleteAsync(
                     "very po",
                     suggesterName: string.Empty));
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
             StringAssert.StartsWith(
                 "Cannot find fields enabled for suggestions. Please provide a value for 'suggesterName' in the query.",
                 ex.Message);
@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Tests
                     "very po",
                     invalidName,
                     new AutocompleteOptions { Mode = AutocompleteMode.OneTerm }));
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
             StringAssert.StartsWith(
                 $"The specified suggester name '{invalidName}' does not exist in this index definition.",
                 ex.Message);

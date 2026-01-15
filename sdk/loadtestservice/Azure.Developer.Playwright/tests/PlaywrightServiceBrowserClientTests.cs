@@ -37,8 +37,8 @@ public class PlaywrightServiceBrowserClientTests
         Assert.Multiple(() =>
         {
             Assert.That(client._options.ServiceAuth, Is.EqualTo(ServiceAuthType.EntraId));
-            Assert.AreEqual(client._options.OS, OSPlatform.Linux);
-            Assert.AreEqual(client._options.ExposeNetwork, Constants.s_default_expose_network);
+            Assert.That(OSPlatform.Linux, Is.EqualTo(client._options.OS));
+            Assert.That(Constants.s_default_expose_network, Is.EqualTo(client._options.ExposeNetwork));
             Assert.That(Guid.TryParse(client._options.RunId, out _), Is.True);
             Assert.That(client._options.RunName, Is.EqualTo(client._options.RunId)); // RunName defaults to RunId
 

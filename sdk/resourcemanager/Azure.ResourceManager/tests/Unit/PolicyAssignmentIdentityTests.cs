@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Tests
             Assert.IsNull(data.Identity);
 
             data.ManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
+            Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+            Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.SystemAssigned));
 
             data.ManagedIdentity = null;
             Assert.IsNull(data.Identity);
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Tests
             Assert.IsNull(data.Identity);
 
             data.Identity = new SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType.None);
-            Assert.AreEqual(SystemAssignedServiceIdentityType.None, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.None, data.ManagedIdentity.ManagedServiceIdentityType);
+            Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.None));
+            Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
 
             data.Identity = null;
             Assert.IsNull(data.Identity);
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Tests
                 PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
                 ManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
+            Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.SystemAssigned));
+            Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
 
             data.ManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.None);
-            Assert.AreEqual(SystemAssignedServiceIdentityType.None, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.None, data.ManagedIdentity.ManagedServiceIdentityType);
+            Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.None));
+            Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
         }
 
         [TestCase]
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Tests
                 PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
                 Identity = new SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType.SystemAssigned)
             };
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
+            Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.SystemAssigned));
+            Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
 
             data.Identity = new SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType.None);
-            Assert.AreEqual(SystemAssignedServiceIdentityType.None, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.None, data.ManagedIdentity.ManagedServiceIdentityType);
+            Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.None));
+            Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
         }
 
         [TestCase]
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.Tests
                 PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
                 Identity = new SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType.SystemAssigned)
             };
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
+            Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.SystemAssigned));
+            Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
 
             data.ManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.None);
-            Assert.AreEqual(SystemAssignedServiceIdentityType.None, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.None, data.ManagedIdentity.ManagedServiceIdentityType);
+            Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.None));
+            Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
         }
 
         [TestCase]
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.Tests
                 PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
                 ManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
+            Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.SystemAssigned));
+            Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
 
             data.Identity = new SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType.None);
-            Assert.AreEqual(SystemAssignedServiceIdentityType.None, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.None, data.ManagedIdentity.ManagedServiceIdentityType);
+            Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.None));
+            Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
         }
 
         [TestCase]
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.Tests
                 PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
                 ManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
+            Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.SystemAssigned));
+            Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
 
             data.ManagedIdentity.ManagedServiceIdentityType = ManagedServiceIdentityType.None;
-            Assert.AreEqual(SystemAssignedServiceIdentityType.None, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.None, data.ManagedIdentity.ManagedServiceIdentityType);
+            Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.None));
+            Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
         }
 
         [TestCase]
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.Tests
                 PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
                 ManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
+            Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.SystemAssigned));
+            Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
 
             data.Identity.SystemAssignedServiceIdentityType = SystemAssignedServiceIdentityType.None;
-            Assert.AreEqual(SystemAssignedServiceIdentityType.None, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.None, data.ManagedIdentity.ManagedServiceIdentityType);
+            Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.None));
+            Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.None));
         }
 
         [TestCase]
@@ -245,12 +245,12 @@ namespace Azure.ResourceManager.Tests
             using var jsonDocument = JsonDocument.Parse(json);
             JsonElement element = jsonDocument.RootElement;
             PolicyAssignmentData data = PolicyAssignmentData.DeserializePolicyAssignmentData(element);
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual("22fdaec1-8b9f-49dc-bd72-ddaf8f215577", data.Identity.PrincipalId.ToString());
-            Assert.AreEqual("72f988af-86f1-41af-91ab-2d7cd011db47", data.Identity.TenantId.ToString());
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
-            Assert.AreEqual("22fdaec1-8b9f-49dc-bd72-ddaf8f215577", data.ManagedIdentity.PrincipalId.ToString());
-            Assert.AreEqual("72f988af-86f1-41af-91ab-2d7cd011db47", data.ManagedIdentity.TenantId.ToString());
+            Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.SystemAssigned));
+            Assert.That(data.Identity.PrincipalId.ToString(), Is.EqualTo("22fdaec1-8b9f-49dc-bd72-ddaf8f215577"));
+            Assert.That(data.Identity.TenantId.ToString(), Is.EqualTo("72f988af-86f1-41af-91ab-2d7cd011db47"));
+            Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+            Assert.That(data.ManagedIdentity.PrincipalId.ToString(), Is.EqualTo("22fdaec1-8b9f-49dc-bd72-ddaf8f215577"));
+            Assert.That(data.ManagedIdentity.TenantId.ToString(), Is.EqualTo("72f988af-86f1-41af-91ab-2d7cd011db47"));
 
             data.Identity.SystemAssignedServiceIdentityType = SystemAssignedServiceIdentityType.None;
             string expectedNone = "{\"identity\":{\"type\":\"None\"},\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.Tests
             using var jsonDocument = JsonDocument.Parse(json);
             JsonElement element = jsonDocument.RootElement;
             PolicyAssignmentData data = PolicyAssignmentData.DeserializePolicyAssignmentData(element);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
-            Assert.AreEqual("22fdaec1-8b9f-49dc-bd72-ddaf8f215577", data.ManagedIdentity.PrincipalId.ToString());
-            Assert.AreEqual("72f988af-86f1-41af-91ab-2d7cd011db47", data.ManagedIdentity.TenantId.ToString());
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual("22fdaec1-8b9f-49dc-bd72-ddaf8f215577", data.Identity.PrincipalId.ToString());
-            Assert.AreEqual("72f988af-86f1-41af-91ab-2d7cd011db47", data.Identity.TenantId.ToString());
+            Assert.That(data.ManagedIdentity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
+            Assert.That(data.ManagedIdentity.PrincipalId.ToString(), Is.EqualTo("22fdaec1-8b9f-49dc-bd72-ddaf8f215577"));
+            Assert.That(data.ManagedIdentity.TenantId.ToString(), Is.EqualTo("72f988af-86f1-41af-91ab-2d7cd011db47"));
+            Assert.That(data.Identity.SystemAssignedServiceIdentityType, Is.EqualTo(SystemAssignedServiceIdentityType.SystemAssigned));
+            Assert.That(data.Identity.PrincipalId.ToString(), Is.EqualTo("22fdaec1-8b9f-49dc-bd72-ddaf8f215577"));
+            Assert.That(data.Identity.TenantId.ToString(), Is.EqualTo("72f988af-86f1-41af-91ab-2d7cd011db47"));
 
             data.ManagedIdentity.ManagedServiceIdentityType = ManagedServiceIdentityType.None;
             string expectedNone = "{\"identity\":{\"type\":\"None\"},\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";

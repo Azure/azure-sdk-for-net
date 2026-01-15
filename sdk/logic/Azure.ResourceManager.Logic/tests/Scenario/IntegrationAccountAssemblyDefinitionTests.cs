@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string assemblyDefinitionName = SessionRecording.GenerateAssetName("assemblyDefinition");
             var assemblyDefinition = await CreateAssemblyDefinition(assemblyDefinitionName);
             Assert.IsNotNull(assemblyDefinition);
-            Assert.AreEqual(assemblyDefinitionName,assemblyDefinition.Data.Name);
+            Assert.That(assemblyDefinition.Data.Name, Is.EqualTo(assemblyDefinitionName));
         }
 
         [RecordedTest]
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string assemblyDefinitionName = SessionRecording.GenerateAssetName("assemblyDefinition");
             await CreateAssemblyDefinition(assemblyDefinitionName);
             bool flag = await _assemblyDefinitionCollection.ExistsAsync(assemblyDefinitionName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Logic.Tests
             await CreateAssemblyDefinition(assemblyDefinitionName);
             var assemblyDefinition = await _assemblyDefinitionCollection.GetAsync(assemblyDefinitionName);
             Assert.IsNotNull(assemblyDefinition);
-            Assert.AreEqual(assemblyDefinitionName, assemblyDefinition.Value.Data.Name);
+            Assert.That(assemblyDefinition.Value.Data.Name, Is.EqualTo(assemblyDefinitionName));
         }
 
         [RecordedTest]
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Logic.Tests
             string assemblyDefinitionName = SessionRecording.GenerateAssetName("assemblyDefinition");
             var assemblyDefinition = await CreateAssemblyDefinition(assemblyDefinitionName);
             bool flag = await _assemblyDefinitionCollection.ExistsAsync(assemblyDefinitionName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await assemblyDefinition.DeleteAsync(WaitUntil.Completed);
             flag = await _assemblyDefinitionCollection.ExistsAsync(assemblyDefinitionName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

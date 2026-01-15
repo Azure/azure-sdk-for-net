@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var input = ResourceDataHelper.GetBasicStaticSiteARMResourceData(StaticSiteLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             var staticSite = lro.Value;
-            Assert.AreEqual(name, staticSite.Data.Name);
+            Assert.That(staticSite.Data.Name, Is.EqualTo(name));
         }
 
         [TestCase]
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var input = ResourceDataHelper.GetBasicStaticSiteARMResourceData(StaticSiteLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, staticSiteName, input);
             StaticSiteResource staticSiteARMResource = lro.Value;
-            Assert.IsTrue(await container.ExistsAsync(staticSiteName));
-            Assert.IsFalse(await container.ExistsAsync(staticSiteName + "1"));
+            Assert.That((bool)await container.ExistsAsync(staticSiteName), Is.True);
+            Assert.That((bool)await container.ExistsAsync(staticSiteName + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }

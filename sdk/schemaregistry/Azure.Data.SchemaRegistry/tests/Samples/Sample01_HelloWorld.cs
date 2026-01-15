@@ -100,7 +100,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             string definition = schema.Definition;
             #endregion
 
-            Assert.AreEqual(Regex.Replace(_avroDefinition, @"\s+", string.Empty), definition);
+            Assert.That(definition, Is.EqualTo(Regex.Replace(_avroDefinition, @"\s+", string.Empty)));
         }
 
         [Test]
@@ -151,7 +151,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             string definition = schema.Definition;
             #endregion
 
-            Assert.AreEqual(_jsonDefinition, definition);
+            Assert.That(definition, Is.EqualTo(_jsonDefinition));
         }
 
         [Test]
@@ -190,7 +190,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             string definition = schema.Definition;
             #endregion
 
-            Assert.AreEqual(_customDefinition, definition);
+            Assert.That(definition, Is.EqualTo(_customDefinition));
         }
     }
 }

@@ -83,9 +83,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             foreach (var expectedNotebook in notebooks)
             {
                 NotebookResource actualNotebook = await client.GetNotebookAsync(expectedNotebook.Name);
-                Assert.AreEqual(expectedNotebook.Name, actualNotebook.Name);
-                Assert.AreEqual(expectedNotebook.Id, actualNotebook.Id);
-                Assert.AreEqual(expectedNotebook.Properties.BigDataPool?.ReferenceName, actualNotebook.Properties.BigDataPool?.ReferenceName);
+                Assert.That(actualNotebook.Name, Is.EqualTo(expectedNotebook.Name));
+                Assert.That(actualNotebook.Id, Is.EqualTo(expectedNotebook.Id));
+                Assert.That(actualNotebook.Properties.BigDataPool?.ReferenceName, Is.EqualTo(expectedNotebook.Properties.BigDataPool?.ReferenceName));
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await renameOperation.WaitForCompletionResponseAsync();
 
             NotebookResource notebook = await client.GetNotebookAsync (newNotebookName);
-            Assert.AreEqual (newNotebookName, notebook.Name);
+            Assert.That(notebook.Name, Is.EqualTo(newNotebookName));
 
             NotebookDeleteNotebookOperation operation = await client.StartDeleteNotebookAsync (newNotebookName);
             await operation.WaitForCompletionResponseAsync();

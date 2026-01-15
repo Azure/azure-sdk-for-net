@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var input = ResourceDataHelper.GetBasicDiagnosticSettingsData();
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             var setting = lro.Value;
-            Assert.AreEqual(name, setting.Data.Name);
+            Assert.That(setting.Data.Name, Is.EqualTo(name));
         }
 
         [Ignore("Need to Update cleanup")]

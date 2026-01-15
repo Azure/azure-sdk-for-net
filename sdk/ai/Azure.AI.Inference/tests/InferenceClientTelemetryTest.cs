@@ -72,7 +72,7 @@ namespace Azure.AI.Inference.Tests
             )
         {
             if (testType == TestType.Basic)
-                Assert.True(withUsage, "The Basic test cannot be without tag usage. Please correct the test.");
+                Assert.That(withUsage, Is.True, "The Basic test cannot be without tag usage. Please correct the test.");
             using var _ = ConfigureInstrumentation(true, traceContent);
 
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
@@ -220,7 +220,7 @@ namespace Azure.AI.Inference.Tests
                         {
                             // Multiple choices are not reported for streaming calls so we can only validate the first one.
                             // If it's fixed, this test will fail and will need to be updated
-                            Assert.Null(update.Choices);
+                            Assert.That(update.Choices, Is.Null);
                             UpdateResponse(expectedResponse, update, fullContent);
                         }
 
@@ -273,7 +273,7 @@ namespace Azure.AI.Inference.Tests
                     {
                         Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
 
-                        Assert.AreEqual(2, response.Value.Choices.Count);
+                        Assert.That(response.Value.Choices.Count, Is.EqualTo(2));
                         foreach (var choice in response.Value.Choices)
                         {
                             // TODO: stop is returned along with the tool calls
@@ -281,7 +281,7 @@ namespace Azure.AI.Inference.Tests
                             //   $"Unexpected finish reason - '{choice.FinishReason}', content - '{choice.Message.Content }'");
 
                             Assert.NotNull(choice.Message.ToolCalls);
-                            Assert.AreEqual(2, choice.Message.ToolCalls.Count);
+                            Assert.That(choice.Message.ToolCalls.Count, Is.EqualTo(2));
                         }
 
                         actListener.ValidateStartActivity(requestOptions, endpoint, true);
@@ -311,7 +311,7 @@ namespace Azure.AI.Inference.Tests
                         {
                             // Multiple choices are not reported for streaming calls so we can only validate the first one.
                             // If it's fixed, this test will fail and will need to be updated
-                            Assert.Null(update.Choices);
+                            Assert.That(update.Choices, Is.Null);
                             UpdateResponse(expectedResponse, update, fullContent);
 
                             if (update.ToolCallUpdate != null)
@@ -330,7 +330,7 @@ namespace Azure.AI.Inference.Tests
                             }
                         }
 
-                        Assert.AreEqual(2, toolCallNames.Count);
+                        Assert.That(toolCallNames.Count, Is.EqualTo(2));
                         expectedResponse.Choices = new[] {
                             new { finish_reason = expectedResponse.FinishReasons[0], index = 0,
                                 message = new { content = fullContent[0].ToString(), tool_calls =

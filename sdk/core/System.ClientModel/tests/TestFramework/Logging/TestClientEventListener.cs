@@ -58,9 +58,9 @@ namespace ClientModel.Tests
         public EventWrittenEventArgs GetAndValidateSingleEvent(int eventId, string expectedEventName, EventLevel expectedEventLevel, string expectedEventSourceName)
         {
             EventWrittenEventArgs args = SingleEventById(eventId);
-            Assert.AreEqual(expectedEventName, args.EventName);
-            Assert.AreEqual(expectedEventLevel, args.Level);
-            Assert.AreEqual(expectedEventSourceName, args.EventSource.Name);
+            Assert.That(args.EventName, Is.EqualTo(expectedEventName));
+            Assert.That(args.Level, Is.EqualTo(expectedEventLevel));
+            Assert.That(args.EventSource.Name, Is.EqualTo(expectedEventSourceName));
             string requestId = args.GetProperty<string>("requestId");
             Assert.That(string.IsNullOrEmpty(requestId), Is.False);
             return args;
@@ -73,7 +73,7 @@ namespace ClientModel.Tests
 
         public void ValidateNumberOfEventsById(int eventId, int expectedNumEvents)
         {
-            Assert.AreEqual(expectedNumEvents, EventsById(eventId).Count());
+            Assert.That(EventsById(eventId).Count(), Is.EqualTo(expectedNumEvents));
         }
 
         public IEnumerable<EventWrittenEventArgs> EventsById(int id)

@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             // Create SQL VM group
             var sqlVmGroupCollection = _resourceGroup.GetSqlVmGroups();
             SqlVmGroupResource sqlVmGroup = await CreateSqlVmGroupAsync(_resourceGroup, _sqlVmGroupName, _storageAccountName, _storageAccountKey);
-            Assert.AreEqual(_sqlVmGroupName, sqlVmGroup.Data.Name);
+            Assert.That(sqlVmGroup.Data.Name, Is.EqualTo(_sqlVmGroupName));
             // Get SQL VM group
             SqlVmGroupResource sqlVmGroupFromGet = await sqlVmGroupCollection.GetAsync(_sqlVmGroupName);
-            Assert.AreEqual(_sqlVmGroupName, sqlVmGroupFromGet.Data.Name);
+            Assert.That(sqlVmGroupFromGet.Data.Name, Is.EqualTo(_sqlVmGroupName));
             // List by subscription
             var count = 0;
             await foreach (var sqlVmGroupFromList in Subscription.GetSqlVmGroupsAsync())
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             {
                 count++;
             }
-            Assert.AreEqual(0, count);
+            Assert.That(count, Is.EqualTo(0));
         }
 
         [TestCase]
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
         {
             // Create SQL VM group
             SqlVmGroupResource sqlVmGroup = await CreateSqlVmGroupAsync(_resourceGroup, _sqlVmGroupName, _storageAccountName, _storageAccountKey);
-            Assert.AreEqual(_sqlVmGroupName, sqlVmGroup.Data.Name);
+            Assert.That(sqlVmGroup.Data.Name, Is.EqualTo(_sqlVmGroupName));
             // Update SQL VM group
             string key = "test", value = "updateTag";
             SqlVmGroupResource sqlVmGroupFromUpdate = (await sqlVmGroup.UpdateAsync(WaitUntil.Completed, new SqlVmGroupPatch()
@@ -91,13 +91,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
                     { key, value }
                 }
             })).Value;
-            Assert.AreEqual(1, sqlVmGroupFromUpdate.Data.Tags.Keys.Count);
-            Assert.AreEqual(value, sqlVmGroupFromUpdate.Data.Tags[key]);
+            Assert.That(sqlVmGroupFromUpdate.Data.Tags.Keys.Count, Is.EqualTo(1));
+            Assert.That(sqlVmGroupFromUpdate.Data.Tags[key], Is.EqualTo(value));
             // Get SQL VM group
             SqlVmGroupResource sqlVmGroupFromGet = await sqlVmGroupFromUpdate.GetAsync();
-            Assert.AreEqual(_sqlVmGroupName, sqlVmGroupFromGet.Data.Name);
-            Assert.AreEqual(1, sqlVmGroupFromGet.Data.Tags.Keys.Count);
-            Assert.AreEqual(value, sqlVmGroupFromGet.Data.Tags[key]);
+            Assert.That(sqlVmGroupFromGet.Data.Name, Is.EqualTo(_sqlVmGroupName));
+            Assert.That(sqlVmGroupFromGet.Data.Tags.Keys.Count, Is.EqualTo(1));
+            Assert.That(sqlVmGroupFromGet.Data.Tags[key], Is.EqualTo(value));
         }
 
         [TestCase(null)]
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             };
             SqlVmGroupResource updatedSqlVmGroup = await sqlVmGroup.SetTagsAsync(tags);
 
-            Assert.AreEqual(tags, updatedSqlVmGroup.Data.Tags);
+            Assert.That(updatedSqlVmGroup.Data.Tags, Is.EqualTo(tags));
         }
     }
 }

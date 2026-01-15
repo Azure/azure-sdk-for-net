@@ -244,10 +244,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                     receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 }
                 var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
-                Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
+                Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message.Body.ToString()));
 
                 await client.DisposeAsync();
-                Assert.IsTrue(client.IsClosed);
+                Assert.That(client.IsClosed, Is.True);
                 if (!useSessions)
                 {
                     Assert.Throws<ObjectDisposedException>(() => client.CreateReceiver(scope.QueueName));
@@ -288,7 +288,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                     receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 }
                 var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
-                Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
+                Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message.Body.ToString()));
 
                 if (!useSessions)
                 {
@@ -337,7 +337,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             {
                 var client = CreateClient();
                 var receiver = await client.AcceptSessionAsync(scope.QueueName, "");
-                Assert.AreEqual("", receiver.SessionId);
+                Assert.That(receiver.SessionId, Is.Empty);
             }
         }
     }

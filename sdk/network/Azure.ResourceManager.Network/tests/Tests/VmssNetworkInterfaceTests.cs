@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Tests
             var firstResult = vmssListAllPageResult.First();
 
             Assert.NotNull(vmssListAllPageResult);
-            Assert.AreEqual("Succeeded", firstResult.ProvisioningState.ToString());
+            Assert.That(firstResult.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
             Assert.NotNull(firstResult.ResourceGuid);
 
             string idItem = firstResult.Id;
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Network.Tests
         private void VerifyVmssNicProperties(NetworkInterfaceData nic)
         {
             Assert.NotNull(nic.NetworkSecurityGroup);
-            Assert.False(string.IsNullOrEmpty(nic.NetworkSecurityGroup.Id));
+            Assert.That(string.IsNullOrEmpty(nic.NetworkSecurityGroup.Id), Is.False);
             Assert.NotNull(nic.DnsSettings);
             Assert.NotNull(nic.DnsSettings.DnsServers);
-            Assert.AreEqual(1, nic.DnsSettings.DnsServers.Count);
+            Assert.That(nic.DnsSettings.DnsServers.Count, Is.EqualTo(1));
             Assert.NotNull(nic.IPConfigurations[0].PublicIPAddress);
-            Assert.False(string.IsNullOrEmpty(nic.IPConfigurations[0].PublicIPAddress.Id));
+            Assert.That(string.IsNullOrEmpty(nic.IPConfigurations[0].PublicIPAddress.Id), Is.False);
         }
     }
 }

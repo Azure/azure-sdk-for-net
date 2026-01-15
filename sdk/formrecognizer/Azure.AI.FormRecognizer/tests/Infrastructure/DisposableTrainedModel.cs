@@ -55,8 +55,8 @@ namespace Azure.AI.FormRecognizer.Tests
             TrainingOperation operation = await trainingClient.StartTrainingAsync(trainingFilesUri, useTrainingLabels, modelName);
             await operation.WaitForCompletionAsync();
 
-            Assert.IsTrue(operation.HasValue);
-            Assert.AreEqual(CustomFormModelStatus.Ready, operation.Value.Status);
+            Assert.That(operation.HasValue, Is.True);
+            Assert.That(operation.Value.Status, Is.EqualTo(CustomFormModelStatus.Ready));
 
             return new DisposableTrainedModel(trainingClient, operation.Value.ModelId, deleteOnDisposal);
         }

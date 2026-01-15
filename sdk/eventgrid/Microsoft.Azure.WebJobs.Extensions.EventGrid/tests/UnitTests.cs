@@ -37,24 +37,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             // JObject as input
             ITriggerData triggerDataWithEvent = await binding.BindAsync(eve, null);
-            Assert.AreEqual(data, triggerDataWithEvent.BindingData["data"]);
+            Assert.That(triggerDataWithEvent.BindingData["data"], Is.EqualTo(data));
 
             // JArray as input
             ITriggerData triggerDataWithEvents = await bindingBatch.BindAsync(events, null);
-            Assert.AreEqual(dataEvents, triggerDataWithEvents.BindingData["data"]);
+            Assert.That(triggerDataWithEvents.BindingData["data"], Is.EqualTo(dataEvents));
 
             // string as input
             ITriggerData triggerDataWithString = await binding.BindAsync(FakeData.EventGridEvent, null);
-            Assert.AreEqual(data, triggerDataWithString.BindingData["data"]);
+            Assert.That(triggerDataWithString.BindingData["data"], Is.EqualTo(data));
 
             // test invalid, batch of events
             FormatException formatException = Assert.Throws<FormatException>(() => binding.BindAsync(FakeData.EventGridEvents, null));
-            Assert.AreEqual($"Unable to parse {FakeData.EventGridEvents} to {typeof(JObject)}", formatException.Message);
+            Assert.That(formatException.Message, Is.EqualTo($"Unable to parse {FakeData.EventGridEvents} to {typeof(JObject)}"));
 
             // test invalid, random object
             var testObject = new TestClass();
             InvalidOperationException invalidException = Assert.Throws<InvalidOperationException>(() => binding.BindAsync(testObject, null));
-            Assert.AreEqual($"Unable to bind {testObject} to type {arrayParam[0].ParameterType}", invalidException.Message);
+            Assert.That(invalidException.Message, Is.EqualTo($"Unable to bind {testObject} to type {arrayParam[0].ParameterType}"));
         }
 
         private class TestClass

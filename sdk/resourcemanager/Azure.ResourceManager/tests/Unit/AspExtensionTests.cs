@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Tests
         private static void AssertDefaultSubscription(string defaultSubscription, ArmClient client)
         {
             SubscriptionResource subscription = client.GetType().GetField("_defaultSubscription", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(client) as SubscriptionResource;
-            Assert.AreEqual(subscription.Id, SubscriptionResource.CreateResourceIdentifier(defaultSubscription));
+            Assert.That(SubscriptionResource.CreateResourceIdentifier(defaultSubscription), Is.EqualTo(subscription.Id));
         }
 
         private static ArmClient GetClient(ServiceCollection services)
@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.Tests
 
             AssertDefaultSubscription(defaultSubscription, client);
 
-            Assert.IsTrue(client.ApiVersionOverrides.ContainsKey(ResourceGroupResource.ResourceType));
-            Assert.AreEqual(client.ApiVersionOverrides[ResourceGroupResource.ResourceType], apiVersion);
+            Assert.That(client.ApiVersionOverrides.ContainsKey(ResourceGroupResource.ResourceType), Is.True);
+            Assert.That(apiVersion, Is.EqualTo(client.ApiVersionOverrides[ResourceGroupResource.ResourceType]));
         }
     }
 }

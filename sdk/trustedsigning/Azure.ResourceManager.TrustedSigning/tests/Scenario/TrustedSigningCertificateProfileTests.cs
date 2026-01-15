@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             Assert.IsNotNull(certProfile);
 
             ArmOperation op = await certProfile.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(op.HasCompleted);
+            Assert.That(op.HasCompleted, Is.True);
         }
 
         // Get details of a certificate profile.
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
                     break;
                 }
             }
-            Assert.IsTrue(exist);
+            Assert.That(exist, Is.True);
         }
 
         // Create a certificate profile.

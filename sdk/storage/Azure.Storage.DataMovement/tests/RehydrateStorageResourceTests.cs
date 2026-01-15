@@ -77,7 +77,7 @@ namespace Azure.Storage.DataMovement.Tests
                     ? await new LocalFilesStorageResourceProvider().FromSourceAsync(transferProperties, CancellationToken.None)
                     : await new LocalFilesStorageResourceProvider().FromDestinationAsync(transferProperties, CancellationToken.None);
 
-            Assert.AreEqual(originalPath, storageResource.Uri.LocalPath);
+            Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(originalPath));
             Assert.IsInstanceOf(typeof(LocalFileStorageResource), storageResource);
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Storage.DataMovement.Tests
                     ? await new LocalFilesStorageResourceProvider().FromSourceAsync(transferProperties, CancellationToken.None)
                     : await new LocalFilesStorageResourceProvider().FromDestinationAsync(transferProperties, CancellationToken.None);
 
-            Assert.AreEqual(originalPath, storageResource.Uri.LocalPath);
+            Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(originalPath));
             Assert.IsInstanceOf(typeof(LocalDirectoryStorageResourceContainer), storageResource);
         }
     }

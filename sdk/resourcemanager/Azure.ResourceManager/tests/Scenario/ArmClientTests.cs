@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Tests
             options.AddPolicy(tracker, HttpPipelinePosition.PerCall);
             var client = GetArmClient(options);
             var subscription = await client.GetDefaultSubscriptionAsync();
-            Assert.AreEqual(1, tracker.Times);
+            Assert.That(tracker.Times, Is.EqualTo(1));
             var rgCollection = subscription.GetResourceGroups();
             _ = await rgCollection.GetAsync(_rgName);
-            Assert.AreEqual(2, tracker.Times);
+            Assert.That(tracker.Times, Is.EqualTo(2));
         }
 
         [RecordedTest]
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Tests
             options.AddPolicy(tracker, HttpPipelinePosition.PerRetry);
             var client = GetArmClient(options);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await client.GetDefaultSubscriptionAsync());
-            Assert.AreEqual(options.Retry.MaxRetries, tracker.Times);
+            Assert.That(tracker.Times, Is.EqualTo(options.Retry.MaxRetries));
         }
 
         [RecordedTest]
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Tests
             var rgCollection = subscription.GetResourceGroups();
             _ = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testRg-"), new ResourceGroupData(AzureLocation.WestUS));
 
-            Assert.AreEqual(GetDefaultResourceGroupVersion(rgCollection), tracker.VersionUsed);
+            Assert.That(tracker.VersionUsed, Is.EqualTo(GetDefaultResourceGroupVersion(rgCollection)));
         }
 
         private static string GetDefaultResourceGroupVersion(ResourceGroupCollection rgCollection)
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.Tests
             _ = await rgCollection1.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testRg-"), new ResourceGroupData(AzureLocation.WestUS));
             _ = await rgCollection2.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testRg-"), new ResourceGroupData(AzureLocation.WestUS));
 
-            Assert.AreEqual(versionOverride, tracker1.VersionUsed);
-            Assert.AreEqual(GetDefaultResourceGroupVersion(rgCollection2), tracker2.VersionUsed);
+            Assert.That(tracker1.VersionUsed, Is.EqualTo(versionOverride));
+            Assert.That(tracker2.VersionUsed, Is.EqualTo(GetDefaultResourceGroupVersion(rgCollection2)));
         }
 
         [RecordedTest]
@@ -179,13 +179,13 @@ namespace Azure.ResourceManager.Tests
             var providerCollection = subscription.GetResourceProviders();
             var version = await providerCollection.GetApiVersionAsync(new ResourceType("Microsoft.Compute/virtualMachines"));
             Assert.NotNull(version);
-            Assert.AreEqual(1, policy.GetCount("Microsoft.Compute"));
-            Assert.AreEqual(0, policy.GetCount("Microsoft.Network"));
+            Assert.That(policy.GetCount("Microsoft.Compute"), Is.EqualTo(1));
+            Assert.That(policy.GetCount("Microsoft.Network"), Is.EqualTo(0));
 
             version = await providerCollection.GetApiVersionAsync(new ResourceType("Microsoft.Compute/availabilitySets"));
             Assert.NotNull(version);
-            Assert.AreEqual(1, policy.GetCount("Microsoft.Compute"));
-            Assert.AreEqual(0, policy.GetCount("Microsoft.Network"));
+            Assert.That(policy.GetCount("Microsoft.Compute"), Is.EqualTo(1));
+            Assert.That(policy.GetCount("Microsoft.Network"), Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -202,9 +202,9 @@ namespace Azure.ResourceManager.Tests
             var client = GetArmClient(options);
             var subscription = await client.GetDefaultSubscriptionAsync();
             var version = await subscription.GetResourceProviders().GetApiVersionAsync(computeResourceType);
-            Assert.AreEqual(expectedVersion, version);
-            Assert.AreEqual(0, policy.GetCount("Microsoft.Compute"));
-            Assert.AreEqual(0, policy.GetCount("Microsoft.Network"));
+            Assert.That(version, Is.EqualTo(expectedVersion));
+            Assert.That(policy.GetCount("Microsoft.Compute"), Is.EqualTo(0));
+            Assert.That(policy.GetCount("Microsoft.Network"), Is.EqualTo(0));
 
             policy = new ProviderCounterPolicy();
             options = new ArmClientOptions();
@@ -213,9 +213,9 @@ namespace Azure.ResourceManager.Tests
             client = GetArmClient(options);
             subscription = await client.GetDefaultSubscriptionAsync();
             version = await subscription.GetResourceProviders().GetApiVersionAsync(computeResourceType);
-            Assert.AreNotEqual(expectedVersion, version);
-            Assert.AreEqual(1, policy.GetCount("Microsoft.Compute"));
-            Assert.AreEqual(0, policy.GetCount("Microsoft.Network"));
+            Assert.That(version, Is.Not.EqualTo(expectedVersion));
+            Assert.That(policy.GetCount("Microsoft.Compute"), Is.EqualTo(1));
+            Assert.That(policy.GetCount("Microsoft.Network"), Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Tests
         {
             var client = GetArmClient(subscriptionId: Recording.Random.NewGuid().ToString());
             var ex = Assert.Throws<RequestFailedException>(() => client.GetDefaultSubscription());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [RecordedTest]
@@ -258,14 +258,14 @@ namespace Azure.ResourceManager.Tests
         public void GetGenericResourcesOperationsTests()
         {
             string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/providers/Microsoft.Compute/virtualMachines/myVm";
-            Assert.AreEqual(id, Client.GetGenericResource(new ResourceIdentifier(id)).Id.ToString());
+            Assert.That(Client.GetGenericResource(new ResourceIdentifier(id)).Id.ToString(), Is.EqualTo(id));
         }
 
         [RecordedTest]
         public void GetGenericResourceOperationsSingleIDTests()
         {
             string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
-            Assert.AreEqual(id, Client.GetGenericResource(new ResourceIdentifier(id)).Id.ToString());
+            Assert.That(Client.GetGenericResource(new ResourceIdentifier(id)).Id.ToString(), Is.EqualTo(id));
         }
 
         [RecordedTest]
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Tests
             string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}";
             var genericResourceOperations = Client.GetGenericResource(new ResourceIdentifier(id));
             var genericResource = await genericResourceOperations.GetAsync();
-            Assert.AreEqual(200, genericResource.GetRawResponse().Status);
+            Assert.That(genericResource.GetRawResponse().Status, Is.EqualTo(200));
         }
 
         [RecordedTest]
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Tests
             string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
             var genericResourceOperations = Client.GetGenericResource(new ResourceIdentifier(id));
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
         }
 
         [RecordedTest]
@@ -304,13 +304,13 @@ namespace Azure.ResourceManager.Tests
             var resourceProviders = subscription.GetResourceProviders();
             var subscriptionApiVersion = await resourceProviders.GetApiVersionAsync(SubscriptionResource.ResourceType);
             var resourceGroupApiVersion = await resourceProviders.GetApiVersionAsync("microsoft.Resources/resourcegroups");
-            Assert.AreEqual(subscriptionApiVersion, "2016-06-01");
-            Assert.AreEqual(resourceGroupApiVersion, "2019-10-01");
+            Assert.That(subscriptionApiVersion, Is.EqualTo("2016-06-01"));
+            Assert.That(resourceGroupApiVersion, Is.EqualTo("2019-10-01"));
 
             client.TryGetApiVersion("Microsoft.resources/subscriptions", out subscriptionApiVersion);
             client.TryGetApiVersion("mIcrOsoft.resources/ResourceGroups", out resourceGroupApiVersion);
-            Assert.AreEqual(subscriptionApiVersion, "2016-06-01");
-            Assert.AreEqual(resourceGroupApiVersion, "2019-10-01");
+            Assert.That(subscriptionApiVersion, Is.EqualTo("2016-06-01"));
+            Assert.That(resourceGroupApiVersion, Is.EqualTo("2019-10-01"));
         }
 
         [RecordedTest]
@@ -324,15 +324,15 @@ namespace Azure.ResourceManager.Tests
 
             client.TryGetApiVersion("Microsoft.resources/subscriptions", out var subscriptionApiVersion);
             client.TryGetApiVersion("mIcrOsoft.resources/ResourceGroups", out var resourceGroupApiVersion);
-            Assert.AreEqual(subscriptionApiVersion, "2016-06-01");
-            Assert.AreEqual(resourceGroupApiVersion, "2021-01-01");
+            Assert.That(subscriptionApiVersion, Is.EqualTo("2016-06-01"));
+            Assert.That(resourceGroupApiVersion, Is.EqualTo("2021-01-01"));
 
             var subscription = await client.GetDefaultSubscriptionAsync();
             var resourceProviders = subscription.GetResourceProviders();
             subscriptionApiVersion = await resourceProviders.GetApiVersionAsync(SubscriptionResource.ResourceType);
             resourceGroupApiVersion = await resourceProviders.GetApiVersionAsync("microsoft.Resources/resourcegroups");
-            Assert.AreEqual(subscriptionApiVersion, "2016-06-01");
-            Assert.AreEqual(resourceGroupApiVersion, "2021-01-01");
+            Assert.That(subscriptionApiVersion, Is.EqualTo("2016-06-01"));
+            Assert.That(resourceGroupApiVersion, Is.EqualTo("2021-01-01"));
         }
 
         private static HttpPipeline GetPipelineFromClient(ArmClient client)

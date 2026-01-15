@@ -30,7 +30,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             // Test deserialization
             var deserializedSecret = ModelReaderWriter.Read<DataFactoryKeyVaultSecret>(binaryData, options);
             Assert.IsNotNull(deserializedSecret);
-            Assert.AreEqual(keyVaultSecret.Store.ReferenceName, deserializedSecret.Store.ReferenceName);
+            Assert.That(deserializedSecret.Store.ReferenceName, Is.EqualTo(keyVaultSecret.Store.ReferenceName));
         }
 
         [Test]
@@ -51,8 +51,8 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             // Test deserialization
             var deserializedRef = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(binaryData, options);
             Assert.IsNotNull(deserializedRef);
-            Assert.AreEqual(linkedServiceRef.ReferenceName, deserializedRef.ReferenceName);
-            Assert.AreEqual(linkedServiceRef.ReferenceKind, deserializedRef.ReferenceKind);
+            Assert.That(deserializedRef.ReferenceName, Is.EqualTo(linkedServiceRef.ReferenceName));
+            Assert.That(deserializedRef.ReferenceKind, Is.EqualTo(linkedServiceRef.ReferenceKind));
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             // Test deserialization
             var deserializedSecret = ModelReaderWriter.Read<DataFactorySecretString>(binaryData, options);
             Assert.IsNotNull(deserializedSecret);
-            Assert.AreEqual(secretString.Value, deserializedSecret.Value);
+            Assert.That(deserializedSecret.Value, Is.EqualTo(secretString.Value));
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             var deserializedSecret = ModelReaderWriter.Read<DataFactorySecret>(binaryData, options);
             Assert.IsNotNull(deserializedSecret);
             Assert.IsInstanceOf<DataFactorySecretString>(deserializedSecret);
-            Assert.AreEqual(((DataFactorySecretString)secret).Value, ((DataFactorySecretString)deserializedSecret).Value);
+            Assert.That(((DataFactorySecretString)deserializedSecret).Value, Is.EqualTo(((DataFactorySecretString)secret).Value));
         }
 
         [Test]
@@ -117,10 +117,10 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             using var document = JsonDocument.Parse(stream);
             var root = document.RootElement;
 
-            Assert.IsTrue(root.TryGetProperty("value", out var valueProperty));
-            Assert.AreEqual("testSecret", valueProperty.GetString());
-            Assert.IsTrue(root.TryGetProperty("type", out var typeProperty));
-            Assert.AreEqual("SecureString", typeProperty.GetString());
+            Assert.That(root.TryGetProperty("value", out var valueProperty), Is.True);
+            Assert.That(valueProperty.GetString(), Is.EqualTo("testSecret"));
+            Assert.That(root.TryGetProperty("type", out var typeProperty), Is.True);
+            Assert.That(typeProperty.GetString(), Is.EqualTo("SecureString"));
         }
 
         [Test]
@@ -138,7 +138,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
 
             // Assert
             Assert.IsNotNull(secretString);
-            Assert.AreEqual("testSecret", secretString.Value);
+            Assert.That(secretString.Value, Is.EqualTo("testSecret"));
         }
 
         [Test]
@@ -152,7 +152,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             var format = ((IPersistableModel<DataFactorySecretString>)secretString).GetFormatFromOptions(options);
 
             // Assert
-            Assert.AreEqual("J", format);
+            Assert.That(format, Is.EqualTo("J"));
         }
 
         [Test]

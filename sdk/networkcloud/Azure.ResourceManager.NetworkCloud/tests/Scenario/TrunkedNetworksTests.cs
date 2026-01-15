@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             ArmOperation<NetworkCloudTrunkedNetworkResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, trunkedNetworkName, createData);
-            Assert.AreEqual(trunkedNetworkName, createResult.Value.Data.Name);
+            Assert.That(createResult.Value.Data.Name, Is.EqualTo(trunkedNetworkName));
 
             // Get
             var getResult = await trunkedNetwork.GetAsync();
-            Assert.AreEqual(trunkedNetworkName, getResult.Value.Data.Name);
+            Assert.That(getResult.Value.Data.Name, Is.EqualTo(trunkedNetworkName));
 
             // Update
             NetworkCloudTrunkedNetworkPatch patch = new NetworkCloudTrunkedNetworkPatch()
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             NetworkCloudTrunkedNetworkResource updateResult = await trunkedNetwork.UpdateAsync(patch);
-            Assert.AreEqual(patch.Tags, updateResult.Data.Tags);
+            Assert.That(updateResult.Data.Tags, Is.EqualTo(patch.Tags));
 
             // List by Resource Group
             var listByResourceGroup = new List<NetworkCloudTrunkedNetworkResource>();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             // Delete
             var deleteResult = await trunkedNetwork.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            Assert.IsTrue(deleteResult.HasCompleted);
+            Assert.That(deleteResult.HasCompleted, Is.True);
         }
     }
 }

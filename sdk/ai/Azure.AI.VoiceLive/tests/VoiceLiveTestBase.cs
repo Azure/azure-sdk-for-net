@@ -75,7 +75,7 @@ namespace Azure.AI.VoiceLive.Tests
         protected byte[] LoadTestAudio(string filename)
         {
             var path = Path.Combine(AudioPath, filename);
-            Assert.True(File.Exists(path), $"Test audio file not found: {path}");
+            Assert.That(File.Exists(path), Is.True, $"Test audio file not found: {path}");
 
             var data = File.ReadAllBytes(path);
             TestContext.WriteLine($"Loaded audio file: {filename} ({data.Length} bytes)");
@@ -117,7 +117,7 @@ namespace Azure.AI.VoiceLive.Tests
         protected void EnsureEventIdsUnique(SessionUpdate sessionUpdate)
         {
             Assert.IsNotNull(sessionUpdate.EventId, $"Event ID was not specified on type {sessionUpdate.Type}");
-            Assert.IsFalse(_eventIDs.Contains(sessionUpdate.EventId), $"EventId {sessionUpdate.EventId} was reused");
+            Assert.That(_eventIDs.Contains(sessionUpdate.EventId), Is.False, $"EventId {sessionUpdate.EventId} was reused");
             _eventIDs.Add(sessionUpdate.EventId);
         }
 
@@ -149,7 +149,7 @@ namespace Azure.AI.VoiceLive.Tests
 
         protected T SafeCast<T>(object o) where T : class
         {
-            Assert.IsTrue(o is T, $"Expected {typeof(T).Name} but got {o.GetType().Name}");
+            Assert.That(o is T, Is.True, $"Expected {typeof(T).Name} but got {o.GetType().Name}");
 #pragma warning disable CS8603 // Possible null reference return. Assert 2 lines above prevents.
             return o as T;
 #pragma warning restore CS8603 // Possible null reference return.
@@ -158,7 +158,7 @@ namespace Azure.AI.VoiceLive.Tests
         protected async Task<SessionUpdate> GetNextUpdate(IAsyncEnumerator<SessionUpdate> updateEnumerator, bool checkEventId = true)
         {
             var moved = await updateEnumerator.MoveNextAsync().ConfigureAwait(false);
-            Assert.IsTrue(moved, "Failed to move to the next update.");
+            Assert.That(moved, Is.True, "Failed to move to the next update.");
             var currentUpdate = updateEnumerator.Current;
             Assert.IsNotNull(currentUpdate);
             if (checkEventId)

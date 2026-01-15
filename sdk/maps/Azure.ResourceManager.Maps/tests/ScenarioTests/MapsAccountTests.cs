@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Maps.Tests
             // Now delete the account
             await account.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await mapCollection.ExistsAsync(accountName)).Value;
-            Assert.IsFalse(falseResult);
+            Assert.That(falseResult, Is.False);
         }
 
         [RecordedTest]
@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.Maps.Tests
             newParameters.Tags.Add("key3", "value3");
             newParameters.Tags.Add("key4", "value4");
             var updatedAccount = (await mapCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, newParameters)).Value;
-            Assert.AreEqual(2, updatedAccount.Data.Tags.Count);
-            Assert.AreEqual("value3", updatedAccount.Data.Tags["key3"]);
-            Assert.AreEqual("value4", updatedAccount.Data.Tags["key4"]);
+            Assert.That(updatedAccount.Data.Tags.Count, Is.EqualTo(2));
+            Assert.That(updatedAccount.Data.Tags["key3"], Is.EqualTo("value3"));
+            Assert.That(updatedAccount.Data.Tags["key4"], Is.EqualTo("value4"));
         }
 
         [RecordedTest]
@@ -100,14 +100,14 @@ namespace Azure.ResourceManager.Maps.Tests
             var mapCollection = resourceGroup.GetMapsAccounts();
 
             var accounts = await mapCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(accounts.Count, 0);
+            Assert.That(accounts.Count, Is.EqualTo(0));
 
             // Create accounts
             await CreateDefaultMapsAccount(mapCollection);
             await CreateDefaultMapsAccount(mapCollection);
 
             accounts = await mapCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(2, accounts.Count);
+            Assert.That(accounts.Count, Is.EqualTo(2));
 
             VerifyAccountProperties(accounts.First().Data, true, MapsSkuName.G2);
             VerifyAccountProperties(accounts.Skip(1).First().Data, true, MapsSkuName.G2);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Maps.Tests
             // Validate key was regenerated
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreNotEqual(key2, key2Regen);
+                Assert.That(key2Regen, Is.Not.EqualTo(key2));
             }
         }
     }

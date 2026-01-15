@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             var autoProvisioningSetting = await CreateAutoProvisioningSetting();
             bool flag = await _autoProvisioningSettingCollection.ExistsAsync(_automationName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             Assert.IsNotNull(autoProvisioningSetting);
             Assert.IsNotNull(autoProvisioningSetting.Data.Id);
-            Assert.AreEqual(automationName, autoProvisioningSetting.Data.Name);
-            Assert.AreEqual("Microsoft.Security/autoProvisioningSettings", autoProvisioningSetting.Data.ResourceType.ToString());
+            Assert.That(autoProvisioningSetting.Data.Name, Is.EqualTo(automationName));
+            Assert.That(autoProvisioningSetting.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/autoProvisioningSettings"));
         }
     }
 }

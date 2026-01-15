@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             // Create Volume
             NetworkCloudVolumeData createData = new NetworkCloudVolumeData(TestEnvironment.Location, new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"), 10);
             ArmOperation<NetworkCloudVolumeResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, createData);
-            Assert.AreEqual(createResult.Value.Data.Name, volumeName);
+            Assert.That(volumeName, Is.EqualTo(createResult.Value.Data.Name));
 
             // Get Volume
             NetworkCloudVolumeResource volume = Client.GetNetworkCloudVolumeResource(volumeResourceId);
             NetworkCloudVolumeResource getResult = await volume.GetAsync();
-            Assert.AreEqual(volumeName, getResult.Data.Name);
+            Assert.That(getResult.Data.Name, Is.EqualTo(volumeName));
 
             // Update Volume
             NetworkCloudVolumePatch updateData = new NetworkCloudVolumePatch()
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             Response<NetworkCloudVolumeResource> updateResult = await volume.UpdateAsync(updateData);
-            Assert.AreEqual(updateData.Tags, updateResult.Value.Data.Tags);
+            Assert.That(updateResult.Value.Data.Tags, Is.EqualTo(updateData.Tags));
 
             // List Volumes by Resource Group
             var listByResourceGroupResult = new List<NetworkCloudVolumeResource>();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             // Delete Volume
             var deleteResult = await volume.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            Assert.IsTrue(deleteResult.HasCompleted);
+            Assert.That(deleteResult.HasCompleted, Is.True);
         }
     }
 }

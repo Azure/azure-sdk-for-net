@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 
             ElasticSanSnapshotData data = new ElasticSanSnapshotData(new SnapshotCreationInfo(volume.Id));
             ElasticSanSnapshotResource snapshot = (await snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName1, data)).Value;
-            Assert.AreEqual(snapshot.Id.Name, snapshotName1);
-            Assert.AreEqual(snapshot.Data.VolumeName, volumeName);
-            Assert.AreEqual(snapshot.Data.Name, snapshotName1);
+            Assert.That(snapshotName1, Is.EqualTo(snapshot.Id.Name));
+            Assert.That(volumeName, Is.EqualTo(snapshot.Data.VolumeName));
+            Assert.That(snapshotName1, Is.EqualTo(snapshot.Data.Name));
 
             ElasticSanSnapshotResource snapshot2 = (await snapshot.GetAsync()).Value;
-            Assert.AreEqual(snapshot2.Id.Name, snapshot.Id.Name);
-            Assert.AreEqual(snapshot2.Data.VolumeName, snapshot.Data.VolumeName);
-            Assert.AreEqual(snapshot2.Data.CreationDataSourceId, snapshot.Data.CreationDataSourceId);
+            Assert.That(snapshot.Id.Name, Is.EqualTo(snapshot2.Id.Name));
+            Assert.That(snapshot.Data.VolumeName, Is.EqualTo(snapshot2.Data.VolumeName));
+            Assert.That(snapshot.Data.CreationDataSourceId, Is.EqualTo(snapshot2.Data.CreationDataSourceId));
 
             await snapshot.DeleteAsync(WaitUntil.Completed);
         }

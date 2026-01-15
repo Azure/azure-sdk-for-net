@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.FluidRelay.Tests.Tests
             // Create
             var createFluidRelayServerOperation = await fluidRelayServerResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, fluidRelayServerName, fluidRelayServerResourceData);
             await createFluidRelayServerOperation.WaitForCompletionAsync();
-            Assert.IsTrue(createFluidRelayServerOperation.HasCompleted);
-            Assert.IsTrue(createFluidRelayServerOperation.HasValue);
+            Assert.That(createFluidRelayServerOperation.HasCompleted, Is.True);
+            Assert.That(createFluidRelayServerOperation.HasValue, Is.True);
 
             // Get
             Response<FluidRelayServerResource> getFluidRelayResponse = await fluidRelayServerResourceCollection.GetAsync(fluidRelayServerName);
             FluidRelayServerResource fluidRelayServerResource = getFluidRelayResponse.Value;
             Assert.IsNotNull(fluidRelayServerResource);
-            Assert.AreEqual(fluidRelayServerName, fluidRelayServerResource.Data.Name);
+            Assert.That(fluidRelayServerResource.Data.Name, Is.EqualTo(fluidRelayServerName));
 
             // Get Keys
             Response<FluidRelayServerKeys> getKeyFluidRelayResponse = await fluidRelayServerResource.GetKeysAsync();
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.FluidRelay.Tests.Tests
             {
                 Assert.IsNotNull(server.Data.Name);
             }
-            Assert.IsTrue(await fluidRelayServerResourceCollection2.GetAsyncEnumerator().MoveNextAsync());
+            Assert.That(await fluidRelayServerResourceCollection2.GetAsyncEnumerator().MoveNextAsync(), Is.True);
 
             //Regenerate Keys
             RegenerateKeyContent key1 = new RegenerateKeyContent(FluidRelayKeyName.PrimaryKey);
             Response<FluidRelayServerKeys> regenerateKeyFluidRelayResponse = await fluidRelayServerResource.RegenerateKeysAsync(key1);
             FluidRelayServerKeys NewFluidRelayServerKeys = regenerateKeyFluidRelayResponse.Value;
-            Assert.IsTrue(NewFluidRelayServerKeys.SecondaryKey.Equals(fluidRelayServerKeys.SecondaryKey));
-            Assert.IsFalse(NewFluidRelayServerKeys.PrimaryKey.Equals(fluidRelayServerKeys.PrimaryKey));
+            Assert.That(NewFluidRelayServerKeys.SecondaryKey.Equals(fluidRelayServerKeys.SecondaryKey), Is.True);
+            Assert.That(NewFluidRelayServerKeys.PrimaryKey.Equals(fluidRelayServerKeys.PrimaryKey), Is.False);
 
             // Delete
             var deleteFluidRelayServerOperation = await fluidRelayServerResource.DeleteAsync(WaitUntil.Completed);
             await deleteFluidRelayServerOperation.WaitForCompletionResponseAsync();
-            Assert.IsTrue(deleteFluidRelayServerOperation.HasCompleted);
+            Assert.That(deleteFluidRelayServerOperation.HasCompleted, Is.True);
         }
 
         [TestCase]

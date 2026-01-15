@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
             var certification = await CreateDefaultCertification(iothub, certName);
             Assert.IsNotNull(certification);
-            Assert.AreEqual(certName, certification.Data.Name);
+            Assert.That(certification.Data.Name, Is.EqualTo(certName));
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
             var getCertification = await CreateDefaultCertification(iothub, certName);
             Assert.IsNotNull(getCertification);
-            Assert.AreEqual(certName, getCertification.Data.Name);
+            Assert.That(getCertification.Data.Name, Is.EqualTo(certName));
         }
 
         [Test]
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             await CreateDefaultCertification(iothub, certName);
             list = await iothub.GetIotHubCertificateDescriptions().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(certName, list.FirstOrDefault().Data.Name);
+            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(certName));
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
 
             await CreateDefaultCertification(iothub, certName);
             bool isExisted = await iothub.GetIotHubCertificateDescriptions().ExistsAsync(certName);
-            Assert.IsTrue(isExisted);
+            Assert.That(isExisted, Is.True);
         }
 
         [Test]
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
 
             var deleteCertification = await CreateDefaultCertification(iothub, certName);
             bool isExisted = await iothub.GetIotHubCertificateDescriptions().ExistsAsync(certName);
-            Assert.IsTrue(isExisted);
+            Assert.That(isExisted, Is.True);
 
             await deleteCertification.DeleteAsync(WaitUntil.Completed, deleteCertification.Data.ETag.ToString());
             isExisted = await iothub.GetIotHubCertificateDescriptions().ExistsAsync(certName);
-            Assert.IsFalse(isExisted);
+            Assert.That(isExisted, Is.False);
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             Thread.Sleep(1000);
             LogProfileResource logProfile2 = await logProfile.GetAsync();
 
-            Assert.AreEqual(logProfile.Data.Name, logProfile2.Data.Name);
+            Assert.That(logProfile2.Data.Name, Is.EqualTo(logProfile.Data.Name));
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
             await queue.SendMessageAsync("<s:Envelope xmlns:s=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:a=\"http://www.w3.org/2005/08/addressing\"><s:Header><a:Action s:mustUnderstand=\"1\">http://tempuri.org/ITestContract/Create</a:Action></s:Header><s:Body><Create xmlns=\"http://tempuri.org/\"><name>test</name></Create></s:Body></s:Envelope>");
 
             var testService = host.Services.GetRequiredService<TestService>();
-            Assert.True(testService.ManualResetEvent.Wait(System.TimeSpan.FromSeconds(5)));
+            Assert.That(testService.ManualResetEvent.Wait(System.TimeSpan.FromSeconds(5)), Is.True);
         }
     }
 }

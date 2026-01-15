@@ -59,14 +59,14 @@ namespace Azure.AI.FormRecognizer.Tests
             await client.StartTrainingAsync(new Uri(encodedUriString), useTrainingLabels: false);
             await client.StartTrainingAsync(new Uri(decodedUriString), useTrainingLabels: false);
 
-            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
 
             foreach (var request in mockTransport.Requests)
             {
                 var requestBody = GetString(request.Content);
 
-                Assert.True(requestBody.Contains(encodedUriString));
-                Assert.False(requestBody.Contains(decodedUriString));
+                Assert.That(requestBody.Contains(encodedUriString), Is.True);
+                Assert.That(requestBody.Contains(decodedUriString), Is.False);
             }
         }
 

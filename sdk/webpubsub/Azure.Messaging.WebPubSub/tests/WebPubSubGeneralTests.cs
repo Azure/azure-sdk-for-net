@@ -31,14 +31,14 @@ namespace Azure.Rest.WebPubSub.Tests
             var textContent = "Hello";
             var response = await serviceClient.SendToAllAsync(textContent, ContentType.TextPlain);
 
-            Assert.AreEqual(202, response.Status);
+            Assert.That(response.Status, Is.EqualTo(202));
 
             var jsonContent = BinaryData.FromObjectAsJson(new { hello = "world" });
             response = await serviceClient.SendToAllAsync(RequestContent.Create(jsonContent), ContentType.ApplicationJson);
-            Assert.AreEqual(202, response.Status);
+            Assert.That(response.Status, Is.EqualTo(202));
             var binaryContent = BinaryData.FromString("Hello");
             response = await serviceClient.SendToAllAsync(RequestContent.Create(binaryContent), ContentType.ApplicationOctetStream);
-            Assert.AreEqual(202, response.Status);
+            Assert.That(response.Status, Is.EqualTo(202));
         }
 
         [TestCase(6, 6, null, 6, 1)]
@@ -77,8 +77,8 @@ namespace Azure.Rest.WebPubSub.Tests
                 actualPageCount++;
             }
 
-            Assert.AreEqual(expectedPageCount, actualPageCount);
-            Assert.AreEqual(expectedTotalCount, actualConnectionCount);
+            Assert.That(actualPageCount, Is.EqualTo(expectedPageCount));
+            Assert.That(actualConnectionCount, Is.EqualTo(expectedTotalCount));
 
             if (TestEnvironment.Mode != RecordedTestMode.Playback)
             {
@@ -125,7 +125,7 @@ namespace Azure.Rest.WebPubSub.Tests
             }
 
             List<WebPubSubGroupMember> remainingConnectionsAfterFirstPage = await serviceClient.ListConnectionsInGroupAsync(groupName, continuationToken: firstContinuationToken).ToEnumerableAsync();
-            Assert.AreEqual(totalCount - firstPageSize, remainingConnectionsAfterFirstPage.Count);
+            Assert.That(remainingConnectionsAfterFirstPage.Count, Is.EqualTo(totalCount - firstPageSize));
 
             if (TestEnvironment.Mode != RecordedTestMode.Playback)
             {

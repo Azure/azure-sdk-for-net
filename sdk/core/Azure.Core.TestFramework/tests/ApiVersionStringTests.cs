@@ -27,7 +27,7 @@ namespace Azure.Core.Tests
         {
             var leftAvs = new ApiVersionString(left);
             var rightAvs = new ApiVersionString(right);
-            Assert.AreEqual(0, left.CompareTo(right));
+            Assert.That(left.CompareTo(right), Is.EqualTo(0));
         }
     }
 }

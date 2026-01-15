@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             ResourceIdentifier localRulestackResourceIdentifier = LocalRulestackPrefixResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, LocalRulestackResource.Data.Name, name);
             LocalRulestackPrefixResource.ValidateResourceId(localRulestackResourceIdentifier);
 
-            Assert.IsTrue(localRulestackResourceIdentifier.ResourceType.Equals(LocalRulestackPrefixResource.ResourceType));
-            Assert.IsTrue(localRulestackResourceIdentifier.Equals($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{LocalRulestackResource.Data.Name}/prefixlists/{name}"));
+            Assert.That(localRulestackResourceIdentifier.ResourceType.Equals(LocalRulestackPrefixResource.ResourceType), Is.True);
+            Assert.That(localRulestackResourceIdentifier.Equals($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{LocalRulestackResource.Data.Name}/prefixlists/{name}"), Is.True);
             Assert.Throws<ArgumentException>(() => LocalRulestackPrefixResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public void Data()
         {
-            Assert.IsTrue(PrefixListResource.HasData);
+            Assert.That(PrefixListResource.HasData, Is.True);
             Assert.NotNull(PrefixListResource.Data);
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             updatedData.Description = "Updated description for prefix list test";
             LocalRulestackPrefixResource updatedResource = (await PrefixListResource.UpdateAsync(WaitUntil.Completed, updatedData)).Value;
 
-            Assert.AreEqual(updatedResource.Data.Description, "Updated description for prefix list test");
+            Assert.That(updatedResource.Data.Description, Is.EqualTo("Updated description for prefix list test"));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await PrefixListResource.UpdateAsync(WaitUntil.Completed, null));
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             LocalRulestackPrefixResource resource = await LocalRulestackResource.GetLocalRulestackPrefixAsync("dotnetSdkTest0-prefixList");
             Assert.NotNull(resource);
-            Assert.AreEqual(resource.Data.Name, PrefixListResource.Data.Name);
+            Assert.That(PrefixListResource.Data.Name, Is.EqualTo(resource.Data.Name));
         }
     }
 }

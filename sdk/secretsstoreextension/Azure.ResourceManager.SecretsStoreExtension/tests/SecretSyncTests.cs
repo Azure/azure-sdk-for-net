@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
         {
             // SecretSyncCollection.ExistsAsync
             var exists = (await ssc.ExistsAsync(SsName)).Value;
-            Assert.AreEqual(exists, shouldExist);
+            Assert.That(shouldExist, Is.EqualTo(exists));
 
             // SecretSyncCollection.GetAsync
             if (shouldExist)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
 
             // SecretSyncCollection.GetIfExistsAsync
             NullableResponse<SecretSyncResource> nr = await ssc.GetIfExistsAsync(SsName);
-            Assert.AreEqual(nr.HasValue, shouldExist);
+            Assert.That(shouldExist, Is.EqualTo(nr.HasValue));
             if (shouldExist)
             {
                 CheckContents(nr.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
 
             // SecretSyncCollection.GetAllAsync
             List<SecretSyncResource> secretSyncs = await ssc.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(secretSyncs.Any(), shouldExist);
+            Assert.That(shouldExist, Is.EqualTo(secretSyncs.Any()));
             if (shouldExist)
             {
-                Assert.AreEqual(secretSyncs.Count, 1);
+                Assert.That(secretSyncs.Count, Is.EqualTo(1));
                 CheckContents(secretSyncs[0]);
             }
         }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
 
             // SecretsStoreExtensionExtensions.GetSecretSyncsAsync (extends SubscriptionResource)
             List<SecretSyncResource> secretSyncsAsync = await subscription.GetSecretSyncsAsync().ToEnumerableAsync();
-            Assert.AreEqual(secretSyncsAsync.Count, 1);
+            Assert.That(secretSyncsAsync.Count, Is.EqualTo(1));
             CheckContents(secretSyncsAsync[0]);
         }
 
@@ -209,25 +209,25 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
             string expectedSourcePath = null, string expectedTargetPath = null,
             Dictionary<string, string> expectedTags = null)
         {
-            Assert.AreEqual(ss.Data.Name, SsName);
-            Assert.AreEqual(ss.Data.Properties.SecretProviderClassName, SpcName);
-            Assert.AreEqual(ss.Data.Properties.ServiceAccountName, ServiceAccountName);
+            Assert.That(ss.Data.Name, Is.EqualTo(SsName));
+            Assert.That(ss.Data.Properties.SecretProviderClassName, Is.EqualTo(SpcName));
+            Assert.That(ss.Data.Properties.ServiceAccountName, Is.EqualTo(ServiceAccountName));
 
             if (expectedSourcePath is not null && expectedTargetPath is not null)
             {
                 var osm = ss.Data.Properties.ObjectSecretMapping;
-                Assert.AreEqual(osm.Count, 1);
-                Assert.AreEqual(osm[0].SourcePath, expectedSourcePath);
-                Assert.AreEqual(osm[0].TargetKey, expectedTargetPath);
+                Assert.That(osm.Count, Is.EqualTo(1));
+                Assert.That(expectedSourcePath, Is.EqualTo(osm[0].SourcePath));
+                Assert.That(expectedTargetPath, Is.EqualTo(osm[0].TargetKey));
             }
 
             if (expectedTags is not null)
             {
-                Assert.AreEqual(expectedTags.Count, ss.Data.Tags.Count);
+                Assert.That(ss.Data.Tags.Count, Is.EqualTo(expectedTags.Count));
                 foreach (KeyValuePair<string, string> kv in ss.Data.Tags)
                 {
-                    Assert.IsTrue(expectedTags.ContainsKey(kv.Key));
-                    Assert.AreEqual(expectedTags[kv.Key], kv.Value);
+                    Assert.That(expectedTags.ContainsKey(kv.Key), Is.True);
+                    Assert.That(kv.Value, Is.EqualTo(expectedTags[kv.Key]));
                 }
             }
         }

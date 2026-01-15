@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         protected void AssertValues(AutomanageBestPracticeResource profile, string profileName)
         {
             Assert.NotNull(profile);
-            Assert.True(profile.HasData);
-            Assert.AreEqual(profileName, profile.Id.Name);
+            Assert.That(profile.HasData, Is.True);
+            Assert.That(profile.Id.Name, Is.EqualTo(profileName));
             Assert.NotNull(profile.Id);
             Assert.NotNull(profile.Data);
             Assert.NotNull(profile.Data.Configuration);

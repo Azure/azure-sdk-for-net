@@ -159,7 +159,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
         protected void AssertSecretsEqual(KeyVaultSecret exp, KeyVaultSecret act)
         {
-            Assert.AreEqual(exp.Value, act.Value);
+            Assert.That(act.Value, Is.EqualTo(exp.Value));
             AssertSecretPropertiesEqual(exp.Properties, act.Properties);
         }
 
@@ -167,17 +167,17 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         {
             if (compareId)
             {
-                Assert.AreEqual(exp.Id, act.Id);
+                Assert.That(act.Id, Is.EqualTo(exp.Id));
             }
 
-            Assert.AreEqual(exp.ContentType, act.ContentType);
-            Assert.AreEqual(exp.KeyId, act.KeyId);
-            Assert.AreEqual(exp.Managed, act.Managed);
-            Assert.AreEqual(exp.PreviousVersion, act.PreviousVersion);
+            Assert.That(act.ContentType, Is.EqualTo(exp.ContentType));
+            Assert.That(act.KeyId, Is.EqualTo(exp.KeyId));
+            Assert.That(act.Managed, Is.EqualTo(exp.Managed));
+            Assert.That(act.PreviousVersion, Is.EqualTo(exp.PreviousVersion));
 
-            Assert.AreEqual(exp.Enabled, act.Enabled);
-            Assert.AreEqual(exp.ExpiresOn, act.ExpiresOn);
-            Assert.AreEqual(exp.NotBefore, act.NotBefore);
+            Assert.That(act.Enabled, Is.EqualTo(exp.Enabled));
+            Assert.That(act.ExpiresOn, Is.EqualTo(exp.ExpiresOn));
+            Assert.That(act.NotBefore, Is.EqualTo(exp.NotBefore));
         }
 
         protected static void AssertAreEqual<T>(IReadOnlyCollection<T> exp, IReadOnlyCollection<T> act)
@@ -201,7 +201,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 if (!act.TryGetValue(pair.Key, out TValue value))
                     Assert.Fail("Actual dictionary does not contain expected key '{0}'", pair.Key);
 
-                Assert.AreEqual(pair.Value, value);
+                Assert.That(value, Is.EqualTo(pair.Value));
             }
         }
 

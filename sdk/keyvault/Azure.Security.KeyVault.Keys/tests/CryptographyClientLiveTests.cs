@@ -43,14 +43,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             EncryptResult encResult = await cryptoClient.EncryptAsync(algorithm, data);
 
-            Assert.AreEqual(algorithm, encResult.Algorithm);
-            Assert.AreEqual(key.Id, encResult.KeyId);
+            Assert.That(encResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(encResult.KeyId, Is.EqualTo(key.Id));
             Assert.IsNotNull(encResult.Ciphertext);
 
             DecryptResult decResult = await cryptoClient.DecryptAsync(algorithm, encResult.Ciphertext);
 
-            Assert.AreEqual(algorithm, decResult.Algorithm);
-            Assert.AreEqual(key.Id, decResult.KeyId);
+            Assert.That(decResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(decResult.KeyId, Is.EqualTo(key.Id));
             Assert.IsNotNull(decResult.Plaintext);
 
             CollectionAssert.AreEqual(data, decResult.Plaintext);
@@ -69,14 +69,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             WrapResult encResult = await cryptoClient.WrapKeyAsync(algorithm, data);
 
-            Assert.AreEqual(algorithm, encResult.Algorithm);
-            Assert.AreEqual(key.Id, encResult.KeyId);
+            Assert.That(encResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(encResult.KeyId, Is.EqualTo(key.Id));
             Assert.IsNotNull(encResult.EncryptedKey);
 
             UnwrapResult decResult = await cryptoClient.UnwrapKeyAsync(algorithm, encResult.EncryptedKey);
 
-            Assert.AreEqual(algorithm, decResult.Algorithm);
-            Assert.AreEqual(key.Id, decResult.KeyId);
+            Assert.That(decResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(decResult.KeyId, Is.EqualTo(key.Id));
             Assert.IsNotNull(decResult.Key);
 
             CollectionAssert.AreEqual(data, decResult.Key);
@@ -106,11 +106,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             SignResult signDataResult = await cryptoClient.SignDataAsync(algorithm, data);
 
-            Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(algorithm, signDataResult.Algorithm);
+            Assert.That(signResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(signDataResult.Algorithm, Is.EqualTo(algorithm));
 
-            Assert.AreEqual(key.Id, signResult.KeyId);
-            Assert.AreEqual(key.Id, signDataResult.KeyId);
+            Assert.That(signResult.KeyId, Is.EqualTo(key.Id));
+            Assert.That(signDataResult.KeyId, Is.EqualTo(key.Id));
 
             Assert.NotNull(signResult.Signature);
             Assert.NotNull(signDataResult.Signature);
@@ -119,14 +119,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             VerifyResult verifyDataResult = await cryptoClient.VerifyDataAsync(algorithm, data, signResult.Signature);
 
-            Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(algorithm, verifyDataResult.Algorithm);
+            Assert.That(verifyResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(verifyDataResult.Algorithm, Is.EqualTo(algorithm));
 
-            Assert.AreEqual(key.Id, verifyResult.KeyId);
-            Assert.AreEqual(key.Id, verifyDataResult.KeyId);
+            Assert.That(verifyResult.KeyId, Is.EqualTo(key.Id));
+            Assert.That(verifyDataResult.KeyId, Is.EqualTo(key.Id));
 
-            Assert.True(verifyResult.IsValid);
-            Assert.True(verifyResult.IsValid);
+            Assert.That(verifyResult.IsValid, Is.True);
+            Assert.That(verifyResult.IsValid, Is.True);
         }
 
         [RecordedTest]
@@ -157,11 +157,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             SignResult signDataResult = await cryptoClient.SignDataAsync(algorithm, dataStream);
 
-            Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(algorithm, signDataResult.Algorithm);
+            Assert.That(signResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(signDataResult.Algorithm, Is.EqualTo(algorithm));
 
-            Assert.AreEqual(key.Id, signResult.KeyId);
-            Assert.AreEqual(key.Id, signDataResult.KeyId);
+            Assert.That(signResult.KeyId, Is.EqualTo(key.Id));
+            Assert.That(signDataResult.KeyId, Is.EqualTo(key.Id));
 
             Assert.NotNull(signResult.Signature);
             Assert.NotNull(signDataResult.Signature);
@@ -172,14 +172,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             VerifyResult verifyDataResult = await cryptoClient.VerifyDataAsync(algorithm, dataStream, signResult.Signature);
 
-            Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(algorithm, verifyDataResult.Algorithm);
+            Assert.That(verifyResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(verifyDataResult.Algorithm, Is.EqualTo(algorithm));
 
-            Assert.AreEqual(key.Id, verifyResult.KeyId);
-            Assert.AreEqual(key.Id, verifyDataResult.KeyId);
+            Assert.That(verifyResult.KeyId, Is.EqualTo(key.Id));
+            Assert.That(verifyDataResult.KeyId, Is.EqualTo(key.Id));
 
-            Assert.True(verifyResult.IsValid);
-            Assert.True(verifyDataResult.IsValid);
+            Assert.That(verifyResult.IsValid, Is.True);
+            Assert.That(verifyDataResult.IsValid, Is.True);
         }
 
         // We do not test using ES256K below since macOS doesn't support it; various ideas to work around that adversely affect runtime code too much.
@@ -220,16 +220,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
             // Sign locally...
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
-            Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(key.Key.Id, signResult.KeyId);
+            Assert.That(signResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(signResult.KeyId, Is.EqualTo(key.Key.Id));
             Assert.NotNull(signResult.Signature);
 
             // ...and verify remotely.
             VerifyResult verifyResult = await remoteClient.VerifyAsync(algorithm, digest, signResult.Signature);
 
-            Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(key.Key.Id, verifyResult.KeyId);
-            Assert.IsTrue(verifyResult.IsValid);
+            Assert.That(verifyResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(verifyResult.KeyId, Is.EqualTo(key.Key.Id));
+            Assert.That(verifyResult.IsValid, Is.True);
         }
 
         [RecordedTest]
@@ -254,16 +254,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
             // Sign locally...
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
-            Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(key.Key.Id, signResult.KeyId);
+            Assert.That(signResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(signResult.KeyId, Is.EqualTo(key.Key.Id));
             Assert.NotNull(signResult.Signature);
 
             // ...and verify remotely.
             VerifyResult verifyResult = await remoteClient.VerifyAsync(algorithm, digest, signResult.Signature);
 
-            Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(key.Key.Id, verifyResult.KeyId);
-            Assert.IsTrue(verifyResult.IsValid);
+            Assert.That(verifyResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(verifyResult.KeyId, Is.EqualTo(key.Key.Id));
+            Assert.That(verifyResult.IsValid, Is.True);
         }
 
         [RecordedTest]
@@ -309,16 +309,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
             // Should sign remotely...
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
-            Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(key.Key.Id, signResult.KeyId);
+            Assert.That(signResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(signResult.KeyId, Is.EqualTo(key.Key.Id));
             Assert.NotNull(signResult.Signature);
 
             // ...and verify locally.
             VerifyResult verifyResult = await client.VerifyAsync(algorithm, digest, signResult.Signature);
 
-            Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(key.Key.Id, verifyResult.KeyId);
-            Assert.IsTrue(verifyResult.IsValid);
+            Assert.That(verifyResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(verifyResult.KeyId, Is.EqualTo(key.Key.Id));
+            Assert.That(verifyResult.IsValid, Is.True);
         }
 
         [RecordedTest]
@@ -343,16 +343,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
             // Should sign remotely...
             SignResult signResult = await client.SignAsync(algorithm, digest);
 
-            Assert.AreEqual(algorithm, signResult.Algorithm);
-            Assert.AreEqual(key.Key.Id, signResult.KeyId);
+            Assert.That(signResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(signResult.KeyId, Is.EqualTo(key.Key.Id));
             Assert.NotNull(signResult.Signature);
 
             // ...and verify locally.
             VerifyResult verifyResult = await client.VerifyAsync(algorithm, digest, signResult.Signature);
 
-            Assert.AreEqual(algorithm, verifyResult.Algorithm);
-            Assert.AreEqual(key.Key.Id, verifyResult.KeyId);
-            Assert.IsTrue(verifyResult.IsValid);
+            Assert.That(verifyResult.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(verifyResult.KeyId, Is.EqualTo(key.Key.Id));
+            Assert.That(verifyResult.IsValid, Is.True);
         }
 
         [RecordedTest]
@@ -369,14 +369,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             EncryptResult encrypted = await localClient.EncryptAsync(algorithm, plaintext);
 
-            Assert.AreEqual(algorithm, encrypted.Algorithm);
-            Assert.AreEqual(key.Id, encrypted.KeyId);
+            Assert.That(encrypted.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(encrypted.KeyId, Is.EqualTo(key.Id));
             Assert.IsNotNull(encrypted.Ciphertext);
 
             DecryptResult decrypted = await remoteClient.DecryptAsync(algorithm, encrypted.Ciphertext);
 
-            Assert.AreEqual(algorithm, decrypted.Algorithm);
-            Assert.AreEqual(key.Id, decrypted.KeyId);
+            Assert.That(decrypted.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(decrypted.KeyId, Is.EqualTo(key.Id));
             Assert.IsNotNull(decrypted.Plaintext);
 
             CollectionAssert.AreEqual(plaintext, decrypted.Plaintext);
@@ -395,7 +395,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             EncryptResult encryptResult = await cryptoClient.EncryptAsync(EncryptionAlgorithm.RsaOaep, plaintext);
             DecryptResult decryptResult = await cryptoClient.DecryptAsync(EncryptionAlgorithm.RsaOaep, encryptResult.Ciphertext);
 
-            Assert.AreEqual(plaintext, decryptResult.Plaintext);
+            Assert.That(decryptResult.Plaintext, Is.EqualTo(plaintext));
         }
 
         [RecordedTest]
@@ -414,7 +414,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CryptographyClient client = GetCryptoClient(keyId, forceRemote: true);
             EncryptResult encrypted = await client.EncryptAsync(EncryptionAlgorithm.RsaOaep, plaintext);
 
-            Assert.AreEqual(key.Id.ToString(), encrypted.KeyId);
+            Assert.That(encrypted.KeyId, Is.EqualTo(key.Id.ToString()));
         }
 
         [RecordedTest]
@@ -429,7 +429,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
             byte[] ciphertext = rsa.Encrypt(plaintext, RSAEncryptionPadding.OaepSHA256);
-            Assert.AreEqual(plaintext, rsa.Decrypt(ciphertext, RSAEncryptionPadding.OaepSHA256));
+            Assert.That(rsa.Decrypt(ciphertext, RSAEncryptionPadding.OaepSHA256), Is.EqualTo(plaintext));
         }
 
         [RecordedTest]
@@ -444,7 +444,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
             byte[] ciphertext = rsa.Encrypt(plaintext, RSAEncryptionPadding.OaepSHA256);
-            Assert.AreEqual(plaintext, rsa.Decrypt(ciphertext, RSAEncryptionPadding.OaepSHA256));
+            Assert.That(rsa.Decrypt(ciphertext, RSAEncryptionPadding.OaepSHA256), Is.EqualTo(plaintext));
         }
 
         [RecordedTest]
@@ -458,7 +458,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
             byte[] hash = rsa.SignData(plaintext, 0, plaintext.Length, HashAlgorithmName.SHA256, RSASignaturePadding.Pss);
-            Assert.IsTrue(rsa.VerifyData(plaintext, hash, HashAlgorithmName.SHA256, RSASignaturePadding.Pss));
+            Assert.That(rsa.VerifyData(plaintext, hash, HashAlgorithmName.SHA256, RSASignaturePadding.Pss), Is.True);
         }
 
         [RecordedTest]
@@ -472,7 +472,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
             byte[] hash = rsa.SignData(plaintext, 0, plaintext.Length, HashAlgorithmName.SHA256, RSASignaturePadding.Pss);
-            Assert.IsTrue(rsa.VerifyData(plaintext, hash, HashAlgorithmName.SHA256, RSASignaturePadding.Pss));
+            Assert.That(rsa.VerifyData(plaintext, hash, HashAlgorithmName.SHA256, RSASignaturePadding.Pss), Is.True);
         }
 
         private async Task<KeyVaultKey> CreateTestKey(EncryptionAlgorithm algorithm)

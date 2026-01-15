@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         public async Task Exist()
         {
             var flag = await _dtlVnetCollection.ExistsAsync(_dtlVnetName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
         }
 
         [RecordedTest]
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         {
             await _dtlVnet.DeleteAsync(WaitUntil.Completed);
             bool flag = await _dtlVnetCollection.ExistsAsync(_dtlVnetName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         private void ValidateDevTestLabVirtualNetwork(DevTestLabVirtualNetworkData dtlVnetData, string _dtlVnetName)
         {
             Assert.IsNotNull(dtlVnetData);
             Assert.IsNotEmpty(dtlVnetData.Id);
-            Assert.AreEqual(_dtlVnetName, dtlVnetData.Name);
-            Assert.AreEqual("Succeeded", dtlVnetData.ProvisioningState);
+            Assert.That(dtlVnetData.Name, Is.EqualTo(_dtlVnetName));
+            Assert.That(dtlVnetData.ProvisioningState, Is.EqualTo("Succeeded"));
         }
     }
 }

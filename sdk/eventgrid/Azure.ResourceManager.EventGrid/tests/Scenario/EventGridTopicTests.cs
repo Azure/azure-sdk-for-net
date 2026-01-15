@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsNotNull(topic);
             Assert.IsNotNull(topic.Data);
             Assert.IsNotNull(topic.Data.Id);
-            Assert.AreEqual(expectedName, topic.Data.Name);
-            Assert.AreEqual("Microsoft.EventGrid/topics", topic.Data.ResourceType.ToString());
-            Assert.AreEqual("Succeeded", topic.Data.ProvisioningState.ToString());
-            Assert.AreEqual(_resourceGroup.Data.Location, topic.Data.Location);
+            Assert.That(topic.Data.Name, Is.EqualTo(expectedName));
+            Assert.That(topic.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EventGrid/topics"));
+            Assert.That(topic.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(topic.Data.Location, Is.EqualTo(_resourceGroup.Data.Location));
         }
 
         [Test]
@@ -71,41 +71,41 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
             await topic.UpdateAsync(WaitUntil.Completed, patch);
             var updatedTopic = await _eventGridTopicCollection.GetAsync(topicName);
-            Assert.IsTrue(updatedTopic.Value.Data.Tags.ContainsKey(EnvTag));
+            Assert.That(updatedTopic.Value.Data.Tags.ContainsKey(EnvTag), Is.True);
 
             // AddTag
             var addTagResult = await topic.AddTagAsync(StickerTagKey, StickerTagValue);
             Assert.IsNotNull(addTagResult);
             Assert.IsNotNull(addTagResult.Value);
-            Assert.IsTrue(addTagResult.Value.Data.Tags.ContainsKey(StickerTagKey));
-            Assert.AreEqual(StickerTagValue, addTagResult.Value.Data.Tags[StickerTagKey]);
+            Assert.That(addTagResult.Value.Data.Tags.ContainsKey(StickerTagKey), Is.True);
+            Assert.That(addTagResult.Value.Data.Tags[StickerTagKey], Is.EqualTo(StickerTagValue));
 
             // SetTags
             var tags = new Dictionary<string, string> { { EnvTag, TestTag }, { TeamTagKey, TeamTagValue }, { StickerTagKey, StickerTagValue } };
             var setTagsResult = await topic.SetTagsAsync(tags);
             Assert.IsNotNull(setTagsResult);
             Assert.IsNotNull(setTagsResult.Value);
-            Assert.IsTrue(setTagsResult.Value.Data.Tags.ContainsKey(StickerTagKey));
-            Assert.AreEqual(StickerTagValue, setTagsResult.Value.Data.Tags[StickerTagKey]);
+            Assert.That(setTagsResult.Value.Data.Tags.ContainsKey(StickerTagKey), Is.True);
+            Assert.That(setTagsResult.Value.Data.Tags[StickerTagKey], Is.EqualTo(StickerTagValue));
 
             // RemoveTag
             await topic.AddTagAsync(RemoveStickerTagKey, RemoveStickerTagValue);
             var removeTagResult = await topic.RemoveTagAsync(RemoveStickerTagKey);
             Assert.IsNotNull(removeTagResult);
             Assert.IsNotNull(removeTagResult.Value);
-            Assert.IsFalse(removeTagResult.Value.Data.Tags.ContainsKey(RemoveStickerTagKey));
+            Assert.That(removeTagResult.Value.Data.Tags.ContainsKey(RemoveStickerTagKey), Is.False);
 
             // Exists
             bool exists = await _eventGridTopicCollection.ExistsAsync(topicName);
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
 
             // GetAll
             var topicsInResourceGroup = await _eventGridTopicCollection.GetAllAsync().ToEnumerableAsync();
             Assert.NotNull(topicsInResourceGroup);
-            Assert.IsTrue(topicsInResourceGroup.Any(t => t.Data.Name == topicName));
+            Assert.That(topicsInResourceGroup.Any(t => t.Data.Name == topicName), Is.True);
             var topicsInSubscription = await DefaultSubscription.GetEventGridTopicsAsync().ToEnumerableAsync();
             Assert.NotNull(topicsInSubscription);
-            Assert.IsTrue(topicsInSubscription.Any(t => t.Data.Name == topicName));
+            Assert.That(topicsInSubscription.Any(t => t.Data.Name == topicName), Is.True);
 
             // ListSharedAccessKeys
             var keys = await topic.GetSharedAccessKeysAsync();
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // GetAsync
             var getAsyncResult = await topic.GetAsync();
             Assert.IsNotNull(getAsyncResult);
-            Assert.AreEqual(topic.Data.Name, getAsyncResult.Value.Data.Name);
+            Assert.That(getAsyncResult.Value.Data.Name, Is.EqualTo(topic.Data.Name));
 
             // Delete
             await topic.DeleteAsync(WaitUntil.Completed);
             bool existsAfterDelete = await _eventGridTopicCollection.ExistsAsync(topicName);
-            Assert.IsFalse(existsAfterDelete);
+            Assert.That(existsAfterDelete, Is.False);
         }
 
         [Test]

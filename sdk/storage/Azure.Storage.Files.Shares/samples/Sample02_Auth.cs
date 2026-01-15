@@ -131,7 +131,7 @@ namespace Azure.Storage.Files.Shares.Samples
             RequestFailedException ex =
                 Assert.ThrowsAsync<RequestFailedException>(
                     async () => await service.CreateShareAsync(Randomize("sample-share")));
-            Assert.AreEqual(403, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(403));
         }
 
         /// <summary>

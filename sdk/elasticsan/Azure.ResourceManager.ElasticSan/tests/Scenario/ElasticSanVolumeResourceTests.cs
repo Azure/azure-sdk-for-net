@@ -42,16 +42,16 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             ElasticSanVolumeData data = new ElasticSanVolumeData(100);
             ElasticSanVolumeResource volume1 = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, data)).Value;
             ElasticSanVolumeResource volume2 = await volume1.GetAsync();
-            Assert.AreEqual(volume1.Id.Name, volume2.Id.Name);
-            Assert.AreEqual(100, volume2.Data.SizeGiB);
-            Assert.AreEqual(ElasticSanVolumeCreateOption.None, volume1.Data.CreationData.CreateSource);
+            Assert.That(volume2.Id.Name, Is.EqualTo(volume1.Id.Name));
+            Assert.That(volume2.Data.SizeGiB, Is.EqualTo(100));
+            Assert.That(volume1.Data.CreationData.CreateSource, Is.EqualTo(ElasticSanVolumeCreateOption.None));
 
             ElasticSanVolumePatch patch = new ElasticSanVolumePatch()
             {
                 SizeGiB = 200
             };
             ElasticSanVolumeResource volume3 = (await volume1.UpdateAsync(WaitUntil.Completed, patch)).Value;
-            Assert.AreEqual(200, volume3.Data.SizeGiB);
+            Assert.That(volume3.Data.SizeGiB, Is.EqualTo(200));
 
             await volume1.DeleteAsync(WaitUntil.Completed, ElasticSanDeleteSnapshotsUnderVolume.True, ElasticSanForceDeleteVolume.True);
         }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
                     break;
                 }
             }
-            Assert.IsTrue(foundVolume);
+            Assert.That(foundVolume, Is.True);
 
             await volume1.DeleteAsync(WaitUntil.Completed);
             count = 0;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             {
                 count++;
             }
-            Assert.AreEqual(count, 0);
+            Assert.That(count, Is.EqualTo(0));
         }
     }
 }

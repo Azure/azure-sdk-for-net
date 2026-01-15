@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var result = WebPubSubServiceAccessUtil.CreateFromConnectionString(connectionString);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(new Uri(endpoint), result.ServiceEndpoint);
+            Assert.That(result.ServiceEndpoint, Is.EqualTo(new Uri(endpoint)));
             Assert.IsNull((result.Credential as KeyCredential).AccessKey);
         }
 
@@ -60,11 +60,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var result = WebPubSubServiceAccessUtil.CreateFromConnectionString(connectionString);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(new Uri(endpoint), result.ServiceEndpoint);
+            Assert.That(result.ServiceEndpoint, Is.EqualTo(new Uri(endpoint)));
             Assert.IsNotNull(result.Credential);
             Assert.IsInstanceOf<KeyCredential>(result.Credential);
             var keyCredential = (KeyCredential)result.Credential;
-            Assert.AreEqual(accessKey, keyCredential.AccessKey);
+            Assert.That(keyCredential.AccessKey, Is.EqualTo(accessKey));
         }
 
         [Test]
@@ -78,8 +78,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var result = WebPubSubServiceAccessUtil.CreateFromConnectionString(connectionString);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(8080, result.ServiceEndpoint.Port);
-            Assert.AreEqual("test.webpubsub.azure.com", result.ServiceEndpoint.Host);
+            Assert.That(result.ServiceEndpoint.Port, Is.EqualTo(8080));
+            Assert.That(result.ServiceEndpoint.Host, Is.EqualTo("test.webpubsub.azure.com"));
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var result = WebPubSubServiceAccessUtil.CreateFromConnectionString(connectionString);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(int.Parse(validPort), result.ServiceEndpoint.Port);
+            Assert.That(result.ServiceEndpoint.Port, Is.EqualTo(int.Parse(validPort)));
         }
 
         [Test]
@@ -137,12 +137,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var success = WebPubSubServiceAccessUtil.CreateFromIConfiguration(section, TestAzureComponentFactory.Instance, out var result);
 
-            Assert.IsTrue(success);
+            Assert.That(success, Is.True);
             Assert.IsNotNull(result);
-            Assert.AreEqual(new Uri(endpoint), result.ServiceEndpoint);
+            Assert.That(result.ServiceEndpoint, Is.EqualTo(new Uri(endpoint)));
             Assert.IsInstanceOf<KeyCredential>(result.Credential);
             var keyCredential = (KeyCredential)result.Credential;
-            Assert.AreEqual(accessKey, keyCredential.AccessKey);
+            Assert.That(keyCredential.AccessKey, Is.EqualTo(accessKey));
         }
 
         [Test]
@@ -161,9 +161,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var success = WebPubSubServiceAccessUtil.CreateFromIConfiguration(section, TestAzureComponentFactory.Instance, out var result);
 
-            Assert.IsTrue(success);
+            Assert.That(success, Is.True);
             Assert.IsNotNull(result);
-            Assert.AreEqual(new Uri(serviceUri), result.ServiceEndpoint);
+            Assert.That(result.ServiceEndpoint, Is.EqualTo(new Uri(serviceUri)));
             Assert.IsInstanceOf<IdentityCredential>(result.Credential);
         }
 
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var success = WebPubSubServiceAccessUtil.CreateFromIConfiguration(section, TestAzureComponentFactory.Instance, out var result);
 
-            Assert.IsFalse(success);
+            Assert.That(success, Is.False);
             Assert.IsNull(result);
         }
 
@@ -206,10 +206,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var success = WebPubSubServiceAccessUtil.CreateFromIConfiguration(section, TestAzureComponentFactory.Instance, out var result);
 
-            Assert.IsTrue(success);
+            Assert.That(success, Is.True);
             Assert.IsNotNull(result);
             // Connection string value should be used, not serviceUri
-            Assert.AreEqual(new Uri(endpoint), result.ServiceEndpoint);
+            Assert.That(result.ServiceEndpoint, Is.EqualTo(new Uri(endpoint)));
             Assert.IsInstanceOf<KeyCredential>(result.Credential);
         }
 
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = WebPubSubServiceAccessUtil.CanCreateFromIConfiguration(section);
 
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = WebPubSubServiceAccessUtil.CanCreateFromIConfiguration(section);
 
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = WebPubSubServiceAccessUtil.CanCreateFromIConfiguration(section);
 
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
     }
 }

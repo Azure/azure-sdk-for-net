@@ -99,37 +99,37 @@ namespace Azure.ResourceManager.Storage.Tests
                 new StorageTaskAssignmentData(assignmentProperties))).Value;
 
             //validate
-            Assert.AreEqual(taskAssignementName, taskAssignment1.Data.Name);
-            Assert.AreEqual(assignmentProperties.TaskId, taskAssignment1.Data.Properties.TaskId);
-            Assert.AreEqual(assignmentProperties.IsEnabled, taskAssignment1.Data.Properties.IsEnabled);
-            Assert.AreEqual(assignmentProperties.Description, taskAssignment1.Data.Properties.Description);
-            Assert.AreEqual(assignmentProperties.Report.Prefix, taskAssignment1.Data.Properties.Report.Prefix);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Target.Prefix, taskAssignment1.Data.Properties.ExecutionContext.Target.Prefix);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Target.ExcludePrefix, taskAssignment1.Data.Properties.ExecutionContext.Target.ExcludePrefix);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.TriggerType, taskAssignment1.Data.Properties.ExecutionContext.Trigger.TriggerType);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.StartFrom, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartFrom);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.Interval, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.Interval);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.IntervalUnit, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.IntervalUnit);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.EndBy, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.EndBy);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.StartOn, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartOn);
+            Assert.That(taskAssignment1.Data.Name, Is.EqualTo(taskAssignementName));
+            Assert.That(taskAssignment1.Data.Properties.TaskId, Is.EqualTo(assignmentProperties.TaskId));
+            Assert.That(taskAssignment1.Data.Properties.IsEnabled, Is.EqualTo(assignmentProperties.IsEnabled));
+            Assert.That(taskAssignment1.Data.Properties.Description, Is.EqualTo(assignmentProperties.Description));
+            Assert.That(taskAssignment1.Data.Properties.Report.Prefix, Is.EqualTo(assignmentProperties.Report.Prefix));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Target.Prefix, Is.EqualTo(assignmentProperties.ExecutionContext.Target.Prefix));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Target.ExcludePrefix, Is.EqualTo(assignmentProperties.ExecutionContext.Target.ExcludePrefix));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.TriggerType, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.TriggerType));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartFrom, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.StartFrom));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.Interval, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.Interval));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.IntervalUnit, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.IntervalUnit));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.EndBy, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.EndBy));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartOn, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.StartOn));
 
             // Get TaskAssignement
             taskAssignment1 = (await taskAssignment1.GetAsync()).Value;
 
             //validate
-            Assert.AreEqual(taskAssignementName, taskAssignment1.Data.Name);
-            Assert.AreEqual(assignmentProperties.TaskId, taskAssignment1.Data.Properties.TaskId);
-            Assert.AreEqual(assignmentProperties.IsEnabled, taskAssignment1.Data.Properties.IsEnabled);
-            Assert.AreEqual(assignmentProperties.Description, taskAssignment1.Data.Properties.Description);
-            Assert.AreEqual(assignmentProperties.Report.Prefix, taskAssignment1.Data.Properties.Report.Prefix);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Target.Prefix, taskAssignment1.Data.Properties.ExecutionContext.Target.Prefix);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Target.ExcludePrefix, taskAssignment1.Data.Properties.ExecutionContext.Target.ExcludePrefix);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.TriggerType, taskAssignment1.Data.Properties.ExecutionContext.Trigger.TriggerType);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.StartFrom, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartFrom);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.Interval, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.Interval);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.IntervalUnit, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.IntervalUnit);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.EndBy, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.EndBy);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.StartOn, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartOn);
+            Assert.That(taskAssignment1.Data.Name, Is.EqualTo(taskAssignementName));
+            Assert.That(taskAssignment1.Data.Properties.TaskId, Is.EqualTo(assignmentProperties.TaskId));
+            Assert.That(taskAssignment1.Data.Properties.IsEnabled, Is.EqualTo(assignmentProperties.IsEnabled));
+            Assert.That(taskAssignment1.Data.Properties.Description, Is.EqualTo(assignmentProperties.Description));
+            Assert.That(taskAssignment1.Data.Properties.Report.Prefix, Is.EqualTo(assignmentProperties.Report.Prefix));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Target.Prefix, Is.EqualTo(assignmentProperties.ExecutionContext.Target.Prefix));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Target.ExcludePrefix, Is.EqualTo(assignmentProperties.ExecutionContext.Target.ExcludePrefix));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.TriggerType, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.TriggerType));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartFrom, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.StartFrom));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.Interval, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.Interval));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.IntervalUnit, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.IntervalUnit));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.EndBy, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.EndBy));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartOn, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.StartOn));
 
             //udpate TaskAssignement
             var assignmentPatchProperties = new StorageTaskAssignmentPatchProperties(
@@ -152,37 +152,37 @@ namespace Azure.ResourceManager.Storage.Tests
                 new StorageTaskAssignmentPatch(assignmentPatchProperties, null))).Value;
 
             //validate
-            Assert.AreEqual(taskAssignementName, taskAssignment1.Data.Name);
-            Assert.AreEqual(assignmentPatchProperties.TaskId, taskAssignment1.Data.Properties.TaskId.ToString());
-            Assert.AreEqual(assignmentPatchProperties.IsEnabled, taskAssignment1.Data.Properties.IsEnabled);
-            Assert.AreEqual(assignmentPatchProperties.Description, taskAssignment1.Data.Properties.Description);
-            Assert.AreEqual(assignmentPatchProperties.Report.Prefix, taskAssignment1.Data.Properties.Report.Prefix);
-            Assert.AreEqual(assignmentPatchProperties.ExecutionContext.Target.Prefix, taskAssignment1.Data.Properties.ExecutionContext.Target.Prefix);
-            Assert.AreEqual(assignmentPatchProperties.ExecutionContext.Target.ExcludePrefix, taskAssignment1.Data.Properties.ExecutionContext.Target.ExcludePrefix);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.TriggerType, taskAssignment1.Data.Properties.ExecutionContext.Trigger.TriggerType);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.StartFrom, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartFrom);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.Interval, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.Interval);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.IntervalUnit, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.IntervalUnit);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.EndBy, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.EndBy);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.StartOn, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartOn);
+            Assert.That(taskAssignment1.Data.Name, Is.EqualTo(taskAssignementName));
+            Assert.That(taskAssignment1.Data.Properties.TaskId.ToString(), Is.EqualTo(assignmentPatchProperties.TaskId));
+            Assert.That(taskAssignment1.Data.Properties.IsEnabled, Is.EqualTo(assignmentPatchProperties.IsEnabled));
+            Assert.That(taskAssignment1.Data.Properties.Description, Is.EqualTo(assignmentPatchProperties.Description));
+            Assert.That(taskAssignment1.Data.Properties.Report.Prefix, Is.EqualTo(assignmentPatchProperties.Report.Prefix));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Target.Prefix, Is.EqualTo(assignmentPatchProperties.ExecutionContext.Target.Prefix));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Target.ExcludePrefix, Is.EqualTo(assignmentPatchProperties.ExecutionContext.Target.ExcludePrefix));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.TriggerType, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.TriggerType));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartFrom, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.StartFrom));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.Interval, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.Interval));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.IntervalUnit, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.IntervalUnit));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.EndBy, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.EndBy));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartOn, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.StartOn));
 
             // list single TaskAssignement
             taskAssignment1 = (await _storageTaskAssignmentCollection.GetAsync(taskAssignementName)).Value;
 
             //validate
-            Assert.AreEqual(taskAssignementName, taskAssignment1.Data.Name);
-            Assert.AreEqual(assignmentPatchProperties.TaskId, taskAssignment1.Data.Properties.TaskId.ToString());
-            Assert.AreEqual(assignmentPatchProperties.IsEnabled, taskAssignment1.Data.Properties.IsEnabled);
-            Assert.AreEqual(assignmentPatchProperties.Description, taskAssignment1.Data.Properties.Description);
-            Assert.AreEqual(assignmentPatchProperties.Report.Prefix, taskAssignment1.Data.Properties.Report.Prefix);
-            Assert.AreEqual(assignmentPatchProperties.ExecutionContext.Target.Prefix, taskAssignment1.Data.Properties.ExecutionContext.Target.Prefix);
-            Assert.AreEqual(assignmentPatchProperties.ExecutionContext.Target.ExcludePrefix, taskAssignment1.Data.Properties.ExecutionContext.Target.ExcludePrefix);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.TriggerType, taskAssignment1.Data.Properties.ExecutionContext.Trigger.TriggerType);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.StartFrom, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartFrom);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.Interval, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.Interval);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.IntervalUnit, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.IntervalUnit);
+            Assert.That(taskAssignment1.Data.Name, Is.EqualTo(taskAssignementName));
+            Assert.That(taskAssignment1.Data.Properties.TaskId.ToString(), Is.EqualTo(assignmentPatchProperties.TaskId));
+            Assert.That(taskAssignment1.Data.Properties.IsEnabled, Is.EqualTo(assignmentPatchProperties.IsEnabled));
+            Assert.That(taskAssignment1.Data.Properties.Description, Is.EqualTo(assignmentPatchProperties.Description));
+            Assert.That(taskAssignment1.Data.Properties.Report.Prefix, Is.EqualTo(assignmentPatchProperties.Report.Prefix));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Target.Prefix, Is.EqualTo(assignmentPatchProperties.ExecutionContext.Target.Prefix));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Target.ExcludePrefix, Is.EqualTo(assignmentPatchProperties.ExecutionContext.Target.ExcludePrefix));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.TriggerType, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.TriggerType));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartFrom, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.StartFrom));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.Interval, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.Interval));
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.IntervalUnit, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.IntervalUnit));
             Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.EndBy, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.EndBy);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.StartOn, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartOn);
+            Assert.That(taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartOn, Is.EqualTo(assignmentProperties.ExecutionContext.Trigger.Parameters.StartOn));
 
             //delete TaskAssignement
             try
@@ -193,8 +193,8 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //validate if deleted successfully
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _storageTaskAssignmentCollection.GetAsync(taskAssignementName); });
-            Assert.AreEqual(404, exception.Status);
-            Assert.IsFalse(await _storageTaskAssignmentCollection.ExistsAsync(taskAssignementName));
+            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.That((bool)await _storageTaskAssignmentCollection.ExistsAsync(taskAssignementName), Is.False);
         }
 
         [Test]
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             // list TaskAssignmentInstancesReport
             var assignments = await _storageTaskAssignmentCollection.GetAllAsync(top:1).ToEnumerableAsync();
-            Assert.IsTrue(assignments.Count >= 2);
+            Assert.That(assignments.Count >= 2, Is.True);
         }
 
         [Test]
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task ListStorageTaskAssignmentsInstancesReport()
         {
             var reports = await _storageAccount.GetStorageTaskAssignmentsInstancesReportsAsync().ToEnumerableAsync();
-            Assert.AreEqual(0, reports.Count);
+            Assert.That(reports.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             // list TaskAssignmentInstancesReport
             var reports = await taskAssignment.GetStorageTaskAssignmentInstancesReportsAsync(maxpagesize: 3, null).ToEnumerableAsync();
-            Assert.AreEqual(0, reports.Count);
+            Assert.That(reports.Count, Is.EqualTo(0));
         }
     }
 }

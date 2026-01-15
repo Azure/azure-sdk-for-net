@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyPrivateLinkResources(CosmosDBPrivateLinkResource expectedValue, CosmosDBPrivateLinkResource actualValue)
         {
-            Assert.AreEqual(expectedValue.Id, actualValue.Id);
-            Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.RequiredMembers, actualValue.Data.RequiredMembers);
-            Assert.AreEqual(expectedValue.Data.RequiredZoneNames, actualValue.Data.RequiredZoneNames);
+            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+            Assert.That(actualValue.Data.RequiredMembers, Is.EqualTo(expectedValue.Data.RequiredMembers));
+            Assert.That(actualValue.Data.RequiredZoneNames, Is.EqualTo(expectedValue.Data.RequiredZoneNames));
         }
     }
 }

@@ -85,18 +85,18 @@ namespace Azure.ResourceManager.Reservations.Tests
 
         private void TestCreatePurchaseResponse(ArmOperation<ReservationOrderResource> purchaseResponse, ReservationPurchaseContent purchaseRequest, string reservationOrderId)
         {
-            Assert.IsTrue(purchaseResponse.HasCompleted);
-            Assert.IsTrue(purchaseResponse.HasValue);
-            Assert.AreEqual(purchaseRequest.BillingPlan.ToString(), purchaseResponse.Value.Data.BillingPlan.ToString());
-            Assert.AreEqual(string.Format("/providers/microsoft.capacity/reservationOrders/{0}", reservationOrderId), purchaseResponse.Value.Data.Id.ToString());
-            Assert.AreEqual("microsoft.capacity", purchaseResponse.Value.Data.ResourceType.Namespace);
-            Assert.AreEqual("reservationOrders", purchaseResponse.Value.Data.ResourceType.Type);
-            Assert.AreEqual(purchaseRequest.DisplayName, purchaseResponse.Value.Data.DisplayName);
-            Assert.AreEqual(reservationOrderId, purchaseResponse.Value.Data.Name);
-            Assert.AreEqual(3, purchaseResponse.Value.Data.OriginalQuantity);
-            Assert.AreEqual(purchaseRequest.Term.ToString(), purchaseResponse.Value.Data.Term.ToString());
+            Assert.That(purchaseResponse.HasCompleted, Is.True);
+            Assert.That(purchaseResponse.HasValue, Is.True);
+            Assert.That(purchaseResponse.Value.Data.BillingPlan.ToString(), Is.EqualTo(purchaseRequest.BillingPlan.ToString()));
+            Assert.That(purchaseResponse.Value.Data.Id.ToString(), Is.EqualTo(string.Format("/providers/microsoft.capacity/reservationOrders/{0}", reservationOrderId)));
+            Assert.That(purchaseResponse.Value.Data.ResourceType.Namespace, Is.EqualTo("microsoft.capacity"));
+            Assert.That(purchaseResponse.Value.Data.ResourceType.Type, Is.EqualTo("reservationOrders"));
+            Assert.That(purchaseResponse.Value.Data.DisplayName, Is.EqualTo(purchaseRequest.DisplayName));
+            Assert.That(purchaseResponse.Value.Data.Name, Is.EqualTo(reservationOrderId));
+            Assert.That(purchaseResponse.Value.Data.OriginalQuantity, Is.EqualTo(3));
+            Assert.That(purchaseResponse.Value.Data.Term.ToString(), Is.EqualTo(purchaseRequest.Term.ToString()));
             Assert.IsNotNull(purchaseResponse.Value.Data.Reservations);
-            Assert.AreEqual(1, purchaseResponse.Value.Data.Reservations.Count);
+            Assert.That(purchaseResponse.Value.Data.Reservations.Count, Is.EqualTo(1));
         }
     }
 }

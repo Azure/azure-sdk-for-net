@@ -158,7 +158,7 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
 
         FileFromStoreRemovalResult removalResult = await client.RemoveFileFromVectorStoreAsync(vectorStore.Id, files[0].Id);
         Assert.That(removalResult.FileId, Is.EqualTo(files[0].Id));
-        Assert.True(removalResult.Removed);
+        Assert.That(removalResult.Removed, Is.True);
 
         // Errata: removals aren't immediately reflected when requesting the list
         TimeSpan waitTime = Recording!.Mode == RecordedTestMode.Playback ? TimeSpan.FromMilliseconds(1) : TimeSpan.FromSeconds(10);

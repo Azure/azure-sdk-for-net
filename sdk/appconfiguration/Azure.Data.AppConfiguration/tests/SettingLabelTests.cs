@@ -20,11 +20,11 @@ namespace Azure.Data.AppConfiguration.Tests
             if (hasName)
             {
                 Assert.IsNotNull(label.Name);
-                Assert.AreEqual("testName", label.Name);
+                Assert.That(label.Name, Is.EqualTo("testName"));
             }
             else
             {
-                Assert.IsNull(label.Name);
+                Assert.That(label.Name, Is.Null);
             }
         }
 

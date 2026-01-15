@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             var privateEndpointConnectionResponse =
                 await collectionResponse.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, privateEndpointConnectionData);
             var privateEndpointConnectionResource = privateEndpointConnectionResponse.Value;
-            Assert.IsTrue(privateEndpointConnectionResponse.HasCompleted);
+            Assert.That(privateEndpointConnectionResponse.HasCompleted, Is.True);
             Assert.IsNotNull(privateEndpointConnectionResource);
 
             // Get Private Endpoint Connection
             privateEndpointConnectionResource = await collectionResponse.GetAsync(privateEndpointConnectionName);
             Assert.IsNotNull(privateEndpointConnectionResource);
-            Assert.AreEqual(privateEndpointConnectionResource.Data.Name, privateEndpointConnectionName);
+            Assert.That(privateEndpointConnectionName, Is.EqualTo(privateEndpointConnectionResource.Data.Name));
 
             // Delete Private Endpoint Connection
             await privateEndpointConnectionResource.DeleteAsync(WaitUntil.Completed);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             string privateLinkResourceName = "Default";
             var privateLinkServiceResource = await privateLinkServiceCollection.GetAsync(privateLinkResourceName);
             Assert.IsNotNull(privateLinkServiceResource);
-            Assert.AreEqual(privateLinkServiceResource.Value.Data.Name, privateLinkResourceName);
+            Assert.That(privateLinkResourceName, Is.EqualTo(privateLinkServiceResource.Value.Data.Name));
         }
     }
 }

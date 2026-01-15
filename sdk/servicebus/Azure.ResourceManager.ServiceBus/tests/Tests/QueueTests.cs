@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             string queueName = Recording.GenerateAssetName("queue");
             ServiceBusQueueResource queue = (await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName, new ServiceBusQueueData())).Value;
             Assert.NotNull(queue);
-            Assert.AreEqual(queue.Id.Name, queueName);
+            Assert.That(queueName, Is.EqualTo(queue.Id.Name));
 
             //validate if created successfully
-            Assert.IsTrue(await _queueCollection.ExistsAsync(queueName));
+            Assert.That((bool)await _queueCollection.ExistsAsync(queueName), Is.True);
             queue = await _queueCollection.GetAsync(queueName);
 
             //delete queue
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //validate
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _queueCollection.GetAsync(queueName); });
-            Assert.AreEqual(404, exception.Status);
-            Assert.IsFalse(await _queueCollection.ExistsAsync(queueName));
+            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.That((bool)await _queueCollection.ExistsAsync(queueName), Is.False);
         }
 
         [Test]
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //validate
             List<ServiceBusQueueResource> list = await _queueCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(10, list.Count);
+            Assert.That(list.Count, Is.EqualTo(10));
             list = await _queueCollection.GetAllAsync(5, 5).ToEnumerableAsync();
-            Assert.AreEqual(5, list.Count);
+            Assert.That(list.Count, Is.EqualTo(5));
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             string queueName = Recording.GenerateAssetName("queue");
             ServiceBusQueueResource queue = (await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName, new ServiceBusQueueData())).Value;
             Assert.NotNull(queue);
-            Assert.AreEqual(queue.Id.Name, queueName);
+            Assert.That(queueName, Is.EqualTo(queue.Id.Name));
 
             //update queue
             ServiceBusQueueData parameters = new ServiceBusQueueData()
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 MaxSizeInMegabytes = 1024
             };
             queue = (await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName, parameters)).Value;
-            Assert.AreEqual(queue.Data.MaxMessageSizeInKilobytes, 1024);
+            Assert.That(queue.Data.MaxMessageSizeInKilobytes, Is.EqualTo(1024));
         }
 
         [Test]
@@ -117,19 +117,19 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             };
             ServiceBusQueueAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
-            Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
+            Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //get authorization rule
             authorizationRule = await ruleCollection.GetAsync(ruleName);
-            Assert.AreEqual(authorizationRule.Id.Name, ruleName);
+            Assert.That(ruleName, Is.EqualTo(authorizationRule.Id.Name));
             Assert.NotNull(authorizationRule);
-            Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
+            Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //get all authorization rules
             List<ServiceBusQueueAuthorizationRuleResource> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
 
             //validate
-            Assert.True(rules.Count == 1);
+            Assert.That(rules.Count == 1, Is.True);
             bool isContainAuthorizationRuleName = false;
             foreach (ServiceBusQueueAuthorizationRuleResource rule in rules)
             {
@@ -138,21 +138,21 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                     isContainAuthorizationRuleName = true;
                 }
             }
-            Assert.True(isContainAuthorizationRuleName);
+            Assert.That(isContainAuthorizationRuleName, Is.True);
 
             //update authorization rule
             parameter.Rights.Add(ServiceBusAccessRight.Manage);
             authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
-            Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
+            Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //delete authorization rule
             await authorizationRule.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted
-            Assert.IsFalse(await ruleCollection.ExistsAsync(ruleName));
+            Assert.That((bool)await ruleCollection.ExistsAsync(ruleName), Is.False);
             rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.True(rules.Count == 0);
+            Assert.That(rules.Count == 0, Is.True);
         }
 
         [Test]
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             };
             ServiceBusQueueAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
-            Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
+            Assert.That(parameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             ServiceBusAccessKeys keys1 = await authorizationRule.GetKeysAsync();
             Assert.NotNull(keys1);
@@ -185,15 +185,15 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //the recordings are sanitized therefore cannot be compared
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreNotEqual(keys1.PrimaryKey, keys2.PrimaryKey);
-                Assert.AreEqual(keys1.SecondaryKey, keys2.SecondaryKey);
+                Assert.That(keys2.PrimaryKey, Is.Not.EqualTo(keys1.PrimaryKey));
+                Assert.That(keys2.SecondaryKey, Is.EqualTo(keys1.SecondaryKey));
             }
 
             ServiceBusAccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType.SecondaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);
-                Assert.AreNotEqual(keys2.SecondaryKey, keys3.SecondaryKey);
+                Assert.That(keys3.PrimaryKey, Is.EqualTo(keys2.PrimaryKey));
+                Assert.That(keys3.SecondaryKey, Is.Not.EqualTo(keys2.SecondaryKey));
             }
 
             var updatePrimaryKey = GenerateRandomKey();
@@ -205,8 +205,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             });
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(updatePrimaryKey, keys4.PrimaryKey);
-                Assert.AreEqual(currentKeys.SecondaryKey, keys4.SecondaryKey);
+                Assert.That(keys4.PrimaryKey, Is.EqualTo(updatePrimaryKey));
+                Assert.That(keys4.SecondaryKey, Is.EqualTo(currentKeys.SecondaryKey));
             }
 
             currentKeys = keys4;
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             });
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(updateSecondaryKey, keys5.SecondaryKey);
-                Assert.AreEqual(currentKeys.PrimaryKey, keys5.PrimaryKey);
+                Assert.That(keys5.SecondaryKey, Is.EqualTo(updateSecondaryKey));
+                Assert.That(keys5.PrimaryKey, Is.EqualTo(currentKeys.PrimaryKey));
             }
         }
 
@@ -251,17 +251,17 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             };
 
             ServiceBusQueueResource secondQueue = (await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, secondQueueName, queueData)).Value;
-            Assert.AreEqual(new TimeSpan(0, 3, 0), secondQueue.Data.LockDuration);
-            Assert.AreEqual(new TimeSpan(0, 10, 0), secondQueue.Data.DuplicateDetectionHistoryTimeWindow);
-            Assert.AreEqual(new TimeSpan(428, 3, 11, 2), secondQueue.Data.DefaultMessageTimeToLive);
-            Assert.AreEqual(4096, queueData.MaxSizeInMegabytes);
-            Assert.AreEqual(8, queueData.MaxDeliveryCount);
-            Assert.True(queueData.DeadLetteringOnMessageExpiration);
-            Assert.True(queueData.RequiresDuplicateDetection);
-            Assert.AreEqual(ServiceBusMessagingEntityStatus.Active, queueData.Status);
-            Assert.AreEqual(firstQueueName, queueData.ForwardTo);
-            Assert.AreEqual(firstQueueName, queueData.ForwardDeadLetteredMessagesTo);
-            Assert.AreEqual(102400, queueData.MaxMessageSizeInKilobytes);
+            Assert.That(secondQueue.Data.LockDuration, Is.EqualTo(new TimeSpan(0, 3, 0)));
+            Assert.That(secondQueue.Data.DuplicateDetectionHistoryTimeWindow, Is.EqualTo(new TimeSpan(0, 10, 0)));
+            Assert.That(secondQueue.Data.DefaultMessageTimeToLive, Is.EqualTo(new TimeSpan(428, 3, 11, 2)));
+            Assert.That(queueData.MaxSizeInMegabytes, Is.EqualTo(4096));
+            Assert.That(queueData.MaxDeliveryCount, Is.EqualTo(8));
+            Assert.That(queueData.DeadLetteringOnMessageExpiration, Is.True);
+            Assert.That(queueData.RequiresDuplicateDetection, Is.True);
+            Assert.That(queueData.Status, Is.EqualTo(ServiceBusMessagingEntityStatus.Active));
+            Assert.That(queueData.ForwardTo, Is.EqualTo(firstQueueName));
+            Assert.That(queueData.ForwardDeadLetteredMessagesTo, Is.EqualTo(firstQueueName));
+            Assert.That(queueData.MaxMessageSizeInKilobytes, Is.EqualTo(102400));
 
             secondQueue.Data.Status = ServiceBusMessagingEntityStatus.Disabled;
             queueData = secondQueue.Data;
@@ -285,8 +285,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             };
 
             ServiceBusQueueResource thirdQueue = (await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, thirdQueueName, queueData)).Value;
-            Assert.AreEqual(new TimeSpan(7, 0, 0, 0), thirdQueue.Data.AutoDeleteOnIdle);
-            Assert.True(thirdQueue.Data.RequiresSession);
+            Assert.That(thirdQueue.Data.AutoDeleteOnIdle, Is.EqualTo(new TimeSpan(7, 0, 0, 0)));
+            Assert.That(thirdQueue.Data.RequiresSession, Is.True);
 
             //EnableExpress can only be set for Standard Namespaces
             queueData = new ServiceBusQueueData()
@@ -294,27 +294,27 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 EnableExpress = true
             };
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _queueCollection.CreateOrUpdateAsync(WaitUntil.Completed, fourthQueueName, queueData); });
-            Assert.AreEqual(400, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(400));
         }
 
         public void AssertQueuePropertiesOnUpdates(ServiceBusQueueData actualQueue, ServiceBusQueueData expectedQueue)
         {
-            Assert.AreEqual(expectedQueue.Location, actualQueue.Location);
-            Assert.AreEqual(expectedQueue.LockDuration, actualQueue.LockDuration);
-            Assert.AreEqual(expectedQueue.DefaultMessageTimeToLive, actualQueue.DefaultMessageTimeToLive);
-            Assert.AreEqual(expectedQueue.DuplicateDetectionHistoryTimeWindow, actualQueue.DuplicateDetectionHistoryTimeWindow);
-            Assert.AreEqual(expectedQueue.RequiresDuplicateDetection, actualQueue.RequiresDuplicateDetection);
-            Assert.AreEqual(expectedQueue.RequiresSession, actualQueue.RequiresSession);
-            Assert.AreEqual(expectedQueue.ForwardDeadLetteredMessagesTo, actualQueue.ForwardDeadLetteredMessagesTo);
-            Assert.AreEqual(expectedQueue.ForwardTo, actualQueue.ForwardTo);
-            Assert.AreEqual(expectedQueue.MaxDeliveryCount, actualQueue.MaxDeliveryCount);
-            Assert.AreEqual(expectedQueue.EnableBatchedOperations, actualQueue.EnableBatchedOperations);
-            Assert.AreEqual(expectedQueue.MaxMessageSizeInKilobytes, actualQueue.MaxMessageSizeInKilobytes);
-            Assert.AreEqual(expectedQueue.MaxSizeInMegabytes, actualQueue.MaxSizeInMegabytes);
-            Assert.AreEqual(expectedQueue.Status, actualQueue.Status);
-            Assert.AreEqual(expectedQueue.AutoDeleteOnIdle, actualQueue.AutoDeleteOnIdle);
-            Assert.AreEqual(expectedQueue.EnableExpress, actualQueue.EnableExpress);
-            Assert.AreEqual(expectedQueue.EnablePartitioning, actualQueue.EnablePartitioning);
+            Assert.That(actualQueue.Location, Is.EqualTo(expectedQueue.Location));
+            Assert.That(actualQueue.LockDuration, Is.EqualTo(expectedQueue.LockDuration));
+            Assert.That(actualQueue.DefaultMessageTimeToLive, Is.EqualTo(expectedQueue.DefaultMessageTimeToLive));
+            Assert.That(actualQueue.DuplicateDetectionHistoryTimeWindow, Is.EqualTo(expectedQueue.DuplicateDetectionHistoryTimeWindow));
+            Assert.That(actualQueue.RequiresDuplicateDetection, Is.EqualTo(expectedQueue.RequiresDuplicateDetection));
+            Assert.That(actualQueue.RequiresSession, Is.EqualTo(expectedQueue.RequiresSession));
+            Assert.That(actualQueue.ForwardDeadLetteredMessagesTo, Is.EqualTo(expectedQueue.ForwardDeadLetteredMessagesTo));
+            Assert.That(actualQueue.ForwardTo, Is.EqualTo(expectedQueue.ForwardTo));
+            Assert.That(actualQueue.MaxDeliveryCount, Is.EqualTo(expectedQueue.MaxDeliveryCount));
+            Assert.That(actualQueue.EnableBatchedOperations, Is.EqualTo(expectedQueue.EnableBatchedOperations));
+            Assert.That(actualQueue.MaxMessageSizeInKilobytes, Is.EqualTo(expectedQueue.MaxMessageSizeInKilobytes));
+            Assert.That(actualQueue.MaxSizeInMegabytes, Is.EqualTo(expectedQueue.MaxSizeInMegabytes));
+            Assert.That(actualQueue.Status, Is.EqualTo(expectedQueue.Status));
+            Assert.That(actualQueue.AutoDeleteOnIdle, Is.EqualTo(expectedQueue.AutoDeleteOnIdle));
+            Assert.That(actualQueue.EnableExpress, Is.EqualTo(expectedQueue.EnableExpress));
+            Assert.That(actualQueue.EnablePartitioning, Is.EqualTo(expectedQueue.EnablePartitioning));
         }
     }
 }

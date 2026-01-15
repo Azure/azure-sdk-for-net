@@ -81,15 +81,15 @@ namespace Azure.ResourceManager.NetApp.Tests
         [RecordedTest]
         public async Task UpdateNetworkSiblingSet()
         {
-            Assert.AreEqual(NetAppNetworkFeature.Basic, _volumeResource.Data.NetworkFeatures);
+            Assert.That(_volumeResource.Data.NetworkFeatures, Is.EqualTo(NetAppNetworkFeature.Basic));
             QueryNetworkSiblingSetContent queryNetworkSiblingSetContent = new QueryNetworkSiblingSetContent(_volumeResource.Data.NetworkSiblingSetId.ToString(), DefaultSubnetId);
             Response<NetworkSiblingSet> networkSiblingSet = await DefaultSubscription.QueryNetworkSiblingSetNetAppResourceAsync(DefaultLocation, queryNetworkSiblingSetContent);
 
-            Assert.AreEqual(NetAppNetworkFeature.Basic, _volumeResource.Data.NetworkFeatures);
+            Assert.That(_volumeResource.Data.NetworkFeatures, Is.EqualTo(NetAppNetworkFeature.Basic));
             UpdateNetworkSiblingSetContent updateNetworkSiblingSetContent = new UpdateNetworkSiblingSetContent(networkSiblingSet.Value.NetworkSiblingSetId, networkSiblingSet.Value.SubnetId, networkSiblingSet.Value.NetworkSiblingSetStateId, NetAppNetworkFeature.Standard);
             ArmOperation<NetworkSiblingSet> networkSiblingSetLRO = await DefaultSubscription.UpdateNetworkSiblingSetNetAppResourceAsync(WaitUntil.Completed, DefaultLocation, updateNetworkSiblingSetContent);
             NetworkSiblingSet networkSiblingSetResult = networkSiblingSetLRO.Value;
-            Assert.AreEqual(NetAppNetworkFeature.Standard, networkSiblingSetResult.NetworkFeatures);
+            Assert.That(networkSiblingSetResult.NetworkFeatures, Is.EqualTo(NetAppNetworkFeature.Standard));
             await LiveDelay(60000);
             NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(_volumeResource.Id.Name);
 

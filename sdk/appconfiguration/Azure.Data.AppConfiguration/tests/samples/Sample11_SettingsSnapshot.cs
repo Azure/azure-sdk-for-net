@@ -39,7 +39,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine($"Retrieved configuration snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
 
                 Assert.NotNull(retrievedSnapshot);
-                Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
+                Assert.That(retrievedSnapshot.Name, Is.EqualTo(createdSnapshot.Name));
             }
             finally
             {
@@ -77,7 +77,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine($"Retrieved configuration snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
 
                 Assert.NotNull(retrievedSnapshot);
-                Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
+                Assert.That(retrievedSnapshot.Name, Is.EqualTo(createdSnapshot.Name));
             }
             finally
             {
@@ -121,7 +121,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine($"Retrieved configuration snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
 
                 Assert.NotNull(retrievedSnapshot);
-                Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
+                Assert.That(retrievedSnapshot.Name, Is.EqualTo(createdSnapshot.Name));
             }
             finally
             {
@@ -158,7 +158,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 #endregion
 
                 Assert.NotNull(retrievedSnapshot);
-                Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
+                Assert.That(retrievedSnapshot.Name, Is.EqualTo(createdSnapshot.Name));
             }
             finally
             {
@@ -187,8 +187,8 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine($"Created configuration snapshot: {createdSnapshot.Name}, status: {createdSnapshot.Status}");
 
                 Assert.NotNull(createdSnapshot);
-                Assert.AreEqual(configSnapshotName, createdSnapshot.Name);
-                Assert.AreEqual(ConfigurationSnapshotStatus.Ready, createdSnapshot.Status);
+                Assert.That(createdSnapshot.Name, Is.EqualTo(configSnapshotName));
+                Assert.That(createdSnapshot.Status, Is.EqualTo(ConfigurationSnapshotStatus.Ready));
 
                 #region Snippet:AzConfigSample11_ArchiveSnapshot
                 var snapshotName = "some_snapshot";
@@ -200,7 +200,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 #endregion
 
                 Assert.NotNull(archivedSnapshot);
-                Assert.AreEqual(ConfigurationSnapshotStatus.Archived, archivedSnapshot.Status);
+                Assert.That(archivedSnapshot.Status, Is.EqualTo(ConfigurationSnapshotStatus.Archived));
             }
             finally
             {
@@ -229,13 +229,13 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine($"Created configuration snapshot: {createdSnapshot.Name}, status: {createdSnapshot.Status}");
 
                 Assert.NotNull(createdSnapshot);
-                Assert.AreEqual(configSnapshotName, createdSnapshot.Name);
-                Assert.AreEqual(ConfigurationSnapshotStatus.Ready, createdSnapshot.Status);
+                Assert.That(createdSnapshot.Name, Is.EqualTo(configSnapshotName));
+                Assert.That(createdSnapshot.Status, Is.EqualTo(ConfigurationSnapshotStatus.Ready));
 
                 ConfigurationSnapshot archivedSnapshot = client.ArchiveSnapshot(configSnapshotName);
                 Console.WriteLine($"Archived configuration snapshot: {archivedSnapshot.Name}, status: {archivedSnapshot.Status}");
 
-                Assert.AreEqual(ConfigurationSnapshotStatus.Archived, archivedSnapshot.Status);
+                Assert.That(archivedSnapshot.Status, Is.EqualTo(ConfigurationSnapshotStatus.Archived));
 
                 #region Snippet:AzConfigSample11_RecoverSnapshot
                 var snapshotName = "some_snapshot";
@@ -247,7 +247,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 #endregion
 
                 Assert.NotNull(recoveredSnapshot);
-                Assert.AreEqual(ConfigurationSnapshotStatus.Ready, recoveredSnapshot.Status);
+                Assert.That(recoveredSnapshot.Status, Is.EqualTo(ConfigurationSnapshotStatus.Ready));
             }
             finally
             {
@@ -276,7 +276,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine($"Created configuration snapshot: {createdFirstSnapshot.Name}, status: {createdFirstSnapshot.Status}");
 
                 Assert.NotNull(createdFirstSnapshot);
-                Assert.AreEqual(firstSnapshotName, createdFirstSnapshot.Name);
+                Assert.That(createdFirstSnapshot.Name, Is.EqualTo(firstSnapshotName));
 
                 var secondSnapshotFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter(secondSetting.Key) };
                 var secondSnapshotName = GenerateSnapshotName("second_snapshot");
@@ -285,7 +285,7 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine($"Created configuration snapshot: {createdSecondSnapshot.Name}, status: {createdFirstSnapshot.Status}");
 
                 Assert.NotNull(createdSecondSnapshot);
-                Assert.AreEqual(secondSnapshotName, createdSecondSnapshot.Name);
+                Assert.That(createdSecondSnapshot.Name, Is.EqualTo(secondSnapshotName));
 
                 #region Snippet:AzConfigSample11_GetSnapshots
                 var count = 0;
@@ -355,6 +355,6 @@ namespace Azure.Data.AppConfiguration.Samples
             return prefix + Guid.NewGuid();
         }
 
-        private static void AssertStatus200(Response response) => Assert.AreEqual(200, response.Status);
+        private static void AssertStatus200(Response response) => Assert.That(response.Status, Is.EqualTo(200));
     }
 }

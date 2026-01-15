@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             Assert.Greater(savingsPlanModelResources.Count, 0);
             savingsPlanModelResources.ForEach(model =>
             {
-                Assert.IsTrue(model.HasData);
-                Assert.AreEqual(BillingBenefitsProvisioningState.Succeeded, model.Data.ProvisioningState);
+                Assert.That(model.HasData, Is.True);
+                Assert.That(model.Data.ProvisioningState, Is.EqualTo(BillingBenefitsProvisioningState.Succeeded));
                 ValidateResponseProperties(model);
             });
         }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         {
             var response = await _tenant.GetBillingBenefitsSavingsPlanOrderAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.NotNull(response.Value);
 
             var resources = response.Value.GetBillingBenefitsSavingsPlans().GetAllAsync();
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         {
             var response = await _tenant.GetBillingBenefitsSavingsPlanOrderAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.NotNull(response.Value);
 
             var modelResponse = await response.Value.GetBillingBenefitsSavingsPlanAsync("2035abf9-4697-4220-b158-dbff2a0dc073");
 
-            Assert.AreEqual(200, modelResponse.GetRawResponse().Status);
+            Assert.That(modelResponse.GetRawResponse().Status, Is.EqualTo(200));
             Assert.NotNull(modelResponse.Value);
             var model = modelResponse.Value;
             ValidateResponseProperties(model);
@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         {
             var response = await _tenant.GetBillingBenefitsSavingsPlanOrderAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.NotNull(response.Value);
 
             var modelResponse = await response.Value.GetBillingBenefitsSavingsPlanAsync("2035abf9-4697-4220-b158-dbff2a0dc073");
 
-            Assert.AreEqual(200, modelResponse.GetRawResponse().Status);
+            Assert.That(modelResponse.GetRawResponse().Status, Is.EqualTo(200));
             Assert.NotNull(modelResponse.Value);
 
             var modelResource = modelResponse.Value;
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             };
             var updateReponse = await modelResource.UpdateAsync(updateProperties);
 
-            Assert.AreEqual(200, updateReponse.GetRawResponse().Status);
+            Assert.That(updateReponse.GetRawResponse().Status, Is.EqualTo(200));
             Assert.NotNull(updateReponse.Value);
 
             var newModelResponse = await response.Value.GetBillingBenefitsSavingsPlanAsync("2035abf9-4697-4220-b158-dbff2a0dc073");
-            Assert.AreEqual(200, newModelResponse.GetRawResponse().Status);
+            Assert.That(newModelResponse.GetRawResponse().Status, Is.EqualTo(200));
             Assert.NotNull(newModelResponse.Value);
             Assert.IsNotEmpty(newModelResponse.Value.Data.DisplayName);
-            Assert.False(newModelResponse.Value.Data.DisplayName.Equals(originalName, StringComparison.OrdinalIgnoreCase));
+            Assert.That(newModelResponse.Value.Data.DisplayName.Equals(originalName, StringComparison.OrdinalIgnoreCase), Is.False);
             ValidateResponseProperties(newModelResponse.Value);
         }
 
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         {
             var response = await _tenant.GetBillingBenefitsSavingsPlanOrderAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.NotNull(response.Value);
 
             var modelResponse = await response.Value.GetBillingBenefitsSavingsPlanAsync("2035abf9-4697-4220-b158-dbff2a0dc073");
 
-            Assert.AreEqual(200, modelResponse.GetRawResponse().Status);
+            Assert.That(modelResponse.GetRawResponse().Status, Is.EqualTo(200));
             Assert.NotNull(modelResponse.Value);
 
             var modelResource = modelResponse.Value;
@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             };
             var updateReponse = await modelResource.UpdateAsync(updateProperties);
 
-            Assert.AreEqual(200, updateReponse.GetRawResponse().Status);
+            Assert.That(updateReponse.GetRawResponse().Status, Is.EqualTo(200));
             Assert.NotNull(updateReponse.Value);
 
             // Get renew properties
             var newModelResponse = await response.Value.GetBillingBenefitsSavingsPlanAsync("2035abf9-4697-4220-b158-dbff2a0dc073", "renewProperties");
-            Assert.AreEqual(200, newModelResponse.GetRawResponse().Status);
+            Assert.That(newModelResponse.GetRawResponse().Status, Is.EqualTo(200));
             Assert.NotNull(newModelResponse.Value);
             Assert.IsNotEmpty(newModelResponse.Value.Data.DisplayName);
             ValidateResponseProperties(newModelResponse.Value);
@@ -203,12 +203,12 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         {
             var response = await _tenant.GetBillingBenefitsSavingsPlanOrderAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.NotNull(response.Value);
 
             var modelResponse = await response.Value.GetBillingBenefitsSavingsPlanAsync("2035abf9-4697-4220-b158-dbff2a0dc073");
 
-            Assert.AreEqual(200, modelResponse.GetRawResponse().Status);
+            Assert.That(modelResponse.GetRawResponse().Status, Is.EqualTo(200));
             Assert.NotNull(modelResponse.Value);
             var model = modelResponse.Value;
             var validateContent = new SavingsPlanUpdateValidateContent();
@@ -224,28 +224,28 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             var validateResponse = await model.ValidateUpdateAsync(validateContent).ToEnumerableAsync();
 
             Assert.NotNull(validateResponse);
-            Assert.AreEqual(1, validateResponse.Count);
-            Assert.IsTrue(validateResponse[0].IsValid);
+            Assert.That(validateResponse.Count, Is.EqualTo(1));
+            Assert.That(validateResponse[0].IsValid, Is.True);
         }
 
         private void ValidateResponseProperties(BillingBenefitsSavingsPlanResource model)
         {
-            Assert.IsTrue(model.HasData);
-            Assert.AreEqual("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47", model.Data.BillingScopeId.ToString());
+            Assert.That(model.HasData, Is.True);
+            Assert.That(model.Data.BillingScopeId.ToString(), Is.EqualTo("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47"));
             Assert.NotNull(model.Data.Commitment);
             Assert.IsNotEmpty(model.Data.Commitment.CurrencyCode);
-            Assert.AreEqual(BillingBenefitsCommitmentGrain.Hourly, model.Data.Commitment.Grain);
+            Assert.That(model.Data.Commitment.Grain, Is.EqualTo(BillingBenefitsCommitmentGrain.Hourly));
             Assert.Greater(model.Data.Commitment.Amount, 0);
             Assert.NotNull(model.Data.Id);
             Assert.NotNull(model.Data.IsRenewed);
             Assert.IsNotEmpty(model.Data.Name);
             Assert.IsNotEmpty(model.Data.DisplayName);
             Assert.NotNull(model.Data.ResourceType);
-            Assert.AreEqual("microsoft.billingbenefits", model.Data.ResourceType.Namespace);
-            Assert.AreEqual("savingsPlanOrders/savingsPlans", model.Data.ResourceType.Type);
+            Assert.That(model.Data.ResourceType.Namespace, Is.EqualTo("microsoft.billingbenefits"));
+            Assert.That(model.Data.ResourceType.Type, Is.EqualTo("savingsPlanOrders/savingsPlans"));
             Assert.NotNull(model.Data.Sku);
-            Assert.AreEqual("Compute_Savings_Plan", model.Data.Sku.Name);
-            Assert.AreEqual("Compute_Savings_Plan", model.Data.SkuName);
+            Assert.That(model.Data.Sku.Name, Is.EqualTo("Compute_Savings_Plan"));
+            Assert.That(model.Data.SkuName, Is.EqualTo("Compute_Savings_Plan"));
             Assert.NotNull(model.Data.Term);
             Assert.IsNotEmpty(model.Data.Name);
             Assert.IsNotEmpty(model.Data.BillingProfileId);

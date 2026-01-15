@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
 
             Assert.IsNotNull(brokerResource);
             Assert.IsNotNull(brokerResource.Data);
-            Assert.AreEqual(brokerResource.Data.Name, BrokersName);
+            Assert.That(BrokersName, Is.EqualTo(brokerResource.Data.Name));
 
             // Cant update Broker
         }

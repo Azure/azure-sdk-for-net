@@ -385,7 +385,8 @@
     <PackageReference Update="Moq" Version="[4.18.2]" /><!-- This version should not be changed without team discussion. -->
     <PackageReference Update="NSubstitute" Version="5.3.0" />
     <PackageReference Update="NUnit" Version="$(NUnitVersion)" />
-    <PackageReference Update="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageReference Update="NUnit3TestAdapter" Version="6.1.0" />
+    <PackageReference Update="NUnit.Analyzers" Version="4.11.2" />
     <PackageReference Update="Microsoft.NET.Sdk.Functions" Version="4.6.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="18.0.1" />
 

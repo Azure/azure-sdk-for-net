@@ -85,9 +85,9 @@ namespace Azure.Storage.Blobs.Tests
         [Test]
         public override void TestAutoResolve()
         {
-            Assert.AreEqual(
-                StorageChecksumAlgorithm.StorageCrc64,
-                TransferValidationOptionsExtensions.ResolveAuto(StorageChecksumAlgorithm.Auto));
+            Assert.That(
+                TransferValidationOptionsExtensions.ResolveAuto(StorageChecksumAlgorithm.Auto),
+                Is.EqualTo(StorageChecksumAlgorithm.StorageCrc64));
         }
 
         #region Added Tests
@@ -117,7 +117,7 @@ namespace Azure.Storage.Blobs.Tests
 
             // Assert
             // validated stream is buffered
-            Assert.AreEqual(typeof(MemoryStream), response.Value.Content.GetType());
+            Assert.That(response.Value.Content.GetType(), Is.EqualTo(typeof(MemoryStream)));
         }
 
         [Test]
@@ -141,7 +141,7 @@ namespace Azure.Storage.Blobs.Tests
 
             // Assert
             // unvalidated stream type is private; just check we didn't get back a buffered stream
-            Assert.AreNotEqual(typeof(MemoryStream), response.Value.Content.GetType());
+            Assert.That(response.Value.Content.GetType(), Is.Not.EqualTo(typeof(MemoryStream)));
         }
         #endregion
     }

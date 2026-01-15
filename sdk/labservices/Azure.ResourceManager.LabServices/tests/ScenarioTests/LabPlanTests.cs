@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.LabServices.Tests
 
             // Exists test
             bool boolResult = await collection.ExistsAsync(resourceName);
-            Assert.IsTrue(boolResult);
+            Assert.That(boolResult, Is.True);
 
             // GetAll test
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, list.Count);
+            Assert.That(list.Count, Is.EqualTo(1));
             AssertLabPlanData(data, list[0].Data);
 
             // Delete test
             await resource.DeleteAsync(WaitUntil.Completed);
             boolResult = await collection.ExistsAsync(resourceName);
-            Assert.IsFalse(boolResult);
+            Assert.That(boolResult, Is.False);
         }
 
         public LabPlanData GetData()
@@ -110,21 +110,21 @@ namespace Azure.ResourceManager.LabServices.Tests
 
         public void AssertLabPlanData(LabPlanData expected, LabPlanData actual)
         {
-            Assert.AreEqual(expected.DefaultConnectionProfile.WebSshAccess, actual.DefaultConnectionProfile.WebSshAccess);
-            Assert.AreEqual(expected.DefaultConnectionProfile.WebRdpAccess, actual.DefaultConnectionProfile.WebRdpAccess);
-            Assert.AreEqual(expected.DefaultConnectionProfile.ClientSshAccess, actual.DefaultConnectionProfile.ClientSshAccess);
-            Assert.AreEqual(expected.DefaultConnectionProfile.ClientRdpAccess, actual.DefaultConnectionProfile.ClientRdpAccess);
-            Assert.AreEqual(expected.DefaultAutoShutdownProfile.ShutdownOnDisconnect, actual.DefaultAutoShutdownProfile.ShutdownOnDisconnect);
-            Assert.AreEqual(expected.DefaultAutoShutdownProfile.ShutdownWhenNotConnected, actual.DefaultAutoShutdownProfile.ShutdownWhenNotConnected);
-            Assert.AreEqual(expected.DefaultAutoShutdownProfile.ShutdownOnIdle, actual.DefaultAutoShutdownProfile.ShutdownOnIdle);
-            Assert.AreEqual(expected.DefaultAutoShutdownProfile.DisconnectDelay, actual.DefaultAutoShutdownProfile.DisconnectDelay);
-            Assert.AreEqual(expected.DefaultAutoShutdownProfile.NoConnectDelay, actual.DefaultAutoShutdownProfile.NoConnectDelay);
-            Assert.AreEqual(expected.DefaultAutoShutdownProfile.IdleDelay, actual.DefaultAutoShutdownProfile.IdleDelay);
-            Assert.AreEqual(expected.SupportInfo.Uri, actual.SupportInfo.Uri);
-            Assert.AreEqual(expected.SupportInfo.Email, actual.SupportInfo.Email);
-            Assert.AreEqual(expected.SupportInfo.Phone, actual.SupportInfo.Phone);
-            Assert.AreEqual(expected.SupportInfo.Instructions, actual.SupportInfo.Instructions);
-            Assert.AreEqual(expected.AllowedRegions.Count, 2);
+            Assert.That(actual.DefaultConnectionProfile.WebSshAccess, Is.EqualTo(expected.DefaultConnectionProfile.WebSshAccess));
+            Assert.That(actual.DefaultConnectionProfile.WebRdpAccess, Is.EqualTo(expected.DefaultConnectionProfile.WebRdpAccess));
+            Assert.That(actual.DefaultConnectionProfile.ClientSshAccess, Is.EqualTo(expected.DefaultConnectionProfile.ClientSshAccess));
+            Assert.That(actual.DefaultConnectionProfile.ClientRdpAccess, Is.EqualTo(expected.DefaultConnectionProfile.ClientRdpAccess));
+            Assert.That(actual.DefaultAutoShutdownProfile.ShutdownOnDisconnect, Is.EqualTo(expected.DefaultAutoShutdownProfile.ShutdownOnDisconnect));
+            Assert.That(actual.DefaultAutoShutdownProfile.ShutdownWhenNotConnected, Is.EqualTo(expected.DefaultAutoShutdownProfile.ShutdownWhenNotConnected));
+            Assert.That(actual.DefaultAutoShutdownProfile.ShutdownOnIdle, Is.EqualTo(expected.DefaultAutoShutdownProfile.ShutdownOnIdle));
+            Assert.That(actual.DefaultAutoShutdownProfile.DisconnectDelay, Is.EqualTo(expected.DefaultAutoShutdownProfile.DisconnectDelay));
+            Assert.That(actual.DefaultAutoShutdownProfile.NoConnectDelay, Is.EqualTo(expected.DefaultAutoShutdownProfile.NoConnectDelay));
+            Assert.That(actual.DefaultAutoShutdownProfile.IdleDelay, Is.EqualTo(expected.DefaultAutoShutdownProfile.IdleDelay));
+            Assert.That(actual.SupportInfo.Uri, Is.EqualTo(expected.SupportInfo.Uri));
+            Assert.That(actual.SupportInfo.Email, Is.EqualTo(expected.SupportInfo.Email));
+            Assert.That(actual.SupportInfo.Phone, Is.EqualTo(expected.SupportInfo.Phone));
+            Assert.That(actual.SupportInfo.Instructions, Is.EqualTo(expected.SupportInfo.Instructions));
+            Assert.That(expected.AllowedRegions.Count, Is.EqualTo(2));
         }
     }
 }

@@ -42,20 +42,20 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             volumeGroupData.VirtualNetworkRules.Add(new ElasticSanVirtualNetworkRule(vnetResourceId));
 
             ElasticSanVolumeGroupResource volumeGroupResource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupName, volumeGroupData)).Value;
-            Assert.AreEqual(volumeGroupResource.Id.Name, volumeGroupName);
-            Assert.AreEqual(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey, volumeGroupResource.Data.Encryption);
-            Assert.AreEqual(ElasticSanStorageTargetType.Iscsi, volumeGroupResource.Data.ProtocolType);
-            Assert.AreEqual(false, volumeGroupResource.Data.EnforceDataIntegrityCheckForIscsi);
+            Assert.That(volumeGroupName, Is.EqualTo(volumeGroupResource.Id.Name));
+            Assert.That(volumeGroupResource.Data.Encryption, Is.EqualTo(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey));
+            Assert.That(volumeGroupResource.Data.ProtocolType, Is.EqualTo(ElasticSanStorageTargetType.Iscsi));
+            Assert.That(volumeGroupResource.Data.EnforceDataIntegrityCheckForIscsi, Is.EqualTo(false));
             Assert.GreaterOrEqual(volumeGroupResource.Data.VirtualNetworkRules.Count, 1);
-            Assert.AreEqual(vnetResourceId, volumeGroupResource.Data.VirtualNetworkRules[0].VirtualNetworkResourceId);
+            Assert.That(volumeGroupResource.Data.VirtualNetworkRules[0].VirtualNetworkResourceId, Is.EqualTo(vnetResourceId));
 
             ElasticSanVolumeGroupResource volumeGroup = (await collection.GetAsync(volumeGroupName)).Value;
-            Assert.AreEqual(volumeGroupResource.Id.Name, volumeGroupName);
-            Assert.AreEqual(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey, volumeGroupResource.Data.Encryption);
-            Assert.AreEqual(ElasticSanStorageTargetType.Iscsi, volumeGroupResource.Data.ProtocolType);
-            Assert.AreEqual(false, volumeGroupResource.Data.EnforceDataIntegrityCheckForIscsi);
+            Assert.That(volumeGroupName, Is.EqualTo(volumeGroupResource.Id.Name));
+            Assert.That(volumeGroupResource.Data.Encryption, Is.EqualTo(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey));
+            Assert.That(volumeGroupResource.Data.ProtocolType, Is.EqualTo(ElasticSanStorageTargetType.Iscsi));
+            Assert.That(volumeGroupResource.Data.EnforceDataIntegrityCheckForIscsi, Is.EqualTo(false));
             Assert.GreaterOrEqual(volumeGroupResource.Data.VirtualNetworkRules.Count, 1);
-            Assert.AreEqual(vnetResourceId, volumeGroupResource.Data.VirtualNetworkRules[0].VirtualNetworkResourceId);
+            Assert.That(volumeGroupResource.Data.VirtualNetworkRules[0].VirtualNetworkResourceId, Is.EqualTo(vnetResourceId));
         }
 
         [Test]
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 
             string volumeGroupName1 = Recording.GenerateAssetName("testvolumegroup-");
             _ = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupName1, new ElasticSanVolumeGroupData())).Value;
-            Assert.IsTrue(await collection.ExistsAsync(volumeGroupName1));
-            Assert.IsFalse(await collection.ExistsAsync(volumeGroupName1 + "111"));
+            Assert.That((bool)await collection.ExistsAsync(volumeGroupName1), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(volumeGroupName1 + "111"), Is.False);
         }
     }
 }

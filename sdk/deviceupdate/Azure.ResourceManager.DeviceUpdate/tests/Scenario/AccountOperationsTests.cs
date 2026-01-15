@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
             await account.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await account.GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [TestCase]

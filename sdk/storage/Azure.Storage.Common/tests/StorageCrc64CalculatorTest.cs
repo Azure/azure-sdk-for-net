@@ -40,7 +40,7 @@ namespace Azure.Storage.Tests
                 i++;
             }
 
-            Assert.AreEqual(wholeCrc, composedCrc);
+            Assert.That(composedCrc, Is.EqualTo(wholeCrc));
         }
 
         [TestCase(2)]
@@ -82,7 +82,7 @@ namespace Azure.Storage.Tests
                 lengthIndex++;
             }
 
-            Assert.AreEqual(wholeCrc, composedCrc);
+            Assert.That(composedCrc, Is.EqualTo(wholeCrc));
         }
 
         [TestCase(2)]
@@ -111,7 +111,7 @@ namespace Azure.Storage.Tests
             ulong composedCrc = StorageCrc64Composer.Compose(
                 blockCrcs.Zip(blockLengths, (crc, len) => (crc, (long)len)));
 
-            Assert.AreEqual(wholeCrc, composedCrc);
+            Assert.That(composedCrc, Is.EqualTo(wholeCrc));
         }
 
         [TestCase(2)]

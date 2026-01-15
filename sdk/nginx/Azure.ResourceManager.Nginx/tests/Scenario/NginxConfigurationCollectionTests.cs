@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
             NginxConfigurationCollection collection = nginxDeployment.GetNginxConfigurations();
             const string nginxConfigurationName = "default";
-            Assert.IsFalse(await collection.ExistsAsync(nginxConfigurationName));
+            Assert.That((bool)await collection.ExistsAsync(nginxConfigurationName), Is.False);
             const string virtualPath = "/etc/nginx/nginx.conf";
             _ = await CreateNginxConfiguration(nginxDeployment, nginxConfigurationName, virtualPath);
 
-            Assert.IsTrue(await collection.ExistsAsync(nginxConfigurationName));
+            Assert.That((bool)await collection.ExistsAsync(nginxConfigurationName), Is.True);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxConfigurationCollection collection = nginxDeployment.GetNginxConfigurations();
             const string nginxConfigurationName = "default";
             NullableResponse<NginxConfigurationResource> nginxConfigurationResponse = await collection.GetIfExistsAsync(nginxConfigurationName);
-            Assert.False(nginxConfigurationResponse.HasValue);
+            Assert.That(nginxConfigurationResponse.HasValue, Is.False);
 
             const string virtualPath = "/etc/nginx/nginx.conf";
             NginxConfigurationResource nginxConfiguration1 = await CreateNginxConfiguration(nginxDeployment, nginxConfigurationName, virtualPath);
             NullableResponse<NginxConfigurationResource> nginxConfigurationResponse2 = await collection.GetIfExistsAsync(nginxConfigurationName);
-            Assert.True(nginxConfigurationResponse2.HasValue);
+            Assert.That(nginxConfigurationResponse2.HasValue, Is.True);
             NginxConfigurationResource nginxConfiguration2 = nginxConfigurationResponse2.Value;
 
             ResourceDataHelper.AssertResourceData(nginxConfiguration1.Data, nginxConfiguration2.Data);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             {
                 count++;
             }
-            Assert.AreEqual(1, count);
+            Assert.That(count, Is.EqualTo(1));
         }
     }
 }

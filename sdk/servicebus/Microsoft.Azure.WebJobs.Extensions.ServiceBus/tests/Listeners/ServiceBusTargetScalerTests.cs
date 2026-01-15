@@ -61,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests.Listeners
                 );
             TargetScalerResult result = targetScaler.GetScaleResultInternal(context, messageCount);
 
-            Assert.AreEqual(result.TargetWorkerCount, expected);
+            Assert.That(expected, Is.EqualTo(result.TargetWorkerCount));
         }
     }
 }

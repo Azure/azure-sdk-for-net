@@ -46,7 +46,7 @@ namespace Azure.Health.Insights.CancerProfiling.Tests
                 Assert.IsNotNull(operation);
                 Response response = operation.GetRawResponse();
                 Assert.IsNotNull(response);
-                Assert.IsTrue(response.Status == (int)HttpStatusCode.OK);
+                Assert.That(response.Status == (int)HttpStatusCode.OK, Is.True);
                 OncoPhenotypeResults results = FetchResults(response);
                 Assert.IsNotEmpty(results.Patients);
                 var patient = results.Patients[0];

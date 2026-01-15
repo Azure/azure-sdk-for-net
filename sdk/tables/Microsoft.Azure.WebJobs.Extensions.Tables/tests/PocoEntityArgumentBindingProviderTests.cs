@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             IArgumentBinding<TableEntityContext> binding = TableAttributeBindingProvider.TryCreatePocoBinding(_parameters[0], converterMock.Object);
             // Assert
-            Assert.Null(binding);
+            Assert.That(binding, Is.Null);
         }
 
         [Test]

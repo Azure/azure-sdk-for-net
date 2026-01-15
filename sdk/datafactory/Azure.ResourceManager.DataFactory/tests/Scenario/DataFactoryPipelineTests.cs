@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string pipelineName = Recording.GenerateAssetName("adf-pipeline-");
             var pipeline = await CreateDefaultEmptyPipeLine(dataFactory, pipelineName);
             Assert.IsNotNull(pipeline);
-            Assert.AreEqual(pipelineName, pipeline.Data.Name);
+            Assert.That(pipeline.Data.Name, Is.EqualTo(pipelineName));
             // Exist
             bool flag = await dataFactory.GetDataFactoryPipelines().ExistsAsync(pipelineName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
             // Get
             var pipelineGet = await dataFactory.GetDataFactoryPipelines().GetAsync(pipelineName);
             Assert.IsNotNull(pipeline);
-            Assert.AreEqual(pipelineName, pipelineGet.Value.Data.Name);
+            Assert.That(pipelineGet.Value.Data.Name, Is.EqualTo(pipelineName));
             // Get All
             var list = await dataFactory.GetDataFactoryPipelines().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(1, list.Count);
+            Assert.That(list.Count, Is.EqualTo(1));
             //Delete
             await pipeline.DeleteAsync(WaitUntil.Completed);
             flag = await dataFactory.GetDataFactoryDatasets().ExistsAsync(pipelineName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         public async Task PipelineCreate(string name, Func<DataFactoryResource, string, string, Task<DataFactoryDatasetResource>> datesetSourceFunc1, Func<DataFactoryResource, string, string, Task<DataFactoryDatasetResource>> datesetSinkFunc1, Func<DataFactoryResource, string, string, string, string, DataFactoryPipelineData> pipelineFunc)

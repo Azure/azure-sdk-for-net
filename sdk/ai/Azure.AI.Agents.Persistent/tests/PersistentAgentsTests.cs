@@ -228,10 +228,10 @@ namespace Azure.AI.Agents.Persistent.Tests
                 id = GetFieldFromJson(agentResponse.Content, "id");
                 name = GetFieldFromJson(agentResponse.Content, "name");
             }
-            Assert.AreNotEqual(default, id);
-            Assert.AreEqual(name, AGENT_NAME);
+            Assert.That(id, Is.Not.EqualTo(default));
+            Assert.That(name, Is.EqualTo(AGENT_NAME));
             Response<bool> delResponse = await client.Administration.DeleteAgentAsync(id);
-            Assert.IsTrue(delResponse.Value);
+            Assert.That(delResponse.Value, Is.True);
         }
 
         [RecordedTest]
@@ -266,7 +266,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 Response agentResponse = await client.Administration.UpdateAgentAsync(agent.Id, content);
                 name = GetFieldFromJson(agentResponse.Content, "name");
             }
-            Assert.AreEqual(AGENT_NAME2, name);
+            Assert.That(name, Is.EqualTo(AGENT_NAME2));
         }
 
         [RecordedTest]
@@ -279,23 +279,23 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgent agent1 = await GetAgent(client, AGENT_NAME);
             ids = [agent1.Id];
             int count = await CountElementsAndRemoveIds(client, ids);
-            Assert.AreEqual(0, ids.Count);
-            Assert.AreEqual(initialAgentCount + 1, count);
+            Assert.That(ids.Count, Is.EqualTo(0));
+            Assert.That(count, Is.EqualTo(initialAgentCount + 1));
 
             PersistentAgent agent2 = await GetAgent(client, AGENT_NAME2);
             ids.Add(agent1.Id);
             ids.Add(agent2.Id);
             count = await CountElementsAndRemoveIds(client, ids);
-            Assert.AreEqual(0, ids.Count);
-            Assert.AreEqual(initialAgentCount + 2, count);
+            Assert.That(ids.Count, Is.EqualTo(0));
+            Assert.That(count, Is.EqualTo(initialAgentCount + 2));
 
             await DeleteAndAssert(client, agent1);
             ids.Add(agent1.Id);
             ids.Add(agent2.Id);
             count = await CountElementsAndRemoveIds(client, ids);
-            Assert.AreEqual(1, ids.Count);
-            Assert.False(ids.Contains(agent2.Id));
-            Assert.AreEqual(initialAgentCount + 1, count);
+            Assert.That(ids.Count, Is.EqualTo(1));
+            Assert.That(ids.Contains(agent2.Id), Is.False);
+            Assert.That(count, Is.EqualTo(initialAgentCount + 1));
             await DeleteAndAssert(client, agent2);
         }
 
@@ -330,14 +330,14 @@ namespace Azure.AI.Agents.Persistent.Tests
                 Assert.LessOrEqual(pg.Values.Count, 2);
             }
             List<PersistentAgentThread> lstThreads = await client.Threads.GetThreadsAsync(limit: 2).ToListAsync();
-            Assert.AreEqual(lstThreads.Count, cntBefore + 3);
+            Assert.That(cntBefore + 3, Is.EqualTo(lstThreads.Count));
             foreach (PersistentAgentThread thr in lstThreads)
                 threads.Remove(thr.Id);
-            Assert.AreEqual(threads.Count, 0, $"Some threads were not added: {threads.ToList()}");
+            Assert.That(threads.Count, Is.EqualTo(0), $"Some threads were not added: {threads.ToList()}");
             threads = [thr1.Id, thr2.Id, thr3.Id];
-            Assert.True((await client.Threads.DeleteThreadAsync(thr1.Id)).Value);
-            Assert.True((await client.Threads.DeleteThreadAsync(thr2.Id)).Value);
-            Assert.True((await client.Threads.DeleteThreadAsync(thr3.Id)).Value);
+            Assert.That((await client.Threads.DeleteThreadAsync(thr1.Id)).Value, Is.True);
+            Assert.That((await client.Threads.DeleteThreadAsync(thr2.Id)).Value, Is.True);
+            Assert.That((await client.Threads.DeleteThreadAsync(thr3.Id)).Value, Is.True);
             int cnt = 0;
             StringBuilder sbUndeleted = new();
             pgThreads = client.Threads.GetThreadsAsync(limit: 2);
@@ -348,7 +348,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 cnt++;
             }
             Assert.That(sbUndeleted.Length == 0, $"The threads{sbUndeleted.ToString()} were not deleted.");
-            Assert.AreEqual(cntBefore, cnt);
+            Assert.That(cnt, Is.EqualTo(cntBefore));
         }
 
         [RecordedTest]
@@ -389,12 +389,12 @@ namespace Azure.AI.Agents.Persistent.Tests
                 Response<PersistentAgentThread> threadResponse = await client.Threads.GetThreadAsync(thread_id);
                 metadata = threadResponse.Value.Metadata;
             }
-            Assert.AreNotEqual(default, thread_id);
-            Assert.AreEqual(2, metadata.Count);
+            Assert.That(thread_id, Is.Not.EqualTo(default));
+            Assert.That(metadata.Count, Is.EqualTo(2));
 
             // Test delete thread
             Response<bool> delResponse = await client.Threads.DeleteThreadAsync(thread_id);
-            Assert.True(delResponse);
+            Assert.That((bool)delResponse, Is.True);
         }
 
         [RecordedTest]
@@ -406,7 +406,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgentThread thread = await GetThread(client);
-            Assert.AreEqual(0, thread.Metadata.Count);
+            Assert.That(thread.Metadata.Count, Is.EqualTo(0));
 
             if (argType == ArgumentType.Metadata)
             {
@@ -435,12 +435,12 @@ namespace Azure.AI.Agents.Persistent.Tests
             // Test get thread
             Response<PersistentAgentThread> getThreadResponse = await client.Threads.GetThreadAsync(thread.Id);
             thread = getThreadResponse.Value;
-            Assert.AreNotEqual(default, thread.Id);
-            Assert.AreEqual(2, thread.Metadata.Count);
+            Assert.That(thread.Id, Is.Not.EqualTo(default));
+            Assert.That(thread.Metadata.Count, Is.EqualTo(2));
 
             // Test delete thread
             Response<bool> delResponse = await client.Threads.DeleteThreadAsync(thread.Id);
-            Assert.True(delResponse);
+            Assert.That((bool)delResponse, Is.True);
         }
 
         [RecordedTest]
@@ -471,9 +471,9 @@ namespace Azure.AI.Agents.Persistent.Tests
                 Response<PersistentThreadMessage> msg = await client.Messages.GetMessageAsync(thread.Id, GetFieldFromJson(rawMsg.Content, "id"));
                 tmTest = msg.Value;
             }
-            Assert.AreEqual(1, tmTest.ContentItems.Count);
-            Assert.IsTrue(tmTest.ContentItems[0] is MessageTextContent text);
-            Assert.AreEqual(message, ((MessageTextContent)tmTest.ContentItems[0]).Text);
+            Assert.That(tmTest.ContentItems.Count, Is.EqualTo(1));
+            Assert.That(tmTest.ContentItems[0] is MessageTextContent text, Is.True);
+            Assert.That(((MessageTextContent)tmTest.ContentItems[0]).Text, Is.EqualTo(message));
         }
 
         [RecordedTest]
@@ -490,7 +490,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 thread.Id,
                 MessageRole.User,
                 "Hello, tell me a joke");
-            Assert.AreEqual(0, oldMsgResp.Value.Metadata.Count);
+            Assert.That(oldMsgResp.Value.Metadata.Count, Is.EqualTo(0));
             if (argType == ArgumentType.Metadata)
             {
                 Response<PersistentThreadMessage> msg = await client.Messages.UpdateMessageAsync(thread.Id, oldMsgResp.Value.Id, metadata: new Dictionary<string, string> {
@@ -514,7 +514,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 Response<PersistentThreadMessage> msg = await client.Messages.GetMessageAsync(thread.Id, GetFieldFromJson(rawMsg.Content, "id"));
                 tmTest = msg.Value;
             }
-            Assert.AreEqual(2, tmTest.Metadata.Count);
+            Assert.That(tmTest.Metadata.Count, Is.EqualTo(2));
         }
 
         [RecordedTest]
@@ -524,7 +524,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgentsClient client = GetClient();
             PersistentAgentThread thread = await GetThread(client);
             AsyncPageable<PersistentThreadMessage> msgResp = client.Messages.GetMessagesAsync(thread.Id);
-            Assert.False(await msgResp.AnyAsync());
+            Assert.That(await msgResp.AnyAsync(), Is.False);
 
             HashSet<string> ids = new();
             PersistentThreadMessage msg1 = await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "foo");
@@ -534,8 +534,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 ids.Remove(msg.Id);
             }
-            Assert.AreEqual(0, ids.Count);
-            Assert.AreEqual(1, (await msgResp.ToListAsync()).Count);
+            Assert.That(ids.Count, Is.EqualTo(0));
+            Assert.That((await msgResp.ToListAsync()).Count, Is.EqualTo(1));
 
             PersistentThreadMessage msg2 = await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "bar");
             ids.Add(msg1.Id);
@@ -545,11 +545,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 ids.Remove(msg.Id);
             }
-            Assert.AreEqual(0, ids.Count);
-            Assert.AreEqual(2, (await msgResp.ToListAsync()).Count);
+            Assert.That(ids.Count, Is.EqualTo(0));
+            Assert.That((await msgResp.ToListAsync()).Count, Is.EqualTo(2));
             // Delete message.
             bool wasDeleted = await client.Messages.DeleteMessageAsync(threadId: thread.Id, messageId: msg1.Id);
-            Assert.IsTrue(wasDeleted);
+            Assert.That(wasDeleted, Is.True);
             ids.Add(msg1.Id);
             ids.Add(msg2.Id);
             msgResp = client.Messages.GetMessagesAsync(thread.Id);
@@ -557,7 +557,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 ids.Remove(msg.Id);
             }
-            Assert.AreEqual(1, ids.Count);
+            Assert.That(ids.Count, Is.EqualTo(1));
             Assert.That(ids.Contains(msg1.Id));
             // Check that we can add message to thread after deletion.
             msg2 = await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "baz");
@@ -568,7 +568,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 ids.Remove(msg.Id);
             }
-            Assert.AreEqual(1, ids.Count);
+            Assert.That(ids.Count, Is.EqualTo(1));
         }
 
         [RecordedTest]
@@ -597,15 +597,15 @@ namespace Azure.AI.Agents.Persistent.Tests
             int idNum = 0;
             await foreach (PersistentAgent agent in agents)
             {
-                Assert.AreEqual(ids[idNum], agent.Id, $"The ID #{idNum} is incorrect.");
+                Assert.That(agent.Id, Is.EqualTo(ids[idNum]), $"The ID #{idNum} is incorrect.");
                 idNum++;
             }
-            Assert.AreEqual(idNum, 4);
+            Assert.That(idNum, Is.EqualTo(4));
             // Test calling after.
             agents = client.Administration.GetAgentsAsync(after: ids[idNum - 1], limit: 2, order: ListSortOrder.Ascending);
             await foreach (PersistentAgent agent in agents)
             {
-                Assert.AreEqual(ids[idNum], agent.Id, $"The ID #{idNum} is incorrect.");
+                Assert.That(agent.Id, Is.EqualTo(ids[idNum]), $"The ID #{idNum} is incorrect.");
                 idNum++;
                 agentLimit--;
                 if (agentLimit <= 0)
@@ -636,15 +636,15 @@ namespace Azure.AI.Agents.Persistent.Tests
             int idNum = 0;
             await foreach (PersistentAgentThread thread in threads)
             {
-                Assert.AreEqual(ids[idNum], thread.Id, $"The ID #{idNum} is incorrect.");
+                Assert.That(thread.Id, Is.EqualTo(ids[idNum]), $"The ID #{idNum} is incorrect.");
                 idNum++;
             }
-            Assert.AreEqual(idNum, 4);
+            Assert.That(idNum, Is.EqualTo(4));
             // Test calling after.
             threads = client.Threads.GetThreadsAsync(after: ids[idNum-1], limit: 2, order: ListSortOrder.Ascending);
             await foreach (PersistentAgentThread thread in threads)
             {
-                Assert.AreEqual(ids[idNum], thread.Id, $"The ID #{idNum} is incorrect.");
+                Assert.That(thread.Id, Is.EqualTo(ids[idNum]), $"The ID #{idNum} is incorrect.");
                 idNum++;
                 threadLimit--;
                 if (threadLimit <= 0)
@@ -675,15 +675,15 @@ namespace Azure.AI.Agents.Persistent.Tests
             int idNum = 0;
             await foreach (PersistentAgentsVectorStore vct in vctStores)
             {
-                Assert.AreEqual(ids[idNum], vct.Id, $"The ID #{idNum} is incorrect.");
+                Assert.That(vct.Id, Is.EqualTo(ids[idNum]), $"The ID #{idNum} is incorrect.");
                 idNum++;
             }
-            Assert.AreEqual(idNum, 4);
+            Assert.That(idNum, Is.EqualTo(4));
             // Test calling after.
             vctStores = client.VectorStores.GetVectorStoresAsync(after: ids[idNum - 1], limit: 2, order: ListSortOrder.Ascending);
             await foreach (PersistentAgentsVectorStore vct in vctStores)
             {
-                Assert.AreEqual(ids[idNum], vct.Id, $"The ID #{idNum} is incorrect.");
+                Assert.That(vct.Id, Is.EqualTo(ids[idNum]), $"The ID #{idNum} is incorrect.");
                 idNum++;
                 storeLimit--;
                 if (storeLimit <= 0)
@@ -716,15 +716,15 @@ namespace Azure.AI.Agents.Persistent.Tests
             int idNum = 0;
             await foreach (ThreadRun run in runs)
             {
-                Assert.AreEqual(ids[idNum], run.Id, $"The ID #{idNum} is incorrect.");
+                Assert.That(run.Id, Is.EqualTo(ids[idNum]), $"The ID #{idNum} is incorrect.");
                 idNum++;
             }
-            Assert.AreEqual(idNum, 2);
+            Assert.That(idNum, Is.EqualTo(2));
             // Test calling after.
             runs = client.Runs.GetRunsAsync(threadId: thread.Id, after: ids[idNum - 1], limit: 1, order: ListSortOrder.Ascending);
             await foreach (ThreadRun run in runs)
             {
-                Assert.AreEqual(ids[idNum], run.Id, $"The ID #{idNum} is incorrect.");
+                Assert.That(run.Id, Is.EqualTo(ids[idNum]), $"The ID #{idNum} is incorrect.");
                 idNum++;
             }
             await client.Threads.DeleteThreadAsync(threadId: thread.Id);
@@ -772,18 +772,18 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // Check run steps
             List<string> ids = await client.Runs.GetRunStepsAsync(run, order: ListSortOrder.Ascending).Select(x => x.Id).ToListAsync();
-            Assert.AreEqual(ids.Count, 3);
+            Assert.That(ids.Count, Is.EqualTo(3));
 
             // Check steps before
             List<RunStep> steps = await client.Runs.GetRunStepsAsync(run, before: ids[1], order: ListSortOrder.Ascending).ToListAsync();
-            Assert.AreEqual(1, steps.Count);
-            Assert.AreEqual(steps[0].Id, ids[0]);
+            Assert.That(steps.Count, Is.EqualTo(1));
+            Assert.That(ids[0], Is.EqualTo(steps[0].Id));
 
             // Check steps after
             steps = await client.Runs.GetRunStepsAsync(run, after: ids[0], order: ListSortOrder.Ascending).ToListAsync();
-            Assert.AreEqual(2, steps.Count);
-            Assert.AreEqual(steps[0].Id, ids[1]);
-            Assert.AreEqual(steps[1].Id, ids[2]);
+            Assert.That(steps.Count, Is.EqualTo(2));
+            Assert.That(ids[1], Is.EqualTo(steps[0].Id));
+            Assert.That(ids[2], Is.EqualTo(steps[1].Id));
 
             // Check that we have steps of the correct types
             bool foundWeatherBot = false;
@@ -802,8 +802,8 @@ namespace Azure.AI.Agents.Persistent.Tests
                     }
                 }
             }
-            Assert.True(foundWeatherBot, "The weather bot step was not found.");
-            Assert.True(foundStockBot, "The stock bot step was not found.");
+            Assert.That(foundWeatherBot, Is.True, "The weather bot step was not found.");
+            Assert.That(foundStockBot, Is.True, "The stock bot step was not found.");
 
             List <PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
                 threadId: run.ThreadId,
@@ -834,15 +834,15 @@ namespace Azure.AI.Agents.Persistent.Tests
             int idNum = 0;
             await foreach (PersistentThreadMessage msg in msgResp)
             {
-                Assert.AreEqual(ids[idNum], msg.Id, $"The ID #{idNum} is incorrect.");
+                Assert.That(msg.Id, Is.EqualTo(ids[idNum]), $"The ID #{idNum} is incorrect.");
                 idNum++;
             }
-            Assert.AreEqual(idNum, 4);
+            Assert.That(idNum, Is.EqualTo(4));
             // Test calling after.
             msgResp = client.Messages.GetMessagesAsync(thread.Id, after: ids[idNum - 1], limit: 2, order: ListSortOrder.Ascending);
             await foreach (PersistentThreadMessage msg in msgResp)
             {
-                Assert.AreEqual(ids[idNum], msg.Id, $"The ID #{idNum} is incorrect.");
+                Assert.That(msg.Id, Is.EqualTo(ids[idNum]), $"The ID #{idNum} is incorrect.");
                 idNum++;
             }
         }
@@ -878,10 +878,10 @@ namespace Azure.AI.Agents.Persistent.Tests
             int idNum = 0;
             await foreach (VectorStoreFile fle in files)
             {
-                Assert.AreEqual(ids[idNum], fle.Id, $"The ID #{idNum} is incorrect.");
+                Assert.That(fle.Id, Is.EqualTo(ids[idNum]), $"The ID #{idNum} is incorrect.");
                 idNum++;
             }
-            Assert.AreEqual(idNum, 4);
+            Assert.That(idNum, Is.EqualTo(4));
             // Test calling after.
             files = client.VectorStores.GetVectorStoreFilesAsync(
                 vectorStoreId: vct.Id,
@@ -891,7 +891,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             );
             await foreach (VectorStoreFile fle in files)
             {
-                Assert.AreEqual(ids[idNum], fle.Id, $"The ID #{idNum} is incorrect.");
+                Assert.That(fle.Id, Is.EqualTo(ids[idNum]), $"The ID #{idNum} is incorrect.");
                 idNum++;
             }
         }
@@ -940,10 +940,10 @@ namespace Azure.AI.Agents.Persistent.Tests
             int idNum = 0;
             await foreach (VectorStoreFile fle in files)
             {
-                Assert.AreEqual(ids[idNum], fle.Id, $"The ID #{idNum} is incorrect.");
+                Assert.That(fle.Id, Is.EqualTo(ids[idNum]), $"The ID #{idNum} is incorrect.");
                 idNum++;
             }
-            Assert.AreEqual(4, idNum);
+            Assert.That(idNum, Is.EqualTo(4));
             // Test calling after.
             files = client.VectorStores.GetVectorStoreFileBatchFilesAsync(
                 vectorStoreId: vct.Id,
@@ -954,7 +954,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             );
             await foreach (VectorStoreFile fle in files)
             {
-                Assert.AreEqual(ids[idNum], fle.Id, $"The ID #{idNum} is incorrect.");
+                Assert.That(fle.Id, Is.EqualTo(ids[idNum]), $"The ID #{idNum} is incorrect.");
                 idNum++;
             }
         }
@@ -987,22 +987,22 @@ namespace Azure.AI.Agents.Persistent.Tests
                 Response<ThreadRun> resResp = await client.Runs.GetRunAsync(thread.Id, GetFieldFromJson(rawRun.Content, "id"));
                 result = resResp.Value;
             }
-            Assert.AreEqual(agent.Id, result.AssistantId);
-            Assert.AreEqual(thread.Id, result.ThreadId);
+            Assert.That(result.AssistantId, Is.EqualTo(agent.Id));
+            Assert.That(result.ThreadId, Is.EqualTo(thread.Id));
             //  Check run status
             result = await WaitForRun(client, result);
             AsyncPageable<PersistentThreadMessage> msgResp = client.Messages.GetMessagesAsync(thread.Id);
             List<PersistentThreadMessage> messages = await msgResp.ToListAsync();
-            Assert.AreEqual(2, messages.Count);
+            Assert.That(messages.Count, Is.EqualTo(2));
 
-            Assert.AreEqual(MessageRole.Agent, messages[0].Role);
-            Assert.AreEqual(MessageRole.User, messages[1].Role);
+            Assert.That(messages[0].Role, Is.EqualTo(MessageRole.Agent));
+            Assert.That(messages[1].Role, Is.EqualTo(MessageRole.User));
             // Get Run steps
             AsyncPageable<RunStep> steps = client.Runs.GetRunStepsAsync(result);
             List<RunStep> stepsList = await steps.ToListAsync();
             Assert.GreaterOrEqual(stepsList.Count, 1);
             RunStep step = await client.Runs.GetRunStepAsync(result.ThreadId, result.Id, stepsList[0].Id);
-            Assert.AreEqual(stepsList[0].Id, step.Id);
+            Assert.That(step.Id, Is.EqualTo(stepsList[0].Id));
         }
 
         [RecordedTest]
@@ -1029,14 +1029,14 @@ namespace Azure.AI.Agents.Persistent.Tests
                 assistantId: agent.Id,
                 opts
             );
-            Assert.AreEqual(agent.Id, result.AssistantId);
+            Assert.That(result.AssistantId, Is.EqualTo(agent.Id));
             //  Check run status
             result = await WaitForRun(client, result);
             AsyncPageable<PersistentThreadMessage> msgResp = client.Messages.GetMessagesAsync(result.ThreadId);
             List<PersistentThreadMessage> data = await msgResp.ToListAsync();
-            Assert.AreEqual(2, data.Count);
-            Assert.AreEqual(MessageRole.Agent, data[0].Role);
-            Assert.AreEqual(MessageRole.User, data[1].Role);
+            Assert.That(data.Count, Is.EqualTo(2));
+            Assert.That(data[0].Role, Is.EqualTo(MessageRole.Agent));
+            Assert.That(data[1].Role, Is.EqualTo(MessageRole.User));
         }
 
         [RecordedTest]
@@ -1051,7 +1051,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "Hello, tell me a joke");
             ThreadRun  runResp = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
             runResp = await WaitForRun(client, runResp);
-            Assert.AreEqual(0, runResp.Metadata.Count);
+            Assert.That(runResp.Metadata.Count, Is.EqualTo(0));
             if (argType == ArgumentType.Metadata)
             {
                 runResp = await client.Runs.UpdateRunAsync(
@@ -1077,7 +1077,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 Response rawRun = await client.Runs.UpdateRunAsync(thread.Id, runResp.Id, content);
                 runResp = await client.Runs.GetRunAsync(thread.Id, GetFieldFromJson(rawRun.Content, "id"));
             }
-            Assert.AreEqual(2, runResp.Metadata.Count);
+            Assert.That(runResp.Metadata.Count, Is.EqualTo(2));
         }
 
         [RecordedTest]
@@ -1093,16 +1093,16 @@ namespace Azure.AI.Agents.Persistent.Tests
             ThreadRun runResp2 = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
             runResp2 = await WaitForRun(client, runResp2);
             AsyncPageable<ThreadRun> runsResp = client.Runs.GetRunsAsync(thread.Id, limit: 1);
-            Assert.True(await runsResp.AnyAsync());
+            Assert.That(await runsResp.AnyAsync(), Is.True);
             runsResp = client.Runs.GetRunsAsync(thread.Id);
             List<ThreadRun> data = await runsResp.ToListAsync();
-            Assert.AreEqual(2, data.Count);
+            Assert.That(data.Count, Is.EqualTo(2));
             HashSet<string> ids = [data[0].Id, data[1].Id];
             await foreach (ThreadRun rn in runsResp)
             {
                 ids.Remove(rn.Id);
             }
-            Assert.AreEqual(0, ids.Count);
+            Assert.That(ids.Count, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -1175,13 +1175,13 @@ namespace Azure.AI.Agents.Persistent.Tests
                 if (toolRun.Status == RunStatus.RequiresAction && toolRun.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
                 {
                     List<ToolOutput> toolOutputs = new();
-                    Assert.AreEqual(1, submitToolOutputsAction.ToolCalls.Count);
+                    Assert.That(submitToolOutputsAction.ToolCalls.Count, Is.EqualTo(1));
                     functionCalled = true;
                     if (submitToolOutputsAction.ToolCalls[0] is RequiredFunctionToolCall functionToolCall)
                     {
                         using JsonDocument argumentsJson = JsonDocument.Parse(functionToolCall.Arguments);
                         string nameArgument = argumentsJson.RootElement.GetProperty("name").GetString();
-                        Assert.AreEqual(0, string.Compare(nameArgument, "mike", true));
+                        Assert.That(string.Compare(nameArgument, "mike", true), Is.EqualTo(0));
                         toolOutputs.Add(new ToolOutput(submitToolOutputsAction.ToolCalls[0], "bar"));
                     }
                     else
@@ -1212,12 +1212,12 @@ namespace Azure.AI.Agents.Persistent.Tests
             while (toolRun.Status == RunStatus.Queued
                 || toolRun.Status == RunStatus.InProgress
                 || toolRun.Status == RunStatus.RequiresAction);
-            Assert.AreEqual(RunStatus.Completed, toolRun.Status, message: toolRun.LastError?.Message);
-            Assert.True(functionCalled);
+            Assert.That(toolRun.Status, Is.EqualTo(RunStatus.Completed), toolRun.LastError?.Message);
+            Assert.That(functionCalled, Is.True);
             AsyncPageable<PersistentThreadMessage> messages = client.Messages.GetMessagesAsync(toolRun.ThreadId, toolRun.Id);
             List<PersistentThreadMessage> messagesList = await messages.ToListAsync();
             Assert.GreaterOrEqual(messagesList.Count, 1);
-            Assert.AreEqual(parallelToolCalls, toolRun.ParallelToolCalls);
+            Assert.That(toolRun.ParallelToolCalls, Is.EqualTo(parallelToolCalls));
         }
 
         [RecordedTest]
@@ -1318,7 +1318,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     if (streamingUpdate is RunUpdate runUpdate)
                         fileSearchRun = runUpdate.Value;
                 }
-                Assert.AreEqual(RunStatus.Completed, fileSearchRun.Status, fileSearchRun.LastError?.ToString());
+                Assert.That(fileSearchRun.Status, Is.EqualTo(RunStatus.Completed), fileSearchRun.LastError?.ToString());
             }
             else
             {
@@ -1338,7 +1338,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.GreaterOrEqual(messages.Count, 1);
             // Check list, get and delete operations.
             PersistentAgentsVectorStore getVct = await client.VectorStores.GetVectorStoreAsync(vectorStore.Id);
-            Assert.AreEqual(vectorStore.Id, getVct.Id);
+            Assert.That(getVct.Id, Is.EqualTo(vectorStore.Id));
             AsyncPageable<PersistentAgentsVectorStore> stores = client.VectorStores.GetVectorStoresAsync(limit: 100);
             getVct = null;
             await foreach (PersistentAgentsVectorStore store in stores)
@@ -1351,7 +1351,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             Assert.NotNull(getVct);
             bool removed = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
-            Assert.True(removed);
+            Assert.That(removed, Is.True);
             stores = client.VectorStores.GetVectorStoresAsync(limit: 100);
             getVct = null;
             await foreach (PersistentAgentsVectorStore store in stores)
@@ -1362,7 +1362,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     break;
                 }
             }
-            Assert.IsNull(getVct);
+            Assert.That(getVct, Is.Null);
         }
 
         [RecordedTest]
@@ -1584,7 +1584,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 fileSearchRun = await client.Runs.CreateRunAsync(thread.Id, agent.Id, include: include);
 
                 fileSearchRun = await WaitForRun(client, fileSearchRun);
-                Assert.AreEqual(RunStatus.Completed, fileSearchRun.Status);
+                Assert.That(fileSearchRun.Status, Is.EqualTo(RunStatus.Completed));
                 List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id).ToListAsync();
                 Assert.GreaterOrEqual(messages.Count, 1);
             }
@@ -1604,12 +1604,12 @@ namespace Azure.AI.Agents.Persistent.Tests
             if (includeContent)
             {
                 Assert.Greater(fileSearchCall.FileSearch.Results[0].Content.Count, 0);
-                Assert.AreEqual(FileSearchToolCallContentType.Text, fileSearchCall.FileSearch.Results[0].Content[0].Type);
-                Assert.False(string.IsNullOrEmpty(fileSearchCall.FileSearch.Results[0].Content[0].Text));
+                Assert.That(fileSearchCall.FileSearch.Results[0].Content[0].Type, Is.EqualTo(FileSearchToolCallContentType.Text));
+                Assert.That(string.IsNullOrEmpty(fileSearchCall.FileSearch.Results[0].Content[0].Text), Is.False);
             }
             else
             {
-                Assert.AreEqual(0, fileSearchCall.FileSearch.Results[0].Content.Count);
+                Assert.That(fileSearchCall.FileSearch.Results[0].Content.Count, Is.EqualTo(0));
             }
         }
 
@@ -1629,7 +1629,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgentThread thread = await client.Threads.CreateThreadAsync(messages: messages);
             ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
             run = await WaitForRun(client, run);
-            Assert.AreEqual(RunStatus.Completed, run.Status);
+            Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
             List<PersistentThreadMessage> afterRunMessages = await client.Messages.GetMessagesAsync(thread.Id).ToListAsync();
             Assert.Greater(afterRunMessages.Count(), 1);
         }
@@ -1690,7 +1690,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     }
                 }
             }
-            Assert.True(foundId);
+            Assert.That(foundId, Is.True);
         }
 
         [RecordedTest]
@@ -1730,9 +1730,9 @@ namespace Azure.AI.Agents.Persistent.Tests
             while (run.Status == RunStatus.Queued
                 || run.Status == RunStatus.InProgress);
 
-            Assert.AreEqual(
-                RunStatus.Completed,
+            Assert.That(
                 run.Status,
+                Is.EqualTo(RunStatus.Completed),
                 run.LastError?.Message);
             AsyncPageable<PersistentThreadMessage> messages = client.Messages.GetMessagesAsync(
                 threadId: thread.Id,
@@ -1930,12 +1930,12 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             if (correctDefinition)
             {
-                Assert.True(output.Contains("80"));
-                Assert.True(completed);
+                Assert.That(output.Contains("80"), Is.True);
+                Assert.That(completed, Is.True);
             }
             else
             {
-                Assert.True(cancelled);
+                Assert.That(cancelled, Is.True);
             }
         }
 
@@ -2006,7 +2006,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 );
             }
             run = await WaitForRun(client, run);
-            Assert.AreEqual(RunStatus.Completed, run.Status, run.LastError?.Message);
+            Assert.That(run.Status, Is.EqualTo(RunStatus.Completed), run.LastError?.Message);
             List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(run.ThreadId, run.Id).ToListAsync();
             Assert.GreaterOrEqual(messages.Count, 1);
             string expectedResponse = null;
@@ -2071,7 +2071,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     if (runStepFound)
                         break;
                 }
-                Assert.True(runStepFound, $"The run step of type {runStepType} was not found.");
+                Assert.That(runStepFound, Is.True, $"The run step of type {runStepType} was not found.");
             }
         }
 
@@ -2156,8 +2156,8 @@ namespace Azure.AI.Agents.Persistent.Tests
                     }
                 }
             }
-            Assert.AreEqual(RunStatus.Completed, run.Status, run.LastError?.Message);
-            Assert.AreEqual(shouldApprove, isApprovalRequested,
+            Assert.That(run.Status, Is.EqualTo(RunStatus.Completed), run.LastError?.Message);
+            Assert.That(isApprovalRequested, Is.EqualTo(shouldApprove),
                 isApprovalRequested ? $"The approval was requested, but it was not expected: trust: {trust}, isPerTool: {isPerTool}, shouldApprove: {shouldApprove}." : $"The approval was not requested, but it was expected: trust: {trust}, isPerTool: {isPerTool}, shouldApprove: {shouldApprove}."
             );
             Assert.Greater((await client.Messages.GetMessagesAsync(thread.Id).ToListAsync()).Count, 1);
@@ -2174,7 +2174,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     }
                 }
             }
-            Assert.IsTrue(isRunStepMCPPresent, "No MCP tool call step is present.");
+            Assert.That(isRunStepMCPPresent, Is.True, "No MCP tool call step is present.");
         }
 
         [RecordedTest]
@@ -2243,8 +2243,8 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
             }
             while (toolApprovals.Count > 0);
-            Assert.IsTrue(isApprovalRequested, "The approval was not requested.");
-            Assert.IsTrue(isMCPStepCreated, "The Delta MCP step was not encountered.");
+            Assert.That(isApprovalRequested, Is.True, "The approval was not requested.");
+            Assert.That(isMCPStepCreated, Is.True, "The Delta MCP step was not encountered.");
             Assert.Greater((await client.Messages.GetMessagesAsync(thread.Id).ToListAsync()).Count, 1);
         }
 
@@ -2431,9 +2431,9 @@ namespace Azure.AI.Agents.Persistent.Tests
             while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress
             || run.Status == RunStatus.RequiresAction);
-            Assert.AreEqual(
-                RunStatus.Completed,
+            Assert.That(
                 run.Status,
+                Is.EqualTo(RunStatus.Completed),
                 run.LastError?.Message);
             IEnumerable<RunStep> steps = (await client.Runs.GetRunStepsAsync(run).ToListAsync()).Where((x) => x.StepDetails is RunStepToolCallDetails);
             Assert.That(steps.Any(), "No tool call were found.");
@@ -2454,7 +2454,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 if (computerCallFound)
                     break;
             }
-            Assert.True(computerCallFound, "Computer use call was not found.");
+            Assert.That(computerCallFound, Is.True, "Computer use call was not found.");
             List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(threadId: thread.Id).ToListAsync();
             Assert.Greater(messages.Count, 1);
         }
@@ -2513,14 +2513,14 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
                 FailOnStreamError(streamingUpdate);
             }
-            Assert.True(isStarted, "The stream is missing Start event.");
-            Assert.True(receivedMessage, "The message was never received.");
-            Assert.True(gotExpectedDelta, $"The delta tool call of type {runStepDeltaType} was not found.");
-            Assert.True(isCompleted, "The stream was not completed.");
-            Assert.True(urlAnnotationFound, "The Uri annotation was not found.");
-            Assert.True(fileAnnotationFound, "The file annotation was not found.");
+            Assert.That(isStarted, Is.True, "The stream is missing Start event.");
+            Assert.That(receivedMessage, Is.True, "The message was never received.");
+            Assert.That(gotExpectedDelta, Is.True, $"The delta tool call of type {runStepDeltaType} was not found.");
+            Assert.That(isCompleted, Is.True, "The stream was not completed.");
+            Assert.That(urlAnnotationFound, Is.True, "The Uri annotation was not found.");
+            Assert.That(fileAnnotationFound, Is.True, "The file annotation was not found.");
             if (!string.IsNullOrEmpty(agentMessagePattern))
-                Assert.True(Regex.Match(sbAgentMessages.ToString(), agentMessagePattern).Success, $"The regular expression {agentMessagePattern} was not fount in agent message(s) {sbAgentMessages.ToString()}");
+                Assert.That(Regex.Match(sbAgentMessages.ToString(), agentMessagePattern).Success, Is.True, $"The regular expression {agentMessagePattern} was not fount in agent message(s) {sbAgentMessages.ToString()}");
         }
 
         private static string CreateTempDirMayBe()
@@ -2529,7 +2529,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             if (!Directory.Exists(tempDir))
             {
                 DirectoryInfo info = Directory.CreateDirectory(tempDir);
-                Assert.True(info.Exists, "Unable to create temp directory.");
+                Assert.That(info.Exists, Is.True, "Unable to create temp directory.");
             }
             return tempDir;
         }
@@ -2565,7 +2565,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         private static async Task DeleteAndAssert(PersistentAgentsClient client, PersistentAgent agent)
         {
             Response<bool> resp = await client.Administration.DeleteAgentAsync(agent.Id);
-            Assert.IsTrue(resp.Value);
+            Assert.That(resp.Value, Is.True);
         }
 
         private static async Task<PersistentAgent> GetAgent(PersistentAgentsClient client, string agentName = AGENT_NAME, string instruction = "You are helpful agent.", string model="gpt-4o", IEnumerable<ToolDefinition> tools=null, ToolResources toolResources=null)
@@ -2622,7 +2622,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             while (run.Status == RunStatus.Queued
                 || run.Status == RunStatus.InProgress
                 || run.Status == RunStatus.RequiresAction);
-            Assert.AreEqual(RunStatus.Completed, run.Status, message: run.LastError?.Message?.ToString());
+            Assert.That(run.Status, Is.EqualTo(RunStatus.Completed), run.LastError?.Message?.ToString());
             return run;
         }
 
@@ -2636,7 +2636,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 batch = await client.VectorStores.GetVectorStoreFileBatchAsync(vectorStoreId: vectorStoreId, batchId: batch.Id);
             }
             while (batch.Status == VectorStoreFileBatchStatus.InProgress);
-            Assert.AreEqual(VectorStoreFileBatchStatus.Completed, batch.Status, message: "Failed to create VectorStoreFileBatchStatus");
+            Assert.That(batch.Status, Is.EqualTo(VectorStoreFileBatchStatus.Completed), "Failed to create VectorStoreFileBatchStatus");
             return batch;
         }
 

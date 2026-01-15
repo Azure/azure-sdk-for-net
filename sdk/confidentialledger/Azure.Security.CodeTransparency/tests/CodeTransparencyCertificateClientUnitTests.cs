@@ -36,10 +36,10 @@ namespace Azure.Security.CodeTransparency.Tests
             ServiceIdentityResult responseSecond = await client.GetServiceIdentityAsync("serviceName");
             ServiceIdentityResult responseThird = await client.GetServiceIdentityAsync("serviceName");
 
-            Assert.AreEqual(1, mockTransport.Requests.Count, "called only once");
-            Assert.AreEqual("https://foo.bar.com/ledgerIdentity/serviceName", mockTransport.Requests[0].Uri.ToString());
-            Assert.AreEqual(responseFirst.CreatedAt, responseSecond.CreatedAt);
-            Assert.AreEqual(responseFirst.CreatedAt, responseThird.CreatedAt);
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(1), "called only once");
+            Assert.That(mockTransport.Requests[0].Uri.ToString(), Is.EqualTo("https://foo.bar.com/ledgerIdentity/serviceName"));
+            Assert.That(responseSecond.CreatedAt, Is.EqualTo(responseFirst.CreatedAt));
+            Assert.That(responseThird.CreatedAt, Is.EqualTo(responseFirst.CreatedAt));
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             CodeTransparencyCertificateClient client = options.CreateCertificateClient();
             ServiceIdentityResult responseFirst = await client.GetServiceIdentityAsync("serviceName");
-            Assert.AreEqual("https://identity.confidential-ledger.core.azure.com/ledgerIdentity/serviceName", mockTransport.Requests[0].Uri.ToString());
+            Assert.That(mockTransport.Requests[0].Uri.ToString(), Is.EqualTo("https://identity.confidential-ledger.core.azure.com/ledgerIdentity/serviceName"));
             Assert.NotNull(responseFirst.GetCertificate(), "can parse the PEM cert");
         }
     }

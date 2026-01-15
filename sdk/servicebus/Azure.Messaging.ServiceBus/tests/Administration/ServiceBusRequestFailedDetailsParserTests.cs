@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Administration
             var parser = new ServiceBusRequestFailedDetailsParser();
             parser.TryParse(response, out var error, out var data);
 
-            Assert.AreSame(default(ResponseError), error);
+            Assert.That(error, Is.SameAs(default(ResponseError)));
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Administration
             var parser = new ServiceBusRequestFailedDetailsParser();
             parser.TryParse(response, out var error, out var data);
 
-            Assert.AreSame(default(ResponseError), error);
+            Assert.That(error, Is.SameAs(default(ResponseError)));
         }
 
         [Test]
@@ -69,9 +69,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Administration
             parser.TryParse(response, out var error, out var data);
 
             Assert.NotNull(error);
-            Assert.AreNotSame(error, default(ResponseError));
-            Assert.AreEqual(subcCode, error.Code);
-            Assert.AreEqual(message, error.Message);
+            Assert.AreNotSame(default(ResponseError), error);
+            Assert.That(error.Code, Is.EqualTo(subcCode));
+            Assert.That(error.Message, Is.EqualTo(message));
         }
     }
 }

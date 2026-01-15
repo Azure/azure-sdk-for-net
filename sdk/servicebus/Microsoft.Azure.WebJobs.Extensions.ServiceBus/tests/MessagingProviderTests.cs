@@ -30,14 +30,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             var receiverOptions = options.ToReceiverOptions();
 
             var receiver = provider.CreateBatchMessageReceiver(_client, "entityPath", receiverOptions);
-            Assert.AreEqual("entityPath", receiver.EntityPath);
+            Assert.That(receiver.EntityPath, Is.EqualTo("entityPath"));
 
             var receiver2 = provider.CreateBatchMessageReceiver(_client, "entityPath", receiverOptions);
-            Assert.AreSame(receiver, receiver2);
+            Assert.That(receiver2, Is.SameAs(receiver));
 
             options.PrefetchCount = 100;
             receiver = provider.CreateBatchMessageReceiver(_client, "entityPath1", options.ToReceiverOptions());
-            Assert.AreEqual(100, receiver.PrefetchCount);
+            Assert.That(receiver.PrefetchCount, Is.EqualTo(100));
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             var processorOptions = options.ToProcessorOptions(options.AutoCompleteMessages, false);
 
             var processor = provider.CreateProcessor(_client, "entityPath", processorOptions);
-            Assert.AreEqual("entityPath", processor.EntityPath);
+            Assert.That(processor.EntityPath, Is.EqualTo("entityPath"));
 
             var processor2 = provider.CreateProcessor(_client, "entityPath", processorOptions);
             Assert.AreNotSame(processor, processor2);
@@ -57,9 +57,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             options.MaxConcurrentCalls = 5;
             options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(30);
             processor = provider.CreateProcessor(_client, "entityPath1", options.ToProcessorOptions(options.AutoCompleteMessages, false));
-            Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
-            Assert.AreEqual(options.MaxConcurrentCalls, processor.MaxConcurrentCalls);
-            Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
+            Assert.That(processor.PrefetchCount, Is.EqualTo(options.PrefetchCount));
+            Assert.That(processor.MaxConcurrentCalls, Is.EqualTo(options.MaxConcurrentCalls));
+            Assert.That(processor.MaxAutoLockRenewalDuration, Is.EqualTo(options.MaxAutoLockRenewalDuration));
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             var processorOptions = options.ToSessionProcessorOptions(options.AutoCompleteMessages, false);
 
             var processor = provider.CreateSessionProcessor(_client, "entityPath", processorOptions);
-            Assert.AreEqual("entityPath", processor.EntityPath);
+            Assert.That(processor.EntityPath, Is.EqualTo("entityPath"));
 
             var processor2 = provider.CreateSessionProcessor(_client, "entityPath", processorOptions);
             Assert.AreNotSame(processor, processor2);
@@ -79,9 +79,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             options.MaxConcurrentSessions = 5;
             options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(30);
             processor = provider.CreateSessionProcessor(_client, "entityPath1", options.ToSessionProcessorOptions(options.AutoCompleteMessages, false));
-            Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
-            Assert.AreEqual(options.MaxConcurrentSessions, processor.MaxConcurrentSessions);
-            Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
+            Assert.That(processor.PrefetchCount, Is.EqualTo(options.PrefetchCount));
+            Assert.That(processor.MaxConcurrentSessions, Is.EqualTo(options.MaxConcurrentSessions));
+            Assert.That(processor.MaxAutoLockRenewalDuration, Is.EqualTo(options.MaxAutoLockRenewalDuration));
         }
 
         [Test]
@@ -94,10 +94,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
 
             var sender = provider.CreateMessageSender(_client, "entityPath");
-            Assert.AreEqual("entityPath", sender.EntityPath);
+            Assert.That(sender.EntityPath, Is.EqualTo("entityPath"));
 
             var sender2 = provider.CreateMessageSender(_client, "entityPath");
-            Assert.AreSame(sender, sender2);
+            Assert.That(sender2, Is.SameAs(sender));
         }
 
         [Test]
@@ -108,13 +108,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
 
             var sender1 = provider.CreateMessageSender(_client, "entityPath");
-            Assert.AreEqual("entityPath", sender1.EntityPath);
-            Assert.AreEqual(_client.FullyQualifiedNamespace, sender1.FullyQualifiedNamespace);
+            Assert.That(sender1.EntityPath, Is.EqualTo("entityPath"));
+            Assert.That(sender1.FullyQualifiedNamespace, Is.EqualTo(_client.FullyQualifiedNamespace));
 
             var sender2 = provider.CreateMessageSender(_secondaryClient, "entityPath");
             Assert.AreNotSame(sender1, sender2);
-            Assert.AreEqual("entityPath", sender2.EntityPath);
-            Assert.AreEqual(_secondaryClient.FullyQualifiedNamespace, sender2.FullyQualifiedNamespace);
+            Assert.That(sender2.EntityPath, Is.EqualTo("entityPath"));
+            Assert.That(sender2.FullyQualifiedNamespace, Is.EqualTo(_secondaryClient.FullyQualifiedNamespace));
         }
 
         [Test]
@@ -125,13 +125,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
 
             var receiver1 = provider.CreateBatchMessageReceiver(_client, "entityPath", new ServiceBusReceiverOptions());
-            Assert.AreEqual("entityPath", receiver1.EntityPath);
-            Assert.AreEqual(_client.FullyQualifiedNamespace, receiver1.FullyQualifiedNamespace);
+            Assert.That(receiver1.EntityPath, Is.EqualTo("entityPath"));
+            Assert.That(receiver1.FullyQualifiedNamespace, Is.EqualTo(_client.FullyQualifiedNamespace));
 
             var receiver2 = provider.CreateBatchMessageReceiver(_secondaryClient, "entityPath", new ServiceBusReceiverOptions());
             Assert.AreNotSame(receiver1, receiver2);
-            Assert.AreEqual("entityPath", receiver2.EntityPath);
-            Assert.AreEqual(_secondaryClient.FullyQualifiedNamespace, receiver2.FullyQualifiedNamespace);
+            Assert.That(receiver2.EntityPath, Is.EqualTo("entityPath"));
+            Assert.That(receiver2.FullyQualifiedNamespace, Is.EqualTo(_secondaryClient.FullyQualifiedNamespace));
         }
 
         private IConfiguration CreateConfiguration(params KeyValuePair<string, string>[] data)

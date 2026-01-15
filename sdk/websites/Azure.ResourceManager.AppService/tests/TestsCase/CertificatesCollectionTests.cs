@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var input = ResourceDataHelper.GetBasicCertificateData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             var certificate = lro.Value;
-            Assert.AreEqual(name, certificate.Data.Name);
+            Assert.That(certificate.Data.Name, Is.EqualTo(name));
         }
 
         [TestCase]
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var collection = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier("db1ab6f0-4769-4b27-930e-01e2ef9c123c", "testRG-666")).GetAppCertificates();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             var certificate = lro.Value;
-            Assert.AreEqual(name, certificate.Data.Name);
+            Assert.That(certificate.Data.Name, Is.EqualTo(name));
             Assert.IsNull(certificate.Data.KeyVaultId);
         }
 
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var input = ResourceDataHelper.GetBasicCertificateData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, input);
             AppCertificateResource certificate = lro.Value;
-            Assert.IsTrue(await container.ExistsAsync(certificateName));
-            Assert.IsFalse(await container.ExistsAsync(certificateName + "1"));
+            Assert.That((bool)await container.ExistsAsync(certificateName), Is.True);
+            Assert.That((bool)await container.ExistsAsync(certificateName + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }

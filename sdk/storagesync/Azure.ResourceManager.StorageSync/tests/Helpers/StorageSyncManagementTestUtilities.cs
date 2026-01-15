@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             if (useDefaults)
             {
-                Assert.AreEqual(DefaultLocation, resource.Data.Location.ToString());
+                Assert.That(resource.Data.Location.ToString(), Is.EqualTo(DefaultLocation));
                 Assert.NotNull(resource.Data.Tags);
-                Assert.AreEqual(2, resource.Data.Tags.Count);
-                Assert.AreEqual("value1", resource.Data.Tags["key1"]);
-                Assert.AreEqual("value2", resource.Data.Tags["key2"]);
+                Assert.That(resource.Data.Tags.Count, Is.EqualTo(2));
+                Assert.That(resource.Data.Tags["key1"], Is.EqualTo("value1"));
+                Assert.That(resource.Data.Tags["key2"], Is.EqualTo("value2"));
             }
         }
 
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.StorageSync.Tests
             if (useDefaults)
             {
                 var defaults = GetDefaultServerEndpointParameters(resource.Data.ServerResourceId);
-                Assert.AreEqual(resource.Data.ServerResourceId, defaults.ServerResourceId);
-                Assert.AreEqual(resource.Data.ServerLocalPath, defaults.ServerLocalPath);
-                Assert.AreEqual(resource.Data.CloudTiering, defaults.CloudTiering);
-                Assert.AreEqual(resource.Data.VolumeFreeSpacePercent, defaults.VolumeFreeSpacePercent);
+                Assert.That(defaults.ServerResourceId, Is.EqualTo(resource.Data.ServerResourceId));
+                Assert.That(defaults.ServerLocalPath, Is.EqualTo(resource.Data.ServerLocalPath));
+                Assert.That(defaults.CloudTiering, Is.EqualTo(resource.Data.CloudTiering));
+                Assert.That(defaults.VolumeFreeSpacePercent, Is.EqualTo(resource.Data.VolumeFreeSpacePercent));
             }
         }
 
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.StorageSync.Tests
             if (useDefaults)
             {
                 var defaults = GetDefaultServerEndpointUpdateParameters(resource.Id);
-                Assert.AreEqual(resource.Data.CloudTiering, defaults.CloudTiering);
-                Assert.AreEqual(resource.Data.VolumeFreeSpacePercent, defaults.VolumeFreeSpacePercent);
+                Assert.That(defaults.CloudTiering, Is.EqualTo(resource.Data.CloudTiering));
+                Assert.That(defaults.VolumeFreeSpacePercent, Is.EqualTo(resource.Data.VolumeFreeSpacePercent));
             }
         }
 
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             Assert.NotNull(resource.SystemData);
             Assert.NotNull(resource.SystemData.CreatedOn);
-            Assert.AreNotEqual(default(DateTime), resource.SystemData.CreatedOn.Value);
+            Assert.That(resource.SystemData.CreatedOn.Value, Is.Not.EqualTo(default(DateTime)));
             Assert.NotNull(resource.SystemData.CreatedBy);
             Assert.NotNull(resource.SystemData.CreatedByType);
             Assert.NotNull(resource.SystemData.LastModifiedOn);
-            Assert.AreNotEqual(default(DateTime), resource.SystemData.LastModifiedOn.Value);
+            Assert.That(resource.SystemData.LastModifiedOn.Value, Is.Not.EqualTo(default(DateTime)));
             Assert.NotNull(resource.SystemData.LastModifiedBy);
             Assert.NotNull(resource.SystemData.LastModifiedByType);
         }

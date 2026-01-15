@@ -60,7 +60,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             bool hasNext = chunk.HasNext();
 
             // Assert
-            Assert.IsTrue(hasNext);
+            Assert.That(hasNext, Is.True);
 
             containerClient.Verify(r => r.GetBlobClient(chunkPath));
             lazyLoadingBlobStreamFactory.Verify(r => r.BuildLazyLoadingBlobStream(
@@ -110,7 +110,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             bool hasNext = chunk.HasNext();
 
             // Assert
-            Assert.IsFalse(hasNext);
+            Assert.That(hasNext, Is.False);
 
             containerClient.Verify(r => r.GetBlobClient(chunkPath));
             lazyLoadingBlobStreamFactory.Verify(r => r.BuildLazyLoadingBlobStream(
@@ -228,27 +228,27 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             BlobChangeFeedEvent changeFeedEvent = await chunk.Next(IsAsync);
 
             // Assert
-            Assert.AreEqual(topic, changeFeedEvent.Topic);
-            Assert.AreEqual(subject, changeFeedEvent.Subject);
-            Assert.AreEqual(BlobChangeFeedEventType.BlobCreated, changeFeedEvent.EventType);
-            Assert.AreEqual(eventTime, changeFeedEvent.EventTime);
-            Assert.AreEqual(eventId, changeFeedEvent.Id);
-            Assert.AreEqual(dataVersion, changeFeedEvent.SchemaVersion);
-            Assert.AreEqual(metadataVersion, changeFeedEvent.MetadataVersion);
+            Assert.That(changeFeedEvent.Topic, Is.EqualTo(topic));
+            Assert.That(changeFeedEvent.Subject, Is.EqualTo(subject));
+            Assert.That(changeFeedEvent.EventType, Is.EqualTo(BlobChangeFeedEventType.BlobCreated));
+            Assert.That(changeFeedEvent.EventTime, Is.EqualTo(eventTime));
+            Assert.That(changeFeedEvent.Id, Is.EqualTo(eventId));
+            Assert.That(changeFeedEvent.SchemaVersion, Is.EqualTo(dataVersion));
+            Assert.That(changeFeedEvent.MetadataVersion, Is.EqualTo(metadataVersion));
 
-            Assert.AreEqual(BlobOperationName.PutBlob, changeFeedEvent.EventData.BlobOperationName);
-            Assert.AreEqual(clientRequestId, changeFeedEvent.EventData.ClientRequestId);
-            Assert.AreEqual(requestId, changeFeedEvent.EventData.RequestId);
-            Assert.AreEqual(etag, changeFeedEvent.EventData.ETag);
-            Assert.AreEqual(contentType, changeFeedEvent.EventData.ContentType);
-            Assert.AreEqual(contentLength, changeFeedEvent.EventData.ContentLength);
-            Assert.AreEqual(BlobType.Block, changeFeedEvent.EventData.BlobType);
-            Assert.AreEqual(contentOffset, changeFeedEvent.EventData.ContentOffset);
-            Assert.AreEqual(destinationUri, changeFeedEvent.EventData.DestinationUri);
-            Assert.AreEqual(sourceUri, changeFeedEvent.EventData.SourceUri);
-            Assert.AreEqual(uri, changeFeedEvent.EventData.Uri);
-            Assert.AreEqual(recursive, changeFeedEvent.EventData.Recursive);
-            Assert.AreEqual(sequencer, changeFeedEvent.EventData.Sequencer);
+            Assert.That(changeFeedEvent.EventData.BlobOperationName, Is.EqualTo(BlobOperationName.PutBlob));
+            Assert.That(changeFeedEvent.EventData.ClientRequestId, Is.EqualTo(clientRequestId));
+            Assert.That(changeFeedEvent.EventData.RequestId, Is.EqualTo(requestId));
+            Assert.That(changeFeedEvent.EventData.ETag, Is.EqualTo(etag));
+            Assert.That(changeFeedEvent.EventData.ContentType, Is.EqualTo(contentType));
+            Assert.That(changeFeedEvent.EventData.ContentLength, Is.EqualTo(contentLength));
+            Assert.That(changeFeedEvent.EventData.BlobType, Is.EqualTo(BlobType.Block));
+            Assert.That(changeFeedEvent.EventData.ContentOffset, Is.EqualTo(contentOffset));
+            Assert.That(changeFeedEvent.EventData.DestinationUri, Is.EqualTo(destinationUri));
+            Assert.That(changeFeedEvent.EventData.SourceUri, Is.EqualTo(sourceUri));
+            Assert.That(changeFeedEvent.EventData.Uri, Is.EqualTo(uri));
+            Assert.That(changeFeedEvent.EventData.Recursive, Is.EqualTo(recursive));
+            Assert.That(changeFeedEvent.EventData.Sequencer, Is.EqualTo(sequencer));
 
             containerClient.Verify(r => r.GetBlobClient(chunkPath));
             lazyLoadingBlobStreamFactory.Verify(r => r.BuildLazyLoadingBlobStream(

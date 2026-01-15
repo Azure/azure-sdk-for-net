@@ -24,14 +24,14 @@ namespace Azure.Identity.Tests
 
         private Task VerifyDeviceCode(DeviceCodeInfo codeInfo, string expectedCode)
         {
-            Assert.AreEqual(expectedCode, codeInfo.DeviceCode);
+            Assert.That(codeInfo.DeviceCode, Is.EqualTo(expectedCode));
 
             return Task.CompletedTask;
         }
 
         private Task VerifyDeviceCodeAndCancel(DeviceCodeInfo codeInfo, string actualCode, CancellationTokenSource cancelSource)
         {
-            Assert.AreEqual(actualCode, codeInfo.DeviceCode);
+            Assert.That(codeInfo.DeviceCode, Is.EqualTo(actualCode));
 
             cancelSource.Cancel();
 
@@ -103,11 +103,11 @@ namespace Azure.Identity.Tests
 
             AccessToken token = await cred.GetTokenAsync(context);
 
-            Assert.AreEqual(token.Token, expectedToken);
+            Assert.That(expectedToken, Is.EqualTo(token.Token));
 
             token = await cred.GetTokenAsync(context);
 
-            Assert.AreEqual(token.Token, expectedToken);
+            Assert.That(expectedToken, Is.EqualTo(token.Token));
         }
 
         [Test]
@@ -126,13 +126,13 @@ namespace Azure.Identity.Tests
 
                 AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new[] { Scope }));
 
-                Assert.AreEqual(token.Token, expectedToken);
-                Assert.AreEqual(mockPublicMsalClient.DeviceCodeResult.Message + Environment.NewLine, capturedOut.ToString());
+                Assert.That(expectedToken, Is.EqualTo(token.Token));
+                Assert.That(capturedOut.ToString(), Is.EqualTo(mockPublicMsalClient.DeviceCodeResult.Message + Environment.NewLine));
 
                 token = await cred.GetTokenAsync(new TokenRequestContext(new[] { Scope }));
 
-                Assert.AreEqual(token.Token, expectedToken);
-                Assert.AreEqual(mockPublicMsalClient.DeviceCodeResult.Message + Environment.NewLine, capturedOut.ToString());
+                Assert.That(expectedToken, Is.EqualTo(token.Token));
+                Assert.That(capturedOut.ToString(), Is.EqualTo(mockPublicMsalClient.DeviceCodeResult.Message + Environment.NewLine));
             }
             finally
             {
@@ -202,7 +202,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<AuthenticationRequiredException>(async () => await cred.GetTokenAsync(expTokenRequestContext));
 
-            Assert.AreEqual(expTokenRequestContext, ex.TokenRequestContext);
+            Assert.That(ex.TokenRequestContext, Is.EqualTo(expTokenRequestContext));
         }
     }
 }

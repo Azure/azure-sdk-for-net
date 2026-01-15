@@ -65,19 +65,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Task<FunctionResult> task = product.ExecuteAsync(context, CancellationToken.None);
 
             // Assert
-            Assert.True(task.Result.Succeeded);
+            Assert.That(task.Result.Succeeded, Is.True);
 
             // Validate log is written
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.AreEqual("BlobDoesNotMatchPattern", logMessage.EventId.Name);
-            Assert.AreEqual(LogLevel.Debug, logMessage.Level);
-            Assert.AreEqual(6, logMessage.State.Count());
-            Assert.AreEqual("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
-            Assert.AreEqual(containerName + "/{name}", logMessage.GetStateValue<string>("pattern"));
-            Assert.AreEqual(blob.Name, logMessage.GetStateValue<string>("blobName"));
-            Assert.Null(logMessage.GetStateValue<string>("pollId"));
-            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerScanSource>("triggerSource"));
-            Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
+            Assert.That(logMessage.EventId.Name, Is.EqualTo("BlobDoesNotMatchPattern"));
+            Assert.That(logMessage.Level, Is.EqualTo(LogLevel.Debug));
+            Assert.That(logMessage.State.Count(), Is.EqualTo(6));
+            Assert.That(logMessage.GetStateValue<string>("functionName"), Is.EqualTo("FunctionIdLogName"));
+            Assert.That(logMessage.GetStateValue<string>("pattern"), Is.EqualTo(containerName + "/{name}"));
+            Assert.That(logMessage.GetStateValue<string>("blobName"), Is.EqualTo(blob.Name));
+            Assert.That(logMessage.GetStateValue<string>("pollId"), Is.Null);
+            Assert.That(logMessage.GetStateValue<BlobTriggerScanSource>("triggerSource"), Is.EqualTo(context.TriggerSource));
+            Assert.That(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")), Is.True);
         }
 
         [Test]
@@ -93,18 +93,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Task<FunctionResult> task = product.ExecuteAsync(context, CancellationToken.None);
 
             // Assert
-            Assert.True(task.Result.Succeeded);
+            Assert.That(task.Result.Succeeded, Is.True);
 
             // Validate log is written
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.AreEqual("BlobHasNoETag", logMessage.EventId.Name);
-            Assert.AreEqual(LogLevel.Debug, logMessage.Level);
-            Assert.AreEqual(5, logMessage.State.Count());
-            Assert.AreEqual(context.Blob.BlobClient.Name, logMessage.GetStateValue<string>("blobName"));
-            Assert.AreEqual("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
-            Assert.AreEqual(context.PollId, logMessage.GetStateValue<string>("pollId"));
-            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerScanSource>("triggerSource"));
-            Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
+            Assert.That(logMessage.EventId.Name, Is.EqualTo("BlobHasNoETag"));
+            Assert.That(logMessage.Level, Is.EqualTo(LogLevel.Debug));
+            Assert.That(logMessage.State.Count(), Is.EqualTo(5));
+            Assert.That(logMessage.GetStateValue<string>("blobName"), Is.EqualTo(context.Blob.BlobClient.Name));
+            Assert.That(logMessage.GetStateValue<string>("functionName"), Is.EqualTo("FunctionIdLogName"));
+            Assert.That(logMessage.GetStateValue<string>("pollId"), Is.EqualTo(context.PollId));
+            Assert.That(logMessage.GetStateValue<BlobTriggerScanSource>("triggerSource"), Is.EqualTo(context.TriggerSource));
+            Assert.That(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")), Is.True);
         }
 
         [Test]
@@ -122,19 +122,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Task<FunctionResult> task = product.ExecuteAsync(context, CancellationToken.None);
 
             // Assert
-            Assert.True(task.Result.Succeeded);
+            Assert.That(task.Result.Succeeded, Is.True);
 
             // Validate log is written
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.AreEqual("BlobAlreadyProcessed", logMessage.EventId.Name);
-            Assert.AreEqual(LogLevel.Debug, logMessage.Level);
-            Assert.AreEqual(6, logMessage.State.Count());
-            Assert.AreEqual("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
-            Assert.AreEqual(context.Blob.BlobClient.Name, logMessage.GetStateValue<string>("blobName"));
-            Assert.AreEqual(expectedETag, logMessage.GetStateValue<string>("eTag"));
-            Assert.AreEqual(context.PollId, logMessage.GetStateValue<string>("pollId"));
-            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerScanSource>("triggerSource"));
-            Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
+            Assert.That(logMessage.EventId.Name, Is.EqualTo("BlobAlreadyProcessed"));
+            Assert.That(logMessage.Level, Is.EqualTo(LogLevel.Debug));
+            Assert.That(logMessage.State.Count(), Is.EqualTo(6));
+            Assert.That(logMessage.GetStateValue<string>("functionName"), Is.EqualTo("FunctionIdLogName"));
+            Assert.That(logMessage.GetStateValue<string>("blobName"), Is.EqualTo(context.Blob.BlobClient.Name));
+            Assert.That(logMessage.GetStateValue<string>("eTag"), Is.EqualTo(expectedETag));
+            Assert.That(logMessage.GetStateValue<string>("pollId"), Is.EqualTo(context.PollId));
+            Assert.That(logMessage.GetStateValue<BlobTriggerScanSource>("triggerSource"), Is.EqualTo(context.TriggerSource));
+            Assert.That(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")), Is.True);
         }
 
         [Test]
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Task<FunctionResult> task = product.ExecuteAsync(context, CancellationToken.None);
 
             // Assert
-            Assert.False(task.Result.Succeeded);
+            Assert.That(task.Result.Succeeded, Is.False);
         }
 
         [Test]
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Task<FunctionResult> task = product.ExecuteAsync(context, CancellationToken.None);
 
             // Assert
-            Assert.False(task.Result.Succeeded);
+            Assert.That(task.Result.Succeeded, Is.False);
         }
 
         [Test]
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             // Assert
             task.GetAwaiter().GetResult();
-            Assert.AreEqual(2, calls);
+            Assert.That(calls, Is.EqualTo(2));
         }
 
         [Test]
@@ -322,7 +322,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             // Assert
             task.WaitUntilCompleted();
             mock.Verify();
-            Assert.True(task.Result.Succeeded);
+            Assert.That(task.Result.Succeeded, Is.True);
         }
 
         [Test]
@@ -361,7 +361,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             mock.Verify();
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(
                 () => task.GetAwaiter().GetResult());
-            Assert.AreSame(expectedException, exception);
+            Assert.That(exception, Is.SameAs(expectedException));
         }
 
         [Test]
@@ -414,20 +414,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                         It.IsAny<CancellationToken>()),
                     Times.Once());
             managerMock.Verify();
-            Assert.True(task.Result.Succeeded);
+            Assert.That(task.Result.Succeeded, Is.True);
 
             // Validate log is written
             var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.AreEqual("BlobMessageEnqueued", logMessage.EventId.Name);
-            Assert.AreEqual(LogLevel.Debug, logMessage.Level);
-            Assert.AreEqual(7, logMessage.State.Count());
-            Assert.AreEqual("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
-            Assert.AreEqual(context.Blob.BlobClient.Name, logMessage.GetStateValue<string>("blobName"));
-            Assert.AreEqual("testQueueName", logMessage.GetStateValue<string>("queueName"));
-            Assert.AreEqual("testMessageId", logMessage.GetStateValue<string>("messageId"));
-            Assert.AreEqual(context.PollId, logMessage.GetStateValue<string>("pollId"));
-            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerScanSource>("triggerSource"));
-            Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
+            Assert.That(logMessage.EventId.Name, Is.EqualTo("BlobMessageEnqueued"));
+            Assert.That(logMessage.Level, Is.EqualTo(LogLevel.Debug));
+            Assert.That(logMessage.State.Count(), Is.EqualTo(7));
+            Assert.That(logMessage.GetStateValue<string>("functionName"), Is.EqualTo("FunctionIdLogName"));
+            Assert.That(logMessage.GetStateValue<string>("blobName"), Is.EqualTo(context.Blob.BlobClient.Name));
+            Assert.That(logMessage.GetStateValue<string>("queueName"), Is.EqualTo("testQueueName"));
+            Assert.That(logMessage.GetStateValue<string>("messageId"), Is.EqualTo("testMessageId"));
+            Assert.That(logMessage.GetStateValue<string>("pollId"), Is.EqualTo(context.PollId));
+            Assert.That(logMessage.GetStateValue<BlobTriggerScanSource>("triggerSource"), Is.EqualTo(context.TriggerSource));
+            Assert.That(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")), Is.True);
         }
 
         private BlobTriggerExecutorContext CreateExecutorContext(bool createBlob = true)

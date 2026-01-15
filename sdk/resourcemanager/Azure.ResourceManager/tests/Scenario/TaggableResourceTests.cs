@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Tests
             else
             {
                 var result = await _rg.AddTagAsync(key, value);
-                Assert.AreEqual(result.Value.Data.Tags, tags);
+                Assert.That(tags, Is.EqualTo(result.Value.Data.Tags));
             }
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Tests
         public async Task TestSetTags()
         {
             var result = await _rg.SetTagsAsync(UpdateTags);
-            Assert.AreEqual(result.Value.Data.Tags, UpdateTags);
+            Assert.That(UpdateTags, Is.EqualTo(result.Value.Data.Tags));
         }
 
         [TestCaseSource(nameof(TagRemoveSource))]
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Tests
         public async Task TestRemoveTag(string key, IDictionary<string, string> tags)
         {
             var result = await _rg.RemoveTagAsync(key);
-            Assert.AreEqual(result.Value.Data.Tags, tags);
+            Assert.That(tags, Is.EqualTo(result.Value.Data.Tags));
         }
 
         static IEnumerable<object[]> TagAddSource()

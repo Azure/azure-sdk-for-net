@@ -44,11 +44,11 @@ namespace Azure.Core.Tests
 
             for (int i = 0; i < size; i++)
             {
-                Assert.AreEqual(sourceArray[i], destinationArray[i]);
+                Assert.That(destinationArray[i], Is.EqualTo(sourceArray[i]));
             }
             for (int i = size; i < destinationArray.Length; i++)
             {
-                Assert.AreEqual(0, destinationArray[i]);
+                Assert.That(destinationArray[i], Is.EqualTo(0));
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Core.Tests
             destination.Position = 0;
             using var reader = new StreamReader(destination);
 
-            Assert.AreEqual(expected, reader.ReadToEnd());
+            Assert.That(reader.ReadToEnd(), Is.EqualTo(expected));
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace Azure.Core.Tests
             destination.Position = 0;
             using var reader = new StreamReader(destination);
 
-            Assert.AreEqual(expected, reader.ReadToEnd());
+            Assert.That(reader.ReadToEnd(), Is.EqualTo(expected));
         }
 
         [Test]
@@ -209,8 +209,8 @@ namespace Azure.Core.Tests
             stream.Position = 0;
 
             var document = JsonDocument.Parse(stream);
-            Assert.AreEqual("test", document.RootElement.GetProperty("name").GetString());
-            Assert.AreEqual(42, document.RootElement.GetProperty("value").GetInt32());
+            Assert.That(document.RootElement.GetProperty("name").GetString(), Is.EqualTo("test"));
+            Assert.That(document.RootElement.GetProperty("value").GetInt32(), Is.EqualTo(42));
         }
 
         [Test]
@@ -224,8 +224,8 @@ namespace Azure.Core.Tests
             stream.Position = 0;
 
             var document = JsonDocument.Parse(stream);
-            Assert.AreEqual("test", document.RootElement.GetProperty("name").GetString());
-            Assert.AreEqual(42, document.RootElement.GetProperty("value").GetInt32());
+            Assert.That(document.RootElement.GetProperty("name").GetString(), Is.EqualTo("test"));
+            Assert.That(document.RootElement.GetProperty("value").GetInt32(), Is.EqualTo(42));
         }
 
         [Test]
@@ -234,7 +234,7 @@ namespace Azure.Core.Tests
             var model = new TestJsonModel { Name = "test", Value = 42 };
             var content = RequestContent.Create(model);
 
-            Assert.IsTrue(content.TryComputeLength(out long length));
+            Assert.That(content.TryComputeLength(out long length), Is.True);
             Assert.Greater(length, 0);
         }
 
@@ -259,8 +259,8 @@ namespace Azure.Core.Tests
             stream.Position = 0;
 
             var document = JsonDocument.Parse(stream);
-            Assert.AreEqual("persistable", document.RootElement.GetProperty("name").GetString());
-            Assert.AreEqual(123, document.RootElement.GetProperty("value").GetInt32());
+            Assert.That(document.RootElement.GetProperty("name").GetString(), Is.EqualTo("persistable"));
+            Assert.That(document.RootElement.GetProperty("value").GetInt32(), Is.EqualTo(123));
         }
 
         [Test]
@@ -274,8 +274,8 @@ namespace Azure.Core.Tests
             stream.Position = 0;
 
             var document = JsonDocument.Parse(stream);
-            Assert.AreEqual("persistable", document.RootElement.GetProperty("name").GetString());
-            Assert.AreEqual(123, document.RootElement.GetProperty("value").GetInt32());
+            Assert.That(document.RootElement.GetProperty("name").GetString(), Is.EqualTo("persistable"));
+            Assert.That(document.RootElement.GetProperty("value").GetInt32(), Is.EqualTo(123));
         }
 
         [Test]
@@ -290,8 +290,8 @@ namespace Azure.Core.Tests
             stream.Position = 0;
 
             var document = JsonDocument.Parse(stream);
-            Assert.AreEqual("mixed", document.RootElement.GetProperty("name").GetString());
-            Assert.AreEqual(456, document.RootElement.GetProperty("value").GetInt32());
+            Assert.That(document.RootElement.GetProperty("name").GetString(), Is.EqualTo("mixed"));
+            Assert.That(document.RootElement.GetProperty("value").GetInt32(), Is.EqualTo(456));
         }
 
         [Test]

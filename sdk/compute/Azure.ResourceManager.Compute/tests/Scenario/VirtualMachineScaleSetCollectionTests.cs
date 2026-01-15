@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmssName, input);
             VirtualMachineScaleSetResource vmss = lro.Value;
-            Assert.AreEqual(vmssName, vmss.Data.Name);
+            Assert.That(vmss.Data.Name, Is.EqualTo(vmssName));
         }
 
         [TestCase]
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmssName, input);
             VirtualMachineScaleSetResource vmss = lro.Value;
-            Assert.AreEqual(vmssName, vmss.Data.Name);
+            Assert.That(vmss.Data.Name, Is.EqualTo(vmssName));
         }
 
         [TestCase]
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmssName, input);
             VirtualMachineScaleSetResource vmss = lro.Value;
-            Assert.IsTrue(await collection.ExistsAsync(vmssName));
-            Assert.IsFalse(await collection.ExistsAsync(vmssName + "1"));
+            Assert.That((bool)await collection.ExistsAsync(vmssName), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(vmssName + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }

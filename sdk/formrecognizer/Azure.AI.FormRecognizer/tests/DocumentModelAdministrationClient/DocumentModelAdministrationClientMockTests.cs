@@ -60,14 +60,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await client.BuildDocumentModelAsync(WaitUntil.Started, new Uri(encodedUriString), DocumentBuildMode.Template);
             await client.BuildDocumentModelAsync(WaitUntil.Started, new Uri(decodedUriString), DocumentBuildMode.Template);
 
-            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
 
             foreach (var request in mockTransport.Requests)
             {
                 var requestBody = GetString(request.Content);
 
-                Assert.True(requestBody.Contains(encodedUriString));
-                Assert.False(requestBody.Contains(decodedUriString));
+                Assert.That(requestBody.Contains(encodedUriString), Is.True);
+                Assert.That(requestBody.Contains(decodedUriString), Is.False);
             }
         }
 

@@ -33,18 +33,18 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.Contains(tag, properties.Tags.ToList());
-            Assert.AreEqual(_repositoryName, properties.RepositoryName);
+            Assert.That(properties.RepositoryName, Is.EqualTo(_repositoryName));
             Assert.GreaterOrEqual(properties.RelatedArtifacts.Count, helloWorldRelatedArtifacts);
 
-            Assert.IsTrue(properties.RelatedArtifacts.Any(
+            Assert.That(properties.RelatedArtifacts.Any(
                 artifact =>
                     artifact.Architecture == "arm64" &&
-                    artifact.OperatingSystem == "linux"));
+                    artifact.OperatingSystem == "linux"), Is.True);
 
-            Assert.IsTrue(properties.RelatedArtifacts.Any(
+            Assert.That(properties.RelatedArtifacts.Any(
                 artifact =>
                     artifact.Architecture == "amd64" &&
-                    artifact.OperatingSystem == "windows"));
+                    artifact.OperatingSystem == "windows"), Is.True);
         }
 
         [RecordedTest]
@@ -66,10 +66,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
             ArtifactManifestProperties properties = await childArtifact.GetManifestPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(_repositoryName, properties.RepositoryName);
+            Assert.That(properties.RepositoryName, Is.EqualTo(_repositoryName));
             Assert.IsNotNull(properties.Digest);
-            Assert.AreEqual(ArtifactArchitecture.Arm64, properties.Architecture);
-            Assert.AreEqual(ArtifactOperatingSystem.Linux, properties.OperatingSystem);
+            Assert.That(properties.Architecture, Is.EqualTo(ArtifactArchitecture.Arm64));
+            Assert.That(properties.OperatingSystem, Is.EqualTo(ArtifactOperatingSystem.Linux));
         }
 
         [RecordedTest, NonParallelizable]
@@ -94,17 +94,17 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 });
 
             // Assert
-            Assert.IsFalse(properties.CanList);
-            Assert.IsFalse(properties.CanRead);
-            Assert.IsFalse(properties.CanWrite);
-            Assert.IsFalse(properties.CanDelete);
+            Assert.That(properties.CanList, Is.False);
+            Assert.That(properties.CanRead, Is.False);
+            Assert.That(properties.CanWrite, Is.False);
+            Assert.That(properties.CanDelete, Is.False);
 
             ArtifactManifestProperties updatedProperties = await artifact.GetManifestPropertiesAsync();
 
-            Assert.IsFalse(updatedProperties.CanList);
-            Assert.IsFalse(updatedProperties.CanRead);
-            Assert.IsFalse(updatedProperties.CanWrite);
-            Assert.IsFalse(updatedProperties.CanDelete);
+            Assert.That(updatedProperties.CanList, Is.False);
+            Assert.That(updatedProperties.CanRead, Is.False);
+            Assert.That(updatedProperties.CanWrite, Is.False);
+            Assert.That(updatedProperties.CanDelete, Is.False);
 
             // Cleanup
             await artifact.UpdateManifestPropertiesAsync(originalProperties);
@@ -146,8 +146,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }
 
                 var properties = await artifact.GetManifestPropertiesAsync();
-                Assert.AreEqual(1, properties.Value.Tags.Count);
-                Assert.AreEqual(tag, properties.Value.Tags[0]);
+                Assert.That(properties.Value.Tags.Count, Is.EqualTo(1));
+                Assert.That(properties.Value.Tags[0], Is.EqualTo(tag));
 
                 // Act
                 await artifact.DeleteAsync();
@@ -193,7 +193,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Assert
-            Assert.IsTrue(gotV1Tag);
+            Assert.That(gotV1Tag, Is.True);
         }
 
         [RecordedTest]
@@ -215,12 +215,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int pageCount = 0;
             await foreach (var page in pages)
             {
-                Assert.IsTrue(page.Values.Count <= pageSize);
+                Assert.That(page.Values.Count <= pageSize, Is.True);
                 pageCount++;
             }
 
             // Assert
-            Assert.IsTrue(pageCount >= minExpectedPages);
+            Assert.That(pageCount >= minExpectedPages, Is.True);
         }
 
         [RecordedTest]
@@ -248,13 +248,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     firstPage = page;
                 }
 
-                Assert.IsTrue(page.Values.Count <= pageSize);
+                Assert.That(page.Values.Count <= pageSize, Is.True);
                 pageCount++;
             }
 
             // Assert
-            Assert.AreNotEqual(null, firstPage);
-            Assert.AreEqual("v2", firstPage.Values[0].Name);
+            Assert.That(firstPage, Is.Not.EqualTo(null));
+            Assert.That(firstPage.Values[0].Name, Is.EqualTo("v2"));
             Assert.GreaterOrEqual(pageCount, minExpectedPages);
         }
 
@@ -270,8 +270,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             ArtifactTagProperties properties = await artifact.GetTagPropertiesAsync(tag);
 
             // Assert
-            Assert.AreEqual(tag, properties.Name);
-            Assert.AreEqual(_repositoryName, properties.RepositoryName);
+            Assert.That(properties.Name, Is.EqualTo(tag));
+            Assert.That(properties.RepositoryName, Is.EqualTo(_repositoryName));
         }
 
         [RecordedTest]
@@ -304,11 +304,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 int i = 0;
                 await foreach (ArtifactTagProperties tag in allTags)
                 {
-                    Assert.AreEqual(tags[i], tag.Name);
+                    Assert.That(tag.Name, Is.EqualTo(tags[i]));
                     i++;
                 }
 
-                Assert.AreEqual(2, i);
+                Assert.That(i, Is.EqualTo(2));
             }
             finally
             {
@@ -343,17 +343,17 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 });
 
             // Assert
-            Assert.IsFalse(properties.CanList);
-            Assert.IsFalse(properties.CanRead);
-            Assert.IsFalse(properties.CanWrite);
-            Assert.IsFalse(properties.CanDelete);
+            Assert.That(properties.CanList, Is.False);
+            Assert.That(properties.CanRead, Is.False);
+            Assert.That(properties.CanWrite, Is.False);
+            Assert.That(properties.CanDelete, Is.False);
 
             ArtifactTagProperties updatedProperties = await artifact.GetTagPropertiesAsync(tag);
 
-            Assert.IsFalse(updatedProperties.CanList);
-            Assert.IsFalse(updatedProperties.CanRead);
-            Assert.IsFalse(updatedProperties.CanWrite);
-            Assert.IsFalse(updatedProperties.CanDelete);
+            Assert.That(updatedProperties.CanList, Is.False);
+            Assert.That(updatedProperties.CanRead, Is.False);
+            Assert.That(updatedProperties.CanWrite, Is.False);
+            Assert.That(updatedProperties.CanDelete, Is.False);
 
             // Cleanup
             await artifact.UpdateTagPropertiesAsync(tag, originalWriteableProperties);
@@ -396,8 +396,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }
 
                 var properties = await artifact.GetManifestPropertiesAsync();
-                Assert.AreEqual(1, properties.Value.Tags.Count);
-                Assert.AreEqual(tag, properties.Value.Tags[0]);
+                Assert.That(properties.Value.Tags.Count, Is.EqualTo(1));
+                Assert.That(properties.Value.Tags[0], Is.EqualTo(tag));
 
                 // Act
                 await artifact.DeleteTagAsync(tag);

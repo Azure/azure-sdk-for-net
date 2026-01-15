@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             ResourceIdentifier localRulestackResourceIdentifier = LocalRulestackCertificateObjectResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, LocalRulestackResource.Data.Name, name);
             LocalRulestackCertificateObjectResource.ValidateResourceId(localRulestackResourceIdentifier);
 
-            Assert.IsTrue(localRulestackResourceIdentifier.ResourceType.Equals(LocalRulestackCertificateObjectResource.ResourceType));
-            Assert.IsTrue(localRulestackResourceIdentifier.Equals($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{LocalRulestackResource.Data.Name}/certificates/{name}"));
+            Assert.That(localRulestackResourceIdentifier.ResourceType.Equals(LocalRulestackCertificateObjectResource.ResourceType), Is.True);
+            Assert.That(localRulestackResourceIdentifier.Equals($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{LocalRulestackResource.Data.Name}/certificates/{name}"), Is.True);
             Assert.Throws<ArgumentException>(() => LocalRulestackCertificateObjectResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public void Data()
         {
-            Assert.IsTrue(CertificateObjectLocalRulestackResource.HasData);
+            Assert.That(CertificateObjectLocalRulestackResource.HasData, Is.True);
             Assert.NotNull(CertificateObjectLocalRulestackResource.Data);
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             updatedData.Description = "Updated description for certificates test";
             LocalRulestackCertificateObjectResource updatedResource = (await CertificateObjectLocalRulestackResource.UpdateAsync(WaitUntil.Completed, updatedData)).Value;
 
-            Assert.AreEqual(updatedResource.Data.Description, "Updated description for certificates test");
+            Assert.That(updatedResource.Data.Description, Is.EqualTo("Updated description for certificates test"));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await CertificateObjectLocalRulestackResource.UpdateAsync(WaitUntil.Completed, null));
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             LocalRulestackCertificateObjectResource resource = await LocalRulestackResource.GetLocalRulestackCertificateObjectAsync("dotnetSdkTest-cert");
             Assert.NotNull(resource);
-            Assert.AreEqual(resource.Data.Name, CertificateObjectLocalRulestackResource.Data.Name);
+            Assert.That(CertificateObjectLocalRulestackResource.Data.Name, Is.EqualTo(resource.Data.Name));
         }
     }
 }

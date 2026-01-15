@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
 
             var resultItem = (CarbonEmissionOverallSummary)result.Value[0];
             Assert.IsNotNull(resultItem.LatestMonthEmissions);
-            Assert.IsTrue(resultItem.DataType == CarbonEmissionDataType.OverallSummaryData);
+            Assert.That(resultItem.DataType == CarbonEmissionDataType.OverallSummaryData, Is.True);
         }
     }
 }

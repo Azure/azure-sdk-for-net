@@ -16,18 +16,18 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         public void AssertPathAccessControlEntryEquality(PathAccessControlItem expected, PathAccessControlItem actual)
         {
-            Assert.AreEqual(expected.DefaultScope, actual.DefaultScope);
-            Assert.AreEqual(expected.AccessControlType, actual.AccessControlType);
-            Assert.AreEqual(expected.EntityId, actual.EntityId);
-            Assert.AreEqual(expected.Permissions, actual.Permissions);
+            Assert.That(actual.DefaultScope, Is.EqualTo(expected.DefaultScope));
+            Assert.That(actual.AccessControlType, Is.EqualTo(expected.AccessControlType));
+            Assert.That(actual.EntityId, Is.EqualTo(expected.EntityId));
+            Assert.That(actual.Permissions, Is.EqualTo(expected.Permissions));
         }
         public void AssertPathPermissionsEquality(PathPermissions expected, PathPermissions actual)
         {
-            Assert.AreEqual(expected.Owner, actual.Owner);
-            Assert.AreEqual(expected.Group, actual.Group);
-            Assert.AreEqual(expected.Other, actual.Other);
-            Assert.AreEqual(expected.StickyBit, actual.StickyBit);
-            Assert.AreEqual(expected.ExtendedAcls, actual.ExtendedAcls);
+            Assert.That(actual.Owner, Is.EqualTo(expected.Owner));
+            Assert.That(actual.Group, Is.EqualTo(expected.Group));
+            Assert.That(actual.Other, Is.EqualTo(expected.Other));
+            Assert.That(actual.StickyBit, Is.EqualTo(expected.StickyBit));
+            Assert.That(actual.ExtendedAcls, Is.EqualTo(expected.ExtendedAcls));
         }
     }
 }

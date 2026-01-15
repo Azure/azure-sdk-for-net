@@ -32,7 +32,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests
             using var createJsonDocument = JsonDocument.Parse(GetContentFromResponse(createResult));
             JsonElement createBodyJson = createJsonDocument.RootElement;
 
-            Assert.AreEqual(workflowId.ToString(), createBodyJson.GetProperty("id").ToString());
+            Assert.That(createBodyJson.GetProperty("id").ToString(), Is.EqualTo(workflowId.ToString()));
         }
 
         [RecordedTest]
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests
             Response getResult = await client.GetWorkflowAsync(workflowId, new());
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(getResult));
             JsonElement getBodyJson = jsonDocument.RootElement;
-            Assert.AreEqual(workflowId.ToString(), getBodyJson.GetProperty("id").GetString());
+            Assert.That(getBodyJson.GetProperty("id").GetString(), Is.EqualTo(workflowId.ToString()));
         }
 
         [RecordedTest]
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests
             Guid workflowId = new Guid("3f7a14f2-c9cd-4fe4-96df-ed3447256118");
 
             Response deleteResult = await client.DeleteAsync(workflowId);
-            Assert.AreEqual(204, deleteResult.Status);
+            Assert.That(deleteResult.Status, Is.EqualTo(204));
         }
 
         [RecordedTest]
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests
             string request = "{\"operations\":[{\"type\":\"CreateTerm\",\"payload\":{\"glossaryTerm\":{\"name\":\"term\",\"anchor\":{\"glossaryGuid\":\"5dae5e5b-5aa6-48f1-9e46-26fe7328de71\"},\"status\":\"Approved\",\"nickName\":\"term\"}}}],\"comment\":\"Thanks!\"}";
 
             Response submitResult = await client.SubmitAsync(RequestContent.Create(request));
-            Assert.AreEqual(200, submitResult.Status);
+            Assert.That(submitResult.Status, Is.EqualTo(200));
         }
 
         [RecordedTest]
@@ -91,7 +91,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests
 
             Response cancelResult = await client.CancelAsync(workflowRunId, RequestContent.Create(request));
 
-            Assert.AreEqual(200, cancelResult.Status);
+            Assert.That(cancelResult.Status, Is.EqualTo(200));
         }
 
         [RecordedTest]
@@ -105,7 +105,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests
 
             Response approveResult = await client.ApproveAsync(taskId, RequestContent.Create(request));
 
-            Assert.AreEqual(200, approveResult.Status);
+            Assert.That(approveResult.Status, Is.EqualTo(200));
         }
         #region Helpers
 

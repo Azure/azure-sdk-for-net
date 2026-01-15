@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task GremlinDatabaseCreateAndUpdate()
         {
             var database = await CreateGremlinDatabase(null);
-            Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
+            Assert.That(database.Data.Resource.DatabaseName, Is.EqualTo(_databaseName));
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, database.Data.Options.Throughput);
 
             bool ifExists = await GremlinDatabaseCollection.ExistsAsync(_databaseName);
-            Assert.True(ifExists);
+            Assert.That(ifExists, Is.True);
 
             // NOT WORKING API
             //ThroughputSettingData throughtput = await database.GetMongoDBCollectionThroughputAsync();
             GremlinDatabaseResource database2 = await GremlinDatabaseCollection.GetAsync(_databaseName);
-            Assert.AreEqual(_databaseName, database2.Data.Resource.DatabaseName);
+            Assert.That(database2.Data.Resource.DatabaseName, Is.EqualTo(_databaseName));
             //Assert.AreEqual(TestThroughput1, database2.Data.Options.Throughput);
 
             VerifyGremlinDatabases(database, database2);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 AzureLocation.WestUS, database.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, null);
 
             database = await (await GremlinDatabaseCollection.CreateOrUpdateAsync(WaitUntil.Started, _databaseName, updateOptions)).WaitForCompletionAsync();
-            Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
+            Assert.That(database.Data.Resource.DatabaseName, Is.EqualTo(_databaseName));
             database2 = await GremlinDatabaseCollection.GetAsync(_databaseName);
             VerifyGremlinDatabases(database, database2);
         }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var database = await CreateGremlinDatabase(null);
             GremlinDatabaseThroughputSettingResource throughput = await database.GetGremlinDatabaseThroughputSetting().GetAsync();
 
-            Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
+            Assert.That(throughput.Data.Resource.Throughput, Is.EqualTo(TestThroughput1));
 
             GremlinDatabaseThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResourceInfo()
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     Throughput = TestThroughput2
                 }))).Value;
 
-            Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
+            Assert.That(throughput2.Data.Resource.Throughput, Is.EqualTo(TestThroughput2));
         }
 
         [Test]
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await database.DeleteAsync(WaitUntil.Completed);
 
             bool exists = await GremlinDatabaseCollection.ExistsAsync(_databaseName);
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
         }
 
         internal async Task<GremlinDatabaseResource> CreateGremlinDatabase(AutoscaleSettings autoscale)
@@ -190,18 +190,18 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyGremlinDatabases(GremlinDatabaseResource expectedValue, GremlinDatabaseResource actualValue)
         {
-            Assert.AreEqual(expectedValue.Id, actualValue.Id);
-            Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.Location, actualValue.Data.Location);
-            Assert.AreEqual(expectedValue.Data.Tags, actualValue.Data.Tags);
-            Assert.AreEqual(expectedValue.Data.ResourceType, actualValue.Data.ResourceType);
+            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+            Assert.That(actualValue.Data.Location, Is.EqualTo(expectedValue.Data.Location));
+            Assert.That(actualValue.Data.Tags, Is.EqualTo(expectedValue.Data.Tags));
+            Assert.That(actualValue.Data.ResourceType, Is.EqualTo(expectedValue.Data.ResourceType));
 
-            Assert.AreEqual(expectedValue.Data.Options, actualValue.Data.Options);
+            Assert.That(actualValue.Data.Options, Is.EqualTo(expectedValue.Data.Options));
 
-            Assert.AreEqual(expectedValue.Data.Resource.DatabaseName, actualValue.Data.Resource.DatabaseName);
-            Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
-            Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
-            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
+            Assert.That(actualValue.Data.Resource.DatabaseName, Is.EqualTo(expectedValue.Data.Resource.DatabaseName));
+            Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
+            Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
+            Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
         }
     }
 }

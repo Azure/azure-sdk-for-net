@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var input = ResourceDataHelpers.GetBookmarkData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             SecurityInsightsBookmarkResource bookmark1 = lro.Value;
-            Assert.AreEqual(name, bookmark1.Data.Name);
+            Assert.That(bookmark1.Data.Name, Is.EqualTo(name));
             //2.Get
             SecurityInsightsBookmarkResource bookmark2 = await collection.GetAsync(name);
             ResourceDataHelpers.AssertBookmarkData(bookmark1.Data, bookmark2.Data);
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 3);
             //4Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync("6a8d6ea6-04d5-49d7-8169-ffca8b0ced60"));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync("6a8d6ea6-04d5-49d7-8169-ffca8b0ced60"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }

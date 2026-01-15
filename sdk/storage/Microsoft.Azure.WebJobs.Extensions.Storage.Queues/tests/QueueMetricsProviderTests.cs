@@ -57,9 +57,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
             QueueMetricsProvider _provider = new QueueMetricsProvider(Fixture.Queue, _loggerFactory);
             var metrics = await _provider.GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.QueueLength);
-            Assert.AreEqual(TimeSpan.Zero, metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.QueueLength, Is.EqualTo(0));
+            Assert.That(metrics.QueueTime, Is.EqualTo(TimeSpan.Zero));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
 
             // add some test messages
             for (int i = 0; i < 5; i++)
@@ -71,13 +71,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
 
             metrics = await _provider.GetMetricsAsync();
 
-            Assert.AreEqual(5, metrics.QueueLength);
-            Assert.True(metrics.QueueTime.Ticks > 0);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.QueueLength, Is.EqualTo(5));
+            Assert.That(metrics.QueueTime.Ticks > 0, Is.True);
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
 
             // verify non-generic interface works as expected
             metrics = (QueueTriggerMetrics)(await _provider.GetMetricsAsync());
-            Assert.AreEqual(5, metrics.QueueLength);
+            Assert.That(metrics.QueueLength, Is.EqualTo(5));
         }
 
         [Test]
@@ -93,12 +93,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
 
             var metrics = await _metricsProvider.GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.QueueLength);
-            Assert.AreEqual(TimeSpan.Zero, metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            Assert.That(metrics.QueueLength, Is.EqualTo(0));
+            Assert.That(metrics.QueueTime, Is.EqualTo(TimeSpan.Zero));
+            Assert.That(metrics.Timestamp, Is.Not.EqualTo(default(DateTime)));
 
             var warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == Microsoft.Extensions.Logging.LogLevel.Warning);
-            Assert.AreEqual("Error querying for queue scale status: Things are very wrong.", warning.FormattedMessage);
+            Assert.That(warning.FormattedMessage, Is.EqualTo("Error querying for queue scale status: Things are very wrong."));
         }
 
         public class TestFixture : IDisposable

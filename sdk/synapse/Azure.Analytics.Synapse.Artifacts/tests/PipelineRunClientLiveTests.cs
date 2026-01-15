@@ -71,7 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             Assert.NotNull(runResponse.RunId);
 
             PipelineRun run = await runClient.GetPipelineRunAsync (runResponse.RunId);
-            Assert.AreEqual (run.RunId, runResponse.RunId);
+            Assert.That(runResponse.RunId, Is.EqualTo(run.RunId));
             Assert.NotNull (run.Status);
         }
 

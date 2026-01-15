@@ -42,9 +42,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             foreach (IntegrationRuntimeResource integration in integrations.Value)
             {
                 IntegrationRuntimeResource fetchedIntegration = await client.GetAsync (integration.Name);
-                Assert.AreEqual (integration.Name, fetchedIntegration.Name);
-                Assert.AreEqual (integration.Id, fetchedIntegration.Id);
-                Assert.AreEqual (integration.Type, fetchedIntegration.Type);
+                Assert.That(fetchedIntegration.Name, Is.EqualTo(integration.Name));
+                Assert.That(fetchedIntegration.Id, Is.EqualTo(integration.Id));
+                Assert.That(fetchedIntegration.Type, Is.EqualTo(integration.Type));
             }
         }
 

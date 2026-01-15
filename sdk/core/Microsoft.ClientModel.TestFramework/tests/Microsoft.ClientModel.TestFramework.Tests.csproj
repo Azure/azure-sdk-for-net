@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="NUnit3TestAdapter" VersionOverride="5.1.0" />
     <PackageReference Include="NUnit" VersionOverride="4.4.0" />
+    <PackageReference Include="NUnit.Analyzers" />
     <PackageReference Include="Moq" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" VersionOverride="17.13.0" />
   </ItemGroup>

@@ -23,8 +23,9 @@ namespace Azure.Search.Documents.Tests.Models
             {
                 // Assumes property names match JSON property names sans case. This would still alert us if properties were added,
                 // but any custom name overrides would break this check and require specific handling.
-                Assert.IsTrue(
+                Assert.That(
                     IndexingParametersConfiguration.WellKnownProperties.Keys.Contains(property.Name, StringComparer.OrdinalIgnoreCase),
+                    Is.True,
                     $"Property '{property.Name}' was not found in {nameof(IndexingParametersConfiguration.WellKnownProperties)}");
             }
         }
@@ -65,25 +66,25 @@ namespace Azure.Search.Documents.Tests.Models
             using JsonDocument doc = JsonDocument.Parse(json);
             IndexingParametersConfiguration configuration = IndexingParametersConfiguration.DeserializeIndexingParametersConfiguration(doc.RootElement);
 
-            Assert.AreEqual(BlobIndexerParsingMode.Json, configuration.ParsingMode);
-            Assert.AreEqual(".png", configuration.ExcludedFileNameExtensions);
-            Assert.AreEqual(".json,.jsonc", configuration.IndexedFileNameExtensions);
-            Assert.IsFalse(configuration.FailOnUnsupportedContentType);
-            Assert.IsFalse(configuration.FailOnUnprocessableDocument);
-            Assert.IsTrue(configuration.IndexStorageMetadataOnlyForOversizedDocuments);
-            Assert.AreEqual("A,B", configuration.DelimitedTextHeaders);
-            Assert.AreEqual("|", configuration.DelimitedTextDelimiter);
-            Assert.IsTrue(configuration.FirstLineContainsHeaders);
-            Assert.AreEqual("$.values", configuration.DocumentRoot);
-            Assert.AreEqual(BlobIndexerDataToExtract.AllMetadata, configuration.DataToExtract);
-            Assert.AreEqual(BlobIndexerImageAction.GenerateNormalizedImages, configuration.ImageAction);
-            Assert.IsTrue(configuration.AllowSkillsetToReadFileData);
-            Assert.AreEqual(BlobIndexerPdfTextRotationAlgorithm.DetectAngles, configuration.PdfTextRotationAlgorithm);
-            Assert.AreEqual(IndexerExecutionEnvironment.Standard, configuration.ExecutionEnvironment);
-            Assert.AreEqual(TimeSpan.Parse("12:34:56"), configuration.QueryTimeout);
+            Assert.That(configuration.ParsingMode, Is.EqualTo(BlobIndexerParsingMode.Json));
+            Assert.That(configuration.ExcludedFileNameExtensions, Is.EqualTo(".png"));
+            Assert.That(configuration.IndexedFileNameExtensions, Is.EqualTo(".json,.jsonc"));
+            Assert.That(configuration.FailOnUnsupportedContentType, Is.False);
+            Assert.That(configuration.FailOnUnprocessableDocument, Is.False);
+            Assert.That(configuration.IndexStorageMetadataOnlyForOversizedDocuments, Is.True);
+            Assert.That(configuration.DelimitedTextHeaders, Is.EqualTo("A,B"));
+            Assert.That(configuration.DelimitedTextDelimiter, Is.EqualTo("|"));
+            Assert.That(configuration.FirstLineContainsHeaders, Is.True);
+            Assert.That(configuration.DocumentRoot, Is.EqualTo("$.values"));
+            Assert.That(configuration.DataToExtract, Is.EqualTo(BlobIndexerDataToExtract.AllMetadata));
+            Assert.That(configuration.ImageAction, Is.EqualTo(BlobIndexerImageAction.GenerateNormalizedImages));
+            Assert.That(configuration.AllowSkillsetToReadFileData, Is.True);
+            Assert.That(configuration.PdfTextRotationAlgorithm, Is.EqualTo(BlobIndexerPdfTextRotationAlgorithm.DetectAngles));
+            Assert.That(configuration.ExecutionEnvironment, Is.EqualTo(IndexerExecutionEnvironment.Standard));
+            Assert.That(configuration.QueryTimeout, Is.EqualTo(TimeSpan.Parse("12:34:56")));
 
-            Assert.AreEqual(1, configuration.Count());
-            Assert.AreEqual("custom", configuration["customTestProperty"]);
+            Assert.That(configuration.Count(), Is.EqualTo(1));
+            Assert.That(configuration["customTestProperty"], Is.EqualTo("custom"));
         }
 
         private static IEnumerable<PropertyInfo> DeclaredProperties => typeof(IndexingParametersConfiguration)

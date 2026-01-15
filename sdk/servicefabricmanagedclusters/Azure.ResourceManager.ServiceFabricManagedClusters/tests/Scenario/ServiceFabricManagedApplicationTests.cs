@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
             // Exist
             bool flag = await _appCollection.ExistsAsync(applicationName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Get
             var getApplication = await _appCollection.GetAsync(applicationName);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             // Delete
             await application.DeleteAsync(WaitUntil.Completed);
             flag = await _appCollection.ExistsAsync(applicationName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [RecordedTest]
@@ -97,24 +97,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             // AddTag
             await application.AddTagAsync("addtagkey", "addtagvalue");
             application = await _appCollection.GetAsync(applicationName);
-            Assert.AreEqual(1, application.Data.Tags.Count);
+            Assert.That(application.Data.Tags.Count, Is.EqualTo(1));
             KeyValuePair<string, string> tag = application.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
 
             // RemoveTag
             await application.RemoveTagAsync("addtagkey");
             application = await _appCollection.GetAsync(applicationName);
-            Assert.AreEqual(0, application.Data.Tags.Count);
+            Assert.That(application.Data.Tags.Count, Is.EqualTo(0));
         }
 
         private void ValidateServiceFabricManagedApplicationType(ServiceFabricManagedApplicationData application, string appTypeName)
         {
             Assert.IsNotNull(application);
             Assert.IsNotEmpty(application.Id);
-            Assert.AreEqual(appTypeName, application.Name);
-            Assert.AreEqual(DefaultLocation, application.Location);
-            Assert.AreEqual("Microsoft.ServiceFabric/managedclusters/applications", application.ResourceType.ToString());
+            Assert.That(application.Name, Is.EqualTo(appTypeName));
+            Assert.That(application.Location, Is.EqualTo(DefaultLocation));
+            Assert.That(application.ResourceType.ToString(), Is.EqualTo("Microsoft.ServiceFabric/managedclusters/applications"));
         }
     }
 }

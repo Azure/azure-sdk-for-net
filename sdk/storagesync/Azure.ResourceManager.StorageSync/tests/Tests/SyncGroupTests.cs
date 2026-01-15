@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
             // Verify StorageSyncGroupCollection contains a single CloudEndpoint
             List<StorageSyncGroupResource> syncGroupResources = await syncGroupCollection.ToEnumerableAsync();
             Assert.NotNull(syncGroupResources);
-            Assert.AreEqual(syncGroupResources.Count(), 1);
+            Assert.That(syncGroupResources.Count(), Is.EqualTo(1));
             StorageSyncManagementTestUtilities.VerifySyncGroupProperties(syncGroupResources.First(), false);
         }
 
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // Delete SyncGroup before it's created
             var deleteException = Assert.ThrowsAsync<RequestFailedException>(async () => (await _storageSyncServiceResource.GetStorageSyncGroupAsync(_syncGroupName)).Value?.Delete(WaitUntil.Completed));
-            Assert.AreEqual(404, deleteException.Status);
-            Assert.IsFalse((await syncGroupCollection.ExistsAsync(_syncGroupName)).Value);
+            Assert.That(deleteException.Status, Is.EqualTo(404));
+            Assert.That((await syncGroupCollection.ExistsAsync(_syncGroupName)).Value, Is.False);
 
             // Create StorageSyncGroup
             StorageSyncGroupResource syncGroupResource = (await syncGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, _syncGroupName, _storageSyncGroupCreateOrUpdateContent)).Value;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
             await syncGroupResource.DeleteAsync(WaitUntil.Completed);
 
             // Verify StorageSyncGroup has been deleted.
-            Assert.IsFalse((await syncGroupCollection.ExistsAsync(_syncGroupName)).Value);
+            Assert.That((await syncGroupCollection.ExistsAsync(_syncGroupName)).Value, Is.False);
         }
     }
 }

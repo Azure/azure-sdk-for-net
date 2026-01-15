@@ -22,13 +22,13 @@ namespace Azure.Core.Experimental.Tests
         public void DoubleImplicit([ValueSource("DoubleData")] double testValue)
         {
             Variant value = testValue;
-            Assert.AreEqual(testValue, value.As<double>());
-            Assert.AreEqual(typeof(double), value.Type);
+            Assert.That(value.As<double>(), Is.EqualTo(testValue));
+            Assert.That(value.Type, Is.EqualTo(typeof(double)));
 
             double? source = testValue;
             value = source;
-            Assert.AreEqual(source, value.As<double?>());
-            Assert.AreEqual(typeof(double), value.Type);
+            Assert.That(value.As<double?>(), Is.EqualTo(source));
+            Assert.That(value.Type, Is.EqualTo(typeof(double)));
         }
 
         [Test]
@@ -40,8 +40,8 @@ namespace Azure.Core.Experimental.Tests
                 value = Variant.Create(testValue);
             }
 
-            Assert.AreEqual(testValue, value.As<double>());
-            Assert.AreEqual(typeof(double), value.Type);
+            Assert.That(value.As<double>(), Is.EqualTo(testValue));
+            Assert.That(value.Type, Is.EqualTo(typeof(double)));
 
             double? source = testValue;
 
@@ -50,8 +50,8 @@ namespace Azure.Core.Experimental.Tests
                 value = Variant.Create(source);
             }
 
-            Assert.AreEqual(source, value.As<double?>());
-            Assert.AreEqual(typeof(double), value.Type);
+            Assert.That(value.As<double?>(), Is.EqualTo(source));
+            Assert.That(value.Type, Is.EqualTo(typeof(double)));
         }
 
         [Test]
@@ -59,11 +59,11 @@ namespace Azure.Core.Experimental.Tests
         {
             Variant value = new(testValue);
             bool success = value.TryGetValue(out double result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, value.As<double>());
-            Assert.AreEqual(testValue, (double)value);
+            Assert.That(value.As<double>(), Is.EqualTo(testValue));
+            Assert.That((double)value, Is.EqualTo(testValue));
         }
 
         [Test]
@@ -73,12 +73,12 @@ namespace Azure.Core.Experimental.Tests
             Variant value = new(source);
 
             bool success = value.TryGetValue(out double result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, value.As<double>());
+            Assert.That(value.As<double>(), Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, (double)value);
+            Assert.That((double)value, Is.EqualTo(testValue));
         }
 
         [Test]
@@ -87,10 +87,10 @@ namespace Azure.Core.Experimental.Tests
             double source = testValue;
             Variant value = new(source);
             bool success = value.TryGetValue(out double? result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, (double)value);
+            Assert.That((double)value, Is.EqualTo(testValue));
         }
 
         [Test]
@@ -100,21 +100,21 @@ namespace Azure.Core.Experimental.Tests
             object o = i;
             Variant value = new(o);
 
-            Assert.AreEqual(typeof(double), value.Type);
-            Assert.True(value.TryGetValue(out double result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out double? nullableResult));
-            Assert.AreEqual(testValue, nullableResult!.Value);
+            Assert.That(value.Type, Is.EqualTo(typeof(double)));
+            Assert.That(value.TryGetValue(out double result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out double? nullableResult), Is.True);
+            Assert.That(nullableResult!.Value, Is.EqualTo(testValue));
 
             double? n = testValue;
             o = n;
             value = new(o);
 
-            Assert.AreEqual(typeof(double), value.Type);
-            Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out nullableResult));
-            Assert.AreEqual(testValue, nullableResult!.Value);
+            Assert.That(value.Type, Is.EqualTo(typeof(double)));
+            Assert.That(value.TryGetValue(out result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out nullableResult), Is.True);
+            Assert.That(nullableResult!.Value, Is.EqualTo(testValue));
         }
 
         [Test]
@@ -122,9 +122,9 @@ namespace Azure.Core.Experimental.Tests
         {
             double? source = null;
             Variant value = source;
-            Assert.Null(value.Type);
-            Assert.AreEqual(source, value.As<double?>());
-            Assert.False(value.As<double?>().HasValue);
+            Assert.That(value.Type, Is.Null);
+            Assert.That(value.As<double?>(), Is.EqualTo(source));
+            Assert.That(value.As<double?>().HasValue, Is.False);
         }
 
         [Test]
@@ -132,14 +132,14 @@ namespace Azure.Core.Experimental.Tests
         {
             Variant value = new(testValue);
             object o = value.As<object>();
-            Assert.AreEqual(typeof(double), o.GetType());
-            Assert.AreEqual(testValue, (double)o);
+            Assert.That(o.GetType(), Is.EqualTo(typeof(double)));
+            Assert.That((double)o, Is.EqualTo(testValue));
 
             double? n = testValue;
             value = new(n);
             o = value.As<object>();
-            Assert.AreEqual(typeof(double), o.GetType());
-            Assert.AreEqual(testValue, (double)o);
+            Assert.That(o.GetType(), Is.EqualTo(typeof(double)));
+            Assert.That((double)o, Is.EqualTo(testValue));
         }
     }
 }

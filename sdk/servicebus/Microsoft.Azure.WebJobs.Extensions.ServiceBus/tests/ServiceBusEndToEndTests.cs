@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var count = await CleanUpEntity(FirstQueueScope.QueueName);
 
-                Assert.AreEqual(numMessages * 3, count);
+                Assert.That(count, Is.EqualTo(numMessages * 3));
                 await host.StopAsync();
             }
         }
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var count = await CleanUpEntity(FirstQueueScope.QueueName);
 
-                Assert.AreEqual(numMessages * 3, count);
+                Assert.That(count, Is.EqualTo(numMessages * 3));
                 await host.StopAsync();
             }
         }
@@ -150,8 +150,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // in addition to verifying that our custom processor was called, we're also
                 // verifying here that extensions can log
                 IEnumerable<LogMessage> messages = loggerProvider.GetAllLogMessages().Where(m => m.Category == CustomMessagingProvider.CustomMessagingCategory);
-                Assert.AreEqual(4, messages.Count(p => p.FormattedMessage.Contains("Custom processor Begin called!")));
-                Assert.AreEqual(4, messages.Count(p => p.FormattedMessage.Contains("Custom processor End called!")));
+                Assert.That(messages.Count(p => p.FormattedMessage.Contains("Custom processor Begin called!")), Is.EqualTo(4));
+                Assert.That(messages.Count(p => p.FormattedMessage.Contains("Custom processor End called!")), Is.EqualTo(4));
                 await host.StopAsync();
             }
         }
@@ -179,8 +179,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await host.StopAsync();
             }
 
-            Assert.AreEqual("Test-topic-1", _resultMessage1);
-            Assert.AreEqual("Test-topic-2", _resultMessage2);
+            Assert.That(_resultMessage1, Is.EqualTo("Test-topic-1"));
+            Assert.That(_resultMessage2, Is.EqualTo("Test-topic-2"));
         }
 
         [Test]
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -258,7 +258,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages();
                 Assert.IsNotEmpty(logs.Where(message => message.FormattedMessage.Contains("RenewMessageLock")));
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var host = BuildHost<TestSingleDispose>();
 
             bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-            Assert.True(result);
+            Assert.That(result, Is.True);
             host.Dispose();
         }
 
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var host = BuildHost<TestSingleDispose>();
 
             bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-            Assert.True(result);
+            Assert.That(result, Is.True);
             await host.StopAsync();
         }
 
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var host = BuildHost<TestBatchDispose>();
 
             bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-            Assert.True(result);
+            Assert.That(result, Is.True);
             await host.StopAsync();
         }
 
@@ -305,7 +305,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var host = BuildHost<TestBatchDispose>();
 
             bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-            Assert.True(result);
+            Assert.That(result, Is.True);
             host.Dispose();
         }
 
@@ -340,7 +340,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 skipValidation: true))
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
 
@@ -362,7 +362,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                 }
             }
-            Assert.AreEqual(0, remaining);
+            Assert.That(remaining, Is.EqualTo(0));
         }
 
         [Test]
@@ -373,7 +373,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -386,7 +386,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -402,7 +402,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -416,7 +416,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 // Delay to make sure function is done executing
                 await Task.Delay(500);
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
@@ -437,7 +437,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -461,7 +461,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 // Delay to make sure function is done executing
                 await Task.Delay(500);
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
@@ -490,8 +490,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, FirstQueueScope.QueueName));
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext));
-            Assert.AreEqual(2, scope.LinkedActivities.Count);
-            Assert.IsTrue(scope.IsCompleted);
+            Assert.That(scope.LinkedActivities.Count, Is.EqualTo(2));
+            Assert.That(scope.IsCompleted, Is.True);
         }
 
         [Test]
@@ -505,8 +505,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessageBusDestination, FirstQueueScope.QueueName));
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.PeerAddress, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.Component, DiagnosticProperty.ServiceBusServiceContext));
-            Assert.AreEqual(2, scope.LinkedActivities.Count);
-            Assert.IsTrue(scope.IsFailed);
+            Assert.That(scope.LinkedActivities.Count, Is.EqualTo(2));
+            Assert.That(scope.IsFailed, Is.True);
         }
 
         [Test]
@@ -517,7 +517,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await WriteQueueMessage(JsonConvert.SerializeObject(new {Date = DateTimeOffset.Now}));
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -540,12 +540,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 var start = DateTimeOffset.Now;
                 await host.StopAsync();
                 var stop = DateTimeOffset.Now;
 
-                Assert.IsTrue(stop.Subtract(start) < TimeSpan.FromSeconds(10));
+                Assert.That(stop.Subtract(start) < TimeSpan.FromSeconds(10), Is.True);
             }
         }
 
@@ -568,7 +568,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await WriteQueueMessage(JsonConvert.SerializeObject(new {Date = DateTimeOffset.Now}));
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -582,7 +582,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var jobHost = host.GetJobHost();
                 await jobHost.CallAsync(nameof(ServiceBusOutputPocoTest.OutputPoco));
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -596,7 +596,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var jobHost = host.GetJobHost();
                 await jobHost.CallAsync(nameof(ServiceBusOutputBinaryDataTest.OutputBinaryData));
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -610,7 +610,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var jobHost = host.GetJobHost();
                 await jobHost.CallAsync(nameof(ServiceBusOutputBinaryDataBatchTest.OutputBinaryData));
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -632,16 +632,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await WriteQueueMessage("{ Name: 'foo', Value: 'bar' }");
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
                 Assert.Contains("PocoValues(foo,bar)", logs);
                 await host.StopAsync();
             }
-            Assert.AreEqual(0, provider.ClientCache.Count);
-            Assert.AreEqual(0, provider.MessageReceiverCache.Count);
-            Assert.AreEqual(0, provider.MessageSenderCache.Count);
-            Assert.AreEqual(0, provider.ActionsCache.Count);
+            Assert.That(provider.ClientCache.Count, Is.EqualTo(0));
+            Assert.That(provider.MessageReceiverCache.Count, Is.EqualTo(0));
+            Assert.That(provider.MessageSenderCache.Count, Is.EqualTo(0));
+            Assert.That(provider.ActionsCache.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -655,7 +655,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await jobHost.CallAsync(method, new { input = "foobar" });
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
                 Assert.Contains("Input(foobar)", logs);
@@ -694,7 +694,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 string functionId = $"{methodInfo.DeclaringType.FullName}.{methodInfo.Name}";
                 var concurrencyManager = host.Services.GetServices<ConcurrencyManager>().SingleOrDefault();
                 var concurrencyStatus = concurrencyManager.GetStatus(functionId);
-                Assert.AreEqual(1, concurrencyStatus.CurrentConcurrency);
+                Assert.That(concurrencyStatus.CurrentConcurrency, Is.EqualTo(1));
 
                 // write a bunch of messages in batch
                 int numMessages = 500;
@@ -737,7 +737,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
             }
         }
 
@@ -754,7 +754,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
             }
         }
 
@@ -771,7 +771,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
             }
         }
 
@@ -825,14 +825,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 }
 
                 // Wait to ensure function invocation has started before draining messages
-                Assert.True(_drainValidationPreDelay.WaitOne(SBTimeoutMills));
+                Assert.That(_drainValidationPreDelay.WaitOne(SBTimeoutMills), Is.True);
 
                 // Start draining in-flight messages
                 var drainModeManager = host.Services.GetService<IDrainModeManager>();
                 await drainModeManager.EnableDrainModeAsync(CancellationToken.None);
 
                 // Validate that function execution was allowed to complete
-                Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
+                Assert.That(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills), Is.True);
                 await host.StopAsync();
             }
         }
@@ -897,7 +897,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _topicSubscriptionCalled1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -915,7 +915,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _topicSubscriptionCalled1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
         }
@@ -931,7 +931,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 bool result = _topicSubscriptionCalled1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
 
                 await host.StopAsync();
             }
@@ -952,14 +952,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 }
 
                 // Wait to ensure function invocation has started before draining messages
-                Assert.True(_drainValidationPreDelay.WaitOne(SBTimeoutMills));
+                Assert.That(_drainValidationPreDelay.WaitOne(SBTimeoutMills), Is.True);
 
                 // Start draining in-flight messages
                 var drainModeManager = host.Services.GetService<IDrainModeManager>();
                 await drainModeManager.EnableDrainModeAsync(CancellationToken.None);
 
                 // Validate that function execution was allowed to complete
-                Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
+                Assert.That(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills), Is.True);
                 await host.StopAsync();
             }
         }
@@ -981,8 +981,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             // Wait for the host to terminate
             await host.StopAsync();
 
-            Assert.AreEqual("E2E-SBQueue2SBQueue-SBQueue2SBTopic-topic-1", _resultMessage1);
-            Assert.AreEqual("E2E-SBQueue2SBQueue-SBQueue2SBTopic-topic-2", _resultMessage2);
+            Assert.That(_resultMessage1, Is.EqualTo("E2E-SBQueue2SBQueue-SBQueue2SBTopic-topic-1"));
+            Assert.That(_resultMessage2, Is.EqualTo("E2E-SBQueue2SBQueue-SBQueue2SBTopic-topic-2"));
 
             IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider().GetAllLogMessages();
 
@@ -1085,7 +1085,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             expectedOutputLines = expectedOutputLines.Select(x => x.Replace(" ", string.Empty)).ToArray();
             consoleOutputLines = consoleOutputLines.Select(x => x.Replace(" ", string.Empty)).ToArray();
-            Assert.AreEqual(expectedOutputLines.Length, consoleOutputLines.Length);
+            Assert.That(consoleOutputLines.Length, Is.EqualTo(expectedOutputLines.Length));
             for (int i = 0; i < expectedOutputLines.Length; i++)
             {
                 StringAssert.StartsWith(expectedOutputLines[i], consoleOutputLines[i]);
@@ -1099,7 +1099,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             foreach (string msg in triggerDetailsConsoleOutput)
             {
-                Assert.True(Regex.IsMatch(msg, expectedPattern), $"Expected trace event {expectedPattern} not found.");
+                Assert.That(Regex.IsMatch(msg, expectedPattern), Is.True, $"Expected trace event {expectedPattern} not found.");
             }
         }
 
@@ -1164,23 +1164,23 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 ServiceBusMessageActions messageActions,
                 [ServiceBus(SecondQueueNameKey)] ServiceBusSender messageSender)
             {
-                Assert.AreEqual("E2E", body);
-                Assert.AreEqual(1, deliveryCount);
+                Assert.That(body, Is.EqualTo("E2E"));
+                Assert.That(deliveryCount, Is.EqualTo(1));
                 Assert.IsNotNull(lockToken);
                 Assert.IsNull(deadLetterSource);
-                Assert.AreEqual("replyTo", replyTo);
-                Assert.AreEqual("to", to);
-                Assert.AreEqual("subject", subject);
-                Assert.AreEqual("subject", label);
-                Assert.AreEqual("correlationId", correlationId);
-                Assert.AreEqual("application/json", contentType);
-                Assert.AreEqual("value", applicationProperties["key"]);
-                Assert.AreEqual("value", userProperties["key"]);
+                Assert.That(replyTo, Is.EqualTo("replyTo"));
+                Assert.That(to, Is.EqualTo("to"));
+                Assert.That(subject, Is.EqualTo("subject"));
+                Assert.That(label, Is.EqualTo("subject"));
+                Assert.That(correlationId, Is.EqualTo("correlationId"));
+                Assert.That(contentType, Is.EqualTo("application/json"));
+                Assert.That(applicationProperties["key"], Is.EqualTo("value"));
+                Assert.That(userProperties["key"], Is.EqualTo("value"));
                 Assert.Greater(expiresAtUtc, DateTime.UtcNow);
-                Assert.AreEqual(expiresAt.DateTime, expiresAtUtc);
+                Assert.That(expiresAtUtc, Is.EqualTo(expiresAt.DateTime));
                 // account for clock skew
                 Assert.Less(enqueuedTimeUtc, DateTime.UtcNow.AddMinutes(5));
-                Assert.AreEqual(enqueuedTime.DateTime, enqueuedTimeUtc);
+                Assert.That(enqueuedTimeUtc, Is.EqualTo(enqueuedTime.DateTime));
                 Assert.IsNull(sessionId);
                 Assert.IsNull(replyToSessionId);
 
@@ -1236,8 +1236,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static void TriggerPoco(
                 [ServiceBusTrigger(FirstQueueNameKey)] TestPoco received)
             {
-                Assert.AreEqual("value", received.Value);
-                Assert.AreEqual("name", received.Name);
+                Assert.That(received.Value, Is.EqualTo("value"));
+                Assert.That(received.Name, Is.EqualTo("name"));
                 _waitHandle1.Set();
             }
         }
@@ -1253,7 +1253,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static void TriggerBinaryData(
                 [ServiceBusTrigger(FirstQueueNameKey)] BinaryData received)
             {
-                Assert.AreEqual("message", received.ToString());
+                Assert.That(received.ToString(), Is.EqualTo("message"));
                 _waitHandle1.Set();
             }
         }
@@ -1411,24 +1411,24 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 for (int i = 0; i < array.Length; i++)
                 {
-                    Assert.AreEqual(1, deliveryCountArray[i]);
+                    Assert.That(deliveryCountArray[i], Is.EqualTo(1));
                     Assert.IsNotNull(lockTokenArray[i]);
                     Assert.IsNull(deadLetterSourceArray[i]);
-                    Assert.AreEqual("replyTo", replyToArray[i]);
-                    Assert.AreEqual("to", toArray[i]);
-                    Assert.AreEqual("subject", subjectArray[i]);
-                    Assert.AreEqual("subject", labelArray[i]);
-                    Assert.AreEqual("correlationId", correlationIdArray[i]);
-                    Assert.AreEqual("application/json", contentTypeArray[i]);
-                    Assert.AreEqual("partitionKey", partitionKeyArray[i]);
-                    Assert.AreEqual("partitionKey", transactionPartitionKeyArray[i]);
-                    Assert.AreEqual("value", applicationPropertiesArray[i]["key"]);
-                    Assert.AreEqual("value", userPropertiesArray[i]["key"]);
+                    Assert.That(replyToArray[i], Is.EqualTo("replyTo"));
+                    Assert.That(toArray[i], Is.EqualTo("to"));
+                    Assert.That(subjectArray[i], Is.EqualTo("subject"));
+                    Assert.That(labelArray[i], Is.EqualTo("subject"));
+                    Assert.That(correlationIdArray[i], Is.EqualTo("correlationId"));
+                    Assert.That(contentTypeArray[i], Is.EqualTo("application/json"));
+                    Assert.That(partitionKeyArray[i], Is.EqualTo("partitionKey"));
+                    Assert.That(transactionPartitionKeyArray[i], Is.EqualTo("partitionKey"));
+                    Assert.That(applicationPropertiesArray[i]["key"], Is.EqualTo("value"));
+                    Assert.That(userPropertiesArray[i]["key"], Is.EqualTo("value"));
                     Assert.Greater(expiresAtUtcArray[i], DateTime.UtcNow);
-                    Assert.AreEqual(expiresAtArray[i].DateTime, expiresAtUtcArray[i]);
+                    Assert.That(expiresAtUtcArray[i], Is.EqualTo(expiresAtArray[i].DateTime));
                     // account for clock skew
                     Assert.Less(enqueuedTimeUtcArray[i], DateTime.UtcNow.AddMinutes(5));
-                    Assert.AreEqual(enqueuedTimeArray[i].DateTime, enqueuedTimeUtcArray[i]);
+                    Assert.That(enqueuedTimeUtcArray[i], Is.EqualTo(enqueuedTimeArray[i].DateTime));
                     Assert.IsNull(sessionIdArray[i]);
                     Assert.IsNull(replyToSessionIdArray[i]);
                 }
@@ -1464,7 +1464,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public static void Run([ServiceBusTrigger(FirstQueueNameKey)] JObject input)
             {
-                Assert.AreEqual(JTokenType.Date, input["Date"].Type);
+                Assert.That(input["Date"].Type, Is.EqualTo(JTokenType.Date));
                 _waitHandle1.Set();
             }
         }
@@ -1473,7 +1473,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public static void BindToJObject([ServiceBusTrigger(FirstQueueNameKey)] JObject input)
             {
-                Assert.AreEqual(JTokenType.String, input["Date"].Type);
+                Assert.That(input["Date"].Type, Is.EqualTo(JTokenType.String));
                 _waitHandle1.Set();
             }
         }
@@ -1500,8 +1500,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 string name, string value, string messageId,
                 ILogger logger)
             {
-                Assert.AreEqual(input.Name, name);
-                Assert.AreEqual(input.Value, value);
+                Assert.That(name, Is.EqualTo(input.Name));
+                Assert.That(value, Is.EqualTo(input.Value));
                 logger.LogInformation($"PocoValues({name},{value})");
                 _waitHandle1.Set();
             }
@@ -1524,7 +1524,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage input)
             {
                 input.GetRawAmqpMessage().Body.TryGetValue(out object value);
-                Assert.AreEqual("foobar", value);
+                Assert.That(value, Is.EqualTo("foobar"));
                 _waitHandle1.Set();
             }
         }
@@ -1534,7 +1534,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static void BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey)] string input)
             {
-                Assert.AreEqual("foobar", input);
+                Assert.That(input, Is.EqualTo("foobar"));
                 _waitHandle1.Set();
             }
         }
@@ -1544,8 +1544,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static void BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey)] TestPoco poco)
             {
-                Assert.AreEqual("Key", poco.Name);
-                Assert.AreEqual("Value", poco.Value);
+                Assert.That(poco.Name, Is.EqualTo("Key"));
+                Assert.That(poco.Value, Is.EqualTo("Value"));
                 _waitHandle1.Set();
             }
         }
@@ -1568,7 +1568,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                [ServiceBusTrigger(FirstQueueNameKey)]
                ServiceBusReceivedMessage[] array)
             {
-                Assert.AreEqual(array.Length, MinBatchSize);
+                Assert.That(MinBatchSize, Is.EqualTo(array.Length));
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }
@@ -1580,7 +1580,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                [ServiceBusTrigger(FirstQueueNameKey)]
                ServiceBusReceivedMessage[] array)
             {
-                Assert.AreEqual(array.Length, 3);
+                Assert.That(3, Is.EqualTo(array.Length));
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }
@@ -1624,7 +1624,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                [ServiceBusTrigger(FirstQueueNameKey, AutoCompleteMessages = true)]
                ServiceBusReceivedMessage[] array)
             {
-                Assert.True(array.Length > 0);
+                Assert.That(array.Length > 0, Is.True);
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }
@@ -1676,7 +1676,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                [ServiceBusTrigger(FirstQueueNameKey, MaxMessageBatchSize = 2)]
                ServiceBusReceivedMessage[] array)
             {
-                Assert.AreEqual(array.Length, 2);
+                Assert.That(2, Is.EqualTo(array.Length));
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }
@@ -1705,7 +1705,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 _waitHandle1.Set();
                 // wait a small amount of time for the host to call dispose
                 await Task.Delay(2000, CancellationToken.None);
-                Assert.IsTrue(cancellationToken.IsCancellationRequested);
+                Assert.That(cancellationToken.IsCancellationRequested, Is.True);
             }
         }
 
@@ -1719,7 +1719,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 _waitHandle1.Set();
                 // wait a small amount of time for the host to call dispose
                 await Task.Delay(2000, CancellationToken.None);
-                Assert.IsTrue(cancellationToken.IsCancellationRequested);
+                Assert.That(cancellationToken.IsCancellationRequested, Is.True);
             }
         }
 
@@ -1797,7 +1797,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var peeked = await receiveActions.PeekMessagesAsync(1, message.SequenceNumber);
                 Assert.IsNotEmpty(peeked);
-                Assert.AreEqual(message.SequenceNumber, peeked.Single().SequenceNumber);
+                Assert.That(peeked.Single().SequenceNumber, Is.EqualTo(message.SequenceNumber));
 
                 _waitHandle1.Set();
             }
@@ -1818,7 +1818,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 ServiceBusReceivedMessage message,
                 ServiceBusMessageActions messageActions)
             {
-                Assert.AreEqual("DLQ", message.DeadLetterReason);
+                Assert.That(message.DeadLetterReason, Is.EqualTo("DLQ"));
                 await messageActions.CompleteMessageAsync(message);
                 _waitHandle1.Set();
             }
@@ -1885,7 +1885,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 logger.LogInformation($"DrainModeValidationFunctions.QueueNoSessions: message data {msg.Body}");
                 _drainValidationPreDelay.Set();
-                Assert.False(cancellationToken.IsCancellationRequested);
+                Assert.That(cancellationToken.IsCancellationRequested, Is.False);
                 await messageActions.CompleteMessageAsync(msg);
                 _drainValidationPostDelay.Set();
             }
@@ -1902,7 +1902,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 logger.LogInformation($"DrainModeValidationFunctions.NoSessions: message data {msg.Body}");
                 _drainValidationPreDelay.Set();
-                Assert.False(cancellationToken.IsCancellationRequested);
+                Assert.That(cancellationToken.IsCancellationRequested, Is.False);
                 await messageActions.CompleteMessageAsync(msg);
                 _drainValidationPostDelay.Set();
             }
@@ -1917,10 +1917,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                CancellationToken cancellationToken,
                ILogger logger)
             {
-                Assert.True(array.Length > 0);
+                Assert.That(array.Length > 0, Is.True);
                 logger.LogInformation($"DrainModeTestJobBatch.QueueNoSessionsBatch: received {array.Length} messages");
                 _drainValidationPreDelay.Set();
-                Assert.False(cancellationToken.IsCancellationRequested);
+                Assert.That(cancellationToken.IsCancellationRequested, Is.False);
                 foreach (ServiceBusReceivedMessage msg in array)
                 {
                     await messageActions.CompleteMessageAsync(msg);
@@ -1937,10 +1937,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 CancellationToken cancellationToken,
                 ILogger logger)
             {
-                Assert.True(array.Length > 0);
+                Assert.That(array.Length > 0, Is.True);
                 logger.LogInformation($"DrainModeTestJobBatch.TopicNoSessionsBatch: received {array.Length} messages");
                 _drainValidationPreDelay.Set();
-                Assert.False(cancellationToken.IsCancellationRequested);
+                Assert.That(cancellationToken.IsCancellationRequested, Is.False);
                 foreach (ServiceBusReceivedMessage msg in array)
                 {
                     // validate that manual lock renewal works

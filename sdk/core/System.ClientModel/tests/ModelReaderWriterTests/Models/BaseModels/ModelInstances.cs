@@ -24,24 +24,24 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
             var expectedRawData = GetRawData(expected);
             var actualRawData = GetRawData(actual);
 
-            Assert.AreEqual(expected.Name!, actual.Name!);
-            Assert.AreEqual(expected.Kind!, actual.Kind!);
-            Assert.AreEqual(expected.Fields, actual.Fields);
-            Assert.AreEqual(expected.KeyValuePairs, actual.KeyValuePairs);
+            Assert.That(actual.Name!, Is.EqualTo(expected.Name!));
+            Assert.That(actual.Kind!, Is.EqualTo(expected.Kind!));
+            Assert.That(actual.Fields, Is.EqualTo(expected.Fields));
+            Assert.That(actual.KeyValuePairs, Is.EqualTo(expected.KeyValuePairs));
             if (format == "J")
             {
-                Assert.AreEqual(expected.XProperty, actual.XProperty);
-                Assert.AreEqual(expectedRawData.Count, actualRawData.Count);
+                Assert.That(actual.XProperty, Is.EqualTo(expected.XProperty));
+                Assert.That(actualRawData.Count, Is.EqualTo(expectedRawData.Count));
                 foreach (var key in expectedRawData.Keys)
                 {
-                    Assert.IsTrue(actualRawData.ContainsKey(key));
-                    Assert.IsTrue(expectedRawData[key].ToMemory().Span.SequenceEqual(actualRawData[key].ToMemory().Span));
+                    Assert.That(actualRawData.ContainsKey(key), Is.True);
+                    Assert.That(expectedRawData[key].ToMemory().Span.SequenceEqual(actualRawData[key].ToMemory().Span), Is.True);
                 }
             }
             else
             {
-                Assert.AreEqual(0, actual.XProperty);
-                Assert.AreEqual(0, actualRawData.Count);
+                Assert.That(actual.XProperty, Is.EqualTo(0));
+                Assert.That(actualRawData.Count, Is.EqualTo(0));
             }
         }
 
@@ -50,22 +50,22 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
             var expectedRawData = GetRawData(expected);
             var actualRawData = GetRawData(actual);
 
-            Assert.AreEqual(expected.Name!, actual.Name!);
-            Assert.AreEqual(expected.Kind!, actual.Kind!);
+            Assert.That(actual.Name!, Is.EqualTo(expected.Name!));
+            Assert.That(actual.Kind!, Is.EqualTo(expected.Kind!));
             if (format == "J")
             {
-                Assert.AreEqual(expected.YProperty!, actual.YProperty!);
-                Assert.AreEqual(expectedRawData.Count, actualRawData.Count);
+                Assert.That(actual.YProperty!, Is.EqualTo(expected.YProperty!));
+                Assert.That(actualRawData.Count, Is.EqualTo(expectedRawData.Count));
                 foreach (var key in expectedRawData.Keys)
                 {
-                    Assert.IsTrue(actualRawData.ContainsKey(key));
-                    Assert.IsTrue(expectedRawData[key].ToMemory().Span.SequenceEqual(actualRawData[key].ToMemory().Span));
+                    Assert.That(actualRawData.ContainsKey(key), Is.True);
+                    Assert.That(expectedRawData[key].ToMemory().Span.SequenceEqual(actualRawData[key].ToMemory().Span), Is.True);
                 }
             }
             else
             {
-                Assert.IsNull(actual.YProperty);
-                Assert.AreEqual(0, actualRawData.Count);
+                Assert.That(actual.YProperty, Is.Null);
+                Assert.That(actualRawData.Count, Is.EqualTo(0));
             }
         }
 
@@ -74,22 +74,22 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
             var expectedRawData = GetRawData(expected);
             var actualRawData = GetRawData(actual);
 
-            Assert.AreEqual("UnknownBaseModel", actual.GetType().Name);
+            Assert.That(actual.GetType().Name, Is.EqualTo("UnknownBaseModel"));
 
-            Assert.AreEqual(expected.Name!, actual.Name!);
-            Assert.AreEqual(expected.Kind!, actual.Kind!);
+            Assert.That(actual.Name!, Is.EqualTo(expected.Name!));
+            Assert.That(actual.Kind!, Is.EqualTo(expected.Kind!));
             if (format == "J")
             {
-                Assert.AreEqual(expectedRawData.Count, actualRawData.Count);
+                Assert.That(actualRawData.Count, Is.EqualTo(expectedRawData.Count));
                 foreach (var key in expectedRawData.Keys)
                 {
-                    Assert.IsTrue(actualRawData.ContainsKey(key));
-                    Assert.IsTrue(expectedRawData[key].ToMemory().Span.SequenceEqual(actualRawData[key].ToMemory().Span));
+                    Assert.That(actualRawData.ContainsKey(key), Is.True);
+                    Assert.That(expectedRawData[key].ToMemory().Span.SequenceEqual(actualRawData[key].ToMemory().Span), Is.True);
                 }
             }
             else
             {
-                Assert.AreEqual(0, actualRawData.Count);
+                Assert.That(actualRawData.Count, Is.EqualTo(0));
             }
         }
 

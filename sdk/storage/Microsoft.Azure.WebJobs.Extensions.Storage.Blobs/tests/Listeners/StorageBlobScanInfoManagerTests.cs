@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             var result = await manager.LoadLatestScanAsync(storageAccountName, containerName);
 
-            Assert.Null(result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             var result = await manager.LoadLatestScanAsync(storageAccountName, containerName);
 
-            Assert.Null(result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             var result = await manager.LoadLatestScanAsync(storageAccountName, containerName);
 
-            Assert.AreEqual(now, result);
+            Assert.That(result, Is.EqualTo(now));
         }
 
         [Test]
@@ -92,8 +92,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             var scanInfoJson = JObject.Parse(scanInfo);
             var storedTime = (DateTime)(scanInfoJson["LatestScan"]);
 
-            Assert.AreEqual(now, storedTime);
-            Assert.AreEqual(now, await manager.LoadLatestScanAsync(storageAccountName, containerName));
+            Assert.That(storedTime, Is.EqualTo(now));
+            Assert.That(await manager.LoadLatestScanAsync(storageAccountName, containerName), Is.EqualTo(now));
         }
 
         [Test]
@@ -120,8 +120,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             var scanInfoJson = JObject.Parse(scanInfo);
             var storedTime = (DateTime)scanInfoJson["LatestScan"];
 
-            Assert.AreEqual(now, storedTime);
-            Assert.AreEqual(now, await manager.LoadLatestScanAsync(storageAccountName, containerName));
+            Assert.That(storedTime, Is.EqualTo(now));
+            Assert.That(await manager.LoadLatestScanAsync(storageAccountName, containerName), Is.EqualTo(now));
         }
 
         private BlockBlobClient GetBlockBlobReference(BlobServiceClient blobClient, string hostId, string storageAccountName, string containerName)

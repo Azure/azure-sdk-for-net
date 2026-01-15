@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             bool verified = publicKey.VerifyHash(hash, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
             Debug.WriteLine($"Signature verified: {verified}");
 
-            Assert.IsTrue(verified);
+            Assert.That(verified, Is.True);
 
             DeleteCertificateOperation deleteOperation = await client.StartDeleteCertificateAsync(certificateName);
             await deleteOperation.WaitForCompletionAsync();

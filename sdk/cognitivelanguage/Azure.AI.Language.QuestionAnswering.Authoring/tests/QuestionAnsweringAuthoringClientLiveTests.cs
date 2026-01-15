@@ -27,8 +27,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
             AsyncPageable<QuestionAnsweringProject> projects = Client.GetProjectsAsync();
             Response<QuestionAnsweringProject> projectDetailsResponse = await Client.GetProjectDetailsAsync(testProjectName);
 
-            Assert.AreEqual(201, createProjectResponse.Status);
-            Assert.AreEqual(200, projectDetailsResponse.GetRawResponse().Status);
+            Assert.That(createProjectResponse.Status, Is.EqualTo(201));
+            Assert.That(projectDetailsResponse.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That((await projects.ToEnumerableAsync()).Any(project => project.ProjectName.Contains(testProjectName)));
             Assert.That(projectDetailsResponse.GetRawResponse().Content.ToString().Contains(testProjectName));
         }
@@ -63,7 +63,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
             Operation deploymentOperation = await Client.DeployProjectAsync(WaitUntil.Completed, testProjectName, testDeploymentName);
             BinaryData deployment = deploymentOperation.GetRawResponse().Content;
 
-            Assert.True(deploymentOperation.HasCompleted);
+            Assert.That(deploymentOperation.HasCompleted, Is.True);
             Assert.That(deployment.ToString(), Contains.Substring(testDeploymentName));
         }
 
@@ -94,8 +94,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
             Operation updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
             BinaryData sources = updateQnasOperation.GetRawResponse().Content;
 
-            Assert.True(updateQnasOperation.HasCompleted);
-            Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
+            Assert.That(updateQnasOperation.HasCompleted, Is.True);
+            Assert.That(updateQnasOperation.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(sources.ToString().Contains(question));
             Assert.That(sources.ToString().Contains(answer));
         }
@@ -127,8 +127,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
             Operation updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
             BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
-            Assert.True(updateSourcesOperation.HasCompleted);
-            Assert.AreEqual(200, updateSourcesOperation.GetRawResponse().Status);
+            Assert.That(updateSourcesOperation.HasCompleted, Is.True);
+            Assert.That(updateSourcesOperation.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(sources.ToString().Contains(sourceUri));
         }
 
@@ -144,9 +144,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
             JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.GetRawResponse().Content);
             string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
 
-            Assert.True(exportOperation.HasCompleted);
-            Assert.AreEqual(200, exportOperation.GetRawResponse().Status);
-            Assert.True(!String.IsNullOrEmpty(exportedFileUrl));
+            Assert.That(exportOperation.HasCompleted, Is.True);
+            Assert.That(exportOperation.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(!String.IsNullOrEmpty(exportedFileUrl), Is.True);
         }
 
         [RecordedTest]
@@ -177,9 +177,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
 
             Response<QuestionAnsweringProject> projectDetails = await Client.GetProjectDetailsAsync(testProjectName);
 
-            Assert.True(importOperation.HasCompleted);
-            Assert.AreEqual(200, importOperation.GetRawResponse().Status);
-            Assert.AreEqual(200, projectDetails.GetRawResponse().Status);
+            Assert.That(importOperation.HasCompleted, Is.True);
+            Assert.That(importOperation.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(projectDetails.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(projectDetails.GetRawResponse().Content.ToString().Contains(testProjectName));
         }
 
@@ -205,7 +205,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
 
             Response addFeedbackResponse = await Client.AddFeedbackAsync(testProjectName, addFeedbackRequestContent);
 
-            Assert.AreEqual(204, addFeedbackResponse.Status);
+            Assert.That(addFeedbackResponse.Status, Is.EqualTo(204));
         }
     }
 }

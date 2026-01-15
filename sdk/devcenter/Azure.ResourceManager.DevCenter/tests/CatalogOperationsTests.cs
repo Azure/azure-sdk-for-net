@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             // List
             List<DevCenterCatalogResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
+            Assert.That(resources.Any(r => r.Id == createdResource.Id), Is.True);
 
             // Get
             Response<DevCenterCatalogResource> retrievedResource = await resourceCollection.GetAsync(resourceName);

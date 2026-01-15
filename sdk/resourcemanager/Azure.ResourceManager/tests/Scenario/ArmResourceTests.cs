@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Tests
             TestObject obj2 = subscription.GetCachedClient(factory);
             Assert.IsNotNull(obj2);
             Assert.IsNotNull(obj2.Client);
-            Assert.IsTrue(ReferenceEquals(obj1, obj2));
-            Assert.IsTrue(ReferenceEquals(obj1.Client, obj2.Client));
+            Assert.That(ReferenceEquals(obj1, obj2), Is.True);
+            Assert.That(ReferenceEquals(obj1.Client, obj2.Client), Is.True);
         }
 
         private class TestObjectWithClosure
@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.Tests
             var extensionClient1 = new ArmClientExtensionClient(Client, scope1);
             var obj1 = extensionClient1.GetTestObject();
             var obj2 = extensionClient1.GetTestObject();
-            Assert.IsTrue(ReferenceEquals(obj1, obj2));
-            Assert.IsTrue(ReferenceEquals(obj1.Client, obj2.Client));
+            Assert.That(ReferenceEquals(obj1, obj2), Is.True);
+            Assert.That(ReferenceEquals(obj1.Client, obj2.Client), Is.True);
             ResourceIdentifier scope2 = new(subscription.Id + "/resourceGroups/rg2");
             var extensionClient2 = new ArmClientExtensionClient(Client, scope2);
             var obj3 = extensionClient2.GetTestObject();
-            Assert.IsFalse(ReferenceEquals(obj1, obj3));
-            Assert.IsTrue(ReferenceEquals(obj1.Client, obj3.Client));
+            Assert.That(ReferenceEquals(obj1, obj3), Is.False);
+            Assert.That(ReferenceEquals(obj1.Client, obj3.Client), Is.True);
         }
     }
 }

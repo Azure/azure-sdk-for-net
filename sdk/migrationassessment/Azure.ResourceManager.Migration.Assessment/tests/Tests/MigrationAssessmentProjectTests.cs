@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
                 await assessmentProjectCollection.CreateOrUpdateAsync(WaitUntil.Completed, assessmentProjName, assessmentProjectData);
             await response.WaitForCompletionAsync();
             assessmentProjectResource = response.Value;
-            Assert.IsTrue(response.HasCompleted);
+            Assert.That(response.HasCompleted, Is.True);
             Assert.IsNotNull(assessmentProjectResource);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
 
             // Get Assessment Project
             assessmentProjectResource = await assessmentProjectCollection.GetAsync(assessmentProjName);
-            Assert.AreEqual(MigrationAssessmentProvisioningState.Succeeded, assessmentProjectResource.Data.ProvisioningState);
+            Assert.That(assessmentProjectResource.Data.ProvisioningState, Is.EqualTo(MigrationAssessmentProvisioningState.Succeeded));
             Assert.IsNotNull(assessmentProjectResource.Id);
 
             // Update Assessment Project
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             var response = await assessmentProjectResource.UpdateAsync(WaitUntil.Completed, assessmentProjectPatch);
             assessmentProjectResource = response.Value;
             string assessmentProjectTagValue = string.Empty;
-            Assert.IsTrue(assessmentProjectResource.Data.Tags.TryGetValue("Key1", out assessmentProjectTagValue));
-            Assert.AreEqual(assessmentProjectTagValue, "TestPatchValue");
+            Assert.That(assessmentProjectResource.Data.Tags.TryGetValue("Key1", out assessmentProjectTagValue), Is.True);
+            Assert.That(assessmentProjectTagValue, Is.EqualTo("TestPatchValue"));
 
             // Delete Assessment Project
             await assessmentProjectResource.DeleteAsync(WaitUntil.Completed);

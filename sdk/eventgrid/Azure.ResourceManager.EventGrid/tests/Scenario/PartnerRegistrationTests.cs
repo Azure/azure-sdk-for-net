@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string partnerRegistrationName = Recording.GenerateAssetName("PartnerRegistration");
             await CreatePartnerRegistration(_resourceGroup, partnerRegistrationName);
             bool flag = await _partnerRegistrationCollection.ExistsAsync(partnerRegistrationName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // Get all registrations created within a resourceGroup
             Assert.NotNull(list);
             Assert.GreaterOrEqual(list.Count, 1);
-            Assert.AreEqual(list.FirstOrDefault().Data.Name, partnerRegistrationName);
+            Assert.That(partnerRegistrationName, Is.EqualTo(list.FirstOrDefault().Data.Name));
             // Get all registrations created within the subscription irrespective of the resourceGroup
             var registrationsInAzureSubscription = await DefaultSubscription.GetPartnerRegistrationsAsync().ToEnumerableAsync();
             Assert.NotNull(registrationsInAzureSubscription);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                     break;
                 }
             }
-            Assert.IsTrue(falseFlag);
+            Assert.That(falseFlag, Is.True);
         }
 
         [Ignore("28/02/2025: This test is failing in the pipeline, because of API Issue, enable it in RECORD mode once the api is fixed")]
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string partnerRegistrationName = Recording.GenerateAssetName("PartnerRegistration");
             var registration = await CreatePartnerRegistration(_resourceGroup, partnerRegistrationName);
             bool flag = await _partnerRegistrationCollection.ExistsAsync(partnerRegistrationName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await registration.DeleteAsync(WaitUntil.Completed);
             flag = await _partnerRegistrationCollection.ExistsAsync(partnerRegistrationName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [Ignore("28/02/2025: This test is failing in the pipeline, because of API Issue, enable it in RECORD mode once the api is fixed")]
@@ -125,25 +125,25 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // AddTag
             await registration.AddTagAsync("addtagkey", "addtagvalue");
             registration = await _partnerRegistrationCollection.GetAsync(partnerRegistrationName);
-            Assert.AreEqual(1, registration.Data.Tags.Count);
+            Assert.That(registration.Data.Tags.Count, Is.EqualTo(1));
             KeyValuePair<string, string> tag = registration.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
 
             // RemoveTag
             await registration.RemoveTagAsync("addtagkey");
             registration = await _partnerRegistrationCollection.GetAsync(partnerRegistrationName);
-            Assert.AreEqual(0, registration.Data.Tags.Count);
+            Assert.That(registration.Data.Tags.Count, Is.EqualTo(0));
         }
 
         private void ValidatePartnerRegistration(PartnerRegistrationResource partnerRegistration, string partnerRegistrationName)
         {
             Assert.IsNotNull(partnerRegistration);
             Assert.IsNotNull(partnerRegistration.Data.Id);
-            Assert.AreEqual(partnerRegistrationName, partnerRegistration.Data.Name);
-            Assert.AreEqual("Microsoft.EventGrid/partnerRegistrations", partnerRegistration.Data.ResourceType.ToString());
-            Assert.AreEqual("Succeeded", partnerRegistration.Data.ProvisioningState.ToString());
-            Assert.AreEqual("Global", partnerRegistration.Data.Location.ToString());
+            Assert.That(partnerRegistration.Data.Name, Is.EqualTo(partnerRegistrationName));
+            Assert.That(partnerRegistration.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EventGrid/partnerRegistrations"));
+            Assert.That(partnerRegistration.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(partnerRegistration.Data.Location.ToString(), Is.EqualTo("Global"));
         }
     }
 }

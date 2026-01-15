@@ -49,8 +49,8 @@ public class TestLogger : ILogger
     public LoggerEvent GetAndValidateSingleEvent(int eventId, string expectedEventName, LogLevel expectedEventLevel)
     {
         LoggerEvent log = SingleEventById(eventId);
-        Assert.AreEqual(expectedEventName, log.EventId.Name);
-        Assert.AreEqual(expectedEventLevel, log.LogLevel);
+        Assert.That(log.EventId.Name, Is.EqualTo(expectedEventName));
+        Assert.That(log.LogLevel, Is.EqualTo(expectedEventLevel));
         string requestId = log.GetValueFromArguments<string>("requestId");
         Assert.That(string.IsNullOrEmpty(requestId), Is.False);
         return log;
@@ -63,7 +63,7 @@ public class TestLogger : ILogger
 
     public void ValidateNumberOfEventsById(int eventId, int expectedNumEvents)
     {
-        Assert.AreEqual(expectedNumEvents, EventsById(eventId).Count());
+        Assert.That(EventsById(eventId).Count(), Is.EqualTo(expectedNumEvents));
     }
 
     public IEnumerable<LoggerEvent> EventsById(int eventId)

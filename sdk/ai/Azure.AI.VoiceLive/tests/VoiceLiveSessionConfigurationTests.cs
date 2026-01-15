@@ -200,7 +200,7 @@ namespace Azure.AI.VoiceLive.Tests
                 MaxResponseOutputTokens = 4
             };
 
-            Assert.AreEqual(4, sessionOpts.MaxResponseOutputTokens.NumericValue);
+            Assert.That(sessionOpts.MaxResponseOutputTokens.NumericValue, Is.EqualTo(4));
 
             var sessionOpts2 = new VoiceLiveSessionOptions
             {
@@ -208,7 +208,7 @@ namespace Azure.AI.VoiceLive.Tests
                 MaxResponseOutputTokens = MaxResponseOutputTokensOption.CreateInfiniteMaxTokensOption()
             };
 
-            Assert.IsNull(sessionOpts2.MaxResponseOutputTokens.NumericValue);
+            Assert.That(sessionOpts2.MaxResponseOutputTokens.NumericValue, Is.Null);
         }
 
         [Test]
@@ -220,7 +220,7 @@ namespace Azure.AI.VoiceLive.Tests
                 ToolChoice = "my_tool"
             };
 
-            Assert.AreEqual("my_tool", sessionOpts.ToolChoice.FunctionName);
+            Assert.That(sessionOpts.ToolChoice.FunctionName, Is.EqualTo("my_tool"));
 
             var sessionOpts2 = new VoiceLiveSessionOptions
             {
@@ -228,7 +228,7 @@ namespace Azure.AI.VoiceLive.Tests
                 ToolChoice = ToolChoiceLiteral.None
             };
 
-            Assert.IsNull(sessionOpts2.ToolChoice.FunctionName);
+            Assert.That(sessionOpts2.ToolChoice.FunctionName, Is.Null);
         }
     }
 }

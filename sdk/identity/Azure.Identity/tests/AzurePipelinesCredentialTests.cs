@@ -78,7 +78,7 @@ namespace Azure.Identity.Tests
             }))
             {
                 var options = new AzurePipelinesCredentialOptions();
-                Assert.AreEqual("mockCollectionUri", options.OidcRequestUri);
+                Assert.That(options.OidcRequestUri, Is.EqualTo("mockCollectionUri"));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.Identity.Tests
 
                 AccessToken token = await chainedCred.GetTokenAsync(new TokenRequestContext(new[] { "scope" }), CancellationToken.None);
 
-                Assert.AreEqual("mockToken", token.Token);
+                Assert.That(token.Token, Is.EqualTo("mockToken"));
             }
         }
 

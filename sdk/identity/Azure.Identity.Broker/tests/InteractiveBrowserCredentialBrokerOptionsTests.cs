@@ -30,8 +30,8 @@ namespace Azure.Identity.Broker.Tests
             credentialOptions.BeforeBuildClient(builder);
 
             (BrokerOptions Options, Func<object> Parent) = GetBrokerOptions(builder);
-            Assert.AreEqual(enableMsaPassthrough ?? false, Options?.MsaPassthrough);
-            Assert.AreEqual(parentWindowHandle, Parent());
+            Assert.That(Options?.MsaPassthrough, Is.EqualTo(enableMsaPassthrough ?? false));
+            Assert.That(Parent(), Is.EqualTo(parentWindowHandle));
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Azure.Identity.Broker.Tests
                 .Create(Guid.NewGuid().ToString());
 
             var credential = new InteractiveBrowserCredential((InteractiveBrowserCredentialBrokerOptions)credentialOptions);
-            Assert.AreEqual(enableUseOperatingSystemAccount, credential.UseOperatingSystemAccount);
+            Assert.That(credential.UseOperatingSystemAccount, Is.EqualTo(enableUseOperatingSystemAccount));
         }
 
         private static (BrokerOptions Options, Func<object> Parent) GetBrokerOptions(PublicClientApplicationBuilder builder)

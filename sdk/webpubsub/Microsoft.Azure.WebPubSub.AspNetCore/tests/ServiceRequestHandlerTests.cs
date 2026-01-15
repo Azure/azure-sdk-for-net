@@ -45,8 +45,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             await _adaptor.HandleRequest(context);
 
             context.Response.Headers.TryGetValue(Constants.Headers.WebHookAllowedOrigin, out var allowedOrigin);
-            Assert.AreEqual(StatusCodes.Status200OK, context.Response.StatusCode);
-            Assert.AreEqual("*", allowedOrigin.SingleOrDefault());
+            Assert.That(context.Response.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
+            Assert.That(allowedOrigin.SingleOrDefault(), Is.EqualTo("*"));
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             await _adaptor.HandleRequest(context);
 
-            Assert.AreEqual(StatusCodes.Status400BadRequest, context.Response.StatusCode);
+            Assert.That(context.Response.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
         }
 
         [Test]
@@ -69,11 +69,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             await _adaptor.HandleRequest(context);
 
-            Assert.AreEqual(StatusCodes.Status200OK, context.Response.StatusCode);
+            Assert.That(context.Response.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
             context.Response.Body.Seek(0, SeekOrigin.Begin);
             var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
             var converted = JsonSerializer.Deserialize<ConnectEventResponse>(response);
-            Assert.AreEqual("testuser", converted.UserId);
+            Assert.That(converted.UserId, Is.EqualTo("testuser"));
         }
 
         [TestCase(MqttProtocolVersion.V311)]
@@ -101,25 +101,25 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             hubMock.Setup(h => h.OnConnectAsync(It.IsAny<ConnectEventRequest>(), It.IsAny<CancellationToken>())).Callback<ConnectEventRequest, CancellationToken>((request, token) =>
             {
                 var mqttRequest = request as MqttConnectEventRequest;
-                Assert.AreEqual("mqtt", mqttRequest.Subprotocols.Single());
+                Assert.That(mqttRequest.Subprotocols.Single(), Is.EqualTo("mqtt"));
                 var clientCert = mqttRequest.ClientCertificates.Single();
-                Assert.AreEqual("thumbprint", clientCert.Thumbprint);
-                Assert.AreEqual("certificate content", clientCert.Content);
-                Assert.AreEqual("username", mqttRequest.Mqtt.Username);
-                Assert.AreEqual("password", mqttRequest.Mqtt.Password);
+                Assert.That(clientCert.Thumbprint, Is.EqualTo("thumbprint"));
+                Assert.That(clientCert.Content, Is.EqualTo("certificate content"));
+                Assert.That(mqttRequest.Mqtt.Username, Is.EqualTo("username"));
+                Assert.That(mqttRequest.Mqtt.Password, Is.EqualTo("password"));
                 var userProperty = mqttRequest.Mqtt.UserProperties.Single();
-                Assert.AreEqual("a", userProperty.Name);
-                Assert.AreEqual("b", userProperty.Value);
-                Assert.AreEqual(protocolVersion, mqttRequest.Mqtt.ProtocolVersion);
+                Assert.That(userProperty.Name, Is.EqualTo("a"));
+                Assert.That(userProperty.Value, Is.EqualTo("b"));
+                Assert.That(mqttRequest.Mqtt.ProtocolVersion, Is.EqualTo(protocolVersion));
             }).Returns(ValueTask.FromResult(mqttConnectEventResponse as ConnectEventResponse));
             _adaptor.RegisterHub(hubName, hubMock.Object);
             await _adaptor.HandleRequest(context);
-            Assert.AreEqual(StatusCodes.Status200OK, context.Response.StatusCode);
+            Assert.That(context.Response.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
             context.Response.Body.Seek(0, SeekOrigin.Begin);
             var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
             var expectedBody = "{\"mqtt\":{\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]},\"userId\":\"userId\",\"groups\":[\"group1\",\"group2\"],\"subprotocol\":\"mqtt\",\"roles\":[\"webpubsub.joinLeaveGroup\"]}";
             Console.WriteLine(response);
-            Assert.AreEqual(expectedBody, response);
+            Assert.That(response, Is.EqualTo(expectedBody));
             hubMock.Verify(h => h.OnConnectAsync(It.IsAny<MqttConnectEventRequest>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
@@ -141,18 +141,18 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var hubMock = new Mock<WebPubSubHub>();
             hubMock.Setup(h => h.OnConnectAsync(It.IsAny<MqttConnectEventRequest>(), It.IsAny<CancellationToken>())).Callback<ConnectEventRequest, CancellationToken>((r, token) =>
             {
-                Assert.AreEqual("mqtt", r.Subprotocols.Single());
+                Assert.That(r.Subprotocols.Single(), Is.EqualTo("mqtt"));
                 var clientCert = r.ClientCertificates.Single();
-                Assert.AreEqual("thumbprint", clientCert.Thumbprint);
-                Assert.AreEqual("certificate content", clientCert.Content);
+                Assert.That(clientCert.Thumbprint, Is.EqualTo("thumbprint"));
+                Assert.That(clientCert.Content, Is.EqualTo("certificate content"));
             }).Returns(ValueTask.FromResult(mqttConnectEventResponse));
             _adaptor.RegisterHub(hubName, hubMock.Object);
             await _adaptor.HandleRequest(context);
-            Assert.AreEqual(StatusCodes.Status200OK, context.Response.StatusCode);
+            Assert.That(context.Response.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
             context.Response.Body.Seek(0, SeekOrigin.Begin);
             var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
             var expectedBody = "{\"userId\":\"userId\",\"groups\":[\"group1\",\"group2\"],\"subprotocol\":\"mqtt\",\"roles\":[\"webpubsub.joinLeaveGroup\"]}";
-            Assert.AreEqual(expectedBody, response);
+            Assert.That(response, Is.EqualTo(expectedBody));
             hubMock.Verify(h => h.OnConnectAsync(It.IsAny<MqttConnectEventRequest>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
@@ -196,11 +196,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             await _adaptor.HandleRequest(context);
 
-            Assert.AreEqual(StatusCodes.Status200OK, context.Response.StatusCode);
+            Assert.That(context.Response.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
             context.Response.Body.Seek(0, SeekOrigin.Begin);
             var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
             // validate message response matched it's defined in TestHub.Message()
-            Assert.AreEqual("ACK", response);
+            Assert.That(response, Is.EqualTo("ACK"));
         }
 
         [Test]
@@ -219,8 +219,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             context.Response.Headers.TryGetValue(Constants.Headers.CloudEvents.State, out var states);
             Assert.NotNull(states);
             var updated = states[0].DecodeConnectionStates();
-            Assert.AreEqual(1, updated.Count);
-            Assert.AreEqual(10, updated["counter"].ToObjectFromJson<int>());
+            Assert.That(updated.Count, Is.EqualTo(1));
+            Assert.That(updated["counter"].ToObjectFromJson<int>(), Is.EqualTo(10));
 
             // 2 to add a new state.
             context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "2", connectionState: initState);
@@ -230,15 +230,15 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             context.Response.Headers.TryGetValue(Constants.Headers.CloudEvents.State, out states);
             Assert.NotNull(states);
             updated = states[0].DecodeConnectionStates();
-            Assert.AreEqual(2, updated.Count);
-            Assert.AreEqual("new", updated["new"].ToObjectFromJson<string>());
+            Assert.That(updated.Count, Is.EqualTo(2));
+            Assert.That(updated["new"].ToObjectFromJson<string>(), Is.EqualTo("new"));
 
             // 3 to clear states
             context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "3", connectionState: initState);
             await _adaptor.HandleRequest(context);
 
             var exist = context.Response.Headers.TryGetValue(Constants.Headers.CloudEvents.State, out _);
-            Assert.False(exist);
+            Assert.That(exist, Is.False);
 
             // 4 clar and add
             context = PrepareHttpContext(httpMethod: HttpMethods.Post, type: WebPubSubEventType.User, eventName: "message", body: "4", connectionState: initState);
@@ -247,8 +247,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             context.Response.Headers.TryGetValue(Constants.Headers.CloudEvents.State, out states);
             Assert.NotNull(states);
             updated = states[0].DecodeConnectionStates();
-            Assert.AreEqual(2, updated.Count);
-            Assert.AreEqual("new1", updated["new1"].ToObjectFromJson<string>());
+            Assert.That(updated.Count, Is.EqualTo(2));
+            Assert.That(updated["new1"].ToObjectFromJson<string>(), Is.EqualTo("new1"));
         }
 
         [Test]
@@ -260,8 +260,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             await _adaptor.HandleRequest(context);
 
-            Assert.AreEqual(StatusCodes.Status200OK, context.Response.StatusCode);
-            Assert.Null(context.Response.ContentLength);
+            Assert.That(context.Response.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
+            Assert.That(context.Response.ContentLength, Is.Null);
         }
 
         [Test]
@@ -272,11 +272,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             await _adaptor.HandleRequest(context);
 
-            Assert.AreEqual(StatusCodes.Status500InternalServerError, context.Response.StatusCode);
+            Assert.That(context.Response.StatusCode, Is.EqualTo(StatusCodes.Status500InternalServerError));
             context.Response.Body.Seek(0, SeekOrigin.Begin);
             var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
             // validate response matches exception
-            Assert.AreEqual("Test Exception", response);
+            Assert.That(response, Is.EqualTo("Test Exception"));
         }
 
         [Test]
@@ -287,11 +287,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             await _adaptor.HandleRequest(context);
 
-            Assert.AreEqual(StatusCodes.Status500InternalServerError, context.Response.StatusCode);
+            Assert.That(context.Response.StatusCode, Is.EqualTo(StatusCodes.Status500InternalServerError));
             context.Response.Body.Seek(0, SeekOrigin.Begin);
             var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
             // validate response matches exception
-            Assert.AreEqual("Test Exception", response);
+            Assert.That(response, Is.EqualTo("Test Exception"));
         }
 
         [Test]
@@ -303,11 +303,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             await _adaptor.HandleRequest(context);
 
-            Assert.AreEqual(StatusCodes.Status401Unauthorized, context.Response.StatusCode);
+            Assert.That(context.Response.StatusCode, Is.EqualTo(StatusCodes.Status401Unauthorized));
             context.Response.Body.Seek(0, SeekOrigin.Begin);
             var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
             // validate response matches exception
-            Assert.AreEqual("Invalid user", response);
+            Assert.That(response, Is.EqualTo("Invalid user"));
         }
 
         [Test]
@@ -320,8 +320,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             await _adaptor.HandleRequest(context);
 
-            Assert.AreEqual(StatusCodes.Status200OK, context.Response.StatusCode);
-            Assert.Null(context.Response.ContentLength);
+            Assert.That(context.Response.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
+            Assert.That(context.Response.ContentLength, Is.Null);
         }
 
         private static HttpContext PrepareHttpContext(
@@ -413,7 +413,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
             {
                 Assert.NotNull(request);
-                Assert.AreEqual("my-host.webpubsub.net", request.ConnectionContext.Origin);
+                Assert.That(request.ConnectionContext.Origin, Is.EqualTo("my-host.webpubsub.net"));
 
                 return new ValueTask<ConnectEventResponse>(new ConnectEventResponse
                 {
@@ -424,7 +424,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             public override ValueTask<UserEventResponse> OnMessageReceivedAsync(UserEventRequest request, CancellationToken cancellationToken)
             {
                 Assert.NotNull(request);
-                Assert.AreEqual("my-host.webpubsub.net", request.ConnectionContext.Origin);
+                Assert.That(request.ConnectionContext.Origin, Is.EqualTo("my-host.webpubsub.net"));
                 var response = new UserEventResponse("ACK");
                 // simple tests.
                 switch (request.Data.ToString())
@@ -452,14 +452,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             public override Task OnConnectedAsync(ConnectedEventRequest request)
             {
                 Assert.NotNull(request);
-                Assert.AreEqual("my-host.webpubsub.net", request.ConnectionContext.Origin);
+                Assert.That(request.ConnectionContext.Origin, Is.EqualTo("my-host.webpubsub.net"));
                 return Task.CompletedTask;
             }
 
             public override Task OnDisconnectedAsync(DisconnectedEventRequest request)
             {
                 Assert.NotNull(request);
-                Assert.AreEqual("my-host.webpubsub.net", request.ConnectionContext.Origin);
+                Assert.That(request.ConnectionContext.Origin, Is.EqualTo("my-host.webpubsub.net"));
                 return Task.CompletedTask;
             }
         }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             serviceFabricManagedCluster = (await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data)).Value;
 
             ServiceFabricManagedClusterData resourceData = serviceFabricManagedCluster.Data;
-            Assert.AreEqual(clusterName, resourceData.Name);
+            Assert.That(resourceData.Name, Is.EqualTo(clusterName));
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             serviceFabricManagedCluster = (await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data)).Value;
 
             ServiceFabricManagedClusterData resourceData = serviceFabricManagedCluster.Data;
-            Assert.AreEqual(clusterName, resourceData.Name);
+            Assert.That(resourceData.Name, Is.EqualTo(clusterName));
 
             var clustersList = clusterCollection.GetAllAsync();
             var clusterCount = 0;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
                 clusterCount++;
             }
 
-            Assert.AreEqual(clusterCount, 1);
+            Assert.That(clusterCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             {
                 var startFaultSimulationResult = (await serviceFabricManagedCluster.StartFaultSimulationAsync(WaitUntil.Completed, faultSimulationContentWrapper)).Value;
 
-                Assert.AreEqual(startFaultSimulationResult.Status, FaultSimulationStatus.Active);
+                Assert.That(FaultSimulationStatus.Active, Is.EqualTo(startFaultSimulationResult.Status));
 
                 // List Fault Simulation
                 var faultSimulationCount = 0;
@@ -122,23 +122,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
                     mostRecentSimulationId = simulation.SimulationId;
                 }
 
-                Assert.AreEqual(faultSimulationCount, 1);
-                Assert.AreEqual(startFaultSimulationResult.SimulationId, mostRecentSimulationId);
+                Assert.That(faultSimulationCount, Is.EqualTo(1));
+                Assert.That(mostRecentSimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
 
                 // Get Fault Simulation
                 FaultSimulationIdContent faultSimulationIdContent = new FaultSimulationIdContent(startFaultSimulationResult.SimulationId);
                 var getFaultSimulationResult = (await serviceFabricManagedCluster.GetFaultSimulationAsync(faultSimulationIdContent)).Value;
 
-                Assert.AreEqual(startFaultSimulationResult.SimulationId, getFaultSimulationResult.SimulationId);
-                Assert.AreEqual(startFaultSimulationResult.Details.ClusterId, getFaultSimulationResult.Details.ClusterId);
-                Assert.AreEqual(startFaultSimulationResult.StartOn, getFaultSimulationResult.StartOn);
-                Assert.AreEqual(startFaultSimulationResult.EndOn, getFaultSimulationResult.EndOn);
+                Assert.That(getFaultSimulationResult.SimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
+                Assert.That(getFaultSimulationResult.Details.ClusterId, Is.EqualTo(startFaultSimulationResult.Details.ClusterId));
+                Assert.That(getFaultSimulationResult.StartOn, Is.EqualTo(startFaultSimulationResult.StartOn));
+                Assert.That(getFaultSimulationResult.EndOn, Is.EqualTo(startFaultSimulationResult.EndOn));
 
                 // Stop Fault Simulation
                 var stopFaultSimulationResult = (await serviceFabricManagedCluster.StopFaultSimulationAsync(WaitUntil.Completed, faultSimulationIdContent)).Value;
 
-                Assert.AreEqual(startFaultSimulationResult.SimulationId, stopFaultSimulationResult.SimulationId);
-                Assert.AreEqual(stopFaultSimulationResult.Status, FaultSimulationStatus.Done);
+                Assert.That(stopFaultSimulationResult.SimulationId, Is.EqualTo(startFaultSimulationResult.SimulationId));
+                Assert.That(FaultSimulationStatus.Done, Is.EqualTo(stopFaultSimulationResult.Status));
             }
             catch (Exception ex)
             {

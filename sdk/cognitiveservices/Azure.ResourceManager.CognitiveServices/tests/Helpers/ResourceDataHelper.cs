@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.Helpers
 
         public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
-            Assert.AreEqual(r1.Location, r2.Location);
-            Assert.AreEqual(r1.Tags, r2.Tags);
+            Assert.That(r2.Name, Is.EqualTo(r1.Name));
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.That(r2.Location, Is.EqualTo(r1.Location));
+            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
         }
 
         #region Account
         public static void AssertAccount(CognitiveServicesAccountData account1, CognitiveServicesAccountData account2)
         {
             AssertTrackedResource(account1, account2);
-            Assert.AreEqual(account1.ETag, account2.ETag);
+            Assert.That(account2.ETag, Is.EqualTo(account1.ETag));
         }
 
         public static CognitiveServicesAccountData GetBasicAccountData(AzureLocation location)
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.Helpers
         public static void AssertCommitmentPlan(CommitmentPlanData plan1, CommitmentPlanData plan2)
         {
             //AssertTrackedResource(plan1, plan2);
-            Assert.AreEqual(plan1.Name, plan2.Name);
-            Assert.AreEqual(plan1.Id, plan2.Id);
-            Assert.AreEqual(plan1.ResourceType, plan2.ResourceType);
-            Assert.AreEqual(plan1.ETag, plan2.ETag);
+            Assert.That(plan2.Name, Is.EqualTo(plan1.Name));
+            Assert.That(plan2.Id, Is.EqualTo(plan1.Id));
+            Assert.That(plan2.ResourceType, Is.EqualTo(plan1.ResourceType));
+            Assert.That(plan2.ETag, Is.EqualTo(plan1.ETag));
         }
 
         public static CommitmentPlanData GetBasicCommitmentPlanData()
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.Helpers
         #region Deployment
         public static void AssertDeployment(CognitiveServicesAccountDeploymentData d1, CognitiveServicesAccountDeploymentData d2)
         {
-            Assert.AreEqual(d1.Name, d2.Name);
-            Assert.AreEqual(d1.Id, d2.Id);
-            Assert.AreEqual(d1.ResourceType, d2.ResourceType);
-            Assert.AreEqual(d1.ETag, d2.ETag);
+            Assert.That(d2.Name, Is.EqualTo(d1.Name));
+            Assert.That(d2.Id, Is.EqualTo(d1.Id));
+            Assert.That(d2.ResourceType, Is.EqualTo(d1.ResourceType));
+            Assert.That(d2.ETag, Is.EqualTo(d1.ETag));
         }
 
         public static CognitiveServicesAccountDeploymentData GetBasicDeploymentData()
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.Helpers
         #region CognitiveServicesPrivateEndpointConnection
         public static void AssertConnection(CognitiveServicesPrivateEndpointConnectionData c1, CognitiveServicesPrivateEndpointConnectionData c2)
         {
-            Assert.AreEqual(c1.Name, c2.Name);
-            Assert.AreEqual(c1.Id, c2.Id);
-            Assert.AreEqual(c1.ResourceType, c2.ResourceType);
-            Assert.AreEqual(c1.ETag, c2.ETag);
+            Assert.That(c2.Name, Is.EqualTo(c1.Name));
+            Assert.That(c2.Id, Is.EqualTo(c1.Id));
+            Assert.That(c2.ResourceType, Is.EqualTo(c1.ResourceType));
+            Assert.That(c2.ETag, Is.EqualTo(c1.ETag));
         }
         public static CognitiveServicesPrivateEndpointConnectionData GetBasicCognitiveServicesPrivateEndpointConnectionData()
         {

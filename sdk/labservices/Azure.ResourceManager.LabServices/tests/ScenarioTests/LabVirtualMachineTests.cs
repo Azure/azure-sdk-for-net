@@ -32,39 +32,39 @@ namespace Azure.ResourceManager.LabServices.Tests
             // GetAll test
             var vmCollection = lab.GetLabVirtualMachines();
             var list = await vmCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(3, list.Count);
+            Assert.That(list.Count, Is.EqualTo(3));
             var vmName = list[0].Data.Name;
 
             // Exists test
             bool boolResult = await vmCollection.ExistsAsync(vmName);
-            Assert.IsTrue(boolResult);
+            Assert.That(boolResult, Is.True);
             boolResult = await vmCollection.ExistsAsync("foo");
-            Assert.IsFalse(boolResult);
+            Assert.That(boolResult, Is.False);
 
             // Get test - 1
             var vm = (await vmCollection.GetAsync(vmName)).Value;
-            Assert.AreEqual(vm.Data.Name, vmName);
+            Assert.That(vmName, Is.EqualTo(vm.Data.Name));
 
             // Start test
             // Start before redeploy
             await vm.StartAsync(WaitUntil.Completed);
             vm = (await vmCollection.GetAsync(vmName)).Value;
-            Assert.AreEqual(vm.Data.State, LabVirtualMachineState.Running);
+            Assert.That(vm.Data.State, Is.EqualTo(LabVirtualMachineState.Running));
 
             // Redeploy test
             await vm.RedeployAsync(WaitUntil.Completed);
             vm = (await vmCollection.GetAsync(vmName)).Value;
-            Assert.AreEqual(vm.Data.State, LabVirtualMachineState.Running);
+            Assert.That(vm.Data.State, Is.EqualTo(LabVirtualMachineState.Running));
 
             // Reimage test
             await vm.ReimageAsync(WaitUntil.Completed);
             vm = (await vmCollection.GetAsync(vmName)).Value;
-            Assert.AreEqual(vm.Data.State, LabVirtualMachineState.Running);
+            Assert.That(vm.Data.State, Is.EqualTo(LabVirtualMachineState.Running));
 
             // Get test - 2
             vm = await vm.GetAsync();
-            Assert.AreEqual(vm.Data.Name, vmName);
-            Assert.AreEqual(vm.Data.State, LabVirtualMachineState.Running);
+            Assert.That(vmName, Is.EqualTo(vm.Data.Name));
+            Assert.That(vm.Data.State, Is.EqualTo(LabVirtualMachineState.Running));
 
             // Reset password test
             // Set the password if not in playback mode
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.LabServices.Tests
             // Stop test
             await vm.StopAsync(WaitUntil.Completed);
             vm = (await vmCollection.GetAsync(vmName)).Value;
-            Assert.AreEqual(vm.Data.State, LabVirtualMachineState.Stopped);
+            Assert.That(vm.Data.State, Is.EqualTo(LabVirtualMachineState.Stopped));
         }
 
         public LabData GetLabData()

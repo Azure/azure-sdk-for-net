@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
         {
             string monitorName = Recording.GenerateAssetName("testNR-");
             NewRelicMonitorResource monitorResource = await CreateMonitorResourceAsync(monitorName);
-            Assert.AreEqual(monitorName, monitorResource.Data.Name);
+            Assert.That(monitorResource.Data.Name, Is.EqualTo(monitorName));
         }
 
         [TestCase]
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
         {
             string monitorName = Recording.GenerateAssetName("testNR-LOP-");
             NewRelicMonitorResource monitorResource = await CreateMonitorResourceLinkWithOrgWithPlanAsync(monitorName);
-            Assert.AreEqual(monitorName, monitorResource.Data.Name);
+            Assert.That(monitorResource.Data.Name, Is.EqualTo(monitorName));
         }
 
         [TestCase]
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
 
             NewRelicMonitorResource monitorResource2 = await collection.GetAsync(monitorName);
 
-            Assert.AreEqual(monitorResource1.Data.Name, monitorResource2.Data.Name);
-            Assert.AreEqual(monitorResource1.Data.Id, monitorResource2.Data.Id);
-            Assert.AreEqual(monitorResource1.Data.ResourceType, monitorResource2.Data.ResourceType);
-            Assert.AreEqual(monitorResource1.Data.Location, monitorResource2.Data.Location);
-            Assert.AreEqual(monitorResource1.Data.Tags, monitorResource2.Data.Tags);
+            Assert.That(monitorResource2.Data.Name, Is.EqualTo(monitorResource1.Data.Name));
+            Assert.That(monitorResource2.Data.Id, Is.EqualTo(monitorResource1.Data.Id));
+            Assert.That(monitorResource2.Data.ResourceType, Is.EqualTo(monitorResource1.Data.ResourceType));
+            Assert.That(monitorResource2.Data.Location, Is.EqualTo(monitorResource1.Data.Location));
+            Assert.That(monitorResource2.Data.Tags, Is.EqualTo(monitorResource1.Data.Tags));
         }
 
         [TestCase]
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
             var input = GetMonitorInput();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, monitorName, input);
 
-            Assert.IsTrue(await collection.ExistsAsync(monitorName));
-            Assert.IsFalse(await collection.ExistsAsync(monitorName + "1"));
+            Assert.That((bool)await collection.ExistsAsync(monitorName), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(monitorName + "1"), Is.False);
         }
 
         [TestCase]

@@ -78,23 +78,23 @@ namespace Azure.ResourceManager.Tests
 
         protected static void AssertAreEqual(GenericResource aset, GenericResource aset2)
         {
-            Assert.AreEqual(aset.Data.Id, aset2.Data.Id);
-            Assert.AreEqual(aset.Data.Identity, aset2.Data.Identity);
-            Assert.AreEqual(aset.Data.Kind, aset2.Data.Kind);
-            Assert.AreEqual(aset.Data.Location, aset2.Data.Location);
-            Assert.AreEqual(aset.Data.ManagedBy, aset2.Data.ManagedBy);
-            Assert.AreEqual(aset.Data.Name, aset2.Data.Name);
-            Assert.AreEqual(aset.Data.Plan, aset2.Data.Plan);
+            Assert.That(aset2.Data.Id, Is.EqualTo(aset.Data.Id));
+            Assert.That(aset2.Data.Identity, Is.EqualTo(aset.Data.Identity));
+            Assert.That(aset2.Data.Kind, Is.EqualTo(aset.Data.Kind));
+            Assert.That(aset2.Data.Location, Is.EqualTo(aset.Data.Location));
+            Assert.That(aset2.Data.ManagedBy, Is.EqualTo(aset.Data.ManagedBy));
+            Assert.That(aset2.Data.Name, Is.EqualTo(aset.Data.Name));
+            Assert.That(aset2.Data.Plan, Is.EqualTo(aset.Data.Plan));
             if (aset.Data.Sku != null && aset2.Data.Sku != null)
             {
                 Assert.NotNull(aset.Data.Sku);
                 Assert.NotNull(aset2.Data.Sku);
-                Assert.AreEqual(aset.Data.Sku.Name, aset2.Data.Sku.Name);
-                Assert.AreEqual(aset.Data.Sku.Tier, aset2.Data.Sku.Tier);
-                Assert.AreEqual(aset.Data.Sku.Size, aset2.Data.Sku.Size);
-                Assert.AreEqual(aset.Data.Sku.Family, aset2.Data.Sku.Family);
-                Assert.AreEqual(aset.Data.Sku.Model, aset2.Data.Sku.Model);
-                Assert.AreEqual(aset.Data.Sku.Capacity, aset2.Data.Sku.Capacity);
+                Assert.That(aset2.Data.Sku.Name, Is.EqualTo(aset.Data.Sku.Name));
+                Assert.That(aset2.Data.Sku.Tier, Is.EqualTo(aset.Data.Sku.Tier));
+                Assert.That(aset2.Data.Sku.Size, Is.EqualTo(aset.Data.Sku.Size));
+                Assert.That(aset2.Data.Sku.Family, Is.EqualTo(aset.Data.Sku.Family));
+                Assert.That(aset2.Data.Sku.Model, Is.EqualTo(aset.Data.Sku.Model));
+                Assert.That(aset2.Data.Sku.Capacity, Is.EqualTo(aset.Data.Sku.Capacity));
             }
             //TODO: Add equal for Properties and Tags
         }
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.Tests
         }
         protected void CompareMgmtGroups(ManagementGroupResource expected, ManagementGroupResource actual)
         {
-            Assert.AreEqual(expected.Data.DisplayName, actual.Data.DisplayName);
-            Assert.AreEqual(expected.Data.Id, actual.Data.Id);
-            Assert.AreEqual(expected.Data.Name, actual.Data.Name);
-            Assert.AreEqual(expected.Data.TenantId, actual.Data.TenantId);
-            Assert.AreEqual(expected.Data.ResourceType, actual.Data.ResourceType);
+            Assert.That(actual.Data.DisplayName, Is.EqualTo(expected.Data.DisplayName));
+            Assert.That(actual.Data.Id, Is.EqualTo(expected.Data.Id));
+            Assert.That(actual.Data.Name, Is.EqualTo(expected.Data.Name));
+            Assert.That(actual.Data.TenantId, Is.EqualTo(expected.Data.TenantId));
+            Assert.That(actual.Data.ResourceType, Is.EqualTo(expected.Data.ResourceType));
             Assert.IsNotNull(actual.Data.Details, "Details were null");
             Assert.IsNotNull(actual.Data.Children, "Children were null");
         }

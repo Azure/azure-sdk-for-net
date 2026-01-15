@@ -43,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
             Assert.IsEmpty(provider.ActionsCache);
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
             Assert.IsEmpty(provider.ActionsCache);
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
             Assert.IsEmpty(provider.ActionsCache);
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
             Assert.IsEmpty(provider.ActionsCache);
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
             Assert.IsEmpty(provider.ActionsCache);
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
             Assert.IsEmpty(provider.ActionsCache);
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
                 await host.StopAsync();
             }
             Assert.IsEmpty(provider.ActionsCache);
@@ -198,12 +198,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
             }
 
             var abandonedMessage = (await client.CreateReceiver(FirstQueueScope.QueueName).ReceiveMessagesAsync(1)).Single();
-            Assert.AreEqual("foobar", abandonedMessage.Body.ToString());
-            Assert.AreEqual("value", abandonedMessage.ApplicationProperties["key"]);
+            Assert.That(abandonedMessage.Body.ToString(), Is.EqualTo("foobar"));
+            Assert.That(abandonedMessage.ApplicationProperties["key"], Is.EqualTo("value"));
             Assert.IsEmpty(provider.ActionsCache);
         }
 
@@ -223,12 +223,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
             }
 
             var abandonedMessage = (await client.CreateReceiver(FirstQueueScope.QueueName).ReceiveMessagesAsync(1)).Single();
-            Assert.AreEqual("foobar", abandonedMessage.Body.ToString());
-            Assert.AreEqual("value", abandonedMessage.ApplicationProperties["key"]);
+            Assert.That(abandonedMessage.Body.ToString(), Is.EqualTo("foobar"));
+            Assert.That(abandonedMessage.ApplicationProperties["key"], Is.EqualTo("value"));
             Assert.IsEmpty(provider.ActionsCache);
         }
 
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                Assert.That(result, Is.True);
             }
             Assert.IsEmpty(provider.ActionsCache);
         }
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage message)
             {
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 await SettlementService.Complete(new CompleteRequest() { Locktoken = message.LockToken }, new MockServerCallContext());
                 _waitHandle1.Set();
             }
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage[] messages)
             {
                 var message = messages.Single();
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 await SettlementService.Complete(new CompleteRequest() { Locktoken = message.LockToken }, new MockServerCallContext());
                 _waitHandle1.Set();
             }
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage message, ServiceBusClient client)
             {
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 await SettlementService.Deadletter(
                     new DeadletterRequest()
                     {
@@ -297,10 +297,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var receiver = client.CreateReceiver(FirstQueueScope.QueueName, new ServiceBusReceiverOptions {SubQueue = SubQueue.DeadLetter});
                 var deadletterMessage = await receiver.ReceiveMessageAsync();
-                Assert.AreEqual("foobar", deadletterMessage.Body.ToString());
-                Assert.AreEqual("description", deadletterMessage.DeadLetterErrorDescription);
-                Assert.AreEqual("reason", deadletterMessage.DeadLetterReason);
-                Assert.AreEqual(42, deadletterMessage.ApplicationProperties["key"]);
+                Assert.That(deadletterMessage.Body.ToString(), Is.EqualTo("foobar"));
+                Assert.That(deadletterMessage.DeadLetterErrorDescription, Is.EqualTo("description"));
+                Assert.That(deadletterMessage.DeadLetterReason, Is.EqualTo("reason"));
+                Assert.That(deadletterMessage.ApplicationProperties["key"], Is.EqualTo(42));
                 _waitHandle1.Set();
             }
         }
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage message, ServiceBusClient client)
             {
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 await SettlementService.Deadletter(
                     new DeadletterRequest()
                     {
@@ -323,9 +323,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var receiver = client.CreateReceiver(FirstQueueScope.QueueName, new ServiceBusReceiverOptions {SubQueue = SubQueue.DeadLetter});
                 var deadletterMessage = await receiver.ReceiveMessageAsync();
-                Assert.AreEqual("foobar", deadletterMessage.Body.ToString());
-                Assert.AreEqual("description", deadletterMessage.DeadLetterErrorDescription);
-                Assert.AreEqual("reason", deadletterMessage.DeadLetterReason);
+                Assert.That(deadletterMessage.Body.ToString(), Is.EqualTo("foobar"));
+                Assert.That(deadletterMessage.DeadLetterErrorDescription, Is.EqualTo("description"));
+                Assert.That(deadletterMessage.DeadLetterReason, Is.EqualTo("reason"));
                 _waitHandle1.Set();
             }
         }
@@ -339,7 +339,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 var message = messages.Single();
 
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 var dict = new Dictionary<string, object> { { "key", 42 } };
                 var map = new AmqpMap(dict);
                 var buffer = new ByteBuffer(200, true);
@@ -357,10 +357,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var receiver = client.CreateReceiver(FirstQueueScope.QueueName,
                     new ServiceBusReceiverOptions { SubQueue = SubQueue.DeadLetter });
                 var deadletterMessage = await receiver.ReceiveMessageAsync();
-                Assert.AreEqual("foobar", deadletterMessage.Body.ToString());
-                Assert.AreEqual("description", deadletterMessage.DeadLetterErrorDescription);
-                Assert.AreEqual("reason", deadletterMessage.DeadLetterReason);
-                Assert.AreEqual(42, deadletterMessage.ApplicationProperties["key"]);
+                Assert.That(deadletterMessage.Body.ToString(), Is.EqualTo("foobar"));
+                Assert.That(deadletterMessage.DeadLetterErrorDescription, Is.EqualTo("description"));
+                Assert.That(deadletterMessage.DeadLetterReason, Is.EqualTo("reason"));
+                Assert.That(deadletterMessage.ApplicationProperties["key"], Is.EqualTo(42));
 
                 var exception = Assert.ThrowsAsync<RpcException>(
                     async () =>
@@ -402,7 +402,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 await SettlementService.Defer(
                     new DeferRequest
                     {
@@ -412,8 +412,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new MockServerCallContext());
                 var deferredMessage = (await receiveActions.ReceiveDeferredMessagesAsync(
                     new[] { message.SequenceNumber })).Single();
-                Assert.AreEqual("foobar", deferredMessage.Body.ToString());
-                Assert.IsTrue((bool)deferredMessage.ApplicationProperties["key"]);
+                Assert.That(deferredMessage.Body.ToString(), Is.EqualTo("foobar"));
+                Assert.That((bool)deferredMessage.ApplicationProperties["key"], Is.True);
                 _waitHandle1.Set();
             }
         }
@@ -426,7 +426,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 var message = messages.Single();
 
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 await SettlementService.Defer(
                     new DeferRequest
                     {
@@ -436,8 +436,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new MockServerCallContext());
                 var deferredMessage = (await receiveActions.ReceiveDeferredMessagesAsync(
                     new[] { message.SequenceNumber })).Single();
-                Assert.AreEqual("foobar", deferredMessage.Body.ToString());
-                Assert.IsTrue((bool)deferredMessage.ApplicationProperties["key"]);
+                Assert.That(deferredMessage.Body.ToString(), Is.EqualTo("foobar"));
+                Assert.That((bool)deferredMessage.ApplicationProperties["key"], Is.True);
                 _waitHandle1.Set();
             }
         }
@@ -448,7 +448,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 await SettlementService.Abandon(
                     new AbandonRequest
                     {
@@ -468,7 +468,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 var message = messages.Single();
 
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 await SettlementService.Abandon(
                     new AbandonRequest
                     {
@@ -486,7 +486,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
-                Assert.AreEqual("foobar", message.Body.ToString());
+                Assert.That(message.Body.ToString(), Is.EqualTo("foobar"));
                 var lockedBefore = message.LockedUntil;
                 await SettlementService.RenewMessageLock(
                     new RenewMessageLockRequest { Locktoken = message.LockToken },

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string authorizationRuleName = Recording.GenerateAssetName("ManagesharedAccessKey");
             var authoriaztionRule = await CreateNamespaceAuthorizationRule(authorizationRuleName);
             Assert.IsNotNull(authoriaztionRule);
-            Assert.AreEqual(authorizationRuleName, authoriaztionRule.Data.Name);
+            Assert.That(authoriaztionRule.Data.Name, Is.EqualTo(authorizationRuleName));
         }
 
         [RecordedTest]
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string authorizationRuleName = Recording.GenerateAssetName("ManagesharedAccessKey");
             await CreateNamespaceAuthorizationRule(authorizationRuleName);
             bool flag = await _AuthorizationRuleCollection.ExistsAsync(authorizationRuleName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             await CreateNamespaceAuthorizationRule(authorizationRuleName);
             var authoriaztionRule = await _AuthorizationRuleCollection.GetAsync(authorizationRuleName);
             Assert.IsNotNull(authoriaztionRule);
-            Assert.AreEqual(authorizationRuleName, authoriaztionRule.Value.Data.Name);
+            Assert.That(authoriaztionRule.Value.Data.Name, Is.EqualTo(authorizationRuleName));
         }
 
         [RecordedTest]
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string authorizationRuleName = Recording.GenerateAssetName("ManagesharedAccessKey");
             var authoriaztionRule = await CreateNamespaceAuthorizationRule(authorizationRuleName);
             bool flag = await _AuthorizationRuleCollection.ExistsAsync(authorizationRuleName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await authoriaztionRule.DeleteAsync(WaitUntil.Completed);
             flag = await _AuthorizationRuleCollection.ExistsAsync(authorizationRuleName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [RecordedTest]
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             Assert.IsNotNull(key.Value.PrimaryKey);
             Assert.IsNotNull(key.Value.SecondaryKey);
             Assert.IsNotNull(key.Value.SecondaryConnectionString);
-            Assert.AreEqual(authorizationRuleName, key.Value.KeyName);
+            Assert.That(key.Value.KeyName, Is.EqualTo(authorizationRuleName));
         }
 
         [RecordedTest]
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             Assert.IsNotNull(key.Value.PrimaryKey);
             Assert.IsNotNull(key.Value.SecondaryKey);
             Assert.IsNotNull(key.Value.SecondaryConnectionString);
-            Assert.AreEqual(authorizationRuleName, key.Value.KeyName);
+            Assert.That(key.Value.KeyName, Is.EqualTo(authorizationRuleName));
         }
     }
 }

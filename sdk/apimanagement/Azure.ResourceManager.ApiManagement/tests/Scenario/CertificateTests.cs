@@ -74,21 +74,21 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var createResponse = (await certCollection.CreateOrUpdateAsync(WaitUntil.Completed, certificateId, content)).Value;
             Assert.NotNull(createResponse);
-            Assert.AreEqual(certificateId, createResponse.Data.Name);
+            Assert.That(createResponse.Data.Name, Is.EqualTo(certificateId));
 
             // get the certificate to check is was created
             var getResponse = (await certCollection.GetAsync(certificateId)).Value;
             Assert.NotNull(getResponse);
-            Assert.AreEqual(certificateId, getResponse.Data.Name);
+            Assert.That(getResponse.Data.Name, Is.EqualTo(certificateId));
             if (Mode == RecordedTestMode.Playback)
             {
-                Assert.AreEqual("cn=contoso.com", getResponse.Data.Subject.ToLower());
-                Assert.AreEqual("10ad178a8c73d33cde4e7ad638dc56de2671043d", getResponse.Data.Thumbprint.ToLower());
+                Assert.That(getResponse.Data.Subject.ToLower(), Is.EqualTo("cn=contoso.com"));
+                Assert.That(getResponse.Data.Thumbprint.ToLower(), Is.EqualTo("10ad178a8c73d33cde4e7ad638dc56de2671043d"));
             }
             else
             {
-                Assert.AreEqual(cert.Subject.ToLower(), getResponse.Data.Subject.ToLower());
-                Assert.AreEqual(cert.Thumbprint.ToLower(), getResponse.Data.Thumbprint.ToLower());
+                Assert.That(getResponse.Data.Subject.ToLower(), Is.EqualTo(cert.Subject.ToLower()));
+                Assert.That(getResponse.Data.Thumbprint.ToLower(), Is.EqualTo(cert.Thumbprint.ToLower()));
             }
             //create key vault certificate
             //string kvcertificateId = Recording.GenerateAssetName("kvcertificateId");
@@ -115,12 +115,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // list certificates
             listResponse = await certCollection.GetAllAsync().ToEnumerableAsync();
             Assert.NotNull(listResponse);
-            Assert.AreEqual(1, listResponse.Count);
+            Assert.That(listResponse.Count, Is.EqualTo(1));
 
             // remove the certificate
             await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await certCollection.ExistsAsync(certificateId));
-            Assert.IsFalse(resultFalse);
+            Assert.That((bool)resultFalse, Is.False);
         }
     }
 }

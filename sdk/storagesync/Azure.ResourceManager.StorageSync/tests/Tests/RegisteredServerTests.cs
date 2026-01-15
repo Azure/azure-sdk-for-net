@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
             // Get a list of existing RegisteredServers
             List<StorageSyncRegisteredServerResource> registeredServerResources = await _storageSyncServiceResource.GetStorageSyncRegisteredServers().ToEnumerableAsync();
             Assert.NotNull(registeredServerResources);
-            Assert.AreEqual(registeredServerResources.Count(), 1);
+            Assert.That(registeredServerResources.Count(), Is.EqualTo(1));
             StorageSyncManagementTestUtilities.VerifyRegisteredServerProperties(registeredServerResources.First());
         }
 
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // Delete RegisteredServer before it's created
             var deleteException = Assert.ThrowsAsync<RequestFailedException>(async () => (await _storageSyncServiceResource.GetStorageSyncRegisteredServerAsync(_guid)).Value?.Delete(WaitUntil.Completed));
-            Assert.AreEqual(404, deleteException.Status);
-            Assert.IsFalse((await registeredServersCollection.ExistsAsync(_guid)).Value);
+            Assert.That(deleteException.Status, Is.EqualTo(404));
+            Assert.That((await registeredServersCollection.ExistsAsync(_guid)).Value, Is.False);
 
             // Create RegisteredServer
             StorageSyncRegisteredServerResource registeredServerResource = (await registeredServersCollection.CreateOrUpdateAsync(WaitUntil.Completed, _guid, _registeredServerCreateOrUpdateContent)).Value;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
             await registeredServerResource.DeleteAsync(WaitUntil.Completed);
 
             // Verify RegisteredServer has been deleted.
-            Assert.IsFalse((await registeredServersCollection.ExistsAsync(_guid)).Value);
+            Assert.That((await registeredServersCollection.ExistsAsync(_guid)).Value, Is.False);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.Core.Tests.Diagnostics
                 Page<byte>.FromValues(new byte[] {3, 4}, null, null)
             });
 
-            Assert.AreEqual(new byte[] { 1, 2, 3, 4 }, pageable.ToArray());
+            Assert.That(pageable.ToArray(), Is.EqualTo(new byte[] { 1, 2, 3, 4 }));
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace Azure.Core.Tests.Diagnostics
                 Page<byte>.FromValues(new byte[] {3, 4}, null, null)
             });
 
-            Assert.AreEqual(new byte[] { 1, 2, 3, 4 }, await pageable.ToEnumerableAsync());
+            Assert.That(await pageable.ToEnumerableAsync(), Is.EqualTo(new byte[] { 1, 2, 3, 4 }));
         }
 
         [Test]
@@ -46,14 +46,14 @@ namespace Azure.Core.Tests.Diagnostics
             var pages = pageable.AsPages(continuationToken: null);
             var page = pages.First();
 
-            Assert.AreEqual(new byte[] { 1, 2 }, page.Values);
-            Assert.AreEqual("X", page.ContinuationToken);
+            Assert.That(page.Values, Is.EqualTo(new byte[] { 1, 2 }));
+            Assert.That(page.ContinuationToken, Is.EqualTo("X"));
 
             pages = pageable.AsPages(continuationToken: "X");
             page = pages.First();
 
-            Assert.AreEqual(new byte[] { 3, 4 }, page.Values);
-            Assert.Null(page.ContinuationToken);
+            Assert.That(page.Values, Is.EqualTo(new byte[] { 3, 4 }));
+            Assert.That(page.ContinuationToken, Is.Null);
         }
 
         [Test]
@@ -68,14 +68,14 @@ namespace Azure.Core.Tests.Diagnostics
             var pages = pageable.AsPages(continuationToken: null);
             var page = await pages.FirstAsync();
 
-            Assert.AreEqual(new byte[] { 1, 2 }, page.Values);
-            Assert.AreEqual("X", page.ContinuationToken);
+            Assert.That(page.Values, Is.EqualTo(new byte[] { 1, 2 }));
+            Assert.That(page.ContinuationToken, Is.EqualTo("X"));
 
             pages = pageable.AsPages(continuationToken: "X");
             page = await pages.FirstAsync();
 
-            Assert.AreEqual(new byte[] { 3, 4 }, page.Values);
-            Assert.Null(page.ContinuationToken);
+            Assert.That(page.Values, Is.EqualTo(new byte[] { 3, 4 }));
+            Assert.That(page.ContinuationToken, Is.Null);
         }
     }
 }

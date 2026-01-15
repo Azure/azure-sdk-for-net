@@ -32,96 +32,96 @@ namespace Azure.Messaging.WebPubSub.Client.Tests.Protocols
 
             yield return GetData(new { type="ack", ackId = 123, success=true }, message =>
             {
-                Assert.True(message is AckMessage);
+                Assert.That(message is AckMessage, Is.True);
                 var ackMessage = message as AckMessage;
-                Assert.AreEqual(123u, ackMessage.AckId);
-                Assert.True(ackMessage.Success);
-                Assert.Null(ackMessage.Error);
+                Assert.That(ackMessage.AckId, Is.EqualTo(123u));
+                Assert.That(ackMessage.Success, Is.True);
+                Assert.That(ackMessage.Error, Is.Null);
             });
             yield return GetData(new { type = "ack", ackId = 123, success = false, error = new { name = "Forbidden", message = "message"} }, message =>
             {
-                Assert.True(message is AckMessage);
+                Assert.That(message is AckMessage, Is.True);
                 var ackMessage = message as AckMessage;
-                Assert.AreEqual(123u, ackMessage.AckId);
-                Assert.False(ackMessage.Success);
-                Assert.AreEqual("Forbidden", ackMessage.Error.Name);
-                Assert.AreEqual("message", ackMessage.Error.Message);
+                Assert.That(ackMessage.AckId, Is.EqualTo(123u));
+                Assert.That(ackMessage.Success, Is.False);
+                Assert.That(ackMessage.Error.Name, Is.EqualTo("Forbidden"));
+                Assert.That(ackMessage.Error.Message, Is.EqualTo("message"));
             });
             yield return GetData(new { sequenceId = 738476327894u, type = "message", from = "group", group = "groupname", dataType = "text", data = "xyz", fromUserId = "user" }, message =>
             {
-                Assert.True(message is GroupDataMessage);
+                Assert.That(message is GroupDataMessage, Is.True);
                 var groupDataMessage = message as GroupDataMessage;
-                Assert.AreEqual("groupname", groupDataMessage.Group);
-                Assert.AreEqual(738476327894u, groupDataMessage.SequenceId);
-                Assert.AreEqual(WebPubSubDataType.Text, groupDataMessage.DataType);
-                Assert.AreEqual("user", groupDataMessage.FromUserId);
-                Assert.AreEqual("xyz", groupDataMessage.Data.ToString());
+                Assert.That(groupDataMessage.Group, Is.EqualTo("groupname"));
+                Assert.That(groupDataMessage.SequenceId, Is.EqualTo(738476327894u));
+                Assert.That(groupDataMessage.DataType, Is.EqualTo(WebPubSubDataType.Text));
+                Assert.That(groupDataMessage.FromUserId, Is.EqualTo("user"));
+                Assert.That(groupDataMessage.Data.ToString(), Is.EqualTo("xyz"));
             });
             yield return GetData(new { type = "message", from = "group", group = "groupname", dataType = "json", data = new JsonData { Value = "xyz" } }, message =>
             {
-                Assert.True(message is GroupDataMessage);
+                Assert.That(message is GroupDataMessage, Is.True);
                 var groupDataMessage = message as GroupDataMessage;
-                Assert.AreEqual("groupname", groupDataMessage.Group);
-                Assert.Null(groupDataMessage.SequenceId);
-                Assert.AreEqual(WebPubSubDataType.Json, groupDataMessage.DataType);
+                Assert.That(groupDataMessage.Group, Is.EqualTo("groupname"));
+                Assert.That(groupDataMessage.SequenceId, Is.Null);
+                Assert.That(groupDataMessage.DataType, Is.EqualTo(WebPubSubDataType.Json));
                 var obj = groupDataMessage.Data.ToObjectFromJson<JsonData>();
-                Assert.AreEqual("xyz", obj.Value);
+                Assert.That(obj.Value, Is.EqualTo("xyz"));
             });
             yield return GetData(new { type = "message", from = "group", group = "groupname", dataType = "binary", data = "eHl6" }, message =>
             {
-                Assert.True(message is GroupDataMessage);
+                Assert.That(message is GroupDataMessage, Is.True);
                 var groupDataMessage = message as GroupDataMessage;
-                Assert.AreEqual("groupname", groupDataMessage.Group);
-                Assert.Null(groupDataMessage.SequenceId);
-                Assert.AreEqual(WebPubSubDataType.Binary, groupDataMessage.DataType);
-                Assert.AreEqual("eHl6", Convert.ToBase64String(groupDataMessage.Data.ToArray()));
+                Assert.That(groupDataMessage.Group, Is.EqualTo("groupname"));
+                Assert.That(groupDataMessage.SequenceId, Is.Null);
+                Assert.That(groupDataMessage.DataType, Is.EqualTo(WebPubSubDataType.Binary));
+                Assert.That(Convert.ToBase64String(groupDataMessage.Data.ToArray()), Is.EqualTo("eHl6"));
             });
             yield return GetData(new { sequenceId = 738476327894u, type = "message", from = "server", dataType = "text", data = "xyz" }, message =>
             {
-                Assert.True(message is ServerDataMessage);
+                Assert.That(message is ServerDataMessage, Is.True);
                 var dataMessage = message as ServerDataMessage;
-                Assert.AreEqual(738476327894u, dataMessage.SequenceId);
-                Assert.AreEqual(WebPubSubDataType.Text, dataMessage.DataType);
-                Assert.AreEqual("xyz", dataMessage.Data.ToString());
+                Assert.That(dataMessage.SequenceId, Is.EqualTo(738476327894u));
+                Assert.That(dataMessage.DataType, Is.EqualTo(WebPubSubDataType.Text));
+                Assert.That(dataMessage.Data.ToString(), Is.EqualTo("xyz"));
             });
             yield return GetData(new { type = "message", from = "server", dataType = "json", data = new JsonData { Value = "xyz" } }, message =>
             {
-                Assert.True(message is ServerDataMessage);
+                Assert.That(message is ServerDataMessage, Is.True);
                 var dataMessage = message as ServerDataMessage;;
-                Assert.Null(dataMessage.SequenceId);
-                Assert.AreEqual(WebPubSubDataType.Json, dataMessage.DataType);
+                Assert.That(dataMessage.SequenceId, Is.Null);
+                Assert.That(dataMessage.DataType, Is.EqualTo(WebPubSubDataType.Json));
                 var obj = dataMessage.Data.ToObjectFromJson<JsonData>();
-                Assert.AreEqual("xyz", obj.Value);
+                Assert.That(obj.Value, Is.EqualTo("xyz"));
             });
             yield return GetData(new { type = "message", from = "server", dataType = "binary", data = "eHl6" }, message =>
             {
-                Assert.True(message is ServerDataMessage);
+                Assert.That(message is ServerDataMessage, Is.True);
                 var dataMessage = message as ServerDataMessage;
-                Assert.Null(dataMessage.SequenceId);
-                Assert.AreEqual(WebPubSubDataType.Binary, dataMessage.DataType);
-                Assert.AreEqual("eHl6", Convert.ToBase64String(dataMessage.Data.ToArray()));
+                Assert.That(dataMessage.SequenceId, Is.Null);
+                Assert.That(dataMessage.DataType, Is.EqualTo(WebPubSubDataType.Binary));
+                Assert.That(Convert.ToBase64String(dataMessage.Data.ToArray()), Is.EqualTo("eHl6"));
             });
             yield return GetData(new { type = "system", @event = "connected", userId = "user", connectionId = "connection" }, message =>
             {
-                Assert.True(message is ConnectedMessage);
+                Assert.That(message is ConnectedMessage, Is.True);
                 var connectedMessage = message as ConnectedMessage;
-                Assert.AreEqual("user", connectedMessage.UserId);
-                Assert.AreEqual("connection", connectedMessage.ConnectionId);
-                Assert.Null(connectedMessage.ReconnectionToken);
+                Assert.That(connectedMessage.UserId, Is.EqualTo("user"));
+                Assert.That(connectedMessage.ConnectionId, Is.EqualTo("connection"));
+                Assert.That(connectedMessage.ReconnectionToken, Is.Null);
             });
             yield return GetData(new { type = "system", @event = "connected", userId = "user", connectionId = "connection", reconnectionToken = "rec" }, message =>
             {
-                Assert.True(message is ConnectedMessage);
+                Assert.That(message is ConnectedMessage, Is.True);
                 var connectedMessage = message as ConnectedMessage;
-                Assert.AreEqual("user", connectedMessage.UserId);
-                Assert.AreEqual("connection", connectedMessage.ConnectionId);
-                Assert.AreEqual("rec", connectedMessage.ReconnectionToken);
+                Assert.That(connectedMessage.UserId, Is.EqualTo("user"));
+                Assert.That(connectedMessage.ConnectionId, Is.EqualTo("connection"));
+                Assert.That(connectedMessage.ReconnectionToken, Is.EqualTo("rec"));
             });
             yield return GetData(new { type = "system", @event = "disconnected", message = "msg" }, message =>
             {
-                Assert.True(message is DisconnectedMessage);
+                Assert.That(message is DisconnectedMessage, Is.True);
                 var disconnectedMessage = message as DisconnectedMessage;
-                Assert.AreEqual("msg", disconnectedMessage.Reason);
+                Assert.That(disconnectedMessage.Reason, Is.EqualTo("msg"));
             });
         }
 
@@ -160,19 +160,19 @@ namespace Azure.Messaging.WebPubSub.Client.Tests.Protocols
         public void SerializeMessageTest(WebPubSubMessage message, string serializedPayload)
         {
             var protocol = new WebPubSubJsonProtocol();
-            Assert.AreEqual(serializedPayload, Encoding.UTF8.GetString(protocol.GetMessageBytes(message).ToArray()));
+            Assert.That(Encoding.UTF8.GetString(protocol.GetMessageBytes(message).ToArray()), Is.EqualTo(serializedPayload));
         }
 
         [Test]
         public void ProtocolPropertyTest()
         {
             var jsonProtocol = new WebPubSubJsonProtocol();
-            Assert.False(jsonProtocol.IsReliable);
-            Assert.AreEqual("json.webpubsub.azure.v1", jsonProtocol.Name);
+            Assert.That(jsonProtocol.IsReliable, Is.False);
+            Assert.That(jsonProtocol.Name, Is.EqualTo("json.webpubsub.azure.v1"));
 
             var jsonReliableProtocol = new WebPubSubJsonReliableProtocol();
-            Assert.True(jsonReliableProtocol.IsReliable);
-            Assert.AreEqual("json.reliable.webpubsub.azure.v1", jsonReliableProtocol.Name);
+            Assert.That(jsonReliableProtocol.IsReliable, Is.True);
+            Assert.That(jsonReliableProtocol.Name, Is.EqualTo("json.reliable.webpubsub.azure.v1"));
         }
     }
 }

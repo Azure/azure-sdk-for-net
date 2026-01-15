@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Tests.Models
         {
             SearchIndexerSkillset sut = new(name: null, description: null, skills: null, cognitiveServicesAccount: null, knowledgeStore: null, indexProjection: null, etag: value, encryptionKey: null, serializedAdditionalRawData: null);
 
-            Assert.AreEqual(expected, sut.ETag?.ToString());
+            Assert.That(sut.ETag?.ToString(), Is.EqualTo(expected));
         }
     }
 }

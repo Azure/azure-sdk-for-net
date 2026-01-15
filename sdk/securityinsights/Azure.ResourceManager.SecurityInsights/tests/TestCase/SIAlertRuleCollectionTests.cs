@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var input = ResourceDataHelpers.GetSecurityInsightsAlertRuleData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             SecurityInsightsAlertRuleResource alertRules1 = lro.Value;
-            Assert.AreEqual(name, alertRules1.Data.Name);
+            Assert.That(alertRules1.Data.Name, Is.EqualTo(name));
             //2.Get
             SecurityInsightsAlertRuleResource alertRules2 = await collection.GetAsync(name);
             ResourceDataHelpers.AssertSecurityInsightsAlertRuleData(alertRules1.Data, alertRules2.Data);
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 3);
             //4Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }

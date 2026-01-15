@@ -378,7 +378,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 identitySasBlob.GetPropertiesAsync(),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("AuthenticationFailed")));
         }
 
         [RecordedTest]
@@ -568,7 +568,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 // Assert
-                Assert.AreEqual(serviceClient.Uri.Query, containerClient.Uri.Query);
+                Assert.That(containerClient.Uri.Query, Is.EqualTo(serviceClient.Uri.Query));
                 await containerClient.CreateAsync();
                 containerClient.GetBlobsAsync();
             }
@@ -618,7 +618,7 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient serviceClient = blobContainerClient.GetParentBlobServiceClient();
 
             // Assert
-            Assert.AreEqual(blobContainerClient.Uri.Query, serviceClient.Uri.Query);
+            Assert.That(serviceClient.Uri.Query, Is.EqualTo(blobContainerClient.Uri.Query));
             await serviceClient.GetPropertiesAsync();
         }
 
@@ -662,7 +662,7 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient blobClient = containerClient.GetBlobBaseClient(blobName);
 
             // Assert
-            Assert.AreEqual(containerClient.Uri.Query, blobClient.Uri.Query);
+            Assert.That(blobClient.Uri.Query, Is.EqualTo(containerClient.Uri.Query));
             await blobClient.GetPropertiesAsync();
         }
 
@@ -706,7 +706,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClient blobClient = containerClient.GetBlobClient(blobName);
 
             // Assert
-            Assert.AreEqual(containerClient.Uri.Query, blobClient.Uri.Query);
+            Assert.That(blobClient.Uri.Query, Is.EqualTo(containerClient.Uri.Query));
             await blobClient.GetPropertiesAsync();
         }
 
@@ -750,7 +750,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient blobClient = containerClient.GetBlockBlobClient(blobName);
 
             // Assert
-            Assert.AreEqual(containerClient.Uri.Query, blobClient.Uri.Query);
+            Assert.That(blobClient.Uri.Query, Is.EqualTo(containerClient.Uri.Query));
             await blobClient.GetPropertiesAsync();
         }
 
@@ -794,7 +794,7 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient blobClient = containerClient.GetAppendBlobClient(blobName);
 
             // Assert
-            Assert.AreEqual(containerClient.Uri.Query, blobClient.Uri.Query);
+            Assert.That(blobClient.Uri.Query, Is.EqualTo(containerClient.Uri.Query));
             await blobClient.GetPropertiesAsync();
         }
 
@@ -838,7 +838,7 @@ namespace Azure.Storage.Blobs.Test
             PageBlobClient blobClient = containerClient.GetPageBlobClient(blobName);
 
             // Assert
-            Assert.AreEqual(containerClient.Uri.Query, blobClient.Uri.Query);
+            Assert.That(blobClient.Uri.Query, Is.EqualTo(containerClient.Uri.Query));
             await blobClient.GetPropertiesAsync();
         }
 
@@ -882,7 +882,7 @@ namespace Azure.Storage.Blobs.Test
             BlobLeaseClient blobClient = containerClient.GetBlobLeaseClient(Recording.Random.NewGuid().ToString());
 
             // Assert
-            Assert.AreEqual(containerClient.Uri.Query, blobClient.Uri.Query);
+            Assert.That(blobClient.Uri.Query, Is.EqualTo(containerClient.Uri.Query));
             await blobClient.AcquireAsync(TimeSpan.FromSeconds(15));
             await blobClient.BreakAsync();
         }
@@ -930,7 +930,7 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient containerClient = blobClient.GetParentBlobContainerClient();
 
             // Assert
-            Assert.AreEqual(containerClient.Uri.Query, containerClient.Uri.Query);
+            Assert.That(containerClient.Uri.Query, Is.EqualTo(containerClient.Uri.Query));
             await containerClient.GetPropertiesAsync();
         }
 
@@ -973,7 +973,7 @@ namespace Azure.Storage.Blobs.Test
             BlobLeaseClient leaseClient = blobClient.GetBlobLeaseClient(Recording.Random.NewGuid().ToString());
 
             // Assert
-            Assert.AreEqual(leaseClient.Uri.Query, blobClient.Uri.Query);
+            Assert.That(blobClient.Uri.Query, Is.EqualTo(leaseClient.Uri.Query));
             await leaseClient.AcquireAsync(TimeSpan.FromSeconds(15));
             await leaseClient.BreakAsync();
         }
@@ -1026,7 +1026,7 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient cpkSasBlobClient = sasBlobClient.WithCustomerProvidedKey(customerProvidedKey);
 
             // Assert
-            Assert.AreEqual(sasBlobClient.Uri.Query, cpkSasBlobClient.Uri.Query);
+            Assert.That(cpkSasBlobClient.Uri.Query, Is.EqualTo(sasBlobClient.Uri.Query));
             await cpkSasBlobClient.GetPropertiesAsync();
         }
 
@@ -1072,7 +1072,7 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient cpkSasBlobClient = sasBlobClient.WithEncryptionScope(fakeEncryptionScope);
 
             // Assert
-            Assert.AreEqual(sasBlobClient.Uri.Query, cpkSasBlobClient.Uri.Query);
+            Assert.That(cpkSasBlobClient.Uri.Query, Is.EqualTo(sasBlobClient.Uri.Query));
         }
 
         [RecordedTest]
@@ -1122,7 +1122,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             // The original client will not have the snapshot appended to the uri, so having the same SAS
             // in the query should suffice
-            Assert.IsTrue(snapshotBlobClient.Uri.Query.EndsWith(sasToken));
+            Assert.That(snapshotBlobClient.Uri.Query.EndsWith(sasToken), Is.True);
             await snapshotBlobClient.GetPropertiesAsync();
         }
 
@@ -1173,7 +1173,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             // The original client will not have the Version appended to the uri, so having the same SAS
             // in the query should suffice
-            Assert.IsTrue(versionBlobClient.Uri.Query.EndsWith(sasToken));
+            Assert.That(versionBlobClient.Uri.Query.EndsWith(sasToken), Is.True);
         }
 
         [RecordedTest]
@@ -1226,7 +1226,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClient cpkSasBlobClient = sasBlobClient.WithCustomerProvidedKey(customerProvidedKey);
 
             // Assert
-            Assert.AreEqual(sasBlobClient.Uri.Query, cpkSasBlobClient.Uri.Query);
+            Assert.That(cpkSasBlobClient.Uri.Query, Is.EqualTo(sasBlobClient.Uri.Query));
             await cpkSasBlobClient.GetPropertiesAsync();
         }
 
@@ -1274,7 +1274,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClient cpkSasBlobClient = sasBlobClient.WithClientSideEncryptionOptions(clientSideEncryptionOptions);
 
             // Assert
-            Assert.AreEqual(sasBlobClient.Uri.Query, cpkSasBlobClient.Uri.Query);
+            Assert.That(cpkSasBlobClient.Uri.Query, Is.EqualTo(sasBlobClient.Uri.Query));
         }
 
         [RecordedTest]
@@ -1319,7 +1319,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClient cpkSasBlobClient = sasBlobClient.WithEncryptionScope(fakeEncryptionScope);
 
             // Assert
-            Assert.AreEqual(sasBlobClient.Uri.Query, cpkSasBlobClient.Uri.Query);
+            Assert.That(cpkSasBlobClient.Uri.Query, Is.EqualTo(sasBlobClient.Uri.Query));
         }
 
         [RecordedTest]
@@ -1369,7 +1369,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             // The original client will not have the snapshot appended to the uri, so having the same SAS
             // in the query should suffice
-            Assert.IsTrue(snapshotBlobClient.Uri.Query.EndsWith(sasToken));
+            Assert.That(snapshotBlobClient.Uri.Query.EndsWith(sasToken), Is.True);
             await snapshotBlobClient.GetPropertiesAsync();
         }
 
@@ -1420,7 +1420,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             // The original client will not have the Version appended to the uri, so having the same SAS
             // in the query should suffice
-            Assert.IsTrue(versionBlobClient.Uri.Query.EndsWith(sasToken));
+            Assert.That(versionBlobClient.Uri.Query.EndsWith(sasToken), Is.True);
         }
 
         [RecordedTest]
@@ -1469,7 +1469,7 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient cpkSasAppendBlobClient = sasAppendBlobClient.WithCustomerProvidedKey(customerProvidedKey);
 
             // Assert
-            Assert.AreEqual(sasAppendBlobClient.Uri.Query, cpkSasAppendBlobClient.Uri.Query);
+            Assert.That(cpkSasAppendBlobClient.Uri.Query, Is.EqualTo(sasAppendBlobClient.Uri.Query));
             await cpkSasAppendBlobClient.GetPropertiesAsync();
         }
 
@@ -1515,7 +1515,7 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient cpkSasBlobClient = sasBlobClient.WithEncryptionScope(fakeEncryptionScope);
 
             // Assert
-            Assert.AreEqual(sasBlobClient.Uri.Query, cpkSasBlobClient.Uri.Query);
+            Assert.That(cpkSasBlobClient.Uri.Query, Is.EqualTo(sasBlobClient.Uri.Query));
         }
 
         [RecordedTest]
@@ -1566,7 +1566,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             // The original client will not have the snapshot appended to the uri, so having the same SAS
             // in the query should suffice
-            Assert.IsTrue(snapshotAppendBlobClient.Uri.Query.EndsWith(sasToken));
+            Assert.That(snapshotAppendBlobClient.Uri.Query.EndsWith(sasToken), Is.True);
             await snapshotAppendBlobClient.GetPropertiesAsync();
         }
 
@@ -1618,7 +1618,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             // The original client will not have the Version appended to the uri, so having the same SAS
             // in the query should suffice
-            Assert.IsTrue(versionAppendBlobClient.Uri.Query.EndsWith(sasToken));
+            Assert.That(versionAppendBlobClient.Uri.Query.EndsWith(sasToken), Is.True);
         }
 
         [RecordedTest]
@@ -1671,7 +1671,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient cpkSasBlockBlobClient = sasBlockBlobClient.WithCustomerProvidedKey(customerProvidedKey);
 
             // Assert
-            Assert.AreEqual(sasBlockBlobClient.Uri.Query, cpkSasBlockBlobClient.Uri.Query);
+            Assert.That(cpkSasBlockBlobClient.Uri.Query, Is.EqualTo(sasBlockBlobClient.Uri.Query));
             await cpkSasBlockBlobClient.GetPropertiesAsync();
         }
 
@@ -1717,7 +1717,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient cpkSasBlobClient = sasBlobClient.WithEncryptionScope(fakeEncryptionScope);
 
             // Assert
-            Assert.AreEqual(sasBlobClient.Uri.Query, cpkSasBlobClient.Uri.Query);
+            Assert.That(cpkSasBlobClient.Uri.Query, Is.EqualTo(sasBlobClient.Uri.Query));
         }
 
         [RecordedTest]
@@ -1767,7 +1767,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             // The original client will not have the snapshot appended to the uri, so having the same SAS
             // in the query should suffice
-            Assert.IsTrue(snapshotBlockBlobClient.Uri.Query.EndsWith(sasToken));
+            Assert.That(snapshotBlockBlobClient.Uri.Query.EndsWith(sasToken), Is.True);
             await snapshotBlockBlobClient.GetPropertiesAsync();
         }
 
@@ -1818,7 +1818,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             // The original client will not have the Version appended to the uri, so having the same SAS
             // in the query should suffice
-            Assert.IsTrue(versionBlockBlobClient.Uri.Query.EndsWith(sasToken));
+            Assert.That(versionBlockBlobClient.Uri.Query.EndsWith(sasToken), Is.True);
         }
 
         [RecordedTest]
@@ -1867,7 +1867,7 @@ namespace Azure.Storage.Blobs.Test
             PageBlobClient cpkSasPageBlobClient = sasPageBlobClient.WithCustomerProvidedKey(customerProvidedKey);
 
             // Assert
-            Assert.AreEqual(sasPageBlobClient.Uri.Query, cpkSasPageBlobClient.Uri.Query);
+            Assert.That(cpkSasPageBlobClient.Uri.Query, Is.EqualTo(sasPageBlobClient.Uri.Query));
             await cpkSasPageBlobClient.GetPropertiesAsync();
         }
 
@@ -1913,7 +1913,7 @@ namespace Azure.Storage.Blobs.Test
             PageBlobClient cpkSasBlobClient = sasBlobClient.WithEncryptionScope(fakeEncryptionScope);
 
             // Assert
-            Assert.AreEqual(sasBlobClient.Uri.Query, cpkSasBlobClient.Uri.Query);
+            Assert.That(cpkSasBlobClient.Uri.Query, Is.EqualTo(sasBlobClient.Uri.Query));
         }
 
         [RecordedTest]
@@ -1964,7 +1964,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             // The original client will not have the snapshot appended to the uri, so having the same SAS
             // in the query should suffice
-            Assert.IsTrue(snapshotPageBlobClient.Uri.Query.EndsWith(sasToken));
+            Assert.That(snapshotPageBlobClient.Uri.Query.EndsWith(sasToken), Is.True);
             await snapshotPageBlobClient.GetPropertiesAsync();
         }
 
@@ -2016,7 +2016,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             // The original client will not have the Version appended to the uri, so having the same SAS
             // in the query should suffice
-            Assert.IsTrue(versionPageBlobClient.Uri.Query.EndsWith(sasToken));
+            Assert.That(versionPageBlobClient.Uri.Query.EndsWith(sasToken), Is.True);
         }
 
         [RecordedTest]

@@ -176,7 +176,7 @@ namespace Azure.Data.Tables.Tests
 
             var actualSas = client.GenerateSasUri(permissions, resourceTypes, expires);
 
-            Assert.AreEqual("?" + expectedSas, actualSas.Query);
+            Assert.That(actualSas.Query, Is.EqualTo("?" + expectedSas));
         }
 
         [Test]
@@ -228,11 +228,11 @@ namespace Azure.Data.Tables.Tests
         {
             var client = new TableServiceClient(connString, new TableClientOptions());
 
-            Assert.AreEqual(accountName, client.AccountName);
+            Assert.That(client.AccountName, Is.EqualTo(accountName));
 
             var tableClient = client.GetTableClient("someTable");
 
-            Assert.AreEqual(accountName, tableClient.AccountName);
+            Assert.That(tableClient.AccountName, Is.EqualTo(accountName));
         }
 
         private static IEnumerable<object[]> TableClientsWithTableNameInUri()
@@ -304,7 +304,7 @@ namespace Azure.Data.Tables.Tests
         [TestCaseSource(nameof(TableServiceClientsAllCtors))]
         public void UriPropertyIsPopulated(TableServiceClient client)
         {
-            Assert.AreEqual(_url.AbsoluteUri, client.Uri.AbsoluteUri);
+            Assert.That(client.Uri.AbsoluteUri, Is.EqualTo(_url.AbsoluteUri));
             Assert.That(client.Uri.AbsoluteUri, Does.Not.Contain(signature));
         }
 

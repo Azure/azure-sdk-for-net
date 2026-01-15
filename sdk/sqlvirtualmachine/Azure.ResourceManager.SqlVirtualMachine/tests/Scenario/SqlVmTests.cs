@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
                 }
             })).Value;
             ValidateSqlVirtualMachine(sqlVmFromUpdate.Data, sqlVm.Data, sameTags: false);
-            Assert.AreEqual(1, sqlVmFromUpdate.Data.Tags.Count);
-            Assert.AreEqual(value, sqlVmFromUpdate.Data.Tags[key]);
+            Assert.That(sqlVmFromUpdate.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(sqlVmFromUpdate.Data.Tags[key], Is.EqualTo(value));
             // List
             var count = 0;
             await foreach (var sqlVmFromList in sqlVmCollections)
@@ -110,18 +110,18 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             };
             SqlVmResource updatedSqlVm = await sqlVm.SetTagsAsync(tags);
 
-            Assert.AreEqual(tags, updatedSqlVm.Data.Tags);
+            Assert.That(updatedSqlVm.Data.Tags, Is.EqualTo(tags));
         }
 
         private static void ValidateSqlVirtualMachine(SqlVmData sqlVM1, SqlVmData sqlVM2, bool sameTags = true)
         {
-            Assert.AreEqual(sqlVM1.Id, sqlVM2.Id);
-            Assert.AreEqual(sqlVM1.Name, sqlVM2.Name);
-            Assert.AreEqual(sqlVM1.Location, sqlVM2.Location);
-            Assert.AreEqual(sqlVM1.SqlManagement, sqlVM2.SqlManagement);
+            Assert.That(sqlVM2.Id, Is.EqualTo(sqlVM1.Id));
+            Assert.That(sqlVM2.Name, Is.EqualTo(sqlVM1.Name));
+            Assert.That(sqlVM2.Location, Is.EqualTo(sqlVM1.Location));
+            Assert.That(sqlVM2.SqlManagement, Is.EqualTo(sqlVM1.SqlManagement));
             if (sameTags)
             {
-                Assert.True(ValidateTags(sqlVM1, sqlVM2));
+                Assert.That(ValidateTags(sqlVM1, sqlVM2), Is.True);
             }
         }
 

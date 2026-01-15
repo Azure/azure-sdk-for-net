@@ -117,7 +117,7 @@ namespace Azure.Maps.Routing.Tests
             }
             #endregion
 
-            Assert.IsTrue(result.Value.Routes.Count > 0);
+            Assert.That(result.Value.Routes.Count > 0, Is.True);
         }
 
         [Test]
@@ -164,7 +164,7 @@ namespace Azure.Maps.Routing.Tests
             }
             #endregion
 
-            Assert.IsTrue(result.Value.Routes.Count > 0);
+            Assert.That(result.Value.Routes.Count > 0, Is.True);
         }
 
         [Test]
@@ -349,10 +349,10 @@ namespace Azure.Maps.Routing.Tests
             Response<RouteMatrixResult> result = client.GetImmediateRouteMatrix(routeMatrixQuery);
             #endregion
 
-            Assert.AreEqual(2, result.Value.Matrix.Count);
-            Assert.AreEqual(1, result.Value.Matrix[0].Count);
-            Assert.AreEqual(2, result.Value.Summary.SuccessfulRoutes);
-            Assert.AreEqual(2, result.Value.Summary.TotalRoutes);
+            Assert.That(result.Value.Matrix.Count, Is.EqualTo(2));
+            Assert.That(result.Value.Matrix[0].Count, Is.EqualTo(1));
+            Assert.That(result.Value.Summary.SuccessfulRoutes, Is.EqualTo(2));
+            Assert.That(result.Value.Summary.TotalRoutes, Is.EqualTo(2));
         }
 
         [Test]
@@ -420,10 +420,10 @@ namespace Azure.Maps.Routing.Tests
             GetRouteMatrixOperation result = client.GetRouteMatrix(WaitUntil.Completed, routeMatrixOptions);
             #endregion
 
-            Assert.AreEqual(2, result.Value.Matrix.Count);
-            Assert.AreEqual(1, result.Value.Matrix[0].Count);
-            Assert.AreEqual(2, result.Value.Summary.SuccessfulRoutes);
-            Assert.AreEqual(2, result.Value.Summary.TotalRoutes);
+            Assert.That(result.Value.Matrix.Count, Is.EqualTo(2));
+            Assert.That(result.Value.Matrix[0].Count, Is.EqualTo(1));
+            Assert.That(result.Value.Summary.SuccessfulRoutes, Is.EqualTo(2));
+            Assert.That(result.Value.Summary.TotalRoutes, Is.EqualTo(2));
         }
 
         [Test]
@@ -506,7 +506,7 @@ namespace Azure.Maps.Routing.Tests
             #endregion
 
             Assert.IsNotNull(result.Value.ReachableRange.Center);
-            Assert.IsTrue(result.Value.ReachableRange.Boundary.Count > 10);
+            Assert.That(result.Value.ReachableRange.Boundary.Count > 10, Is.True);
         }
 
         [Test]

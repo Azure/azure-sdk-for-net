@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             string nginxDeploymentApiKeyName = Recording.GenerateAssetName("testDeploymentApiKey-");
             NginxDeploymentApiKeyResource nginxDeploymentApiKey = await CreateNginxDeploymentApiKey(nginxDeployment, nginxDeploymentApiKeyName);
 
-            Assert.IsTrue(nginxDeploymentApiKeyName.Equals(nginxDeploymentApiKey.Data.Name));
+            Assert.That(nginxDeploymentApiKeyName.Equals(nginxDeploymentApiKey.Data.Name), Is.True);
         }
 
         [TestCase]
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
             NginxDeploymentApiKeyCollection collection = nginxDeployment.GetNginxDeploymentApiKeys();
             List<NginxDeploymentApiKeyResource> nginxDeploymentApiKeys = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(0, nginxDeploymentApiKeys.Count);
+            Assert.That(nginxDeploymentApiKeys.Count, Is.EqualTo(0));
 
             string nginxDeploymentApiKeyName1 = Recording.GenerateAssetName("testDeploymentApiKey-");
             string nginxDeploymentApiKeyName2 = Recording.GenerateAssetName("testDeploymentApiKey-");
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             _ = await CreateNginxDeploymentApiKey(nginxDeployment, nginxDeploymentApiKeyName2);
 
             nginxDeploymentApiKeys = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(2, nginxDeploymentApiKeys.Count);
+            Assert.That(nginxDeploymentApiKeys.Count, Is.EqualTo(2));
         }
 
         [TestCase]
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             string nginxDeploymentApiKeyName = Recording.GenerateAssetName("testDeploymentApiKey-");
             _ = await CreateNginxDeploymentApiKey(nginxDeployment, nginxDeploymentApiKeyName);
 
-            Assert.IsTrue(await collection.ExistsAsync(nginxDeploymentApiKeyName));
-            Assert.IsFalse(await collection.ExistsAsync(nginxDeploymentApiKeyName + "1"));
+            Assert.That((bool)await collection.ExistsAsync(nginxDeploymentApiKeyName), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(nginxDeploymentApiKeyName + "1"), Is.False);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentApiKeyResource nginxDeploymentApiKey1 = await CreateNginxDeploymentApiKey(nginxDeployment, nginxDeploymentApiKeyName);
             NullableResponse<NginxDeploymentApiKeyResource> nginxDeploymentApiKeyResponse = await collection.GetIfExistsAsync(nginxDeploymentApiKeyName);
 
-            Assert.True(nginxDeploymentApiKeyResponse.HasValue);
+            Assert.That(nginxDeploymentApiKeyResponse.HasValue, Is.True);
             NginxDeploymentApiKeyResource nginxDeploymentApiKey2 = nginxDeploymentApiKeyResponse.Value;
             ResourceDataHelper.AssertResourceData(nginxDeploymentApiKey1.Data, nginxDeploymentApiKey2.Data);
 
             NullableResponse<NginxDeploymentApiKeyResource> nginxDeploymentApiKeyResponse2 = await collection.GetIfExistsAsync(nginxDeploymentApiKeyName + "1");
-            Assert.False(nginxDeploymentApiKeyResponse2.HasValue);
+            Assert.That(nginxDeploymentApiKeyResponse2.HasValue, Is.False);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.GetIfExistsAsync(null));
         }
     }

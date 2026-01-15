@@ -42,9 +42,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             foreach (SqlPool pool in pools.Value)
             {
                 SqlPool actualPool = await client.GetAsync (pool.Name);
-                Assert.AreEqual (pool.Id, actualPool.Id);
-                Assert.AreEqual (pool.Name, actualPool.Name);
-                Assert.AreEqual (pool.Status, actualPool.Status);
+                Assert.That(actualPool.Id, Is.EqualTo(pool.Id));
+                Assert.That(actualPool.Name, Is.EqualTo(pool.Name));
+                Assert.That(actualPool.Status, Is.EqualTo(pool.Status));
             }
         }
     }

@@ -13,12 +13,12 @@ namespace Azure.Core.Experimental.Tests
         {
             A a = new();
             Variant value = new(a);
-            Assert.AreEqual(typeof(A), value.Type);
-            Assert.AreSame(a, value.As<A>());
+            Assert.That(value.Type, Is.EqualTo(typeof(A)));
+            Assert.That(value.As<A>(), Is.SameAs(a));
 
             bool success = value.TryGetValue(out B result);
-            Assert.False(success);
-            Assert.Null(result);
+            Assert.That(success, Is.False);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -26,19 +26,19 @@ namespace Azure.Core.Experimental.Tests
         {
             B b = new();
             Variant value = new(b);
-            Assert.AreEqual(typeof(B), value.Type);
-            Assert.AreSame(b, value.As<A>());
-            Assert.AreSame(b, value.As<B>());
+            Assert.That(value.Type, Is.EqualTo(typeof(B)));
+            Assert.That(value.As<A>(), Is.SameAs(b));
+            Assert.That(value.As<B>(), Is.SameAs(b));
 
             bool success = value.TryGetValue(out C result);
-            Assert.False(success);
-            Assert.Null(result);
+            Assert.That(success, Is.False);
+            Assert.That(result, Is.Null);
 
             Assert.Throws<InvalidCastException>(() => value.As<C>());
 
             A a = new B();
             value = new(a);
-            Assert.AreEqual(typeof(B), value.Type);
+            Assert.That(value.Type, Is.EqualTo(typeof(B)));
         }
 
         [Test]
@@ -46,10 +46,10 @@ namespace Azure.Core.Experimental.Tests
         {
             I a = new A();
             Variant value = new(a);
-            Assert.AreEqual(typeof(A), value.Type);
+            Assert.That(value.Type, Is.EqualTo(typeof(A)));
 
-            Assert.AreSame(a, value.As<A>());
-            Assert.AreSame(a, value.As<I>());
+            Assert.That(value.As<A>(), Is.SameAs(a));
+            Assert.That(value.As<I>(), Is.SameAs(a));
         }
 
         private class A : I { }

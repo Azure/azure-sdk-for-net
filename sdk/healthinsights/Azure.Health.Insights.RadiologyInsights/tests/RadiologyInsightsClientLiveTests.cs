@@ -44,7 +44,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             Assert.IsNotNull(operation);
             Response response = operation.GetRawResponse();
             Assert.IsNotNull(response);
-            Assert.IsTrue(response.Status == (int)HttpStatusCode.OK);
+            Assert.That(response.Status == (int)HttpStatusCode.OK, Is.True);
             RadiologyInsightsInferenceResult results = FetchResults(response);
             Assert.IsNotEmpty(results.PatientResults);
             var patient = results.PatientResults[0];

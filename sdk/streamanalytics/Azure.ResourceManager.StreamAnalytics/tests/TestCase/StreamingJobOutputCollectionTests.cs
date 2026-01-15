@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
             var input = ResourceDataHelpers.GetStreamingJobOutputData();
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             StreamingJobOutputResource output1 = lro.Value;
-            Assert.AreEqual(name, output1.Data.Name);
+            Assert.That(output1.Data.Name, Is.EqualTo(name));
             //2.Get
             StreamingJobOutputResource output2 = await container.GetAsync(name);
             ResourceDataHelpers.AssertOutput(output1.Data, output2.Data);
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 1);
             //4Exists
-            Assert.IsTrue(await container.ExistsAsync(name));
-            Assert.IsFalse(await container.ExistsAsync(name + "1"));
+            Assert.That((bool)await container.ExistsAsync(name), Is.True);
+            Assert.That((bool)await container.ExistsAsync(name + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.ExistsAsync(null));
         }

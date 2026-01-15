@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var createdDnsResolverPolicyLink = await _dnsResolverPolicy.GetDnsResolverPolicyVirtualNetworkLinks().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverPolicyLinkName, dnsResolverPolicyLinkData);
 
             // ASSERT
-            Assert.AreEqual(createdDnsResolverPolicyLink.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
+            Assert.That(DnsResolverProvisioningState.Succeeded, Is.EqualTo(createdDnsResolverPolicyLink.Value.Data.ProvisioningState));
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var retrievedDnsResolverPolicyLink = await _dnsResolverPolicy.GetDnsResolverPolicyVirtualNetworkLinks().GetAsync(dnsResolverPolicyLinkName);
 
             // ASSERT
-            Assert.AreEqual(retrievedDnsResolverPolicyLink.Value.Data.Name, dnsResolverPolicyLinkName);
+            Assert.That(dnsResolverPolicyLinkName, Is.EqualTo(retrievedDnsResolverPolicyLink.Value.Data.Name));
         }
 
         [Test]
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 
             // ASSERT
             var getDnsResolverPolicyLink = await _dnsResolverPolicy.GetDnsResolverPolicyVirtualNetworkLinks().ExistsAsync(dnsResolverPolicyLinkName);
-            Assert.AreEqual(getDnsResolverPolicyLink.Value, false);
+            Assert.That(getDnsResolverPolicyLink.Value, Is.EqualTo(false));
         }
     }
 }

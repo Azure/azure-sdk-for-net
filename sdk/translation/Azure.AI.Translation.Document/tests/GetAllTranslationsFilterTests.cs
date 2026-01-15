@@ -111,7 +111,7 @@ namespace Azure.AI.Translation.Document.Tests
 
             // assert
             Assert.That(filteredTranslations.All(t => canceledStatusList.Contains(t.Status)));
-            Assert.True(canceledIds.All(canceledId => filteredIds.Contains(canceledId)));
+            Assert.That(canceledIds.All(canceledId => filteredIds.Contains(canceledId)), Is.True);
         }
 
         [RecordedTest]
@@ -214,7 +214,7 @@ namespace Azure.AI.Translation.Document.Tests
             var timestamp = Recording.UtcNow;
             foreach (var result in filteredTranslations)
             {
-                Assert.IsTrue(result.CreatedOn <= timestamp);
+                Assert.That(result.CreatedOn <= timestamp, Is.True);
                 timestamp = result.CreatedOn;
             }
         }

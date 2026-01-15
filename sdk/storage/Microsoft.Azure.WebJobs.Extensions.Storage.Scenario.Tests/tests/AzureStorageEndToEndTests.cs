@@ -218,7 +218,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             string functionId = $"{methodInfo.DeclaringType.FullName}.{methodInfo.Name}";
             var concurrencyManager = host.Services.GetServices<ConcurrencyManager>().SingleOrDefault();
             var concurrencyStatus = concurrencyManager.GetStatus(functionId);
-            Assert.AreEqual(1, concurrencyStatus.CurrentConcurrency);
+            Assert.That(concurrencyStatus.CurrentConcurrency, Is.EqualTo(1));
 
             // write a bunch of queue messages
             int numMessages = 300;
@@ -282,7 +282,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             string sharedListenerId = "SharedBlobQueueListener";
             var concurrencyManager = host.Services.GetServices<ConcurrencyManager>().SingleOrDefault();
             var concurrencyStatus = concurrencyManager.GetStatus(sharedListenerId);
-            Assert.AreEqual(1, concurrencyStatus.CurrentConcurrency);
+            Assert.That(concurrencyStatus.CurrentConcurrency, Is.EqualTo(1));
 
             // write some blobs
             int numBlobs = 50;
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             // Stop the host and wait for it to finish
             await host.StopAsync();
 
-            Assert.True(signaled, $"[{DateTime.UtcNow.ToString("HH:mm:ss.fff")}] Function chain did not complete in {waitTime}. Logs:{Environment.NewLine}{host.GetTestLoggerProvider().GetLogString()}");
+            Assert.That(signaled, Is.True, $"[{DateTime.UtcNow.ToString("HH:mm:ss.fff")}] Function chain did not complete in {waitTime}. Logs:{Environment.NewLine}{host.GetTestLoggerProvider().GetLogString()}");
         }
 
         [Test]
@@ -416,14 +416,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
             // find the raw string to compare it to the original
             Assert.NotNull(poisonMessage);
-            Assert.AreEqual(messageContent, poisonMessage.MessageText);
+            Assert.That(poisonMessage.MessageText, Is.EqualTo(messageContent));
 
             // Make sure the functions were called correctly
-            Assert.AreEqual(0, _badMessageCalls);
+            Assert.That(_badMessageCalls, Is.EqualTo(0));
 
             // Validate Logger
             var loggerErrors = loggerProvider.GetAllLogMessages().Where(l => l.Level == Microsoft.Extensions.Logging.LogLevel.Error);
-            Assert.True(loggerErrors.All(t => t.Exception.InnerException.InnerException is FormatException));
+            Assert.That(loggerErrors.All(t => t.Exception.InnerException.InnerException is FormatException), Is.True);
         }
 
         [Test]
@@ -435,7 +435,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
             var waitTime = TimeSpan.FromSeconds(30);
             bool result = _waitHandle.WaitOne(waitTime);
-            Assert.True(result);
+            Assert.That(result, Is.True);
             host.Dispose();
         }
 
@@ -447,7 +447,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
             var waitTime = TimeSpan.FromSeconds(30);
             bool result = _waitHandle.WaitOne(waitTime);
-            Assert.True(result);
+            Assert.That(result, Is.True);
             await host.StopAsync();
         }
 
@@ -647,7 +647,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 _waitHandle.Set();
                 // wait a small amount of time for the host to call dispose
                 await Task.Delay(2000, CancellationToken.None);
-                Assert.IsTrue(cancellationToken.IsCancellationRequested);
+                Assert.That(cancellationToken.IsCancellationRequested, Is.True);
             }
         }
 

@@ -20,8 +20,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.Ignore("Loading X509Certificate2 with private EC key not supported on this platform");
 #endif
             using X509Certificate2 certificate = PemReader.LoadCertificate(s_ecdsaFullCertificate.AsSpan(), keyType: PemReader.KeyType.ECDsa);
-            Assert.AreEqual("CN=Azure SDK", certificate.Subject);
-            Assert.IsTrue(certificate.HasPrivateKey);
+            Assert.That(certificate.Subject, Is.EqualTo("CN=Azure SDK"));
+            Assert.That(certificate.HasPrivateKey, Is.True);
         }
 
         [Test]
@@ -31,8 +31,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.Ignore("Loading X509Certificate2 with private EC key not supported on this platform");
 #endif
             using X509Certificate2 certificate = PemReader.LoadCertificate(s_ecdsaFullCertificate.AsSpan());
-            Assert.AreEqual("CN=Azure SDK", certificate.Subject);
-            Assert.IsTrue(certificate.HasPrivateKey);
+            Assert.That(certificate.Subject, Is.EqualTo("CN=Azure SDK"));
+            Assert.That(certificate.HasPrivateKey, Is.True);
         }
 
         [Test]
@@ -42,37 +42,37 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.Ignore("Loading X509Certificate2 with private EC key not supported on this platform");
 #endif
             using X509Certificate2 certificate = PemReader.LoadCertificate(ECDsaPrivateKey.AsSpan(), cer: s_ecdsaCertificateBytes, keyType: PemReader.KeyType.ECDsa);
-            Assert.AreEqual("CN=Azure SDK", certificate.Subject);
-            Assert.IsTrue(certificate.HasPrivateKey);
+            Assert.That(certificate.Subject, Is.EqualTo("CN=Azure SDK"));
+            Assert.That(certificate.HasPrivateKey, Is.True);
         }
 
         [Test]
         public void LoadCertificateWithoutPublicKey()
         {
             Exception ex = Assert.Throws<InvalidDataException>(() => PemReader.LoadCertificate(ECDsaPrivateKey.AsSpan(), keyType: PemReader.KeyType.ECDsa));
-            Assert.AreEqual("The certificate is missing the public key", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("The certificate is missing the public key"));
         }
 
         [Test]
         public void LoadCertificateWithoutPrivateKey()
         {
             Exception ex = Assert.Throws<InvalidDataException>(() => PemReader.LoadCertificate(ECDsaCertificate.AsSpan(), keyType: PemReader.KeyType.ECDsa));
-            Assert.AreEqual("The certificate is missing the private key", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("The certificate is missing the private key"));
         }
 
         [Test]
         public void LoadCertificateWithOnlyPublicKeyAllowed()
         {
             using X509Certificate2 certificate = PemReader.LoadCertificate(ECDsaCertificate.AsSpan(), allowCertificateOnly: true, keyType: PemReader.KeyType.ECDsa);
-            Assert.AreEqual("CN=Azure SDK", certificate.Subject);
-            Assert.IsFalse(certificate.HasPrivateKey);
+            Assert.That(certificate.Subject, Is.EqualTo("CN=Azure SDK"));
+            Assert.That(certificate.HasPrivateKey, Is.False);
         }
 
         [Test]
         public void LoadCertificateWithNoKeys()
         {
             Exception ex = Assert.Throws<InvalidDataException>(() => PemReader.LoadCertificate(Span<char>.Empty, keyType: PemReader.KeyType.ECDsa));
-            Assert.AreEqual("The certificate is missing the public key", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("The certificate is missing the public key"));
         }
 
         [Test]
@@ -82,8 +82,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.Ignore("Loading X509Certificate2 with private EC key not supported on this platform");
 #endif
             using X509Certificate2 certificate = PemReader.LoadCertificate(s_ecdsaFullCertificate.AsSpan(), cer: Encoding.UTF8.GetBytes("This is not a certificate"), keyType: PemReader.KeyType.ECDsa);
-            Assert.AreEqual("CN=Azure SDK", certificate.Subject);
-            Assert.IsTrue(certificate.HasPrivateKey);
+            Assert.That(certificate.Subject, Is.EqualTo("CN=Azure SDK"));
+            Assert.That(certificate.HasPrivateKey, Is.True);
         }
 
         [Test]
@@ -105,8 +105,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.Ignore("Loading X509Certificate2 with private EC key not supported on this platform");
 #endif
             using X509Certificate2 certificate = PemReader.LoadCertificate(s_ecdsaFullCertificate.AsSpan(), keyType: PemReader.KeyType.ECDsa);
-            Assert.AreEqual("CN=Azure SDK", certificate.Subject);
-            Assert.IsTrue(certificate.HasPrivateKey);
+            Assert.That(certificate.Subject, Is.EqualTo("CN=Azure SDK"));
+            Assert.That(certificate.HasPrivateKey, Is.True);
         }
     }
 }

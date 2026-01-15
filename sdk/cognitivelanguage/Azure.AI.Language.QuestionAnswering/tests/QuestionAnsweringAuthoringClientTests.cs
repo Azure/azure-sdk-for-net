@@ -24,7 +24,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(
                 () => new QuestionAnsweringAuthoringClient(null, (AzureKeyCredential)null));
-            Assert.AreEqual("endpoint", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("endpoint"));
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(
                 () => new QuestionAnsweringAuthoringClient(endpoint, (AzureKeyCredential)null));
-            Assert.AreEqual("credential", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("credential"));
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new QuestionAnsweringClient(null, (TokenCredential)null));
-            Assert.AreEqual("endpoint", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("endpoint"));
         }
 
         [Test]
@@ -52,47 +52,47 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new QuestionAnsweringClient(endpoint, (TokenCredential)null));
-            Assert.AreEqual("credential", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("credential"));
         }
 
         [Test]
         public void GetDeploymentsNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetDeployments(null));
-            Assert.AreEqual("projectName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("projectName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetDeploymentsAsync(null).ToEnumerableAsync());
-            Assert.AreEqual("projectName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("projectName"));
         }
 
         [Test]
         public void GetSynonymsNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetSynonyms(null));
-            Assert.AreEqual("projectName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("projectName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetSynonymsAsync(null).ToEnumerableAsync());
-            Assert.AreEqual("projectName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("projectName"));
         }
 
         [Test]
         public void GetSourcesNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetSources(null));
-            Assert.AreEqual("projectName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("projectName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetSourcesAsync(null).ToEnumerableAsync());
-            Assert.AreEqual("projectName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("projectName"));
         }
 
         [Test]
         public void GetQnasNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetQnas(null));
-            Assert.AreEqual("projectName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("projectName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetQnasAsync(null).ToEnumerableAsync());
-            Assert.AreEqual("projectName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("projectName"));
         }
 
         // TODO: These tests should be activated once the bug with the validation generation is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26291

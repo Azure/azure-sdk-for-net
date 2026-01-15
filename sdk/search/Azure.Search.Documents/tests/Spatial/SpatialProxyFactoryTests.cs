@@ -22,12 +22,12 @@ namespace Azure.Search.Documents.Tests.Spatial
         [TestCase(typeof(GeographyLineString), true)]
         [TestCase(typeof(GeometryLineString), false)]
         public void CanCreate(Type type, bool expected) =>
-            Assert.AreEqual(expected, SpatialProxyFactory.CanCreate(type));
+            Assert.That(SpatialProxyFactory.CanCreate(type), Is.EqualTo(expected));
 
         [Test]
         public void CreateNull()
         {
-            Assert.IsFalse(SpatialProxyFactory.TryCreate(null, out GeographyProxy proxy));
+            Assert.That(SpatialProxyFactory.TryCreate(null, out GeographyProxy proxy), Is.False);
             Assert.IsNull(proxy);
         }
 
@@ -37,9 +37,9 @@ namespace Azure.Search.Documents.Tests.Spatial
             GeographyPoint point = GeographyFactory.Point(1.0, 2.0);
             GeographyPointProxy proxy = new GeographyPointProxy(point);
 
-            Assert.AreSame(point, proxy.Value);
-            Assert.AreEqual(1.0, proxy.Latitude);
-            Assert.AreEqual(2.0, proxy.Longitude);
+            Assert.That(proxy.Value, Is.SameAs(point));
+            Assert.That(proxy.Latitude, Is.EqualTo(1.0));
+            Assert.That(proxy.Longitude, Is.EqualTo(2.0));
         }
 
         [Test]
@@ -54,19 +54,19 @@ namespace Azure.Search.Documents.Tests.Spatial
                 .LineTo(0.0, 0.0);
             GeographyPolygonProxy proxy = new GeographyPolygonProxy(polygon);
 
-            Assert.AreSame(polygon, proxy.Value);
-            Assert.AreEqual(1, proxy.Rings.Count);
+            Assert.That(proxy.Value, Is.SameAs(polygon));
+            Assert.That(proxy.Rings.Count, Is.EqualTo(1));
 
             GeographyLineString line0 = polygon.Rings[0];
             GeographyLineStringProxy proxyLine0 = proxy.Rings[0];
-            Assert.AreSame(line0, proxyLine0.Value);
-            Assert.AreEqual(5, line0.Points.Count);
-            Assert.AreEqual(line0.Points.Count, proxyLine0.Points.Count);
+            Assert.That(proxyLine0.Value, Is.SameAs(line0));
+            Assert.That(line0.Points.Count, Is.EqualTo(5));
+            Assert.That(proxyLine0.Points.Count, Is.EqualTo(line0.Points.Count));
 
             for (int i = 0; i < line0.Points.Count; i++)
             {
-                Assert.AreEqual(line0.Points[i].Latitude, proxyLine0.Points[i].Latitude);
-                Assert.AreEqual(line0.Points[i].Longitude, proxyLine0.Points[i].Longitude);
+                Assert.That(proxyLine0.Points[i].Latitude, Is.EqualTo(line0.Points[i].Latitude));
+                Assert.That(proxyLine0.Points[i].Longitude, Is.EqualTo(line0.Points[i].Longitude));
             }
         }
 
@@ -81,21 +81,21 @@ namespace Azure.Search.Documents.Tests.Spatial
                 .LineTo(0.0, 0.0);
             GeographyLineStringProxy proxy = new GeographyLineStringProxy(line);
 
-            Assert.AreSame(line, proxy.Value);
-            Assert.AreEqual(5, line.Points.Count);
-            Assert.AreEqual(line.Points.Count, proxy.Points.Count);
+            Assert.That(proxy.Value, Is.SameAs(line));
+            Assert.That(line.Points.Count, Is.EqualTo(5));
+            Assert.That(proxy.Points.Count, Is.EqualTo(line.Points.Count));
 
             for (int i = 0; i < line.Points.Count; i++)
             {
-                Assert.AreEqual(line.Points[i].Latitude, proxy.Points[i].Latitude);
-                Assert.AreEqual(line.Points[i].Longitude, proxy.Points[i].Longitude);
+                Assert.That(proxy.Points[i].Latitude, Is.EqualTo(line.Points[i].Latitude));
+                Assert.That(proxy.Points[i].Longitude, Is.EqualTo(line.Points[i].Longitude));
             }
         }
 
         [TestCaseSource(nameof(CreateFailsData))]
         public void CreateFails(object value)
         {
-            Assert.IsFalse(SpatialProxyFactory.TryCreate(value, out GeographyProxy proxy));
+            Assert.That(SpatialProxyFactory.TryCreate(value, out GeographyProxy proxy), Is.False);
             Assert.IsNull(proxy);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.Search.Documents.Tests.Spatial
         [TestCase(typeof(GeographyLineString), false)]
         [TestCase(typeof(GeometryLineString), false)]
         public void IsSupportedPoint(Type type, bool expected) =>
-            Assert.AreEqual(expected, SpatialProxyFactory.IsSupportedPoint(type));
+            Assert.That(SpatialProxyFactory.IsSupportedPoint(type), Is.EqualTo(expected));
 
         private static IEnumerable CreateFailsData => new[]
         {

@@ -46,8 +46,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             foreach (var expectedPipeline in pipelines)
             {
                 PipelineResource actualPipeline = await client.GetPipelineAsync(expectedPipeline.Name);
-                Assert.AreEqual(expectedPipeline.Name, actualPipeline.Name);
-                Assert.AreEqual(expectedPipeline.Id, actualPipeline.Id);
+                Assert.That(actualPipeline.Name, Is.EqualTo(expectedPipeline.Name));
+                Assert.That(actualPipeline.Id, Is.EqualTo(expectedPipeline.Id));
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await renameOperation.WaitForCompletionResponseAsync();
 
             PipelineResource pipeline = await client.GetPipelineAsync (newPipelineName);
-            Assert.AreEqual (newPipelineName, pipeline.Name);
+            Assert.That(pipeline.Name, Is.EqualTo(newPipelineName));
 
             PipelineDeletePipelineOperation operation = await client.StartDeletePipelineAsync (newPipelineName);
             await operation.WaitForCompletionResponseAsync();

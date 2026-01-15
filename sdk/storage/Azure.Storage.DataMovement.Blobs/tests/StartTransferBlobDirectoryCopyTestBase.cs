@@ -181,7 +181,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             CancellationToken cancellationToken)
         {
             long size = contents.Length;
-            Assert.IsTrue(size % (Constants.KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
+            Assert.That(size % (Constants.KB / 2) == 0, Is.True, "Cannot create page blob that's not a multiple of 512");
             await blobClient.CreateIfNotExistsAsync(
                 size,
                 new PageBlobCreateOptions()
@@ -314,14 +314,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             // Assert file and file contents
-            Assert.AreEqual(sourceFileNames.Count, destinationFileNames.Count);
+            Assert.That(destinationFileNames.Count, Is.EqualTo(sourceFileNames.Count));
             sourceFileNames.Sort();
             destinationFileNames.Sort();
             for (int i = 0; i < sourceFileNames.Count; i++)
             {
-                Assert.AreEqual(
-                    sourceFileNames[i],
-                    destinationFileNames[i]);
+                Assert.That(
+                    destinationFileNames[i],
+                    Is.EqualTo(sourceFileNames[i]));
 
                 // Verify contents
                 string sourceFullName = !string.IsNullOrEmpty(sourcePrefix) ?
@@ -334,7 +334,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 TDestinationObjectClient destinationClient = GetDestinationBlob(destinationContainer, destinationFullName);
                 using Stream sourceStream = await sourceClient.OpenReadAsync(cancellationToken: cancellationToken);
                 using Stream destinationStream = await destinationClient.OpenReadAsync(cancellationToken: cancellationToken);
-                Assert.AreEqual(sourceStream, destinationStream);
+                Assert.That(destinationStream, Is.EqualTo(sourceStream));
 
                 if (propertiesTestType == TransferPropertiesTestType.NoPreserve)
                 {
@@ -353,10 +353,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                     Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
-                    Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
-                    Assert.AreEqual(_defaultContentLanguage, destinationProperties.ContentLanguage);
-                    Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
-                    Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
+                    Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(_defaultContentDisposition));
+                    Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(_defaultContentLanguage));
+                    Assert.That(destinationProperties.CacheControl, Is.EqualTo(_defaultCacheControl));
+                    Assert.That(destinationProperties.ContentType, Is.EqualTo(_defaultContentType));
                 }
                 else //(propertiesTestType == TransferPropertiesTestType.Default ||
                      //(propertiesTestType == TransferPropertiesTestType.Preserve)
@@ -365,7 +365,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                     Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                    Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
+                    Assert.That(destinationProperties.ContentType, Is.EqualTo(sourceProperties.ContentType));
                 }
             }
         }

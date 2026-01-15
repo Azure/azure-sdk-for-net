@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Sql.Tests
             var serverAdvancedThreatProtectionResource = serverAdvancedThreatProtectionResponse.Value;
 
             // Verify that the initial Get request contains the default settings.
-            Assert.AreEqual(AdvancedThreatProtectionState.Disabled, serverAdvancedThreatProtectionResource.Data.State);
+            Assert.That(serverAdvancedThreatProtectionResource.Data.State, Is.EqualTo(AdvancedThreatProtectionState.Disabled));
 
             // Modify the settings. Then send, receive and see if its still ok.
             ServerAdvancedThreatProtectionData serverAtpData = new ServerAdvancedThreatProtectionData()
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql.Tests
             serverAdvancedThreatProtectionResource = serverAdvancedThreatProtectionResponse.Value;
 
             // Verify that the Get request contains the updated settings.
-            Assert.AreEqual(serverAtpData.State, serverAdvancedThreatProtectionResource.Data.State);
+            Assert.That(serverAdvancedThreatProtectionResource.Data.State, Is.EqualTo(serverAtpData.State));
 
             // Modify the settings again. Then send, receive and see if its still ok.
             serverAtpData.State = AdvancedThreatProtectionState.Disabled;
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Sql.Tests
             serverAdvancedThreatProtectionResponse = await sqlServerResource.GetServerAdvancedThreatProtectionAsync(AdvancedThreatProtectionName.Default);
             serverAdvancedThreatProtectionResource = serverAdvancedThreatProtectionResponse.Value;
 
-            Assert.AreEqual(serverAtpData.State, serverAdvancedThreatProtectionResource.Data.State);
+            Assert.That(serverAdvancedThreatProtectionResource.Data.State, Is.EqualTo(serverAtpData.State));
 
             // Database Advanced Threat Protection settings
             var databaseAdvancedThreatProtectionResponse = await sqlDatabaseResource.GetDatabaseAdvancedThreatProtectionAsync(AdvancedThreatProtectionName.Default);
             var databaseAdvancedThreatProtectionResource = databaseAdvancedThreatProtectionResponse.Value;
 
             // Verify that the initial Get request contains the default settings.
-            Assert.AreEqual(AdvancedThreatProtectionState.Disabled, databaseAdvancedThreatProtectionResource.Data.State);
+            Assert.That(databaseAdvancedThreatProtectionResource.Data.State, Is.EqualTo(AdvancedThreatProtectionState.Disabled));
 
             // Modify the settings. Then send, receive and see if its still ok.
             DatabaseAdvancedThreatProtectionData databaseAtpData = new DatabaseAdvancedThreatProtectionData()
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql.Tests
             databaseAdvancedThreatProtectionResource = databaseAdvancedThreatProtectionResponse.Value;
 
             // Verify that the Get request contains the updated settings.
-            Assert.AreEqual(databaseAtpData.State, databaseAdvancedThreatProtectionResource.Data.State);
+            Assert.That(databaseAdvancedThreatProtectionResource.Data.State, Is.EqualTo(databaseAtpData.State));
         }
     }
 }

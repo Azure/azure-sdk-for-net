@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             VMwareResourcePoolResource resourcePool = lro.Value;
             Assert.IsNotNull(resourcePool);
             VMwareResourcePoolData resourceData = resourcePool.Data;
-            Assert.AreEqual(resourceData.Name, resourcePoolName);
+            Assert.That(resourcePoolName, Is.EqualTo(resourceData.Name));
 
             // Get
             VMwareResourcePoolResource result = await collection.GetAsync(resourcePoolName);
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 
             // Check exists
             bool isExist = await collection.ExistsAsync(resourcePoolName);
-            Assert.IsTrue(isExist);
+            Assert.That(isExist, Is.True);
 
             // Get if exists
             NullableResponse<VMwareResourcePoolResource> response = await collection.GetIfExistsAsync(resourcePoolName);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
                 if (item.Data.Name == resourcePoolName)
                     isExist = true;
             }
-            Assert.IsTrue(isExist);
+            Assert.That(isExist, Is.True);
 
             // Delete
             await resourcePool.DeleteAsync(WaitUntil.Completed);

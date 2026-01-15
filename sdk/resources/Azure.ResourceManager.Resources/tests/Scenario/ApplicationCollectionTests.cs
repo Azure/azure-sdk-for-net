@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Tests
             string appName = Recording.GenerateAssetName("application-C-");
             ArmApplicationData applicationData = CreateApplicationData(appDef.Id, new ResourceIdentifier(subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-1-")), Recording.GenerateAssetName("s1"));
             ArmApplicationResource application = (await rg.GetArmApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, applicationData)).Value;
-            Assert.AreEqual(appName, application.Data.Name);
+            Assert.That(application.Data.Name, Is.EqualTo(appName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmApplications().CreateOrUpdateAsync(WaitUntil.Completed, null, applicationData));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, null));
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.Tests
             {
                 count++;
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Resources.Tests
                     count++;
                 }
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]
@@ -108,96 +108,96 @@ namespace Azure.ResourceManager.Resources.Tests
 
         private static void AssertValidApplication(ArmApplicationResource model, ArmApplicationResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
             if (model.Data.Plan != null || getResult.Data.Plan != null)
             {
                 Assert.NotNull(model.Data.Plan);
                 Assert.NotNull(getResult.Data.Plan);
-                Assert.AreEqual(model.Data.Plan.Name, getResult.Data.Plan.Name);
-                Assert.AreEqual(model.Data.Plan.Product, getResult.Data.Plan.Product);
-                Assert.AreEqual(model.Data.Plan.PromotionCode, getResult.Data.Plan.PromotionCode);
-                Assert.AreEqual(model.Data.Plan.Publisher, getResult.Data.Plan.Publisher);
-                Assert.AreEqual(model.Data.Plan.Version, getResult.Data.Plan.Version);
+                Assert.That(getResult.Data.Plan.Name, Is.EqualTo(model.Data.Plan.Name));
+                Assert.That(getResult.Data.Plan.Product, Is.EqualTo(model.Data.Plan.Product));
+                Assert.That(getResult.Data.Plan.PromotionCode, Is.EqualTo(model.Data.Plan.PromotionCode));
+                Assert.That(getResult.Data.Plan.Publisher, Is.EqualTo(model.Data.Plan.Publisher));
+                Assert.That(getResult.Data.Plan.Version, Is.EqualTo(model.Data.Plan.Version));
             }
-            Assert.AreEqual(model.Data.Kind, getResult.Data.Kind);
-            Assert.AreEqual(model.Data.Identity, getResult.Data.Identity);
-            Assert.AreEqual(model.Data.ManagedResourceGroupId, getResult.Data.ManagedResourceGroupId);
-            Assert.AreEqual(model.Data.ApplicationDefinitionId, getResult.Data.ApplicationDefinitionId);
-            Assert.AreEqual(model.Data.Parameters.ToArray(), getResult.Data.Parameters.ToArray());
-            Assert.AreEqual(model.Data.Outputs.ToArray(), getResult.Data.Outputs.ToArray());
-            Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
+            Assert.That(getResult.Data.Kind, Is.EqualTo(model.Data.Kind));
+            Assert.That(getResult.Data.Identity, Is.EqualTo(model.Data.Identity));
+            Assert.That(getResult.Data.ManagedResourceGroupId, Is.EqualTo(model.Data.ManagedResourceGroupId));
+            Assert.That(getResult.Data.ApplicationDefinitionId, Is.EqualTo(model.Data.ApplicationDefinitionId));
+            Assert.That(getResult.Data.Parameters.ToArray(), Is.EqualTo(model.Data.Parameters.ToArray()));
+            Assert.That(getResult.Data.Outputs.ToArray(), Is.EqualTo(model.Data.Outputs.ToArray()));
+            Assert.That(getResult.Data.ProvisioningState, Is.EqualTo(model.Data.ProvisioningState));
             if (model.Data.BillingDetails != null || getResult.Data.BillingDetails != null)
             {
                 Assert.NotNull(model.Data.BillingDetails);
                 Assert.NotNull(getResult.Data.BillingDetails);
-                Assert.AreEqual(model.Data.BillingDetails.ResourceUsageId, getResult.Data.BillingDetails.ResourceUsageId);
+                Assert.That(getResult.Data.BillingDetails.ResourceUsageId, Is.EqualTo(model.Data.BillingDetails.ResourceUsageId));
             }
             if (model.Data.JitAccessPolicy != null || getResult.Data.JitAccessPolicy != null)
             {
                 Assert.NotNull(model.Data.JitAccessPolicy);
                 Assert.NotNull(getResult.Data.JitAccessPolicy);
-                Assert.AreEqual(model.Data.JitAccessPolicy.JitAccessEnabled, getResult.Data.JitAccessPolicy.JitAccessEnabled);
-                Assert.AreEqual(model.Data.JitAccessPolicy.JitApprovalMode, getResult.Data.JitAccessPolicy.JitApprovalMode);
-                Assert.AreEqual(model.Data.JitAccessPolicy.JitApprovers.Count, getResult.Data.JitAccessPolicy.JitApprovers.Count);
+                Assert.That(getResult.Data.JitAccessPolicy.JitAccessEnabled, Is.EqualTo(model.Data.JitAccessPolicy.JitAccessEnabled));
+                Assert.That(getResult.Data.JitAccessPolicy.JitApprovalMode, Is.EqualTo(model.Data.JitAccessPolicy.JitApprovalMode));
+                Assert.That(getResult.Data.JitAccessPolicy.JitApprovers.Count, Is.EqualTo(model.Data.JitAccessPolicy.JitApprovers.Count));
                 for (int i = 0; i < model.Data.JitAccessPolicy.JitApprovers.Count; ++i)
                 {
-                    Assert.AreEqual(model.Data.JitAccessPolicy.JitApprovers[i].DisplayName, getResult.Data.JitAccessPolicy.JitApprovers[i].DisplayName);
-                    Assert.AreEqual(model.Data.JitAccessPolicy.JitApprovers[i].ApproverType, getResult.Data.JitAccessPolicy.JitApprovers[i].ApproverType);
+                    Assert.That(getResult.Data.JitAccessPolicy.JitApprovers[i].DisplayName, Is.EqualTo(model.Data.JitAccessPolicy.JitApprovers[i].DisplayName));
+                    Assert.That(getResult.Data.JitAccessPolicy.JitApprovers[i].ApproverType, Is.EqualTo(model.Data.JitAccessPolicy.JitApprovers[i].ApproverType));
                 }
-                Assert.AreEqual(model.Data.JitAccessPolicy.MaximumJitAccessDuration, getResult.Data.JitAccessPolicy.MaximumJitAccessDuration);
+                Assert.That(getResult.Data.JitAccessPolicy.MaximumJitAccessDuration, Is.EqualTo(model.Data.JitAccessPolicy.MaximumJitAccessDuration));
             }
-            Assert.AreEqual(model.Data.PublisherTenantId, getResult.Data.PublisherTenantId);
-            Assert.AreEqual(model.Data.Authorizations.Count, getResult.Data.Authorizations.Count);
+            Assert.That(getResult.Data.PublisherTenantId, Is.EqualTo(model.Data.PublisherTenantId));
+            Assert.That(getResult.Data.Authorizations.Count, Is.EqualTo(model.Data.Authorizations.Count));
             for (int i = 0; i < model.Data.Authorizations.Count; ++i)
             {
-                Assert.AreEqual(model.Data.Authorizations[i].PrincipalId, getResult.Data.Authorizations[i].PrincipalId);
-                Assert.AreEqual(model.Data.Authorizations[i].RoleDefinitionId, getResult.Data.Authorizations[i].RoleDefinitionId);
+                Assert.That(getResult.Data.Authorizations[i].PrincipalId, Is.EqualTo(model.Data.Authorizations[i].PrincipalId));
+                Assert.That(getResult.Data.Authorizations[i].RoleDefinitionId, Is.EqualTo(model.Data.Authorizations[i].RoleDefinitionId));
             }
-            Assert.AreEqual(model.Data.ManagementMode, getResult.Data.ManagementMode);
+            Assert.That(getResult.Data.ManagementMode, Is.EqualTo(model.Data.ManagementMode));
             if (model.Data.CustomerSupport != null || getResult.Data.CustomerSupport != null)
             {
                 Assert.NotNull(model.Data.CustomerSupport);
                 Assert.NotNull(getResult.Data.CustomerSupport);
-                Assert.AreEqual(model.Data.CustomerSupport.ContactName, getResult.Data.CustomerSupport.ContactName);
-                Assert.AreEqual(model.Data.CustomerSupport.Email, getResult.Data.CustomerSupport.Email);
-                Assert.AreEqual(model.Data.CustomerSupport.Phone, getResult.Data.CustomerSupport.Phone);
+                Assert.That(getResult.Data.CustomerSupport.ContactName, Is.EqualTo(model.Data.CustomerSupport.ContactName));
+                Assert.That(getResult.Data.CustomerSupport.Email, Is.EqualTo(model.Data.CustomerSupport.Email));
+                Assert.That(getResult.Data.CustomerSupport.Phone, Is.EqualTo(model.Data.CustomerSupport.Phone));
             }
             if (model.Data.SupportUris != null || getResult.Data.SupportUris != null)
             {
                 Assert.NotNull(model.Data.SupportUris);
                 Assert.NotNull(getResult.Data.SupportUris);
-                Assert.AreEqual(model.Data.SupportUris.AzureGovernmentUri, getResult.Data.SupportUris.AzureGovernmentUri);
-                Assert.AreEqual(model.Data.SupportUris.AzurePublicCloudUri, getResult.Data.SupportUris.AzurePublicCloudUri);
+                Assert.That(getResult.Data.SupportUris.AzureGovernmentUri, Is.EqualTo(model.Data.SupportUris.AzureGovernmentUri));
+                Assert.That(getResult.Data.SupportUris.AzurePublicCloudUri, Is.EqualTo(model.Data.SupportUris.AzurePublicCloudUri));
             }
             if (model.Data.Artifacts != null || getResult.Data.Artifacts != null)
             {
                 Assert.NotNull(model.Data.Artifacts);
                 Assert.NotNull(getResult.Data.Artifacts);
-                Assert.AreEqual(model.Data.Artifacts.Count, getResult.Data.Artifacts.Count);
+                Assert.That(getResult.Data.Artifacts.Count, Is.EqualTo(model.Data.Artifacts.Count));
                 for (int i = 0; i < model.Data.Artifacts.Count; ++i)
                 {
-                    Assert.AreEqual(model.Data.Artifacts[i].Name, getResult.Data.Artifacts[i].Name);
-                    Assert.AreEqual(model.Data.Artifacts[i].Uri, getResult.Data.Artifacts[i].Uri);
-                    Assert.AreEqual(model.Data.Artifacts[i].ArtifactType, getResult.Data.Artifacts[i].ArtifactType);
+                    Assert.That(getResult.Data.Artifacts[i].Name, Is.EqualTo(model.Data.Artifacts[i].Name));
+                    Assert.That(getResult.Data.Artifacts[i].Uri, Is.EqualTo(model.Data.Artifacts[i].Uri));
+                    Assert.That(getResult.Data.Artifacts[i].ArtifactType, Is.EqualTo(model.Data.Artifacts[i].ArtifactType));
                 }
             }
             if (model.Data.CreatedBy != null || getResult.Data.CreatedBy != null)
             {
                 Assert.NotNull(model.Data.CreatedBy);
                 Assert.NotNull(getResult.Data.CreatedBy);
-                Assert.AreEqual(model.Data.CreatedBy.ObjectId, getResult.Data.CreatedBy.ObjectId);
-                Assert.AreEqual(model.Data.CreatedBy.Puid, getResult.Data.CreatedBy.Puid);
-                Assert.AreEqual(model.Data.CreatedBy.ApplicationId, getResult.Data.CreatedBy.ApplicationId);
+                Assert.That(getResult.Data.CreatedBy.ObjectId, Is.EqualTo(model.Data.CreatedBy.ObjectId));
+                Assert.That(getResult.Data.CreatedBy.Puid, Is.EqualTo(model.Data.CreatedBy.Puid));
+                Assert.That(getResult.Data.CreatedBy.ApplicationId, Is.EqualTo(model.Data.CreatedBy.ApplicationId));
             }
             if (model.Data.UpdatedBy != null || getResult.Data.UpdatedBy != null)
             {
                 Assert.NotNull(model.Data.UpdatedBy);
                 Assert.NotNull(getResult.Data.UpdatedBy);
-                Assert.AreEqual(model.Data.UpdatedBy.ObjectId, getResult.Data.UpdatedBy.ObjectId);
-                Assert.AreEqual(model.Data.UpdatedBy.Puid, getResult.Data.UpdatedBy.Puid);
-                Assert.AreEqual(model.Data.UpdatedBy.ApplicationId, getResult.Data.UpdatedBy.ApplicationId);
+                Assert.That(getResult.Data.UpdatedBy.ObjectId, Is.EqualTo(model.Data.UpdatedBy.ObjectId));
+                Assert.That(getResult.Data.UpdatedBy.Puid, Is.EqualTo(model.Data.UpdatedBy.Puid));
+                Assert.That(getResult.Data.UpdatedBy.ApplicationId, Is.EqualTo(model.Data.UpdatedBy.ApplicationId));
             }
         }
     }

@@ -28,8 +28,8 @@ namespace Azure.Search.Documents.Tests
             var endpoint = new Uri($"https://{serviceName}.search.windows.net");
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
             Assert.NotNull(service);
-            Assert.AreEqual(endpoint, service.Endpoint);
-            Assert.AreEqual(serviceName, service.ServiceName);
+            Assert.That(service.Endpoint, Is.EqualTo(endpoint));
+            Assert.That(service.ServiceName, Is.EqualTo(serviceName));
 
             Assert.Throws<ArgumentNullException>(() => new SearchIndexerClient(null, new AzureKeyCredential("fake")));
             Assert.Throws<ArgumentNullException>(() => new SearchIndexerClient(endpoint, credential: null));
@@ -123,10 +123,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateDataSourceConnection(null));
-            Assert.AreEqual("dataSourceConnection", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("dataSourceConnection"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateDataSourceConnectionAsync(null));
-            Assert.AreEqual("dataSourceConnection", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("dataSourceConnection"));
         }
 
         [Test]
@@ -137,10 +137,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateOrUpdateDataSourceConnection(null));
-            Assert.AreEqual("dataSourceConnection", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("dataSourceConnection"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateOrUpdateDataSourceConnectionAsync(null));
-            Assert.AreEqual("dataSourceConnection", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("dataSourceConnection"));
         }
 
         [Test]
@@ -151,10 +151,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetDataSourceConnection(null));
-            Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("dataSourceConnectionName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetDataSourceConnectionAsync(null));
-            Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("dataSourceConnectionName"));
         }
 
         [Test]
@@ -165,16 +165,16 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteDataSourceConnection((string)null));
-            Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("dataSourceConnectionName"));
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteDataSourceConnection((SearchIndexerDataSourceConnection)null));
-            Assert.AreEqual("dataSourceConnection", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("dataSourceConnection"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteDataSourceConnectionAsync((string)null));
-            Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("dataSourceConnectionName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteDataSourceConnectionAsync((SearchIndexerDataSourceConnection)null));
-            Assert.AreEqual("dataSourceConnection", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("dataSourceConnection"));
         }
 
         [Test]
@@ -205,14 +205,14 @@ namespace Azure.Search.Documents.Tests
 
                 Assert.That(updatedConnection, Is.EqualTo(createdConnection).Using(SearchIndexerDataSourceConnectionComparer.Shared));
                 Assert.IsNull(updatedConnection.ConnectionString); // Should not be returned since it contains sensitive information.
-                Assert.AreNotEqual(createdConnection.ETag, updatedConnection.ETag);
+                Assert.That(updatedConnection.ETag, Is.Not.EqualTo(createdConnection.ETag));
 
                 // Get the connection.
                 connection = await client.GetDataSourceConnectionAsync(connectionName);
 
                 Assert.That(connection, Is.EqualTo(updatedConnection).Using(SearchIndexerDataSourceConnectionComparer.Shared));
                 Assert.IsNull(connection.ConnectionString); // Should not be returned since it contains sensitive information.
-                Assert.AreEqual(updatedConnection.ETag, connection.ETag);
+                Assert.That(connection.ETag, Is.EqualTo(updatedConnection.ETag));
 
                 // Delete the connection.
                 await client.DeleteDataSourceConnectionAsync(connection, onlyIfUnchanged: true);
@@ -238,10 +238,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateIndexer(null));
-            Assert.AreEqual("indexer", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexer"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateIndexerAsync(null));
-            Assert.AreEqual("indexer", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexer"));
         }
 
         [Test]
@@ -252,10 +252,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateOrUpdateIndexer(null));
-            Assert.AreEqual("indexer", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexer"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateOrUpdateIndexerAsync(null));
-            Assert.AreEqual("indexer", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexer"));
         }
 
         [Test]
@@ -266,10 +266,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetIndexer(null));
-            Assert.AreEqual("indexerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexerName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetIndexerAsync(null));
-            Assert.AreEqual("indexerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexerName"));
         }
 
         [Test]
@@ -280,16 +280,16 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndexer((string)null));
-            Assert.AreEqual("indexerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexerName"));
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndexer((SearchIndexer)null));
-            Assert.AreEqual("indexer", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexer"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexerAsync((string)null));
-            Assert.AreEqual("indexerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexerName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexerAsync((SearchIndexer)null));
-            Assert.AreEqual("indexer", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexer"));
         }
 
         [Test]
@@ -300,10 +300,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.ResetIndexer(null));
-            Assert.AreEqual("indexerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexerName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.ResetIndexerAsync(null));
-            Assert.AreEqual("indexerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexerName"));
         }
 
         [Test]
@@ -314,10 +314,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.RunIndexer(null));
-            Assert.AreEqual("indexerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexerName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.RunIndexerAsync(null));
-            Assert.AreEqual("indexerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexerName"));
         }
 
         [Test]
@@ -328,10 +328,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateSkillset(null));
-            Assert.AreEqual("skillset", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("skillset"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateSkillsetAsync(null));
-            Assert.AreEqual("skillset", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("skillset"));
         }
 
         [Test]
@@ -342,10 +342,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateOrUpdateSkillset(null));
-            Assert.AreEqual("skillset", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("skillset"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateOrUpdateSkillsetAsync(null));
-            Assert.AreEqual("skillset", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("skillset"));
         }
 
         [Test]
@@ -356,10 +356,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetSkillset(null));
-            Assert.AreEqual("skillsetName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("skillsetName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetSkillsetAsync(null));
-            Assert.AreEqual("skillsetName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("skillsetName"));
         }
 
         [Test]
@@ -370,16 +370,16 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSkillset((string)null));
-            Assert.AreEqual("skillsetName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("skillsetName"));
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSkillset((SearchIndexerSkillset)null));
-            Assert.AreEqual("skillset", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("skillset"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSkillsetAsync((string)null));
-            Assert.AreEqual("skillsetName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("skillsetName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSkillsetAsync((SearchIndexerSkillset)null));
-            Assert.AreEqual("skillset", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("skillset"));
         }
 
         [Test]
@@ -578,38 +578,38 @@ namespace Azure.Search.Documents.Tests
                 SearchIndexerSkillset updatedSkillset = await client.CreateOrUpdateSkillsetAsync(createdSkillset, onlyIfUnchanged: true);
 
                 Assert.That(updatedSkillset, Is.EqualTo(createdSkillset).Using(SearchIndexerSkillsetComparer.Shared));
-                Assert.AreNotEqual(createdSkillset.ETag, updatedSkillset.ETag);
+                Assert.That(updatedSkillset.ETag, Is.Not.EqualTo(createdSkillset.ETag));
 
                 // Get the skillset
                 skillset = await client.GetSkillsetAsync(skillsetName);
 
                 Assert.That(skillset, Is.EqualTo(updatedSkillset).Using(SearchIndexerSkillsetComparer.Shared));
-                Assert.AreEqual(updatedSkillset.ETag, skillset.ETag);
+                Assert.That(skillset.ETag, Is.EqualTo(updatedSkillset.ETag));
 
                 // Check the projections in the knowledge store of the skillset.
-                Assert.AreEqual(2, skillset.KnowledgeStore.Projections.Count);
+                Assert.That(skillset.KnowledgeStore.Projections.Count, Is.EqualTo(2));
 
                 KnowledgeStoreProjection p1 = skillset.KnowledgeStore.Projections[0];
-                Assert.AreEqual(3, p1.Tables.Count);
-                Assert.AreEqual("hotelReviewsDocument", p1.Tables[0].TableName);
-                Assert.AreEqual(0, p1.Tables[0].Inputs.Count);
-                Assert.AreEqual("hotelReviewsPages", p1.Tables[1].TableName);
-                Assert.AreEqual(0, p1.Tables[1].Inputs.Count);
-                Assert.AreEqual("hotelReviewsKeyPhrases", p1.Tables[2].TableName);
-                Assert.AreEqual(0, p1.Tables[2].Inputs.Count);
-                Assert.AreEqual(0, p1.Objects.Count);
-                Assert.AreEqual(0, p1.Files.Count);
+                Assert.That(p1.Tables.Count, Is.EqualTo(3));
+                Assert.That(p1.Tables[0].TableName, Is.EqualTo("hotelReviewsDocument"));
+                Assert.That(p1.Tables[0].Inputs.Count, Is.EqualTo(0));
+                Assert.That(p1.Tables[1].TableName, Is.EqualTo("hotelReviewsPages"));
+                Assert.That(p1.Tables[1].Inputs.Count, Is.EqualTo(0));
+                Assert.That(p1.Tables[2].TableName, Is.EqualTo("hotelReviewsKeyPhrases"));
+                Assert.That(p1.Tables[2].Inputs.Count, Is.EqualTo(0));
+                Assert.That(p1.Objects.Count, Is.EqualTo(0));
+                Assert.That(p1.Files.Count, Is.EqualTo(0));
 
                 KnowledgeStoreProjection p2 = skillset.KnowledgeStore.Projections[1];
-                Assert.AreEqual(3, p2.Tables.Count);
-                Assert.AreEqual("hotelReviewsInlineDocument", p2.Tables[0].TableName);
-                Assert.AreEqual(6, p2.Tables[0].Inputs.Count);
-                Assert.AreEqual("hotelReviewsInlinePages", p2.Tables[1].TableName);
-                Assert.AreEqual(3, p2.Tables[1].Inputs.Count);
-                Assert.AreEqual("hotelReviewsInlineKeyPhrases", p2.Tables[2].TableName);
-                Assert.AreEqual(1, p2.Tables[2].Inputs.Count);
-                Assert.AreEqual(0, p2.Objects.Count);
-                Assert.AreEqual(0, p2.Files.Count);
+                Assert.That(p2.Tables.Count, Is.EqualTo(3));
+                Assert.That(p2.Tables[0].TableName, Is.EqualTo("hotelReviewsInlineDocument"));
+                Assert.That(p2.Tables[0].Inputs.Count, Is.EqualTo(6));
+                Assert.That(p2.Tables[1].TableName, Is.EqualTo("hotelReviewsInlinePages"));
+                Assert.That(p2.Tables[1].Inputs.Count, Is.EqualTo(3));
+                Assert.That(p2.Tables[2].TableName, Is.EqualTo("hotelReviewsInlineKeyPhrases"));
+                Assert.That(p2.Tables[2].Inputs.Count, Is.EqualTo(1));
+                Assert.That(p2.Objects.Count, Is.EqualTo(0));
+                Assert.That(p2.Files.Count, Is.EqualTo(0));
 
                 // Delete the skillset.
                 await client.DeleteSkillsetAsync(skillset, onlyIfUnchanged: true);
@@ -742,8 +742,8 @@ namespace Azure.Search.Documents.Tests
             {
                 SearchIndexerSkillset createdSkillset = await client.CreateSkillsetAsync(specifiedSkillset);
 
-                Assert.AreEqual(skillsetName, createdSkillset.Name);
-                Assert.AreEqual(skills.Count, createdSkillset.Skills.Count);
+                Assert.That(createdSkillset.Name, Is.EqualTo(skillsetName));
+                Assert.That(createdSkillset.Skills.Count, Is.EqualTo(skills.Count));
             }
             catch
             {

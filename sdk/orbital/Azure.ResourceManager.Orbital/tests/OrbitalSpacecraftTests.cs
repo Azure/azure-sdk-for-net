@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Orbital.Tests
             string spacecraftName = Recording.GenerateAssetName("spacecraft");
             // Create Spacecraft
             OrbitalSpacecraftResource spacecraft = await CreateSpacecraftAsync(rg, spacecraftName, location);
-            Assert.AreEqual(spacecraftName, spacecraft.Data.Name);
+            Assert.That(spacecraft.Data.Name, Is.EqualTo(spacecraftName));
             // Create contact profile
             string contactProfileName = Recording.GenerateAssetName("contact");
             var channels = new List<OrbitalContactProfileLinkChannel>()

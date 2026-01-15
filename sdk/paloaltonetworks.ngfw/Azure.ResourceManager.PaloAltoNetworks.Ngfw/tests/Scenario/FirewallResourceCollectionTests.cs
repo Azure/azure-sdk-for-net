@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             PaloAltoNetworksFirewallData data = IsAsync ? GetFirewallResourceData("default", "20.12.91.61", "10.148.0.0/16", "10.148.1.0/26", "10.148.0.0/26") : GetFirewallResourceData("defaultSync", "20.12.90.143", "10.162.0.0/16", "10.162.1.0/26", "10.162.0.0/26");
             var response = await ResGroup.GetPaloAltoNetworksFirewalls().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
             PaloAltoNetworksFirewallResource firewall = response.Value;
-            Assert.IsTrue(resourceName.Equals(firewall.Data.Name));
+            Assert.That(resourceName.Equals(firewall.Data.Name), Is.True);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await ResGroup.GetPaloAltoNetworksFirewalls().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, null)).Value);
         }
 
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Exists()
         {
             PaloAltoNetworksFirewallCollection collection = DefaultResGroup.GetPaloAltoNetworksFirewalls();
-            Assert.IsTrue(await collection.ExistsAsync(DefaultResource1.Data.Name));
-            Assert.IsFalse(await collection.ExistsAsync("invalidResourceName"));
+            Assert.That((bool)await collection.ExistsAsync(DefaultResource1.Data.Name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync("invalidResourceName"), Is.False);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
@@ -80,16 +80,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
                 count++;
             }
 
-            Assert.AreEqual(count, 4);
+            Assert.That(count, Is.EqualTo(4));
         }
 
         private void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
-            Assert.AreEqual(r1.Location, r2.Location);
-            Assert.AreEqual(r1.Tags, r2.Tags);
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.Name, Is.EqualTo(r1.Name));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.That(r2.Location, Is.EqualTo(r1.Location));
+            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
         }
 
         private PaloAltoNetworksFirewallData GetFirewallResourceData(string nameSuffix, string publicIp, string vnetIp, string subnet1_ip, string subnet2_ip)

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Tests
             ResourcesSku sku = new ResourcesSku("NameForSku", ArmSkuTier.Basic.ToString(), "SizeForSku", "FamilyForSku", "ModelForSku", 15464547, null);
             GenericResourceData data = ResourceManagerModelFactory.GenericResourceData(id: id, name: id.Name, resourceType: id.ResourceType, tags: new Dictionary<string, string>(), location: AzureLocation.EastUS, plan: plan, kind: "KindForResource", managedBy: "ManagedByForResource", sku: sku);
             var binary = ModelReaderWriter.Write(data, _wireOptions);
-            Assert.AreEqual(expected, binary.ToString());
+            Assert.That(binary.ToString(), Is.EqualTo(expected));
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Tests
             }, location: AzureLocation.EastUS, plan: plan, kind: kind, managedBy: managedBy, sku: sku);
 
             var binary = ModelReaderWriter.Write(genericResource, _wireOptions);
-            Assert.AreEqual(expected, binary.ToString());
+            Assert.That(binary.ToString(), Is.EqualTo(expected));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Tests
             GenericResourceData data = ResourceManagerModelFactory.GenericResourceData(id: id, name: id.Name, resourceType: id.ResourceType, tags: new Dictionary<string, string>(), location: AzureLocation.EastUS);
 
             var binary = ModelReaderWriter.Write(data, _wireOptions);
-            Assert.AreEqual(expected, binary.ToString());
+            Assert.That(binary.ToString(), Is.EqualTo(expected));
         }
 
         [Test]
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.Tests
             const string json = "{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1\",\"kind\":\"KindForResource\",\"location\":\"eastus\",\"managedBy\":\"ManagedByForResource\",\"name\":\"account1\",\"plan\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"},\"sku\":{\"name\":\"NameForSku\",\"tier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{},\"type\":\"Microsoft.ClassicStorage/storageAccounts\"}";
             using var jsonDocument = JsonDocument.Parse(json);
             GenericResourceData data = GenericResourceData.DeserializeGenericResourceData(jsonDocument.RootElement);
-            Assert.AreEqual("account1", data.Name);
-            Assert.AreEqual(AzureLocation.EastUS, data.Location);
-            Assert.AreEqual("PromotionCodeForPlan", data.Plan.PromotionCode);
+            Assert.That(data.Name, Is.EqualTo("account1"));
+            Assert.That(data.Location, Is.EqualTo(AzureLocation.EastUS));
+            Assert.That(data.Plan.PromotionCode, Is.EqualTo("PromotionCodeForPlan"));
         }
 
         [Test]

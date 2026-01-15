@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             portalSignInSettings = (await portalSignInSettings.CreateOrUpdateAsync(WaitUntil.Completed, portalSignInSettings.Data)).Value;
 
             Assert.NotNull(portalSignInSettings);
-            Assert.IsFalse(portalSignInSettings.Data.IsRedirectEnabled);
+            Assert.That(portalSignInSettings.Data.IsRedirectEnabled, Is.False);
 
             portalSignInSettings = await portalSignInSettings.GetAsync();
             Assert.NotNull(portalSignInSettings);
-            Assert.IsFalse(portalSignInSettings.Data.IsRedirectEnabled);
+            Assert.That(portalSignInSettings.Data.IsRedirectEnabled, Is.False);
         }
     }
 }

@@ -62,8 +62,8 @@ namespace Azure.Analytics.Defender.Easm.Tests
         {
             var result = await client.GetDiscoveryGroupAsync(knownGroupName);
             DiscoveryGroup discoGroup = result.Value;
-            Assert.AreEqual(knownGroupName, discoGroup.Name);
-            Assert.AreEqual(knownGroupName, discoGroup.DisplayName);
+            Assert.That(discoGroup.Name, Is.EqualTo(knownGroupName));
+            Assert.That(discoGroup.DisplayName, Is.EqualTo(knownGroupName));
             Assert.IsNotNull(discoGroup.Description);
             Assert.IsNotNull(discoGroup.Seeds);
             Assert.IsNotNull(discoGroup.Seeds[0].Kind);
@@ -83,13 +83,13 @@ namespace Azure.Analytics.Defender.Easm.Tests
             request.Tier = "advanced";
             var response = await client.CreateOrReplaceDiscoveryGroupAsync(newGroupName, request).ConfigureAwait(false);
             DiscoveryGroup discoGroup = response.Value;
-            Assert.IsTrue(doSeedsMatch(seed, discoGroup.Seeds[0]));
+            Assert.That(doSeedsMatch(seed, discoGroup.Seeds[0]), Is.True);
         }
         [RecordedTest]
         public async System.Threading.Tasks.Task DiscoGroupsRunTest()
         {
             Response response = await client.RunDiscoveryGroupAsync(knownGroupName).ConfigureAwait(false);
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         }
         [RecordedTest]
         public async System.Threading.Tasks.Task DiscoRunListTest()

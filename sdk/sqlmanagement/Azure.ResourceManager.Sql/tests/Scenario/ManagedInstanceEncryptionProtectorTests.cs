@@ -58,27 +58,27 @@ namespace Azure.ResourceManager.Sql.Tests
             };
             var encryption = await collection.CreateOrUpdateAsync(WaitUntil.Completed, encryptionProtectorName, data);
             Assert.IsNotNull(encryption.Value.Data);
-            Assert.AreEqual(encryptionProtectorName, encryption.Value.Data.Name);
-            Assert.AreEqual("ServiceManaged", encryption.Value.Data.ServerKeyName);
-            Assert.AreEqual("ServiceManaged", encryption.Value.Data.ServerKeyType.ToString());
-            Assert.AreEqual(false, encryption.Value.Data.IsAutoRotationEnabled);
+            Assert.That(encryption.Value.Data.Name, Is.EqualTo(encryptionProtectorName));
+            Assert.That(encryption.Value.Data.ServerKeyName, Is.EqualTo("ServiceManaged"));
+            Assert.That(encryption.Value.Data.ServerKeyType.ToString(), Is.EqualTo("ServiceManaged"));
+            Assert.That(encryption.Value.Data.IsAutoRotationEnabled, Is.EqualTo(false));
 
             // 2.CheckIfExist
-            Assert.IsTrue(await collection.ExistsAsync(encryptionProtectorName));
+            Assert.That((bool)await collection.ExistsAsync(encryptionProtectorName), Is.True);
 
             // 3.Get
             var getEncryption = await collection.GetAsync(encryptionProtectorName);
             Assert.IsNotNull(encryption.Value.Data);
-            Assert.AreEqual(encryptionProtectorName, getEncryption.Value.Data.Name);
-            Assert.AreEqual("ServiceManaged", getEncryption.Value.Data.ServerKeyName);
-            Assert.AreEqual("ServiceManaged", getEncryption.Value.Data.ServerKeyType.ToString());
-            Assert.AreEqual(false, getEncryption.Value.Data.IsAutoRotationEnabled);
+            Assert.That(getEncryption.Value.Data.Name, Is.EqualTo(encryptionProtectorName));
+            Assert.That(getEncryption.Value.Data.ServerKeyName, Is.EqualTo("ServiceManaged"));
+            Assert.That(getEncryption.Value.Data.ServerKeyType.ToString(), Is.EqualTo("ServiceManaged"));
+            Assert.That(getEncryption.Value.Data.IsAutoRotationEnabled, Is.EqualTo(false));
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(encryptionProtectorName, list.FirstOrDefault().Data.Name);
+            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(encryptionProtectorName));
         }
     }
 }

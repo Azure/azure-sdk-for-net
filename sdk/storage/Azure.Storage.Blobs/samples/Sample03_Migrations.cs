@@ -176,7 +176,7 @@ namespace Azure.Storage.Blobs.Samples
                 #endregion
 
                 BlobContainerAccessPolicy containerAccessPolicy = containerClient.GetAccessPolicy();
-                Assert.AreEqual(signedIdentifiers.First().Id, containerAccessPolicy.SignedIdentifiers.First().Id);
+                Assert.That(containerAccessPolicy.SignedIdentifiers.First().Id, Is.EqualTo(signedIdentifiers.First().Id));
             }
             finally
             {
@@ -262,7 +262,7 @@ namespace Azure.Storage.Blobs.Samples
                 string downloadedData = await new StreamReader(downloadStream).ReadToEndAsync();
                 downloadStream.Close();
 
-                Assert.AreEqual(data, downloadedData);
+                Assert.That(downloadedData, Is.EqualTo(data));
             }
             finally
             {
@@ -298,7 +298,7 @@ namespace Azure.Storage.Blobs.Samples
                 string downloadedData = await new StreamReader(downloadStream).ReadToEndAsync();
                 downloadStream.Close();
 
-                Assert.AreEqual(data, downloadedData);
+                Assert.That(downloadedData, Is.EqualTo(data));
             }
             finally
             {
@@ -331,7 +331,7 @@ namespace Azure.Storage.Blobs.Samples
 
                 BinaryData downloadedData = (await blobClient.DownloadContentAsync()).Value.Content;
 
-                Assert.AreEqual(data, downloadedData.ToString());
+                Assert.That(downloadedData.ToString(), Is.EqualTo(data));
             }
             finally
             {
@@ -364,7 +364,7 @@ namespace Azure.Storage.Blobs.Samples
                 string downloadedData = await new StreamReader(fs).ReadToEndAsync();
                 fs.Close();
 
-                Assert.AreEqual(data, downloadedData);
+                Assert.That(downloadedData, Is.EqualTo(data));
             }
             finally
             {
@@ -400,7 +400,7 @@ namespace Azure.Storage.Blobs.Samples
                 string downloadedData = await new StreamReader(fs).ReadToEndAsync();
                 fs.Close();
 
-                Assert.AreEqual(data, downloadedData);
+                Assert.That(downloadedData, Is.EqualTo(data));
             }
             finally
             {
@@ -429,7 +429,7 @@ namespace Azure.Storage.Blobs.Samples
                 string downloadedData = downloadResult.Content.ToString();
                 #endregion
 
-                Assert.AreEqual(data, downloadedData);
+                Assert.That(downloadedData, Is.EqualTo(data));
             }
             finally
             {
@@ -471,7 +471,7 @@ namespace Azure.Storage.Blobs.Samples
                 }
                 #endregion
 
-                Assert.IsTrue(blobNames.SetEquals(downloadedBlobNames));
+                Assert.That(blobNames.SetEquals(downloadedBlobNames), Is.True);
             }
             finally
             {
@@ -528,7 +528,7 @@ namespace Azure.Storage.Blobs.Samples
                 }
                 #endregion
 
-                Assert.IsTrue(blobNames.SetEquals(downloadedBlobNames));
+                Assert.That(blobNames.SetEquals(downloadedBlobNames), Is.True);
             }
             finally
             {
@@ -587,8 +587,8 @@ namespace Azure.Storage.Blobs.Samples
                 }
                 #endregion
 
-                Assert.IsTrue(expectedBlobNamesResult.SetEquals(downloadedBlobNames));
-                Assert.IsTrue(new HashSet<string> { virtualDirName + '/' }.SetEquals(downloadedPrefixNames));
+                Assert.That(expectedBlobNamesResult.SetEquals(downloadedBlobNames), Is.True);
+                Assert.That(new HashSet<string> { virtualDirName + '/' }.SetEquals(downloadedPrefixNames), Is.True);
             }
             finally
             {
@@ -619,11 +619,11 @@ namespace Azure.Storage.Blobs.Samples
 
                 var expectedMetadata = new Dictionary<string, string> { { "foo", "bar" }, { "fizz", "buzz" } };
                 var actualMetadata = (await blobClient.GetPropertiesAsync()).Value.Metadata;
-                Assert.AreEqual(expectedMetadata.Count, actualMetadata.Count);
+                Assert.That(actualMetadata.Count, Is.EqualTo(expectedMetadata.Count));
                 foreach (var expectedKvp in expectedMetadata)
                 {
-                    Assert.IsTrue(actualMetadata.TryGetValue(expectedKvp.Key, out var actualValue));
-                    Assert.AreEqual(expectedKvp.Value, actualValue);
+                    Assert.That(actualMetadata.TryGetValue(expectedKvp.Key, out var actualValue), Is.True);
+                    Assert.That(actualValue, Is.EqualTo(expectedKvp.Value));
                 }
             }
             finally
@@ -662,11 +662,11 @@ namespace Azure.Storage.Blobs.Samples
                 #endregion
 
                 var actualMetadata = (await blobClient.GetPropertiesAsync()).Value.Metadata;
-                Assert.AreEqual(initialMetadata.Count, actualMetadata.Count);
+                Assert.That(actualMetadata.Count, Is.EqualTo(initialMetadata.Count));
                 foreach (var expectedKvp in initialMetadata)
                 {
-                    Assert.IsTrue(actualMetadata.TryGetValue(expectedKvp.Key, out var actualValue));
-                    Assert.AreEqual(expectedKvp.Value, actualValue);
+                    Assert.That(actualMetadata.TryGetValue(expectedKvp.Key, out var actualValue), Is.True);
+                    Assert.That(actualValue, Is.EqualTo(expectedKvp.Value));
                 }
             }
             finally
@@ -1049,8 +1049,8 @@ namespace Azure.Storage.Blobs.Samples
                     downloadedBytes = memStream.ToArray();
                 }
 
-                Assert.AreEqual(data, Encoding.UTF8.GetString(downloadedBytes));
-                Assert.IsTrue(Enumerable.SequenceEqual(precalculatedContentHash, blobContentMD5));
+                Assert.That(Encoding.UTF8.GetString(downloadedBytes), Is.EqualTo(data));
+                Assert.That(Enumerable.SequenceEqual(precalculatedContentHash, blobContentMD5), Is.True);
             }
             finally
             {
@@ -1132,7 +1132,7 @@ namespace Azure.Storage.Blobs.Samples
                     downloadedBytes = memStream.ToArray();
                 }
 
-                Assert.AreEqual(data, Encoding.UTF8.GetString(downloadedBytes));
+                Assert.That(Encoding.UTF8.GetString(downloadedBytes), Is.EqualTo(data));
             }
             finally
             {

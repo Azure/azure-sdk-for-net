@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
 
             Assert.IsNotNull(instanceResource);
             Assert.IsNotNull(instanceResource.Data);
-            Assert.AreEqual(instanceResource.Data.Name, InstanceName);
+            Assert.That(InstanceName, Is.EqualTo(instanceResource.Data.Name));
 
             // Update Instance
             Random random = new Random();
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.IotOperations.Tests
             Assert.IsNotNull(updatedInstance.Data);
             Assert.IsNotNull(updatedInstance.Data.Properties);
             Assert.IsNotNull(updatedInstance.Data.Properties.Description);
-            Assert.AreEqual(
-                updatedInstance.Data.Properties.Description,
-                "Updated Description: " + random.ToString()
+            Assert.That(
+                "Updated Description: " + random.ToString(),
+                Is.EqualTo(updatedInstance.Data.Properties.Description)
             );
         }
 

@@ -110,7 +110,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(entities, new List<string>() { "800-102-1100", "Microsoft" });
 
             entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.ABARoutingNumber } });
-            Assert.AreEqual(0, entities.Count);
+            Assert.That(entities.Count, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -143,13 +143,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents);
 
-            Assert.IsFalse(results[0].HasError);
-            Assert.IsFalse(results[2].HasError);
+            Assert.That(results[0].HasError, Is.False);
+            Assert.That(results[2].HasError, Is.False);
 
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
-            Assert.IsTrue(results[1].HasError);
+            Assert.That(results[1].HasError, Is.True);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
-            Assert.AreEqual(exceptionMessage, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
         }
 
         [RecordedTest]
@@ -293,7 +293,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
             foreach (var text in minimumExpectedOutput)
             {
-                Assert.IsTrue(entities.Any(e => e.Text == text));
+                Assert.That(entities.Any(e => e.Text == text), Is.True);
             }
         }
 
@@ -318,7 +318,7 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (RecognizePiiEntitiesResult result in results)
             {
                 Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
-                Assert.False(result.HasError);
+                Assert.That(result.HasError, Is.False);
 
                 //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
                 Assert.IsNotNull(result.Statistics);
@@ -330,8 +330,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
                 else
                 {
-                    Assert.AreEqual(0, result.Statistics.CharacterCount);
-                    Assert.AreEqual(0, result.Statistics.TransactionCount);
+                    Assert.That(result.Statistics.CharacterCount, Is.EqualTo(0));
+                    Assert.That(result.Statistics.TransactionCount, Is.EqualTo(0));
                 }
 
                 ValidateInDocumenResult(result.Entities, minimumExpectedOutput[result.Id]);

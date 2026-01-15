@@ -64,9 +64,9 @@ public partial class Sample_PersistentAgents_Sharepoint : SamplesBase<AIAgentsTe
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
 
-        Assert.AreEqual(
-            RunStatus.Completed,
+        Assert.That(
             run.Status,
+            Is.EqualTo(RunStatus.Completed),
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsSharepointAsync_Print
@@ -157,9 +157,9 @@ public partial class Sample_PersistentAgents_Sharepoint : SamplesBase<AIAgentsTe
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
 
-        Assert.AreEqual(
-            RunStatus.Completed,
+        Assert.That(
             run.Status,
+            Is.EqualTo(RunStatus.Completed),
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsSharepoint_Print

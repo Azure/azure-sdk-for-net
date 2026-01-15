@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var validator = serviceProvider.GetRequiredService<RequestValidator>();
 
             Assert.NotNull(validator);
-            Assert.True(validator.IsValidOrigin(new List<string> { testHost }));
+            Assert.That(validator.IsValidOrigin(new List<string> { testHost }), Is.True);
 
             var serviceClient = serviceProvider.GetRequiredService<WebPubSubServiceClient<TestHub>>();
             Assert.NotNull(serviceClient);
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             // no throws
             Assert.NotNull(wpsOptions);
             Assert.NotNull(wpsOptions.Value);
-            Assert.Null(wpsOptions.Value.ServiceEndpoint);
+            Assert.That(wpsOptions.Value.ServiceEndpoint, Is.Null);
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var validator = app.Services.GetRequiredService<RequestValidator>();
 
             Assert.NotNull(validator);
-            Assert.True(validator.IsValidOrigin(new List<string> { testHost }));
+            Assert.That(validator.IsValidOrigin(new List<string> { testHost }), Is.True);
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             Assert.NotNull(validator);
             Assert.NotNull(adaptor);
-            Assert.True(validator.IsValidOrigin(new List<string> { testHost }));
+            Assert.That(validator.IsValidOrigin(new List<string> { testHost }), Is.True);
             Assert.NotNull(adaptor.GetHub(customHub), "Custom hub should be registered");
         }
 
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             Assert.NotNull(validator);
             Assert.NotNull(adaptor);
-            Assert.True(validator.IsValidOrigin(new List<string> { testHost }));
+            Assert.That(validator.IsValidOrigin(new List<string> { testHost }), Is.True);
             Assert.NotNull(adaptor.GetHub(nameof(TestHub)), "Hub with the name that matches the class name should be registered");
         }
 

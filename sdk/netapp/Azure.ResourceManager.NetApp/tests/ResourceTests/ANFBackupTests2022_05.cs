@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsNotNull(getVolumeResource2022_05.Data.DataProtection);
             Assert.IsNull(getVolumeResource2022_05.Data.DataProtection.Snapshot);
             Assert.IsNull(getVolumeResource2022_05.Data.DataProtection.Replication);
-           // Assert.AreEqual(backupConfiguration.VaultId, getVolumeResource2022_05.Data.DataProtection.Backup.VaultId);
-            Assert.AreEqual(backupConfiguration.IsBackupEnabled, getVolumeResource2022_05.Data.DataProtection.Backup.IsBackupEnabled);
+            // Assert.AreEqual(backupConfiguration.VaultId, getVolumeResource2022_05.Data.DataProtection.Backup.VaultId);
+            Assert.That(getVolumeResource2022_05.Data.DataProtection.Backup.IsBackupEnabled, Is.EqualTo(backupConfiguration.IsBackupEnabled));
 
             //Validate volume is backup enabled, api-version 2022-09-01
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
@@ -160,8 +160,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
             Assert.NotNull(backupVolumeResource.Data.DataProtection.Backup.VaultId);
-            Assert.AreEqual(_vault.Id, backupVolumeResource.Data.DataProtection.Backup.VaultId);
-            Assert.AreEqual(backupConfiguration.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
+            Assert.That(backupVolumeResource.Data.DataProtection.Backup.VaultId, Is.EqualTo(_vault.Id));
+            Assert.That(backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled, Is.EqualTo(backupConfiguration.IsBackupEnabled));
 
             //Disable the backup
             backupConfiguration.IsBackupEnabled = false;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             TestContext.WriteLine($"Disable: elapsed time {watch.ElapsedMilliseconds} ms {watch.Elapsed}");
             // Assert.IsFalse(backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
             getVolumeResource2022_05 = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
-            Assert.IsFalse(getVolumeResource2022_05.Data.DataProtection.Backup.IsBackupEnabled);
+            Assert.That(getVolumeResource2022_05.Data.DataProtection.Backup.IsBackupEnabled, Is.False);
         }
 
         private async Task WaitForBackupSucceeded(NetAppVolumeBackupCollection volumeBackupCollection, string backupName)

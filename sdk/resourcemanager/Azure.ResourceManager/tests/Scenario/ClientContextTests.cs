@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Tests
             
             Console.WriteLine("-----Client 1-----");
             _ = await (await client1.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            Assert.AreEqual(2, dummyPolicy1.numMsgGot);
+            Assert.That(dummyPolicy1.numMsgGot, Is.EqualTo(2));
 
             options1.AddPolicy(dummyPolicy2, HttpPipelinePosition.PerCall);
 
             _ = await (await client1.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("test2Rg-"));
-            
-            Assert.AreEqual(3, dummyPolicy1.numMsgGot);
-            Assert.AreEqual(0, dummyPolicy2.numMsgGot);
+
+            Assert.That(dummyPolicy1.numMsgGot, Is.EqualTo(3));
+            Assert.That(dummyPolicy2.numMsgGot, Is.EqualTo(0));
         }
 
         private class dummyPolicy : HttpPipelineSynchronousPolicy
@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.Tests
             var subY = await clientY.GetDefaultSubscriptionAsync();
             var versionX = await subX.GetResourceProviders().GetApiVersionAsync(ResourceGroupResource.ResourceType);
             var versionY = await subY.GetResourceProviders().GetApiVersionAsync(ResourceGroupResource.ResourceType);
-            Assert.AreEqual(versionX, versionY);
-            Assert.AreNotEqual(versionY, fakeVersion);
-            Assert.AreNotEqual(versionX, fakeVersion);
+            Assert.That(versionY, Is.EqualTo(versionX));
+            Assert.That(fakeVersion, Is.Not.EqualTo(versionY));
+            Assert.That(fakeVersion, Is.Not.EqualTo(versionX));
 
             x = new ArmClientOptions();
             x.SetApiVersion(ResourceGroupResource.ResourceType, fakeVersion);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Tests
             subX = await clientX.GetDefaultSubscriptionAsync();
             versionX = await subX.GetResourceProviders().GetApiVersionAsync(ResourceGroupResource.ResourceType);
             versionY = await subY.GetResourceProviders().GetApiVersionAsync(ResourceGroupResource.ResourceType);
-            Assert.AreNotEqual(versionX, versionY);
+            Assert.That(versionY, Is.Not.EqualTo(versionX));
         }
     }
 }

@@ -15,9 +15,9 @@ namespace Azure.Storage.Files.Shares.Tests
             MockStream stream = new MockStream();
             ShareFileDownloadInfo storageFileDownloadInfo =
                 FilesModelFactory.StorageFileDownloadInfo(content: stream);
-            Assert.IsFalse(stream.IsDisposed);
+            Assert.That(stream.IsDisposed, Is.False);
             storageFileDownloadInfo.Dispose();
-            Assert.IsTrue(stream.IsDisposed);
+            Assert.That(stream.IsDisposed, Is.True);
         }
     }
 }

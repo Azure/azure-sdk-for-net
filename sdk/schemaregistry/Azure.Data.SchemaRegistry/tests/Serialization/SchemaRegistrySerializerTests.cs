@@ -41,7 +41,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
 
             var serializer = new SchemaRegistrySerializer(mockClient.Object, new SampleJsonGenerator(), "groupName");
             var content = await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }).ConfigureAwait(false);
-            Assert.AreEqual("SchemaId", content.ContentType.ToString().Split('+')[1]);
+            Assert.That(content.ContentType.ToString().Split('+')[1], Is.EqualTo("SchemaId"));
         }
 
         [Test]
@@ -65,10 +65,10 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
 
             var serializer = new SchemaRegistrySerializer(mockClient.Object, new SampleCustomGenerator(), "groupName", options);
             var content = await serializer.SerializeAsync(new Employee { Age = 25, Name = "Name" }).ConfigureAwait(false);
-            Assert.AreEqual("SchemaId", content.ContentType.ToString().Split('+')[1]);
+            Assert.That(content.ContentType.ToString().Split('+')[1], Is.EqualTo("SchemaId"));
 
             // Test that the correct mime type was used
-            Assert.AreEqual("text/plain", content.ContentType.ToString().Split('+')[0]);
+            Assert.That(content.ContentType.ToString().Split('+')[0], Is.EqualTo("text/plain"));
         }
 
         [Test]
@@ -96,10 +96,10 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             sampleGeneratorAvro.SchemaToUse = s_avroschema;
             var serializer = new SchemaRegistrySerializer(mockClient.Object, sampleGeneratorAvro, "groupName", options);
             var content = await serializer.SerializeAsync(new Employee { Age = 25, Name = "Name" }).ConfigureAwait(false);
-            Assert.AreEqual("SchemaId", content.ContentType.ToString().Split('+')[1]);
+            Assert.That(content.ContentType.ToString().Split('+')[1], Is.EqualTo("SchemaId"));
 
             // Test that the correct mime type was used
-            Assert.AreEqual("avro/binary", content.ContentType.ToString().Split('+')[0]);
+            Assert.That(content.ContentType.ToString().Split('+')[0], Is.EqualTo("avro/binary"));
         }
 
         private class FakeSerializer : ObjectSerializer
@@ -152,8 +152,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             public override bool TryValidate(object data, Type dataType, string schemaDefinition, out IEnumerable<Exception> validationErrors)
             {
                 Assert.That(data, Is.TypeOf<Employee>());
-                Assert.AreEqual(dataType.Name, "Employee");
-                Assert.AreEqual(schemaDefinition, SchemaToUse);
+                Assert.That(dataType.Name, Is.EqualTo("Employee"));
+                Assert.That(SchemaToUse, Is.EqualTo(schemaDefinition));
 
                 validationErrors = new List<Exception>();
 

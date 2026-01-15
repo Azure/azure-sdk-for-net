@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(new WebJobsAuthenticationEventsTriggerAttribute()), testMessage);
             Assert.Throws<MissingFieldException>(() => _ = configurationManager.AudienceAppId, testMessage);
             Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
-            Assert.AreEqual("99045fe1-7639-4a75-9d4a-577b6ca3810f", configurationManager.AuthorizedPartyAppId, testMessage);
+            Assert.That(configurationManager.AuthorizedPartyAppId, Is.EqualTo("99045fe1-7639-4a75-9d4a-577b6ca3810f"), testMessage);
 
             ValidateAuthorityUrl(configurationManager, testMessage, false);
         }
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(new WebJobsAuthenticationEventsTriggerAttribute() { AuthorizedPartyAppId = testAuthorizedPartyId }), testMessage);
             Assert.Throws<MissingFieldException>(() => _ = configurationManager.AudienceAppId, testMessage);
             Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
-            Assert.AreEqual(testAuthorizedPartyId, configurationManager.AuthorizedPartyAppId, testMessage);
+            Assert.That(configurationManager.AuthorizedPartyAppId, Is.EqualTo(testAuthorizedPartyId), testMessage);
 
             ValidateAuthorityUrl(configurationManager, testMessage, false);
         }
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 
             Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), "Config should not throw when initialized.");
             Assert.DoesNotThrow(() => _ = configurationManager.AudienceAppId, "Audience is not null");
-            Assert.AreEqual(testAudienceAppId, configurationManager.AudienceAppId, "Audience should match what it was set to.");
+            Assert.That(configurationManager.AudienceAppId, Is.EqualTo(testAudienceAppId), "Audience should match what it was set to.");
 
             ValidateAuthorityUrl(configurationManager, "AuthorityURl should match what match to what it was set to.");
 
@@ -88,12 +88,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 
             Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), "Config should not throw when initialized.");
             Assert.DoesNotThrow(() => _ = configurationManager.AudienceAppId, "Audience is not null");
-            Assert.AreEqual(testAudienceAppId, configurationManager.AudienceAppId, "Audience should match what it was set to.");
+            Assert.That(configurationManager.AudienceAppId, Is.EqualTo(testAudienceAppId), "Audience should match what it was set to.");
 
             ValidateAuthorityUrl(configurationManager, "AuthorityURl should match what match to what it was set to.");
 
             Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, "Should not throw when AuthorizedPartyAppId is not set.");
-            Assert.AreEqual("99045fe1-7639-4a75-9d4a-577b6ca3810f", configurationManager.AuthorizedPartyAppId, "AuthorizedPartyAppId should match default value.");
+            Assert.That(configurationManager.AuthorizedPartyAppId, Is.EqualTo("99045fe1-7639-4a75-9d4a-577b6ca3810f"), "AuthorizedPartyAppId should match default value.");
         }
 
         [Test]
@@ -135,10 +135,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), testMessage);
 
             Assert.DoesNotThrow(() => _ = configurationManager.AudienceAppId, testMessage);
-            Assert.AreEqual(testAudienceAppId, configurationManager.AudienceAppId, testMessage);
+            Assert.That(configurationManager.AudienceAppId, Is.EqualTo(testAudienceAppId), testMessage);
 
             Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
-            Assert.AreEqual(testAuthorizedPartyId, configurationManager.AuthorizedPartyAppId, testMessage);
+            Assert.That(configurationManager.AuthorizedPartyAppId, Is.EqualTo(testAuthorizedPartyId), testMessage);
 
             ValidateAuthorityUrl(configurationManager, testMessage, false);
         }
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             if (isSuccess)
             {
                 Assert.DoesNotThrow(() => _ = configurationManager.AudienceAppId, testMessage);
-                Assert.AreEqual(testAudienceAppId, configurationManager.AudienceAppId, testMessage);
+                Assert.That(configurationManager.AudienceAppId, Is.EqualTo(testAudienceAppId), testMessage);
             }
             else
             {
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             if (isSuccess)
             {
                 Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
-                Assert.AreEqual(testAuthorizedPartyId, configurationManager.AuthorizedPartyAppId, testMessage);
+                Assert.That(configurationManager.AuthorizedPartyAppId, Is.EqualTo(testAuthorizedPartyId), testMessage);
             }
             else
             {
@@ -214,13 +214,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             if (isSuccess)
             {
                 Assert.DoesNotThrow(() => _ = configurationManager.AuthorityUrl, testMessage);
-                Assert.AreEqual(testAuthorityUrl, configurationManager.AuthorityUrl, testMessage);
+                Assert.That(configurationManager.AuthorityUrl, Is.EqualTo(testAuthorityUrl), testMessage);
 
                 string odicUrlV1 = configurationManager.GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions.V1_0);
                 string odicUrlV2 = configurationManager.GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions.V2_0);
 
-                Assert.AreEqual($"{testAuthorityUrl}/.well-known/openid-configuration", odicUrlV1, testMessage);
-                Assert.AreEqual($"{testAuthorityUrl}/v2.0/.well-known/openid-configuration", odicUrlV2, testMessage);
+                Assert.That(odicUrlV1, Is.EqualTo($"{testAuthorityUrl}/.well-known/openid-configuration"), testMessage);
+                Assert.That(odicUrlV2, Is.EqualTo($"{testAuthorityUrl}/v2.0/.well-known/openid-configuration"), testMessage);
             }
             else
             {

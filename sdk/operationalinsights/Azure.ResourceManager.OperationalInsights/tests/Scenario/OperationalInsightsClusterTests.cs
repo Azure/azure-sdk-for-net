@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OperationalInsights.Tests.Scenario
                 }
             };
             var cluster = (await _resourceGroup.GetOperationalInsightsClusters().CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData)).Value;
-            Assert.IsTrue(cluster.Data.KeyVaultProperties.KeyVaultUri.ToString().Equals(""));
+            Assert.That(cluster.Data.KeyVaultProperties.KeyVaultUri.ToString().Equals(""), Is.True);
         }
     }
 }

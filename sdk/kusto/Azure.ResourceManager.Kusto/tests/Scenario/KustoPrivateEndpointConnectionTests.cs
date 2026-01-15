@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         )
         {
             AssertEquality("cluster", actualPrivateEndpointConnectionData.GroupId);
-            Assert.IsTrue(actualPrivateEndpointConnectionData.Name.Contains(TE.PrivateEndpointName));
+            Assert.That(actualPrivateEndpointConnectionData.Name.Contains(TE.PrivateEndpointName), Is.True);
             ValidatePrivateEndpointConnectionState(actualPrivateEndpointConnectionData.ConnectionState);
         }
 

@@ -54,9 +54,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             ExtensionMockTransferManager.OnStartTransferContainerAsync = (sourceResource, destinationResource, transferOptions) =>
             {
-                Assert.AreEqual(directoryPath, sourceResource.Uri.LocalPath);
-                Assert.AreEqual(blobUri, destinationResource.Uri.AbsoluteUri);
-                Assert.AreEqual(options, transferOptions);
+                Assert.That(sourceResource.Uri.LocalPath, Is.EqualTo(directoryPath));
+                Assert.That(destinationResource.Uri.AbsoluteUri, Is.EqualTo(blobUri));
+                Assert.That(transferOptions, Is.EqualTo(options));
                 Assert.IsInstanceOf<BlobStorageResourceContainer>(destinationResource);
 
                 assertionComplete = true;
@@ -77,7 +77,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 await client.UploadDirectoryAsync(WaitUntil.Started, directoryPath, blobDirectoryPrefix);
             }
 
-            Assert.IsTrue(assertionComplete);
+            Assert.That(assertionComplete, Is.True);
         }
 
         [Test]
@@ -101,9 +101,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             ExtensionMockTransferManager.OnStartTransferContainerAsync = (sourceResource, destinationResource, transferOptions) =>
             {
-                Assert.AreEqual(directoryPath, destinationResource.Uri.LocalPath);
-                Assert.AreEqual(blobUri, sourceResource.Uri.AbsoluteUri);
-                Assert.AreEqual(options, transferOptions);
+                Assert.That(destinationResource.Uri.LocalPath, Is.EqualTo(directoryPath));
+                Assert.That(sourceResource.Uri.AbsoluteUri, Is.EqualTo(blobUri));
+                Assert.That(transferOptions, Is.EqualTo(options));
                 Assert.IsInstanceOf(expSourceResourceType, sourceResource);
 
                 assertionComplete = true;
@@ -124,7 +124,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 await client.DownloadToDirectoryAsync(WaitUntil.Started, directoryPath, blobDirectoryPrefix);
             }
 
-            Assert.IsTrue(assertionComplete);
+            Assert.That(assertionComplete, Is.True);
         }
 
         private MockTransferManager ExtensionMockTransferManager { get; set; }

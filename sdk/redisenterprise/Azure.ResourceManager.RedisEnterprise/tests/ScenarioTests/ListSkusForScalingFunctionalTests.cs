@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
-            Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
-            Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
-            Assert.AreEqual(RedisEnterpriseSkuName.BalancedB100, clusterResponse.Data.Sku.Name);
+            Assert.That(clusterResponse.Data.Location, Is.EqualTo(DefaultLocation));
+            Assert.That(clusterResponse.Data.Name, Is.EqualTo(redisEnterpriseCacheName));
+            Assert.That(clusterResponse.Data.Sku.Name, Is.EqualTo(RedisEnterpriseSkuName.BalancedB100));
 
             clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
-            Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
-            Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
-            Assert.AreEqual(RedisEnterpriseSkuName.BalancedB100, clusterResponse.Data.Sku.Name);
+            Assert.That(clusterResponse.Data.Location, Is.EqualTo(DefaultLocation));
+            Assert.That(clusterResponse.Data.Name, Is.EqualTo(redisEnterpriseCacheName));
+            Assert.That(clusterResponse.Data.Sku.Name, Is.EqualTo(RedisEnterpriseSkuName.BalancedB100));
 
             var databaseCollection = clusterResponse.GetRedisEnterpriseDatabases();
             string databaseName = "default";
@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
             };
 
             var databaseResponse = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
-            Assert.AreEqual(databaseName, databaseResponse.Data.Name);
-            Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
-            Assert.AreEqual(RedisEnterpriseClusteringPolicy.OssCluster, databaseResponse.Data.ClusteringPolicy);
-            Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
+            Assert.That(databaseResponse.Data.Name, Is.EqualTo(databaseName));
+            Assert.That(databaseResponse.Data.ClientProtocol, Is.EqualTo(RedisEnterpriseClientProtocol.Encrypted));
+            Assert.That(databaseResponse.Data.ClusteringPolicy, Is.EqualTo(RedisEnterpriseClusteringPolicy.OssCluster));
+            Assert.That(databaseResponse.Data.EvictionPolicy, Is.EqualTo(RedisEnterpriseEvictionPolicy.NoEviction));
 
             databaseResponse = await databaseCollection.GetAsync(databaseName);
-            Assert.AreEqual(databaseName, databaseResponse.Data.Name);
-            Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
-            Assert.AreEqual(RedisEnterpriseClusteringPolicy.OssCluster, databaseResponse.Data.ClusteringPolicy);
-            Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
+            Assert.That(databaseResponse.Data.Name, Is.EqualTo(databaseName));
+            Assert.That(databaseResponse.Data.ClientProtocol, Is.EqualTo(RedisEnterpriseClientProtocol.Encrypted));
+            Assert.That(databaseResponse.Data.ClusteringPolicy, Is.EqualTo(RedisEnterpriseClusteringPolicy.OssCluster));
+            Assert.That(databaseResponse.Data.EvictionPolicy, Is.EqualTo(RedisEnterpriseEvictionPolicy.NoEviction));
 
             // List Skus for scaling
             var skusResponse = await clusterResponse.GetSkusForScalingAsync();
@@ -87,18 +87,18 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
 
             // Assert that the response contains specific SKUs
             var skus = skusResponse.Value.Skus;
-            Assert.IsTrue(skus.Any(s => s.Name == RedisEnterpriseSkuName.BalancedB20));
-            Assert.IsTrue(skus.Any(s => s.Name == RedisEnterpriseSkuName.BalancedB50));
-            Assert.IsTrue(skus.Any(s => s.SizeInGB == 24.0));
+            Assert.That(skus.Any(s => s.Name == RedisEnterpriseSkuName.BalancedB20), Is.True);
+            Assert.That(skus.Any(s => s.Name == RedisEnterpriseSkuName.BalancedB50), Is.True);
+            Assert.That(skus.Any(s => s.SizeInGB == 24.0), Is.True);
 
             // Delete database and cluster
             await databaseResponse.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await databaseCollection.ExistsAsync(databaseName)).Value;
-            Assert.IsFalse(falseResult);
+            Assert.That(falseResult, Is.False);
 
             await clusterResponse.DeleteAsync(WaitUntil.Completed);
             falseResult = (await Collection.ExistsAsync(redisEnterpriseCacheName)).Value;
-            Assert.IsFalse(falseResult);
+            Assert.That(falseResult, Is.False);
         }
     }
 }

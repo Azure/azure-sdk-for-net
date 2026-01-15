@@ -132,8 +132,8 @@ namespace Azure.Search.Documents.Tests
                     });
 
             Assert.NotNull(response.SemanticSearch.Answers);
-            Assert.AreEqual(1, response.SemanticSearch.Answers.Count);
-            Assert.AreEqual("9", response.SemanticSearch.Answers[0].Key);
+            Assert.That(response.SemanticSearch.Answers.Count, Is.EqualTo(1));
+            Assert.That(response.SemanticSearch.Answers[0].Key, Is.EqualTo("9"));
             Assert.NotNull(response.SemanticSearch.Answers[0].Highlights);
             Assert.NotNull(response.SemanticSearch.Answers[0].Text);
 
@@ -188,8 +188,8 @@ namespace Azure.Search.Documents.Tests
 
             // Get the document
             Response<SearchDocument> response = await searchClient.GetDocumentAsync<SearchDocument>((string)document["id"]);
-            Assert.AreEqual(document["id"], response.Value["id"]);
-            Assert.AreEqual(document["name"], response.Value["name"]);
+            Assert.That(response.Value["id"], Is.EqualTo(document["id"]));
+            Assert.That(response.Value["name"], Is.EqualTo(document["name"]));
 
             // Update created index to add vector field
 
@@ -214,8 +214,8 @@ namespace Azure.Search.Documents.Tests
 
             // Update index
             SearchIndex updatedIndex = await indexClient.CreateOrUpdateIndexAsync(createdIndex);
-            Assert.AreEqual(indexName, updatedIndex.Name);
-            Assert.AreEqual(3, updatedIndex.Fields.Count);
+            Assert.That(updatedIndex.Name, Is.EqualTo(indexName));
+            Assert.That(updatedIndex.Fields.Count, Is.EqualTo(3));
 
             // Update document to add vector field's data
 
@@ -230,11 +230,11 @@ namespace Azure.Search.Documents.Tests
 
             // Get the document
             response = await searchClient.GetDocumentAsync<SearchDocument>((string)document["id"]);
-            Assert.AreEqual(document["id"], response.Value["id"]);
-            Assert.AreEqual(document["name"], response.Value["name"]);
+            Assert.That(response.Value["id"], Is.EqualTo(document["id"]));
+            Assert.That(response.Value["name"], Is.EqualTo(document["name"]));
             Assert.IsNotNull(response.Value["descriptionVector"]);
 
-            Assert.AreEqual(updatedIndex.Name, createdIndex.Name);
+            Assert.That(createdIndex.Name, Is.EqualTo(updatedIndex.Name));
         }
 
         [Test]
@@ -270,8 +270,8 @@ namespace Azure.Search.Documents.Tests
             // Update index
             RequestFailedException ex = await CatchAsync<RequestFailedException>(
                 async () => await indexClient.CreateOrUpdateIndexAsync(createdIndex));
-            Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("InvalidRequestParameter", ex.ErrorCode);
+            Assert.That(ex.Status, Is.EqualTo(400));
+            Assert.That(ex.ErrorCode, Is.EqualTo("InvalidRequestParameter"));
         }
 
         [Test]
@@ -346,8 +346,8 @@ namespace Azure.Search.Documents.Tests
             RequestFailedException ex = await CatchAsync<RequestFailedException>(
                async () => await indexClient.CreateIndexAsync(index));
 
-            Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("InvalidRequestParameter", ex.ErrorCode);
+            Assert.That(ex.Status, Is.EqualTo(400));
+            Assert.That(ex.ErrorCode, Is.EqualTo("InvalidRequestParameter"));
         }
 
         [Test]
@@ -381,9 +381,9 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexClient indexClient = resources.GetIndexClient();
             SearchIndex createdIndex = await indexClient.CreateIndexAsync(index);
-            Assert.AreEqual(indexName, createdIndex.Name);
-            Assert.IsTrue(createdIndex.Fields[1].IsStored);
-            Assert.IsFalse(createdIndex.Fields[1].IsHidden);
+            Assert.That(createdIndex.Name, Is.EqualTo(indexName));
+            Assert.That(createdIndex.Fields[1].IsStored, Is.True);
+            Assert.That(createdIndex.Fields[1].IsHidden, Is.False);
         }
 
         [Test]
@@ -417,9 +417,9 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexClient indexClient = resources.GetIndexClient();
             SearchIndex createdIndex = await indexClient.CreateIndexAsync(index);
-            Assert.AreEqual(indexName, createdIndex.Name);
-            Assert.IsTrue(createdIndex.Fields[1].IsStored);
-            Assert.IsTrue(createdIndex.Fields[1].IsHidden);
+            Assert.That(createdIndex.Name, Is.EqualTo(indexName));
+            Assert.That(createdIndex.Fields[1].IsStored, Is.True);
+            Assert.That(createdIndex.Fields[1].IsHidden, Is.True);
         }
 
         [Test]
@@ -453,16 +453,16 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexClient indexClient = resources.GetIndexClient();
             SearchIndex createdIndex = await indexClient.CreateIndexAsync(index);
-            Assert.AreEqual(indexName, createdIndex.Name);
-            Assert.IsFalse(createdIndex.Fields[1].IsStored);
+            Assert.That(createdIndex.Name, Is.EqualTo(indexName));
+            Assert.That(createdIndex.Fields[1].IsStored, Is.False);
 
             createdIndex.Fields[1].IsStored = true;
 
             // Update index
             RequestFailedException ex = await CatchAsync<RequestFailedException>(
                 async () => await indexClient.CreateOrUpdateIndexAsync(createdIndex));
-            Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("OperationNotAllowed", ex.ErrorCode);
+            Assert.That(ex.Status, Is.EqualTo(400));
+            Assert.That(ex.ErrorCode, Is.EqualTo("OperationNotAllowed"));
         }
 
         [Test]
@@ -496,13 +496,13 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexClient indexClient = resources.GetIndexClient();
             SearchIndex createdIndex = await indexClient.CreateIndexAsync(index);
-            Assert.AreEqual(indexName, createdIndex.Name);
-            Assert.IsTrue(createdIndex.Fields[1].IsHidden);
+            Assert.That(createdIndex.Name, Is.EqualTo(indexName));
+            Assert.That(createdIndex.Fields[1].IsHidden, Is.True);
 
             createdIndex.Fields[1].IsHidden = false;
             SearchIndex updatedIndex = await indexClient.CreateOrUpdateIndexAsync(createdIndex);
-            Assert.AreEqual(indexName, createdIndex.Name);
-            Assert.IsFalse(createdIndex.Fields[1].IsHidden);
+            Assert.That(createdIndex.Name, Is.EqualTo(indexName));
+            Assert.That(createdIndex.Fields[1].IsHidden, Is.False);
         }
 
         [Test]
@@ -534,8 +534,8 @@ namespace Azure.Search.Documents.Tests
             await indexClient.CreateIndexAsync(index);
 
             SearchIndex createdIndex = await indexClient.GetIndexAsync(indexName);
-            Assert.AreEqual(indexName, createdIndex.Name);
-            Assert.AreEqual(index.Fields.Count, createdIndex.Fields.Count);
+            Assert.That(createdIndex.Name, Is.EqualTo(indexName));
+            Assert.That(createdIndex.Fields.Count, Is.EqualTo(index.Fields.Count));
         }
 
         private class Model

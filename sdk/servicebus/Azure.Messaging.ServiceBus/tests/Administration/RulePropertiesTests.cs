@@ -17,9 +17,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Administration
                 "ruleName",
                 filter,
                 action);
-            Assert.AreEqual("ruleName", properties.Name);
-            Assert.AreEqual(filter, properties.Filter);
-            Assert.AreEqual(action, properties.Action);
+            Assert.That(properties.Name, Is.EqualTo("ruleName"));
+            Assert.That(properties.Filter, Is.EqualTo(filter));
+            Assert.That(properties.Action, Is.EqualTo(action));
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Administration
             };
             var properties = new RuleProperties(options);
 
-            Assert.AreEqual(options, new CreateRuleOptions(properties));
+            Assert.That(new CreateRuleOptions(properties), Is.EqualTo(options));
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Administration
             };
             var properties = new RuleProperties(options);
 
-            Assert.AreEqual(options, new CreateRuleOptions(properties));
+            Assert.That(new CreateRuleOptions(properties), Is.EqualTo(options));
         }
     }
 }

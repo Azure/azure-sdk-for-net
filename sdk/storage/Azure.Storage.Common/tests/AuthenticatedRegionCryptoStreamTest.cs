@@ -272,7 +272,7 @@ namespace Azure.Storage.Test
             } while (read != 0);
 
             // Assert
-            Assert.AreEqual(ciphertextResult.Length, totalRead);
+            Assert.That(totalRead, Is.EqualTo(ciphertextResult.Length));
             foreach (int authBlock in Enumerable.Range(0, numAuthBlocks))
             {
                 int plaintextOffset = authBlock * _authRegionDataLength;
@@ -330,7 +330,7 @@ namespace Azure.Storage.Test
             } while (read != 0);
 
             // Assert
-            Assert.AreEqual(plaintextResult.Length, totalRead);
+            Assert.That(totalRead, Is.EqualTo(plaintextResult.Length));
             foreach (int authBlock in Enumerable.Range(0, numAuthBlocks))
             {
                 int plaintextOffset = authBlock * _authRegionDataLength;
@@ -422,7 +422,7 @@ namespace Azure.Storage.Test
             } while (read != 0);
 
             // Assert
-            Assert.AreEqual(expectedOutputLength, totalRead);
+            Assert.That(totalRead, Is.EqualTo(expectedOutputLength));
         }
 
         [Test]

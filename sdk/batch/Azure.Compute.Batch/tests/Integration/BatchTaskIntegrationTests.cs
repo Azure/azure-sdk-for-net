@@ -73,7 +73,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 BatchTask task = await client.GetTaskAsync(jobID, taskID);
                 Assert.IsNotNull(task);
-                Assert.AreEqual(commandLine, task.CommandLine);
+                Assert.That(task.CommandLine, Is.EqualTo(commandLine));
             }
             finally
             {
@@ -121,7 +121,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 }
 
                 Assert.IsNotNull(batchTaskAddResult);
-                Assert.AreEqual(batchTaskAddResult.TaskId, taskID);
+                Assert.That(taskID, Is.EqualTo(batchTaskAddResult.TaskId));
             }
             finally
             {
@@ -163,13 +163,13 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 CreateTasksResult taskResult = await client.CreateTasksAsync(jobID, tasks);
                 Assert.IsNotNull(taskResult);
-                Assert.AreEqual(taskCount, taskResult.PassCount);
+                Assert.That(taskResult.PassCount, Is.EqualTo(taskCount));
 
                 for (int i = 0; i < taskCount; i++)
                 {
                     BatchTask task = await client.GetTaskAsync(jobID, $"{taskID}_{i}");
                     Assert.IsNotNull(task);
-                    Assert.AreEqual(commandLine, task.CommandLine);
+                    Assert.That(task.CommandLine, Is.EqualTo(commandLine));
                 }
             }
             finally
@@ -217,18 +217,18 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 CreateTasksResult taskResult = await client.CreateTasksAsync(jobID, tasks, createTaskOptions);
                 Assert.IsNotNull(taskResult);
-                Assert.AreEqual(taskCount, taskResult.BatchTaskCreateResults.Count);
+                Assert.That(taskResult.BatchTaskCreateResults.Count, Is.EqualTo(taskCount));
 
                 // verify sample set of tasks
                 BatchTask task1 = await client.GetTaskAsync(jobID, $"{taskID}_0");
                 BatchTask task2 = await client.GetTaskAsync(jobID, $"{taskID}_1000");
                 BatchTask task3 = await client.GetTaskAsync(jobID, $"{taskID}_1999");
                 Assert.IsNotNull(task1);
-                Assert.AreEqual(commandLine, task1.CommandLine);
+                Assert.That(task1.CommandLine, Is.EqualTo(commandLine));
                 Assert.IsNotNull(task2);
-                Assert.AreEqual(commandLine, task2.CommandLine);
+                Assert.That(task2.CommandLine, Is.EqualTo(commandLine));
                 Assert.IsNotNull(task3);
-                Assert.AreEqual(commandLine, task3.CommandLine);
+                Assert.That(task3.CommandLine, Is.EqualTo(commandLine));
             }
             finally
             {
@@ -276,18 +276,18 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 CreateTasksResult taskResult = await client.CreateTasksAsync(jobID, tasks, createTaskOptions);
                 Assert.IsNotNull(taskResult);
-                Assert.AreEqual(taskCount, taskResult.PassCount);
+                Assert.That(taskResult.PassCount, Is.EqualTo(taskCount));
 
                 // verify sample set of tasks
                 BatchTask task1 = await client.GetTaskAsync(jobID, $"{taskID}_0");
                 BatchTask task2 = await client.GetTaskAsync(jobID, $"{taskID}_1000");
                 BatchTask task3 = await client.GetTaskAsync(jobID, $"{taskID}_1999");
                 Assert.IsNotNull(task1);
-                Assert.AreEqual(commandLine, task1.CommandLine);
+                Assert.That(task1.CommandLine, Is.EqualTo(commandLine));
                 Assert.IsNotNull(task2);
-                Assert.AreEqual(commandLine, task2.CommandLine);
+                Assert.That(task2.CommandLine, Is.EqualTo(commandLine));
                 Assert.IsNotNull(task3);
-                Assert.AreEqual(commandLine, task3.CommandLine);
+                Assert.That(task3.CommandLine, Is.EqualTo(commandLine));
 
                 //client.GetTasks
             }
@@ -350,22 +350,22 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Console.WriteLine($"Size of taskResult in memory: {taskResultSize} bytes");
 
                 Assert.IsNotNull(taskResult);
-                Assert.AreEqual(taskCount, taskResult.BatchTaskCreateResults.Count);
+                Assert.That(taskResult.BatchTaskCreateResults.Count, Is.EqualTo(taskCount));
                 var failedTaskResults = taskResult.BatchTaskCreateResults
                     .Where(result => result.Status != BatchTaskAddStatus.Success)
                     .ToList();
-                Assert.AreEqual(0, failedTaskResults.Count);
+                Assert.That(failedTaskResults.Count, Is.EqualTo(0));
 
                 // verify sample set of tasks
                 BatchTask task1 = await client.GetTaskAsync(jobID, $"{taskID}_0");
                 BatchTask task2 = await client.GetTaskAsync(jobID, $"{taskID}_500000");
                 BatchTask task3 = await client.GetTaskAsync(jobID, $"{taskID}_999999");
                 Assert.IsNotNull(task1);
-                Assert.AreEqual(commandLine, task1.CommandLine);
+                Assert.That(task1.CommandLine, Is.EqualTo(commandLine));
                 Assert.IsNotNull(task2);
-                Assert.AreEqual(commandLine, task2.CommandLine);
+                Assert.That(task2.CommandLine, Is.EqualTo(commandLine));
                 Assert.IsNotNull(task3);
-                Assert.AreEqual(commandLine, task3.CommandLine);
+                Assert.That(task3.CommandLine, Is.EqualTo(commandLine));
             }
             finally
             {
@@ -417,23 +417,23 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 // verify all the tasks got processed
                 Assert.IsNotNull(taskResult);
-                Assert.AreEqual(taskCount, taskResult.BatchTaskCreateResults.Count);
+                Assert.That(taskResult.BatchTaskCreateResults.Count, Is.EqualTo(taskCount));
 
                 var failedTaskResults = taskResult.BatchTaskCreateResults
                     .Where(result => result.Status != BatchTaskAddStatus.Success)
                     .ToList();
-                Assert.AreEqual(0, failedTaskResults.Count);
+                Assert.That(failedTaskResults.Count, Is.EqualTo(0));
 
                 // verify sample set of tasks
                 BatchTask task1 = await client.GetTaskAsync(jobID, $"{taskID}_0");
                 BatchTask task2 = await client.GetTaskAsync(jobID, $"{taskID}_50000");
                 BatchTask task3 = await client.GetTaskAsync(jobID, $"{taskID}_99999");
                 Assert.IsNotNull(task1);
-                Assert.AreEqual(commandLine, task1.CommandLine);
+                Assert.That(task1.CommandLine, Is.EqualTo(commandLine));
                 Assert.IsNotNull(task2);
-                Assert.AreEqual(commandLine, task2.CommandLine);
+                Assert.That(task2.CommandLine, Is.EqualTo(commandLine));
                 Assert.IsNotNull(task3);
-                Assert.AreEqual(commandLine, task3.CommandLine);
+                Assert.That(task3.CommandLine, Is.EqualTo(commandLine));
             }
             finally
             {
@@ -469,7 +469,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 BatchTaskCreateOptions taskCreateContent = new BatchTaskCreateOptions(taskID, commandLine);
 
                 response = await client.CreateTaskAsync(jobID, taskCreateContent);
-                Assert.AreEqual(201, response.Status);
+                Assert.That(response.Status, Is.EqualTo(201));
 
                 // get task via lists tasks
                 BatchTask task = null;
@@ -479,7 +479,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 }
 
                 Assert.IsNotNull(task);
-                Assert.AreEqual(commandLine, task.CommandLine);
+                Assert.That(task.CommandLine, Is.EqualTo(commandLine));
 
                 // update task constraints
                 BatchTaskConstraints batchTaskConstraints = new BatchTaskConstraints()
@@ -489,12 +489,12 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 task.Constraints = batchTaskConstraints;
                 response = await client.ReplaceTaskAsync(jobID, taskID, task);
-                Assert.AreEqual(200, response.Status);
+                Assert.That(response.Status, Is.EqualTo(200));
 
                 // verify task got updated
                 BatchTask updatedTask = await client.GetTaskAsync(jobID, taskID);
                 Assert.IsNotNull(updatedTask);
-                Assert.AreEqual(3, updatedTask.Constraints.MaxTaskRetryCount);
+                Assert.That(updatedTask.Constraints.MaxTaskRetryCount, Is.EqualTo(3));
             }
             finally
             {
@@ -542,7 +542,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 };
 
                 response = await client.CreateTaskAsync(jobID, taskCreateContent);
-                Assert.AreEqual(201, response.Status);
+                Assert.That(response.Status, Is.EqualTo(201));
 
                 // list subtasks
                 int count = 0;
@@ -550,7 +550,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     count++;
                 }
-                Assert.AreEqual(0, count);
+                Assert.That(count, Is.EqualTo(0));
             }
             finally
             {
@@ -588,13 +588,13 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 BatchTask task = await client.GetTaskAsync(jobID, taskID);
                 Assert.IsNotNull(task);
-                Assert.AreEqual(commandLine, task.CommandLine);
+                Assert.That(task.CommandLine, Is.EqualTo(commandLine));
 
                 response = await client.TerminateTaskAsync(jobID, taskID);
-                Assert.AreEqual(204, response.Status);
+                Assert.That(response.Status, Is.EqualTo(204));
 
                 response = await client.ReactivateTaskAsync(jobID, taskID);
-                Assert.AreEqual(204, response.Status);
+                Assert.That(response.Status, Is.EqualTo(204));
             }
             finally
             {

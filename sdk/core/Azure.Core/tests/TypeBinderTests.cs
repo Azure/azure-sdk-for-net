@@ -23,12 +23,12 @@ namespace Azure.Core.Tests
                 { "renamed_property", "renamed value"}
             });
 
-            Assert.AreEqual(1, model.IntProperty);
-            Assert.AreEqual(2, model.IntField);
-            Assert.AreEqual("1", model.StringProperty);
-            Assert.AreEqual("2", model.StringField);
-            Assert.AreEqual("Ignore me", model.IgnoredProperty);
-            Assert.AreEqual("renamed value", model.RenamedProperty);
+            Assert.That(model.IntProperty, Is.EqualTo(1));
+            Assert.That(model.IntField, Is.EqualTo(2));
+            Assert.That(model.StringProperty, Is.EqualTo("1"));
+            Assert.That(model.StringField, Is.EqualTo("2"));
+            Assert.That(model.IgnoredProperty, Is.EqualTo("Ignore me"));
+            Assert.That(model.RenamedProperty, Is.EqualTo("renamed value"));
         }
 
         [Test]
@@ -45,16 +45,16 @@ namespace Azure.Core.Tests
                 RenamedProperty = "renamed value"
             }, dictionary);
 
-            Assert.AreEqual(1, dictionary["IntProperty"]);
-            Assert.AreEqual(2, dictionary["IntField"]);
-            Assert.AreEqual(4, dictionary["IntReadOnlyProperty"]);
-            Assert.AreEqual(5, dictionary["IntReadOnlyField"]);
-            Assert.AreEqual("1", dictionary["StringProperty"]);
-            Assert.AreEqual("2", dictionary["StringField"]);
-            Assert.AreEqual("3", dictionary["StringReadOnlyProperty"]);
-            Assert.AreEqual("42", dictionary["StringReadOnlyField"]);
-            Assert.AreEqual("renamed value", dictionary["renamed_property"]);
-            Assert.False(dictionary.ContainsKey("IgnoredProperty"));
+            Assert.That(dictionary["IntProperty"], Is.EqualTo(1));
+            Assert.That(dictionary["IntField"], Is.EqualTo(2));
+            Assert.That(dictionary["IntReadOnlyProperty"], Is.EqualTo(4));
+            Assert.That(dictionary["IntReadOnlyField"], Is.EqualTo(5));
+            Assert.That(dictionary["StringProperty"], Is.EqualTo("1"));
+            Assert.That(dictionary["StringField"], Is.EqualTo("2"));
+            Assert.That(dictionary["StringReadOnlyProperty"], Is.EqualTo("3"));
+            Assert.That(dictionary["StringReadOnlyField"], Is.EqualTo("42"));
+            Assert.That(dictionary["renamed_property"], Is.EqualTo("renamed value"));
+            Assert.That(dictionary.ContainsKey("IgnoredProperty"), Is.False);
         }
 
         [Test]
@@ -68,10 +68,10 @@ namespace Azure.Core.Tests
                 { "StringField", "2" }
             });
 
-            Assert.AreEqual(1, model.IntProperty);
-            Assert.AreEqual(2, model.IntField);
-            Assert.AreEqual("1", model.StringProperty);
-            Assert.AreEqual("2", model.StringField);
+            Assert.That(model.IntProperty, Is.EqualTo(1));
+            Assert.That(model.IntField, Is.EqualTo(2));
+            Assert.That(model.StringProperty, Is.EqualTo("1"));
+            Assert.That(model.StringField, Is.EqualTo("2"));
         }
 
         [Test]
@@ -88,14 +88,14 @@ namespace Azure.Core.Tests
                 RenamedProperty = "renamed value"
             }, dictionary);
 
-            Assert.AreEqual(1, dictionary["IntProperty"]);
-            Assert.AreEqual(2, dictionary["IntField"]);
-            Assert.AreEqual(4, dictionary["IntReadOnlyProperty"]);
-            Assert.AreEqual(5, dictionary["IntReadOnlyField"]);
-            Assert.AreEqual("1", dictionary["StringProperty"]);
-            Assert.AreEqual("2", dictionary["StringField"]);
-            Assert.AreEqual("3", dictionary["StringReadOnlyProperty"]);
-            Assert.AreEqual("42", dictionary["StringReadOnlyField"]);
+            Assert.That(dictionary["IntProperty"], Is.EqualTo(1));
+            Assert.That(dictionary["IntField"], Is.EqualTo(2));
+            Assert.That(dictionary["IntReadOnlyProperty"], Is.EqualTo(4));
+            Assert.That(dictionary["IntReadOnlyField"], Is.EqualTo(5));
+            Assert.That(dictionary["StringProperty"], Is.EqualTo("1"));
+            Assert.That(dictionary["StringField"], Is.EqualTo("2"));
+            Assert.That(dictionary["StringReadOnlyProperty"], Is.EqualTo("3"));
+            Assert.That(dictionary["StringReadOnlyField"], Is.EqualTo("42"));
         }
 
         [Test]
@@ -108,9 +108,9 @@ namespace Azure.Core.Tests
                 { "PrivateProperty", "modified value" },
             });
 
-            Assert.AreEqual(model.PropertyWithPrivateSetter, "private value");
-            Assert.AreEqual(model.GetPrivateField(), "private value");
-            Assert.AreEqual(model.GetPrivateProperty(), "private value");
+            Assert.That(model.PropertyWithPrivateSetter, Is.EqualTo("private value"));
+            Assert.That(model.GetPrivateField(), Is.EqualTo("private value"));
+            Assert.That(model.GetPrivateProperty(), Is.EqualTo("private value"));
         }
 
         [Test]
@@ -119,8 +119,8 @@ namespace Azure.Core.Tests
             var dictionary = new Dictionary<string, object>();
 
             new TestBinder().Serialize(new ModelClass(), dictionary);
-            Assert.False(dictionary.ContainsKey("PrivateField"));
-            Assert.False(dictionary.ContainsKey("PrivateProperty"));
+            Assert.That(dictionary.ContainsKey("PrivateField"), Is.False);
+            Assert.That(dictionary.ContainsKey("PrivateProperty"), Is.False);
         }
 
         [Test]
@@ -134,8 +134,8 @@ namespace Azure.Core.Tests
                 { "PrivateStringProperty", "1" },
             });
 
-            Assert.AreEqual("1", model.StringProperty);
-            Assert.AreEqual("1", ((IFoo)model).InterfaceString);
+            Assert.That(model.StringProperty, Is.EqualTo("1"));
+            Assert.That(((IFoo)model).InterfaceString, Is.EqualTo("1"));
         }
 
         [Test]
@@ -150,8 +150,8 @@ namespace Azure.Core.Tests
                 StringProperty = "1",
             }, dictionary);
 
-            Assert.AreEqual("1", dictionary["StringProperty"]);
-            Assert.AreEqual("1", dictionary["InterfaceString"]);
+            Assert.That(dictionary["StringProperty"], Is.EqualTo("1"));
+            Assert.That(dictionary["InterfaceString"], Is.EqualTo("1"));
         }
 
         [Test]

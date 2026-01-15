@@ -50,7 +50,7 @@ namespace Azure.Storage.Tests
             var crc0 = ComputeHash();
             var crc1 = ComputeHash();
 
-            Assert.IsTrue(Enumerable.SequenceEqual(crc0, crc1));
+            Assert.That(Enumerable.SequenceEqual(crc0, crc1), Is.True);
         }
     }
 }

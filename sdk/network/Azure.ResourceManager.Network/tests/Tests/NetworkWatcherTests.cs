@@ -59,36 +59,36 @@ namespace Azure.ResourceManager.Network.Tests
             var location = TestEnvironment.Location;
             var properties = new NetworkWatcherData { Location = location };
             var createResponse = await networkWatcherCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties);
-            Assert.AreEqual(networkWatcherName, createResponse.Value.Data.Name);
-            Assert.AreEqual(location, createResponse.Value.Data.Location.ToString());
+            Assert.That(createResponse.Value.Data.Name, Is.EqualTo(networkWatcherName));
+            Assert.That(createResponse.Value.Data.Location.ToString(), Is.EqualTo(location));
             Assert.IsEmpty(createResponse.Value.Data.Tags);
 
             //Get Network Watcher by name in the resource group
             Response<NetworkWatcherResource> getResponse = await networkWatcherCollection.GetAsync(networkWatcherName);
-            Assert.AreEqual(location, getResponse.Value.Data.Location.ToString());
-            Assert.AreEqual(networkWatcherName, getResponse.Value.Data.Name);
-            Assert.AreEqual("Succeeded", getResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(getResponse.Value.Data.Location.ToString(), Is.EqualTo(location));
+            Assert.That(getResponse.Value.Data.Name, Is.EqualTo(networkWatcherName));
+            Assert.That(getResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
             Assert.IsEmpty(getResponse.Value.Data.Tags);
 
             properties.Tags.Add("test", "test");
             var updateResponse = await networkWatcherCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties);
-            Assert.AreEqual(networkWatcherName, updateResponse.Value.Data.Name);
-            Assert.AreEqual(location, updateResponse.Value.Data.Location.ToString());
+            Assert.That(updateResponse.Value.Data.Name, Is.EqualTo(networkWatcherName));
+            Assert.That(updateResponse.Value.Data.Location.ToString(), Is.EqualTo(location));
             Has.One.Equals(updateResponse.Value.Data.Tags);
             Assert.That(updateResponse.Value.Data.Tags, Does.ContainKey("test").WithValue("test"));
 
             //Get all Network Watchers in the resource group
             List<NetworkWatcherResource> listResponse = await networkWatcherCollection.GetAllAsync().ToEnumerableAsync();
             Has.One.EqualTo(listResponse);
-            Assert.AreEqual(networkWatcherName, listResponse[0].Data.Name);
-            Assert.AreEqual(location, listResponse[0].Data.Location.ToString());
+            Assert.That(listResponse[0].Data.Name, Is.EqualTo(networkWatcherName));
+            Assert.That(listResponse[0].Data.Location.ToString(), Is.EqualTo(location));
             Has.One.Equals(listResponse[0].Data.Tags);
             Assert.That(listResponse[0].Data.Tags, Does.ContainKey("test").WithValue("test"));
 
             //Get all Network Watchers in the subscription
             List<NetworkWatcherResource> listAllResponse = await subscription.GetNetworkWatchersAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(listAllResponse);
-            Assert.True(listAllResponse.Any(w => networkWatcherName == w.Data.Name));
+            Assert.That(listAllResponse.Any(w => networkWatcherName == w.Data.Name), Is.True);
 
             // TODO: need to create cases
             //await getResponse.Value.GetTopologyAsync();
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             //Get all Network Watchers in the subscription
             List<NetworkWatcherResource> listAllAfterDeletingResponse = await subscription.GetNetworkWatchersAsync().ToEnumerableAsync();
-            Assert.AreEqual(countBeforeTest, listAllAfterDeletingResponse.Count);
-            Assert.False(listAllAfterDeletingResponse.Any(w => w.Data.Name == networkWatcherName));
+            Assert.That(listAllAfterDeletingResponse.Count, Is.EqualTo(countBeforeTest));
+            Assert.That(listAllAfterDeletingResponse.Any(w => w.Data.Name == networkWatcherName), Is.False);
         }
 
         [Test]

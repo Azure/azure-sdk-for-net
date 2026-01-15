@@ -51,7 +51,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             }
             #endregion
 
-            Assert.AreEqual(201, creationResponse.Status);
+            Assert.That(creationResponse.Status, Is.EqualTo(201));
             var x = projects.ToList();
             Assert.That(projects.Any(project => project.ProjectName.ToString().Contains(newProjectName)));
 
@@ -84,9 +84,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
             Console.WriteLine($"Sources: {sources}");
-#endregion
+            #endregion
 
-            Assert.True(updateSourcesOperation.HasCompleted);
+            Assert.That(updateSourcesOperation.HasCompleted, Is.True);
             Assert.That(sources.ToString().Contains(sourceUri));
 
 #region Snippet:QuestionAnsweringAuthoringClient_DeployProject_Authoring
@@ -105,9 +105,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             {
                 Console.WriteLine(deployment);
             }
-#endregion
+            #endregion
 
-            Assert.True(deploymentOperation.HasCompleted);
+            Assert.That(deploymentOperation.HasCompleted, Is.True);
             Assert.That(deployments.Any(deployment => deployment.DeploymentName.ToString().Contains(newDeploymentName)));
         }
 
@@ -149,9 +149,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             {
                 Console.WriteLine(project);
             }
-#endregion
+            #endregion
 
-            Assert.AreEqual(201, creationResponse.Status);
+            Assert.That(creationResponse.Status, Is.EqualTo(201));
             Assert.That((await projects.ToEnumerableAsync()).Any(project => project.ProjectName.ToString().Contains(newProjectName)));
 
 #region Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync_Authoring
@@ -183,9 +183,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
             Console.WriteLine($"Sources: {sources}");
-#endregion
+            #endregion
 
-            Assert.True(updateSourcesOperation.HasCompleted);
+            Assert.That(updateSourcesOperation.HasCompleted, Is.True);
             Assert.That(sources.ToString().Contains(sourceUri));
 
 #region Snippet:QuestionAnsweringAuthoringClient_DeployProjectAsync_Authoring
@@ -204,9 +204,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             {
                 Console.WriteLine(deployment);
             }
-#endregion
+            #endregion
 
-            Assert.True(deploymentOperation.HasCompleted);
+            Assert.That(deploymentOperation.HasCompleted, Is.True);
             Assert.That((await deployments.ToEnumerableAsync()).Any(deployment => deployment.DeploymentName.ToString().Contains(newDeploymentName)));
         }
     }

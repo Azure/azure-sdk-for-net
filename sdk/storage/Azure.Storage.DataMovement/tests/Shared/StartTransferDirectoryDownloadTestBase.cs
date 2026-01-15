@@ -255,8 +255,8 @@ namespace Azure.Storage.DataMovement.Tests
                 testEventRaised,
                 cancellationTokenSource.Token);
 
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
             List<string> localItemsAfterDownload = Directory.GetFiles(destinationFolder, "*", SearchOption.AllDirectories).ToList();
 
@@ -514,8 +514,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             await testEventsRaised.AssertContainerCompletedCheck(4);
         }
 
@@ -554,10 +554,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasFailedItems);
-            Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
+            Assert.That(transfer.Status.HasFailedItems, Is.EqualTo(true));
+            Assert.That(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage), Is.True);
             await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
         }
 
@@ -596,9 +596,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasSkippedItems);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
+            Assert.That(transfer.Status.HasSkippedItems, Is.EqualTo(true));
             await testEventsRaised.AssertContainerCompletedWithSkippedCheck(1);
         }
 
@@ -640,9 +640,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasFailedItems);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
+            Assert.That(transfer.Status.HasFailedItems, Is.EqualTo(true));
             if (!testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage))
             {
                 Assert.Fail($"Did not throw the expected exception. Actual exception thrown: {testEventsRaised.FailedEvents.First().Exception}");

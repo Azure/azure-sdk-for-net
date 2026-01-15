@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 fabricName,
                 fabricData);
 
-            Assert.IsTrue(fabricCreateOperation.HasCompleted);
-            Assert.IsTrue(fabricCreateOperation.HasValue);
+            Assert.That(fabricCreateOperation.HasCompleted, Is.True);
+            Assert.That(fabricCreateOperation.HasValue, Is.True);
 
             // Get
             DataReplicationFabricResource resource = await rg.GetDataReplicationFabrics().GetAsync(fabricName);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
 
             // Delete
             var deleteVaultOperation = await resource.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteVaultOperation.HasCompleted);
+            Assert.That(deleteVaultOperation.HasCompleted, Is.True);
         }
     }
 }

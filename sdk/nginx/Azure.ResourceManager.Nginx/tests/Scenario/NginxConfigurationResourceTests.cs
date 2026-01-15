@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             ResourceIdentifier nginxConfigurationResourceIdentifier = NginxConfigurationResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResGroup.Data.Name, nginxDeploymentName, "default");
             NginxConfigurationResource.ValidateResourceId(nginxConfigurationResourceIdentifier);
 
-            Assert.IsTrue(nginxConfigurationResourceIdentifier.ResourceType.Equals(NginxConfigurationResource.ResourceType));
+            Assert.That(nginxConfigurationResourceIdentifier.ResourceType.Equals(NginxConfigurationResource.ResourceType), Is.True);
         }
 
         [TestCase]
@@ -57,22 +57,22 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(nginxDeployment, nginxConfigurationName, virtualPath, protectedVirtualPath);
             ResourceIdentifier nginxConfigurationResourceIdentifier = NginxConfigurationResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResGroup.Data.Name, nginxDeploymentName, nginxConfigurationName);
 
-            Assert.IsTrue(nginxConfiguration.HasData);
+            Assert.That(nginxConfiguration.HasData, Is.True);
             Assert.NotNull(nginxConfiguration.Data);
-            Assert.IsTrue(nginxConfiguration.Data.Name.Equals(nginxConfigurationName));
-            Assert.IsTrue(nginxConfiguration.Data.Id.Equals(nginxConfigurationResourceIdentifier));
-            Assert.IsTrue(nginxConfiguration.Data.ResourceType.Equals(NginxConfigurationResource.ResourceType));
+            Assert.That(nginxConfiguration.Data.Name.Equals(nginxConfigurationName), Is.True);
+            Assert.That(nginxConfiguration.Data.Id.Equals(nginxConfigurationResourceIdentifier), Is.True);
+            Assert.That(nginxConfiguration.Data.ResourceType.Equals(NginxConfigurationResource.ResourceType), Is.True);
             Assert.IsNull(nginxConfiguration.Data.SystemData);
             Assert.IsNotNull(nginxConfiguration.Data.Properties.ProvisioningState);
-            Assert.True(nginxConfiguration.Data.Properties.RootFile.Equals(virtualPath));
-            Assert.True(nginxConfiguration.Data.Properties.Files.Count != 0);
-            Assert.True(nginxConfiguration.Data.Properties.Files[0].VirtualPath.Equals(virtualPath));
-            Assert.True(nginxConfiguration.Data.Properties.Files[0].Content.Equals(NginxConfigurationContent));
-            Assert.True(nginxConfiguration.Data.Properties.ProtectedFiles.Count != 0);
-            Assert.True(nginxConfiguration.Data.Properties.ProtectedFiles[0].VirtualPath.Equals(protectedVirtualPath));
+            Assert.That(nginxConfiguration.Data.Properties.RootFile.Equals(virtualPath), Is.True);
+            Assert.That(nginxConfiguration.Data.Properties.Files.Count != 0, Is.True);
+            Assert.That(nginxConfiguration.Data.Properties.Files[0].VirtualPath.Equals(virtualPath), Is.True);
+            Assert.That(nginxConfiguration.Data.Properties.Files[0].Content.Equals(NginxConfigurationContent), Is.True);
+            Assert.That(nginxConfiguration.Data.Properties.ProtectedFiles.Count != 0, Is.True);
+            Assert.That(nginxConfiguration.Data.Properties.ProtectedFiles[0].VirtualPath.Equals(protectedVirtualPath), Is.True);
             Assert.IsNotNull(nginxConfiguration.Data.Properties.ProtectedFiles[0].ContentHash);
             Assert.IsNull(nginxConfiguration.Data.Properties.Package.Data);
-            Assert.True(nginxConfiguration.Data.Properties.Package.ProtectedFiles.Count == 0);
+            Assert.That(nginxConfiguration.Data.Properties.Package.ProtectedFiles.Count == 0, Is.True);
         }
 
         [TestCase]
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             const string nginxConfigurationName = "default";
             const string virtualPath = "/etc/nginx/nginx.conf";
             NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(nginxDeployment, nginxConfigurationName, virtualPath);
-            Assert.IsTrue(await collection.ExistsAsync(nginxConfigurationName));
+            Assert.That((bool)await collection.ExistsAsync(nginxConfigurationName), Is.True);
 
             await nginxConfiguration.DeleteAsync(WaitUntil.Completed);
             Assert.ThrowsAsync<RequestFailedException>(async () => _ = await collection.GetAsync(nginxConfigurationName));
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             };
             NginxConfigurationResource nginxConfiguration2 = (await nginxConfiguration.UpdateAsync(WaitUntil.Completed, nginxConfigurationCreateOrUpdateContent)).Value;
 
-            Assert.AreNotEqual(nginxConfiguration.Data.Properties.RootFile, nginxConfiguration2.Data.Properties.RootFile);
+            Assert.That(nginxConfiguration2.Data.Properties.RootFile, Is.Not.EqualTo(nginxConfiguration.Data.Properties.RootFile));
         }
 
         [TestCase]

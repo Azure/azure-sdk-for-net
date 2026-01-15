@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Tests
                     });
 
             Assert.NotNull(response.SemanticSearch.Answers);
-            Assert.AreEqual(1, response.SemanticSearch.Answers.Count);
+            Assert.That(response.SemanticSearch.Answers.Count, Is.EqualTo(1));
 
             Assert.NotNull(response.SemanticSearch.Answers[0].Highlights);
             Assert.NotNull(response.SemanticSearch.Answers[0].Text);
@@ -79,8 +79,8 @@ namespace Azure.Search.Documents.Tests
                         QueryType = SearchQueryType.Semantic,
                     }));
 
-            Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual("InvalidRequestParameter", ex.ErrorCode);
+            Assert.That(ex.Status, Is.EqualTo(400));
+            Assert.That(ex.ErrorCode, Is.EqualTo("InvalidRequestParameter"));
         }
 
         [Test]
@@ -117,11 +117,11 @@ namespace Azure.Search.Documents.Tests
                     docsPerPageCount++;
                     totalDocsCount++;
                 }
-                Assert.AreEqual(docsPerPageCount, 50);
+                Assert.That(docsPerPageCount, Is.EqualTo(50));
             }
 
-            Assert.AreEqual(totalDocsCount, 200);
-            Assert.AreEqual(pageCount, 4);
+            Assert.That(totalDocsCount, Is.EqualTo(200));
+            Assert.That(pageCount, Is.EqualTo(4));
         }
     }
 }

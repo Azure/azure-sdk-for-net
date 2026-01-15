@@ -58,17 +58,17 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                     // wait for callConnected
                     var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(connectedEvent);
-                    Assert.IsTrue(connectedEvent is CallConnected);
-                    Assert.AreEqual(callConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
+                    Assert.That(connectedEvent is CallConnected, Is.True);
+                    Assert.That(((CallConnected)connectedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
 
                     // wait for participants updated
                     var participantsUpdatedEvent1 = await WaitForEvent<ParticipantsUpdated>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(participantsUpdatedEvent1);
-                    Assert.AreEqual(2, ((ParticipantsUpdated)participantsUpdatedEvent1!).Participants.Count);
+                    Assert.That(((ParticipantsUpdated)participantsUpdatedEvent1!).Participants.Count, Is.EqualTo(2));
 
                     // test get properties
                     Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-                    Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+                    Assert.That(properties.Value.CallConnectionState, Is.EqualTo(CallConnectionState.Connected));
 
                     // try RemoveParticipants
                     string operationContext1 = "MyTestOperationcontext";
@@ -77,15 +77,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                         OperationContext = operationContext1,
                     };
                     Response<RemoveParticipantResult> removePartResponse = await response.CallConnection.RemoveParticipantAsync(removeParticipantsOptions);
-                    Assert.IsTrue(!removePartResponse.GetRawResponse().IsError);
+                    Assert.That(!removePartResponse.GetRawResponse().IsError, Is.True);
                     string expectedOperationContext = Mode == RecordedTestMode.Playback ? "Sanitized" : operationContext1;
-                    Assert.AreEqual(expectedOperationContext, removePartResponse.Value.OperationContext);
+                    Assert.That(removePartResponse.Value.OperationContext, Is.EqualTo(expectedOperationContext));
 
                     // call should be disconnected after removing participant
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(disconnectedEvent);
-                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
-                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+                    Assert.That(disconnectedEvent is CallDisconnected, Is.True);
+                    Assert.That(((CallDisconnected)disconnectedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
                     callConnectionId = null;
                 }
                 catch (Exception)
@@ -146,8 +146,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 // wait for callConnected
                 var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
                 Assert.IsNotNull(connectedEvent);
-                Assert.IsTrue(connectedEvent is CallConnected);
-                Assert.AreEqual(callConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
+                Assert.That(connectedEvent is CallConnected, Is.True);
+                Assert.That(((CallConnected)connectedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
 
                 // add participant
                 var callConnection = response.CallConnection;
@@ -160,7 +160,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 var addParticipantResponse = await callConnection.AddParticipantAsync(addParticipantOptions);
 
                 string expectedOperationContext = Mode == RecordedTestMode.Playback ? "Sanitized" : operationContext;
-                Assert.AreEqual(expectedOperationContext, addParticipantResponse.Value.OperationContext);
+                Assert.That(addParticipantResponse.Value.OperationContext, Is.EqualTo(expectedOperationContext));
                 Assert.IsNotNull(addParticipantResponse.Value.InvitationId);
 
                 // ensure invitation has arrived
@@ -176,8 +176,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 // wait for cancel event
                 var CancelAddParticipantSucceededEvent = await WaitForEvent<CancelAddParticipantSucceeded>(callConnectionId, TimeSpan.FromSeconds(20));
                 Assert.IsNotNull(CancelAddParticipantSucceededEvent);
-                Assert.IsTrue(CancelAddParticipantSucceededEvent is CancelAddParticipantSucceeded);
-                Assert.AreEqual(((CancelAddParticipantSucceeded)CancelAddParticipantSucceededEvent!).InvitationId, addParticipantResponse.Value.InvitationId);
+                Assert.That(CancelAddParticipantSucceededEvent is CancelAddParticipantSucceeded, Is.True);
+                Assert.That(addParticipantResponse.Value.InvitationId, Is.EqualTo(((CancelAddParticipantSucceeded)CancelAddParticipantSucceededEvent!).InvitationId));
             }
             catch (Exception ex)
             {

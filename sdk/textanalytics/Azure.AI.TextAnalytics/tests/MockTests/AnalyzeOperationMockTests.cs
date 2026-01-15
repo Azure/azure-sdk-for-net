@@ -70,7 +70,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
             var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
+            Assert.That(logging, Is.EqualTo(expectedContent));
         }
 
         [Test]
@@ -170,7 +170,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
             var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
+            Assert.That(logging, Is.EqualTo(expectedContent));
         }
 
         [Test]
@@ -270,7 +270,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
             var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
+            Assert.That(logging, Is.EqualTo(expectedContent));
         }
         #endregion
 
@@ -306,7 +306,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
             var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
+            Assert.That(logging, Is.EqualTo(expectedContent));
         }
 
         [Test]
@@ -406,7 +406,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
             var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
+            Assert.That(logging, Is.EqualTo(expectedContent));
         }
 
         [Test]
@@ -436,8 +436,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var contentString = GetString(mockTransport.Requests.Single().Content);
             ValidateRequestOptions(contentString);
-            Assert.AreEqual(-1, contentString.IndexOf("domain"));
-            Assert.AreEqual(-1, contentString.IndexOf("piiCategories"));
+            Assert.That(contentString.IndexOf("domain"), Is.EqualTo(-1));
+            Assert.That(contentString.IndexOf("piiCategories"), Is.EqualTo(-1));
         }
 
         [Test]
@@ -478,12 +478,12 @@ namespace Azure.AI.TextAnalytics.Tests
             string domaintFilter = contentString.Substring(contentString.IndexOf("domain"), 13);
 
             var expectedDomainFilterContent = "domain\":\"phi\"";
-            Assert.AreEqual(expectedDomainFilterContent, domaintFilter);
+            Assert.That(domaintFilter, Is.EqualTo(expectedDomainFilterContent));
 
             string piiCategories = contentString.Substring(contentString.IndexOf("piiCategories"), 41);
 
             var expectedPiiCategoriesContent = "piiCategories\":[\"USSocialSecurityNumber\"]";
-            Assert.AreEqual(expectedPiiCategoriesContent, piiCategories);
+            Assert.That(piiCategories, Is.EqualTo(expectedPiiCategoriesContent));
         }
 
         #endregion Pii entities
@@ -520,7 +520,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
             var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
+            Assert.That(logging, Is.EqualTo(expectedContent));
         }
 
         [Test]
@@ -550,7 +550,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var contentString = GetString(mockTransport.Requests.Single().Content);
             ValidateRequestOptions(contentString);
-            Assert.AreEqual(-1, contentString.IndexOf("opinionMining"));
+            Assert.That(contentString.IndexOf("opinionMining"), Is.EqualTo(-1));
         }
 
         [Test]
@@ -590,7 +590,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string opinionMining = contentString.Substring(contentString.IndexOf("opinionMining"), 19);
 
             var expectedOpinionMiningContent = "opinionMining\":true";
-            Assert.AreEqual(expectedOpinionMiningContent, opinionMining);
+            Assert.That(opinionMining, Is.EqualTo(expectedOpinionMiningContent));
         }
 
         #endregion Analyze sentiment
@@ -627,7 +627,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
             var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
+            Assert.That(logging, Is.EqualTo(expectedContent));
         }
         #endregion
 
@@ -663,7 +663,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
             var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
+            Assert.That(logging, Is.EqualTo(expectedContent));
         }
         #endregion
 
@@ -712,8 +712,8 @@ namespace Azure.AI.TextAnalytics.Tests
             var operation = CreateOperation(client);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
-            Assert.AreEqual("InternalServerError", ex.ErrorCode);
-            Assert.IsTrue(ex.Message.Contains("Some error"));
+            Assert.That(ex.ErrorCode, Is.EqualTo("InternalServerError"));
+            Assert.That(ex.Message.Contains("Some error"), Is.True);
         }
 
         private static string GetString(RequestContent content)
@@ -728,20 +728,20 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             if (!full)
             {
-                Assert.AreEqual(-1, contentString.IndexOf("loggingOptOut"));
-                Assert.AreEqual(-1, contentString.IndexOf("modelVersion"));
+                Assert.That(contentString.IndexOf("loggingOptOut"), Is.EqualTo(-1));
+                Assert.That(contentString.IndexOf("modelVersion"), Is.EqualTo(-1));
             }
             else
             {
                 string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
                 var expectedContent = "loggingOptOut\":true";
-                Assert.AreEqual(expectedContent, logging);
+                Assert.That(logging, Is.EqualTo(expectedContent));
 
                 string modelVersion = contentString.Substring(contentString.IndexOf("modelVersion"), 22);
 
                 var expectedModelVersionContent = "modelVersion\":\"latest\"";
-                Assert.AreEqual(expectedModelVersionContent, modelVersion);
+                Assert.That(modelVersion, Is.EqualTo(expectedModelVersionContent));
             }
         }
 

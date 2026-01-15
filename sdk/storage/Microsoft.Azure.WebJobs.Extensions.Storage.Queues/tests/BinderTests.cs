@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 (s) => BindToQueueTriggerViaIBinderProgram.TaskSource = s);
 
             // Assert
-            Assert.AreEqual("No binding found for attribute 'Microsoft.Azure.WebJobs.QueueTriggerAttribute'.", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo("No binding found for attribute 'Microsoft.Azure.WebJobs.QueueTriggerAttribute'."));
         }
 
         private static QueueClient CreateQueue(QueueServiceClient queueServiceClient, string queueName)

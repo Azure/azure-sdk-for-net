@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Exist
             bool flag = await _partnerNamespaceChannelCollection.ExistsAsync(channelName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Get
             var getResponse = await _partnerNamespaceChannelCollection.GetAsync(channelName);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // Delete
             await channel.Value.DeleteAsync(WaitUntil.Completed);
             flag = await _partnerNamespaceChannelCollection.ExistsAsync(channelName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

@@ -39,15 +39,15 @@ namespace Azure.Storage.Tests
             Assert.IsNotNull(stream);
 
             // Assert read-only
-            Assert.IsTrue(stream.CanRead);
-            Assert.IsFalse(stream.CanWrite);
+            Assert.That(stream.CanRead, Is.True);
+            Assert.That(stream.CanWrite, Is.False);
             Assert.DoesNotThrowAsync(
                 async () => await stream.ReadInternal(new byte[1], 0, 1, IsAsync, default));
             Assert.ThrowsAsync<NotSupportedException>(
                 async () => await stream.WriteInternal(new byte[1], 0, 1, IsAsync, default));
 
             // Assert maintain seekability
-            Assert.AreEqual(innerStreamCanSeek, stream.CanSeek);
+            Assert.That(stream.CanSeek, Is.EqualTo(innerStreamCanSeek));
             foreach (TestDelegate del in new List<TestDelegate>()
             {
                 () => stream.Seek(0, SeekOrigin.Begin),
@@ -89,15 +89,15 @@ namespace Azure.Storage.Tests
             Assert.IsNotNull(stream);
 
             // Assert write-only
-            Assert.IsFalse(stream.CanRead);
-            Assert.IsTrue(stream.CanWrite);
+            Assert.That(stream.CanRead, Is.False);
+            Assert.That(stream.CanWrite, Is.True);
             Assert.ThrowsAsync<NotSupportedException>(
                 async () => await stream.ReadInternal(new byte[1], 0, 1, IsAsync, default));
             Assert.DoesNotThrowAsync(
                 async () => await stream.WriteInternal(new byte[1], 0, 1, IsAsync, default));
 
             // Assert seeking not supported
-            Assert.IsFalse(stream.CanSeek);
+            Assert.That(stream.CanSeek, Is.False);
             Assert.Throws<NotSupportedException>(
                 () => stream.Seek(0, SeekOrigin.Begin));
             Assert.Throws<NotSupportedException>(
@@ -212,7 +212,7 @@ namespace Azure.Storage.Tests
                 else
                     Assert.DoesNotThrow(() => stream.Position = l);
 
-                Assert.AreEqual(l, stream.Position);
+                Assert.That(stream.Position, Is.EqualTo(l));
 
                 await stream.ReadInternal(b, 0, b.Length, IsAsync, default);
                 CollectionAssert.AreEqual(new Span<byte>(data, l, b.Length).ToArray(), b);
@@ -249,7 +249,7 @@ namespace Azure.Storage.Tests
                 else
                     Assert.Throws<NotSupportedException>(() => stream.Position = l);
 
-                Assert.AreEqual(position, stream.Position);
+                Assert.That(stream.Position, Is.EqualTo(position));
             }
         }
 
@@ -310,7 +310,7 @@ namespace Azure.Storage.Tests
             await stream.ReadInternal(new byte[firstReadLength], 0, firstReadLength, IsAsync, cancellationToken: default);
 
             // Assert expected checksum call on the whole read
-            Assert.AreEqual(1, callbacks.Count);
+            Assert.That(callbacks.Count, Is.EqualTo(1));
             CollectionAssert.AreEqual(new Span<byte>(data, 0, firstReadLength).ToArray(), callbacks[0]);
 
             // Rewind to 1 KB and read another 2 KB, reading half checksummed contents and half unchecksummed
@@ -320,7 +320,7 @@ namespace Azure.Storage.Tests
             await stream.ReadInternal(new byte[secondReadLength], 0, secondReadLength, IsAsync, cancellationToken: default);
 
             // Assert expected checksum call on latter half of the read
-            Assert.AreEqual(2, callbacks.Count);
+            Assert.That(callbacks.Count, Is.EqualTo(2));
             CollectionAssert.AreEqual(
                 new Span<byte>(
                     data,
@@ -333,9 +333,9 @@ namespace Azure.Storage.Tests
             await stream.CopyToInternalExactBufferSize(Stream.Null, 1000, IsAsync, cancellationToken: default);
 
             // Assert callback invocations and final checksum are as expected
-            Assert.AreEqual(4, callbacks.Count);
-            Assert.AreEqual(1000, callbacks[2].Length);
-            Assert.AreEqual(24, callbacks[3].Length);
+            Assert.That(callbacks.Count, Is.EqualTo(4));
+            Assert.That(callbacks[2].Length, Is.EqualTo(1000));
+            Assert.That(callbacks[3].Length, Is.EqualTo(24));
             CollectionAssert.AreEqual(dataChecksum, streamChecksumCalculator.GetCurrentHash());
         }
 

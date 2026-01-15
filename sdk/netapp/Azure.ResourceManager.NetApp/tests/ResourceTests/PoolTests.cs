@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             CapacityPoolData capactiyPoolData = new(DefaultLocation, _poolSize.Value, NetAppFileServiceLevel.Premium);
             capactiyPoolData.Tags.InitializeFrom(DefaultTags);
             CapacityPoolResource capactiyPoolResource1 = (await _capacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, capactiyPoolData)).Value;
-            Assert.AreEqual(poolName, capactiyPoolResource1.Id.Name);
+            Assert.That(capactiyPoolResource1.Id.Name, Is.EqualTo(poolName));
             VerifyCapacityPoolProperties(capactiyPoolResource1, true);
             (await capactiyPoolResource1.GetAsync()).Value.Should().BeEquivalentTo(capactiyPoolResource1);
 
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.NetApp.Tests
             VerifyCapacityPoolProperties(capactiyPoolResource2, true);
             capactiyPoolResource2.Should().BeEquivalentTo(capactiyPoolResource1);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _capacityPoolCollection.GetAsync(poolName + "1"); });
-            Assert.AreEqual(404, exception.Status);
-            Assert.IsTrue(await _capacityPoolCollection.ExistsAsync(poolName));
-            Assert.IsFalse(await _capacityPoolCollection.ExistsAsync(poolName + "1"));
+            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.That((bool)await _capacityPoolCollection.ExistsAsync(poolName), Is.True);
+            Assert.That((bool)await _capacityPoolCollection.ExistsAsync(poolName + "1"), Is.False);
 
             //delete CapacityPool
             await capactiyPoolResource1.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
-            Assert.IsFalse(await _capacityPoolCollection.ExistsAsync(poolName));
+            Assert.That((bool)await _capacityPoolCollection.ExistsAsync(poolName), Is.False);
             exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _capacityPoolCollection.GetAsync(poolName); });
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
         }
 
         [RecordedTest]
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             CapacityPoolData capactiyPoolData = new(DefaultLocation, _poolSize.Value, NetAppFileServiceLevel.Premium);
             capactiyPoolData.Tags.InitializeFrom(DefaultTags);
             CapacityPoolResource capactiyPoolResource1 = (await _capacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, capactiyPoolData)).Value;
-            Assert.AreEqual(poolName, capactiyPoolResource1.Id.Name);
+            Assert.That(capactiyPoolResource1.Id.Name, Is.EqualTo(poolName));
 
             //Delete Account
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _netAppAccount.DeleteAsync(WaitUntil.Completed); });
-            Assert.AreEqual(409, exception.Status);
-            Assert.IsTrue(await _capacityPoolCollection.ExistsAsync(poolName));
+            Assert.That(exception.Status, Is.EqualTo(409));
+            Assert.That((bool)await _capacityPoolCollection.ExistsAsync(poolName), Is.True);
         }
 
         [RecordedTest]
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                     count++;
                 }
             }
-            Assert.AreEqual(count, 2);
+            Assert.That(count, Is.EqualTo(2));
             VerifyCapacityPoolProperties(pool3, true);
             VerifyCapacityPoolProperties(pool4, true);
             pool3.Should().BeEquivalentTo(pool1);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             pool2.Data.Tags.Should().Contain(keyValuePair);
 
             //service level should not change
-            Assert.AreEqual(pool1.Data.ServiceLevel, pool2.Data.ServiceLevel);
+            Assert.That(pool2.Data.ServiceLevel, Is.EqualTo(pool1.Data.ServiceLevel));
         }
 
         [RecordedTest]
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             // validate
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _capacityPoolCollection.GetAsync("poolName2");});
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
         }
 
         [RecordedTest]
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             // validate
             NetAppAccountCollection netAppAccountCollection = _resourceGroup.GetNetAppAccounts();
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await netAppAccountCollection.GetAsync(_netAppAccount.Id.Name + "1"); });
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
         }
     }
 }

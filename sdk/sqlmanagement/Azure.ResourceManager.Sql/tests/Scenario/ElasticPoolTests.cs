@@ -67,25 +67,25 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             ElasticPoolData data = new ElasticPoolData(Location) { };
             var pool1 = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName1, data);
             Assert.IsNotNull(pool1.Value.Data);
-            Assert.AreEqual(poolName1, pool1.Value.Data.Name);
+            Assert.That(pool1.Value.Data.Name, Is.EqualTo(poolName1));
 
             // 2.CheckIfExist
-            Assert.IsTrue(await collection.ExistsAsync(poolName1));
-            Assert.IsFalse(await collection.ExistsAsync(poolName2));
+            Assert.That((bool)await collection.ExistsAsync(poolName1), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(poolName2), Is.False);
 
             // 3.Get
             var getPool = await collection.GetAsync(poolName1);
             Assert.IsNotNull(getPool.Value.Data);
-            Assert.AreEqual(poolName1, getPool.Value.Data.Name);
+            Assert.That(getPool.Value.Data.Name, Is.EqualTo(poolName1));
 
             var pool2 = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName2, data);
             Assert.IsNotNull(pool2.Value.Data);
-            Assert.AreEqual(poolName2, pool2.Value.Data.Name);
+            Assert.That(pool2.Value.Data.Name, Is.EqualTo(poolName2));
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(2, list.Count);
+            Assert.That(list.Count, Is.EqualTo(2));
             string[] poolNamesList = { list.First().Data.Name, list.Last().Data.Name };
             Assert.Contains(poolName1, poolNamesList);
             Assert.Contains(poolName2, poolNamesList);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             await deletePool2.Value.DeleteAsync(WaitUntil.Completed);
 
             list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(0, list.Count);
+            Assert.That(list.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -127,27 +127,27 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
             var pool1 = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName1, data);
             Assert.IsNotNull(pool1.Value.Data);
-            Assert.AreEqual(poolName1, pool1.Value.Data.Name);
-            Assert.AreEqual(enclaveType, pool1.Value.Data.PreferredEnclaveType);
+            Assert.That(pool1.Value.Data.Name, Is.EqualTo(poolName1));
+            Assert.That(pool1.Value.Data.PreferredEnclaveType, Is.EqualTo(enclaveType));
 
             // 2.CheckIfExist
-            Assert.IsTrue(await collection.ExistsAsync(poolName1));
-            Assert.IsFalse(await collection.ExistsAsync(poolName2));
+            Assert.That((bool)await collection.ExistsAsync(poolName1), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(poolName2), Is.False);
 
             // 3.Get
             var getPool = await collection.GetAsync(poolName1);
             Assert.IsNotNull(getPool.Value.Data);
-            Assert.AreEqual(poolName1, getPool.Value.Data.Name);
-            Assert.AreEqual(enclaveType, getPool.Value.Data.PreferredEnclaveType);
+            Assert.That(getPool.Value.Data.Name, Is.EqualTo(poolName1));
+            Assert.That(getPool.Value.Data.PreferredEnclaveType, Is.EqualTo(enclaveType));
 
             var pool2 = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName2, data);
             Assert.IsNotNull(pool2.Value.Data);
-            Assert.AreEqual(poolName2, pool2.Value.Data.Name);
+            Assert.That(pool2.Value.Data.Name, Is.EqualTo(poolName2));
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(2, list.Count);
+            Assert.That(list.Count, Is.EqualTo(2));
             string[] poolNamesList = { list.First().Data.Name, list.Last().Data.Name };
             Assert.Contains(poolName1, poolNamesList);
             Assert.Contains(poolName2, poolNamesList);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             await deletePool2.Value.DeleteAsync(WaitUntil.Completed);
 
             list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(0, list.Count);
+            Assert.That(list.Count, Is.EqualTo(0));
         }
     }
 }

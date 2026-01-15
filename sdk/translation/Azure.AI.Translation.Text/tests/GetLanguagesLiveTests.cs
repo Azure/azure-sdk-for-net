@@ -30,7 +30,7 @@ namespace Azure.AI.Translation.Text.Tests
             Response<GetSupportedLanguagesResult> response =
                 await client.GetSupportedLanguagesAsync().ConfigureAwait(false);
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.Greater(response.Value.Translation.Count, 0);
             Assert.Greater(response.Value.Transliteration.Count, 0);
             Assert.Greater(response.Value.Models.Count, 0);
@@ -43,9 +43,9 @@ namespace Azure.AI.Translation.Text.Tests
             Response<GetSupportedLanguagesResult> response =
                 await client.GetSupportedLanguagesAsync(scope: "translation", cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.Greater(response.Value.Translation.Count, 0);
-            Assert.IsTrue(response.Value.Translation.TryGetValue("af", out TranslationLanguage translationLanguage));
+            Assert.That(response.Value.Translation.TryGetValue("af", out TranslationLanguage translationLanguage), Is.True);
             Assert.NotNull(translationLanguage.Directionality);
             Assert.NotNull(translationLanguage.Name);
             Assert.NotNull(translationLanguage.NativeName);
@@ -58,9 +58,9 @@ namespace Azure.AI.Translation.Text.Tests
             Response<GetSupportedLanguagesResult> response =
                 await client.GetSupportedLanguagesAsync(scope: "transliteration", cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.Greater(response.Value.Transliteration.Count, 0);
-            Assert.IsTrue(response.Value.Transliteration.TryGetValue("be", out TransliterationLanguage transliterationLanguage));
+            Assert.That(response.Value.Transliteration.TryGetValue("be", out TransliterationLanguage transliterationLanguage), Is.True);
             Assert.NotNull(transliterationLanguage.Name);
             Assert.NotNull(transliterationLanguage.NativeName);
             Assert.NotNull(transliterationLanguage.Scripts);
@@ -86,9 +86,9 @@ namespace Azure.AI.Translation.Text.Tests
             Response<GetSupportedLanguagesResult> response =
                 await client.GetSupportedLanguagesAsync(scope: "transliteration", cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.Greater(response.Value.Transliteration.Count, 0);
-            Assert.IsTrue(response.Value.Transliteration.TryGetValue("zh-Hant", out TransliterationLanguage transliterationLanguage));
+            Assert.That(response.Value.Transliteration.TryGetValue("zh-Hant", out TransliterationLanguage transliterationLanguage), Is.True);
             Assert.NotNull(transliterationLanguage.Name);
             Assert.NotNull(transliterationLanguage.NativeName);
             Assert.NotNull(transliterationLanguage.Scripts);
@@ -105,10 +105,10 @@ namespace Azure.AI.Translation.Text.Tests
             Response<GetSupportedLanguagesResult> response =
                 await client.GetSupportedLanguagesAsync(acceptLanguage: "es", cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.Greater(response.Value.Translation.Count, 0);
             Assert.Greater(response.Value.Transliteration.Count, 0);
-            Assert.IsTrue(response.Value.Translation.TryGetValue("en", out TranslationLanguage language));
+            Assert.That(response.Value.Translation.TryGetValue("en", out TranslationLanguage language), Is.True);
             Assert.NotNull(language.Directionality);
             Assert.NotNull(language.Name);
             Assert.NotNull(language.NativeName);

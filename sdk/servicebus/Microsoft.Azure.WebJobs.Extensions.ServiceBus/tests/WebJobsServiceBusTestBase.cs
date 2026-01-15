@@ -337,7 +337,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 QueueRuntimeProperties properties = await client.GetQueueRuntimePropertiesAsync(FirstQueueScope.QueueName, CancellationToken.None);
-                Assert.AreEqual(ExpectedRemainingMessages, properties.ActiveMessageCount);
+                Assert.That(properties.ActiveMessageCount, Is.EqualTo(ExpectedRemainingMessages));
             }
 
             private static bool IsError(LogMessage logMessage)

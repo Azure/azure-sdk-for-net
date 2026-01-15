@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             if (roleAssignmentScheduleInstance1 != null)
             {
                 var roleAssignmentScheduleInstance2 = await roleAssignmentScheduleInstance1.GetAsync();
-                Assert.AreEqual(roleAssignmentScheduleInstance2.Value.Data.Name, roleAssignmentScheduleInstance1.Data.Name);
+                Assert.That(roleAssignmentScheduleInstance1.Data.Name, Is.EqualTo(roleAssignmentScheduleInstance2.Value.Data.Name));
             }
         }
     }

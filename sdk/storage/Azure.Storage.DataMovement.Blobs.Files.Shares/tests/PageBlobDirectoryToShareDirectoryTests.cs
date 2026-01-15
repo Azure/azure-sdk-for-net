@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             CancellationToken cancellationToken)
         {
             long size = contents.Length;
-            Assert.IsTrue(size % (Constants.KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
+            Assert.That(size % (Constants.KB / 2) == 0, Is.True, "Cannot create page blob that's not a multiple of 512");
             await blobClient.CreateIfNotExistsAsync(size, new PageBlobCreateOptions()
             {
                 Metadata = _defaultMetadata,

@@ -48,8 +48,8 @@ namespace Azure.Core.Tests
             Stream stream = message.ExtractResponseContent();
             Stream stream2 = message.ExtractResponseContent();
 
-            Assert.AreSame(mockStream.Object, stream);
-            Assert.AreSame(stream2, stream);
+            Assert.That(stream, Is.SameAs(mockStream.Object));
+            Assert.That(stream, Is.SameAs(stream2));
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Azure.Core.Tests
 
             Stream stream = message.ExtractResponseContent();
 
-            Assert.AreSame(null, stream);
+            Assert.That(stream, Is.SameAs(null));
         }
 
         [Test]
@@ -78,11 +78,11 @@ namespace Azure.Core.Tests
 
             Stream stream = message.ExtractResponseContent();
 
-            Assert.AreSame(mockStream.Object, stream);
+            Assert.That(stream, Is.SameAs(mockStream.Object));
 #pragma warning disable CA2022 // The return value of ReadAsync is not needed for this test
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => response.ContentStream.Read(Array.Empty<byte>(), 0, 0));
 #pragma warning restore CA2022
-            Assert.AreEqual("The operation has called ExtractResponseContent and will provide the stream as part of its response type.", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo("The operation has called ExtractResponseContent and will provide the stream as part of its response type."));
         }
 
         [Test]
@@ -95,11 +95,11 @@ namespace Azure.Core.Tests
             HttpMessage message = new HttpMessage(new MockRequest(), _classifier);
             message.Response = response;
 
-            Assert.AreEqual(memoryStream.ToArray(), message.Response.Content.ToArray());
+            Assert.That(message.Response.Content.ToArray(), Is.EqualTo(memoryStream.ToArray()));
 
             Stream stream = message.ExtractResponseContent();
 
-            Assert.AreSame(memoryStream, stream);
+            Assert.That(stream, Is.SameAs(memoryStream));
             Assert.Throws<InvalidOperationException>(() => { var x = response.Content; });
         }
     }

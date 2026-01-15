@@ -25,9 +25,9 @@ namespace Azure.Maps.Routing.Tests
             };
             var result = await client.GetRouteRangeAsync(options);
 
-            Assert.AreEqual("0.0.1", result.Value.FormatVersion);
+            Assert.That(result.Value.FormatVersion, Is.EqualTo("0.0.1"));
             Assert.IsNotNull(result.Value.ReachableRange.Center);
-            Assert.AreEqual(50, result.Value.ReachableRange.Boundary.Count);
+            Assert.That(result.Value.ReachableRange.Boundary.Count, Is.EqualTo(50));
         }
 
         [RecordedTest]
@@ -37,7 +37,7 @@ namespace Azure.Maps.Routing.Tests
             var options = new RouteRangeOptions(123.75, 46);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetRouteRangeAsync(options));
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
         }
     }
 }

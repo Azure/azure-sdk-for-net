@@ -116,24 +116,24 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             BlobDestinationCheckpointDetails data = CreatePreserveValues();
 
-            Assert.AreEqual(DataMovementBlobConstants.DestinationCheckpointDetails.SchemaVersion, data.Version);
-            Assert.AreEqual(false, data.IsBlobTypeSet);
+            Assert.That(data.Version, Is.EqualTo(DataMovementBlobConstants.DestinationCheckpointDetails.SchemaVersion));
+            Assert.That(data.IsBlobTypeSet, Is.EqualTo(false));
             Assert.IsNull(data.BlobType);
-            Assert.AreEqual(false, data.IsContentTypeSet);
+            Assert.That(data.IsContentTypeSet, Is.EqualTo(false));
             Assert.IsEmpty(data.ContentTypeBytes);
-            Assert.AreEqual(false, data.IsContentEncodingSet);
+            Assert.That(data.IsContentEncodingSet, Is.EqualTo(false));
             Assert.IsEmpty(data.ContentEncodingBytes);
-            Assert.AreEqual(false, data.IsContentLanguageSet);
+            Assert.That(data.IsContentLanguageSet, Is.EqualTo(false));
             Assert.IsEmpty(data.ContentLanguageBytes);
-            Assert.AreEqual(false, data.IsContentDispositionSet);
+            Assert.That(data.IsContentDispositionSet, Is.EqualTo(false));
             Assert.IsEmpty(data.ContentDispositionBytes);
-            Assert.AreEqual(false, data.IsCacheControlSet);
+            Assert.That(data.IsCacheControlSet, Is.EqualTo(false));
             Assert.IsEmpty(data.CacheControlBytes);
-            Assert.AreEqual(false, data.IsAccessTierSet);
+            Assert.That(data.IsAccessTierSet, Is.EqualTo(false));
             Assert.IsNull(data.AccessTierValue);
-            Assert.AreEqual(false, data.IsMetadataSet);
+            Assert.That(data.IsMetadataSet, Is.EqualTo(false));
             Assert.IsNull(data.Metadata);
-            Assert.AreEqual(false, data.PreserveTags);
+            Assert.That(data.PreserveTags, Is.EqualTo(false));
             Assert.IsNull(data.Tags);
         }
 
@@ -259,47 +259,47 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         private void VerifySampleValues_Version3(BlobDestinationCheckpointDetails data)
         {
-            Assert.AreEqual(4, data.Version);
-            Assert.IsTrue(data.IsBlobTypeSet);
-            Assert.AreEqual(DefaultBlobType, data.BlobType);
-            Assert.AreEqual(true, data.IsContentTypeSet);
-            Assert.AreEqual(StringToByteArray(DefaultContentType), data.ContentTypeBytes);
-            Assert.AreEqual(true, data.IsContentEncodingSet);
-            Assert.AreEqual(StringToByteArray(DefaultContentEncoding), data.ContentEncodingBytes);
-            Assert.AreEqual(true, data.IsContentLanguageSet);
-            Assert.AreEqual(StringToByteArray(DefaultContentLanguage), data.ContentLanguageBytes);
-            Assert.AreEqual(true, data.IsContentDispositionSet);
-            Assert.AreEqual(StringToByteArray(DefaultContentDisposition), data.ContentDispositionBytes);
-            Assert.AreEqual(true, data.IsCacheControlSet);
-            Assert.AreEqual(StringToByteArray(DefaultCacheControl), data.CacheControlBytes);
-            Assert.AreEqual(true, data.IsAccessTierSet);
-            Assert.AreEqual(DefaultAccessTier, data.AccessTierValue);
-            Assert.AreEqual(true, data.IsMetadataSet);
+            Assert.That(data.Version, Is.EqualTo(4));
+            Assert.That(data.IsBlobTypeSet, Is.True);
+            Assert.That(data.BlobType, Is.EqualTo(DefaultBlobType));
+            Assert.That(data.IsContentTypeSet, Is.EqualTo(true));
+            Assert.That(data.ContentTypeBytes, Is.EqualTo(StringToByteArray(DefaultContentType)));
+            Assert.That(data.IsContentEncodingSet, Is.EqualTo(true));
+            Assert.That(data.ContentEncodingBytes, Is.EqualTo(StringToByteArray(DefaultContentEncoding)));
+            Assert.That(data.IsContentLanguageSet, Is.EqualTo(true));
+            Assert.That(data.ContentLanguageBytes, Is.EqualTo(StringToByteArray(DefaultContentLanguage)));
+            Assert.That(data.IsContentDispositionSet, Is.EqualTo(true));
+            Assert.That(data.ContentDispositionBytes, Is.EqualTo(StringToByteArray(DefaultContentDisposition)));
+            Assert.That(data.IsCacheControlSet, Is.EqualTo(true));
+            Assert.That(data.CacheControlBytes, Is.EqualTo(StringToByteArray(DefaultCacheControl)));
+            Assert.That(data.IsAccessTierSet, Is.EqualTo(true));
+            Assert.That(data.AccessTierValue, Is.EqualTo(DefaultAccessTier));
+            Assert.That(data.IsMetadataSet, Is.EqualTo(true));
             CollectionAssert.AreEquivalent(DefaultMetadata, data.Metadata);
-            Assert.AreEqual(false, data.PreserveTags);
+            Assert.That(data.PreserveTags, Is.EqualTo(false));
             CollectionAssert.AreEquivalent(DefaultTags, data.Tags);
         }
 
         private void VerifySampleValues_Version4(BlobDestinationCheckpointDetails data)
         {
-            Assert.AreEqual(4, data.Version);
-            Assert.IsTrue(data.IsBlobTypeSet);
-            Assert.AreEqual(DefaultBlobType, data.BlobType);
-            Assert.AreEqual(true, data.IsContentTypeSet);
-            Assert.AreEqual(StringToByteArray(DefaultContentType), data.ContentTypeBytes);
-            Assert.AreEqual(true, data.IsContentEncodingSet);
-            Assert.AreEqual(StringToByteArray(DefaultContentEncoding), data.ContentEncodingBytes);
-            Assert.AreEqual(true, data.IsContentLanguageSet);
-            Assert.AreEqual(StringToByteArray(DefaultContentLanguage), data.ContentLanguageBytes);
-            Assert.AreEqual(true, data.IsContentDispositionSet);
-            Assert.AreEqual(StringToByteArray(DefaultContentDisposition), data.ContentDispositionBytes);
-            Assert.AreEqual(true, data.IsCacheControlSet);
-            Assert.AreEqual(StringToByteArray(DefaultCacheControl), data.CacheControlBytes);
-            Assert.AreEqual(true, data.IsAccessTierSet);
-            Assert.AreEqual(DefaultAccessTier, data.AccessTierValue);
-            Assert.AreEqual(true, data.IsMetadataSet);
+            Assert.That(data.Version, Is.EqualTo(4));
+            Assert.That(data.IsBlobTypeSet, Is.True);
+            Assert.That(data.BlobType, Is.EqualTo(DefaultBlobType));
+            Assert.That(data.IsContentTypeSet, Is.EqualTo(true));
+            Assert.That(data.ContentTypeBytes, Is.EqualTo(StringToByteArray(DefaultContentType)));
+            Assert.That(data.IsContentEncodingSet, Is.EqualTo(true));
+            Assert.That(data.ContentEncodingBytes, Is.EqualTo(StringToByteArray(DefaultContentEncoding)));
+            Assert.That(data.IsContentLanguageSet, Is.EqualTo(true));
+            Assert.That(data.ContentLanguageBytes, Is.EqualTo(StringToByteArray(DefaultContentLanguage)));
+            Assert.That(data.IsContentDispositionSet, Is.EqualTo(true));
+            Assert.That(data.ContentDispositionBytes, Is.EqualTo(StringToByteArray(DefaultContentDisposition)));
+            Assert.That(data.IsCacheControlSet, Is.EqualTo(true));
+            Assert.That(data.CacheControlBytes, Is.EqualTo(StringToByteArray(DefaultCacheControl)));
+            Assert.That(data.IsAccessTierSet, Is.EqualTo(true));
+            Assert.That(data.AccessTierValue, Is.EqualTo(DefaultAccessTier));
+            Assert.That(data.IsMetadataSet, Is.EqualTo(true));
             CollectionAssert.AreEquivalent(DefaultMetadata, data.Metadata);
-            Assert.AreEqual(false, data.PreserveTags);
+            Assert.That(data.PreserveTags, Is.EqualTo(false));
             CollectionAssert.AreEquivalent(DefaultTags, data.Tags);
         }
 
@@ -329,26 +329,26 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             serialized.Position = 0;
             BlobDestinationCheckpointDetails deserialized = BlobDestinationCheckpointDetails.Deserialize(serialized);
 
-            Assert.AreEqual(DataMovementBlobConstants.DestinationCheckpointDetails.SchemaVersion, deserialized.Version);
-            Assert.AreEqual(original.Version, deserialized.Version);
-            Assert.AreEqual(original.IsBlobTypeSet, deserialized.IsBlobTypeSet);
-            Assert.AreEqual(original.BlobType, deserialized.BlobType);
-            Assert.AreEqual(original.IsContentTypeSet, deserialized.IsContentTypeSet);
-            Assert.AreEqual(original.ContentTypeBytes, deserialized.ContentTypeBytes);
-            Assert.AreEqual(original.IsContentEncodingSet, deserialized.IsContentEncodingSet);
-            Assert.AreEqual(original.ContentEncodingBytes, deserialized.ContentEncodingBytes);
-            Assert.AreEqual(original.IsContentLanguageSet, deserialized.IsContentLanguageSet);
-            Assert.AreEqual(original.ContentLanguageBytes, deserialized.ContentLanguageBytes);
-            Assert.AreEqual(original.IsContentDispositionSet, deserialized.IsContentDispositionSet);
-            Assert.AreEqual(original.ContentDispositionBytes, deserialized.ContentDispositionBytes);
-            Assert.AreEqual(original.IsCacheControlSet, deserialized.IsCacheControlSet);
-            Assert.AreEqual(original.CacheControlBytes, deserialized.CacheControlBytes);
-            Assert.AreEqual(original.IsAccessTierSet, deserialized.IsAccessTierSet);
-            Assert.AreEqual(original.AccessTierValue, deserialized.AccessTierValue);
-            Assert.AreEqual(original.IsMetadataSet, deserialized.IsMetadataSet);
-            Assert.AreEqual(original.Metadata, deserialized.Metadata);
-            Assert.AreEqual(original.PreserveTags, deserialized.PreserveTags);
-            Assert.AreEqual(original.Tags, deserialized.Tags);
+            Assert.That(deserialized.Version, Is.EqualTo(DataMovementBlobConstants.DestinationCheckpointDetails.SchemaVersion));
+            Assert.That(deserialized.Version, Is.EqualTo(original.Version));
+            Assert.That(deserialized.IsBlobTypeSet, Is.EqualTo(original.IsBlobTypeSet));
+            Assert.That(deserialized.BlobType, Is.EqualTo(original.BlobType));
+            Assert.That(deserialized.IsContentTypeSet, Is.EqualTo(original.IsContentTypeSet));
+            Assert.That(deserialized.ContentTypeBytes, Is.EqualTo(original.ContentTypeBytes));
+            Assert.That(deserialized.IsContentEncodingSet, Is.EqualTo(original.IsContentEncodingSet));
+            Assert.That(deserialized.ContentEncodingBytes, Is.EqualTo(original.ContentEncodingBytes));
+            Assert.That(deserialized.IsContentLanguageSet, Is.EqualTo(original.IsContentLanguageSet));
+            Assert.That(deserialized.ContentLanguageBytes, Is.EqualTo(original.ContentLanguageBytes));
+            Assert.That(deserialized.IsContentDispositionSet, Is.EqualTo(original.IsContentDispositionSet));
+            Assert.That(deserialized.ContentDispositionBytes, Is.EqualTo(original.ContentDispositionBytes));
+            Assert.That(deserialized.IsCacheControlSet, Is.EqualTo(original.IsCacheControlSet));
+            Assert.That(deserialized.CacheControlBytes, Is.EqualTo(original.CacheControlBytes));
+            Assert.That(deserialized.IsAccessTierSet, Is.EqualTo(original.IsAccessTierSet));
+            Assert.That(deserialized.AccessTierValue, Is.EqualTo(original.AccessTierValue));
+            Assert.That(deserialized.IsMetadataSet, Is.EqualTo(original.IsMetadataSet));
+            Assert.That(deserialized.Metadata, Is.EqualTo(original.Metadata));
+            Assert.That(deserialized.PreserveTags, Is.EqualTo(original.PreserveTags));
+            Assert.That(deserialized.Tags, Is.EqualTo(original.Tags));
         }
     }
 }

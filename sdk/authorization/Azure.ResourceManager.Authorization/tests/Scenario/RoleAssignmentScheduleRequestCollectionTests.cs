@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             if (roleAssignmentScheduleRequest1 != null)
             {
                 var roleAssignmentScheduleRequest2 = await collection.GetAsync(roleAssignmentScheduleRequest1.Data.Name);
-                Assert.AreEqual(roleAssignmentScheduleRequest2.Value.Data.Name, roleAssignmentScheduleRequest1.Data.Name);
+                Assert.That(roleAssignmentScheduleRequest1.Data.Name, Is.EqualTo(roleAssignmentScheduleRequest2.Value.Data.Name));
             }
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             if (roleAssignmentScheduleRequest != null)
             {
                 var result = await collection.ExistsAsync(roleAssignmentScheduleRequest.Data.Name);
-                Assert.IsTrue(result);
+                Assert.That((bool)result, Is.True);
             }
         }
     }

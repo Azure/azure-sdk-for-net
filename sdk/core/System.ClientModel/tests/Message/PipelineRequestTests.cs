@@ -39,7 +39,7 @@ public class PipelineRequestTests
         string secondAccess = message.Request.ClientRequestId;
 
         // Assert - Should return the same value
-        Assert.AreEqual(firstAccess, secondAccess);
+        Assert.That(secondAccess, Is.EqualTo(firstAccess));
     }
 
     [Test]
@@ -55,7 +55,7 @@ public class PipelineRequestTests
         // Assert - Should be auto-generated and consistent
         Assert.IsNotNull(clientRequestId);
         Assert.IsNotEmpty(clientRequestId);
-        Assert.AreEqual(clientRequestId, message.Request.ClientRequestId);
+        Assert.That(message.Request.ClientRequestId, Is.EqualTo(clientRequestId));
     }
 
     [Test]
@@ -72,7 +72,7 @@ public class PipelineRequestTests
         string clientRequestId = message.Request.ClientRequestId;
 
         // Assert - Should use Activity.Current.Id
-        Assert.AreEqual(Activity.Current?.Id, clientRequestId);
+        Assert.That(clientRequestId, Is.EqualTo(Activity.Current?.Id));
     }
 
     [Test]
@@ -94,7 +94,7 @@ public class PipelineRequestTests
         // Assert - Custom policy should be able to access ClientRequestId
         Assert.IsNotNull(capturedRequestId);
         Assert.IsNotEmpty(capturedRequestId);
-        Assert.AreEqual(message.Request.ClientRequestId, capturedRequestId);
+        Assert.That(capturedRequestId, Is.EqualTo(message.Request.ClientRequestId));
     }
 
     #region Helper Classes

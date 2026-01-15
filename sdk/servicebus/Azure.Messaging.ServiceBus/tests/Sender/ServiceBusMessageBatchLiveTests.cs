@@ -32,8 +32,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                     await AddAndSendMessages();
 
                     batch.Clear();
-                    Assert.AreEqual(0, batch.Count);
-                    Assert.AreEqual(0, batch.SizeInBytes);
+                    Assert.That(batch.Count, Is.EqualTo(0));
+                    Assert.That(batch.SizeInBytes, Is.EqualTo(0));
 
                     await AddAndSendMessages();
 
@@ -56,7 +56,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                             var diff = batch.MaxSizeInBytes - batch.SizeInBytes;
                             // the difference in size from the max allowable size should be less than the size of a single
                             // instrumented message
-                            Assert.IsTrue(diff < 250, diff.ToString());
+                            Assert.That(diff < 250, Is.True, diff.ToString());
                         }
                         Assert.Greater(batch.Count, 0);
                         await sender.SendMessagesAsync(batch);

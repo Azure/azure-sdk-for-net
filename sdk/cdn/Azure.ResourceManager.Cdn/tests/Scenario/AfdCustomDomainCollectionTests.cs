@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdCustomDomainName = Recording.GenerateAssetName("AFDCustomDomain-");
             string afdHostName = "customdomain4afd-1.azuretest.net";
             FrontDoorCustomDomainResource afdCustomDomain = await CreateAfdCustomDomain(afdProfileResource, afdCustomDomainName, afdHostName);
-            Assert.AreEqual(afdCustomDomainName, afdCustomDomain.Data.Name);
+            Assert.That(afdCustomDomain.Data.Name, Is.EqualTo(afdCustomDomainName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetFrontDoorCustomDomains().CreateOrUpdateAsync(WaitUntil.Completed, null, afdCustomDomain.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetFrontDoorCustomDomains().CreateOrUpdateAsync(WaitUntil.Completed, afdCustomDomainName, null));
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 count++;
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]

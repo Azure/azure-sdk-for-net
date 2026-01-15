@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var loggerContract = (await logCollection.CreateOrUpdateAsync(WaitUntil.Completed, newloggerId, loggerCreateParameters)).Value;
 
             Assert.NotNull(loggerContract);
-            Assert.AreEqual(newloggerId, loggerContract.Data.Name);
-            Assert.IsTrue(loggerContract.Data.IsBuffered);
-            Assert.AreEqual(LoggerType.AzureEventHub, loggerContract.Data.LoggerType);
+            Assert.That(loggerContract.Data.Name, Is.EqualTo(newloggerId));
+            Assert.That(loggerContract.Data.IsBuffered, Is.True);
+            Assert.That(loggerContract.Data.LoggerType, Is.EqualTo(LoggerType.AzureEventHub));
             Assert.NotNull(loggerContract.Data.Credentials);
-            Assert.AreEqual(2, loggerContract.Data.Credentials.Keys.Count);
+            Assert.That(loggerContract.Data.Credentials.Keys.Count, Is.EqualTo(2));
 
             var listLoggers = await logCollection.GetAllAsync().ToEnumerableAsync();
             // there should be one user
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             loggerContract = await logCollection.GetAsync(newloggerId);
 
             Assert.NotNull(loggerContract);
-            Assert.AreEqual(newloggerId, loggerContract.Data.Name);
-            Assert.AreEqual(patchedDescription, loggerContract.Data.Description);
+            Assert.That(loggerContract.Data.Name, Is.EqualTo(newloggerId));
+            Assert.That(loggerContract.Data.Description, Is.EqualTo(patchedDescription));
             Assert.NotNull(loggerContract.Data.Credentials);
 
             // delete the logger
             await loggerContract.DeleteAsync(WaitUntil.Completed, ETag.All);
             var falseResult = await logCollection.ExistsAsync(newloggerId);
-            Assert.IsFalse(falseResult);
+            Assert.That((bool)falseResult, Is.False);
         }
     }
 }

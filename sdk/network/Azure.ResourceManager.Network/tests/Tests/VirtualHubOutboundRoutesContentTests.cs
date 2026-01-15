@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Tests
             model.WriteResourceUri(writer, default);
             writer.Flush();
             var json = Encoding.UTF8.GetString(stream.ToArray());
-            Assert.IsTrue(json.Contains(absoluteUri.AbsoluteUri));
+            Assert.That(json.Contains(absoluteUri.AbsoluteUri), Is.True);
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Tests
             model.WriteResourceUri(writer, default);
             writer.Flush();
             var json = Encoding.UTF8.GetString(stream.ToArray());
-            Assert.IsTrue(json.Contains(relativeUri.OriginalString));
+            Assert.That(json.Contains(relativeUri.OriginalString), Is.True);
         }
 
         [Test]
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Network.Tests
             var json = $"{{\"resourceUri\":\"{uriString}\"}}";
             var doc = JsonDocument.Parse(json);
             var content = VirtualHubOutboundRoutesContent.DeserializeVirtualHubOutboundRoutesContent(doc.RootElement, default);
-            Assert.AreEqual(content.ResourceUri, new Uri(uriString));
+            Assert.That(new Uri(uriString), Is.EqualTo(content.ResourceUri));
 
             uriString = "relative/path";
             json = $"{{\"resourceUri\":\"{uriString}\"}}";
             doc = JsonDocument.Parse(json);
             content = VirtualHubOutboundRoutesContent.DeserializeVirtualHubOutboundRoutesContent(doc.RootElement, default);
-            Assert.AreEqual(content.ResourceUri.ToString(), uriString);
+            Assert.That(uriString, Is.EqualTo(content.ResourceUri.ToString()));
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Tests
             using var doc = JsonDocument.Parse(json);
             var property = doc.RootElement.GetProperty("resourceUri");
             var content = VirtualHubOutboundRoutesContent.DeserializeVirtualHubOutboundRoutesContent(doc.RootElement, default);
-            Assert.AreEqual(content.ResourceUri, new Uri("", UriKind.Relative));
+            Assert.That(new Uri("", UriKind.Relative), Is.EqualTo(content.ResourceUri));
         }
 
         [Test]

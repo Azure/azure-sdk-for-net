@@ -24,8 +24,8 @@ public class ClientImplementationSamples
         BinaryData persistableModelData = persistableModel.Write(ModelReaderWriterOptions.Json);
         SampleResource? persistableModelResource = persistableModel.Create(persistableModelData, ModelReaderWriterOptions.Json);
 
-        Assert.AreEqual("""{"id":"123"}""", persistableModelData.ToString());
-        Assert.AreEqual("123", persistableModelResource?.Id);
+        Assert.That(persistableModelData.ToString(), Is.EqualTo("""{"id":"123"}"""));
+        Assert.That(persistableModelResource?.Id, Is.EqualTo("123"));
 
         using MemoryStream stream = new();
         using Utf8JsonWriter writer = new(stream);
@@ -36,8 +36,8 @@ public class ClientImplementationSamples
         Utf8JsonReader reader = new(jsonModelData);
         SampleResource? jsonModelResource = jsonModel.Create(ref reader, ModelReaderWriterOptions.Json);
 
-        Assert.AreEqual("""{"id":"123"}""", jsonModelData.ToString());
-        Assert.AreEqual("123", jsonModelResource?.Id);
+        Assert.That(jsonModelData.ToString(), Is.EqualTo("""{"id":"123"}"""));
+        Assert.That(jsonModelResource?.Id, Is.EqualTo("123"));
     }
 
     [Test]

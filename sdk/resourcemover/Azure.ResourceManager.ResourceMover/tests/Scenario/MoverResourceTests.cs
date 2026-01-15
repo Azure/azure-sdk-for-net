@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
         public async Task CreateOrUpdate()
         {
             MoverResource moverResource = await CreateMoverResource(_moverResourceSet, _virtualNetworkId, _moverResourceName, _targetVnetName);
-            Assert.AreEqual(_moverResourceName, moverResource.Data.Name);
+            Assert.That(moverResource.Data.Name, Is.EqualTo(_moverResourceName));
         }
 
         [TestCase]
@@ -75,23 +75,23 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             MoverResource moverResource = await CreateMoverResource(_moverResourceSet, _virtualNetworkId, _moverResourceName, _targetVnetName);
             await moverResource.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await moverResource.GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         private void AssertValidMoverResource(MoverResource model, MoverResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
             if (model.Data.Properties != null || getResult.Data.Properties != null)
             {
                 Assert.NotNull(model.Data.Properties);
                 Assert.NotNull(getResult.Data.Properties);
-                Assert.AreEqual(model.Data.Properties.ProvisioningState, getResult.Data.Properties.ProvisioningState);
-                Assert.AreEqual(model.Data.Properties.SourceId, getResult.Data.Properties.SourceId);
-                Assert.AreEqual(model.Data.Properties.TargetId, getResult.Data.Properties.TargetId);
-                Assert.AreEqual(model.Data.Properties.ExistingTargetId, getResult.Data.Properties.ExistingTargetId);
-                Assert.AreEqual(model.Data.Properties.IsResolveRequired, getResult.Data.Properties.IsResolveRequired);
+                Assert.That(getResult.Data.Properties.ProvisioningState, Is.EqualTo(model.Data.Properties.ProvisioningState));
+                Assert.That(getResult.Data.Properties.SourceId, Is.EqualTo(model.Data.Properties.SourceId));
+                Assert.That(getResult.Data.Properties.TargetId, Is.EqualTo(model.Data.Properties.TargetId));
+                Assert.That(getResult.Data.Properties.ExistingTargetId, Is.EqualTo(model.Data.Properties.ExistingTargetId));
+                Assert.That(getResult.Data.Properties.IsResolveRequired, Is.EqualTo(model.Data.Properties.IsResolveRequired));
             }
         }
     }

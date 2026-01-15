@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             byte[] original = new byte[] { 0, 1, 2, 3 };
             byte[] actual = original.Take(original.Length);
 
-            Assert.AreSame(original, actual);
+            Assert.That(actual, Is.SameAs(original));
         }
 
         [Test]

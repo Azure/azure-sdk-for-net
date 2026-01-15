@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var notifications = await collection.GetAllAsync().ToEnumerableAsync();
 
             Assert.NotNull(notifications);
-            Assert.AreEqual(7, notifications.Count);
+            Assert.That(notifications.Count, Is.EqualTo(7));
 
             var firstNotification = notifications.FirstOrDefault();
             Assert.NotNull(firstNotification);
@@ -69,46 +69,46 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var recipientEmailContract = (await firstNotification.CreateOrUpdateNotificationRecipientEmailAsync(userEmail)).Value;
 
             Assert.NotNull(recipientEmailContract);
-            Assert.AreEqual(userEmail, recipientEmailContract.Email);
+            Assert.That(recipientEmailContract.Email, Is.EqualTo(userEmail));
 
             // get the notification details
             var notificationContract = (await collection.GetAsync(firstNotification.Data.Name)).Value;
             Assert.NotNull(notificationContract);
             Assert.NotNull(notificationContract.Data.Recipients);
             Assert.IsEmpty(notificationContract.Data.Recipients.Users);
-            Assert.AreEqual(notificationContract.Data.Recipients.Emails.Count, 1);
+            Assert.That(notificationContract.Data.Recipients.Emails.Count, Is.EqualTo(1));
 
             // delete the recipient email
             await notificationContract.DeleteNotificationRecipientEmailAsync(userEmail);
 
             // check the recipient exists
             var resultFalse = (await firstNotification.CheckNotificationRecipientEmailEntityExistsAsync(userEmail)).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
 
             var userCollection = ApiServiceResource.GetApiManagementUsers();
             var listUsersResponse = await userCollection.GetAllAsync().ToEnumerableAsync();
 
             Assert.NotNull(listUsersResponse);
-            Assert.AreEqual(listUsersResponse.Count, 1);
+            Assert.That(listUsersResponse.Count, Is.EqualTo(1));
 
             // add a recipient to the notification
             var recipientUserContract = (await firstNotification.CreateOrUpdateNotificationRecipientUserAsync(listUsersResponse.FirstOrDefault().Data.Name)).Value;
 
             Assert.NotNull(recipientUserContract);
-            Assert.AreEqual(listUsersResponse.First().Id, recipientUserContract.UserId);
+            Assert.That(recipientUserContract.UserId, Is.EqualTo(listUsersResponse.First().Id));
 
             // get the notification details
             notificationContract = (await collection.GetAsync(firstNotification.Data.Name)).Value;
             Assert.NotNull(notificationContract);
             Assert.NotNull(notificationContract.Data.Recipients);
-            Assert.AreEqual(notificationContract.Data.Recipients.Users.Count, 1);
+            Assert.That(notificationContract.Data.Recipients.Users.Count, Is.EqualTo(1));
 
             // delete the recipient user
             await notificationContract.DeleteNotificationRecipientUserAsync(listUsersResponse.FirstOrDefault().Data.Name);
 
             // check the recipient exists
             resultFalse = (await firstNotification.CheckNotificationRecipientUserEntityExistsAsync(listUsersResponse.FirstOrDefault().Data.Name)).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
         }
     }
 }

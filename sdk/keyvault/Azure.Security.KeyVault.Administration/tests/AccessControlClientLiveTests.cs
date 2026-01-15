@@ -253,11 +253,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Guid name = Recording.Random.NewGuid();
 
             Response response = await Client.DeleteRoleAssignmentAsync(KeyVaultRoleScope.Global, name.ToString());
-            Assert.AreEqual(404, response.Status);
+            Assert.That(response.Status, Is.EqualTo(404));
 
             JsonDocument json = JsonDocument.Parse(response.Content);
             KeyVaultServiceError error = KeyVaultServiceError.DeserializeKeyVaultServiceError(json.RootElement.GetProperty("error"), ModelSerializationExtensions.WireOptions);
-            Assert.AreEqual("RoleAssignmentNotFound", error.Code);
+            Assert.That(error.Code, Is.EqualTo("RoleAssignmentNotFound"));
         }
 
         [RecordedTest]
@@ -266,11 +266,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Guid name = Recording.Random.NewGuid();
 
             Response response = await Client.DeleteRoleDefinitionAsync(KeyVaultRoleScope.Global, name);
-            Assert.AreEqual(404, response.Status);
+            Assert.That(response.Status, Is.EqualTo(404));
 
             JsonDocument json = JsonDocument.Parse(response.Content);
             KeyVaultServiceError error = KeyVaultServiceError.DeserializeKeyVaultServiceError(json.RootElement.GetProperty("error"), ModelSerializationExtensions.WireOptions);
-            Assert.AreEqual("RoleDefinitionNotFound", error.Code);
+            Assert.That(error.Code, Is.EqualTo("RoleDefinitionNotFound"));
         }
     }
 }

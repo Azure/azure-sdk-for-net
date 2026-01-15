@@ -25,7 +25,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             var response = await client.GetSnapshotAsync(ReportAssetSnapshotPayload);
             ReportAssetSnapshotResult reportAssetSnapshotResult = response.Value;
             Assert.IsNotNull(reportAssetSnapshotResult);
-            Assert.AreEqual(metric, reportAssetSnapshotResult.Metric);
+            Assert.That(reportAssetSnapshotResult.Metric, Is.EqualTo(metric));
             Assert.IsNotNull(reportAssetSnapshotResult.Description);
         }
         [RecordedTest]
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             var response = await client.GetSnapshotAsync(ReportAssetSnapshotPayload);
             ReportAssetSnapshotResult reportAssetSnapshotResult = response.Value;
             Assert.IsNotNull(reportAssetSnapshotResult.DisplayName);
-            Assert.AreEqual(metric, reportAssetSnapshotResult.Metric);
+            Assert.That(reportAssetSnapshotResult.Metric, Is.EqualTo(metric));
             Assert.IsNotNull(reportAssetSnapshotResult.Description);
             Assert.IsNotNull(reportAssetSnapshotResult.Assets);
         }
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             ReportAssetSummaryPayload reportAssetSummaryRequest = new ReportAssetSummaryPayload();
             reportAssetSummaryRequest.Metrics.Add(metric);
             var response = await client.GetSummaryAsync(reportAssetSummaryRequest);
-            Assert.IsTrue(response.Value.AssetSummaries.Count > 0);
+            Assert.That(response.Value.AssetSummaries.Count > 0, Is.True);
         }
     }
 }

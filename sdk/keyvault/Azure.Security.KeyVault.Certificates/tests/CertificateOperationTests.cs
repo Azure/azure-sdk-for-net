@@ -74,22 +74,22 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             AssertMessageCount(1, messages);
 
             EventWrittenEventArgs message = messages.Last();
-            Assert.AreEqual(EventLevel.Verbose, message.Level);
-            Assert.AreEqual("BeginUpdateStatus", message.EventName);
-            Assert.AreEqual($"{CertificateId}/pending", message.GetProperty<string>("id"));
-            Assert.AreEqual("inProgress", message.GetProperty<string>("status"));
-            Assert.AreEqual("(none)", message.GetProperty<string>("error"));
+            Assert.That(message.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(message.EventName, Is.EqualTo("BeginUpdateStatus"));
+            Assert.That(message.GetProperty<string>("id"), Is.EqualTo($"{CertificateId}/pending"));
+            Assert.That(message.GetProperty<string>("status"), Is.EqualTo("inProgress"));
+            Assert.That(message.GetProperty<string>("error"), Is.EqualTo("(none)"));
 
             // End
             messages = _listener.EventsById(CertificatesEventSource.EndUpdateStatusEvent);
             AssertMessageCount(1, messages);
 
             message = messages.Last();
-            Assert.AreEqual(EventLevel.Verbose, message.Level);
-            Assert.AreEqual("EndUpdateStatus", message.EventName);
-            Assert.AreEqual($"{CertificateId}/pending", message.GetProperty<string>("id"));
-            Assert.AreEqual("completed", message.GetProperty<string>("status"));
-            Assert.AreEqual("(none)", message.GetProperty<string>("error"));
+            Assert.That(message.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(message.EventName, Is.EqualTo("EndUpdateStatus"));
+            Assert.That(message.GetProperty<string>("id"), Is.EqualTo($"{CertificateId}/pending"));
+            Assert.That(message.GetProperty<string>("status"), Is.EqualTo("completed"));
+            Assert.That(message.GetProperty<string>("error"), Is.EqualTo("(none)"));
         }
 
         [Test]
@@ -120,25 +120,25 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             // Begin
             IEnumerable<EventWrittenEventArgs> messages = _listener.EventsById(CertificatesEventSource.BeginUpdateStatusEvent);
-            Assert.AreEqual(10, messages.Count());
+            Assert.That(messages.Count(), Is.EqualTo(10));
 
             EventWrittenEventArgs message = messages.Last();
-            Assert.AreEqual(EventLevel.Verbose, message.Level);
-            Assert.AreEqual("BeginUpdateStatus", message.EventName);
-            Assert.AreEqual($"{CertificateId}/pending", message.GetProperty<string>("id"));
-            Assert.AreEqual("inProgress", message.GetProperty<string>("status"));
-            Assert.AreEqual("(none)", message.GetProperty<string>("error"));
+            Assert.That(message.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(message.EventName, Is.EqualTo("BeginUpdateStatus"));
+            Assert.That(message.GetProperty<string>("id"), Is.EqualTo($"{CertificateId}/pending"));
+            Assert.That(message.GetProperty<string>("status"), Is.EqualTo("inProgress"));
+            Assert.That(message.GetProperty<string>("error"), Is.EqualTo("(none)"));
 
             // End
             messages = _listener.EventsById(CertificatesEventSource.EndUpdateStatusEvent);
             AssertMessageCount(10, messages);
 
             message = messages.Last();
-            Assert.AreEqual(EventLevel.Verbose, message.Level);
-            Assert.AreEqual("EndUpdateStatus", message.EventName);
-            Assert.AreEqual($"{CertificateId}/pending", message.GetProperty<string>("id"));
-            Assert.AreEqual("completed", message.GetProperty<string>("status"));
-            Assert.AreEqual("(none)", message.GetProperty<string>("error"));
+            Assert.That(message.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(message.EventName, Is.EqualTo("EndUpdateStatus"));
+            Assert.That(message.GetProperty<string>("id"), Is.EqualTo($"{CertificateId}/pending"));
+            Assert.That(message.GetProperty<string>("status"), Is.EqualTo("completed"));
+            Assert.That(message.GetProperty<string>("error"), Is.EqualTo("(none)"));
         }
 
         [Test]
@@ -160,29 +160,29 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await client.StartCreateCertificateAsync(CertificateName, s_policy);
 
             Exception ex = Assert.ThrowsAsync<OperationCanceledException>(async () => await WaitForOperationAsync(operation));
-            Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("The operation was canceled so no value is available."));
 
             // Begin
             IEnumerable<EventWrittenEventArgs> messages = _listener.EventsById(CertificatesEventSource.BeginUpdateStatusEvent);
             AssertMessageCount(5, messages);
 
             EventWrittenEventArgs message = messages.Last();
-            Assert.AreEqual(EventLevel.Verbose, message.Level);
-            Assert.AreEqual("BeginUpdateStatus", message.EventName);
-            Assert.AreEqual($"{CertificateId}/pending", message.GetProperty<string>("id"));
-            Assert.AreEqual("inProgress", message.GetProperty<string>("status"));
-            Assert.AreEqual("(none)", message.GetProperty<string>("error"));
+            Assert.That(message.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(message.EventName, Is.EqualTo("BeginUpdateStatus"));
+            Assert.That(message.GetProperty<string>("id"), Is.EqualTo($"{CertificateId}/pending"));
+            Assert.That(message.GetProperty<string>("status"), Is.EqualTo("inProgress"));
+            Assert.That(message.GetProperty<string>("error"), Is.EqualTo("(none)"));
 
             // End
             messages = _listener.EventsById(CertificatesEventSource.EndUpdateStatusEvent);
             AssertMessageCount(5, messages);
 
             message = messages.Last();
-            Assert.AreEqual(EventLevel.Verbose, message.Level);
-            Assert.AreEqual("EndUpdateStatus", message.EventName);
-            Assert.AreEqual($"{CertificateId}/pending", message.GetProperty<string>("id"));
-            Assert.AreEqual("cancelled", message.GetProperty<string>("status"));
-            Assert.AreEqual("(none)", message.GetProperty<string>("error"));
+            Assert.That(message.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(message.EventName, Is.EqualTo("EndUpdateStatus"));
+            Assert.That(message.GetProperty<string>("id"), Is.EqualTo($"{CertificateId}/pending"));
+            Assert.That(message.GetProperty<string>("status"), Is.EqualTo("cancelled"));
+            Assert.That(message.GetProperty<string>("error"), Is.EqualTo("(none)"));
         }
 
         [Test]
@@ -204,29 +204,29 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await client.StartCreateCertificateAsync(CertificateName, s_policy);
 
             Exception ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await WaitForOperationAsync(operation));
-            Assert.AreEqual("The operation was deleted so no value is available.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("The operation was deleted so no value is available."));
 
             // Begin
             IEnumerable<EventWrittenEventArgs> messages = _listener.EventsById(CertificatesEventSource.BeginUpdateStatusEvent);
             AssertMessageCount(5, messages);
 
             EventWrittenEventArgs message = messages.Last();
-            Assert.AreEqual(EventLevel.Verbose, message.Level);
-            Assert.AreEqual("BeginUpdateStatus", message.EventName);
-            Assert.AreEqual($"{CertificateId}/pending", message.GetProperty<string>("id"));
-            Assert.AreEqual("inProgress", message.GetProperty<string>("status"));
-            Assert.AreEqual("(none)", message.GetProperty<string>("error"));
+            Assert.That(message.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(message.EventName, Is.EqualTo("BeginUpdateStatus"));
+            Assert.That(message.GetProperty<string>("id"), Is.EqualTo($"{CertificateId}/pending"));
+            Assert.That(message.GetProperty<string>("status"), Is.EqualTo("inProgress"));
+            Assert.That(message.GetProperty<string>("error"), Is.EqualTo("(none)"));
 
             // End
             messages = _listener.EventsById(CertificatesEventSource.EndUpdateStatusEvent);
             AssertMessageCount(5, messages);
 
             message = messages.Last();
-            Assert.AreEqual(EventLevel.Verbose, message.Level);
-            Assert.AreEqual("EndUpdateStatus", message.EventName);
-            Assert.AreEqual("(deleted)", message.GetProperty<string>("id"));
-            Assert.AreEqual(string.Empty, message.GetProperty<string>("status"));
-            Assert.AreEqual("(none)", message.GetProperty<string>("error"));
+            Assert.That(message.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(message.EventName, Is.EqualTo("EndUpdateStatus"));
+            Assert.That(message.GetProperty<string>("id"), Is.EqualTo("(deleted)"));
+            Assert.That(message.GetProperty<string>("status"), Is.Empty);
+            Assert.That(message.GetProperty<string>("error"), Is.EqualTo("(none)"));
         }
 
         [Test]
@@ -248,29 +248,29 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await client.StartCreateCertificateAsync(CertificateName, s_policy);
 
             Exception ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await WaitForOperationAsync(operation));
-            Assert.AreEqual("The certificate operation failed: mock failure message", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("The certificate operation failed: mock failure message"));
 
             // Begin
             IEnumerable<EventWrittenEventArgs> messages = _listener.EventsById(CertificatesEventSource.BeginUpdateStatusEvent);
             AssertMessageCount(5, messages);
 
             EventWrittenEventArgs message = messages.Last();
-            Assert.AreEqual(EventLevel.Verbose, message.Level);
-            Assert.AreEqual("BeginUpdateStatus", message.EventName);
-            Assert.AreEqual($"{CertificateId}/pending", message.GetProperty<string>("id"));
-            Assert.AreEqual("inProgress", message.GetProperty<string>("status"));
-            Assert.AreEqual("(none)", message.GetProperty<string>("error"));
+            Assert.That(message.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(message.EventName, Is.EqualTo("BeginUpdateStatus"));
+            Assert.That(message.GetProperty<string>("id"), Is.EqualTo($"{CertificateId}/pending"));
+            Assert.That(message.GetProperty<string>("status"), Is.EqualTo("inProgress"));
+            Assert.That(message.GetProperty<string>("error"), Is.EqualTo("(none)"));
 
             // End
             messages = _listener.EventsById(CertificatesEventSource.EndUpdateStatusEvent);
             AssertMessageCount(5, messages);
 
             message = messages.Last();
-            Assert.AreEqual(EventLevel.Verbose, message.Level);
-            Assert.AreEqual("EndUpdateStatus", message.EventName);
-            Assert.AreEqual($"{CertificateId}/pending", message.GetProperty<string>("id"));
-            Assert.AreEqual("failed", message.GetProperty<string>("status"));
-            Assert.AreEqual("mock failure message", message.GetProperty<string>("error"));
+            Assert.That(message.Level, Is.EqualTo(EventLevel.Verbose));
+            Assert.That(message.EventName, Is.EqualTo("EndUpdateStatus"));
+            Assert.That(message.GetProperty<string>("id"), Is.EqualTo($"{CertificateId}/pending"));
+            Assert.That(message.GetProperty<string>("status"), Is.EqualTo("failed"));
+            Assert.That(message.GetProperty<string>("error"), Is.EqualTo("mock failure message"));
         }
 
         private static void AssertMessageCount(int expected, IEnumerable<EventWrittenEventArgs> messages)

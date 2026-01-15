@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Tests.Scenario
             var list = await DefaultSubscription.GetChangesBySubscriptionAsync(_startTime, _endTime).ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             ValidateDetectedChangeData(list.FirstOrDefault());
-            Assert.AreEqual(list.FirstOrDefault().ResourceType, "Microsoft.ChangeAnalysis/changes");
+            Assert.That(list.FirstOrDefault().ResourceType, Is.EqualTo("Microsoft.ChangeAnalysis/changes"));
         }
 
         [RecordedTest]
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Tests.Scenario
             var list = await tenant.GetResourceChangesAsync(resourceId, _startTime, _endTime).ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             ValidateDetectedChangeData(list.FirstOrDefault());
-            Assert.AreEqual(list.FirstOrDefault().ResourceType, "Microsoft.ChangeAnalysis/resourceChanges");
+            Assert.That(list.FirstOrDefault().ResourceType, Is.EqualTo("Microsoft.ChangeAnalysis/resourceChanges"));
         }
 
         private void ValidateDetectedChangeData(DetectedChangeData detectedChange)

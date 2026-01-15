@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Tests
                     break;
                 }
             }
-            Assert.IsTrue(foundVirtualMachine);
+            Assert.That(foundVirtualMachine, Is.True);
         }
 
         [RecordedTest]
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Tests
                     break;
                 }
             }
-            Assert.IsTrue(foundPrivateEndpoint);
+            Assert.That(foundPrivateEndpoint, Is.True);
         }
     }
 }

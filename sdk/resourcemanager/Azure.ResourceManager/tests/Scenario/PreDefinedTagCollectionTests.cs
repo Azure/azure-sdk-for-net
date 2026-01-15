@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Tests
             _tagName = Recording.GenerateAssetName("tagName");
             _subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var result = await _subscription.CreateOrUpdatePredefinedTagAsync(_tagName);
-            Assert.IsTrue(result.Value.TagName.Equals(_tagName));
+            Assert.That(result.Value.TagName.Equals(_tagName), Is.True);
         }
 
         [Test, Order(1)]
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Tests
             _tagName = Recording.GenerateAssetName("tagName");
             _subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var result = await _subscription.CreateOrUpdatePredefinedTagAsync(_tagName);
-            Assert.IsTrue(result.Value.TagName.Equals(_tagName));
+            Assert.That(result.Value.TagName.Equals(_tagName), Is.True);
         }
 
         [Test, Order(2)]

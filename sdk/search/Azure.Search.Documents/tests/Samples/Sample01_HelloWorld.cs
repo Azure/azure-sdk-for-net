@@ -429,7 +429,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 }
                 #endregion Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_Query
 #if !SNIPPET
-                Assert.IsTrue(found, "Expected hotel #6 not found in search results");
+                Assert.That(found, Is.True, "Expected hotel #6 not found in search results");
 #endif
             }
             finally
@@ -508,7 +508,7 @@ namespace Azure.Search.Documents.Tests.Samples
             }
             #endregion Snippet:Azure_Search_Tests_Samples_QuerySession
 
-            Assert.False(hasDuplicates, "Duplicate documents found.");
+            Assert.That(hasDuplicates, Is.False, "Duplicate documents found.");
         }
     }
 }

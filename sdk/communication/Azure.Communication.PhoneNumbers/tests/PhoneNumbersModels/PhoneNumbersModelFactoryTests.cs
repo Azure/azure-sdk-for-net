@@ -14,7 +14,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             var result = PhoneNumbersModelFactory.PhoneNumberAreaCode("123");
             Assert.IsNotNull(result);
-            Assert.AreEqual("123", result.AreaCode);
+            Assert.That(result.AreaCode, Is.EqualTo("123"));
         }
 
         [Test]
@@ -22,8 +22,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             var result = PhoneNumbersModelFactory.PhoneNumberCountry("USA", "US");
             Assert.IsNotNull(result);
-            Assert.AreEqual("USA", result.LocalizedName);
-            Assert.AreEqual("US", result.CountryCode);
+            Assert.That(result.LocalizedName, Is.EqualTo("USA"));
+            Assert.That(result.CountryCode, Is.EqualTo("US"));
         }
 
         [Test]
@@ -32,8 +32,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var administrativeDivision = PhoneNumbersModelFactory.PhoneNumberAdministrativeDivision("Washington", "WA");
             var result = PhoneNumbersModelFactory.PhoneNumberLocality("Seattle", administrativeDivision);
             Assert.IsNotNull(result);
-            Assert.AreEqual("Seattle", result.LocalizedName);
-            Assert.AreEqual(administrativeDivision, result.AdministrativeDivision);
+            Assert.That(result.LocalizedName, Is.EqualTo("Seattle"));
+            Assert.That(result.AdministrativeDivision, Is.EqualTo(administrativeDivision));
         }
 
         [Test]
@@ -41,8 +41,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             var result = PhoneNumbersModelFactory.PhoneNumberAdministrativeDivision("Washington", "WA");
             Assert.IsNotNull(result);
-            Assert.AreEqual("Washington", result.LocalizedName);
-            Assert.AreEqual("WA", result.AbbreviatedName);
+            Assert.That(result.LocalizedName, Is.EqualTo("Washington"));
+            Assert.That(result.AbbreviatedName, Is.EqualTo("WA"));
         }
 
         [Test]
@@ -52,10 +52,10 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var cost = PhoneNumbersModelFactory.PhoneNumberCost(10, "USD", BillingFrequency.Monthly);
             var result = PhoneNumbersModelFactory.PhoneNumberOffering(PhoneNumberType.Geographic, PhoneNumberAssignmentType.Application, capabilities, cost);
             Assert.IsNotNull(result);
-            Assert.AreEqual(PhoneNumberType.Geographic, result.PhoneNumberType);
-            Assert.AreEqual(PhoneNumberAssignmentType.Application, result.AssignmentType);
-            Assert.AreEqual(capabilities, result.AvailableCapabilities);
-            Assert.AreEqual(cost, result.Cost);
+            Assert.That(result.PhoneNumberType, Is.EqualTo(PhoneNumberType.Geographic));
+            Assert.That(result.AssignmentType, Is.EqualTo(PhoneNumberAssignmentType.Application));
+            Assert.That(result.AvailableCapabilities, Is.EqualTo(capabilities));
+            Assert.That(result.Cost, Is.EqualTo(cost));
         }
 
         [Test]
@@ -63,9 +63,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             var result = PhoneNumbersModelFactory.PhoneNumberCost(10, "USD", BillingFrequency.Monthly);
             Assert.IsNotNull(result);
-            Assert.AreEqual(10, result.Amount);
-            Assert.AreEqual("USD", result.IsoCurrencySymbol);
-            Assert.AreEqual(BillingFrequency.Monthly, result.BillingFrequency);
+            Assert.That(result.Amount, Is.EqualTo(10));
+            Assert.That(result.IsoCurrencySymbol, Is.EqualTo("USD"));
+            Assert.That(result.BillingFrequency, Is.EqualTo(BillingFrequency.Monthly));
         }
 
         [Test]
@@ -78,14 +78,14 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var result = PhoneNumbersModelFactory.PhoneNumberSearchResult("search1", phoneNumbers, PhoneNumberType.Geographic, PhoneNumberAssignmentType.Application, capabilities, cost, DateTimeOffset.Now, 0, error);
             Assert.IsNotNull(result);
-            Assert.AreEqual("search1", result.SearchId);
-            Assert.AreEqual(phoneNumbers, result.PhoneNumbers);
-            Assert.AreEqual(PhoneNumberType.Geographic, result.PhoneNumberType);
-            Assert.AreEqual(PhoneNumberAssignmentType.Application, result.AssignmentType);
-            Assert.AreEqual(capabilities, result.Capabilities);
-            Assert.AreEqual(cost, result.Cost);
-            Assert.AreEqual(0, result.ErrorCode);
-            Assert.AreEqual(error, result.Error);
+            Assert.That(result.SearchId, Is.EqualTo("search1"));
+            Assert.That(result.PhoneNumbers, Is.EqualTo(phoneNumbers));
+            Assert.That(result.PhoneNumberType, Is.EqualTo(PhoneNumberType.Geographic));
+            Assert.That(result.AssignmentType, Is.EqualTo(PhoneNumberAssignmentType.Application));
+            Assert.That(result.Capabilities, Is.EqualTo(capabilities));
+            Assert.That(result.Cost, Is.EqualTo(cost));
+            Assert.That(result.ErrorCode, Is.EqualTo(0));
+            Assert.That(result.Error, Is.EqualTo(error));
         }
     }
 }

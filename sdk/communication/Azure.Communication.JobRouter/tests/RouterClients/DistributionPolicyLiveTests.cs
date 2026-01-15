@@ -40,9 +40,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.NotNull(bestWorkerModeDistributionPolicyResponse.Value);
 
             var bestWorkerModeDistributionPolicy = bestWorkerModeDistributionPolicyResponse.Value;
-            Assert.AreEqual(1, bestWorkerModeDistributionPolicy.Mode.MinConcurrentOffers);
-            Assert.AreEqual(1, bestWorkerModeDistributionPolicy.Mode.MaxConcurrentOffers);
-            Assert.IsFalse(bestWorkerModeDistributionPolicy.Mode.BypassSelectors);
+            Assert.That(bestWorkerModeDistributionPolicy.Mode.MinConcurrentOffers, Is.EqualTo(1));
+            Assert.That(bestWorkerModeDistributionPolicy.Mode.MaxConcurrentOffers, Is.EqualTo(1));
+            Assert.That(bestWorkerModeDistributionPolicy.Mode.BypassSelectors, Is.False);
 
             bestWorkerModeDistributionPolicyResponse = await routerClient.UpdateDistributionPolicyAsync(
                 new DistributionPolicy(bestWorkerModeDistributionPolicyId)
@@ -59,9 +59,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.NotNull(bestWorkerModeDistributionPolicyResponse.Value);
 
             bestWorkerModeDistributionPolicy = bestWorkerModeDistributionPolicyResponse.Value;
-            Assert.AreEqual(1, bestWorkerModeDistributionPolicy.Mode.MinConcurrentOffers);
-            Assert.AreEqual(1, bestWorkerModeDistributionPolicy.Mode.MaxConcurrentOffers);
-            Assert.IsTrue(bestWorkerModeDistributionPolicy.Mode.BypassSelectors);
+            Assert.That(bestWorkerModeDistributionPolicy.Mode.MinConcurrentOffers, Is.EqualTo(1));
+            Assert.That(bestWorkerModeDistributionPolicy.Mode.MaxConcurrentOffers, Is.EqualTo(1));
+            Assert.That(bestWorkerModeDistributionPolicy.Mode.BypassSelectors, Is.True);
 
             bestWorkerModeDistributionPolicyResponse = await routerClient.UpdateDistributionPolicyAsync(
                 new DistributionPolicy(bestWorkerModeDistributionPolicyId)
@@ -77,9 +77,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.NotNull(bestWorkerModeDistributionPolicyResponse.Value);
 
             bestWorkerModeDistributionPolicy = bestWorkerModeDistributionPolicyResponse.Value;
-            Assert.AreEqual(1, bestWorkerModeDistributionPolicy.Mode.MinConcurrentOffers);
-            Assert.AreEqual(2, bestWorkerModeDistributionPolicy.Mode.MaxConcurrentOffers);
-            Assert.IsTrue(bestWorkerModeDistributionPolicy.Mode.BypassSelectors);
+            Assert.That(bestWorkerModeDistributionPolicy.Mode.MinConcurrentOffers, Is.EqualTo(1));
+            Assert.That(bestWorkerModeDistributionPolicy.Mode.MaxConcurrentOffers, Is.EqualTo(2));
+            Assert.That(bestWorkerModeDistributionPolicy.Mode.BypassSelectors, Is.True);
         }
 
         [Test]
@@ -112,14 +112,14 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.NotNull(bestWorkerModeDistributionPolicyResponse.Value);
 
             var bestWorkerModeDistributionPolicy = bestWorkerModeDistributionPolicyResponse.Value;
-            Assert.AreEqual(1, bestWorkerModeDistributionPolicy.Mode.MinConcurrentOffers);
-            Assert.AreEqual(2, bestWorkerModeDistributionPolicy.Mode.MaxConcurrentOffers);
-            Assert.IsFalse(bestWorkerModeDistributionPolicy.Mode.BypassSelectors);
+            Assert.That(bestWorkerModeDistributionPolicy.Mode.MinConcurrentOffers, Is.EqualTo(1));
+            Assert.That(bestWorkerModeDistributionPolicy.Mode.MaxConcurrentOffers, Is.EqualTo(2));
+            Assert.That(bestWorkerModeDistributionPolicy.Mode.BypassSelectors, Is.False);
 
             var paramSelectors = ((BestWorkerMode)bestWorkerModeDistributionPolicy.Mode).ScoringRuleOptions
                 .ScoringParameters;
-            Assert.AreEqual(1, paramSelectors.Count);
-            Assert.AreEqual(ScoringRuleParameterSelector.WorkerSelectors, paramSelectors.First());
+            Assert.That(paramSelectors.Count, Is.EqualTo(1));
+            Assert.That(paramSelectors.First(), Is.EqualTo(ScoringRuleParameterSelector.WorkerSelectors));
 
             var scoringRule = ((BestWorkerMode)bestWorkerModeDistributionPolicy.Mode).ScoringRule;
             Assert.NotNull(scoringRule);
@@ -130,11 +130,11 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             if (Mode != RecordedTestMode.Playback)
             {
                 // any value will be sanitized when recordings are saved
-                Assert.AreEqual("MyAppKey", azureFuncScoringRule.Credential.AppKey);
-                Assert.IsTrue(string.IsNullOrWhiteSpace(azureFuncScoringRule.Credential.FunctionKey));
+                Assert.That(azureFuncScoringRule.Credential.AppKey, Is.EqualTo("MyAppKey"));
+                Assert.That(string.IsNullOrWhiteSpace(azureFuncScoringRule.Credential.FunctionKey), Is.True);
             }
 
-            Assert.AreEqual("MyClientId", azureFuncScoringRule.Credential.ClientId);
+            Assert.That(azureFuncScoringRule.Credential.ClientId, Is.EqualTo("MyClientId"));
 
             bestWorkerModeDistributionPolicyResponse = await routerClient.UpdateDistributionPolicyAsync(
                 new DistributionPolicy(bestWorkerModeDistributionPolicyId)
@@ -157,25 +157,25 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.NotNull(bestWorkerModeDistributionPolicyResponse.Value);
 
             bestWorkerModeDistributionPolicy = bestWorkerModeDistributionPolicyResponse.Value;
-            Assert.AreEqual(1, bestWorkerModeDistributionPolicy.Mode.MinConcurrentOffers);
-            Assert.AreEqual(2, bestWorkerModeDistributionPolicy.Mode.MaxConcurrentOffers);
-            Assert.IsFalse(bestWorkerModeDistributionPolicy.Mode.BypassSelectors);
+            Assert.That(bestWorkerModeDistributionPolicy.Mode.MinConcurrentOffers, Is.EqualTo(1));
+            Assert.That(bestWorkerModeDistributionPolicy.Mode.MaxConcurrentOffers, Is.EqualTo(2));
+            Assert.That(bestWorkerModeDistributionPolicy.Mode.BypassSelectors, Is.False);
 
             paramSelectors = ((BestWorkerMode)bestWorkerModeDistributionPolicy.Mode).ScoringRuleOptions
                 .ScoringParameters;
-            Assert.AreEqual(1, paramSelectors.Count);
-            Assert.AreEqual(ScoringRuleParameterSelector.WorkerSelectors, paramSelectors.First());
+            Assert.That(paramSelectors.Count, Is.EqualTo(1));
+            Assert.That(paramSelectors.First(), Is.EqualTo(ScoringRuleParameterSelector.WorkerSelectors));
 
             scoringRule = ((BestWorkerMode)bestWorkerModeDistributionPolicy.Mode).ScoringRule;
             Assert.NotNull(scoringRule);
             azureFuncScoringRule = (FunctionRouterRule)scoringRule;
-            Assert.AreEqual("https://my.function.app/api/myfunction?code=Kg==", azureFuncScoringRule.FunctionUri.ToString());
+            Assert.That(azureFuncScoringRule.FunctionUri.ToString(), Is.EqualTo("https://my.function.app/api/myfunction?code=Kg=="));
             Assert.IsNotNull(azureFuncScoringRule.Credential);
 
             if (Mode != RecordedTestMode.Playback)
             {
                 // any value will be sanitized when recordings are saved
-                Assert.AreEqual("MyKey", azureFuncScoringRule.Credential.FunctionKey);
+                Assert.That(azureFuncScoringRule.Credential.FunctionKey, Is.EqualTo("MyKey"));
             }
         }
 
@@ -200,9 +200,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.NotNull(longestIdleModeDistributionPolicyResponse.Value);
 
             var longestIdleModeDistributionPolicy = longestIdleModeDistributionPolicyResponse.Value;
-            Assert.AreEqual(1, longestIdleModeDistributionPolicy.Mode.MinConcurrentOffers);
-            Assert.AreEqual(1, longestIdleModeDistributionPolicy.Mode.MaxConcurrentOffers);
-            Assert.IsFalse(longestIdleModeDistributionPolicy.Mode.BypassSelectors);
+            Assert.That(longestIdleModeDistributionPolicy.Mode.MinConcurrentOffers, Is.EqualTo(1));
+            Assert.That(longestIdleModeDistributionPolicy.Mode.MaxConcurrentOffers, Is.EqualTo(1));
+            Assert.That(longestIdleModeDistributionPolicy.Mode.BypassSelectors, Is.False);
 
             // specifying min and max concurrent offers
             longestIdleModeDistributionPolicyResponse = await routerClient.UpdateDistributionPolicyAsync(
@@ -219,9 +219,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.NotNull(longestIdleModeDistributionPolicyResponse.Value);
 
             longestIdleModeDistributionPolicy = longestIdleModeDistributionPolicyResponse.Value;
-            Assert.AreEqual(1, longestIdleModeDistributionPolicy.Mode.MinConcurrentOffers);
-            Assert.AreEqual(2, longestIdleModeDistributionPolicy.Mode.MaxConcurrentOffers);
-            Assert.IsTrue(longestIdleModeDistributionPolicy.Mode.BypassSelectors);
+            Assert.That(longestIdleModeDistributionPolicy.Mode.MinConcurrentOffers, Is.EqualTo(1));
+            Assert.That(longestIdleModeDistributionPolicy.Mode.MaxConcurrentOffers, Is.EqualTo(2));
+            Assert.That(longestIdleModeDistributionPolicy.Mode.BypassSelectors, Is.True);
         }
 
         #endregion longest idle mode constructors
@@ -247,9 +247,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.NotNull(roundRobinModeDistributionPolicyResponse.Value);
 
             var roundRobinModeDistributionPolicy = roundRobinModeDistributionPolicyResponse.Value;
-            Assert.AreEqual(1, roundRobinModeDistributionPolicy.Mode.MinConcurrentOffers);
-            Assert.AreEqual(1, roundRobinModeDistributionPolicy.Mode.MaxConcurrentOffers);
-            Assert.IsFalse(roundRobinModeDistributionPolicy.Mode.BypassSelectors);
+            Assert.That(roundRobinModeDistributionPolicy.Mode.MinConcurrentOffers, Is.EqualTo(1));
+            Assert.That(roundRobinModeDistributionPolicy.Mode.MaxConcurrentOffers, Is.EqualTo(1));
+            Assert.That(roundRobinModeDistributionPolicy.Mode.BypassSelectors, Is.False);
 
             // specifying min and max concurrent offers
             roundRobinModeDistributionPolicyResponse = await routerClient.UpdateDistributionPolicyAsync(
@@ -266,9 +266,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.NotNull(roundRobinModeDistributionPolicyResponse.Value);
 
             roundRobinModeDistributionPolicy = roundRobinModeDistributionPolicyResponse.Value;
-            Assert.AreEqual(1, roundRobinModeDistributionPolicy.Mode.MinConcurrentOffers);
-            Assert.AreEqual(2, roundRobinModeDistributionPolicy.Mode.MaxConcurrentOffers);
-            Assert.IsTrue(roundRobinModeDistributionPolicy.Mode.BypassSelectors);
+            Assert.That(roundRobinModeDistributionPolicy.Mode.MinConcurrentOffers, Is.EqualTo(1));
+            Assert.That(roundRobinModeDistributionPolicy.Mode.MaxConcurrentOffers, Is.EqualTo(2));
+            Assert.That(roundRobinModeDistributionPolicy.Mode.BypassSelectors, Is.True);
         }
 
         #endregion round robin mode constructors

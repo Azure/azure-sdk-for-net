@@ -30,7 +30,7 @@ public class ConnectionTests
 
         ProjectClient project = new(projectId, store.Provider);
         var connections = project.GetAllConnections();
-        Assert.AreEqual(0, connections.Count());
+        Assert.That(connections.Count(), Is.EqualTo(0));
     }
 
     [Test]
@@ -43,7 +43,7 @@ public class ConnectionTests
 
         ProjectClient project = new(projectId, store.Provider);
         var connections = project.GetAllConnections();
-        Assert.AreEqual(1, connections.Count());
+        Assert.That(connections.Count(), Is.EqualTo(1));
         PrintConnections(connections);
 
         SecretClient secrets = project.GetSecretClient();
@@ -60,7 +60,7 @@ public class ConnectionTests
 
         ProjectClient project = new(projectId, store.Provider);
         var connections = project.GetAllConnections();
-        Assert.AreEqual(5, connections.Count());
+        Assert.That(connections.Count(), Is.EqualTo(5));
         PrintConnections(connections);
 
         BlobContainerClient blobs = project.GetBlobContainerClient();

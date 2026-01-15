@@ -28,7 +28,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
 
             #endregion
 
-            Assert.AreEqual(200, cancelResult.Status);
+            Assert.That(cancelResult.Status, Is.EqualTo(200));
         }
     }
 }

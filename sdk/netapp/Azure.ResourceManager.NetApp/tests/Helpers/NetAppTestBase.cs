@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
 
             if (useDefaults)
             {
-                Assert.AreEqual(location, account.Data.Location.ToString());
+                Assert.That(account.Data.Location.ToString(), Is.EqualTo(location));
 
                 Assert.NotNull(account.Data.Tags);
                 foreach (var tag in DefaultTags)
                 {
-                    Assert.AreEqual(account.Data.Tags[tag.Key], tag.Value);
+                    Assert.That(tag.Value, Is.EqualTo(account.Data.Tags[tag.Key]));
                 }
             }
         }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
 
             if (useDefaults)
             {
-                Assert.AreEqual(DefaultLocation, volume.Data.Location);
+                Assert.That(volume.Data.Location, Is.EqualTo(DefaultLocation));
 
                 Assert.NotNull(volume.Data.Tags);
                 //we cannot assert on count as a policy might add addional tags
@@ -224,15 +224,15 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
                 {
                     Assert.That(volume.Data.Tags, new DictionaryContainsKeyValuePairConstraint(tag.Key, tag.Value));
                 }
-                Assert.AreEqual(_defaultUsageThreshold, volume.Data.UsageThreshold);
-                Assert.AreEqual(DefaultSubnetId, volume.Data.SubnetId);
+                Assert.That(volume.Data.UsageThreshold, Is.EqualTo(_defaultUsageThreshold));
+                Assert.That(volume.Data.SubnetId, Is.EqualTo(DefaultSubnetId));
             }
         }
 
         public static void AssertNetAppAccountEqual(NetAppAccountResource account1, NetAppAccountResource account2)
         {
-            Assert.AreEqual(account1.Id.Name, account2.Id.Name);
-            Assert.AreEqual(account1.Id.Location, account2.Id.Location);
+            Assert.That(account2.Id.Name, Is.EqualTo(account1.Id.Name));
+            Assert.That(account2.Id.Location, Is.EqualTo(account1.Id.Location));
         }
 
         public static void VerifyCapacityPoolProperties(CapacityPoolResource pool, bool useDefaults)
@@ -246,15 +246,15 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
 
             if (useDefaults)
             {
-                Assert.AreEqual(DefaultLocation, pool.Data.Location);
+                Assert.That(pool.Data.Location, Is.EqualTo(DefaultLocation));
 
                 Assert.NotNull(pool.Data.Tags);
                 foreach (var tag in DefaultTags)
                 {
-                    Assert.AreEqual(pool.Data.Tags[tag.Key], tag.Value);
+                    Assert.That(tag.Value, Is.EqualTo(pool.Data.Tags[tag.Key]));
                 }
-                Assert.AreEqual(NetAppFileServiceLevel.Premium, pool.Data.ServiceLevel);
-                Assert.AreEqual(_poolSize, pool.Data.Size);
+                Assert.That(pool.Data.ServiceLevel, Is.EqualTo(NetAppFileServiceLevel.Premium));
+                Assert.That(pool.Data.Size, Is.EqualTo(_poolSize));
             }
         }
 

@@ -84,8 +84,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(2, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.That(result.PassCount, Is.EqualTo(2));
+            Assert.That(result.FailCount, Is.EqualTo(0));
         }
 
         [Test]
@@ -161,9 +161,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(2, result.BatchTaskCreateResults.Count);
-            Assert.AreEqual(1, result.PassCount);
-            Assert.AreEqual(1, result.FailCount);
+            Assert.That(result.BatchTaskCreateResults.Count, Is.EqualTo(2));
+            Assert.That(result.PassCount, Is.EqualTo(1));
+            Assert.That(result.FailCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -189,7 +189,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                else
                {
                    // one the second pass there should have have all the tasks requests
-                   Assert.AreEqual(2, taskCollection.Values.Count);
+                   Assert.That(taskCollection.Values.Count, Is.EqualTo(2));
                    BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                    return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
                }
@@ -208,8 +208,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(2, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.That(result.PassCount, Is.EqualTo(2));
+            Assert.That(result.FailCount, Is.EqualTo(0));
         }
 
         [Test]
@@ -237,7 +237,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                else
                {
                    // The quue should be 50 as we halved the request size
-                   Assert.AreEqual(50, taskCollection.Values.Count);
+                   Assert.That(taskCollection.Values.Count, Is.EqualTo(50));
 
                    BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                    return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
@@ -259,8 +259,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.That(result.PassCount, Is.EqualTo(tasksCount));
+            Assert.That(result.FailCount, Is.EqualTo(0));
         }
 
         [Test]
@@ -282,7 +282,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
            .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
                // The defaul size should be 100
-               Assert.AreEqual(100, taskCollection.Values.Count);
+               Assert.That(taskCollection.Values.Count, Is.EqualTo(100));
 
                BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
@@ -309,9 +309,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.BatchTaskCreateResults.Count);
-            Assert.AreEqual(tasksCount, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.That(result.BatchTaskCreateResults.Count, Is.EqualTo(tasksCount));
+            Assert.That(result.PassCount, Is.EqualTo(tasksCount));
+            Assert.That(result.FailCount, Is.EqualTo(0));
         }
 
         [Test]
@@ -333,7 +333,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
            .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
                // The defaul size should be 100
-               Assert.AreEqual(100, taskCollection.Values.Count);
+               Assert.That(taskCollection.Values.Count, Is.EqualTo(100));
 
                BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
@@ -394,7 +394,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
            .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
                // The defaul size should be 100
-               Assert.AreEqual(100, taskCollection.Values.Count);
+               Assert.That(taskCollection.Values.Count, Is.EqualTo(100));
 
                BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
@@ -450,7 +450,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
            .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
                // The defaul size should be 100
-               Assert.AreEqual(100, taskCollection.Values.Count);
+               Assert.That(taskCollection.Values.Count, Is.EqualTo(100));
 
                BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
@@ -477,9 +477,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.BatchTaskCreateResults.Count);
-            Assert.AreEqual(tasksCount, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.That(result.BatchTaskCreateResults.Count, Is.EqualTo(tasksCount));
+            Assert.That(result.PassCount, Is.EqualTo(tasksCount));
+            Assert.That(result.FailCount, Is.EqualTo(0));
         }
 
         [Test]
@@ -526,9 +526,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.BatchTaskCreateResults.Count);
-            Assert.AreEqual(tasksCount, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.That(result.BatchTaskCreateResults.Count, Is.EqualTo(tasksCount));
+            Assert.That(result.PassCount, Is.EqualTo(tasksCount));
+            Assert.That(result.FailCount, Is.EqualTo(0));
         }
 
         [Test]
@@ -557,7 +557,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                else
                {
                    // The defaul size should be 100
-                   Assert.AreEqual(100, taskCollection.Values.Count);
+                   Assert.That(taskCollection.Values.Count, Is.EqualTo(100));
 
                    BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                    return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
@@ -586,9 +586,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.BatchTaskCreateResults.Count);
-            Assert.AreEqual(tasksCount, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.That(result.BatchTaskCreateResults.Count, Is.EqualTo(tasksCount));
+            Assert.That(result.PassCount, Is.EqualTo(tasksCount));
+            Assert.That(result.FailCount, Is.EqualTo(0));
         }
 
         [Test]
@@ -610,7 +610,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
            .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
                // The defaul size should be 100
-               Assert.AreEqual(100, taskCollection.Values.Count);
+               Assert.That(taskCollection.Values.Count, Is.EqualTo(100));
 
                BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
@@ -636,9 +636,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(0, result.BatchTaskCreateResults.Count);
-            Assert.AreEqual(tasksCount, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.That(result.BatchTaskCreateResults.Count, Is.EqualTo(0));
+            Assert.That(result.PassCount, Is.EqualTo(tasksCount));
+            Assert.That(result.FailCount, Is.EqualTo(0));
         }
 
         [Test]
@@ -660,7 +660,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
            .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
                // The defaul size should be 100
-               Assert.AreEqual(100, taskCollection.Values.Count);
+               Assert.That(taskCollection.Values.Count, Is.EqualTo(100));
 
                BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
@@ -687,9 +687,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.BatchTaskCreateResults.Count);
-            Assert.AreEqual(tasksCount, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.That(result.BatchTaskCreateResults.Count, Is.EqualTo(tasksCount));
+            Assert.That(result.PassCount, Is.EqualTo(tasksCount));
+            Assert.That(result.FailCount, Is.EqualTo(0));
         }
 
         /// <summary>

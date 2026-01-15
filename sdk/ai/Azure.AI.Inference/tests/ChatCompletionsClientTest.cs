@@ -151,7 +151,7 @@ namespace Azure.AI.Inference.Tests
             {
                 var requestPayload = captureRequestPayloadPolicy._requestContent;
                 var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+                Assert.That(false, Is.True, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
 
             Assert.That(response, Is.Not.Null);
@@ -197,7 +197,7 @@ namespace Azure.AI.Inference.Tests
             {
                 var requestPayload = captureRequestPayloadPolicy._requestContent;
                 var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+                Assert.That(false, Is.True, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
 
             Assert.That(response, Is.Not.Null);
@@ -233,7 +233,7 @@ namespace Azure.AI.Inference.Tests
                 }
                 if (chatUpdate.Role.HasValue)
                 {
-                    Assert.IsFalse(gotRole);
+                    Assert.That(gotRole, Is.False);
                     Assert.That(chatUpdate.Role.Value, Is.EqualTo(ChatRole.Assistant));
                     gotRole = true;
                 }
@@ -243,9 +243,9 @@ namespace Azure.AI.Inference.Tests
                 }
             }
 
-            Assert.IsTrue(!string.IsNullOrEmpty(id));
-            Assert.IsTrue(!string.IsNullOrEmpty(model));
-            Assert.IsTrue(gotRole);
+            Assert.That(!string.IsNullOrEmpty(id), Is.True);
+            Assert.That(!string.IsNullOrEmpty(model), Is.True);
+            Assert.That(gotRole, Is.True);
             var result = contentBuilder.ToString();
             Assert.That(result, Is.Not.Null.Or.Empty);
         }
@@ -281,12 +281,12 @@ namespace Azure.AI.Inference.Tests
             catch (Exception e)
             {
                 exceptionThrown = true;
-                Assert.IsTrue(e.Message.Contains("Extra inputs are not permitted"));
-                Assert.IsTrue(captureRequestPayloadPolicy._requestContent.Contains("foo"));
-                Assert.IsTrue(captureRequestPayloadPolicy._requestHeaders.ContainsKey("extra-parameters"));
-                Assert.IsTrue(captureRequestPayloadPolicy._requestHeaders["extra-parameters"] == ExtraParameters.PassThrough);
+                Assert.That(e.Message.Contains("Extra inputs are not permitted"), Is.True);
+                Assert.That(captureRequestPayloadPolicy._requestContent.Contains("foo"), Is.True);
+                Assert.That(captureRequestPayloadPolicy._requestHeaders.ContainsKey("extra-parameters"), Is.True);
+                Assert.That(captureRequestPayloadPolicy._requestHeaders["extra-parameters"] == ExtraParameters.PassThrough, Is.True);
             }
-            Assert.IsTrue(exceptionThrown);
+            Assert.That(exceptionThrown, Is.True);
         }
 
         [RecordedTest]
@@ -385,7 +385,7 @@ namespace Azure.AI.Inference.Tests
             {
                 var requestPayload = captureRequestPayloadPolicy._requestContent;
                 var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+                Assert.That(false, Is.True, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
 
             Assert.That(response, Is.Not.Null);
@@ -461,7 +461,7 @@ namespace Azure.AI.Inference.Tests
             {
                 var requestPayload = captureRequestPayloadPolicy._requestContent;
                 var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+                Assert.That(false, Is.True, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
             var requestPayload1 = captureRequestPayloadPolicy._requestContent;
 
@@ -526,7 +526,7 @@ namespace Azure.AI.Inference.Tests
             {
                 var requestPayload = captureRequestPayloadPolicy._requestContent;
                 var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+                Assert.That(false, Is.True, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
 
             Assert.That(response, Is.Not.Null);
@@ -620,7 +620,7 @@ namespace Azure.AI.Inference.Tests
             {
                 var requestPayload = captureRequestPayloadPolicy._requestContent;
                 var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+                Assert.That(false, Is.True, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
 
             Assert.That(response, Is.Not.Null);
@@ -777,7 +777,7 @@ namespace Azure.AI.Inference.Tests
             }
             catch (Exception ex)
             {
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+                Assert.That(false, Is.True, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
             finally
             {
@@ -812,7 +812,7 @@ namespace Azure.AI.Inference.Tests
             }
             catch (Exception ex)
             {
-                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+                Assert.That(false, Is.True, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
             finally
             {
@@ -972,16 +972,16 @@ namespace Azure.AI.Inference.Tests
             structuredJson.RootElement.TryGetProperty("steps", out var steps);
             structuredJson.RootElement.TryGetProperty("bake_time", out var bakeTime);
 
-            Assert.AreEqual(JsonValueKind.Array, ingredients.ValueKind);
-            Assert.AreEqual(JsonValueKind.Array, steps.ValueKind);
+            Assert.That(ingredients.ValueKind, Is.EqualTo(JsonValueKind.Array));
+            Assert.That(steps.ValueKind, Is.EqualTo(JsonValueKind.Array));
             foreach (JsonElement stepElement in steps.EnumerateArray())
             {
                 stepElement.TryGetProperty("ingredients", out var stepIngredients);
                 stepElement.TryGetProperty("directions", out var stepDirections);
-                Assert.AreEqual(JsonValueKind.Array, stepIngredients.ValueKind);
-                Assert.AreEqual(JsonValueKind.String, stepDirections.ValueKind);
+                Assert.That(stepIngredients.ValueKind, Is.EqualTo(JsonValueKind.Array));
+                Assert.That(stepDirections.ValueKind, Is.EqualTo(JsonValueKind.String));
             }
-            Assert.AreEqual(JsonValueKind.String, bakeTime.ValueKind);
+            Assert.That(bakeTime.ValueKind, Is.EqualTo(JsonValueKind.String));
         }
 
         #region Helpers

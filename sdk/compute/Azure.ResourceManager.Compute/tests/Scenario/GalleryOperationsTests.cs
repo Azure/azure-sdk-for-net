@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var lro = await gallery.UpdateAsync(WaitUntil.Completed, update);
             GalleryResource updatedGallery = lro.Value;
 
-            Assert.AreEqual(description, updatedGallery.Data.Description);
+            Assert.That(updatedGallery.Data.Description, Is.EqualTo(description));
         }
 
         [RecordedTest]
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Tests
             };
             GalleryResource updatedGallery = await gallery.SetTagsAsync(tags);
 
-            Assert.AreEqual(tags, updatedGallery.Data.Tags);
+            Assert.That(updatedGallery.Data.Tags, Is.EqualTo(tags));
         }
 
         [TestCase]
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Tests
             };
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             var gallery = lro.Value;
-            Assert.AreEqual(gallery.Data.Name, name);
+            Assert.That(name, Is.EqualTo(gallery.Data.Name));
         }
     }
 }

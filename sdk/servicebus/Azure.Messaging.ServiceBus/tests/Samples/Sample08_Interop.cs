@@ -63,9 +63,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 TestModel output = JsonSerializer.Deserialize<TestModel>(receivedJson);
                 #endregion
 
-                Assert.AreEqual("Hello world", output.A);
-                Assert.AreEqual(5, output.B);
-                Assert.IsTrue(output.C);
+                Assert.That(output.A, Is.EqualTo("Hello world"));
+                Assert.That(output.B, Is.EqualTo(5));
+                Assert.That(output.C, Is.True);
             }
         }
 

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             string storageAccountId = await GetStorageAccountId();
             var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup, storageAccountId);
             var metricAlert = (await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, metricAlertName, metricAlertData)).Value;
-            Assert.AreEqual(metricAlertName, metricAlert.Data.Name);
+            Assert.That(metricAlert.Data.Name, Is.EqualTo(metricAlertName));
         }
 
         [TestCase]

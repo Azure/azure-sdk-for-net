@@ -39,11 +39,11 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             mock.VerifyAll();
             Assert.NotNull(result);
             Assert.NotNull(value);
-            Assert.AreEqual(typeof(AzureKeyVaultXmlDecryptor), result.DecryptorType);
-            Assert.AreEqual("VfLYL2prdymawfucH3Goso0zkPbQ4/GKqUsj2TRtLzsBPz7p7cL1SQaY6I29xSlsPQf6IjxHSz4sDJ427GvlLQ==", encryptedElement.Element("value").Value);
-            Assert.AreEqual("AAECAwQFBgcICQoLDA0ODw==", encryptedElement.Element("iv").Value);
-            Assert.AreEqual("Dw4NDAsKCQgHBgUEAwIBAA==", encryptedElement.Element("key").Value);
-            Assert.AreEqual("KeyId", encryptedElement.Element("kid").Value);
+            Assert.That(result.DecryptorType, Is.EqualTo(typeof(AzureKeyVaultXmlDecryptor)));
+            Assert.That(encryptedElement.Element("value").Value, Is.EqualTo("VfLYL2prdymawfucH3Goso0zkPbQ4/GKqUsj2TRtLzsBPz7p7cL1SQaY6I29xSlsPQf6IjxHSz4sDJ427GvlLQ=="));
+            Assert.That(encryptedElement.Element("iv").Value, Is.EqualTo("AAECAwQFBgcICQoLDA0ODw=="));
+            Assert.That(encryptedElement.Element("key").Value, Is.EqualTo("Dw4NDAsKCQgHBgUEAwIBAA=="));
+            Assert.That(encryptedElement.Element("kid").Value, Is.EqualTo("KeyId"));
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             mock.VerifyAll();
             Assert.NotNull(result);
-            Assert.AreEqual("<Element />", result.ToString());
+            Assert.That(result.ToString(), Is.EqualTo("<Element />"));
         }
 
         private class MockNumberGenerator : RandomNumberGenerator

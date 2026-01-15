@@ -503,9 +503,9 @@ public class RealtimeTests : RealtimeTestFixtureBase
             }
         }
 
-        Assert.IsTrue(gotInputTranscriptionCompleted);
-        Assert.IsTrue(gotResponseStarted);
-        Assert.IsTrue(gotResponseFinished);
+        Assert.That(gotInputTranscriptionCompleted, Is.True);
+        Assert.That(gotResponseStarted, Is.True);
+        Assert.That(gotResponseFinished, Is.True);
     }
 
     [Test]

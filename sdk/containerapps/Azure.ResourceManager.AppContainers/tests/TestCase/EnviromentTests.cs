@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
             var containerAppConnectedEnvironmentCollection = rg.GetContainerAppConnectedEnvironments();
             var envResource_lro = await containerAppConnectedEnvironmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, "examplekenv", data);
             var envResource = envResource_lro.Value;
-            Assert.AreEqual(envName, envResource.Data.Name);
+            Assert.That(envResource.Data.Name, Is.EqualTo(envName));
             //2.Get
             var resource2 = await envResource.GetAsync();
             ResourceDataHelpers.AssertEnviroment(envResource.Data, resource2.Value.Data);
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.AppContainers.Tests
             }
             Assert.GreaterOrEqual(count, 3);
             //4.Exists
-            Assert.IsTrue(await containerAppConnectedEnvironmentCollection.ExistsAsync(envName));
-            Assert.IsFalse(await containerAppConnectedEnvironmentCollection.ExistsAsync(envName + "1"));
+            Assert.That((bool)await containerAppConnectedEnvironmentCollection.ExistsAsync(envName), Is.True);
+            Assert.That((bool)await containerAppConnectedEnvironmentCollection.ExistsAsync(envName + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await containerAppConnectedEnvironmentCollection.ExistsAsync(null));
             //Resource

@@ -53,8 +53,8 @@ namespace Azure.Identity.Tests
 
             Assert.IsNotNull(record);
 
-            Assert.AreEqual(username, record.Username);
-            Assert.AreEqual(tenantId, record.TenantId);
+            Assert.That(record.Username, Is.EqualTo(username));
+            Assert.That(record.TenantId, Is.EqualTo(tenantId));
         }
 
         [Test]
@@ -72,8 +72,8 @@ namespace Azure.Identity.Tests
 
             Assert.IsNotNull(record);
 
-            Assert.AreEqual(username, record.Username);
-            Assert.AreEqual(tenantId, record.TenantId);
+            Assert.That(record.Username, Is.EqualTo(username));
+            Assert.That(record.TenantId, Is.EqualTo(tenantId));
         }
     }
 }

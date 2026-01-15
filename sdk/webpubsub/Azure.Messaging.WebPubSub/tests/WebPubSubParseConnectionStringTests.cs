@@ -24,8 +24,8 @@ namespace Azure.Messaging.WebPubSub.Tests
         {
             connectionString = string.Format(connectionString, FakeAccessKey);
             var (uri, credential) = WebPubSubServiceClient.ParseConnectionString(connectionString);
-            Assert.AreEqual(new Uri(url), uri);
-            Assert.AreEqual(FakeAccessKey, credential.Key);
+            Assert.That(uri, Is.EqualTo(new Uri(url)));
+            Assert.That(credential.Key, Is.EqualTo(FakeAccessKey));
         }
 
         [TestCase(null, null)]
@@ -44,24 +44,24 @@ namespace Azure.Messaging.WebPubSub.Tests
 
             var audience = jwt.Claims.FirstOrDefault(s => s.Type == "aud");
             Assert.NotNull(audience);
-            Assert.AreEqual("http://localhost:8080/client/hubs/hub", audience.Value);
+            Assert.That(audience.Value, Is.EqualTo("http://localhost:8080/client/hubs/hub"));
             var iat = jwt.Claims.FirstOrDefault(s => s.Type == "iat")?.Value;
             Assert.NotNull(iat);
-            Assert.IsTrue(long.TryParse(iat, out var issuedAt));
+            Assert.That(long.TryParse(iat, out var issuedAt), Is.True);
             var exp = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
             Assert.NotNull(exp);
-            Assert.IsTrue(long.TryParse(exp, out var expireAt));
+            Assert.That(long.TryParse(exp, out var expireAt), Is.True);
 
             // default expire after should be ~5 minutes (~300 seconds)
             var expireAfter = expireAt - issuedAt;
-            Assert.IsTrue(expireAfter > 295 && expireAfter < 305);
+            Assert.That(expireAfter > 295 && expireAfter < 305, Is.True);
 
             var sub = jwt.Claims.Where(s => s.Type == "sub").Select(s => s.Value).ToArray();
 
             if (userId != null)
             {
-                Assert.AreEqual(1, sub.Length);
-                Assert.AreEqual(userId, sub[0]);
+                Assert.That(sub.Length, Is.EqualTo(1));
+                Assert.That(sub[0], Is.EqualTo(userId));
             }
             else
             {
@@ -71,7 +71,7 @@ namespace Azure.Messaging.WebPubSub.Tests
             var roleClaims = jwt.Claims.Where(s => s.Type == "role").Select(s => s.Value).ToArray();
             if (roles?.Length > 0)
             {
-                Assert.AreEqual(roles, roleClaims);
+                Assert.That(roleClaims, Is.EqualTo(roles));
             }
             else
             {
@@ -94,24 +94,24 @@ namespace Azure.Messaging.WebPubSub.Tests
 
             var audience = jwt.Claims.FirstOrDefault(s => s.Type == "aud");
             Assert.NotNull(audience);
-            Assert.AreEqual("http://localhost:8080/client/hubs/hub", audience.Value);
+            Assert.That(audience.Value, Is.EqualTo("http://localhost:8080/client/hubs/hub"));
             var iat = jwt.Claims.FirstOrDefault(s => s.Type == "iat")?.Value;
             Assert.NotNull(iat);
-            Assert.IsTrue(long.TryParse(iat, out var issuedAt));
+            Assert.That(long.TryParse(iat, out var issuedAt), Is.True);
             var exp = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
             Assert.NotNull(exp);
-            Assert.IsTrue(long.TryParse(exp, out var expireAt));
+            Assert.That(long.TryParse(exp, out var expireAt), Is.True);
 
             // default expire after should be ~5 minutes (~300 seconds)
             var expireAfter = expireAt - issuedAt;
-            Assert.IsTrue(expireAfter > 295 && expireAfter < 305);
+            Assert.That(expireAfter > 295 && expireAfter < 305, Is.True);
 
             var sub = jwt.Claims.Where(s => s.Type == "sub").Select(s => s.Value).ToArray();
 
             if (userId != null)
             {
-                Assert.AreEqual(1, sub.Length);
-                Assert.AreEqual(userId, sub[0]);
+                Assert.That(sub.Length, Is.EqualTo(1));
+                Assert.That(sub[0], Is.EqualTo(userId));
             }
             else
             {
@@ -121,7 +121,7 @@ namespace Azure.Messaging.WebPubSub.Tests
             var roleClaims = jwt.Claims.Where(s => s.Type == "role").Select(s => s.Value).ToArray();
             if (roles?.Length > 0)
             {
-                Assert.AreEqual(roles, roleClaims);
+                Assert.That(roleClaims, Is.EqualTo(roles));
             }
             else
             {
@@ -139,14 +139,14 @@ namespace Azure.Messaging.WebPubSub.Tests
             var uri2 = serviceClient.GetClientAccessUri();
             var urlBuilder = new UriBuilder(uri1);
             urlBuilder.Query = string.Empty;
-            Assert.AreEqual(expectedUrl, urlBuilder.Uri.ToString());
+            Assert.That(urlBuilder.Uri.ToString(), Is.EqualTo(expectedUrl));
             var token1 = HttpUtility.ParseQueryString(uri1.Query).Get("access_token");
             Assert.NotNull(token1);
             var token2 = HttpUtility.ParseQueryString(uri2.Query).Get("access_token");
             Assert.NotNull(token2);
             var jwt1 = JwtTokenHandler.ReadJwtToken(token1);
             var jwt2 = JwtTokenHandler.ReadJwtToken(token2);
-            Assert.AreEqual(jwt1.Header.Kid, jwt2.Header.Kid);
+            Assert.That(jwt2.Header.Kid, Is.EqualTo(jwt1.Header.Kid));
         }
     }
 }

@@ -69,21 +69,21 @@ namespace Azure.ResourceManager.Media.Tests
             string liveOutPutName = Recording.GenerateAssetName("liveoutput");
             var liveoutput = await CreateLiveOutPut(liveOutPutName);
             Assert.IsNotNull(liveoutput);
-            Assert.AreEqual(liveOutPutName, liveoutput.Data.Name);
+            Assert.That(liveoutput.Data.Name, Is.EqualTo(liveOutPutName));
             // Check exists
             bool flag = await liveOutputCollection.ExistsAsync(liveOutPutName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
             // Get
             var result = await liveOutputCollection.GetAsync(liveOutPutName);
             Assert.IsNotNull(result);
-            Assert.AreEqual(liveOutPutName, result.Value.Data.Name);
+            Assert.That(result.Value.Data.Name, Is.EqualTo(liveOutPutName));
             // Get all
             var list = await liveOutputCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             // Delete
             await liveoutput.DeleteAsync(WaitUntil.Completed);
             flag = await liveOutputCollection.ExistsAsync(liveOutPutName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Chaos.Tests
                 WaitUntil.Completed,
                 this.ExperimentName,
                 this.MockExperimentEntities.GetVmssShutdownV2v0Experiment());
-            Assert.AreEqual(this.ExperimentName, resourceResponse.Value.Data.Name);
+            Assert.That(resourceResponse.Value.Data.Name, Is.EqualTo(this.ExperimentName));
         }
 
         [TestCase, Order(2)]
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Chaos.Tests
             var resourceResponse = await experiment.Value.UpdateAsync(
                 WaitUntil.Completed,
                 this.MockExperimentEntities.GetSamplePatch());
-            Assert.AreEqual(experimentTags, resourceResponse.Value.Data.Tags);
+            Assert.That(resourceResponse.Value.Data.Tags, Is.EqualTo(experimentTags));
         }
 
         [TestCase, Order(3)]
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Chaos.Tests
             await this.ExperimentCollection.CreateOrUpdateAsync(WaitUntil.Completed, this.ExperimentName, this.MockExperimentEntities.GetVmssShutdownV2v0Experiment());
             var getResourceResponse = await this.ExperimentCollection.GetAsync(this.ExperimentName).ConfigureAwait(false);
 
-            Assert.AreEqual(this.ExperimentName, getResourceResponse.Value.Data.Name);
+            Assert.That(getResourceResponse.Value.Data.Name, Is.EqualTo(this.ExperimentName));
         }
 
         [TestCase, Order(4)]
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Chaos.Tests
         public async Task List()
         {
             var experimentList = await this.ExperimentCollection.GetAllAsync().ToListAsync().ConfigureAwait(false);
-            Assert.True(experimentList.Any());
+            Assert.That(experimentList.Any(), Is.True);
         }
 
         [TestCase, Order(5)]
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Chaos.Tests
             ResourceGroupResource rg = await subscription.GetResourceGroupAsync(TestEnvironment.ResourceGroup).ConfigureAwait(false);
             var experimentResourceResponse = await this.ExperimentCollection.GetAsync(this.ExperimentName).ConfigureAwait(false);
             var deleteResponse = await experimentResourceResponse.Value.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
-            Assert.AreEqual(200, deleteResponse.GetRawResponse().Status);
+            Assert.That(deleteResponse.GetRawResponse().Status, Is.EqualTo(200));
 
             await Delay(2000, 0);
 
             var existsResponse = await rg.GetChaosExperiments().ExistsAsync(this.ExperimentName).ConfigureAwait(false);
-            Assert.AreEqual(false, existsResponse.Value);
+            Assert.That(existsResponse.Value, Is.EqualTo(false));
         }
 
         [TestCase, Order(6)]
@@ -103,14 +103,14 @@ namespace Azure.ResourceManager.Chaos.Tests
             var experimentName = string.Format(TestConstants.ExperimentForExecutionNameFormat, TestConstants.ExperimentNamePrefix, this.VmssId);
             var experimentResourceResponse = await this.ExperimentCollection.GetAsync(experimentName).ConfigureAwait(false);
             var startResponse = await experimentResourceResponse.Value.StartAsync(WaitUntil.Started).ConfigureAwait(false);
-            Assert.AreEqual(202, startResponse.GetRawResponse().Status);
+            Assert.That(startResponse.GetRawResponse().Status, Is.EqualTo(202));
 
             var executionsList = await experimentResourceResponse.Value.GetChaosExperimentExecutions().ToListAsync().ConfigureAwait(false);
-            Assert.True(executionsList.Any());
+            Assert.That(executionsList.Any(), Is.True);
 
             var executionId = UrlUtility.GetExecutionsId(executionsList.FirstOrDefault().Id);
             var executionResponse = await experimentResourceResponse.Value.GetChaosExperimentExecutionAsync(executionId).ConfigureAwait(false);
-            Assert.AreEqual(200, executionResponse.GetRawResponse().Status);
+            Assert.That(executionResponse.GetRawResponse().Status, Is.EqualTo(200));
         }
 
         [TestCase, Order(7)]
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Chaos.Tests
             var experimentName = string.Format(TestConstants.ExperimentForExecutionNameFormat, TestConstants.ExperimentNamePrefix, this.VmssId);
             var experimentResourceResponse = await this.ExperimentCollection.GetAsync(experimentName).ConfigureAwait(false);
             var cancelResponse = await experimentResourceResponse.Value.CancelAsync(WaitUntil.Started).ConfigureAwait(false);
-            Assert.AreEqual(202, cancelResponse.GetRawResponse().Status);
+            Assert.That(cancelResponse.GetRawResponse().Status, Is.EqualTo(202));
         }
     }
 }

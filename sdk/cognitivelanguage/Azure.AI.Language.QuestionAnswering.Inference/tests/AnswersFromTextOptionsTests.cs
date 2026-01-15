@@ -13,42 +13,42 @@ namespace Azure.AI.Language.QuestionAnswering.Inference.Tests
         public void FromStringTextDocumentsQuestionNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => AnswersFromTextOptions.From(null, Array.Empty<string>(), null));
-            Assert.AreEqual("question", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("question"));
         }
 
         [Test]
         public void FromStringTextDocumentsNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => AnswersFromTextOptions.From("question", (string[])null, null));
-            Assert.AreEqual("textDocuments", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("textDocuments"));
         }
 
         [Test]
         public void FromStringTextDocumentsAutomaticIds()
         {
             AnswersFromTextOptions options = AnswersFromTextOptions.From("question", new[] { "a", "b", "c" }, null);
-            Assert.AreEqual("question", options.Question);
-            Assert.AreEqual(3, options.TextDocuments.Count);
-            Assert.AreEqual("1", options.TextDocuments[0].Id);
-            Assert.AreEqual("a", options.TextDocuments[0].Text);
-            Assert.AreEqual("2", options.TextDocuments[1].Id);
-            Assert.AreEqual("b", options.TextDocuments[1].Text);
-            Assert.AreEqual("3", options.TextDocuments[2].Id);
-            Assert.AreEqual("c", options.TextDocuments[2].Text);
+            Assert.That(options.Question, Is.EqualTo("question"));
+            Assert.That(options.TextDocuments.Count, Is.EqualTo(3));
+            Assert.That(options.TextDocuments[0].Id, Is.EqualTo("1"));
+            Assert.That(options.TextDocuments[0].Text, Is.EqualTo("a"));
+            Assert.That(options.TextDocuments[1].Id, Is.EqualTo("2"));
+            Assert.That(options.TextDocuments[1].Text, Is.EqualTo("b"));
+            Assert.That(options.TextDocuments[2].Id, Is.EqualTo("3"));
+            Assert.That(options.TextDocuments[2].Text, Is.EqualTo("c"));
         }
 
         [Test]
         public void FromTextDocumentsQuestionNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => AnswersFromTextOptions.From(null, (TextDocument[])null, null));
-            Assert.AreEqual("question", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("question"));
         }
 
         [Test]
         public void FromTextDocumentsNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => AnswersFromTextOptions.From("question", (TextDocument[])null, null));
-            Assert.AreEqual("textDocuments", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("textDocuments"));
         }
 
         [Test]
@@ -62,14 +62,14 @@ namespace Azure.AI.Language.QuestionAnswering.Inference.Tests
             };
 
             AnswersFromTextOptions options = AnswersFromTextOptions.From("question", textDocuments, null);
-            Assert.AreEqual("question", options.Question);
-            Assert.AreEqual(3, options.TextDocuments.Count);
-            Assert.AreEqual("1", options.TextDocuments[0].Id);
-            Assert.AreEqual("a", options.TextDocuments[0].Text);
-            Assert.AreEqual("2", options.TextDocuments[1].Id);
-            Assert.AreEqual("b", options.TextDocuments[1].Text);
-            Assert.AreEqual("3", options.TextDocuments[2].Id);
-            Assert.AreEqual("c", options.TextDocuments[2].Text);
+            Assert.That(options.Question, Is.EqualTo("question"));
+            Assert.That(options.TextDocuments.Count, Is.EqualTo(3));
+            Assert.That(options.TextDocuments[0].Id, Is.EqualTo("1"));
+            Assert.That(options.TextDocuments[0].Text, Is.EqualTo("a"));
+            Assert.That(options.TextDocuments[1].Id, Is.EqualTo("2"));
+            Assert.That(options.TextDocuments[1].Text, Is.EqualTo("b"));
+            Assert.That(options.TextDocuments[2].Id, Is.EqualTo("3"));
+            Assert.That(options.TextDocuments[2].Text, Is.EqualTo("c"));
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference.Tests
 
             AnswersFromTextOptions options = new("question", textDocuments);
 
-            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
+            Assert.That(options.StringIndexType, Is.EqualTo(StringIndexType.Utf16CodeUnit));
         }
 
         [Test]
@@ -104,15 +104,15 @@ namespace Azure.AI.Language.QuestionAnswering.Inference.Tests
 
             options = options.Clone("de");
 
-            Assert.AreEqual("question", options.Question);
-            Assert.AreEqual(3, options.TextDocuments.Count);
-            Assert.AreEqual("1", options.TextDocuments[0].Id);
-            Assert.AreEqual("a", options.TextDocuments[0].Text);
-            Assert.AreEqual("2", options.TextDocuments[1].Id);
-            Assert.AreEqual("b", options.TextDocuments[1].Text);
-            Assert.AreEqual("3", options.TextDocuments[2].Id);
-            Assert.AreEqual("c", options.TextDocuments[2].Text);
-            Assert.AreEqual("en", options.Language);
+            Assert.That(options.Question, Is.EqualTo("question"));
+            Assert.That(options.TextDocuments.Count, Is.EqualTo(3));
+            Assert.That(options.TextDocuments[0].Id, Is.EqualTo("1"));
+            Assert.That(options.TextDocuments[0].Text, Is.EqualTo("a"));
+            Assert.That(options.TextDocuments[1].Id, Is.EqualTo("2"));
+            Assert.That(options.TextDocuments[1].Text, Is.EqualTo("b"));
+            Assert.That(options.TextDocuments[2].Id, Is.EqualTo("3"));
+            Assert.That(options.TextDocuments[2].Text, Is.EqualTo("c"));
+            Assert.That(options.Language, Is.EqualTo("en"));
         }
 
         [Test]
@@ -128,15 +128,15 @@ namespace Azure.AI.Language.QuestionAnswering.Inference.Tests
             AnswersFromTextOptions options = new("question", textDocuments);
             options = options.Clone("de");
 
-            Assert.AreEqual("question", options.Question);
-            Assert.AreEqual(3, options.TextDocuments.Count);
-            Assert.AreEqual("1", options.TextDocuments[0].Id);
-            Assert.AreEqual("a", options.TextDocuments[0].Text);
-            Assert.AreEqual("2", options.TextDocuments[1].Id);
-            Assert.AreEqual("b", options.TextDocuments[1].Text);
-            Assert.AreEqual("3", options.TextDocuments[2].Id);
-            Assert.AreEqual("c", options.TextDocuments[2].Text);
-            Assert.AreEqual("de", options.Language);
+            Assert.That(options.Question, Is.EqualTo("question"));
+            Assert.That(options.TextDocuments.Count, Is.EqualTo(3));
+            Assert.That(options.TextDocuments[0].Id, Is.EqualTo("1"));
+            Assert.That(options.TextDocuments[0].Text, Is.EqualTo("a"));
+            Assert.That(options.TextDocuments[1].Id, Is.EqualTo("2"));
+            Assert.That(options.TextDocuments[1].Text, Is.EqualTo("b"));
+            Assert.That(options.TextDocuments[2].Id, Is.EqualTo("3"));
+            Assert.That(options.TextDocuments[2].Text, Is.EqualTo("c"));
+            Assert.That(options.Language, Is.EqualTo("de"));
         }
     }
 }

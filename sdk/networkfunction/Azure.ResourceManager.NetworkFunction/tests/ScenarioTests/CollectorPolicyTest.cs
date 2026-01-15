@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var azureTrafficCollector = await CreateAzureTrafficCollector();
             var collectorPolicy = await CreateCollectorPolicy(azureTrafficCollector, collectorPolicyName);
             Assert.IsNotNull(collectorPolicy);
-            Assert.AreEqual(collectorPolicyName, collectorPolicy.Data.Name);
-            Assert.AreEqual(_location, collectorPolicy.Data.Location);
+            Assert.That(collectorPolicy.Data.Name, Is.EqualTo(collectorPolicyName));
+            Assert.That(collectorPolicy.Data.Location, Is.EqualTo(_location));
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var collection = azureTrafficCollector.GetCollectorPolicies();
             var exist = await collection.ExistsAsync(collectorPolicy.Data.Name);
             Assert.IsNotNull(exist);
-            Assert.IsTrue(exist);
+            Assert.That((bool)exist, Is.True);
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var collection = azureTrafficCollector.GetCollectorPolicies();
             CollectorPolicyResource result = await collection.GetAsync(collectorPolicy.Data.Name);
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.Data.Name, collectorPolicy.Data.Name);
+            Assert.That(collectorPolicy.Data.Name, Is.EqualTo(result.Data.Name));
         }
 
         [Test]
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var list2 = await collection2.GetAllAsync().ToEnumerableAsync();
             var listre = list1.Concat(list2).ToList();
             Assert.IsNotEmpty(listre);
-            Assert.IsTrue(listre.Count >= 2);
-            Assert.IsTrue(listre.Exists(item => item.Data.Name == collectorPolicy1.Data.Name));
-            Assert.IsTrue(listre.Exists(item => item.Data.Name == collectorPolicy2.Data.Name));
+            Assert.That(listre.Count >= 2, Is.True);
+            Assert.That(listre.Exists(item => item.Data.Name == collectorPolicy1.Data.Name), Is.True);
+            Assert.That(listre.Exists(item => item.Data.Name == collectorPolicy2.Data.Name), Is.True);
         }
 
         [Test]
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var collectorPolicyAccount = Client.GetCollectorPolicyResource(collectorPolicyresourceId);
             CollectorPolicyResource result = await collectorPolicyAccount.GetAsync();
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.Data.Id, collectorPolicy.Data.Id);
-            Assert.AreEqual(result.Data.Name, collectorPolicy.Data.Name);
+            Assert.That(collectorPolicy.Data.Id, Is.EqualTo(result.Data.Id));
+            Assert.That(collectorPolicy.Data.Name, Is.EqualTo(result.Data.Name));
         }
 
         [Test]
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var collectorPolicy = await CreateCollectorPolicy(azureTrafficCollector, collectorPolicyName);
             CollectorPolicyResource getResult = await collectorPolicy.GetAsync();
             Assert.IsNotEmpty(getResult.Data.Id);
-            Assert.AreEqual(collectorPolicyName, collectorPolicy.Data.Name);
+            Assert.That(collectorPolicy.Data.Name, Is.EqualTo(collectorPolicyName));
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             };
             CollectorPolicyResource result = await collectorPolicy.UpdateAsync(tagsObject);
             Assert.IsNotEmpty(result.Data.Tags);
-            Assert.AreEqual(tagsObject.Tags, result.Data.Tags);
+            Assert.That(result.Data.Tags, Is.EqualTo(tagsObject.Tags));
         }
 
         [Test]
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var azureTrafficCollector = await CreateAzureTrafficCollector();
             var collectorPolicy = await CreateCollectorPolicy(azureTrafficCollector, collectorPolicyName);
             CollectorPolicyResource addTags = await collectorPolicy.AddTagAsync("key1", "AddTags");
-            Assert.IsTrue(addTags.Data.Tags.ContainsKey("key1"));
+            Assert.That(addTags.Data.Tags.ContainsKey("key1"), Is.True);
             var SetDic = new Dictionary<string, string>()
             {
                 ["key1"] = "collectorPolicy",
@@ -150,12 +150,12 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
                 ["key3"] = "SetTags"
             };
             CollectorPolicyResource setTags = await collectorPolicy.SetTagsAsync(SetDic);
-            Assert.AreEqual(SetDic["key1"], setTags.Data.Tags["key1"]);
-            Assert.IsTrue(setTags.Data.Tags["key1"] != "AddTags");
+            Assert.That(setTags.Data.Tags["key1"], Is.EqualTo(SetDic["key1"]));
+            Assert.That(setTags.Data.Tags["key1"] != "AddTags", Is.True);
             string removekey = "key3";
             CollectorPolicyResource removeTags = await collectorPolicy.RemoveTagAsync(removekey);
             Assert.IsNotEmpty(removeTags.Data.Tags);
-            Assert.IsTrue(!removeTags.Data.Tags.ContainsKey(removekey));
+            Assert.That(!removeTags.Data.Tags.ContainsKey(removekey), Is.True);
         }
 
         [Test]
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             var azureTrafficCollector = await CreateAzureTrafficCollector();
             var collectorPolicy = await CreateCollectorPolicy(azureTrafficCollector, collectorPolicyName);
             var deleted = await collectorPolicy.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleted.HasCompleted);
+            Assert.That(deleted.HasCompleted, Is.True);
             var exist = await _collection.ExistsAsync(collectorPolicyName);
-            Assert.IsFalse(exist.Value);
+            Assert.That(exist.Value, Is.False);
         }
 
         public async Task<AzureTrafficCollectorResource> CreateAzureTrafficCollector()

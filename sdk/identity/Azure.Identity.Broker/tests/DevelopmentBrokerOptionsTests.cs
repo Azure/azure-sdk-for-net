@@ -12,7 +12,7 @@ namespace Azure.Identity.Broker.Tests
         public void TryCreateDevelopmentBrokerOptions()
         {
             bool success = DefaultAzureCredentialFactory.TryCreateDevelopmentBrokerOptions(out var options);
-            Assert.IsTrue(success, "Failed to create DevelopmentBrokerOptions.");
+            Assert.That(success, Is.True, "Failed to create DevelopmentBrokerOptions.");
             Assert.IsNotNull(options, "DevelopmentBrokerOptions is null.");
         }
 

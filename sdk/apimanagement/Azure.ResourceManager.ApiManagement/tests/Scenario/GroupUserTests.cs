@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var groupContract = (await groupCollection.CreateOrUpdateAsync(WaitUntil.Completed, newGroupId, parameters)).Value;
             Assert.NotNull(groupContract);
-            Assert.AreEqual(newGroupDisplayName, groupContract.Data.DisplayName);
-            Assert.IsFalse(groupContract.Data.IsBuiltIn);
+            Assert.That(groupContract.Data.DisplayName, Is.EqualTo(newGroupDisplayName));
+            Assert.That(groupContract.Data.IsBuiltIn, Is.False);
             Assert.NotNull(groupContract.Data.Description);
-            Assert.AreEqual(ApiManagementGroupType.Custom, groupContract.Data.GroupType);
+            Assert.That(groupContract.Data.GroupType, Is.EqualTo(ApiManagementGroupType.Custom));
 
             var userId = Recording.GenerateAssetName("sdkUserId");
             var collection = ApiServiceResource.GetApiManagementUsers();
@@ -89,19 +89,19 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // add user to group
             var addUserContract = (await groupContract.CreateGroupUserAsync(userId)).Value;
             Assert.NotNull(addUserContract);
-            Assert.AreEqual(userContract.Data.Email, addUserContract.Email);
-            Assert.AreEqual(userContract.Data.FirstName, addUserContract.FirstName);
+            Assert.That(addUserContract.Email, Is.EqualTo(userContract.Data.Email));
+            Assert.That(addUserContract.FirstName, Is.EqualTo(userContract.Data.FirstName));
 
             // list group user
             var listgroupResponse = await groupContract.GetGroupUsersAsync().ToEnumerableAsync();
-            Assert.AreEqual(listgroupResponse.Count, 1);
+            Assert.That(listgroupResponse.Count, Is.EqualTo(1));
 
             // remove user from group
             await groupContract.DeleteGroupUserAsync(userId);
 
             // make sure user is removed
             var falseResult = (await groupContract.CheckGroupUserEntityExistsAsync(userId)).Value;
-            Assert.IsFalse(falseResult);
+            Assert.That(falseResult, Is.False);
         }
     }
 }

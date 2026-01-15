@@ -78,7 +78,7 @@ namespace Azure.Communication.CallingServer.Tests.MediaStreaming
         private static void ValidateMetadata(MediaStreamingMetadata streamingMetadata)
         {
             Assert.IsNotNull(streamingMetadata);
-            Assert.AreEqual("subscriptionId", streamingMetadata.MediaSubscriptionId);
+            Assert.That(streamingMetadata.MediaSubscriptionId, Is.EqualTo("subscriptionId"));
 
             ValidateFormat(streamingMetadata.Format);
         }
@@ -86,20 +86,20 @@ namespace Azure.Communication.CallingServer.Tests.MediaStreaming
         private static void ValidateFormat(MediaStreamingFormat streamingFormat)
         {
             Assert.IsNotNull(streamingFormat);
-            Assert.AreEqual("encodingType", streamingFormat.Encoding);
-            Assert.AreEqual(8, streamingFormat.SampleRate);
-            Assert.AreEqual(2, streamingFormat.Channels);
-            Assert.AreEqual(100.1, streamingFormat.Length);
+            Assert.That(streamingFormat.Encoding, Is.EqualTo("encodingType"));
+            Assert.That(streamingFormat.SampleRate, Is.EqualTo(8));
+            Assert.That(streamingFormat.Channels, Is.EqualTo(2));
+            Assert.That(streamingFormat.Length, Is.EqualTo(100.1));
         }
 
         private static void ValidateAudioData(MediaStreamingAudio streamingAudio)
         {
             Assert.IsNotNull(streamingAudio);
-            Assert.AreEqual(5, streamingAudio.Data.Length);
-            Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
-            Assert.IsTrue(streamingAudio.Participant is CommunicationIdentifier);
-            Assert.AreEqual("participantId", streamingAudio.Participant.RawId);
-            Assert.IsFalse(streamingAudio.IsSilent);
+            Assert.That(streamingAudio.Data.Length, Is.EqualTo(5));
+            Assert.That(streamingAudio.Timestamp.Year, Is.EqualTo(2022));
+            Assert.That(streamingAudio.Participant is CommunicationIdentifier, Is.True);
+            Assert.That(streamingAudio.Participant.RawId, Is.EqualTo("participantId"));
+            Assert.That(streamingAudio.IsSilent, Is.False);
         }
     }
 }

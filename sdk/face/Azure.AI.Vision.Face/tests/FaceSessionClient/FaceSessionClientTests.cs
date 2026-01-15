@@ -76,7 +76,7 @@ namespace Azure.AI.Vision.Face.Tests
             Assert.IsNotNull(auditEntry.RequestId);
             Assert.IsNotNull(auditEntry.ReceivedDateTime);
             Assert.IsNotNull(auditEntry.Digest);
-            Assert.AreEqual(auditEntry.SessionId, sessionId);
+            Assert.That(sessionId, Is.EqualTo(auditEntry.SessionId));
 
             Assert.IsNotNull(auditEntry.Request.Url);
             Assert.IsNotNull(auditEntry.Request.Method);
@@ -123,7 +123,7 @@ namespace Azure.AI.Vision.Face.Tests
             Assert.IsNotNull(createResult.AuthToken);
 
             var getResponse = await client.GetLivenessSessionResultAsync(createResult.SessionId);
-            Assert.AreEqual(DeviceCorrelationId, getResponse.Value.DeviceCorrelationId);
+            Assert.That(getResponse.Value.DeviceCorrelationId, Is.EqualTo(DeviceCorrelationId));
         }
 
         [RecordedTest]
@@ -146,8 +146,8 @@ namespace Azure.AI.Vision.Face.Tests
             {
                 Assert.IsNotNull(session.CreatedDateTime);
                 Assert.IsNotNull(session.DeviceCorrelationId);
-                Assert.IsTrue(session.AuthTokenTimeToLiveInSeconds >= 60);
-                Assert.IsTrue(session.AuthTokenTimeToLiveInSeconds <= 86400);
+                Assert.That(session.AuthTokenTimeToLiveInSeconds >= 60, Is.True);
+                Assert.That(session.AuthTokenTimeToLiveInSeconds <= 86400, Is.True);
             }
         }
 
@@ -159,14 +159,14 @@ namespace Azure.AI.Vision.Face.Tests
             var response = await client.GetLivenessSessionResultAsync(sessionId);
             var session = response.Value;
 
-            Assert.AreEqual(sessionId, session.Id);
+            Assert.That(session.Id, Is.EqualTo(sessionId));
             Assert.IsNotNull(session.CreatedDateTime);
             Assert.IsNotNull(session.DeviceCorrelationId);
-            Assert.IsTrue(session.AuthTokenTimeToLiveInSeconds >= 60);
-            Assert.IsTrue(session.AuthTokenTimeToLiveInSeconds <= 86400);
+            Assert.That(session.AuthTokenTimeToLiveInSeconds >= 60, Is.True);
+            Assert.That(session.AuthTokenTimeToLiveInSeconds <= 86400, Is.True);
             Assert.IsNotNull(session.SessionStartDateTime);
             Assert.IsNotNull(session.SessionExpired);
-            Assert.AreEqual(FaceSessionStatus.ResultAvailable, session.Status);
+            Assert.That(session.Status, Is.EqualTo(FaceSessionStatus.ResultAvailable));
 
             AssertAuditEntry(session.Result, sessionId);
         }
@@ -258,7 +258,7 @@ namespace Azure.AI.Vision.Face.Tests
             }
 
             var getResponse = await client.GetLivenessWithVerifySessionResultAsync(createResult.SessionId);
-            Assert.AreEqual(DeviceCorrelationId, getResponse.Value.DeviceCorrelationId);
+            Assert.That(getResponse.Value.DeviceCorrelationId, Is.EqualTo(DeviceCorrelationId));
         }
 
         [RecordedTest]
@@ -281,8 +281,8 @@ namespace Azure.AI.Vision.Face.Tests
             {
                 Assert.IsNotNull(session.CreatedDateTime);
                 Assert.IsNotNull(session.DeviceCorrelationId);
-                Assert.IsTrue(session.AuthTokenTimeToLiveInSeconds >= 60);
-                Assert.IsTrue(session.AuthTokenTimeToLiveInSeconds <= 86400);
+                Assert.That(session.AuthTokenTimeToLiveInSeconds >= 60, Is.True);
+                Assert.That(session.AuthTokenTimeToLiveInSeconds <= 86400, Is.True);
             }
         }
 
@@ -294,14 +294,14 @@ namespace Azure.AI.Vision.Face.Tests
             var response = await client.GetLivenessWithVerifySessionResultAsync(sessionId);
             var session = response.Value;
 
-            Assert.AreEqual(sessionId, session.Id);
+            Assert.That(session.Id, Is.EqualTo(sessionId));
             Assert.IsNotNull(session.CreatedDateTime);
             Assert.IsNotNull(session.DeviceCorrelationId);
-            Assert.IsTrue(session.AuthTokenTimeToLiveInSeconds >= 60);
-            Assert.IsTrue(session.AuthTokenTimeToLiveInSeconds <= 86400);
+            Assert.That(session.AuthTokenTimeToLiveInSeconds >= 60, Is.True);
+            Assert.That(session.AuthTokenTimeToLiveInSeconds <= 86400, Is.True);
             Assert.IsNotNull(session.SessionStartDateTime);
             Assert.IsNotNull(session.SessionExpired);
-            Assert.AreEqual(FaceSessionStatus.ResultAvailable, session.Status);
+            Assert.That(session.Status, Is.EqualTo(FaceSessionStatus.ResultAvailable));
 
             AssertAuditEntry(session.Result, sessionId);
             AssertVerifyResult(session.Result.Response.Body.VerifyResult);

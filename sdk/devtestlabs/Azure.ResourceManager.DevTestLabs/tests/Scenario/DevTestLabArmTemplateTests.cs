@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
 
             // Exist
             bool flag = await _armTemplateCollection.ExistsAsync(templateName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Get
             var template = await _armTemplateCollection.GetAsync(templateName);
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
             Assert.IsNotNull(template);
             Assert.IsNotEmpty(template.Id);
             Assert.IsNotEmpty(template.Publisher);
-            Assert.AreEqual(templateName, template.Name);
-            Assert.AreEqual(true, template.IsEnabled);
+            Assert.That(template.Name, Is.EqualTo(templateName));
+            Assert.That(template.IsEnabled, Is.EqualTo(true));
         }
     }
 }

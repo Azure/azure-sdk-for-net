@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             var containerGroupData = CreateContainerGroupData(containerGroupName, "Regular");
             var containerGroups = rg.GetContainerGroups();
             ContainerGroupResource containerGroup = CreateContainerGroupAsync(containerGroupName, containerGroupData, rg).Result;
-            Assert.AreEqual(containerGroupName, containerGroup.Data.Name);
+            Assert.That(containerGroup.Data.Name, Is.EqualTo(containerGroupName));
             VerifyContainerGroupProperties(containerGroupData, containerGroup.Data);
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             var containerGroupData = CreateContainerGroupData(containerGroupName, priority: "Spot");
             var containerGroups = rg.GetContainerGroups();
             ContainerGroupResource containerGroup = CreateContainerGroupAsync(containerGroupName, containerGroupData, rg).Result;
-            Assert.AreEqual(containerGroupName, containerGroup.Data.Name);
+            Assert.That(containerGroup.Data.Name, Is.EqualTo(containerGroupName));
             VerifyContainerGroupProperties(containerGroupData, containerGroup.Data);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             var containerGroupData = CreateContainerGroupData(containerGroupName, isConfidentialSku: true, ccepolicy: null);
             var containerGroups = rg.GetContainerGroups();
             ContainerGroupResource containerGroup = CreateContainerGroupAsync(containerGroupName, containerGroupData, rg).Result;
-            Assert.AreEqual(containerGroupName, containerGroup.Data.Name);
+            Assert.That(containerGroup.Data.Name, Is.EqualTo(containerGroupName));
             VerifyContainerGroupProperties(containerGroupData, containerGroup.Data);
         }
 

@@ -8,7 +8,7 @@ namespace Azure.ResourceManager.Tests
         public void FormatIsSetToBicep()
         {
             BicepModelReaderWriterOptions options = new BicepModelReaderWriterOptions();
-            Assert.AreEqual("bicep", options.Format);
+            Assert.That(options.Format, Is.EqualTo("bicep"));
         }
 
         [Test]

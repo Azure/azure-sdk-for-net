@@ -94,7 +94,7 @@ namespace Azure.Storage.Queues.Test
             QueueClient sasQueueClient = InstrumentClient(new QueueClient(blobUriBuilder.Uri, GetOptions()));
             await sasQueueClient.GetPropertiesAsync();
 
-            Assert.AreEqual("?" + sasQueryParams, sasQueueClient.Uri.Query);
+            Assert.That(sasQueueClient.Uri.Query, Is.EqualTo("?" + sasQueryParams));
         }
 
         [RecordedTest]
@@ -280,7 +280,7 @@ namespace Azure.Storage.Queues.Test
                     messageText: GetNewString(),
                     visibilityTimeout: new TimeSpan(0, 0, 1),
                     timeToLive: new TimeSpan(1, 0, 0)),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("AuthenticationFailed")));
         }
 
         // Creating Client from GetStorageClient
@@ -300,7 +300,7 @@ namespace Azure.Storage.Queues.Test
             QueueClient queueClient = serviceClient.GetQueueClient(GetNewQueueName());
 
             // Assert
-            Assert.AreEqual(serviceClient.Uri.Query, queueClient.Uri.Query);
+            Assert.That(queueClient.Uri.Query, Is.EqualTo(serviceClient.Uri.Query));
             await queueClient.CreateAsync();
             await queueClient.DeleteIfExistsAsync();
         }
@@ -344,7 +344,7 @@ namespace Azure.Storage.Queues.Test
                 QueueServiceClient serviceClient = queueClient.GetParentQueueServiceClient();
 
                 // Assert
-                Assert.AreEqual(queueClient.Uri.Query, serviceClient.Uri.Query);
+                Assert.That(serviceClient.Uri.Query, Is.EqualTo(queueClient.Uri.Query));
                 await serviceClient.GetPropertiesAsync();
             }
             finally

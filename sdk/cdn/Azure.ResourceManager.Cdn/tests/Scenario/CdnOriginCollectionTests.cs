@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnEndpointResource cdnEndpoint = await CreateCdnEndpointWithOriginGroup(cdnProfile, cdnEndpointName);
             string cdnOriginName = Recording.GenerateAssetName("origin-");
             CdnOriginResource cdnOrigin = await CreateCdnOrigin(cdnEndpoint, cdnOriginName);
-            Assert.AreEqual(cdnOriginName, cdnOrigin.Data.Name);
+            Assert.That(cdnOrigin.Data.Name, Is.EqualTo(cdnOriginName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnEndpoint.GetCdnOrigins().CreateOrUpdateAsync(WaitUntil.Completed, null, cdnOrigin.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnEndpoint.GetCdnOrigins().CreateOrUpdateAsync(WaitUntil.Completed, cdnOriginName, null));
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 count++;
             }
-            Assert.AreEqual(count, 2);
+            Assert.That(count, Is.EqualTo(2));
         }
 
         [TestCase]

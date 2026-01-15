@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Tests
             var collection = projectResource.GetDataMigrationProjectFiles();
             var input = ResourceDataHelpers.GetProjectFileData();
             var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, fileName, input)).Value;
-            Assert.AreEqual(fileName, resource.Data.Name);
+            Assert.That(resource.Data.Name, Is.EqualTo(fileName));
             //Get
             var resource2 = (await collection.GetAsync(fileName)).Value;
             ResourceDataHelpers.AssertFlieData(resource.Data, resource2.Data);
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.DataMigration.Tests
             }
             Assert.GreaterOrEqual(count, 2);
             //4.Exist
-            Assert.IsTrue(await collection.ExistsAsync(fileName));
-            Assert.IsFalse(await collection.ExistsAsync(fileName + "1"));
+            Assert.That((bool)await collection.ExistsAsync(fileName), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(fileName + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resouece operation

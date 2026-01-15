@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.Logic.Tests
 
         private void ValidateRunData(LogicWorkflowRunActionResource actual)
         {
-            Assert.AreEqual("Response", actual.Data.Name);
+            Assert.That(actual.Data.Name, Is.EqualTo("Response"));
             Assert.NotNull(actual.Data.StartOn);
             Assert.NotNull(actual.Data.EndOn);
-            Assert.AreEqual("Skipped", actual.Data.Status.ToString());
+            Assert.That(actual.Data.Status.ToString(), Is.EqualTo("Skipped"));
         }
 
         [RecordedTest]
         public async Task Exist()
         {
             bool flag = await _runActionCollection.ExistsAsync("Response");
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]

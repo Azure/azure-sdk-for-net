@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             ArmOperation<NetworkFabricIPExtendedCommunityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.IpExtendedCommunityName, data);
             NetworkFabricIPExtendedCommunityResource createResult = lro.Value;
-            Assert.AreEqual(createResult.Data.Name, TestEnvironment.IpExtendedCommunityName);
+            Assert.That(TestEnvironment.IpExtendedCommunityName, Is.EqualTo(createResult.Data.Name));
 
             NetworkFabricIPExtendedCommunityResource ipExtendedCommunity = Client.GetNetworkFabricIPExtendedCommunityResource(ipExtendedCommunityResourceId);
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....");
             NetworkFabricIPExtendedCommunityResource getResult = await ipExtendedCommunity.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, TestEnvironment.IpExtendedCommunityName);
+            Assert.That(TestEnvironment.IpExtendedCommunityName, Is.EqualTo(getResult.Data.Name));
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             var deleteResponse = await ipExtendedCommunity.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteResponse.HasCompleted);
+            Assert.That(deleteResponse.HasCompleted, Is.True);
         }
     }
 }

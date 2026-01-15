@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 await host.CallAsync(method, new { message = message });
 
                 // Assert
-                Assert.AreEqual(expectedGuidValue, TestFunctions.Result);
+                Assert.That(TestFunctions.Result, Is.EqualTo(expectedGuidValue));
             }
             finally
             {

@@ -38,8 +38,8 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
         using PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        Assert.True(message.Request.Headers.TryGetValue(header, out var requestHeaderValue));
-        Assert.AreEqual(keyValue, requestHeaderValue);
+        Assert.That(message.Request.Headers.TryGetValue(header, out var requestHeaderValue), Is.True);
+        Assert.That(requestHeaderValue, Is.EqualTo(keyValue));
     }
 
     [Test]
@@ -65,8 +65,8 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
         using PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        Assert.True(message.Request.Headers.TryGetValue(header, out var requestHeaderValue));
-        Assert.AreEqual($"{prefix} {keyValue}", requestHeaderValue);
+        Assert.That(message.Request.Headers.TryGetValue(header, out var requestHeaderValue), Is.True);
+        Assert.That(requestHeaderValue, Is.EqualTo($"{prefix} {keyValue}"));
     }
 
     [Test]
@@ -92,8 +92,8 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
         await pipeline.SendSyncOrAsync(message, IsAsync);
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        Assert.True(message.Request.Headers.TryGetValue(header, out var requestHeaderValue));
-        Assert.AreEqual(keyValue, requestHeaderValue);
+        Assert.That(message.Request.Headers.TryGetValue(header, out var requestHeaderValue), Is.True);
+        Assert.That(requestHeaderValue, Is.EqualTo(keyValue));
     }
 
     [Test]
@@ -120,8 +120,8 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
         await pipeline.SendSyncOrAsync(message, IsAsync);
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        Assert.True(message.Request.Headers.TryGetValue(header, out var requestHeaderValue));
-        Assert.AreEqual($"{prefix} {keyValue}", requestHeaderValue);
+        Assert.That(message.Request.Headers.TryGetValue(header, out var requestHeaderValue), Is.True);
+        Assert.That(requestHeaderValue, Is.EqualTo($"{prefix} {keyValue}"));
     }
 
     [Test]
@@ -145,8 +145,8 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
         using PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        Assert.True(message.Request.Headers.TryGetValue("Authorization", out var requestHeaderValue));
-        Assert.AreEqual($"Basic {keyValue}", requestHeaderValue);
+        Assert.That(message.Request.Headers.TryGetValue("Authorization", out var requestHeaderValue), Is.True);
+        Assert.That(requestHeaderValue, Is.EqualTo($"Basic {keyValue}"));
     }
 
     [Test]
@@ -170,7 +170,7 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
         using PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        Assert.True(message.Request.Headers.TryGetValue("Authorization", out var requestHeaderValue));
-        Assert.AreEqual($"Bearer {keyValue}", requestHeaderValue);
+        Assert.That(message.Request.Headers.TryGetValue("Authorization", out var requestHeaderValue), Is.True);
+        Assert.That(requestHeaderValue, Is.EqualTo($"Bearer {keyValue}"));
     }
 }

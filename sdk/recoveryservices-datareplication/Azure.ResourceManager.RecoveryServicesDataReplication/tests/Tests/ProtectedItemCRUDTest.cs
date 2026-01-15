@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                 WaitUntil.Completed,
                 DataReplicationTestUtilities.DefaultProtectedItemName,
                 protectedItemData);
-            Assert.IsTrue(createProtectedItemOperation.HasCompleted);
-            Assert.IsTrue(createProtectedItemOperation.HasValue);
+            Assert.That(createProtectedItemOperation.HasCompleted, Is.True);
+            Assert.That(createProtectedItemOperation.HasValue, Is.True);
 
             // Get
             var getProtectedItemOperation = await vault.GetDataReplicationProtectedItems().GetAsync(
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
                     WaitUntil.Completed,
                     forceDelete: true);
 
-                Assert.IsTrue(deleteProtectedItemOperation.HasCompleted);
+                Assert.That(deleteProtectedItemOperation.HasCompleted, Is.True);
             }
         }
     }

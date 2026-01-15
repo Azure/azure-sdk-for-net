@@ -84,7 +84,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("Bar").Set("hello");
 
             JsonElement barElement = mdoc.RootElement.GetProperty("Bar").GetJsonElement();
-            Assert.AreEqual("hello", barElement.GetString());
+            Assert.That(barElement.GetString(), Is.EqualTo("hello"));
 
             JsonElement rootElement = mdoc.RootElement.GetJsonElement();
 
@@ -94,9 +94,9 @@ namespace Azure.Core.Tests
                 }
                 """;
 
-            Assert.AreEqual(
-                MutableJsonDocumentTests.RemoveWhiteSpace(expected),
-                MutableJsonDocumentTests.RemoveWhiteSpace(rootElement.ToString())
+            Assert.That(
+                MutableJsonDocumentTests.RemoveWhiteSpace(rootElement.ToString()),
+                Is.EqualTo(MutableJsonDocumentTests.RemoveWhiteSpace(expected))
             );
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Core.Tests
 
             MutableJsonElement bar = jd.RootElement.GetProperty("Bar");
 
-            Assert.AreEqual(JsonValueKind.Null, bar.ValueKind);
+            Assert.That(bar.ValueKind, Is.EqualTo(JsonValueKind.Null));
         }
 
         [Test]
@@ -127,15 +127,15 @@ namespace Azure.Core.Tests
 
             var jd = MutableJsonDocument.Parse(json);
 
-            Assert.AreEqual(JsonValueKind.String, jd.RootElement.GetProperty("Bar").ValueKind);
+            Assert.That(jd.RootElement.GetProperty("Bar").ValueKind, Is.EqualTo(JsonValueKind.String));
 
             jd.RootElement.GetProperty("Bar").Set(1.2);
 
-            Assert.AreEqual(JsonValueKind.Number, jd.RootElement.GetProperty("Bar").ValueKind);
+            Assert.That(jd.RootElement.GetProperty("Bar").ValueKind, Is.EqualTo(JsonValueKind.Number));
 
             jd.RootElement.GetProperty("Bar").Set(null);
 
-            Assert.AreEqual(JsonValueKind.Null, jd.RootElement.GetProperty("Bar").ValueKind);
+            Assert.That(jd.RootElement.GetProperty("Bar").ValueKind, Is.EqualTo(JsonValueKind.Null));
         }
 
         [Test]
@@ -150,10 +150,10 @@ namespace Azure.Core.Tests
             int expected = 0;
             foreach (MutableJsonElement el in enumerator)
             {
-                Assert.AreEqual(expected++, el.GetInt32());
+                Assert.That(el.GetInt32(), Is.EqualTo(expected++));
             }
 
-            Assert.AreEqual(4, expected);
+            Assert.That(expected, Is.EqualTo(4));
         }
 
         [Test]
@@ -173,10 +173,10 @@ namespace Azure.Core.Tests
             int expected = 1;
             foreach (MutableJsonElement el in enumerator)
             {
-                Assert.AreEqual(expected++, el.GetInt32());
+                Assert.That(el.GetInt32(), Is.EqualTo(expected++));
             }
 
-            Assert.AreEqual(5, expected);
+            Assert.That(expected, Is.EqualTo(5));
         }
 
         [Test]
@@ -194,8 +194,8 @@ namespace Azure.Core.Tests
             }
 
             value.Set(5);
-            Assert.AreEqual(5, value.GetInt32());
-            Assert.AreEqual(5, mdoc.RootElement.GetIndexElement(3).GetInt32());
+            Assert.That(value.GetInt32(), Is.EqualTo(5));
+            Assert.That(mdoc.RootElement.GetIndexElement(3).GetInt32(), Is.EqualTo(5));
         }
 
         [Test]
@@ -219,12 +219,12 @@ namespace Azure.Core.Tests
 
             foreach ((string Name, MutableJsonElement Value) property in enumerator)
             {
-                Assert.AreEqual(expectedNames[expected], property.Name);
-                Assert.AreEqual(expected, property.Value.GetInt32());
+                Assert.That(property.Name, Is.EqualTo(expectedNames[expected]));
+                Assert.That(property.Value.GetInt32(), Is.EqualTo(expected));
                 expected++;
             }
 
-            Assert.AreEqual(4, expected);
+            Assert.That(expected, Is.EqualTo(4));
         }
 
         [Test]
@@ -253,12 +253,12 @@ namespace Azure.Core.Tests
             int index = 0;
             foreach ((string Name, MutableJsonElement Value) property in enumerator)
             {
-                Assert.AreEqual(expectedNames[index], property.Name);
-                Assert.AreEqual(index + 1, property.Value.GetInt32());
+                Assert.That(property.Name, Is.EqualTo(expectedNames[index]));
+                Assert.That(property.Value.GetInt32(), Is.EqualTo(index + 1));
                 index++;
             }
 
-            Assert.AreEqual(4, index);
+            Assert.That(index, Is.EqualTo(4));
         }
 
         [Test]
@@ -284,8 +284,8 @@ namespace Azure.Core.Tests
 
             value.Set(5);
 
-            Assert.AreEqual(5, value.GetInt32());
-            Assert.AreEqual(5, mdoc.RootElement.GetProperty("Bar").GetInt32());
+            Assert.That(value.GetInt32(), Is.EqualTo(5));
+            Assert.That(mdoc.RootElement.GetProperty("Bar").GetInt32(), Is.EqualTo(5));
         }
 
         [Test]
@@ -309,8 +309,8 @@ namespace Azure.Core.Tests
 
             foreach ((string Name, MutableJsonElement Value) property in enumerator)
             {
-                Assert.AreEqual(expectedNames[expected], property.Name);
-                Assert.AreEqual(expected, property.Value.GetInt32());
+                Assert.That(property.Name, Is.EqualTo(expectedNames[expected]));
+                Assert.That(property.Value.GetInt32(), Is.EqualTo(expected));
                 expected++;
             }
         }
@@ -336,8 +336,8 @@ namespace Azure.Core.Tests
 
             foreach ((string Name, MutableJsonElement Value) property in enumerator)
             {
-                Assert.AreEqual(expectedNames[expected], property.Name);
-                Assert.AreEqual(++expected, property.Value.GetInt32());
+                Assert.That(property.Name, Is.EqualTo(expectedNames[expected]));
+                Assert.That(property.Value.GetInt32(), Is.EqualTo(++expected));
             }
         }
 
@@ -353,27 +353,27 @@ namespace Azure.Core.Tests
             // Get from parsed JSON
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            Assert.IsTrue(mdoc.RootElement.GetProperty("foo").TryGetByte(out byte b));
-            Assert.AreEqual((byte)42, b);
-            Assert.AreEqual((byte)42, mdoc.RootElement.GetProperty("foo").GetByte());
+            Assert.That(mdoc.RootElement.GetProperty("foo").TryGetByte(out byte b), Is.True);
+            Assert.That(b, Is.EqualTo((byte)42));
+            Assert.That(mdoc.RootElement.GetProperty("foo").GetByte(), Is.EqualTo((byte)42));
 
             // Get from assigned existing value
             byte newValue = 43;
             mdoc.RootElement.GetProperty("foo").Set(newValue);
 
-            Assert.IsTrue(mdoc.RootElement.GetProperty("foo").TryGetByte(out b));
-            Assert.AreEqual(newValue, b);
-            Assert.AreEqual(newValue, mdoc.RootElement.GetProperty("foo").GetByte());
+            Assert.That(mdoc.RootElement.GetProperty("foo").TryGetByte(out b), Is.True);
+            Assert.That(b, Is.EqualTo(newValue));
+            Assert.That(mdoc.RootElement.GetProperty("foo").GetByte(), Is.EqualTo(newValue));
 
             // Get from added value
             mdoc.RootElement.SetProperty("bar", (byte)44);
-            Assert.IsTrue(mdoc.RootElement.GetProperty("bar").TryGetByte(out b));
-            Assert.AreEqual((byte)44, b);
-            Assert.AreEqual((byte)44, mdoc.RootElement.GetProperty("bar").GetByte());
+            Assert.That(mdoc.RootElement.GetProperty("bar").TryGetByte(out b), Is.True);
+            Assert.That(b, Is.EqualTo((byte)44));
+            Assert.That(mdoc.RootElement.GetProperty("bar").GetByte(), Is.EqualTo((byte)44));
 
             // Doesn't work if number change is outside byte range
             mdoc.RootElement.GetProperty("foo").Set(256);
-            Assert.IsFalse(mdoc.RootElement.GetProperty("foo").TryGetByte(out b));
+            Assert.That(mdoc.RootElement.GetProperty("foo").TryGetByte(out b), Is.False);
             Assert.Throws<FormatException>(() => mdoc.RootElement.GetProperty("foo").GetByte());
 
             // Doesn't work for non-number change
@@ -394,27 +394,27 @@ namespace Azure.Core.Tests
             // Get from parsed JSON
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            Assert.IsTrue(tryGet(mdoc.RootElement.GetProperty("foo")).TryGet);
-            Assert.AreEqual(x, tryGet(mdoc.RootElement.GetProperty("foo")).Value);
-            Assert.AreEqual(x, get(mdoc.RootElement.GetProperty("foo")));
+            Assert.That(tryGet(mdoc.RootElement.GetProperty("foo")).TryGet, Is.True);
+            Assert.That(tryGet(mdoc.RootElement.GetProperty("foo")).Value, Is.EqualTo(x));
+            Assert.That(get(mdoc.RootElement.GetProperty("foo")), Is.EqualTo(x));
 
             // Get from assigned existing value
             set(mdoc, "foo", y);
-            Assert.IsTrue(tryGet(mdoc.RootElement.GetProperty("foo")).TryGet);
-            Assert.AreEqual(y, tryGet(mdoc.RootElement.GetProperty("foo")).Value);
-            Assert.AreEqual(y, get(mdoc.RootElement.GetProperty("foo")));
+            Assert.That(tryGet(mdoc.RootElement.GetProperty("foo")).TryGet, Is.True);
+            Assert.That(tryGet(mdoc.RootElement.GetProperty("foo")).Value, Is.EqualTo(y));
+            Assert.That(get(mdoc.RootElement.GetProperty("foo")), Is.EqualTo(y));
 
             // Get from added value
             setProperty(mdoc, "bar", z);
-            Assert.IsTrue(tryGet(mdoc.RootElement.GetProperty("bar")).TryGet);
-            Assert.AreEqual(z, tryGet(mdoc.RootElement.GetProperty("bar")).Value);
-            Assert.AreEqual(z, get(mdoc.RootElement.GetProperty("bar")));
+            Assert.That(tryGet(mdoc.RootElement.GetProperty("bar")).TryGet, Is.True);
+            Assert.That(tryGet(mdoc.RootElement.GetProperty("bar")).Value, Is.EqualTo(z));
+            Assert.That(get(mdoc.RootElement.GetProperty("bar")), Is.EqualTo(z));
 
             // Doesn't work if number change is outside range
             if (invalid is bool testRange && testRange)
             {
                 mdoc.RootElement.GetProperty("foo").Set(testRange);
-                Assert.IsFalse(tryGet(mdoc.RootElement.GetProperty("foo")).TryGet);
+                Assert.That(tryGet(mdoc.RootElement.GetProperty("foo")).TryGet, Is.False);
                 Assert.Throws<FormatException>(() => get(mdoc.RootElement.GetProperty("foo")));
             }
 
@@ -433,31 +433,31 @@ namespace Azure.Core.Tests
             // Get from parsed JSON
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            Assert.IsTrue(mdoc.RootElement.GetProperty("foo").TryGetGuid(out Guid g));
-            Assert.AreEqual(guid, g);
-            Assert.AreEqual(guid, mdoc.RootElement.GetProperty("foo").GetGuid());
+            Assert.That(mdoc.RootElement.GetProperty("foo").TryGetGuid(out Guid g), Is.True);
+            Assert.That(g, Is.EqualTo(guid));
+            Assert.That(mdoc.RootElement.GetProperty("foo").GetGuid(), Is.EqualTo(guid));
 
             // Get from assigned existing value
             Guid fooValue = Guid.NewGuid();
             mdoc.RootElement.GetProperty("foo").Set(fooValue);
 
-            Assert.IsTrue(mdoc.RootElement.GetProperty("foo").TryGetGuid(out g));
-            Assert.AreEqual(fooValue, g);
-            Assert.AreEqual(fooValue, mdoc.RootElement.GetProperty("foo").GetGuid());
+            Assert.That(mdoc.RootElement.GetProperty("foo").TryGetGuid(out g), Is.True);
+            Assert.That(g, Is.EqualTo(fooValue));
+            Assert.That(mdoc.RootElement.GetProperty("foo").GetGuid(), Is.EqualTo(fooValue));
 
             // Get from newly added value
             Guid barValue = Guid.NewGuid();
             mdoc.RootElement.SetProperty("bar", barValue);
 
-            Assert.IsTrue(mdoc.RootElement.GetProperty("bar").TryGetGuid(out g));
-            Assert.AreEqual(barValue, g);
-            Assert.AreEqual(barValue, mdoc.RootElement.GetProperty("bar").GetGuid());
+            Assert.That(mdoc.RootElement.GetProperty("bar").TryGetGuid(out g), Is.True);
+            Assert.That(g, Is.EqualTo(barValue));
+            Assert.That(mdoc.RootElement.GetProperty("bar").GetGuid(), Is.EqualTo(barValue));
 
             // Can get them as a strings, too
-            Assert.AreEqual(JsonValueKind.String, mdoc.RootElement.GetProperty("foo").ValueKind);
-            Assert.AreEqual(fooValue.ToString(), mdoc.RootElement.GetProperty("foo").GetString());
-            Assert.AreEqual(JsonValueKind.String, mdoc.RootElement.GetProperty("bar").ValueKind);
-            Assert.AreEqual(barValue.ToString(), mdoc.RootElement.GetProperty("bar").GetString());
+            Assert.That(mdoc.RootElement.GetProperty("foo").ValueKind, Is.EqualTo(JsonValueKind.String));
+            Assert.That(mdoc.RootElement.GetProperty("foo").GetString(), Is.EqualTo(fooValue.ToString()));
+            Assert.That(mdoc.RootElement.GetProperty("bar").ValueKind, Is.EqualTo(JsonValueKind.String));
+            Assert.That(mdoc.RootElement.GetProperty("bar").GetString(), Is.EqualTo(barValue.ToString()));
 
             // Doesn't work for non-string change
             mdoc.RootElement.GetProperty("foo").Set(true);
@@ -475,31 +475,31 @@ namespace Azure.Core.Tests
             // Get from parsed JSON
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            Assert.IsTrue(mdoc.RootElement.GetProperty("foo").TryGetDateTime(out DateTime d));
-            Assert.AreEqual(dateTime, d);
-            Assert.AreEqual(dateTime, mdoc.RootElement.GetProperty("foo").GetDateTime());
+            Assert.That(mdoc.RootElement.GetProperty("foo").TryGetDateTime(out DateTime d), Is.True);
+            Assert.That(d, Is.EqualTo(dateTime));
+            Assert.That(mdoc.RootElement.GetProperty("foo").GetDateTime(), Is.EqualTo(dateTime));
 
             // Get from assigned existing value
             DateTime fooValue = dateTime.AddDays(1);
             mdoc.RootElement.GetProperty("foo").Set(fooValue);
 
-            Assert.IsTrue(mdoc.RootElement.GetProperty("foo").TryGetDateTime(out d));
-            Assert.AreEqual(fooValue, d);
-            Assert.AreEqual(fooValue, mdoc.RootElement.GetProperty("foo").GetDateTime());
+            Assert.That(mdoc.RootElement.GetProperty("foo").TryGetDateTime(out d), Is.True);
+            Assert.That(d, Is.EqualTo(fooValue));
+            Assert.That(mdoc.RootElement.GetProperty("foo").GetDateTime(), Is.EqualTo(fooValue));
 
             // Get from newly added value
             DateTime barValue = dateTime.AddDays(2);
             mdoc.RootElement.SetProperty("bar", barValue);
 
-            Assert.IsTrue(mdoc.RootElement.GetProperty("bar").TryGetDateTime(out d));
-            Assert.AreEqual(barValue, d);
-            Assert.AreEqual(barValue, mdoc.RootElement.GetProperty("bar").GetDateTime());
+            Assert.That(mdoc.RootElement.GetProperty("bar").TryGetDateTime(out d), Is.True);
+            Assert.That(d, Is.EqualTo(barValue));
+            Assert.That(mdoc.RootElement.GetProperty("bar").GetDateTime(), Is.EqualTo(barValue));
 
             // Can get them as a strings, too
-            Assert.AreEqual(JsonValueKind.String, mdoc.RootElement.GetProperty("foo").ValueKind);
-            Assert.AreEqual(FormatDateTime(fooValue), mdoc.RootElement.GetProperty("foo").GetString());
-            Assert.AreEqual(JsonValueKind.String, mdoc.RootElement.GetProperty("bar").ValueKind);
-            Assert.AreEqual(FormatDateTime(barValue), mdoc.RootElement.GetProperty("bar").GetString());
+            Assert.That(mdoc.RootElement.GetProperty("foo").ValueKind, Is.EqualTo(JsonValueKind.String));
+            Assert.That(mdoc.RootElement.GetProperty("foo").GetString(), Is.EqualTo(FormatDateTime(fooValue)));
+            Assert.That(mdoc.RootElement.GetProperty("bar").ValueKind, Is.EqualTo(JsonValueKind.String));
+            Assert.That(mdoc.RootElement.GetProperty("bar").GetString(), Is.EqualTo(FormatDateTime(barValue)));
 
             // Doesn't work for non-string change
             mdoc.RootElement.GetProperty("foo").Set(true);
@@ -517,31 +517,31 @@ namespace Azure.Core.Tests
             // Get from parsed JSON
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            Assert.IsTrue(mdoc.RootElement.GetProperty("foo").TryGetDateTimeOffset(out DateTimeOffset d));
-            Assert.AreEqual(dateTime, d);
-            Assert.AreEqual(dateTime, mdoc.RootElement.GetProperty("foo").GetDateTimeOffset());
+            Assert.That(mdoc.RootElement.GetProperty("foo").TryGetDateTimeOffset(out DateTimeOffset d), Is.True);
+            Assert.That(d, Is.EqualTo(dateTime));
+            Assert.That(mdoc.RootElement.GetProperty("foo").GetDateTimeOffset(), Is.EqualTo(dateTime));
 
             // Get from assigned existing value
             DateTimeOffset fooValue = DateTimeOffset.Now.AddDays(1);
             mdoc.RootElement.GetProperty("foo").Set(fooValue);
 
-            Assert.IsTrue(mdoc.RootElement.GetProperty("foo").TryGetDateTimeOffset(out d));
-            Assert.AreEqual(fooValue, d);
-            Assert.AreEqual(fooValue, mdoc.RootElement.GetProperty("foo").GetDateTimeOffset());
+            Assert.That(mdoc.RootElement.GetProperty("foo").TryGetDateTimeOffset(out d), Is.True);
+            Assert.That(d, Is.EqualTo(fooValue));
+            Assert.That(mdoc.RootElement.GetProperty("foo").GetDateTimeOffset(), Is.EqualTo(fooValue));
 
             // Get from newly added value
             DateTimeOffset barValue = DateTimeOffset.Now.AddDays(2);
             mdoc.RootElement.SetProperty("bar", barValue);
 
-            Assert.IsTrue(mdoc.RootElement.GetProperty("bar").TryGetDateTimeOffset(out d));
-            Assert.AreEqual(barValue, d);
-            Assert.AreEqual(barValue, mdoc.RootElement.GetProperty("bar").GetDateTimeOffset());
+            Assert.That(mdoc.RootElement.GetProperty("bar").TryGetDateTimeOffset(out d), Is.True);
+            Assert.That(d, Is.EqualTo(barValue));
+            Assert.That(mdoc.RootElement.GetProperty("bar").GetDateTimeOffset(), Is.EqualTo(barValue));
 
             // Can get them as a strings, too
-            Assert.AreEqual(JsonValueKind.String, mdoc.RootElement.GetProperty("foo").ValueKind);
-            Assert.AreEqual(FormatDateTimeOffset(fooValue), mdoc.RootElement.GetProperty("foo").GetString());
-            Assert.AreEqual(JsonValueKind.String, mdoc.RootElement.GetProperty("bar").ValueKind);
-            Assert.AreEqual(FormatDateTimeOffset(barValue), mdoc.RootElement.GetProperty("bar").GetString());
+            Assert.That(mdoc.RootElement.GetProperty("foo").ValueKind, Is.EqualTo(JsonValueKind.String));
+            Assert.That(mdoc.RootElement.GetProperty("foo").GetString(), Is.EqualTo(FormatDateTimeOffset(fooValue)));
+            Assert.That(mdoc.RootElement.GetProperty("bar").ValueKind, Is.EqualTo(JsonValueKind.String));
+            Assert.That(mdoc.RootElement.GetProperty("bar").GetString(), Is.EqualTo(FormatDateTimeOffset(barValue)));
 
             // Doesn't work for non-string change
             mdoc.RootElement.GetProperty("foo").Set(true);
@@ -560,7 +560,7 @@ namespace Azure.Core.Tests
             foreach (var method in actualMethods)
             {
                 var isExpected = expectedMethods.Contains(method.Name);
-                Assert.IsTrue(isExpected, message);
+                Assert.That(isExpected, Is.True, message);
             }
         }
 
@@ -575,7 +575,7 @@ namespace Azure.Core.Tests
             foreach (var nestedType in actualNestedTypes)
             {
                 var isExpected = expectedNestedTypes.Contains(nestedType.Name);
-                Assert.IsTrue(isExpected, message);
+                Assert.That(isExpected, Is.True, message);
             }
         }
 
@@ -583,9 +583,9 @@ namespace Azure.Core.Tests
 
         internal static void ValidateToString(string json, MutableJsonElement element)
         {
-            Assert.AreEqual(
-                MutableJsonDocumentTests.RemoveWhiteSpace(json),
-                MutableJsonDocumentTests.RemoveWhiteSpace(element.ToString()));
+            Assert.That(
+                MutableJsonDocumentTests.RemoveWhiteSpace(element.ToString()),
+                Is.EqualTo(MutableJsonDocumentTests.RemoveWhiteSpace(json)));
         }
 
         internal static string FormatDateTime(DateTime d)

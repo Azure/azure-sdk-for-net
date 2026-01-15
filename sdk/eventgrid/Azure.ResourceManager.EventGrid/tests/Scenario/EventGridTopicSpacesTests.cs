@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
 
             Assert.NotNull(EventGridNamespace);
 
-            Assert.AreEqual(EventGridNamespace.Data.Name, namespaceName);
+            Assert.That(namespaceName, Is.EqualTo(EventGridNamespace.Data.Name));
         }
 
         [Test]
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
 
             Assert.IsNotNull(topicSpace);
 
-            Assert.AreEqual("Test Topic Space", topicSpace.Data.Description);
+            Assert.That(topicSpace.Data.Description, Is.EqualTo("Test Topic Space"));
 
             var retrievedTopicSpace = (await EventGridNamespace.GetTopicSpaces().GetAsync(topicSpaceName)).Value;
 
             Assert.IsNotNull(retrievedTopicSpace);
 
-            Assert.AreEqual(topicSpaceName, retrievedTopicSpace.Data.Name);
+            Assert.That(retrievedTopicSpace.Data.Name, Is.EqualTo(topicSpaceName));
 
             var updatedTopicSpaceData = new TopicSpaceData { Description = "Updated Topic Space Description", TopicTemplates = { "Microsoft.Resources.ResourceWriteSuccess" }, };
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
 
             Assert.IsNotNull(updatedTopicSpace);
 
-            Assert.AreEqual("Updated Topic Space Description", updatedTopicSpace.Data.Description);
+            Assert.That(updatedTopicSpace.Data.Description, Is.EqualTo("Updated Topic Space Description"));
             await updatedTopicSpace.DeleteAsync(WaitUntil.Completed);
         }
 
@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
 
             Assert.GreaterOrEqual(topicSpaces.Count, 2);
 
-            Assert.IsTrue(topicSpaces.Any(ts => ts.Data.Name == topicSpaceName1));
+            Assert.That(topicSpaces.Any(ts => ts.Data.Name == topicSpaceName1), Is.True);
 
-            Assert.IsTrue(topicSpaces.Any(ts => ts.Data.Name == topicSpaceName2));
+            Assert.That(topicSpaces.Any(ts => ts.Data.Name == topicSpaceName2), Is.True);
 
             foreach (var topicSpace in topicSpaces)
                 await topicSpace.DeleteAsync(WaitUntil.Completed);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
             Assert.IsNotNull(getResponse);
             Assert.IsNotNull(getResponse.Value);
             Assert.IsNotNull(getResponse.Value.Data);
-            Assert.AreEqual(topicSpaceName, getResponse.Value.Data.Name);
+            Assert.That(getResponse.Value.Data.Name, Is.EqualTo(topicSpaceName));
 
             // Cleanup
             await getResponse.Value.DeleteAsync(WaitUntil.Completed);

@@ -18,7 +18,7 @@ namespace Azure.Communication.CallingServer
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
             var response = callAutomationClient.GetCallRecording().DeleteRecording(new Uri(AmsDeleteUrl));
-            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.OK));
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace Azure.Communication.CallingServer
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
             var response = await callAutomationClient.GetCallRecording().DeleteRecordingAsync(new Uri(AmsDeleteUrl)).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.OK));
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace Azure.Communication.CallingServer
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.GetCallRecording().DeleteRecording(new Uri(AmsDeleteUrl)));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace Azure.Communication.CallingServer
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(401);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.GetCallRecording().DeleteRecording(new Uri(AmsDeleteUrl)));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 401);
+            Assert.That(ex?.Status, Is.EqualTo(401));
         }
     }
 }

@@ -40,19 +40,19 @@ namespace Azure.ResourceManager.HealthDataAIServices.Tests
 
             // Create
             DeidServiceResource deidService = (await rg.GetDeidServices().CreateOrUpdateAsync(WaitUntil.Completed, deidServiceName, new DeidServiceData(Location))).Value;
-            Assert.AreEqual(deidServiceName, deidService.Data.Name);
+            Assert.That(deidService.Data.Name, Is.EqualTo(deidServiceName));
 
             // Get
             DeidServiceResource deidServiceResource = (await rg.GetDeidServices().GetAsync(deidServiceName)).Value;
-            Assert.AreEqual(HealthDataAIServicesProvisioningState.Succeeded, deidServiceResource.Data.Properties.ProvisioningState);
-            Assert.AreEqual(deidServiceName, deidServiceResource.Data.Name);
-            Assert.AreEqual(Location, deidServiceResource.Data.Location);
-            Assert.IsTrue(deidServiceResource.Data.Properties.ServiceUri.ToString().Contains("deid"), "ServiceUri should contain 'deid'");
+            Assert.That(deidServiceResource.Data.Properties.ProvisioningState, Is.EqualTo(HealthDataAIServicesProvisioningState.Succeeded));
+            Assert.That(deidServiceResource.Data.Name, Is.EqualTo(deidServiceName));
+            Assert.That(deidServiceResource.Data.Location, Is.EqualTo(Location));
+            Assert.That(deidServiceResource.Data.Properties.ServiceUri.ToString().Contains("deid"), Is.True, "ServiceUri should contain 'deid'");
 
             // Delete
             ArmOperation operation = await deidService.DeleteAsync(WaitUntil.Completed);
             await operation.WaitForCompletionResponseAsync();
-            Assert.IsTrue(operation.HasCompleted);
+            Assert.That(operation.HasCompleted, Is.True);
         }
     }
 }

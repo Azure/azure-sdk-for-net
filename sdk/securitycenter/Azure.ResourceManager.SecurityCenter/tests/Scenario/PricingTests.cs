@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             var pricing = await _pricingCollection.GetAsync("VirtualMachines");
             Assert.IsNotNull(pricing);
-            Assert.AreEqual("VirtualMachines", pricing.Value.Data.Name);
-            Assert.AreEqual("Standard", pricing.Value.Data.PricingTier.ToString());
-            Assert.AreEqual("P2",pricing.Value.Data.SubPlan);
-            Assert.AreEqual("Microsoft.Security/pricings", pricing.Value.Data.ResourceType.ToString());
+            Assert.That(pricing.Value.Data.Name, Is.EqualTo("VirtualMachines"));
+            Assert.That(pricing.Value.Data.PricingTier.ToString(), Is.EqualTo("Standard"));
+            Assert.That(pricing.Value.Data.SubPlan, Is.EqualTo("P2"));
+            Assert.That(pricing.Value.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/pricings"));
         }
 
         [RecordedTest]
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             var list = await _pricingCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.IsTrue(list.Exists(item => item.Data.Name == "VirtualMachines"));
-            Assert.IsTrue(list.Exists(item => item.Data.Name == "SqlServers"));
-            Assert.IsTrue(list.Exists(item => item.Data.Name == "AppServices"));
+            Assert.That(list.Exists(item => item.Data.Name == "VirtualMachines"), Is.True);
+            Assert.That(list.Exists(item => item.Data.Name == "SqlServers"), Is.True);
+            Assert.That(list.Exists(item => item.Data.Name == "AppServices"), Is.True);
         }
     }
 }

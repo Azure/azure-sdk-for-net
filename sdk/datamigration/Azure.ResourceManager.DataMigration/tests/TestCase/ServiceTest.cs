@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Tests
             //Create
             var input = ResourceDataHelpers.GetServiceData(subnet.Id);
             var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, input)).Value;
-            Assert.AreEqual(serviceName, resource.Data.Name);
+            Assert.That(resource.Data.Name, Is.EqualTo(serviceName));
             //Get
             var resource2 = (await collection.GetAsync(serviceName)).Value;
             ResourceDataHelpers.AssertServiceData(resource.Data, resource2.Data);
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.DataMigration.Tests
             }
             Assert.GreaterOrEqual(count, 2);
             //4.Exist
-            Assert.IsTrue(await collection.ExistsAsync(serviceName));
-            Assert.IsFalse(await collection.ExistsAsync(serviceName + "1"));
+            Assert.That((bool)await collection.ExistsAsync(serviceName), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(serviceName + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resouece operation

@@ -129,21 +129,21 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             string triggerName = Recording.GenerateAssetName("trigger-");
             var trigger = await CreateDefaultTrigger(dataFactory, triggerName);
             Assert.IsNotNull(trigger);
-            Assert.AreEqual(triggerName, trigger.Data.Name);
+            Assert.That(trigger.Data.Name, Is.EqualTo(triggerName));
             // Exists
             bool flag = await dataFactory.GetDataFactoryTriggers().ExistsAsync(triggerName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
             // Get
             var triggerGet = await dataFactory.GetDataFactoryTriggers().GetAsync(triggerName);
             Assert.IsNotNull(trigger);
-            Assert.AreEqual(triggerName, triggerGet.Value.Data.Name);
+            Assert.That(triggerGet.Value.Data.Name, Is.EqualTo(triggerName));
             // GetAll
             var list = await dataFactory.GetDataFactoryTriggers().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             // Delete
             await trigger.DeleteAsync(WaitUntil.Completed);
             flag = await dataFactory.GetDataFactoryTriggers().ExistsAsync(triggerName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [Test]

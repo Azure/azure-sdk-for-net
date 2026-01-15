@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlRoleAssignmentCreateAndUpdate()
         {
             var assignment = await CreateSqlRoleAssignment();
-            Assert.AreEqual(_roleAssignment.Data.Name, assignment.Data.Name);
-            Assert.AreEqual(_roleDefinition.Id, assignment.Data.RoleDefinitionId);
-            Assert.AreEqual(SqlRoleAssignmentScope, assignment.Data.Scope);
-            Assert.AreEqual(PrincipalId, assignment.Data.PrincipalId);
+            Assert.That(assignment.Data.Name, Is.EqualTo(_roleAssignment.Data.Name));
+            Assert.That(assignment.Data.RoleDefinitionId, Is.EqualTo(_roleDefinition.Id));
+            Assert.That(assignment.Data.Scope, Is.EqualTo(SqlRoleAssignmentScope));
+            Assert.That(assignment.Data.PrincipalId, Is.EqualTo(PrincipalId));
 
             bool ifExists = await SqlRoleAssignmentCollection.ExistsAsync(RoleAssignmentId);
-            Assert.True(ifExists);
+            Assert.That(ifExists, Is.True);
 
             CosmosDBSqlRoleAssignmentResource assignment2 = await SqlRoleAssignmentCollection.GetAsync(RoleAssignmentId);
-            Assert.AreEqual(_roleAssignment.Data.Name, assignment2.Data.Name);
+            Assert.That(assignment2.Data.Name, Is.EqualTo(_roleAssignment.Data.Name));
             VerifySqlRoleAssignments(assignment, assignment2);
 
             var roleDefinition2 = await SqlRoleDefinitionTests.CreateSqlRoleDefinition(RoleDefinitionId2, Recording.GenerateAssetName("sql-role-def-"), $"{_databaseAccount.Id}/dbs/{_sqlDatabase.Data.Name}", _databaseAccount.GetCosmosDBSqlRoleDefinitions());
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 PrincipalId = PrincipalId,
             };
             assignment = await (await SqlRoleAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, RoleAssignmentId, updateParameters)).WaitForCompletionAsync();
-            Assert.AreEqual(_roleAssignment.Data.Name, assignment.Data.Name);
-            Assert.AreEqual(roleDefinition2.Id, assignment.Data.RoleDefinitionId);
-            Assert.AreEqual(SqlRoleAssignmentScope, assignment.Data.Scope);
-            Assert.AreEqual(PrincipalId, assignment.Data.PrincipalId);
+            Assert.That(assignment.Data.Name, Is.EqualTo(_roleAssignment.Data.Name));
+            Assert.That(assignment.Data.RoleDefinitionId, Is.EqualTo(roleDefinition2.Id));
+            Assert.That(assignment.Data.Scope, Is.EqualTo(SqlRoleAssignmentScope));
+            Assert.That(assignment.Data.PrincipalId, Is.EqualTo(PrincipalId));
 
             assignment2 = await SqlRoleAssignmentCollection.GetAsync(RoleAssignmentId);
             VerifySqlRoleAssignments(assignment, assignment2);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var assignments = await SqlRoleAssignmentCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(assignments, Has.Count.EqualTo(1));
-            Assert.AreEqual(assignment.Data.Name, assignments[0].Data.Name);
+            Assert.That(assignments[0].Data.Name, Is.EqualTo(assignment.Data.Name));
 
             VerifySqlRoleAssignments(assignments[0], assignment);
         }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var assignment = await CreateSqlRoleAssignment();
             await assignment.DeleteAsync(WaitUntil.Completed);
 
-            Assert.IsFalse(await SqlRoleAssignmentCollection.ExistsAsync(RoleAssignmentId));
+            Assert.That((bool)await SqlRoleAssignmentCollection.ExistsAsync(RoleAssignmentId), Is.False);
         }
 
         protected async Task<CosmosDBSqlRoleAssignmentResource> CreateSqlRoleAssignment()
@@ -144,14 +144,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifySqlRoleAssignments(CosmosDBSqlRoleAssignmentResource expectedValue, CosmosDBSqlRoleAssignmentResource actualValue)
         {
-            Assert.AreEqual(expectedValue.Id, actualValue.Id);
-            Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.ResourceType, actualValue.Data.ResourceType);
+            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+            Assert.That(actualValue.Data.ResourceType, Is.EqualTo(expectedValue.Data.ResourceType));
 
-            Assert.AreEqual(expectedValue.Data.RoleDefinitionId, actualValue.Data.RoleDefinitionId);
+            Assert.That(actualValue.Data.RoleDefinitionId, Is.EqualTo(expectedValue.Data.RoleDefinitionId));
 
-            Assert.AreEqual(expectedValue.Data.Scope, actualValue.Data.Scope);
-            Assert.AreEqual(expectedValue.Data.PrincipalId, actualValue.Data.PrincipalId);
+            Assert.That(actualValue.Data.Scope, Is.EqualTo(expectedValue.Data.Scope));
+            Assert.That(actualValue.Data.PrincipalId, Is.EqualTo(expectedValue.Data.PrincipalId));
         }
     }
 }

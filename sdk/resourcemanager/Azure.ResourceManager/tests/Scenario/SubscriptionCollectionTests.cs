@@ -30,21 +30,21 @@ namespace Azure.ResourceManager.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             string subscriptionId = subscription.Id.SubscriptionId;
             SubscriptionResource result = await Client.GetSubscriptions().GetAsync(subscriptionId).ConfigureAwait(false);
-            Assert.AreEqual(subscriptionId, result.Id.SubscriptionId);
+            Assert.That(result.Id.SubscriptionId, Is.EqualTo(subscriptionId));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetSubscriptions().GetAsync(null).ConfigureAwait(false));
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetSubscriptions().GetAsync(new Guid().ToString()).ConfigureAwait(false));
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [RecordedTest]
         public async Task Exists()
         {
             var expectFalse = await Client.GetSubscriptions().ExistsAsync(new Guid().ToString()).ConfigureAwait(false);
-            Assert.IsFalse(expectFalse);
+            Assert.That((bool)expectFalse, Is.False);
             string subscriptionId = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).Id.SubscriptionId;
             var expectTrue = await Client.GetSubscriptions().ExistsAsync(subscriptionId).ConfigureAwait(false);
-            Assert.IsTrue(expectTrue);
+            Assert.That((bool)expectTrue, Is.True);
         }
     }
 }

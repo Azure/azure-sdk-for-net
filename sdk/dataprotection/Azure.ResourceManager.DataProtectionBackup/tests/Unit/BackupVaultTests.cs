@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Unit
             Assert.IsNull(dataSourceInfo.ResourceUri);
             Assert.IsNull(dataSourceSetInfo.ResourceUri);
 #pragma warning restore CS0618 // Type or member is obsolete
-            Assert.AreEqual("/sub/test", dataSourceInfo.ResourceUriString);
+            Assert.That(dataSourceInfo.ResourceUriString, Is.EqualTo("/sub/test"));
             Assert.NotNull("/sub/test", dataSourceSetInfo.ResourceUriString);
         }
     }

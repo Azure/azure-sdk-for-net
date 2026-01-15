@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.DevCenter.Tests
             var devCenterResource = devCenterResponse.Value;
 
             List<DevCenterImageResource> images = await devCenterResource.GetImagesAsync().ToEnumerableAsync();
-            Assert.IsTrue(images.Count > 0);
+            Assert.That(images.Count > 0, Is.True);
 
             // List image versions for one image
             List<ImageVersionResource> imageVersions = await images.First().GetImageVersions().GetAllAsync().ToEnumerableAsync();
-            Assert.IsTrue(imageVersions.Count > 0);
+            Assert.That(imageVersions.Count > 0, Is.True);
 
             // Get one of the image versions
             ImageVersionResource imageVersion = await images.First().GetImageVersionAsync(imageVersions.First().Data.Name);

@@ -57,8 +57,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             MockRequest request = transport.Requests[0];
 
-            Assert.IsTrue(request.Headers.TryGetValue(HttpHeader.Names.Authorization, out string authHeaderValue));
-            Assert.AreEqual("Bearer TestAcrAccessToken", authHeaderValue);
+            Assert.That(request.Headers.TryGetValue(HttpHeader.Names.Authorization, out string authHeaderValue), Is.True);
+            Assert.That(authHeaderValue, Is.EqualTo("Bearer TestAcrAccessToken"));
         }
 
         [Test]
@@ -97,20 +97,20 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             string authHeaderValue;
-            Assert.IsTrue(firstRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue));
-            Assert.AreEqual("Bearer TestAcrAccessToken1", authHeaderValue);
-            Assert.AreEqual(1, refreshTokenRequests);
-            Assert.AreEqual(1, accessTokenRequests);
+            Assert.That(firstRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue), Is.True);
+            Assert.That(authHeaderValue, Is.EqualTo("Bearer TestAcrAccessToken1"));
+            Assert.That(refreshTokenRequests, Is.EqualTo(1));
+            Assert.That(accessTokenRequests, Is.EqualTo(1));
 
             // Act
             await SendGetRequest(transport, policy, uri: new Uri("https://example.azurecr.io/acr/v1/hello-world/_tags/latest"), cancellationToken: default);
             MockRequest secondRequest = transport.Requests[2];
 
             // Assert
-            Assert.IsTrue(secondRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue));
-            Assert.AreEqual("Bearer TestAcrAccessToken2", authHeaderValue);
-            Assert.AreEqual(1, refreshTokenRequests);
-            Assert.AreEqual(2, accessTokenRequests);
+            Assert.That(secondRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue), Is.True);
+            Assert.That(authHeaderValue, Is.EqualTo("Bearer TestAcrAccessToken2"));
+            Assert.That(refreshTokenRequests, Is.EqualTo(1));
+            Assert.That(accessTokenRequests, Is.EqualTo(2));
         }
 
         [Test]
@@ -153,20 +153,20 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             string authHeaderValue;
-            Assert.IsTrue(firstRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue));
-            Assert.AreEqual("Bearer TestAcrAccessToken1", authHeaderValue);
-            Assert.AreEqual(1, refreshTokenRequests);
-            Assert.AreEqual(1, accessTokenRequests);
+            Assert.That(firstRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue), Is.True);
+            Assert.That(authHeaderValue, Is.EqualTo("Bearer TestAcrAccessToken1"));
+            Assert.That(refreshTokenRequests, Is.EqualTo(1));
+            Assert.That(accessTokenRequests, Is.EqualTo(1));
 
             // Act
             await SendGetRequest(transport, policy, uri: new Uri("https://example.azurecr.io/acr/v1/hello-world/_tags/latest"), cancellationToken: default);
             MockRequest secondRequest = transport.Requests[2];
 
             // Assert
-            Assert.IsTrue(secondRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue));
-            Assert.AreEqual("Bearer TestAcrAccessToken2", authHeaderValue);
-            Assert.AreEqual(1, refreshTokenRequests);
-            Assert.AreEqual(2, accessTokenRequests);
+            Assert.That(secondRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue), Is.True);
+            Assert.That(authHeaderValue, Is.EqualTo("Bearer TestAcrAccessToken2"));
+            Assert.That(refreshTokenRequests, Is.EqualTo(1));
+            Assert.That(accessTokenRequests, Is.EqualTo(2));
 
             // Act
             await Task.Delay(expiryTime);
@@ -178,10 +178,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await Task.Delay(TimeSpan.FromSeconds(1));
 
             // Assert
-            Assert.IsTrue(thirdRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue));
-            Assert.AreEqual("Bearer TestAcrAccessToken3", authHeaderValue);
-            Assert.AreEqual(2, refreshTokenRequests);
-            Assert.AreEqual(3, accessTokenRequests);
+            Assert.That(thirdRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue), Is.True);
+            Assert.That(authHeaderValue, Is.EqualTo("Bearer TestAcrAccessToken3"));
+            Assert.That(refreshTokenRequests, Is.EqualTo(2));
+            Assert.That(accessTokenRequests, Is.EqualTo(3));
         }
 
         [Test]
@@ -225,20 +225,20 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             string authHeaderValue;
-            Assert.IsTrue(firstRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue));
-            Assert.AreEqual("Bearer TestAcrAccessToken1", authHeaderValue);
-            Assert.AreEqual(1, refreshTokenRequests);
-            Assert.AreEqual(1, accessTokenRequests);
+            Assert.That(firstRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue), Is.True);
+            Assert.That(authHeaderValue, Is.EqualTo("Bearer TestAcrAccessToken1"));
+            Assert.That(refreshTokenRequests, Is.EqualTo(1));
+            Assert.That(accessTokenRequests, Is.EqualTo(1));
 
             // Act
             await SendGetRequest(transport, policy, uri: new Uri("https://example.azurecr.io/acr/v1/hello-world/_tags/latest"), cancellationToken: default);
             MockRequest secondRequest = transport.Requests[2];
 
             // Assert
-            Assert.IsTrue(secondRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue));
-            Assert.AreEqual("Bearer TestAcrAccessToken2", authHeaderValue);
-            Assert.AreEqual(1, refreshTokenRequests);
-            Assert.AreEqual(2, accessTokenRequests);
+            Assert.That(secondRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue), Is.True);
+            Assert.That(authHeaderValue, Is.EqualTo("Bearer TestAcrAccessToken2"));
+            Assert.That(refreshTokenRequests, Is.EqualTo(1));
+            Assert.That(accessTokenRequests, Is.EqualTo(2));
 
             // Act
             await Task.Delay(expiryTime - refreshOffset);
@@ -250,10 +250,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await Task.Delay(TimeSpan.FromSeconds(1));
 
             // Assert
-            Assert.IsTrue(thirdRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue));
-            Assert.AreEqual("Bearer TestAcrAccessToken3", authHeaderValue);
-            Assert.AreEqual(2, refreshTokenRequests);
-            Assert.AreEqual(3, accessTokenRequests);
+            Assert.That(thirdRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue), Is.True);
+            Assert.That(authHeaderValue, Is.EqualTo("Bearer TestAcrAccessToken3"));
+            Assert.That(refreshTokenRequests, Is.EqualTo(2));
+            Assert.That(accessTokenRequests, Is.EqualTo(3));
         }
 
         [Test]
@@ -289,20 +289,20 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             string authHeaderValue;
-            Assert.IsTrue(firstRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue));
-            Assert.AreEqual("Bearer TestAcrAccessToken1", authHeaderValue);
-            Assert.AreEqual(1, refreshTokenRequests);
-            Assert.AreEqual(1, accessTokenRequests);
+            Assert.That(firstRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue), Is.True);
+            Assert.That(authHeaderValue, Is.EqualTo("Bearer TestAcrAccessToken1"));
+            Assert.That(refreshTokenRequests, Is.EqualTo(1));
+            Assert.That(accessTokenRequests, Is.EqualTo(1));
 
             // Act
             await SendGetRequest(transport, policy, uri: new Uri("https://example.azurecr.io/acr/v1/hello-world/_tags/latest"), cancellationToken: default);
             MockRequest secondRequest = transport.Requests[2];
 
             // Assert
-            Assert.IsTrue(secondRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue));
-            Assert.AreEqual("Bearer TestAcrAccessToken2", authHeaderValue);
-            Assert.AreEqual(2, refreshTokenRequests);
-            Assert.AreEqual(2, accessTokenRequests);
+            Assert.That(secondRequest.Headers.TryGetValue(HttpHeader.Names.Authorization, out authHeaderValue), Is.True);
+            Assert.That(authHeaderValue, Is.EqualTo("Bearer TestAcrAccessToken2"));
+            Assert.That(refreshTokenRequests, Is.EqualTo(2));
+            Assert.That(accessTokenRequests, Is.EqualTo(2));
         }
 
         [Test]
@@ -336,12 +336,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             await Task.WhenAll(requestTasks);
-            Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string auth1Value));
+            Assert.That(transport.Requests[0].Headers.TryGetValue("Authorization", out string auth1Value), Is.True);
 
             for (int i = 1; i < requestTasks.Length; i++)
             {
-                Assert.True(transport.Requests[i].Headers.TryGetValue("Authorization", out string authValue));
-                Assert.AreEqual(auth1Value, authValue);
+                Assert.That(transport.Requests[i].Headers.TryGetValue("Authorization", out string authValue), Is.True);
+                Assert.That(authValue, Is.EqualTo(auth1Value));
             }
         }
 
@@ -372,7 +372,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             foreach (Task<Response> task in requestTasks)
             {
-                Assert.IsTrue(task.IsFaulted);
+                Assert.That(task.IsFaulted, Is.True);
             }
         }
 

@@ -191,6 +191,6 @@ public class BicepGenerationTests
 
     private static void AssertEqual(string expectedBicep, string actualBicep)
     {
-        Assert.AreEqual(expectedBicep, actualBicep.Replace("\r\n", "\n"));
+        Assert.That(actualBicep.Replace("\r\n", "\n"), Is.EqualTo(expectedBicep));
     }
 }

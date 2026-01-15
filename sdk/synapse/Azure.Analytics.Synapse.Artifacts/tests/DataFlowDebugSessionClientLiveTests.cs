@@ -116,7 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             // SYNAPSE_API_ISSUE - What payload do we need here?
             DataFlowDebugSessionExecuteCommandOperation executeOperation = await debugClient.StartExecuteCommandAsync(new DataFlowDebugCommandRequest { SessionId = debugSession.SessionId });
             DataFlowDebugCommandResponse response = await executeOperation.WaitForCompletionAsync();
-            Assert.AreEqual (200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         }
     }
 }

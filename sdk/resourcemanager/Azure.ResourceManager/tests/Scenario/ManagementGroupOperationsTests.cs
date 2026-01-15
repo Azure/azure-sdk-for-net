@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Tests
             CompareMgmtGroups(_mgmtGroup, mgmtGroup.Value);
             ResourceIdentifier fakeId = new ResourceIdentifier(_mgmtGroup.Id.ToString() + "x");
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroupResource(new ResourceIdentifier(fakeId)).GetAsync());
-            Assert.AreEqual(403, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(403));
         }
 
         [RecordedTest]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Tests
             ManagementGroupResource mgmtGroup = mgmtGroupOp.Value;
             await mgmtGroup.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await mgmtGroup.GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [RecordedTest]
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Tests
             var deleteOp = await mgmtGroup.DeleteAsync(WaitUntil.Started);
             await deleteOp.WaitForCompletionResponseAsync();
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await mgmtGroup.GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [RecordedTest]
@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.Tests
             ManagementGroupPatch patch = new ManagementGroupPatch();
             patch.DisplayName = "New Display Name";
             ManagementGroupResource patchedMgmtGroup = await mgmtGroup.UpdateAsync(patch);
-            Assert.AreEqual("New Display Name", patchedMgmtGroup.Data.DisplayName);
-            Assert.AreEqual(mgmtGroup.Data.Id, patchedMgmtGroup.Data.Id);
-            Assert.AreEqual(mgmtGroup.Data.Name, patchedMgmtGroup.Data.Name);
-            Assert.AreEqual(mgmtGroup.Data.TenantId, patchedMgmtGroup.Data.TenantId);
-            Assert.AreEqual(mgmtGroup.Data.ResourceType, patchedMgmtGroup.Data.ResourceType);
+            Assert.That(patchedMgmtGroup.Data.DisplayName, Is.EqualTo("New Display Name"));
+            Assert.That(patchedMgmtGroup.Data.Id, Is.EqualTo(mgmtGroup.Data.Id));
+            Assert.That(patchedMgmtGroup.Data.Name, Is.EqualTo(mgmtGroup.Data.Name));
+            Assert.That(patchedMgmtGroup.Data.TenantId, Is.EqualTo(mgmtGroup.Data.TenantId));
+            Assert.That(patchedMgmtGroup.Data.ResourceType, Is.EqualTo(mgmtGroup.Data.ResourceType));
         }
     }
 }

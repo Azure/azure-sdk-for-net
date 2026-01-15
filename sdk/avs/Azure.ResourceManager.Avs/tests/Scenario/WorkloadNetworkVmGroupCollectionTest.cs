@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
                 workloadNetworksList.Add(item);
             }
 
-            Assert.IsTrue(workloadNetworksList.Any());
+            Assert.That(workloadNetworksList.Any(), Is.True);
         }
 
         [TestCase, Order(2)]
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
                 workloadNetworksList.Add(item);
             }
 
-            Assert.IsTrue(workloadNetworksList.Any());
+            Assert.That(workloadNetworksList.Any(), Is.True);
         }
 
         [TestCase, Order(3)]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
         {
             WorkloadNetworkVmGroupCollection collection = getWorkloadNetworkResource().GetWorkloadNetworkVmGroups();
             WorkloadNetworkVmGroupResource result =  await collection.GetAsync(WORKLOAD_NETWORK_NAME);
-            Assert.AreEqual(WORKLOAD_NETWORK_NAME, result.Data.Name);
+            Assert.That(result.Data.Name, Is.EqualTo(WORKLOAD_NETWORK_NAME));
         }
 
         [TestCase, Order(4)]
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
         {
             WorkloadNetworkVmGroupCollection collection = getWorkloadNetworkResource().GetWorkloadNetworkVmGroups();
             bool result = await collection.ExistsAsync(WORKLOAD_NETWORK_NAME);
-            Assert.True(result);
+            Assert.That(result, Is.True);
             result =  await collection.ExistsAsync("wn1");
-            Assert.False(result);
+            Assert.That(result, Is.False);
         }
         [TestCase, Order(5)]
         [RecordedTest]
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
             NullableResponse<WorkloadNetworkVmGroupResource> response = await collection.GetIfExistsAsync(WORKLOAD_NETWORK_NAME);
             WorkloadNetworkVmGroupResource result = response.HasValue ? response.Value : null;
             Assert.NotNull(result);
-            Assert.AreEqual(WORKLOAD_NETWORK_NAME, result.Data.Name);
+            Assert.That(result.Data.Name, Is.EqualTo(WORKLOAD_NETWORK_NAME));
         }
     }
 }

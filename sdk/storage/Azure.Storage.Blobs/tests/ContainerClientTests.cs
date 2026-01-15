@@ -59,9 +59,9 @@ namespace Azure.Storage.Blobs.Test
 
             var builder = new BlobUriBuilder(container.Uri);
 
-            Assert.AreEqual(containerName, builder.BlobContainerName);
-            Assert.AreEqual("", builder.BlobName);
-            Assert.AreEqual(accountName, builder.AccountName);
+            Assert.That(builder.BlobContainerName, Is.EqualTo(containerName));
+            Assert.That(builder.BlobName, Is.Empty);
+            Assert.That(builder.AccountName, Is.EqualTo(accountName));
         }
 
         [Test]
@@ -82,10 +82,10 @@ namespace Azure.Storage.Blobs.Test
 
             var builder = new BlobUriBuilder(container.Uri);
 
-            Assert.AreEqual(containerName, builder.BlobContainerName);
-            Assert.AreEqual("", builder.BlobName);
-            Assert.AreEqual(containerName, container.Name);
-            Assert.AreEqual(accountName, container.AccountName);
+            Assert.That(builder.BlobContainerName, Is.EqualTo(containerName));
+            Assert.That(builder.BlobName, Is.Empty);
+            Assert.That(container.Name, Is.EqualTo(containerName));
+            Assert.That(container.AccountName, Is.EqualTo(accountName));
         }
 
         [RecordedTest]
@@ -172,7 +172,7 @@ namespace Azure.Storage.Blobs.Test
                 // This should throw as we do not have Object permission
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.UploadAsync(new MemoryStream(data)),
-                    e => Assert.AreEqual("AuthorizationResourceTypeMismatch", e.ErrorCode));
+                    e => Assert.That(e.ErrorCode, Is.EqualTo("AuthorizationResourceTypeMismatch")));
             }
             finally
             {
@@ -197,7 +197,7 @@ namespace Azure.Storage.Blobs.Test
             // This should throw as we do not have Container permission
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 containerClient.CreateAsync(),
-                e => Assert.AreEqual("AuthorizationResourceTypeMismatch", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("AuthorizationResourceTypeMismatch")));
         }
 
         [RecordedTest]
@@ -220,7 +220,7 @@ namespace Azure.Storage.Blobs.Test
             // This should throw as we only have read permission
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 containerClient.CreateAsync(),
-                e => Assert.AreEqual("AuthorizationPermissionMismatch", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("AuthorizationPermissionMismatch")));
         }
 
         [RecordedTest]
@@ -249,7 +249,7 @@ namespace Azure.Storage.Blobs.Test
                 // This should throw as we do not have read permission
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.GetPropertiesAsync(),
-                    e => Assert.AreEqual("AuthorizationPermissionMismatch", e.ErrorCode));
+                    e => Assert.That(e.ErrorCode, Is.EqualTo("AuthorizationPermissionMismatch")));
             }
             finally
             {
@@ -277,9 +277,9 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient client2 = InstrumentClient(new BlobContainerClient(blobEndpoint));
             BlobContainerClient client3 = InstrumentClient(new BlobContainerClient(blobEndpoint, tokenCredentials));
 
-            Assert.AreEqual(accountName, client1.AccountName);
-            Assert.AreEqual(accountName, client2.AccountName);
-            Assert.AreEqual(accountName, client3.AccountName);
+            Assert.That(client1.AccountName, Is.EqualTo(accountName));
+            Assert.That(client2.AccountName, Is.EqualTo(accountName));
+            Assert.That(client3.AccountName, Is.EqualTo(accountName));
         }
 
         [RecordedTest]
@@ -340,8 +340,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobContainerClient blobClient = new BlobContainerClient(blobEndpoint, credentials);
 
-            Assert.AreEqual(accountName, blobClient.AccountName);
-            Assert.AreEqual(containerName, blobClient.Name);
+            Assert.That(blobClient.AccountName, Is.EqualTo(accountName));
+            Assert.That(blobClient.Name, Is.EqualTo(containerName));
         }
 
         [RecordedTest]
@@ -396,7 +396,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             bool exists = await aadContainer.ExistsAsync();
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [RecordedTest]
@@ -420,7 +420,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             bool exists = await aadContainer.ExistsAsync();
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [RecordedTest]
@@ -444,7 +444,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             bool exists = await aadContainer.ExistsAsync();
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [RecordedTest]
@@ -469,7 +469,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadContainer.ExistsAsync(),
-                e => Assert.AreEqual(BlobErrorCode.InvalidAuthenticationInfo.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(BlobErrorCode.InvalidAuthenticationInfo.ToString())));
         }
 
         [RecordedTest]
@@ -561,7 +561,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 // Ensure that we grab the whole ETag value from the service without removing the quotes
-                Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+                Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
                 var accountName = new BlobUriBuilder(service.Uri).AccountName;
@@ -597,9 +597,9 @@ namespace Azure.Storage.Blobs.Test
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
-                Assert.AreEqual(3, testExceptionPolicy.DatesSetInRequests.Count);
-                Assert.IsTrue(testExceptionPolicy.DatesSetInRequests[1] > testExceptionPolicy.DatesSetInRequests[0]);
-                Assert.IsTrue(testExceptionPolicy.DatesSetInRequests[2] > testExceptionPolicy.DatesSetInRequests[1]);
+                Assert.That(testExceptionPolicy.DatesSetInRequests.Count, Is.EqualTo(3));
+                Assert.That(testExceptionPolicy.DatesSetInRequests[1] > testExceptionPolicy.DatesSetInRequests[0], Is.True);
+                Assert.That(testExceptionPolicy.DatesSetInRequests[2] > testExceptionPolicy.DatesSetInRequests[1], Is.True);
             }
             finally
             {
@@ -765,7 +765,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
-            Assert.AreEqual(PublicAccessType.Blob, response.Value.PublicAccess);
+            Assert.That(response.Value.PublicAccess, Is.EqualTo(PublicAccessType.Blob));
 
             // Cleanup
             await container.DeleteIfExistsAsync();
@@ -783,7 +783,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
-            Assert.AreEqual(PublicAccessType.None, response.Value.PublicAccess);
+            Assert.That(response.Value.PublicAccess, Is.EqualTo(PublicAccessType.None));
 
             // Cleanup
             await container.DeleteIfExistsAsync();
@@ -801,7 +801,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.CreateAsync(),
-                e => Assert.AreEqual("ContainerAlreadyExists", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ContainerAlreadyExists")));
 
             // Cleanup
             await container.DeleteIfExistsAsync();
@@ -904,8 +904,8 @@ namespace Azure.Storage.Blobs.Test
                     conditions),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"Delete does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"Delete does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -919,7 +919,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.DeleteAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ContainerNotFound")));
         }
 
         [RecordedTest]
@@ -979,7 +979,7 @@ namespace Azure.Storage.Blobs.Test
             Response<bool> response = await container.DeleteIfExistsAsync();
 
             // Assert
-            Assert.IsTrue(response.Value);
+            Assert.That(response.Value, Is.True);
 
             // Act
             response = await container.DeleteIfExistsAsync();
@@ -996,7 +996,7 @@ namespace Azure.Storage.Blobs.Test
             Response<bool> response = await container.DeleteIfExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -1011,7 +1011,7 @@ namespace Azure.Storage.Blobs.Test
             Response<bool> response = await container.ExistsAsync();
 
             // Assert
-            Assert.IsTrue(response.Value);
+            Assert.That(response.Value, Is.True);
 
             await container.DeleteIfExistsAsync();
         }
@@ -1027,7 +1027,7 @@ namespace Azure.Storage.Blobs.Test
             Response<bool> response = await container.ExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -1062,7 +1062,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.Value.Metadata);
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
             if (_serviceVersion >= BlobClientOptions.ServiceVersion.V2019_07_07)
             {
@@ -1110,8 +1110,8 @@ namespace Azure.Storage.Blobs.Test
                     conditions),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"GetProperties does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"GetProperties does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -1125,7 +1125,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.GetPropertiesAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ContainerNotFound")));
         }
 
         [RecordedTest]
@@ -1142,7 +1142,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
             // Check if we correctly set the metadata properly
             Response<BlobContainerProperties> getPropertiesResponse = await test.Container.GetPropertiesAsync();
@@ -1186,8 +1186,8 @@ namespace Azure.Storage.Blobs.Test
                     conditions: conditions),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"SetMetadata does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"SetMetadata does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -1202,7 +1202,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.SetMetadataAsync(metadata),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ContainerNotFound")));
         }
 
         [RecordedTest]
@@ -1283,7 +1283,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.IsNotNull(response);
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
         }
 
         [RecordedTest]
@@ -1325,8 +1325,8 @@ namespace Azure.Storage.Blobs.Test
                     conditions),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"GetAccessPolicy does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"GetAccessPolicy does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -1369,7 +1369,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 test.Container.GetAccessPolicyAsync(conditions: leaseAccessConditions),
-                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("LeaseNotPresentWithContainerOperation")));
         }
 
         [RecordedTest]
@@ -1394,10 +1394,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobContainerAccessPolicy> getPolicyResponse = await test.Container.GetAccessPolicyAsync();
-            Assert.AreEqual(1, getPolicyResponse.Value.SignedIdentifiers.Count());
+            Assert.That(getPolicyResponse.Value.SignedIdentifiers.Count(), Is.EqualTo(1));
 
             BlobSignedIdentifier acl = getPolicyResponse.Value.SignedIdentifiers.First();
-            Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
+            Assert.That(acl.Id, Is.EqualTo(signedIdentifiers[0].Id));
             Assert.IsNull(acl.AccessPolicy);
         }
 
@@ -1411,7 +1411,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.GetAccessPolicyAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ContainerNotFound")));
         }
 
         [RecordedTest]
@@ -1443,18 +1443,18 @@ namespace Azure.Storage.Blobs.Test
             // Assert
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
 
             Response<BlobContainerProperties> propertiesResponse = await test.Container.GetPropertiesAsync();
 
             Response<BlobContainerAccessPolicy> getPolicyResponse = await test.Container.GetAccessPolicyAsync();
-            Assert.AreEqual(1, getPolicyResponse.Value.SignedIdentifiers.Count());
+            Assert.That(getPolicyResponse.Value.SignedIdentifiers.Count(), Is.EqualTo(1));
 
             BlobSignedIdentifier acl = getPolicyResponse.Value.SignedIdentifiers.First();
-            Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, acl.AccessPolicy.PolicyStartsOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, acl.AccessPolicy.PolicyExpiresOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
+            Assert.That(acl.Id, Is.EqualTo(signedIdentifiers[0].Id));
+            Assert.That(acl.AccessPolicy.PolicyStartsOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyStartsOn));
+            Assert.That(acl.AccessPolicy.PolicyExpiresOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn));
+            Assert.That(acl.AccessPolicy.Permissions, Is.EqualTo(signedIdentifiers[0].AccessPolicy.Permissions));
         }
 
         [RecordedTest]
@@ -1488,8 +1488,8 @@ namespace Azure.Storage.Blobs.Test
                     conditions: conditions),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"SetAccessPolicy does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"SetAccessPolicy does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -1501,8 +1501,8 @@ namespace Azure.Storage.Blobs.Test
                 Permissions = "rw"
             };
 
-            Assert.AreEqual(new DateTimeOffset(), accessPolicy.StartsOn);
-            Assert.AreEqual(new DateTimeOffset(), accessPolicy.ExpiresOn);
+            Assert.That(accessPolicy.StartsOn, Is.EqualTo(new DateTimeOffset()));
+            Assert.That(accessPolicy.ExpiresOn, Is.EqualTo(new DateTimeOffset()));
         }
 
         [RecordedTest]
@@ -1526,8 +1526,8 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Assert
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifiers[0].AccessPolicy.StartsOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, signedIdentifiers[0].AccessPolicy.ExpiresOn);
+            Assert.That(signedIdentifiers[0].AccessPolicy.StartsOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyStartsOn));
+            Assert.That(signedIdentifiers[0].AccessPolicy.ExpiresOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn));
 
             // Act
             Response<BlobContainerInfo> response = await test.Container.SetAccessPolicyAsync(permissions: signedIdentifiers);
@@ -1536,12 +1536,12 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContainerAccessPolicy> responseAfter = await test.Container.GetAccessPolicyAsync();
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             BlobSignedIdentifier signedIdentifierResponse = responseAfter.Value.SignedIdentifiers.First();
-            Assert.AreEqual(1, responseAfter.Value.SignedIdentifiers.Count());
-            Assert.AreEqual(signedIdentifiers[0].Id, signedIdentifierResponse.Id);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.PolicyStartsOn);
-            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.StartsOn, signedIdentifierResponse.AccessPolicy.PolicyStartsOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, signedIdentifierResponse.AccessPolicy.PolicyExpiresOn);
-            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.ExpiresOn, signedIdentifierResponse.AccessPolicy.PolicyExpiresOn);
+            Assert.That(responseAfter.Value.SignedIdentifiers.Count(), Is.EqualTo(1));
+            Assert.That(signedIdentifierResponse.Id, Is.EqualTo(signedIdentifiers[0].Id));
+            Assert.That(signedIdentifierResponse.AccessPolicy.PolicyStartsOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyStartsOn));
+            Assert.That(signedIdentifierResponse.AccessPolicy.PolicyStartsOn, Is.EqualTo(signedIdentifierResponse.AccessPolicy.StartsOn));
+            Assert.That(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn));
+            Assert.That(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn, Is.EqualTo(signedIdentifierResponse.AccessPolicy.ExpiresOn));
             Assert.IsNull(signedIdentifierResponse.AccessPolicy.Permissions);
         }
 
@@ -1565,7 +1565,7 @@ namespace Azure.Storage.Blobs.Test
                 }
             };
             // Assert
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifiers[0].AccessPolicy.StartsOn);
+            Assert.That(signedIdentifiers[0].AccessPolicy.StartsOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyStartsOn));
             Assert.IsNull(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn);
 
             // Act
@@ -1577,12 +1577,12 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContainerAccessPolicy> responseAfter = await test.Container.GetAccessPolicyAsync();
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             BlobSignedIdentifier signedIdentifierResponse = responseAfter.Value.SignedIdentifiers.First();
-            Assert.AreEqual(1, responseAfter.Value.SignedIdentifiers.Count());
-            Assert.AreEqual(signedIdentifiers[0].Id, signedIdentifierResponse.Id);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.PolicyStartsOn);
-            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.StartsOn);
+            Assert.That(responseAfter.Value.SignedIdentifiers.Count(), Is.EqualTo(1));
+            Assert.That(signedIdentifierResponse.Id, Is.EqualTo(signedIdentifiers[0].Id));
+            Assert.That(signedIdentifierResponse.AccessPolicy.PolicyStartsOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyStartsOn));
+            Assert.That(signedIdentifierResponse.AccessPolicy.StartsOn, Is.EqualTo(signedIdentifierResponse.AccessPolicy.PolicyStartsOn));
             Assert.IsNull(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn);
-            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.Permissions, signedIdentifiers[0].AccessPolicy.Permissions);
+            Assert.That(signedIdentifiers[0].AccessPolicy.Permissions, Is.EqualTo(signedIdentifierResponse.AccessPolicy.Permissions));
         }
 
         [RecordedTest]
@@ -1605,8 +1605,8 @@ namespace Azure.Storage.Blobs.Test
                 }
             };
             // Assert
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifiers[0].AccessPolicy.StartsOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, signedIdentifiers[0].AccessPolicy.ExpiresOn);
+            Assert.That(signedIdentifiers[0].AccessPolicy.StartsOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyStartsOn));
+            Assert.That(signedIdentifiers[0].AccessPolicy.ExpiresOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn));
 
             // Act
             Response<BlobContainerInfo> response = await test.Container.SetAccessPolicyAsync(permissions: signedIdentifiers);
@@ -1617,12 +1617,12 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContainerAccessPolicy> responseAfter = await test.Container.GetAccessPolicyAsync();
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             BlobSignedIdentifier signedIdentifierResponse = responseAfter.Value.SignedIdentifiers.First();
-            Assert.AreEqual(1, responseAfter.Value.SignedIdentifiers.Count());
-            Assert.AreEqual(signedIdentifiers[0].Id, signedIdentifierResponse.Id);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.PolicyStartsOn);
-            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.PolicyStartsOn, signedIdentifierResponse.AccessPolicy.StartsOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, signedIdentifierResponse.AccessPolicy.PolicyExpiresOn);
-            Assert.AreEqual(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn, signedIdentifierResponse.AccessPolicy.ExpiresOn);
+            Assert.That(responseAfter.Value.SignedIdentifiers.Count(), Is.EqualTo(1));
+            Assert.That(signedIdentifierResponse.Id, Is.EqualTo(signedIdentifiers[0].Id));
+            Assert.That(signedIdentifierResponse.AccessPolicy.PolicyStartsOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyStartsOn));
+            Assert.That(signedIdentifierResponse.AccessPolicy.StartsOn, Is.EqualTo(signedIdentifierResponse.AccessPolicy.PolicyStartsOn));
+            Assert.That(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn));
+            Assert.That(signedIdentifierResponse.AccessPolicy.ExpiresOn, Is.EqualTo(signedIdentifierResponse.AccessPolicy.PolicyExpiresOn));
             Assert.IsNull(signedIdentifierResponse.AccessPolicy.Permissions);
         }
 
@@ -1637,7 +1637,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.SetAccessPolicyAsync(permissions: signedIdentifiers),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ContainerNotFound")));
         }
 
         [RecordedTest]
@@ -1725,13 +1725,13 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContainerProperties> propertiesResponse = await test.Container.GetPropertiesAsync();
 
             Response<BlobContainerAccessPolicy> response = await test.Container.GetAccessPolicyAsync();
-            Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
+            Assert.That(response.Value.SignedIdentifiers.Count(), Is.EqualTo(1));
 
             BlobSignedIdentifier acl = response.Value.SignedIdentifiers.First();
-            Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, acl.AccessPolicy.PolicyStartsOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, acl.AccessPolicy.PolicyExpiresOn);
-            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
+            Assert.That(acl.Id, Is.EqualTo(signedIdentifiers[0].Id));
+            Assert.That(acl.AccessPolicy.PolicyStartsOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyStartsOn));
+            Assert.That(acl.AccessPolicy.PolicyExpiresOn, Is.EqualTo(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn));
+            Assert.That(acl.AccessPolicy.Permissions, Is.EqualTo(signedIdentifiers[0].AccessPolicy.Permissions));
         }
 
         [RecordedTest]
@@ -1750,9 +1750,9 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
-            Assert.AreEqual(id, response.Value.LeaseId);
-            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
+            Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
+            Assert.That(response.Value.LeaseId, Is.EqualTo(id));
+            Assert.That(leaseClient.LeaseId, Is.EqualTo(response.Value.LeaseId));
 
             // Cleanup
             await container.DeleteIfExistsAsync(conditions: new BlobRequestConditions { LeaseId = response.Value.LeaseId });
@@ -1789,8 +1789,8 @@ namespace Azure.Storage.Blobs.Test
                     conditions),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"Acquire does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"Acquire does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -1821,7 +1821,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetBlobLeaseClient(id)).AcquireAsync(duration: duration),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ContainerNotFound")));
         }
 
         [RecordedTest]
@@ -1898,10 +1898,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(renewResponse.GetRawResponse().Headers.RequestId);
-            Assert.AreEqual(renewResponse.Value.LeaseId, leaseClient.LeaseId);
+            Assert.That(leaseClient.LeaseId, Is.EqualTo(renewResponse.Value.LeaseId));
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(renewResponse.Value.ETag.ToString(), $"\"{renewResponse.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{renewResponse.GetRawResponse().Headers.ETag}\"", Is.EqualTo(renewResponse.Value.ETag.ToString()));
 
             // Cleanup
             await container.DeleteIfExistsAsync(conditions: new BlobRequestConditions { LeaseId = renewResponse.Value.LeaseId });
@@ -1936,8 +1936,8 @@ namespace Azure.Storage.Blobs.Test
                     conditions: conditions),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"Release does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"Release does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -1952,7 +1952,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetBlobLeaseClient(id)).ReleaseAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ContainerNotFound")));
         }
 
         [RecordedTest]
@@ -2030,13 +2030,13 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(releaseResponse.Value.ETag.ToString(), $"\"{releaseResponse.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{releaseResponse.GetRawResponse().Headers.ETag}\"", Is.EqualTo(releaseResponse.Value.ETag.ToString()));
 
             // Ensure the correct status by doing a GetProperties call
             Response<BlobContainerProperties> response = await test.Container.GetPropertiesAsync();
 
-            Assert.AreEqual(LeaseStatus.Unlocked, response.Value.LeaseStatus);
-            Assert.AreEqual(LeaseState.Available, response.Value.LeaseState);
+            Assert.That(response.Value.LeaseStatus, Is.EqualTo(LeaseStatus.Unlocked));
+            Assert.That(response.Value.LeaseState, Is.EqualTo(LeaseState.Available));
         }
 
         [RecordedTest]
@@ -2068,8 +2068,8 @@ namespace Azure.Storage.Blobs.Test
                     conditions: conditions),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"Release does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"Release does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -2084,7 +2084,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetBlobLeaseClient(id)).ReleaseAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ContainerNotFound")));
         }
 
         [RecordedTest]
@@ -2160,8 +2160,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobContainerProperties> response = await test.Container.GetPropertiesAsync();
-            Assert.AreEqual(LeaseStatus.Unlocked, response.Value.LeaseStatus);
-            Assert.AreEqual(LeaseState.Broken, response.Value.LeaseState);
+            Assert.That(response.Value.LeaseStatus, Is.EqualTo(LeaseStatus.Unlocked));
+            Assert.That(response.Value.LeaseState, Is.EqualTo(LeaseState.Broken));
         }
 
         [RecordedTest]
@@ -2193,8 +2193,8 @@ namespace Azure.Storage.Blobs.Test
                     conditions: conditions),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"Break does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"Break does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -2209,7 +2209,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetBlobLeaseClient()).BreakAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ContainerNotFound")));
         }
 
         [RecordedTest]
@@ -2290,11 +2290,11 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobLease> changeResponse = await leaseClient.ChangeAsync(newId);
 
             // Assert
-            Assert.AreEqual(newId, changeResponse.Value.LeaseId);
-            Assert.AreEqual(changeResponse.Value.LeaseId, leaseClient.LeaseId);
+            Assert.That(changeResponse.Value.LeaseId, Is.EqualTo(newId));
+            Assert.That(leaseClient.LeaseId, Is.EqualTo(changeResponse.Value.LeaseId));
 
             // Ensure that we grab the whole ETag value from the service without removing the quotes
-            Assert.AreEqual(changeResponse.Value.ETag.ToString(), $"\"{changeResponse.GetRawResponse().Headers.ETag}\"");
+            Assert.That($"\"{changeResponse.GetRawResponse().Headers.ETag}\"", Is.EqualTo(changeResponse.Value.ETag.ToString()));
 
             // Cleanup
             await InstrumentClient(test.Container.GetBlobLeaseClient(changeResponse.Value.LeaseId)).ReleaseAsync();
@@ -2330,8 +2330,8 @@ namespace Azure.Storage.Blobs.Test
                     conditions: conditions),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"Change does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("conditions"));
+                    Assert.That(e.Message.Contains($"Change does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("conditions"), Is.True);
                 });
         }
 
@@ -2346,7 +2346,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetBlobLeaseClient(id)).ChangeAsync(id),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ContainerNotFound")));
         }
 
         [RecordedTest]
@@ -2431,11 +2431,11 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(BlobNames.Length, blobs.Count);
+            Assert.That(blobs.Count, Is.EqualTo(BlobNames.Length));
 
             var foundBlobNames = blobs.Select(blob => blob.Name).ToArray();
 
-            Assert.IsTrue(BlobNames.All(blobName => foundBlobNames.Contains(blobName)));
+            Assert.That(BlobNames.All(blobName => foundBlobNames.Contains(blobName)), Is.True);
         }
 
         [RecordedTest]
@@ -2462,7 +2462,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             AssertDictionaryEquality(tags, blobItems[0].Tags);
-            Assert.AreEqual(tags.Count, blobItems[0].Properties.TagCount);
+            Assert.That(blobItems[0].Properties.TagCount, Is.EqualTo(tags.Count));
         }
 
         [RecordedTest]
@@ -2494,7 +2494,7 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobItem> blobItems = await test.Container.GetBlobsAsync().ToListAsync();
 
             // Assert
-            Assert.AreEqual(rehydratePriority, blobItems[0].Properties.RehydratePriority);
+            Assert.That(blobItems[0].Properties.RehydratePriority, Is.EqualTo(rehydratePriority));
         }
 
         [RecordedTest]
@@ -2510,8 +2510,8 @@ namespace Azure.Storage.Blobs.Test
             Page<BlobItem> page = await test.Container.GetBlobsAsync().AsPages(pageSizeHint: 2).FirstAsync();
 
             // Assert
-            Assert.AreEqual(2, page.Values.Count);
-            Assert.IsTrue(page.Values.All(b => b.Metadata.Count == 0));
+            Assert.That(page.Values.Count, Is.EqualTo(2));
+            Assert.That(page.Values.All(b => b.Metadata.Count == 0), Is.True);
         }
 
         [RecordedTest]
@@ -2552,7 +2552,7 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
 
             // Assert
-            Assert.AreEqual(TestConfigDefault.EncryptionScope, blobs.First().Properties.EncryptionScope);
+            Assert.That(blobs.First().Properties.EncryptionScope, Is.EqualTo(TestConfigDefault.EncryptionScope));
         }
 
         [RecordedTest]
@@ -2575,8 +2575,8 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options).ToListAsync();
 
             // Assert
-            Assert.AreEqual(blobName, blobs[0].Name);
-            Assert.IsTrue(blobs[0].Deleted);
+            Assert.That(blobs[0].Name, Is.EqualTo(blobName));
+            Assert.That(blobs[0].Deleted, Is.True);
         }
 
         [RecordedTest]
@@ -2606,8 +2606,8 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options).ToListAsync();
 
             // Assert
-            Assert.AreEqual(1, blobs.Count);
-            Assert.AreEqual(blobName, blobs.First().Name);
+            Assert.That(blobs.Count, Is.EqualTo(1));
+            Assert.That(blobs.First().Name, Is.EqualTo(blobName));
         }
 
         [RecordedTest]
@@ -2629,8 +2629,8 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options).ToListAsync();
 
             // Assert
-            Assert.AreEqual(2, blobs.Count);
-            Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Snapshot);
+            Assert.That(blobs.Count, Is.EqualTo(2));
+            Assert.That(blobs.First().Snapshot, Is.EqualTo(snapshotResponse.Value.Snapshot.ToString()));
         }
 
         [RecordedTest]
@@ -2650,7 +2650,7 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options).ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, blobs.Count);
+            Assert.That(blobs.Count, Is.EqualTo(3));
         }
 
         [RecordedTest]
@@ -2664,7 +2664,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.GetBlobsAsync().ToListAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ContainerNotFound")));
         }
 
         [RecordedTest]
@@ -2680,7 +2680,7 @@ namespace Azure.Storage.Blobs.Test
                 BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
                 await blob.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("data")));
                 BlobItem blobItem = await test.Container.GetBlobsAsync().FirstAsync();
-                Assert.AreEqual(blobName, blobItem.Name);
+                Assert.That(blobItem.Name, Is.EqualTo(blobName));
             }
         }
 
@@ -2709,11 +2709,11 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(2, blobs.Count);
+            Assert.That(blobs.Count, Is.EqualTo(2));
             Assert.IsNull(blobs[0].IsLatestVersion);
-            Assert.AreEqual(createResponse.Value.VersionId, blobs[0].VersionId);
-            Assert.IsTrue(blobs[1].IsLatestVersion);
-            Assert.AreEqual(setMetadataResponse.Value.VersionId, blobs[1].VersionId);
+            Assert.That(blobs[0].VersionId, Is.EqualTo(createResponse.Value.VersionId));
+            Assert.That(blobs[1].IsLatestVersion, Is.True);
+            Assert.That(blobs[1].VersionId, Is.EqualTo(setMetadataResponse.Value.VersionId));
         }
 
         [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
@@ -2754,7 +2754,7 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreNotEqual(DateTimeOffset.MinValue, blobs.FirstOrDefault().Properties.LastAccessedOn);
+            Assert.That(blobs.FirstOrDefault().Properties.LastAccessedOn, Is.Not.EqualTo(DateTimeOffset.MinValue));
         }
 
         [RecordedTest]
@@ -2783,9 +2783,9 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(1, blobItems.Count);
-            Assert.AreEqual(blob.Name, blobItems[0].Name);
-            Assert.IsTrue(blobItems[0].HasVersionsOnly);
+            Assert.That(blobItems.Count, Is.EqualTo(1));
+            Assert.That(blobItems[0].Name, Is.EqualTo(blob.Name));
+            Assert.That(blobItems[0].HasVersionsOnly, Is.True);
         }
 
         [RecordedTest]
@@ -2802,7 +2802,7 @@ namespace Azure.Storage.Blobs.Test
             BlobItem blobItem = await test.Container.GetBlobsAsync().FirstAsync();
 
             // Assert
-            Assert.AreEqual(blobName, blobItem.Name);
+            Assert.That(blobItem.Name, Is.EqualTo(blobName));
         }
 
         [RecordedTest]
@@ -2823,7 +2823,7 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options).ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, blobs.Count);
+            Assert.That(blobs.Count, Is.EqualTo(3));
         }
 
         [RecordedTest]
@@ -2850,8 +2850,8 @@ namespace Azure.Storage.Blobs.Test
                 prefixes.AddRange(page.Values.Where(item => item.IsPrefix).Select(item => item.Prefix));
             }
 
-            Assert.AreEqual(3, blobs.Count);
-            Assert.AreEqual(2, prefixes.Count);
+            Assert.That(blobs.Count, Is.EqualTo(3));
+            Assert.That(prefixes.Count, Is.EqualTo(2));
 
             var foundBlobNames = blobs.Select(blob => blob.Name).ToArray();
             var foundBlobPrefixes = prefixes.ToArray();
@@ -2862,15 +2862,17 @@ namespace Azure.Storage.Blobs.Test
                 .Distinct()
                 ;
 
-            Assert.IsTrue(
+            Assert.That(
                 BlobNames
                 .Where(blobName => !blobName.Contains(delimiter))
-                .All(blobName => foundBlobNames.Contains(blobName))
+                .All(blobName => foundBlobNames.Contains(blobName)),
+                Is.True
                 );
 
-            Assert.IsTrue(
+            Assert.That(
                 expectedPrefixes
-                .All(prefix => foundBlobPrefixes.Contains(prefix))
+                .All(prefix => foundBlobPrefixes.Contains(prefix)),
+                Is.True
                 );
         }
 
@@ -2898,7 +2900,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             AssertDictionaryEquality(tags, blobHierachyItems[0].Blob.Tags);
-            Assert.AreEqual(tags.Count, blobHierachyItems[0].Blob.Properties.TagCount);
+            Assert.That(blobHierachyItems[0].Blob.Properties.TagCount, Is.EqualTo(tags.Count));
         }
 
         [RecordedTest]
@@ -2930,7 +2932,7 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobHierarchyItem> blobItems = await test.Container.GetBlobsByHierarchyAsync().ToListAsync();
 
             // Assert
-            Assert.AreEqual(rehydratePriority, blobItems[0].Blob.Properties.RehydratePriority);
+            Assert.That(blobItems[0].Blob.Properties.RehydratePriority, Is.EqualTo(rehydratePriority));
         }
 
         [RecordedTest]
@@ -2954,7 +2956,7 @@ namespace Azure.Storage.Blobs.Test
                 .FirstAsync();
 
             // Assert
-            Assert.AreEqual(2, page.Values.Count);
+            Assert.That(page.Values.Count, Is.EqualTo(2));
         }
 
         [RecordedTest]
@@ -2998,7 +3000,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(item.Blob.Metadata);
-            Assert.AreEqual(0, item.Blob.Metadata.Count);
+            Assert.That(item.Blob.Metadata.Count, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -3016,7 +3018,7 @@ namespace Azure.Storage.Blobs.Test
             BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync().FirstAsync();
 
             // Assert
-            Assert.AreEqual(TestConfigDefault.EncryptionScope, item.Blob.Properties.EncryptionScope);
+            Assert.That(item.Blob.Properties.EncryptionScope, Is.EqualTo(TestConfigDefault.EncryptionScope));
         }
 
         [RecordedTest]
@@ -3039,8 +3041,8 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
 
             // Assert
-            Assert.AreEqual(blobName, blobs[0].Blob.Name);
-            Assert.IsTrue(blobs[0].Blob.Deleted);
+            Assert.That(blobs[0].Blob.Name, Is.EqualTo(blobName));
+            Assert.That(blobs[0].Blob.Deleted, Is.True);
         }
 
         [RecordedTest]
@@ -3070,8 +3072,8 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
 
             // Assert
-            Assert.AreEqual(1, blobs.Count);
-            Assert.AreEqual(blobName, blobs.First().Blob.Name);
+            Assert.That(blobs.Count, Is.EqualTo(1));
+            Assert.That(blobs.First().Blob.Name, Is.EqualTo(blobName));
         }
 
         [RecordedTest]
@@ -3093,8 +3095,8 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
 
             // Assert
-            Assert.AreEqual(2, blobs.Count);
-            Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Blob.Snapshot);
+            Assert.That(blobs.Count, Is.EqualTo(2));
+            Assert.That(blobs.First().Blob.Snapshot, Is.EqualTo(snapshotResponse.Value.Snapshot.ToString()));
         }
 
         [RecordedTest]
@@ -3122,11 +3124,11 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(2, blobs.Count);
+            Assert.That(blobs.Count, Is.EqualTo(2));
             Assert.IsNull(blobs[0].Blob.IsLatestVersion);
-            Assert.AreEqual(createResponse.Value.VersionId, blobs[0].Blob.VersionId);
-            Assert.IsTrue(blobs[1].Blob.IsLatestVersion);
-            Assert.AreEqual(setMetadataResponse.Value.VersionId, blobs[1].Blob.VersionId);
+            Assert.That(blobs[0].Blob.VersionId, Is.EqualTo(createResponse.Value.VersionId));
+            Assert.That(blobs[1].Blob.IsLatestVersion, Is.True);
+            Assert.That(blobs[1].Blob.VersionId, Is.EqualTo(setMetadataResponse.Value.VersionId));
         }
 
         [RecordedTest]
@@ -3146,7 +3148,7 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, blobs.Count);
+            Assert.That(blobs.Count, Is.EqualTo(3));
         }
 
         [RecordedTest]
@@ -3160,7 +3162,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.GetBlobsByHierarchyAsync().ToListAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ContainerNotFound")));
         }
 
         [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
@@ -3230,9 +3232,9 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(1, blobHierarchyItems.Count);
-            Assert.AreEqual(blob.Name, blobHierarchyItems[0].Blob.Name);
-            Assert.IsTrue(blobHierarchyItems[0].Blob.HasVersionsOnly);
+            Assert.That(blobHierarchyItems.Count, Is.EqualTo(1));
+            Assert.That(blobHierarchyItems[0].Blob.Name, Is.EqualTo(blob.Name));
+            Assert.That(blobHierarchyItems[0].Blob.HasVersionsOnly, Is.True);
         }
 
         [RecordedTest]
@@ -3254,8 +3256,8 @@ namespace Azure.Storage.Blobs.Test
                 item = await test.Container.GetBlobsByHierarchyAsync().FirstAsync();
 
                 // Assert
-                Assert.IsTrue(item.IsBlob);
-                Assert.AreEqual(blobName, item.Blob.Name);
+                Assert.That(item.IsBlob, Is.True);
+                Assert.That(item.Blob.Name, Is.EqualTo(blobName));
             }
             else
             {
@@ -3268,8 +3270,8 @@ namespace Azure.Storage.Blobs.Test
                     options: options).FirstAsync();
 
                 // Assert
-                Assert.IsTrue(item.IsPrefix);
-                Assert.AreEqual("dir1/dir2/file\uffff.b", item.Prefix);
+                Assert.That(item.IsPrefix, Is.True);
+                Assert.That(item.Prefix, Is.EqualTo("dir1/dir2/file\uffff.b"));
             }
         }
 
@@ -3304,13 +3306,13 @@ namespace Azure.Storage.Blobs.Test
                 }
             }
 
-            Assert.AreEqual(1, blobs.Count);
-            Assert.AreEqual(1, prefixes.Count);
+            Assert.That(blobs.Count, Is.EqualTo(1));
+            Assert.That(prefixes.Count, Is.EqualTo(1));
 
-            Assert.AreEqual("baz", blobs[0].Name);
+            Assert.That(blobs[0].Name, Is.EqualTo("baz"));
             Assert.IsNotNull(blobs[0].VersionId);
 
-            Assert.AreEqual("baz/", prefixes[0]);
+            Assert.That(prefixes[0], Is.EqualTo("baz/"));
         }
 
         [RecordedTest]
@@ -3331,7 +3333,7 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(options).ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, blobHierachyItems.Count);
+            Assert.That(blobHierachyItems.Count, Is.EqualTo(3));
         }
 
         [RecordedTest]
@@ -3343,7 +3345,7 @@ namespace Azure.Storage.Blobs.Test
             using var stream = new MemoryStream(GetRandomBuffer(100));
             await test.Container.UploadBlobAsync(name, stream);
             Response<BlobProperties> properties = await InstrumentClient(test.Container.GetBlobClient(name)).GetPropertiesAsync();
-            Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
+            Assert.That(properties.Value.BlobType, Is.EqualTo(BlobType.Block));
         }
 
         [RecordedTest]
@@ -3354,7 +3356,7 @@ namespace Azure.Storage.Blobs.Test
             var name = GetNewBlobName();
             await test.Container.UploadBlobAsync(name, BinaryData.FromBytes(GetRandomBuffer(100)));
             Response<BlobProperties> properties = await InstrumentClient(test.Container.GetBlobClient(name)).GetPropertiesAsync();
-            Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
+            Assert.That(properties.Value.BlobType, Is.EqualTo(BlobType.Block));
         }
 
         [RecordedTest]
@@ -3391,7 +3393,7 @@ namespace Azure.Storage.Blobs.Test
             Response<bool> response = await test.Container.DeleteBlobIfExistsAsync(name);
 
             // Assert
-            Assert.IsTrue(response.Value);
+            Assert.That(response.Value, Is.True);
             Assert.ThrowsAsync<RequestFailedException>(
                 async () => await blob.GetPropertiesAsync());
         }
@@ -3414,7 +3416,7 @@ namespace Azure.Storage.Blobs.Test
             Response<bool> response = await test.Container.DeleteBlobIfExistsAsync(name);
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
             Assert.ThrowsAsync<RequestFailedException>(
                 async () => await blob.GetPropertiesAsync());
         }
@@ -3433,7 +3435,7 @@ namespace Azure.Storage.Blobs.Test
             Response<bool> response = await container.DeleteBlobIfExistsAsync(name);
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
             Assert.ThrowsAsync<RequestFailedException>(
                 async () => await blob.GetPropertiesAsync());
         }
@@ -3491,15 +3493,15 @@ namespace Azure.Storage.Blobs.Test
                 blobItems.Add(blobItem);
             }
 
-            Assert.AreEqual(blobName, blobItems[0].Name);
+            Assert.That(blobItems[0].Name, Is.EqualTo(blobName));
 
             // Assert
-            Assert.AreEqual(uploadResponse.Value.ETag, propertiesResponse.Value.ETag);
-            Assert.AreEqual(blobName, initalBlob.Name);
-            Assert.AreEqual(expectedUri, initalBlob.Uri);
+            Assert.That(propertiesResponse.Value.ETag, Is.EqualTo(uploadResponse.Value.ETag));
+            Assert.That(initalBlob.Name, Is.EqualTo(blobName));
+            Assert.That(initalBlob.Uri, Is.EqualTo(expectedUri));
 
-            Assert.AreEqual(blobName, sasBlob.Name);
-            Assert.AreEqual(expectedUri, initalBlob.Uri);
+            Assert.That(sasBlob.Name, Is.EqualTo(blobName));
+            Assert.That(initalBlob.Uri, Is.EqualTo(expectedUri));
         }
 
         [RecordedTest]
@@ -3543,25 +3545,25 @@ namespace Azure.Storage.Blobs.Test
                 GetOptions());
 
             // Assert
-            Assert.AreEqual(blobName, blobClientFromContainer.Name);
-            Assert.AreEqual(expectedUri, blobClientFromContainer.Uri);
-            Assert.AreEqual(blobName, blobClientFromConnectionString.Name);
-            Assert.AreEqual(expectedUri, blobClientFromConnectionString.Uri);
+            Assert.That(blobClientFromContainer.Name, Is.EqualTo(blobName));
+            Assert.That(blobClientFromContainer.Uri, Is.EqualTo(expectedUri));
+            Assert.That(blobClientFromConnectionString.Name, Is.EqualTo(blobName));
+            Assert.That(blobClientFromConnectionString.Uri, Is.EqualTo(expectedUri));
 
-            Assert.AreEqual(expectedUri, blockBlobClientFromContainer.Uri);
-            Assert.AreEqual(blobName, blockBlobClientFromContainer.Name);
-            Assert.AreEqual(expectedUri, blockBlobClientFromConnectionString.Uri);
-            Assert.AreEqual(blobName, blockBlobClientFromConnectionString.Name);
+            Assert.That(blockBlobClientFromContainer.Uri, Is.EqualTo(expectedUri));
+            Assert.That(blockBlobClientFromContainer.Name, Is.EqualTo(blobName));
+            Assert.That(blockBlobClientFromConnectionString.Uri, Is.EqualTo(expectedUri));
+            Assert.That(blockBlobClientFromConnectionString.Name, Is.EqualTo(blobName));
 
-            Assert.AreEqual(expectedUri, appendBlobClientFromContainer.Uri);
-            Assert.AreEqual(blobName, appendBlobClientFromContainer.Name);
-            Assert.AreEqual(expectedUri, appendBlobClientFromConnectionString.Uri);
-            Assert.AreEqual(blobName, appendBlobClientFromConnectionString.Name);
+            Assert.That(appendBlobClientFromContainer.Uri, Is.EqualTo(expectedUri));
+            Assert.That(appendBlobClientFromContainer.Name, Is.EqualTo(blobName));
+            Assert.That(appendBlobClientFromConnectionString.Uri, Is.EqualTo(expectedUri));
+            Assert.That(appendBlobClientFromConnectionString.Name, Is.EqualTo(blobName));
 
-            Assert.AreEqual(expectedUri, pageBlobClientFromContainer.Uri);
-            Assert.AreEqual(blobName, pageBlobClientFromContainer.Name);
-            Assert.AreEqual(expectedUri, pageBlobClientFromConnectionString.Uri);
-            Assert.AreEqual(blobName, pageBlobClientFromConnectionString.Name);
+            Assert.That(pageBlobClientFromContainer.Uri, Is.EqualTo(expectedUri));
+            Assert.That(pageBlobClientFromContainer.Name, Is.EqualTo(blobName));
+            Assert.That(pageBlobClientFromConnectionString.Uri, Is.EqualTo(expectedUri));
+            Assert.That(pageBlobClientFromConnectionString.Name, Is.EqualTo(blobName));
         }
 
         [Test]
@@ -3628,27 +3630,27 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient(new BlobContainerClient(
                 connectionString,
                 GetNewContainerName()));
-            Assert.IsTrue(container.CanGenerateSasUri);
+            Assert.That(container.CanGenerateSasUri, Is.True);
 
             // Act - BlobContainerClient(string connectionString, string blobContainerName, BlobClientOptions options)
             BlobContainerClient container2 = InstrumentClient(new BlobContainerClient(
                 connectionString,
                 GetNewContainerName(),
                 GetOptions()));
-            Assert.IsTrue(container2.CanGenerateSasUri);
+            Assert.That(container2.CanGenerateSasUri, Is.True);
 
             // Act - BlobContainerClient(Uri blobContainerUri, BlobClientOptions options = default)
             BlobContainerClient container3 = InstrumentClient(new BlobContainerClient(
                 blobEndpoint,
                 GetOptions()));
-            Assert.IsFalse(container3.CanGenerateSasUri);
+            Assert.That(container3.CanGenerateSasUri, Is.False);
 
             // Act - BlobContainerClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             BlobContainerClient container4 = InstrumentClient(new BlobContainerClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
-            Assert.IsTrue(container4.CanGenerateSasUri);
+            Assert.That(container4.CanGenerateSasUri, Is.True);
 
             // Act - BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
             var tokenCredentials = new DefaultAzureCredential();
@@ -3656,7 +3658,7 @@ namespace Azure.Storage.Blobs.Test
                 blobEndpoint,
                 tokenCredentials,
                 GetOptions()));
-            Assert.IsFalse(container5.CanGenerateSasUri);
+            Assert.That(container5.CanGenerateSasUri, Is.False);
         }
 
         [RecordedTest]
@@ -3667,13 +3669,13 @@ namespace Azure.Storage.Blobs.Test
             container.Setup(x => x.CanGenerateSasUri).Returns(false);
 
             // Assert
-            Assert.IsFalse(container.Object.CanGenerateSasUri);
+            Assert.That(container.Object.CanGenerateSasUri, Is.False);
 
             // Act
             container.Setup(x => x.CanGenerateSasUri).Returns(true);
 
             // Assert
-            Assert.IsTrue(container.Object.CanGenerateSasUri);
+            Assert.That(container.Object.CanGenerateSasUri, Is.True);
         }
 
         [RecordedTest]
@@ -3691,7 +3693,7 @@ namespace Azure.Storage.Blobs.Test
                 connectionString,
                 GetNewContainerName()));
             BlobBaseClient blob = container.GetBlobBaseClient(GetNewBlobName());
-            Assert.IsTrue(blob.CanGenerateSasUri);
+            Assert.That(blob.CanGenerateSasUri, Is.True);
 
             // Act - BlobContainerClient(string connectionString, string blobContainerName, BlobClientOptions options)
             BlobContainerClient container2 = InstrumentClient(new BlobContainerClient(
@@ -3699,14 +3701,14 @@ namespace Azure.Storage.Blobs.Test
                 GetNewContainerName(),
                 GetOptions()));
             BlobBaseClient blob2 = container2.GetBlobBaseClient(GetNewBlobName());
-            Assert.IsTrue(blob2.CanGenerateSasUri);
+            Assert.That(blob2.CanGenerateSasUri, Is.True);
 
             // Act - BlobContainerClient(Uri blobContainerUri, BlobClientOptions options = default)
             BlobContainerClient container3 = InstrumentClient(new BlobContainerClient(
                 blobEndpoint,
                 GetOptions()));
             BlobBaseClient blob3 = container3.GetBlobBaseClient(GetNewBlobName());
-            Assert.IsFalse(blob3.CanGenerateSasUri);
+            Assert.That(blob3.CanGenerateSasUri, Is.False);
 
             // Act - BlobContainerClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             BlobContainerClient container4 = InstrumentClient(new BlobContainerClient(
@@ -3714,7 +3716,7 @@ namespace Azure.Storage.Blobs.Test
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
             BlobBaseClient blob4 = container4.GetBlobBaseClient(GetNewBlobName());
-            Assert.IsTrue(blob4.CanGenerateSasUri);
+            Assert.That(blob4.CanGenerateSasUri, Is.True);
 
             // Act - BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
             var tokenCredentials = new DefaultAzureCredential();
@@ -3723,7 +3725,7 @@ namespace Azure.Storage.Blobs.Test
                 tokenCredentials,
                 GetOptions()));
             BlobBaseClient blob5 = container5.GetBlobBaseClient(GetNewBlobName());
-            Assert.IsFalse(blob5.CanGenerateSasUri);
+            Assert.That(blob5.CanGenerateSasUri, Is.False);
         }
 
         [RecordedTest]
@@ -3741,7 +3743,7 @@ namespace Azure.Storage.Blobs.Test
                 connectionString,
                 GetNewContainerName()));
             BlobServiceClient service = container.GetParentBlobServiceClient();
-            Assert.IsTrue(service.CanGenerateAccountSasUri);
+            Assert.That(service.CanGenerateAccountSasUri, Is.True);
 
             // Act - BlobContainerClient(string connectionString, string blobContainerName, BlobClientOptions options)
             BlobContainerClient container2 = InstrumentClient(new BlobContainerClient(
@@ -3749,14 +3751,14 @@ namespace Azure.Storage.Blobs.Test
                 GetNewContainerName(),
                 GetOptions()));
             BlobServiceClient service2 = container2.GetParentBlobServiceClient();
-            Assert.IsTrue(service2.CanGenerateAccountSasUri);
+            Assert.That(service2.CanGenerateAccountSasUri, Is.True);
 
             // Act - BlobContainerClient(Uri blobContainerUri, BlobClientOptions options = default)
             BlobContainerClient container3 = InstrumentClient(new BlobContainerClient(
                 blobEndpoint,
                 GetOptions()));
             BlobServiceClient service3 = container3.GetParentBlobServiceClient();
-            Assert.IsFalse(service3.CanGenerateAccountSasUri);
+            Assert.That(service3.CanGenerateAccountSasUri, Is.False);
 
             // Act - BlobContainerClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             BlobContainerClient container4 = InstrumentClient(new BlobContainerClient(
@@ -3764,7 +3766,7 @@ namespace Azure.Storage.Blobs.Test
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
             BlobServiceClient service4 = container4.GetParentBlobServiceClient();
-            Assert.IsTrue(service4.CanGenerateAccountSasUri);
+            Assert.That(service4.CanGenerateAccountSasUri, Is.True);
 
             // Act - BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
             var tokenCredentials = new DefaultAzureCredential();
@@ -3773,7 +3775,7 @@ namespace Azure.Storage.Blobs.Test
                 tokenCredentials,
                 GetOptions()));
             BlobServiceClient service5 = container5.GetParentBlobServiceClient();
-            Assert.IsFalse(service5.CanGenerateAccountSasUri);
+            Assert.That(service5.CanGenerateAccountSasUri, Is.False);
         }
 
         [RecordedTest]
@@ -3810,7 +3812,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobContainerName = containerName,
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
             Assert.IsNotNull(stringToSign);
         }
 
@@ -3852,7 +3854,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobContainerName = containerName,
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
             Assert.IsNotNull(stringToSign);
         }
 
@@ -3892,7 +3894,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobContainerName = containerName,
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
         }
 
         [RecordedTest]
@@ -3964,7 +3966,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobContainerName = containerName,
                 Sas = sasBuilder.ToSasQueryParameters(userDelegationKey, containerClient.AccountName)
             };
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
             Assert.IsNotNull(stringToSign);
         }
 
@@ -4009,7 +4011,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobContainerName = containerName,
                 Sas = sasBuilder2.ToSasQueryParameters(userDelegationKey, containerClient.AccountName)
             };
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
             Assert.IsNotNull(stringToSign);
         }
 
@@ -4112,7 +4114,7 @@ namespace Azure.Storage.Blobs.Test
                 Sas = sasBuilder2.ToSasQueryParameters(userDelegationKey, containerClient.AccountName)
             };
 
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.That(sasUri, Is.EqualTo(expectedUri.ToUri()));
             Assert.IsNotNull(stringToSign);
         }
 
@@ -4213,13 +4215,13 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(blockBlobClient);
-            Assert.AreSame(blockBlobClientMock.Object, blockBlobClient);
+            Assert.That(blockBlobClient, Is.SameAs(blockBlobClientMock.Object));
             Assert.IsNotNull(appendBlobClient);
-            Assert.AreSame(appendBlobClientMock.Object, appendBlobClient);
+            Assert.That(appendBlobClient, Is.SameAs(appendBlobClientMock.Object));
             Assert.IsNotNull(pageBlobClient);
-            Assert.AreSame(pageBlobClientMock.Object, pageBlobClient);
+            Assert.That(pageBlobClient, Is.SameAs(pageBlobClientMock.Object));
             Assert.IsNotNull(blobLeaseClient);
-            Assert.AreSame(blobLeaseClientMock.Object, blobLeaseClient);
+            Assert.That(blobLeaseClient, Is.SameAs(blobLeaseClientMock.Object));
         }
 
         [RecordedTest]
@@ -4235,7 +4237,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(blobServiceClient);
-            Assert.AreSame(blobServiceClientMock.Object, blobServiceClient);
+            Assert.That(blobServiceClient, Is.SameAs(blobServiceClientMock.Object));
         }
 
         [RecordedTest]
@@ -4250,7 +4252,7 @@ namespace Azure.Storage.Blobs.Test
             var containers = await service.GetBlobContainersAsync().ToListAsync();
 
             // Assert
-            Assert.AreEqual(container.AccountName, service.AccountName);
+            Assert.That(service.AccountName, Is.EqualTo(container.AccountName));
             Assert.IsNotNull(container);
 
             // Cleanup
@@ -4270,7 +4272,7 @@ namespace Azure.Storage.Blobs.Test
             var containers = await service.GetBlobContainersAsync().ToListAsync();
 
             // Assert
-            Assert.AreEqual(container.AccountName, service.AccountName);
+            Assert.That(service.AccountName, Is.EqualTo(container.AccountName));
             Assert.IsNotNull(container);
 
             // Cleanup
@@ -4340,8 +4342,8 @@ namespace Azure.Storage.Blobs.Test
                     conditions),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains($"Rename does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("sourceConditions"));
+                    Assert.That(e.Message.Contains($"Rename does not support the {invalidCondition} condition(s)."), Is.True);
+                    Assert.That(e.Message.Contains("sourceConditions"), Is.True);
                 });
         }
 
@@ -4383,7 +4385,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 containerClient.RenameAsync(GetNewContainerName()),
-                e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(BlobErrorCode.ContainerNotFound.ToString())));
         }
 
         [RecordedTest]
@@ -4442,7 +4444,7 @@ namespace Azure.Storage.Blobs.Test
                 container.RenameAsync(
                     destinationContainerName: newContainerName,
                     sourceConditions: sourceConditions),
-                e => Assert.AreEqual(BlobErrorCode.LeaseNotPresentWithContainerOperation.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(BlobErrorCode.LeaseNotPresentWithContainerOperation.ToString())));
 
             // Cleanup
             await container.DeleteAsync();
@@ -4482,8 +4484,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             TaggedBlobItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
-            Assert.AreEqual(1, filterBlob.Tags.Count);
-            Assert.AreEqual("myTagValue", filterBlob.Tags["myTagKey"]);
+            Assert.That(filterBlob.Tags.Count, Is.EqualTo(1));
+            Assert.That(filterBlob.Tags["myTagKey"], Is.EqualTo("myTagValue"));
         }
 
         [RecordedTest]
@@ -4535,8 +4537,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             TaggedBlobItem filterBlob = blobs.Where(r => r.BlobName == blobName).FirstOrDefault();
-            Assert.AreEqual(1, filterBlob.Tags.Count);
-            Assert.AreEqual("myTagValue", filterBlob.Tags["myTagKey"]);
+            Assert.That(filterBlob.Tags.Count, Is.EqualTo(1));
+            Assert.That(filterBlob.Tags["myTagKey"], Is.EqualTo("myTagValue"));
         }
 
         [RecordedTest]
@@ -4554,7 +4556,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.FindBlobsByTagsAsync("\"key\" = 'value'").AsPages().FirstAsync(),
-                e => Assert.AreEqual(BlobErrorCode.NoAuthenticationInformation.ToString(), e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(BlobErrorCode.NoAuthenticationInformation.ToString())));
         }
 
         [RecordedTest]
@@ -4567,9 +4569,9 @@ namespace Azure.Storage.Blobs.Test
             Response<AccountInfo> response = await test.Container.GetAccountInfoAsync();
 
             // Assert
-            Assert.AreEqual(SkuName.StandardRagrs, response.Value.SkuName);
-            Assert.AreEqual(AccountKind.StorageV2, response.Value.AccountKind);
-            Assert.IsFalse(response.Value.IsHierarchicalNamespaceEnabled);
+            Assert.That(response.Value.SkuName, Is.EqualTo(SkuName.StandardRagrs));
+            Assert.That(response.Value.AccountKind, Is.EqualTo(AccountKind.StorageV2));
+            Assert.That(response.Value.IsHierarchicalNamespaceEnabled, Is.False);
         }
 
         [RecordedTest]
@@ -4586,7 +4588,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 containerClient.GetAccountInfoAsync(),
-                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("NoAuthenticationInformation")));
         }
 
         [RecordedTest]
@@ -4625,8 +4627,8 @@ namespace Azure.Storage.Blobs.Test
                 containerClient.CreateAsync(),
                 e =>
                 {
-                    Assert.AreEqual(Constants.ErrorCodes.InvalidHeaderValue, e.ErrorCode);
-                    Assert.IsTrue(e.Message.Contains(Constants.Errors.InvalidVersionHeaderMessage));
+                    Assert.That(e.ErrorCode, Is.EqualTo(Constants.ErrorCodes.InvalidHeaderValue));
+                    Assert.That(e.Message.Contains(Constants.Errors.InvalidVersionHeaderMessage), Is.True);
                 });
         }
 
@@ -4648,7 +4650,7 @@ namespace Azure.Storage.Blobs.Test
                 properties => properties.GetRawResponse().Status != 404);
 
             Assert.IsNotNull(properties);
-            Assert.AreEqual(200, properties.GetRawResponse().Status);
+            Assert.That(properties.GetRawResponse().Status, Is.EqualTo(200));
 
             await containerClient.DeleteIfExistsAsync();
             return testExceptionPolicy;

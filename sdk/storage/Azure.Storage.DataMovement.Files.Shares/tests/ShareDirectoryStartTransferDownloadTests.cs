@@ -101,8 +101,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert hardlink was successfully created
             ShareFileProperties properties = await hardlinkClient.GetPropertiesAsync();
-            Assert.AreEqual(2, properties.PosixProperties.LinkCount);
-            Assert.AreEqual(NfsFileType.Regular, properties.PosixProperties.FileType);
+            Assert.That(properties.PosixProperties.LinkCount, Is.EqualTo(2));
+            Assert.That(properties.PosixProperties.FileType, Is.EqualTo(NfsFileType.Regular));
         }
 
         private async Task CreateShareFileNfsAndSymLinkAsync(
@@ -130,8 +130,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert symlink was successfully created
             ShareFileProperties properties = await symlinkClient.GetPropertiesAsync();
-            Assert.AreEqual(1, properties.PosixProperties.LinkCount);
-            Assert.AreEqual(NfsFileType.SymLink, properties.PosixProperties.FileType);
+            Assert.That(properties.PosixProperties.LinkCount, Is.EqualTo(1));
+            Assert.That(properties.PosixProperties.FileType, Is.EqualTo(NfsFileType.SymLink));
         }
 
         protected override TransferValidator.ListFilesAsync GetSourceLister(ShareClient container, string prefix)
@@ -239,8 +239,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             await testEventsRaised.AssertContainerCompletedCheck(2);
 
             // Get source files
@@ -257,7 +257,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 .ToList();
 
             // Assert all files (including hardlink) were copied over to dest
-            Assert.AreEqual(sourceFileNames.Count, destFileNames.Count);
+            Assert.That(destFileNames.Count, Is.EqualTo(sourceFileNames.Count));
             Assert.That(sourceFileNames, Is.EquivalentTo(destFileNames));
         }
 
@@ -307,8 +307,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
             await testEventsRaised.AssertContainerCompletedCheck(2);
 
             // Get source files
@@ -325,11 +325,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 .ToList();
 
             // Ensure the Symlink file was skipped and not copied
-            Assert.AreEqual(2, sourceFileNames.Count);
-            Assert.AreEqual(1, destFileNames.Count);
+            Assert.That(sourceFileNames.Count, Is.EqualTo(2));
+            Assert.That(destFileNames.Count, Is.EqualTo(1));
             Assert.Contains("item1-symlink", sourceFileNames);
-            Assert.False(destFileNames.Contains("item1-symlink"));
-            Assert.AreEqual("item1", destFileNames[0]);
+            Assert.That(destFileNames.Contains("item1-symlink"), Is.False);
+            Assert.That(destFileNames[0], Is.EqualTo("item1"));
         }
     }
 }

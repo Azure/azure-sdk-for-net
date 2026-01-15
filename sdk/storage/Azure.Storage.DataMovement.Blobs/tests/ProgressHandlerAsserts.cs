@@ -53,11 +53,11 @@ namespace Azure.Storage.DataMovement.Tests
             skipped += final.SkippedCount;
             failed += final.FailedCount;
 
-            Assert.AreEqual(0, final.QueuedCount);
-            Assert.AreEqual(0, final.InProgressCount);
-            Assert.AreEqual(fileCount - skippedCount - failedCount, completed);
-            Assert.AreEqual(skippedCount, skipped);
-            Assert.AreEqual(failedCount, failed);
+            Assert.That(final.QueuedCount, Is.EqualTo(0));
+            Assert.That(final.InProgressCount, Is.EqualTo(0));
+            Assert.That(completed, Is.EqualTo(fileCount - skippedCount - failedCount));
+            Assert.That(skipped, Is.EqualTo(skippedCount));
+            Assert.That(failed, Is.EqualTo(failedCount));
         }
 
         public static void AssertBytesTransferred(

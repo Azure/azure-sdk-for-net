@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Tests
         public void TestDeserializerInvalidNullType()
         {
             var identityJsonProperty = DeserializerHelper("InvalidTypeIsNull.json", out _);
-            Assert.AreEqual(default(ManagedServiceIdentityType), ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty).ManagedServiceIdentityType);
+            Assert.That(ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty).ManagedServiceIdentityType, Is.EqualTo(default(ManagedServiceIdentityType)));
         }
 
         [TestCase]
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Tests
             var identityJsonProperty = DeserializerHelper("InvalidType.json", out _);
             ManagedServiceIdentity back = ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty);
             var user = back.UserAssignedIdentities;
-            Assert.AreEqual("/subscriptions/d96407f5-db8f-4325-b582-84ad21310bd8/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());
-            Assert.AreEqual("9a2eaa6a-b49c-4a63-afb5-3b72e3e65422", user.Values.First().ClientId.ToString());
+            Assert.That(user.Keys.First().ToString(), Is.EqualTo("/subscriptions/d96407f5-db8f-4325-b582-84ad21310bd8/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity"));
+            Assert.That(user.Values.First().ClientId.ToString(), Is.EqualTo("9a2eaa6a-b49c-4a63-afb5-3b72e3e65422"));
             Assert.AreEqual("77563a98-c9d9-4f7b-a7af-592d21fa2153", user.Values.First().PrincipalId.ToString());
         }
 
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.Tests
         {
             var identityJsonProperty = DeserializerHelper("SystemAndUserAssignedInnerExtraField.json", out _);
             ManagedServiceIdentity back = ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty);
-            Assert.IsTrue("22fddec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()));
-            Assert.IsTrue("72f988bf-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()));
+            Assert.That("22fddec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()), Is.True);
+            Assert.That("72f988bf-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()), Is.True);
             var user = back.UserAssignedIdentities;
-            Assert.AreEqual("/subscriptions/db1ab6f0-4769-4b27-9dde-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());
-            Assert.AreEqual("9a9eaa6a-b49c-4c63-afb5-3b72e3e65422", user.Values.First().ClientId.ToString());
+            Assert.That(user.Keys.First().ToString(), Is.EqualTo("/subscriptions/db1ab6f0-4769-4b27-9dde-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity"));
+            Assert.That(user.Values.First().ClientId.ToString(), Is.EqualTo("9a9eaa6a-b49c-4c63-afb5-3b72e3e65422"));
             Assert.AreEqual("77563a98-c9d9-407b-a7af-592d21fa2153", user.Values.First().PrincipalId.ToString());
         }
 
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Tests
         {
             var identityJsonProperty = DeserializerHelper("SystemAndUserAssignedMiddleExtraField.json", out _);
             ManagedServiceIdentity back = ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty);
-            Assert.IsTrue("22fddec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()));
-            Assert.IsTrue("72f988bf-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()));
+            Assert.That("22fddec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()), Is.True);
+            Assert.That("72f988bf-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()), Is.True);
             var user = back.UserAssignedIdentities;
-            Assert.AreEqual("/subscriptions/db1ab6f0-4769-4b27-9dde-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());
-            Assert.AreEqual("9a9eaa6a-b49c-4c63-afb5-3b72e3e65422", user.Values.First().ClientId.ToString());
+            Assert.That(user.Keys.First().ToString(), Is.EqualTo("/subscriptions/db1ab6f0-4769-4b27-9dde-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity"));
+            Assert.That(user.Values.First().ClientId.ToString(), Is.EqualTo("9a9eaa6a-b49c-4c63-afb5-3b72e3e65422"));
             Assert.AreEqual("77563a98-c9d9-407b-a7af-592d21fa2153", user.Values.First().PrincipalId.ToString());
         }
 
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Tests
             JsonElement rootElement = document.RootElement;
             var identityJsonProperty = rootElement.EnumerateObject().ElementAt(1);
             ManagedServiceIdentity back = ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty.Value);
-            Assert.IsTrue("22fddec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()));
-            Assert.IsTrue("72f988bf-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()));
+            Assert.That("22fddec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()), Is.True);
+            Assert.That("72f988bf-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()), Is.True);
             var user = back.UserAssignedIdentities;
-            Assert.AreEqual("/subscriptions/db1ab6f0-3466-4b27-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());
-            Assert.AreEqual("9a2eaa6b-b49c-4c63-afb5-3b72e3e65422", user.Values.First().ClientId.ToString());
+            Assert.That(user.Keys.First().ToString(), Is.EqualTo("/subscriptions/db1ab6f0-3466-4b27-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity"));
+            Assert.That(user.Values.First().ClientId.ToString(), Is.EqualTo("9a2eaa6b-b49c-4c63-afb5-3b72e3e65422"));
             Assert.AreEqual("7756fa98-c9d9-477b-a7af-592d21fa2153", user.Values.First().PrincipalId.ToString());
         }
 
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Tests
         {
             var identityJsonProperty = DeserializerHelper("SystemAndUserAssignedValidMultIdentities.json", out _);
             ManagedServiceIdentity back = ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty);
-            Assert.IsTrue("22fddec1-8b9f-49dc-bd72-ddaf8f215570".Equals(back.PrincipalId.ToString()));
-            Assert.IsTrue("72f988bf-86f1-41af-91ab-2d7cd011db40".Equals(back.TenantId.ToString()));
+            Assert.That("22fddec1-8b9f-49dc-bd72-ddaf8f215570".Equals(back.PrincipalId.ToString()), Is.True);
+            Assert.That("72f988bf-86f1-41af-91ab-2d7cd011db40".Equals(back.TenantId.ToString()), Is.True);
             var user = back.UserAssignedIdentities;
-            Assert.AreEqual("/subscriptions/1ab27dfb-d2ee-4283-b1e3-550deaebb8e4/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity0", user.Keys.First().ToString());
-            Assert.AreEqual("9a2eaa6a-b49c-4c63-afb5-3b72e3e65422", user.Values.First().ClientId.ToString());
+            Assert.That(user.Keys.First().ToString(), Is.EqualTo("/subscriptions/1ab27dfb-d2ee-4283-b1e3-550deaebb8e4/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity0"));
+            Assert.That(user.Values.First().ClientId.ToString(), Is.EqualTo("9a2eaa6a-b49c-4c63-afb5-3b72e3e65422"));
             Assert.AreEqual("77563a98-c9d9-477b-a7af-592d21fa2153", user.Values.First().PrincipalId.ToString());
-            Assert.AreEqual("/subscriptions/d96407f5-db8f-4325-b582-84ad21310bd8/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity1", user.Keys.ElementAt(1).ToString());
-            Assert.AreEqual("9a2eaa6a-b49c-4c63-afb5-3b72e3c65420", user.Values.ElementAt(1).ClientId.ToString());
+            Assert.That(user.Keys.ElementAt(1).ToString(), Is.EqualTo("/subscriptions/d96407f5-db8f-4325-b582-84ad21310bd8/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity1"));
+            Assert.That(user.Values.ElementAt(1).ClientId.ToString(), Is.EqualTo("9a2eaa6a-b49c-4c63-afb5-3b72e3c65420"));
             Assert.AreEqual("77563a98-c9d9-477b-a7af-592d2bfa2150", user.Values.ElementAt(1).PrincipalId.ToString());
         }
 
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Tests
         {
             var identityJsonProperty = DeserializerHelper("SystemAssigned.json", out _);
             ManagedServiceIdentity back = ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty);
-            Assert.IsTrue("22fddec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()));
-            Assert.IsTrue("72f988bf-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()));
-            Assert.IsTrue(back.UserAssignedIdentities.Count == 0);
+            Assert.That("22fddec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()), Is.True);
+            Assert.That("72f988bf-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()), Is.True);
+            Assert.That(back.UserAssignedIdentities.Count == 0, Is.True);
         }
 
         [TestCase]
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.Tests
             Assert.IsNull(back.PrincipalId);
             Assert.IsNull(back.TenantId);
             var user = back.UserAssignedIdentities;
-            Assert.AreEqual("/subscriptions/db1ab6f0-4769-4b2e-930e-01e2ef9c123c/resourceGroups/tester-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());
-            Assert.AreEqual("9a2eaa6a-b49c-4c63-afb5-3b72e3e65422", user.Values.First().ClientId.ToString());
+            Assert.That(user.Keys.First().ToString(), Is.EqualTo("/subscriptions/db1ab6f0-4769-4b2e-930e-01e2ef9c123c/resourceGroups/tester-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity"));
+            Assert.That(user.Values.First().ClientId.ToString(), Is.EqualTo("9a2eaa6a-b49c-4c63-afb5-3b72e3e65422"));
             Assert.AreEqual("77563a98-c9d9-477b-a7af-592d21fa2153", user.Values.First().PrincipalId.ToString());
         }
 
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.Tests
         {
             var identityJsonProperty = DeserializerHelper("SystemAndUserAssignedValid.json", out _);
             ManagedServiceIdentity back = ManagedServiceIdentity.DeserializeManagedServiceIdentity(identityJsonProperty);
-            Assert.IsTrue("22fdaec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()));
-            Assert.IsTrue("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()));
+            Assert.That("22fdaec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()), Is.True);
+            Assert.That("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()), Is.True);
             var user = back.UserAssignedIdentities;
-            Assert.AreEqual("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());
-            Assert.AreEqual("SystemAssigned, UserAssigned", back.ManagedServiceIdentityType.ToString());
+            Assert.That(user.Keys.First().ToString(), Is.EqualTo("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity"));
+            Assert.That(back.ManagedServiceIdentityType.ToString(), Is.EqualTo("SystemAssigned, UserAssigned"));
         }
 
         [TestCase]
@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.Tests
             var identityJsonProperty = DeserializerHelper("SystemAndUserAssignedValidV3.json", out _);
             var identityJson = identityJsonProperty.ToString();
             ManagedServiceIdentity back = Deserialize(identityJson, V3Options);
-            Assert.IsTrue("22fdaec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()));
-            Assert.IsTrue("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()));
+            Assert.That("22fdaec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()), Is.True);
+            Assert.That("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()), Is.True);
             var user = back.UserAssignedIdentities;
-            Assert.AreEqual("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());
-            Assert.IsTrue(identityJson.Contains("SystemAssigned,UserAssigned"));
-            Assert.AreEqual("SystemAssigned, UserAssigned", back.ManagedServiceIdentityType.ToString());
+            Assert.That(user.Keys.First().ToString(), Is.EqualTo("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity"));
+            Assert.That(identityJson.Contains("SystemAssigned,UserAssigned"), Is.True);
+            Assert.That(back.ManagedServiceIdentityType.ToString(), Is.EqualTo("SystemAssigned, UserAssigned"));
         }
 
         [TestCase]
@@ -208,13 +208,13 @@ namespace Azure.ResourceManager.Tests
             //Deserialize from v4
             var identityJsonProperty = DeserializerHelper("SystemAndUserAssignedValid.json", out string expectedV4);
             var identityJsonV4 = identityJsonProperty.ToString();
-            Assert.IsTrue(identityJsonV4.Contains("SystemAssigned, UserAssigned"));
+            Assert.That(identityJsonV4.Contains("SystemAssigned, UserAssigned"), Is.True);
             ManagedServiceIdentity back = Deserialize(identityJsonV4);
             var userIdentities = back.UserAssignedIdentities;
-            Assert.IsTrue("22fdaec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()));
-            Assert.IsTrue("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()));
-            Assert.AreEqual("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", userIdentities.Keys.First().ToString());
-            Assert.AreEqual("SystemAssigned, UserAssigned", back.ManagedServiceIdentityType.ToString());
+            Assert.That("22fdaec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()), Is.True);
+            Assert.That("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()), Is.True);
+            Assert.That(userIdentities.Keys.First().ToString(), Is.EqualTo("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity"));
+            Assert.That(back.ManagedServiceIdentityType.ToString(), Is.EqualTo("SystemAssigned, UserAssigned"));
             //Serialize to v3
             var expectedV3 = expectedV4.Replace("SystemAssigned, UserAssigned", "SystemAssigned,UserAssigned");
             JsonAsserts.AssertConverterSerialization(expectedV3, back, V3Options);
@@ -226,13 +226,13 @@ namespace Azure.ResourceManager.Tests
             //Deserialize from v3
             var identityJsonProperty = DeserializerHelper("SystemAndUserAssignedValidV3.json", out string expectedV3);
             var identityJsonV3 = identityJsonProperty.ToString();
-            Assert.IsTrue(identityJsonV3.Contains("SystemAssigned,UserAssigned"));
+            Assert.That(identityJsonV3.Contains("SystemAssigned,UserAssigned"), Is.True);
             ManagedServiceIdentity back = Deserialize(identityJsonV3, V3Options);
             var userIdentities = back.UserAssignedIdentities;
-            Assert.IsTrue("22fdaec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()));
-            Assert.IsTrue("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()));
-            Assert.AreEqual("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", userIdentities.Keys.First().ToString());
-            Assert.AreEqual("SystemAssigned, UserAssigned", back.ManagedServiceIdentityType.ToString());
+            Assert.That("22fdaec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()), Is.True);
+            Assert.That("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()), Is.True);
+            Assert.That(userIdentities.Keys.First().ToString(), Is.EqualTo("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity"));
+            Assert.That(back.ManagedServiceIdentityType.ToString(), Is.EqualTo("SystemAssigned, UserAssigned"));
             //Serialize to v4
             string expectedV4 = expectedV3.Replace("SystemAssigned,UserAssigned", "SystemAssigned, UserAssigned");
             JsonAsserts.AssertConverterSerialization(expectedV4, back);

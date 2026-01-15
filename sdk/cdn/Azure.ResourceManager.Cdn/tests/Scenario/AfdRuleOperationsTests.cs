@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             FrontDoorRuleResource afdRule = await CreateAfdRule(afdRuleSet, afdRuleName);
             await afdRule.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdRule.GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [TestCase]

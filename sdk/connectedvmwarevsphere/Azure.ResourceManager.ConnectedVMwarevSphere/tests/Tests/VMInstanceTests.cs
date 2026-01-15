@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             VMwareVmInstanceResource result = lro.Value;
             Assert.IsNotNull(result);
             VMwareVmInstanceData resourceData = result.Data;
-            Assert.AreEqual(resourceData.HardwareProfile.MemorySizeMB, patch.HardwareProfile.MemorySizeMB);
-            Assert.AreEqual(resourceData.HardwareProfile.NumCpus, patch.HardwareProfile.NumCpus);
+            Assert.That(patch.HardwareProfile.MemorySizeMB, Is.EqualTo(resourceData.HardwareProfile.MemorySizeMB));
+            Assert.That(patch.HardwareProfile.NumCpus, Is.EqualTo(resourceData.HardwareProfile.NumCpus));
 
             // Start
             await vmInstance.StartAsync(WaitUntil.Completed);

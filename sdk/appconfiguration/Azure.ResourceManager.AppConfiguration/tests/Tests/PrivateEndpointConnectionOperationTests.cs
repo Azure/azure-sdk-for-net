@@ -93,14 +93,14 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             await Connection.DeleteAsync(WaitUntil.Completed);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { AppConfigurationPrivateEndpointConnectionResource connection = await ConfigStore.GetAppConfigurationPrivateEndpointConnections().GetAsync(Connection.Data.Name); });
 
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
         }
 
         [Test]
         public async Task GetTest()
         {
             AppConfigurationPrivateEndpointConnectionResource connection = await Connection.GetAsync();
-            Assert.IsTrue(Connection.Data.Name.Equals(connection.Data.Name));
+            Assert.That(Connection.Data.Name.Equals(connection.Data.Name), Is.True);
         }
 
         [Ignore("Not available on this resource")]

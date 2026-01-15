@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Tests
             Assert.IsNotNull(result);
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await providerCollection.GetAsync("DoesNotExist"));
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [RecordedTest]
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Tests
         public async Task Exists()
         {
             ResourceProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
-            Assert.IsTrue(await providerCollection.ExistsAsync("microsoft.insights"));
+            Assert.That((bool)await providerCollection.ExistsAsync("microsoft.insights"), Is.True);
             var response = await providerCollection.ExistsAsync("DoesNotExist");
-            Assert.False(response);
+            Assert.That((bool)response, Is.False);
         }
     }
 }

@@ -43,22 +43,22 @@ namespace Azure.ResourceManager.Sql.Tests
             ManagedDatabaseData data = new ManagedDatabaseData(AzureLocation.WestUS2) { };
             var database = await collection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data);
             Assert.IsNotNull(database.Value.Data);
-            Assert.AreEqual(databaseName, database.Value.Data.Name);
+            Assert.That(database.Value.Data.Name, Is.EqualTo(databaseName));
 
             // 2.CheckIfExist
-            Assert.IsTrue(await collection.ExistsAsync(databaseName));
-            Assert.IsFalse(await collection.ExistsAsync(databaseName + "0"));
+            Assert.That((bool)await collection.ExistsAsync(databaseName), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(databaseName + "0"), Is.False);
 
             // 3.Get
             var getDatabase = await collection.GetAsync(databaseName);
             Assert.IsNotNull(getDatabase.Value.Data);
-            Assert.AreEqual(databaseName, getDatabase.Value.Data.Name);
+            Assert.That(getDatabase.Value.Data.Name, Is.EqualTo(databaseName));
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(databaseName, list.FirstOrDefault().Data.Name);
+            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(databaseName));
 
             // 5.Delete
             var deleteDatabase = await collection.GetAsync(databaseName);

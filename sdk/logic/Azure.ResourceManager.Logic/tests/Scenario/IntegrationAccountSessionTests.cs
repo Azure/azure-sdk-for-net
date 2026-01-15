@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string sessionName = Recording.GenerateAssetName("session");
             var session = await CreateSession(sessionName);
             Assert.IsNotNull(session);
-            Assert.AreEqual(sessionName, session.Data.Name);
+            Assert.That(session.Data.Name, Is.EqualTo(sessionName));
         }
 
         [RecordedTest]
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string sessionName = Recording.GenerateAssetName("session");
             await CreateSession(sessionName);
             bool flag = await _sessionCollection.ExistsAsync(sessionName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Tests
             await CreateSession(sessionName);
             var session = await _sessionCollection.GetAsync(sessionName);
             Assert.IsNotNull(session);
-            Assert.AreEqual(sessionName, session.Value.Data.Name);
+            Assert.That(session.Value.Data.Name, Is.EqualTo(sessionName));
         }
 
         [RecordedTest]
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Logic.Tests
             string sessionName = Recording.GenerateAssetName("session");
             var session = await CreateSession(sessionName);
             bool flag = await _sessionCollection.ExistsAsync(sessionName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await session.DeleteAsync(WaitUntil.Completed);
             flag = await _sessionCollection.ExistsAsync(sessionName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

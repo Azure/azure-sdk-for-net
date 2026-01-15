@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Tests.Scenario
             Response<DataProductResource> getDataProductResponse = await dataProduct.GetAsync();
             DataProductResource dataProductFetched = getDataProductResponse.Value;
             Assert.IsNotNull(dataProductFetched);
-            Assert.AreEqual(dataProduct.Data.Location, dataProductFetched.Data.Location);
+            Assert.That(dataProductFetched.Data.Location, Is.EqualTo(dataProduct.Data.Location));
 
             // Delete Data Product
             Console.Write("Deleting DP");

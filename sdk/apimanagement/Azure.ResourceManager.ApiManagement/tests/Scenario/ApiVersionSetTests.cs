@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // there is no api-version-set initially
             var versionSetlistResponse = await versionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.NotNull(versionSetlistResponse);
-            Assert.AreEqual(versionSetlistResponse.Count, 0);
+            Assert.That(versionSetlistResponse.Count, Is.EqualTo(0));
 
             string newversionsetid = Recording.GenerateAssetName("apiversionsetid");
             const string paramName = "x-ms-sdk-version";
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             await versionCollection.CreateOrUpdateAsync(WaitUntil.Completed, newversionsetid, createVersionSetContract);
             var versionSetContract = (await versionCollection.GetAsync(newversionsetid)).Value;
             Assert.NotNull(versionSetContract);
-            Assert.AreEqual(createVersionSetContract.DisplayName, versionSetContract.Data.DisplayName);
-            Assert.AreEqual(createVersionSetContract.Description, versionSetContract.Data.Description);
-            Assert.AreEqual(versionSetContract.Data.VersioningScheme, VersioningScheme.Header);
-            Assert.AreEqual(createVersionSetContract.VersionHeaderName, versionSetContract.Data.VersionHeaderName);
-            Assert.IsNull(versionSetContract.Data.VersionQueryName);
+            Assert.That(versionSetContract.Data.DisplayName, Is.EqualTo(createVersionSetContract.DisplayName));
+            Assert.That(versionSetContract.Data.Description, Is.EqualTo(createVersionSetContract.Description));
+            Assert.That(VersioningScheme.Header, Is.EqualTo(versionSetContract.Data.VersioningScheme));
+            Assert.That(versionSetContract.Data.VersionHeaderName, Is.EqualTo(createVersionSetContract.VersionHeaderName));
+            Assert.That(versionSetContract.Data.VersionQueryName, Is.Null);
 
             // update the version set contract to change versioning scheme
             var versionSetUpdateParams = new ApiVersionSetPatch()
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             await versionSetContract.UpdateAsync(ETag.All, versionSetUpdateParams);
             versionSetContract = await versionSetContract.GetAsync();
             Assert.NotNull(versionSetContract);
-            Assert.AreEqual(VersioningScheme.Query, versionSetContract.Data.VersioningScheme);
-            Assert.AreEqual(paramName, versionSetContract.Data.VersionQueryName);
+            Assert.That(versionSetContract.Data.VersioningScheme, Is.EqualTo(VersioningScheme.Query));
+            Assert.That(versionSetContract.Data.VersionQueryName, Is.EqualTo(paramName));
 
             // now delete it
             await versionSetContract.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await versionCollection.ExistsAsync(newversionsetid)).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
         }
     }
 }

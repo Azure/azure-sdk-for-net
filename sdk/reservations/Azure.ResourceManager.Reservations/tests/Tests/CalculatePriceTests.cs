@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Reservations.Tests
             var price = response.Value;
 
             // Should return 200 with monthly price
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("USD", price.Properties.BillingCurrencyTotal.CurrencyCode);
-            Assert.IsTrue(price.Properties.BillingCurrencyTotal.Amount > 0);
-            Assert.AreEqual("USD", price.Properties.PricingCurrencyTotal.CurrencyCode);
-            Assert.IsTrue(price.Properties.PricingCurrencyTotal.Amount > 0);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(price.Properties.BillingCurrencyTotal.CurrencyCode, Is.EqualTo("USD"));
+            Assert.That(price.Properties.BillingCurrencyTotal.Amount > 0, Is.True);
+            Assert.That(price.Properties.PricingCurrencyTotal.CurrencyCode, Is.EqualTo("USD"));
+            Assert.That(price.Properties.PricingCurrencyTotal.Amount > 0, Is.True);
             Assert.IsNotEmpty(price.Properties.ReservationOrderId.ToString());
 
             if (billingPlan.Equals("Upfront"))
@@ -87,13 +87,13 @@ namespace Azure.ResourceManager.Reservations.Tests
             }
             else
             {
-                Assert.AreEqual(12, price.Properties.PaymentSchedule.Count);
+                Assert.That(price.Properties.PaymentSchedule.Count, Is.EqualTo(12));
                 foreach (var item in price.Properties.PaymentSchedule)
                 {
-                    Assert.AreEqual("USD", item.PricingCurrencyTotal.CurrencyCode);
-                    Assert.IsTrue(item.PricingCurrencyTotal.Amount > 0);
+                    Assert.That(item.PricingCurrencyTotal.CurrencyCode, Is.EqualTo("USD"));
+                    Assert.That(item.PricingCurrencyTotal.Amount > 0, Is.True);
                     Assert.IsNotNull(item.DueOn);
-                    Assert.AreEqual(PaymentStatus.Scheduled, item.Status);
+                    Assert.That(item.Status, Is.EqualTo(PaymentStatus.Scheduled));
                 }
             }
         }

@@ -39,43 +39,43 @@ namespace Azure.ResourceManager.Redis.Tests
 
             // First try to get cache and verify that it is premium cache
             var response = (await Collection.GetAsync(redisCacheName)).Value;
-            Assert.AreEqual(redisCacheName, response.Data.Name);
-            Assert.AreEqual(RedisSkuName.Premium, response.Data.Sku.Name);
-            Assert.AreEqual(RedisSkuFamily.Premium, response.Data.Sku.Family);
+            Assert.That(response.Data.Name, Is.EqualTo(redisCacheName));
+            Assert.That(response.Data.Sku.Name, Is.EqualTo(RedisSkuName.Premium));
+            Assert.That(response.Data.Sku.Family, Is.EqualTo(RedisSkuFamily.Premium));
 
             // Set firewall rule for 10.0.0.0 to 10.0.0.32
             var firewallCollection = response.GetRedisFirewallRules();
 
             var firewallData = new RedisFirewallRuleData(IPAddress.Parse("10.0.0.0"), IPAddress.Parse("10.0.0.32"));
             var ruleOne = (await firewallCollection.CreateOrUpdateAsync(WaitUntil.Completed, "RuleOne", firewallData)).Value;
-            Assert.AreEqual("10.0.0.0", ruleOne.Data.StartIP.ToString());
-            Assert.AreEqual("10.0.0.32", ruleOne.Data.EndIP.ToString());
+            Assert.That(ruleOne.Data.StartIP.ToString(), Is.EqualTo("10.0.0.0"));
+            Assert.That(ruleOne.Data.EndIP.ToString(), Is.EqualTo("10.0.0.32"));
 
             // Set firewall rule for 10.0.0.64 to 10.0.0.128
             firewallData = new RedisFirewallRuleData(IPAddress.Parse("10.0.0.64"), IPAddress.Parse("10.0.0.128"));
             var ruleTwo = (await firewallCollection.CreateOrUpdateAsync(WaitUntil.Completed, "RuleTwo", firewallData)).Value;
-            Assert.AreEqual("10.0.0.64", ruleTwo.Data.StartIP.ToString());
-            Assert.AreEqual("10.0.0.128", ruleTwo.Data.EndIP.ToString());
+            Assert.That(ruleTwo.Data.StartIP.ToString(), Is.EqualTo("10.0.0.64"));
+            Assert.That(ruleTwo.Data.EndIP.ToString(), Is.EqualTo("10.0.0.128"));
 
             // Get test
             ruleOne = (await firewallCollection.GetAsync("RuleOne")).Value;
-            Assert.AreEqual("10.0.0.0", ruleOne.Data.StartIP.ToString());
-            Assert.AreEqual("10.0.0.32", ruleOne.Data.EndIP.ToString());
+            Assert.That(ruleOne.Data.StartIP.ToString(), Is.EqualTo("10.0.0.0"));
+            Assert.That(ruleOne.Data.EndIP.ToString(), Is.EqualTo("10.0.0.32"));
 
             ruleTwo = (await firewallCollection.GetAsync("RuleTwo")).Value;
-            Assert.AreEqual("10.0.0.64", ruleTwo.Data.StartIP.ToString());
-            Assert.AreEqual("10.0.0.128", ruleTwo.Data.EndIP.ToString());
+            Assert.That(ruleTwo.Data.StartIP.ToString(), Is.EqualTo("10.0.0.64"));
+            Assert.That(ruleTwo.Data.EndIP.ToString(), Is.EqualTo("10.0.0.128"));
 
             // List test
             var rules = await firewallCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(2, rules.Count);
+            Assert.That(rules.Count, Is.EqualTo(2));
 
             // Delete
             await ruleTwo.DeleteAsync(WaitUntil.Completed);
             rules = await firewallCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, rules.Count);
+            Assert.That(rules.Count, Is.EqualTo(1));
             var falseResult = (await firewallCollection.ExistsAsync("RuleTwo")).Value;
-            Assert.IsFalse(falseResult);
+            Assert.That(falseResult, Is.False);
         }
     }
 }

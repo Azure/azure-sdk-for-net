@@ -45,7 +45,7 @@ namespace Azure.AI.Translation.Document.Tests
             var responseString = Encoding.UTF8.GetString(response.Value.ToArray());
             Assert.IsNotEmpty(responseString);
             Assert.IsNotNull(responseString);
-            Assert.AreNotEqual(requestString, responseString);
+            Assert.That(responseString, Is.Not.EqualTo(requestString));
         }
     }
 }

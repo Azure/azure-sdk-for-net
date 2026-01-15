@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             const string PoolName = "sparkchhamosyna";
             BigDataPoolsClient client = CreateClient();
             BigDataPoolResourceInfo pool = await client.GetAsync (PoolName);
-            Assert.AreEqual(PoolName, pool.Name);
+            Assert.That(pool.Name, Is.EqualTo(PoolName));
         }
     }
 }

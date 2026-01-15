@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Tests
 
             ResourceIdentifier fakeId = new ResourceIdentifier(result.Data.Id.ToString() + "x");
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetResourceProviderResource(new ResourceIdentifier(fakeId)).GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [TestCase]

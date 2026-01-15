@@ -33,9 +33,9 @@ namespace Azure.AI.Translation.Text.Tests
             };
             Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync("hi", "Deva", "Latn", inputText).ConfigureAwait(false);
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.IsFalse(string.IsNullOrEmpty(response.Value[0].Text));
-            Assert.IsFalse(string.IsNullOrEmpty(response.Value[1].Text));
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(string.IsNullOrEmpty(response.Value[0].Text), Is.False);
+            Assert.That(string.IsNullOrEmpty(response.Value[1].Text), Is.False);
         }
 
         [RecordedTest]
@@ -50,10 +50,10 @@ namespace Azure.AI.Translation.Text.Tests
             };
             Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync("gu", "latn", "gujr", inputText).ConfigureAwait(false);
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.IsFalse(string.IsNullOrEmpty(response.Value[0].Text));
-            Assert.IsFalse(string.IsNullOrEmpty(response.Value[1].Text));
-            Assert.IsFalse(string.IsNullOrEmpty(response.Value[2].Text));
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(string.IsNullOrEmpty(response.Value[0].Text), Is.False);
+            Assert.That(string.IsNullOrEmpty(response.Value[1].Text), Is.False);
+            Assert.That(string.IsNullOrEmpty(response.Value[2].Text), Is.False);
 
             List<string> expectedText = new()
             { "ગુજરાત", "હદમાં", "હુક્કાબાર" };
@@ -63,7 +63,7 @@ namespace Azure.AI.Translation.Text.Tests
             {
                 editDistance = editDistance + TestHelper.EditDistance(expectedText[i], response.Value[i].Text);
             }
-            Assert.IsTrue(editDistance < 6, $"Total string distance: {editDistance}");
+            Assert.That(editDistance < 6, Is.True, $"Total string distance: {editDistance}");
         }
     }
 }

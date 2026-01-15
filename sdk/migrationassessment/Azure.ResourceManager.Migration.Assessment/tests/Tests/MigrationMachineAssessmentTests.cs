@@ -99,14 +99,14 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
 
             var assessmentResponse = await assessmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, assessmentName, asmData);
             var assessmentResource = assessmentResponse.Value;
-            Assert.IsTrue(assessmentResponse.HasCompleted);
+            Assert.That(assessmentResponse.HasCompleted, Is.True);
             Assert.IsNotNull(assessmentResource);
-            Assert.AreEqual(assessmentResource.Data.Name, assessmentName);
+            Assert.That(assessmentName, Is.EqualTo(assessmentResource.Data.Name));
 
             // Get Assessment
             assessmentResource = await assessmentCollection.GetAsync(assessmentName);
             Assert.IsNotNull(assessmentResource);
-            Assert.AreEqual(assessmentResource.Data.Name, assessmentName);
+            Assert.That(assessmentName, Is.EqualTo(assessmentResource.Data.Name));
 
             // Get All Assessments
             var allAssessments = await assessmentCollection.GetAllAsync().ToEnumerableAsync();

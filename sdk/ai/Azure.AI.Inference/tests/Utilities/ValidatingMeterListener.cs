@@ -159,8 +159,8 @@ namespace Azure.AI.Inference.Tests.Utilities
                 return;
             }
             List<Dictionary<string, object>> lstActual = m_measurementTags[metricsName];
-            Assert.AreEqual(lstExpected.Count, lstActual.Count);
-            Assert.AreEqual(lstExpected.Count, m_measurements[metricsName].Count);
+            Assert.That(lstActual.Count, Is.EqualTo(lstExpected.Count));
+            Assert.That(m_measurements[metricsName].Count, Is.EqualTo(lstExpected.Count));
             for (int i = 0; i < lstExpected.Count; i++)
             {
                 AssertDictEqual(lstExpected[i], lstActual[i]);
@@ -185,11 +185,11 @@ namespace Azure.AI.Inference.Tests.Utilities
         /// <param name="expected">The expected values.</param>
         private static void AssertDictEqual(Dictionary<string, object> expected, Dictionary<string, object> actual)
         {
-            Assert.AreEqual(expected.Count, actual.Count);
+            Assert.That(actual.Count, Is.EqualTo(expected.Count));
             foreach (KeyValuePair<string, object> kv in expected)
             {
                 Assert.That(actual.ContainsKey(kv.Key));
-                Assert.AreEqual(kv.Value, actual[kv.Key]);
+                Assert.That(actual[kv.Key], Is.EqualTo(kv.Value));
             }
         }
 

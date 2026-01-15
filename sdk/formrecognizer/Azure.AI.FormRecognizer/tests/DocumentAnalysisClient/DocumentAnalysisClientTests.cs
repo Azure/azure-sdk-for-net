@@ -100,7 +100,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             catch (AggregateException ex)
             {
                 var innerExceptions = ex.InnerExceptions.ToList();
-                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+                Assert.That(innerExceptions.All(ex => ex is RequestFailedException), Is.True);
             }
         }
 

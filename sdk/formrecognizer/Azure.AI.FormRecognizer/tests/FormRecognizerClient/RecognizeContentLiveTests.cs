@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var formPage = formPages.Single();
 
             Assert.Greater(formPage.Lines.Count, 0);
-            Assert.AreEqual("Contoso", formPage.Lines[0].Text);
+            Assert.That(formPage.Lines[0].Text, Is.EqualTo("Contoso"));
         }
 
         /// <summary>
@@ -76,18 +76,18 @@ namespace Azure.AI.FormRecognizer.Tests
             }
 
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             var formPage = operation.Value.Single();
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(LengthUnit.Inch, formPage.Unit);
-            Assert.AreEqual(8.5, formPage.Width);
-            Assert.AreEqual(11, formPage.Height);
-            Assert.AreEqual(0, formPage.TextAngle);
-            Assert.AreEqual(18, formPage.Lines.Count);
+            Assert.That(formPage.Unit, Is.EqualTo(LengthUnit.Inch));
+            Assert.That(formPage.Width, Is.EqualTo(8.5));
+            Assert.That(formPage.Height, Is.EqualTo(11));
+            Assert.That(formPage.TextAngle, Is.EqualTo(0));
+            Assert.That(formPage.Lines.Count, Is.EqualTo(18));
 
             var lines = formPage.Lines.ToList();
 
@@ -96,7 +96,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 var line = lines[lineIndex];
 
                 Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}.");
-                Assert.AreEqual(4, line.BoundingBox.Points.Count(), $"There should be exactly 4 points in the bounding box in line {lineIndex}.");
+                Assert.That(line.BoundingBox.Points.Count(), Is.EqualTo(4), $"There should be exactly 4 points in the bounding box in line {lineIndex}.");
                 Assert.Greater(line.Words.Count, 0, $"There should be at least one word in line {lineIndex}.");
                 foreach (var item in line.Words)
                 {
@@ -105,19 +105,19 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 Assert.IsNotNull(line.Appearance);
                 Assert.IsNotNull(line.Appearance.Style);
-                Assert.AreEqual(TextStyleName.Other, line.Appearance.Style.Name);
+                Assert.That(line.Appearance.Style.Name, Is.EqualTo(TextStyleName.Other));
                 Assert.Greater(line.Appearance.Style.Confidence, 0f);
             }
 
             var table = formPage.Tables.Single();
 
-            Assert.AreEqual(3, table.RowCount);
-            Assert.AreEqual(5, table.ColumnCount);
-            Assert.AreEqual(4, table.BoundingBox.Points.Count(), $"There should be exactly 4 points in the table bounding box.");
+            Assert.That(table.RowCount, Is.EqualTo(3));
+            Assert.That(table.ColumnCount, Is.EqualTo(5));
+            Assert.That(table.BoundingBox.Points.Count(), Is.EqualTo(4), $"There should be exactly 4 points in the table bounding box.");
 
             var cells = table.Cells.ToList();
 
-            Assert.AreEqual(10, cells.Count);
+            Assert.That(cells.Count, Is.EqualTo(10));
 
             var expectedText = new string[2, 5]
             {
@@ -134,22 +134,22 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 if (cell.RowIndex == 0)
                 {
-                    Assert.IsTrue(cell.IsHeader);
+                    Assert.That(cell.IsHeader, Is.True);
                 }
                 else
                 {
-                    Assert.IsFalse(cell.IsHeader, $"Cell with text {cell.Text} should not have been classified as header.");
+                    Assert.That(cell.IsHeader, Is.False, $"Cell with text {cell.Text} should not have been classified as header.");
                 }
 
                 // Row = 1 has a row span of 2.
                 var expectedRowSpan = cell.RowIndex == 1 ? 2 : 1;
-                Assert.AreEqual(expectedRowSpan, cell.RowSpan, $"Cell with text {cell.Text} should have a row span of {expectedRowSpan}.");
+                Assert.That(cell.RowSpan, Is.EqualTo(expectedRowSpan), $"Cell with text {cell.Text} should have a row span of {expectedRowSpan}.");
 
-                Assert.IsFalse(cell.IsFooter, $"Cell with text {cell.Text} should not have been classified as footer.");
+                Assert.That(cell.IsFooter, Is.False, $"Cell with text {cell.Text} should not have been classified as footer.");
                 Assert.GreaterOrEqual(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater or equal to zero.");
                 Assert.LessOrEqual(cell.RowIndex, 2, $"Cell with text {cell.Text} should have a row index less than or equal to two.");
 
-                Assert.AreEqual(expectedText[cell.RowIndex, cell.ColumnIndex], cell.Text);
+                Assert.That(cell.Text, Is.EqualTo(expectedText[cell.RowIndex, cell.ColumnIndex]));
                 Assert.Greater(cell.FieldElements.Count, 0, $"Cell with text {cell.Text} should have at least one field element.");
             }
         }
@@ -178,18 +178,18 @@ namespace Azure.AI.FormRecognizer.Tests
             }
 
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             var formPage = operation.Value.Single();
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(LengthUnit.Pixel, formPage.Unit);
-            Assert.AreEqual(1700, formPage.Width);
-            Assert.AreEqual(2200, formPage.Height);
-            Assert.AreEqual(0, formPage.TextAngle);
-            Assert.AreEqual(54, formPage.Lines.Count);
+            Assert.That(formPage.Unit, Is.EqualTo(LengthUnit.Pixel));
+            Assert.That(formPage.Width, Is.EqualTo(1700));
+            Assert.That(formPage.Height, Is.EqualTo(2200));
+            Assert.That(formPage.TextAngle, Is.EqualTo(0));
+            Assert.That(formPage.Lines.Count, Is.EqualTo(54));
 
             var lines = formPage.Lines.ToList();
 
@@ -198,7 +198,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 var line = lines[lineIndex];
 
                 Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}.");
-                Assert.AreEqual(4, line.BoundingBox.Points.Count(), $"There should be exactly 4 points in the bounding box in line {lineIndex}.");
+                Assert.That(line.BoundingBox.Points.Count(), Is.EqualTo(4), $"There should be exactly 4 points in the bounding box in line {lineIndex}.");
                 Assert.Greater(line.Words.Count, 0, $"There should be at least one word in line {lineIndex}.");
                 foreach (var item in line.Words)
                 {
@@ -246,20 +246,20 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.GreaterOrEqual(cells[i].ColumnIndex, 0, $"Cell with text {cells[i].Text} should have column index greater than or equal to zero.");
                 Assert.Less(cells[i].ColumnIndex, sampleTable.ColumnCount, $"Cell with text {cells[i].Text} should have column index less than {sampleTable.ColumnCount}.");
 
-                Assert.AreEqual(1, cells[i].RowSpan, $"Cell with text {cells[i].Text} should have a row span of 1.");
-                Assert.AreEqual(1, cells[i].ColumnSpan, $"Cell with text {cells[i].Text} should have a column span of 1.");
+                Assert.That(cells[i].RowSpan, Is.EqualTo(1), $"Cell with text {cells[i].Text} should have a row span of 1.");
+                Assert.That(cells[i].ColumnSpan, Is.EqualTo(1), $"Cell with text {cells[i].Text} should have a column span of 1.");
 
-                Assert.AreEqual(expectedText[cells[i].RowIndex, cells[i].ColumnIndex], cells[i].Text);
+                Assert.That(cells[i].Text, Is.EqualTo(expectedText[cells[i].RowIndex, cells[i].ColumnIndex]));
 
-                Assert.IsFalse(cells[i].IsFooter, $"Cell with text {cells[i].Text} should not have been classified as footer.");
+                Assert.That(cells[i].IsFooter, Is.False, $"Cell with text {cells[i].Text} should not have been classified as footer.");
 
                 if (cells[i].RowIndex == 0)
                 {
-                    Assert.IsTrue(cells[i].IsHeader);
+                    Assert.That(cells[i].IsHeader, Is.True);
                 }
                 else
                 {
-                    Assert.IsFalse(cells[i].IsHeader, $"Cell with text {cells[i].Text} should not have been classified as header.");
+                    Assert.That(cells[i].IsHeader, Is.False, $"Cell with text {cells[i].Text} should not have been classified as header.");
                 }
 
                 Assert.GreaterOrEqual(cells[i].Confidence, 0, $"Cell with text {cells[i].Text} should have confidence greater or equal to zero.");
@@ -271,7 +271,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 }
                 else
                 {
-                    Assert.AreEqual(0, cells[i].FieldElements.Count);
+                    Assert.That(cells[i].FieldElements.Count, Is.EqualTo(0));
                 }
             }
         }
@@ -300,7 +300,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             FormPageCollection formPages = await operation.WaitForCompletionAsync();
 
-            Assert.AreEqual(2, formPages.Count);
+            Assert.That(formPages.Count, Is.EqualTo(2));
 
             for (int pageIndex = 0; pageIndex < formPages.Count; pageIndex++)
             {
@@ -313,7 +313,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 var sampleLine = formPage.Lines[1];
                 var expectedText = pageIndex == 0 ? "Vendor Registration" : "Vendor Details:";
 
-                Assert.AreEqual(expectedText, sampleLine.Text);
+                Assert.That(sampleLine.Text, Is.EqualTo(expectedText));
             }
         }
 
@@ -335,9 +335,9 @@ namespace Azure.AI.FormRecognizer.Tests
 
             ValidateFormPage(blankPage, includeFieldElements: true, expectedPageNumber: 1);
 
-            Assert.AreEqual(0, blankPage.Lines.Count);
-            Assert.AreEqual(0, blankPage.Tables.Count);
-            Assert.AreEqual(0, blankPage.SelectionMarks.Count);
+            Assert.That(blankPage.Lines.Count, Is.EqualTo(0));
+            Assert.That(blankPage.Tables.Count, Is.EqualTo(0));
+            Assert.That(blankPage.SelectionMarks.Count, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -354,7 +354,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             FormPageCollection formPages = await operation.WaitForCompletionAsync();
 
-            Assert.AreEqual(3, formPages.Count);
+            Assert.That(formPages.Count, Is.EqualTo(3));
 
             for (int pageIndex = 0; pageIndex < formPages.Count; pageIndex++)
             {
@@ -369,14 +369,14 @@ namespace Azure.AI.FormRecognizer.Tests
                     var sampleLine = formPage.Lines[3];
                     var expectedText = pageIndex == 0 ? "Bilbo Baggins" : "Frodo Baggins";
 
-                    Assert.AreEqual(expectedText, sampleLine.Text);
+                    Assert.That(sampleLine.Text, Is.EqualTo(expectedText));
                 }
             }
 
             var blankPage = formPages[1];
 
-            Assert.AreEqual(0, blankPage.Lines.Count);
-            Assert.AreEqual(0, blankPage.Tables.Count);
+            Assert.That(blankPage.Lines.Count, Is.EqualTo(0));
+            Assert.That(blankPage.Tables.Count, Is.EqualTo(0));
         }
 
         /// <summary>
@@ -390,7 +390,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var invalidUri = new Uri("https://idont.ex.ist");
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentFromUriAsync(invalidUri));
-            Assert.AreEqual("InvalidImage", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("InvalidImage"));
         }
 
         [RecordedTest]
@@ -417,7 +417,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
 
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             var formPage = operation.Value.Single();
 
@@ -432,7 +432,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { Language = "not language" }));
-            Assert.AreEqual("NotSupportedLanguage", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("NotSupportedLanguage"));
         }
     }
 }

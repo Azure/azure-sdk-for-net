@@ -132,7 +132,7 @@ namespace Azure.Data.SchemaRegistry.Tests
 
             SchemaProperties newVersion = await client.RegisterSchemaAsync(schemaProperties.GroupName, schemaProperties.Name, content_V2, schemaProperties.Format);
             AssertSchemaProperties(newVersion, schemaName, format);
-            Assert.AreNotEqual(registerProperties.Id, newVersion.Id);
+            Assert.That(newVersion.Id, Is.Not.EqualTo(registerProperties.Id));
         }
 
         [RecordedTest]
@@ -262,9 +262,9 @@ namespace Azure.Data.SchemaRegistry.Tests
                 return;
             }
             AssertSchemaProperties(schema.Properties, expectedSchemaName, schemaFormat);
-            Assert.AreEqual(
-                Regex.Replace(expectedSchemaContent, @"\s+", string.Empty),
-                Regex.Replace(schema.Definition, @"\s+", string.Empty));
+            Assert.That(
+                Regex.Replace(schema.Definition, @"\s+", string.Empty),
+                Is.EqualTo(Regex.Replace(expectedSchemaContent, @"\s+", string.Empty)));
         }
 
         private void AssertSchemaProperties(SchemaProperties properties, string schemaName, SchemaFormat schemaFormat)
@@ -275,12 +275,12 @@ namespace Azure.Data.SchemaRegistry.Tests
             }
             Assert.IsNotNull(properties);
             Assert.IsNotNull(properties.Id);
-            Assert.IsTrue(Guid.TryParse(properties.Id, out Guid _));
-            Assert.AreEqual(schemaFormat, properties.Format);
-            Assert.AreEqual(schemaName, properties.Name);
+            Assert.That(Guid.TryParse(properties.Id, out Guid _), Is.True);
+            Assert.That(properties.Format, Is.EqualTo(schemaFormat));
+            Assert.That(properties.Name, Is.EqualTo(schemaName));
             string expectedGroupName = TestEnvironment.SchemaRegistryGroup;
 
-            Assert.AreEqual(expectedGroupName, properties.GroupName);
+            Assert.That(properties.GroupName, Is.EqualTo(expectedGroupName));
         }
 
         private void AssertPropertiesAreEqual(SchemaProperties registeredSchema, SchemaProperties schema, SchemaFormat schemaFormat)
@@ -289,10 +289,10 @@ namespace Azure.Data.SchemaRegistry.Tests
             {
                 return;
             }
-            Assert.AreEqual(registeredSchema.Id, schema.Id);
-            Assert.AreEqual(registeredSchema.Format, schema.Format);
-            Assert.AreEqual(registeredSchema.GroupName, schema.GroupName);
-            Assert.AreEqual(registeredSchema.Name, schema.Name);
+            Assert.That(schema.Id, Is.EqualTo(registeredSchema.Id));
+            Assert.That(schema.Format, Is.EqualTo(registeredSchema.Format));
+            Assert.That(schema.GroupName, Is.EqualTo(registeredSchema.GroupName));
+            Assert.That(schema.Name, Is.EqualTo(registeredSchema.Name));
         }
 
         private SchemaFormat StringToSchemaFormat(string formatName)

@@ -731,8 +731,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferOperation.WaitForCompletionAsync();
                 #endregion
 
-                Assert.IsTrue(await destinationAppendBlobClient.ExistsAsync());
-                Assert.AreEqual(TransferState.Completed, transferOperation.Status.State);
+                Assert.That((bool)await destinationAppendBlobClient.ExistsAsync(), Is.True);
+                Assert.That(transferOperation.Status.State, Is.EqualTo(TransferState.Completed));
             }
             finally
             {

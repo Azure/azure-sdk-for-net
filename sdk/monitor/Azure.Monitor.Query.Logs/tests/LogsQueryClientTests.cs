@@ -25,7 +25,7 @@ namespace Azure.Monitor.Query.Logs.Tests
 
             var mockTransport = MockTransport.FromMessageCallback(message =>
             {
-                Assert.True(message.Request.Headers.TryGetValue("prefer", out preferHeader));
+                Assert.That(message.Request.Headers.TryGetValue("prefer", out preferHeader), Is.True);
                 networkOverride = message.NetworkTimeout;
 
                 return new MockResponse(403);
@@ -41,9 +41,9 @@ namespace Azure.Monitor.Query.Logs.Tests
                 ServerTimeout = TimeSpan.FromMinutes(10)
             }));
 
-            Assert.AreEqual("wait=600", preferHeader);
+            Assert.That(preferHeader, Is.EqualTo("wait=600"));
             // The network timeout is adjusted with 15 sec buffer
-            Assert.AreEqual(TimeSpan.FromMinutes(10).Add(TimeSpan.FromSeconds(15)), networkOverride);
+            Assert.That(networkOverride, Is.EqualTo(TimeSpan.FromMinutes(10).Add(TimeSpan.FromSeconds(15))));
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Azure.Monitor.Query.Logs.Tests
 
             var mockTransport = MockTransport.FromMessageCallback(message =>
             {
-                Assert.True(message.Request.Headers.TryGetValue("prefer", out preferHeader));
+                Assert.That(message.Request.Headers.TryGetValue("prefer", out preferHeader), Is.True);
                 networkOverride = message.NetworkTimeout;
 
                 return new MockResponse(403);
@@ -82,9 +82,9 @@ namespace Azure.Monitor.Query.Logs.Tests
             Assert.ThrowsAsync<RequestFailedException>(() => client.QueryBatchAsync(batch));
 
             // 3 minutes (180 sec) is the max out of all individual queries
-            Assert.AreEqual("wait=180", preferHeader);
+            Assert.That(preferHeader, Is.EqualTo("wait=180"));
             // The network timeout is adjusted with 15 sec buffer
-            Assert.AreEqual(TimeSpan.FromMinutes(3).Add(TimeSpan.FromSeconds(15)), networkOverride);
+            Assert.That(networkOverride, Is.EqualTo(TimeSpan.FromMinutes(3).Add(TimeSpan.FromSeconds(15))));
         }
 
         [Test]
@@ -181,14 +181,14 @@ namespace Azure.Monitor.Query.Logs.Tests
             var client = new LogsQueryClient(mock.Object, options);
 
             await client.QueryWorkspaceAsync("", "", LogsQueryTimeRange.All);
-            Assert.AreEqual(new[] { expectedScope }, scopes);
+            Assert.That(scopes, Is.EqualTo(new[] { expectedScope }));
         }
 
         [Test]
         public void ExposesPublicEndpoint()
         {
             var client = new LogsQueryClient(new Uri("https://api.loganalytics.io"), new MockCredential(), new LogsQueryClientOptions());
-            Assert.AreEqual(new Uri("https://api.loganalytics.io"), client.Endpoint);
+            Assert.That(client.Endpoint, Is.EqualTo(new Uri("https://api.loganalytics.io")));
         }
 
         [Test]
@@ -199,10 +199,10 @@ namespace Azure.Monitor.Query.Logs.Tests
                                 ""message"": ""There were some errors when processing your query.""
                            }";
             var result = LogsQueryModelFactory.LogsQueryResult(new List<LogsTable>(), new BinaryData(errorJson), new BinaryData("{}"), new BinaryData("42"));
-            Assert.AreEqual(result.GetStatistics().ToString(), "{}");
-            Assert.AreEqual(result.GetVisualization().ToString(), "42");
-            Assert.AreEqual("PartialError", result.Error.Code);
-            Assert.AreEqual("There were some errors when processing your query.", result.Error.Message);
+            Assert.That(result.GetStatistics().ToString(), Is.EqualTo("{}"));
+            Assert.That(result.GetVisualization().ToString(), Is.EqualTo("42"));
+            Assert.That(result.Error.Code, Is.EqualTo("PartialError"));
+            Assert.That(result.Error.Message, Is.EqualTo("There were some errors when processing your query."));
         }
 
         [Test]
@@ -225,65 +225,65 @@ namespace Azure.Monitor.Query.Logs.Tests
             LogsTableRow[] rowArray = new LogsTableRow[] { logsTableRow };
             LogsTable logsTable = LogsQueryModelFactory.LogsTable("tester", logsTableColumns.AsEnumerable(), rowArray.AsEnumerable());
 
-            Assert.AreEqual("tester", logsTable.Name);
-            Assert.AreEqual(1, logsTable.Rows.Count);
-            Assert.AreEqual(10, logsTable.Columns.Count);
+            Assert.That(logsTable.Name, Is.EqualTo("tester"));
+            Assert.That(logsTable.Rows.Count, Is.EqualTo(1));
+            Assert.That(logsTable.Columns.Count, Is.EqualTo(10));
 
-            Assert.AreEqual("column0", logsTable.Columns[0].Name);
-            Assert.AreEqual("datetime", logsTable.Columns[0].Type.ToString());
-            Assert.AreEqual("column1", logsTable.Columns[1].Name);
-            Assert.AreEqual("guid", logsTable.Columns[1].Type.ToString());
-            Assert.AreEqual("column2", logsTable.Columns[2].Name);
-            Assert.AreEqual("int", logsTable.Columns[2].Type.ToString());
-            Assert.AreEqual("column3", logsTable.Columns[3].Name);
-            Assert.AreEqual("long", logsTable.Columns[3].Type.ToString());
-            Assert.AreEqual("column4", logsTable.Columns[4].Name);
-            Assert.AreEqual("real", logsTable.Columns[4].Type.ToString());
-            Assert.AreEqual("column5", logsTable.Columns[5].Name);
-            Assert.AreEqual("string", logsTable.Columns[5].Type.ToString());
-            Assert.AreEqual("column6", logsTable.Columns[6].Name);
-            Assert.AreEqual("timespan", logsTable.Columns[6].Type.ToString());
-            Assert.AreEqual("column7", logsTable.Columns[7].Name);
-            Assert.AreEqual("decimal", logsTable.Columns[7].Type.ToString());
-            Assert.AreEqual("column8", logsTable.Columns[8].Name);
-            Assert.AreEqual("bool", logsTable.Columns[8].Type.ToString());
-            Assert.AreEqual("column9", logsTable.Columns[9].Name);
-            Assert.AreEqual("dynamic", logsTable.Columns[9].Type.ToString());
+            Assert.That(logsTable.Columns[0].Name, Is.EqualTo("column0"));
+            Assert.That(logsTable.Columns[0].Type.ToString(), Is.EqualTo("datetime"));
+            Assert.That(logsTable.Columns[1].Name, Is.EqualTo("column1"));
+            Assert.That(logsTable.Columns[1].Type.ToString(), Is.EqualTo("guid"));
+            Assert.That(logsTable.Columns[2].Name, Is.EqualTo("column2"));
+            Assert.That(logsTable.Columns[2].Type.ToString(), Is.EqualTo("int"));
+            Assert.That(logsTable.Columns[3].Name, Is.EqualTo("column3"));
+            Assert.That(logsTable.Columns[3].Type.ToString(), Is.EqualTo("long"));
+            Assert.That(logsTable.Columns[4].Name, Is.EqualTo("column4"));
+            Assert.That(logsTable.Columns[4].Type.ToString(), Is.EqualTo("real"));
+            Assert.That(logsTable.Columns[5].Name, Is.EqualTo("column5"));
+            Assert.That(logsTable.Columns[5].Type.ToString(), Is.EqualTo("string"));
+            Assert.That(logsTable.Columns[6].Name, Is.EqualTo("column6"));
+            Assert.That(logsTable.Columns[6].Type.ToString(), Is.EqualTo("timespan"));
+            Assert.That(logsTable.Columns[7].Name, Is.EqualTo("column7"));
+            Assert.That(logsTable.Columns[7].Type.ToString(), Is.EqualTo("decimal"));
+            Assert.That(logsTable.Columns[8].Name, Is.EqualTo("column8"));
+            Assert.That(logsTable.Columns[8].Type.ToString(), Is.EqualTo("bool"));
+            Assert.That(logsTable.Columns[9].Name, Is.EqualTo("column9"));
+            Assert.That(logsTable.Columns[9].Type.ToString(), Is.EqualTo("dynamic"));
 
             var expectedDate = DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00");
 
-            Assert.AreEqual(expectedDate, logsTable.Rows[0].GetDateTimeOffset(0));
-            Assert.AreEqual(expectedDate, logsTable.Rows[0].GetObject("column0"));
-            Assert.AreEqual(false, logsTable.Rows[0].GetBoolean("column8"));
-            Assert.AreEqual(false, logsTable.Rows[0].GetBoolean(8));
-            Assert.AreEqual(false, logsTable.Rows[0].GetObject("column8"));
-            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), logsTable.Rows[0].GetGuid("column1"));
-            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), logsTable.Rows[0].GetGuid(1));
-            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), logsTable.Rows[0].GetObject("column1"));
-            Assert.AreEqual(12345, logsTable.Rows[0].GetInt32("column2"));
-            Assert.AreEqual(12345, logsTable.Rows[0].GetInt32(2));
-            Assert.AreEqual(12345, logsTable.Rows[0].GetObject("column2"));
-            Assert.AreEqual(1234567890123, logsTable.Rows[0].GetInt64("column3"));
-            Assert.AreEqual(1234567890123, logsTable.Rows[0].GetInt64(3));
-            Assert.AreEqual(1234567890123, logsTable.Rows[0].GetObject("column3"));
-            Assert.AreEqual(12345.6789d, logsTable.Rows[0].GetDouble("column4"));
-            Assert.AreEqual(12345.6789d, logsTable.Rows[0].GetDouble(4));
-            Assert.AreEqual(12345.6789d, logsTable.Rows[0].GetObject("column4"));
-            Assert.AreEqual("string value", logsTable.Rows[0].GetString("column5"));
-            Assert.AreEqual("string value", logsTable.Rows[0].GetString(5));
-            Assert.AreEqual("string value", logsTable.Rows[0].GetObject("column5"));
-            Assert.AreEqual(TimeSpan.FromSeconds(10), logsTable.Rows[0].GetTimeSpan("column6"));
-            Assert.AreEqual(TimeSpan.FromSeconds(10), logsTable.Rows[0].GetTimeSpan(6));
-            Assert.AreEqual(TimeSpan.FromSeconds(10), logsTable.Rows[0].GetObject("column6"));
-            Assert.AreEqual(0.10101m, logsTable.Rows[0].GetDecimal("column7"));
-            Assert.AreEqual(0.10101m, logsTable.Rows[0].GetDecimal(7));
-            Assert.AreEqual(0.10101m, logsTable.Rows[0].GetObject("column7"));
-            Assert.IsFalse(logsTable.Rows[0].GetBoolean("column8"));
-            Assert.IsFalse(logsTable.Rows[0].GetBoolean(8));
-            Assert.AreEqual(false, logsTable.Rows[0].GetObject("column8"));
-            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetDynamic(9).ToString());
-            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetDynamic("column9").ToString());
-            Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetObject("column9").ToString());
+            Assert.That(logsTable.Rows[0].GetDateTimeOffset(0), Is.EqualTo(expectedDate));
+            Assert.That(logsTable.Rows[0].GetObject("column0"), Is.EqualTo(expectedDate));
+            Assert.That(logsTable.Rows[0].GetBoolean("column8"), Is.EqualTo(false));
+            Assert.That(logsTable.Rows[0].GetBoolean(8), Is.EqualTo(false));
+            Assert.That(logsTable.Rows[0].GetObject("column8"), Is.EqualTo(false));
+            Assert.That(logsTable.Rows[0].GetGuid("column1"), Is.EqualTo(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642")));
+            Assert.That(logsTable.Rows[0].GetGuid(1), Is.EqualTo(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642")));
+            Assert.That(logsTable.Rows[0].GetObject("column1"), Is.EqualTo(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642")));
+            Assert.That(logsTable.Rows[0].GetInt32("column2"), Is.EqualTo(12345));
+            Assert.That(logsTable.Rows[0].GetInt32(2), Is.EqualTo(12345));
+            Assert.That(logsTable.Rows[0].GetObject("column2"), Is.EqualTo(12345));
+            Assert.That(logsTable.Rows[0].GetInt64("column3"), Is.EqualTo(1234567890123));
+            Assert.That(logsTable.Rows[0].GetInt64(3), Is.EqualTo(1234567890123));
+            Assert.That(logsTable.Rows[0].GetObject("column3"), Is.EqualTo(1234567890123));
+            Assert.That(logsTable.Rows[0].GetDouble("column4"), Is.EqualTo(12345.6789d));
+            Assert.That(logsTable.Rows[0].GetDouble(4), Is.EqualTo(12345.6789d));
+            Assert.That(logsTable.Rows[0].GetObject("column4"), Is.EqualTo(12345.6789d));
+            Assert.That(logsTable.Rows[0].GetString("column5"), Is.EqualTo("string value"));
+            Assert.That(logsTable.Rows[0].GetString(5), Is.EqualTo("string value"));
+            Assert.That(logsTable.Rows[0].GetObject("column5"), Is.EqualTo("string value"));
+            Assert.That(logsTable.Rows[0].GetTimeSpan("column6"), Is.EqualTo(TimeSpan.FromSeconds(10)));
+            Assert.That(logsTable.Rows[0].GetTimeSpan(6), Is.EqualTo(TimeSpan.FromSeconds(10)));
+            Assert.That(logsTable.Rows[0].GetObject("column6"), Is.EqualTo(TimeSpan.FromSeconds(10)));
+            Assert.That(logsTable.Rows[0].GetDecimal("column7"), Is.EqualTo(0.10101m));
+            Assert.That(logsTable.Rows[0].GetDecimal(7), Is.EqualTo(0.10101m));
+            Assert.That(logsTable.Rows[0].GetObject("column7"), Is.EqualTo(0.10101m));
+            Assert.That(logsTable.Rows[0].GetBoolean("column8"), Is.False);
+            Assert.That(logsTable.Rows[0].GetBoolean(8), Is.False);
+            Assert.That(logsTable.Rows[0].GetObject("column8"), Is.EqualTo(false));
+            Assert.That(logsTable.Rows[0].GetDynamic(9).ToString(), Is.EqualTo("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}"));
+            Assert.That(logsTable.Rows[0].GetDynamic("column9").ToString(), Is.EqualTo("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}"));
+            Assert.That(logsTable.Rows[0].GetObject("column9").ToString(), Is.EqualTo("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}"));
         }
 
         [Test]
@@ -291,7 +291,7 @@ namespace Azure.Monitor.Query.Logs.Tests
         {
             var credential = new DefaultAzureCredential();
             var client = new LogsQueryClient(credential);
-            Assert.AreEqual(LogsQueryAudience.AzurePublicCloud.ToString(), client.Endpoint.OriginalString);
+            Assert.That(client.Endpoint.OriginalString, Is.EqualTo(LogsQueryAudience.AzurePublicCloud.ToString()));
         }
 
         [Test]
@@ -306,7 +306,7 @@ namespace Azure.Monitor.Query.Logs.Tests
             var client = new LogsQueryClient(credential, options);
 
             // When endpoint is not passed in, use Audience to contstruct the endpoint
-            Assert.AreEqual("https://custom.audience", client.Endpoint.OriginalString);
+            Assert.That(client.Endpoint.OriginalString, Is.EqualTo("https://custom.audience"));
         }
 
         [Test]
@@ -330,7 +330,7 @@ namespace Azure.Monitor.Query.Logs.Tests
 
             var client = new LogsQueryClient(endpoint, credential);
 
-            Assert.AreEqual(new Uri("https://custom.audience"), client.Endpoint);
+            Assert.That(client.Endpoint, Is.EqualTo(new Uri("https://custom.audience")));
         }
 
         [Test]
@@ -341,7 +341,7 @@ namespace Azure.Monitor.Query.Logs.Tests
 
             var client = new LogsQueryClient(endpoint, credential);
 
-            Assert.AreEqual("https://custom.audience//", client.Endpoint.AbsoluteUri);
+            Assert.That(client.Endpoint.AbsoluteUri, Is.EqualTo("https://custom.audience//"));
         }
 
         [Test]
@@ -355,7 +355,7 @@ namespace Azure.Monitor.Query.Logs.Tests
 
             var client = new LogsQueryClient(credential, options);
 
-            Assert.AreEqual(new Uri(LogsQueryAudience.AzureGovernment.ToString()), client.Endpoint);
+            Assert.That(client.Endpoint, Is.EqualTo(new Uri(LogsQueryAudience.AzureGovernment.ToString())));
         }
 
         [Test]
@@ -364,7 +364,7 @@ namespace Azure.Monitor.Query.Logs.Tests
             var credential = new DefaultAzureCredential();
             var client = new LogsQueryClient(credential);
 
-            Assert.AreEqual(new Uri(LogsQueryAudience.AzurePublicCloud.ToString()), client.Endpoint);
+            Assert.That(client.Endpoint, Is.EqualTo(new Uri(LogsQueryAudience.AzurePublicCloud.ToString())));
         }
     }
 }

@@ -148,7 +148,7 @@ namespace Azure.Security.CodeTransparency.Tests
                 IdentityClientEndpoint = "https://some.identity.com"
             };
             var _ = new CodeTransparencyClient(new Uri("https://foo.bar.com"), null, options);
-            Assert.AreEqual(0, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -182,9 +182,9 @@ namespace Azure.Security.CodeTransparency.Tests
             BinaryData content = BinaryData.FromString("Hello World!");
             Operation<BinaryData> response = await client.CreateEntryAsync(WaitUntil.Started, content);
 
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
-            Assert.AreEqual(false, response.HasCompleted);
-            Assert.AreEqual("12.345", response.Id);
+            Assert.That(mockTransport.Requests[0].Uri.ToString(), Is.EqualTo("https://foo.bar.com/entries?api-version=2025-01-31-preview"));
+            Assert.That(response.HasCompleted, Is.EqualTo(false));
+            Assert.That(response.Id, Is.EqualTo("12.345"));
         }
 
         [Test]
@@ -217,10 +217,10 @@ namespace Azure.Security.CodeTransparency.Tests
             BinaryData content = BinaryData.FromString("Hello World!");
             Operation<BinaryData> response = await client.CreateEntryAsync(WaitUntil.Started, content);
 
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
-            Assert.AreEqual(1, mockTransport.Requests.Count);
-            Assert.AreEqual(false, response.HasCompleted);
-            Assert.AreEqual("12.345", response.Id);
+            Assert.That(mockTransport.Requests[0].Uri.ToString(), Is.EqualTo("https://foo.bar.com/entries?api-version=2025-01-31-preview"));
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(1));
+            Assert.That(response.HasCompleted, Is.EqualTo(false));
+            Assert.That(response.Id, Is.EqualTo("12.345"));
         }
 
         [Test]
@@ -250,9 +250,9 @@ namespace Azure.Security.CodeTransparency.Tests
             BinaryData content = BinaryData.FromString("Hello World!");
             Operation<BinaryData> response = await client.CreateEntryAsync(WaitUntil.Started, content);
 
-            Assert.AreEqual(2, mockTransport.Requests.Count);
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2025-01-31-preview", mockTransport.Requests[1].Uri.ToString());
-            Assert.AreEqual("12.345", response.Id);
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
+            Assert.That(mockTransport.Requests[1].Uri.ToString(), Is.EqualTo("https://foo.bar.com/entries?api-version=2025-01-31-preview"));
+            Assert.That(response.Id, Is.EqualTo("12.345"));
         }
 
         [Test]
@@ -321,22 +321,22 @@ namespace Azure.Security.CodeTransparency.Tests
                 string key = cborReader.ReadTextString();
                 if (key == "Status")
                 {
-                    Assert.AreEqual(expected: "Succeeded", cborReader.ReadTextString());
+                    Assert.That(cborReader.ReadTextString(), Is.EqualTo("Succeeded"));
                 }
                 else if (key == "OperationId")
                 {
-                    Assert.AreEqual(expected: "1.345", cborReader.ReadTextString());
+                    Assert.That(cborReader.ReadTextString(), Is.EqualTo("1.345"));
                 }
                 else if (key == "EntryId")
                 {
-                    Assert.AreEqual(expected: "123.23", cborReader.ReadTextString());
+                    Assert.That(cborReader.ReadTextString(), Is.EqualTo("123.23"));
                 }
             }
             cborReader.ReadEndMap();
 
-            Assert.AreEqual(3, mockTransport.Requests.Count);
-            Assert.IsTrue(result.HasCompleted);
-            Assert.IsTrue(result.HasValue);
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(3));
+            Assert.That(result.HasCompleted, Is.True);
+            Assert.That(result.HasValue, Is.True);
         }
 
         [Test]
@@ -366,8 +366,8 @@ namespace Azure.Security.CodeTransparency.Tests
 
             Operation<BinaryData> result = client.CreateEntry(WaitUntil.Started, BinaryData.FromString("test-body"));
 
-            Assert.AreEqual(1, mockTransport.Requests.Count);
-            Assert.IsFalse(result.HasCompleted);
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(1));
+            Assert.That(result.HasCompleted, Is.False);
         }
 
         [Test]
@@ -385,8 +385,8 @@ namespace Azure.Security.CodeTransparency.Tests
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             Response<BinaryData> response = await client.GetEntryAsync("4.44");
 
-            Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2025-01-31-preview", mockTransport.Requests[1].Uri.ToString());
-            Assert.AreEqual(expected: 200, response.GetRawResponse().Status);
+            Assert.That(mockTransport.Requests[1].Uri.ToString(), Is.EqualTo("https://foo.bar.com/entries/4.44?api-version=2025-01-31-preview"));
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         }
 
         [Test]
@@ -403,9 +403,9 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             Response<BinaryData> response = await client.GetEntryAsync("4.44");
-            Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(new byte[] { 0x01, 0x02, 0x03 }, response.Value.ToArray());
+            Assert.That(mockTransport.Requests[0].Uri.ToString(), Is.EqualTo("https://foo.bar.com/entries/4.44?api-version=2025-01-31-preview"));
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(response.Value.ToArray(), Is.EqualTo(new byte[] { 0x01, 0x02, 0x03 }));
         }
 
         [Test]
@@ -424,8 +424,8 @@ namespace Azure.Security.CodeTransparency.Tests
             var result = await client.GetTransparencyConfigCborAsync();
 
             Assert.NotNull(result);
-            Assert.AreEqual("test-content", result.Value.ToString());
-            Assert.AreEqual("https://foo.bar.com/.well-known/transparency-configuration?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
+            Assert.That(result.Value.ToString(), Is.EqualTo("test-content"));
+            Assert.That(mockTransport.Requests[0].Uri.ToString(), Is.EqualTo("https://foo.bar.com/.well-known/transparency-configuration?api-version=2025-01-31-preview"));
         }
 
         [Test]
@@ -443,8 +443,8 @@ namespace Azure.Security.CodeTransparency.Tests
             Response<JwksDocument> result = client.GetPublicKeys();
 
             Assert.NotNull(result);
-            Assert.AreEqual(2, mockTransport.Requests.Count);
-            Assert.AreEqual("https://foo.bar.com/jwks?api-version=2025-01-31-preview", mockTransport.Requests[1].Uri.ToString());
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
+            Assert.That(mockTransport.Requests[1].Uri.ToString(), Is.EqualTo("https://foo.bar.com/jwks?api-version=2025-01-31-preview"));
         }
 
         [Test]
@@ -517,7 +517,7 @@ namespace Azure.Security.CodeTransparency.Tests
                 // Should not make any network calls since we're using offline keys
                 CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
 
-                Assert.AreEqual(0, mockTransport.Requests.Count);
+                Assert.That(mockTransport.Requests.Count, Is.EqualTo(0));
             }
 #endif
         }
@@ -547,7 +547,7 @@ namespace Azure.Security.CodeTransparency.Tests
                 // Offline keys are empty, so network fallback is expected; should make 1 network call
                 CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
 
-                Assert.AreEqual(1, mockTransport.Requests.Count);
+                Assert.That(mockTransport.Requests.Count, Is.EqualTo(1));
             }
 #endif
         }
@@ -581,7 +581,7 @@ namespace Azure.Security.CodeTransparency.Tests
                 byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
                 var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
                 StringAssert.Contains("Either offline keys are not configured or network fallback is disabled.", exception.Message);
-                Assert.AreEqual(0, mockTransport.Requests.Count);
+                Assert.That(mockTransport.Requests.Count, Is.EqualTo(0));
             }
 #endif
         }
@@ -606,7 +606,7 @@ namespace Azure.Security.CodeTransparency.Tests
             byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
 
             var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
-            Assert.AreEqual("The ECDsa key uses the wrong algorithm. Expected -39 Found -35", exception.InnerExceptions[0].Message);
+            Assert.That(exception.InnerExceptions[0].Message, Is.EqualTo("The ECDsa key uses the wrong algorithm. Expected -39 Found -35"));
 #endif
         }
 
@@ -648,7 +648,7 @@ namespace Azure.Security.CodeTransparency.Tests
             };
 
             var exception = Assert.Throws<InvalidOperationException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions));
-            Assert.AreEqual("Receipt issuer 'foo.bar.com' is not in the authorized domain list.", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo("Receipt issuer 'foo.bar.com' is not in the authorized domain list."));
 #endif
         }
 
@@ -725,7 +725,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             Assert.DoesNotThrow(() =>
                 CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
-            Assert.AreEqual(1, mockTransport.Requests.Count);
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(1));
 #endif
         }
     }

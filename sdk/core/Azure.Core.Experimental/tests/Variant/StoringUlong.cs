@@ -13,13 +13,13 @@ namespace Azure.Core.Experimental.Tests
         public void ULongImplicit(ulong testValue)
         {
             Variant value = testValue;
-            Assert.AreEqual(testValue, value.As<ulong>());
-            Assert.AreEqual(typeof(ulong), value.Type);
+            Assert.That(value.As<ulong>(), Is.EqualTo(testValue));
+            Assert.That(value.Type, Is.EqualTo(typeof(ulong)));
 
             ulong? source = testValue;
             value = source;
-            Assert.AreEqual(source, value.As<ulong?>());
-            Assert.AreEqual(typeof(ulong), value.Type);
+            Assert.That(value.As<ulong?>(), Is.EqualTo(source));
+            Assert.That(value.Type, Is.EqualTo(typeof(ulong)));
         }
 
         [TestCase(42ul)]
@@ -33,8 +33,8 @@ namespace Azure.Core.Experimental.Tests
                 value = Variant.Create(testValue);
             }
 
-            Assert.AreEqual(testValue, value.As<ulong>());
-            Assert.AreEqual(typeof(ulong), value.Type);
+            Assert.That(value.As<ulong>(), Is.EqualTo(testValue));
+            Assert.That(value.Type, Is.EqualTo(typeof(ulong)));
 
             ulong? source = testValue;
 
@@ -43,8 +43,8 @@ namespace Azure.Core.Experimental.Tests
                 value = Variant.Create(source);
             }
 
-            Assert.AreEqual(source, value.As<ulong?>());
-            Assert.AreEqual(typeof(ulong), value.Type);
+            Assert.That(value.As<ulong?>(), Is.EqualTo(source));
+            Assert.That(value.Type, Is.EqualTo(typeof(ulong)));
         }
 
         [TestCase(42ul)]
@@ -54,11 +54,11 @@ namespace Azure.Core.Experimental.Tests
         {
             Variant value = new(testValue);
             bool success = value.TryGetValue(out ulong result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, value.As<ulong>());
-            Assert.AreEqual(testValue, (ulong)value);
+            Assert.That(value.As<ulong>(), Is.EqualTo(testValue));
+            Assert.That((ulong)value, Is.EqualTo(testValue));
         }
 
         [TestCase(42ul)]
@@ -70,12 +70,12 @@ namespace Azure.Core.Experimental.Tests
             Variant value = new(source);
 
             bool success = value.TryGetValue(out ulong result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, value.As<ulong>());
+            Assert.That(value.As<ulong>(), Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, (ulong)value);
+            Assert.That((ulong)value, Is.EqualTo(testValue));
         }
 
         [TestCase(42ul)]
@@ -86,10 +86,10 @@ namespace Azure.Core.Experimental.Tests
             ulong source = testValue;
             Variant value = new(source);
             bool success = value.TryGetValue(out ulong? result);
-            Assert.True(success);
-            Assert.AreEqual(testValue, result);
+            Assert.That(success, Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
 
-            Assert.AreEqual(testValue, (ulong?)value);
+            Assert.That((ulong?)value, Is.EqualTo(testValue));
         }
 
         [TestCase(42ul)]
@@ -101,21 +101,21 @@ namespace Azure.Core.Experimental.Tests
             object o = i;
             Variant value = new(o);
 
-            Assert.AreEqual(typeof(ulong), value.Type);
-            Assert.True(value.TryGetValue(out ulong result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out ulong? nullableResult));
-            Assert.AreEqual(testValue, nullableResult!.Value);
+            Assert.That(value.Type, Is.EqualTo(typeof(ulong)));
+            Assert.That(value.TryGetValue(out ulong result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out ulong? nullableResult), Is.True);
+            Assert.That(nullableResult!.Value, Is.EqualTo(testValue));
 
             ulong? n = testValue;
             o = n;
             value = new(o);
 
-            Assert.AreEqual(typeof(ulong), value.Type);
-            Assert.True(value.TryGetValue(out result));
-            Assert.AreEqual(testValue, result);
-            Assert.True(value.TryGetValue(out nullableResult));
-            Assert.AreEqual(testValue, nullableResult!.Value);
+            Assert.That(value.Type, Is.EqualTo(typeof(ulong)));
+            Assert.That(value.TryGetValue(out result), Is.True);
+            Assert.That(result, Is.EqualTo(testValue));
+            Assert.That(value.TryGetValue(out nullableResult), Is.True);
+            Assert.That(nullableResult!.Value, Is.EqualTo(testValue));
         }
 
         [Test]
@@ -123,9 +123,9 @@ namespace Azure.Core.Experimental.Tests
         {
             ulong? source = null;
             Variant value = source;
-            Assert.Null(value.Type);
-            Assert.AreEqual(source, value.As<ulong?>());
-            Assert.False(value.As<ulong?>().HasValue);
+            Assert.That(value.Type, Is.Null);
+            Assert.That(value.As<ulong?>(), Is.EqualTo(source));
+            Assert.That(value.As<ulong?>().HasValue, Is.False);
         }
 
         [TestCase(42ul)]
@@ -135,14 +135,14 @@ namespace Azure.Core.Experimental.Tests
         {
             Variant value = new(testValue);
             object o = value.As<object>();
-            Assert.AreEqual(typeof(ulong), o.GetType());
-            Assert.AreEqual(testValue, (ulong)o);
+            Assert.That(o.GetType(), Is.EqualTo(typeof(ulong)));
+            Assert.That((ulong)o, Is.EqualTo(testValue));
 
             ulong? n = testValue;
             value = new(n);
             o = value.As<object>();
-            Assert.AreEqual(typeof(ulong), o.GetType());
-            Assert.AreEqual(testValue, (ulong)o);
+            Assert.That(o.GetType(), Is.EqualTo(typeof(ulong)));
+            Assert.That((ulong)o, Is.EqualTo(testValue));
         }
     }
 }

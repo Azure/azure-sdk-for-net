@@ -81,8 +81,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.NotNull(data);
             Assert.NotNull(data.ValueProvider);
             Assert.NotNull(data.BindingData);
-            Assert.True(data.BindingData.ContainsKey(userPropertyName));
-            Assert.AreEqual(userProperty.GetValue(expectedObject, null), data.BindingData[userPropertyName]);
+            Assert.That(data.BindingData.ContainsKey(userPropertyName), Is.True);
+            Assert.That(data.BindingData[userPropertyName], Is.EqualTo(userProperty.GetValue(expectedObject, null)));
         }
 
         private class StubParameterInfo : ParameterInfo

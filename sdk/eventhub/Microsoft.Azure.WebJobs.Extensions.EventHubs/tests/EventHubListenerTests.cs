@@ -70,7 +70,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 // Expected; ignore.
             }
 
-            Assert.AreEqual(expected, checkpoints);
+            Assert.That(checkpoints, Is.EqualTo(expected));
         }
 
         [TestCase(1, 100)]
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // Because the first invocation will allow a partial batch due to the old checkpoint,
             // the last 5 events will remain in the cache after disposing and stopping the background task.
             Assert.NotNull(eventProcessor.CachedEventsManager);
-            Assert.AreEqual(5, eventProcessor.CachedEventsManager.CachedEvents.Count);
+            Assert.That(eventProcessor.CachedEventsManager.CachedEvents.Count, Is.EqualTo(5));
 
             processor.Verify(
                 p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             }
 
             Assert.NotNull(eventProcessor.CachedEventsManager);
-            Assert.AreEqual(0, eventProcessor.CachedEventsManager.CachedEvents.Count);
+            Assert.That(eventProcessor.CachedEventsManager.CachedEvents.Count, Is.EqualTo(0));
 
             processor.Verify(
                 p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // Because the first invocation will allow a partial batch due to the old checkpoint,
             // the last 5 events will remain in the cache after disposing and stopping the background task.
             Assert.NotNull(eventProcessor.CachedEventsManager);
-            Assert.AreEqual(5, eventProcessor.CachedEventsManager.CachedEvents.Count);
+            Assert.That(eventProcessor.CachedEventsManager.CachedEvents.Count, Is.EqualTo(5));
 
             processor.Verify(
                 p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
@@ -337,7 +337,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             }
 
             Assert.NotNull(eventProcessor.CachedEventsManager);
-            Assert.AreEqual(eventProcessor.CachedEventsManager.CachedEvents.Count, 0);
+            Assert.That(0, Is.EqualTo(eventProcessor.CachedEventsManager.CachedEvents.Count));
         }
 
         [TestCase(1)]
@@ -368,7 +368,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 await eventProcessor.ProcessEventsAsync(partitionContext, events);
 
                 // This value should never be set.
-                Assert.False(partitionContext.PartitionContext.IsCheckpointingAfterInvocation);
+                Assert.That(partitionContext.PartitionContext.IsCheckpointingAfterInvocation, Is.False);
             }
 
             try
@@ -414,7 +414,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 await eventProcessor.ProcessEventsAsync(partitionContext, events);
 
                 // This value should never be set.
-                Assert.False(partitionContext.PartitionContext.IsCheckpointingAfterInvocation);
+                Assert.That(partitionContext.PartitionContext.IsCheckpointingAfterInvocation, Is.False);
             }
 
             try
@@ -699,7 +699,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             await eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.OwnershipLost);
 
-            Assert.IsFalse(eventProcessor.CachedEventsManager.HasCachedEvents);
+            Assert.That(eventProcessor.CachedEventsManager.HasCachedEvents, Is.False);
         }
 
         [Test]
@@ -717,7 +717,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var msg = testLogger.GetLogMessages().Single();
             StringAssert.IsMatch("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\).", msg.FormattedMessage);
             Assert.IsInstanceOf<InvalidOperationException>(msg.Exception);
-            Assert.AreEqual(LogLevel.Error, msg.Level);
+            Assert.That(msg.Level, Is.EqualTo(LogLevel.Error));
         }
 
         [Test]
@@ -735,7 +735,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var msg = testLogger.GetLogMessages().Single();
             StringAssert.IsMatch("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\). An exception of type 'EventHubsException' was thrown. This exception type is typically a result of Event Hub processor rebalancing or a transient error and can be safely ignored.", msg.FormattedMessage);
             Assert.NotNull(msg.Exception);
-            Assert.AreEqual(LogLevel.Information, msg.Level);
+            Assert.That(msg.Level, Is.EqualTo(LogLevel.Information));
 
             testLogger.ClearLogMessages();
 
@@ -745,7 +745,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             msg = testLogger.GetLogMessages().Single();
             StringAssert.IsMatch("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\). An exception of type 'EventHubsException' was thrown. This exception type is typically a result of Event Hub processor rebalancing or a transient error and can be safely ignored.", msg.FormattedMessage);
             Assert.NotNull(msg.Exception);
-            Assert.AreEqual(LogLevel.Information, msg.Level);
+            Assert.That(msg.Level, Is.EqualTo(LogLevel.Information));
         }
 
         [Test]
@@ -777,12 +777,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             IScaleMonitor scaleMonitor = listener.GetMonitor();
 
-            Assert.AreEqual(typeof(EventHubsScaleMonitor), scaleMonitor.GetType());
-            Assert.AreEqual($"{functionId}-EventHubTrigger-{eventHubName}-{consumerGroup}".ToLower(), scaleMonitor.Descriptor.Id);
+            Assert.That(scaleMonitor.GetType(), Is.EqualTo(typeof(EventHubsScaleMonitor)));
+            Assert.That(scaleMonitor.Descriptor.Id, Is.EqualTo($"{functionId}-EventHubTrigger-{eventHubName}-{consumerGroup}".ToLower()));
 
             var scaleMonitor2 = listener.GetMonitor();
 
-            Assert.AreSame(scaleMonitor, scaleMonitor2);
+            Assert.That(scaleMonitor2, Is.SameAs(scaleMonitor));
         }
 
         [Test]

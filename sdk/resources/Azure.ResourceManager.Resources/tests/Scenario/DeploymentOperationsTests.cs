@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Tests
             var deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
             await deployment.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deployment.GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [TestCase]
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Resources.Tests
                 Parameters = CreateDeploymentPropertiesUsingJsonElement().Parameters
             });
             WhatIfOperationResult whatIfOperationResult = (await deployment.WhatIfAsync(WaitUntil.Completed, deploymentWhatIf)).Value;
-            Assert.AreEqual(whatIfOperationResult.Status, "Succeeded");
-            Assert.AreEqual(whatIfOperationResult.Changes.Count, 1);
-            Assert.AreEqual(whatIfOperationResult.Changes[0].ChangeType, WhatIfChangeType.Create);
+            Assert.That(whatIfOperationResult.Status, Is.EqualTo("Succeeded"));
+            Assert.That(whatIfOperationResult.Changes.Count, Is.EqualTo(1));
+            Assert.That(whatIfOperationResult.Changes[0].ChangeType, Is.EqualTo(WhatIfChangeType.Create));
         }
     }
 }

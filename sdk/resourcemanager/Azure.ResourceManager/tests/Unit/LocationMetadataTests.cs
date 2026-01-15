@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Tests
 
             var location = ModelReaderWriter.Read<LocationMetadata>(new BinaryData(_payload));
 
-            Assert.AreEqual(_longitude, location.Longitude);
-            Assert.AreEqual(_latitude, location.Latitude);
+            Assert.That(location.Longitude, Is.EqualTo(_longitude));
+            Assert.That(location.Latitude, Is.EqualTo(_latitude));
 
             var json = ModelReaderWriter.Write(location);
-            Assert.AreEqual(_payload, json.ToString());
+            Assert.That(json.ToString(), Is.EqualTo(_payload));
         }
     }
 }

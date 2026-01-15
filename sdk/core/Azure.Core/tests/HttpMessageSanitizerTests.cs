@@ -33,7 +33,7 @@ namespace Azure.Core.Tests
                 "a-2"
             }, Array.Empty<string>(), "*");
 
-            Assert.AreEqual("http://localhost/" + expected, sanitizer.SanitizeUrl("http://localhost/" + input));
+            Assert.That(sanitizer.SanitizeUrl("http://localhost/" + input), Is.EqualTo("http://localhost/" + expected));
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Azure.Core.Tests
             uriBuilder.Reset(new Uri("http://localhost/"));
             uriBuilder.AppendQuery("a", "b");
 
-            Assert.AreEqual("http://localhost/?a=*", sanitizer.SanitizeUrl(uriBuilder.ToString()));
+            Assert.That(sanitizer.SanitizeUrl(uriBuilder.ToString()), Is.EqualTo("http://localhost/?a=*"));
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace Azure.Core.Tests
             uriBuilder.Reset(new Uri("http://localhost/"));
             uriBuilder.AppendQuery("api-version", "2021-11-01");
 
-            Assert.AreEqual("http://localhost/?api-version=2021-11-01", sanitizer.SanitizeUrl(uriBuilder.ToString()));
+            Assert.That(sanitizer.SanitizeUrl(uriBuilder.ToString()), Is.EqualTo("http://localhost/?api-version=2021-11-01"));
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Azure.Core.Tests
             uriBuilder.Reset(new Uri("http://localhost/"));
             uriBuilder.AppendQuery("api-version", "2021-11-01");
 
-            Assert.AreEqual("http://localhost/?api-version=2021-11-01", sanitizer.SanitizeUrl(uriBuilder.ToString()));
+            Assert.That(sanitizer.SanitizeUrl(uriBuilder.ToString()), Is.EqualTo("http://localhost/?api-version=2021-11-01"));
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace Azure.Core.Tests
             uriBuilder.Reset(new Uri("http://localhost/"));
             uriBuilder.AppendQuery("api-version", "2021-11-01");
 
-            Assert.AreEqual("http://localhost/?api-version=REDACTED", sanitizer.SanitizeUrl(uriBuilder.ToString()));
+            Assert.That(sanitizer.SanitizeUrl(uriBuilder.ToString()), Is.EqualTo("http://localhost/?api-version=REDACTED"));
         }
     }
 }

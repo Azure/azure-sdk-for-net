@@ -123,8 +123,8 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             var content = response.Content;
             using var roleAssignmentJson = JsonDocument.Parse(content.ToMemory());
 
-            Assert.AreEqual(role.RoleAssignmentRoleDefinitionId, roleAssignmentJson.RootElement.GetProperty("roleDefinitionId").GetString());
-            Assert.AreEqual(role.RoleAssignmentPrincipalId, roleAssignmentJson.RootElement.GetProperty("principalId").GetString());
+            Assert.That(roleAssignmentJson.RootElement.GetProperty("roleDefinitionId").GetString(), Is.EqualTo(role.RoleAssignmentRoleDefinitionId));
+            Assert.That(roleAssignmentJson.RootElement.GetProperty("principalId").GetString(), Is.EqualTo(role.RoleAssignmentPrincipalId));
         }
 
         [Test]
@@ -148,8 +148,8 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
                 var roleDefinitionContent = roleDefinitionResponse.Content;
                 using var actualRoleDefinitionJson = JsonDocument.Parse(roleDefinitionContent.ToMemory());
 
-                Assert.AreEqual(expectedRoleDefinitionJson.GetProperty("id").ToString(), actualRoleDefinitionJson.RootElement.GetProperty("id").ToString());
-                Assert.AreEqual(expectedRoleDefinitionJson.GetProperty("name").ToString(), actualRoleDefinitionJson.RootElement.GetProperty("name").ToString());
+                Assert.That(actualRoleDefinitionJson.RootElement.GetProperty("id").ToString(), Is.EqualTo(expectedRoleDefinitionJson.GetProperty("id").ToString()));
+                Assert.That(actualRoleDefinitionJson.RootElement.GetProperty("name").ToString(), Is.EqualTo(expectedRoleDefinitionJson.GetProperty("name").ToString()));
             }
 
             Assert.GreaterOrEqual(roleDefinitionsJson.RootElement.GetArrayLength(), 1);
@@ -177,10 +177,10 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
                 var roleAssignmentContent = roleAssignmentResponse.Content;
                 using var actualRoleDefinitionJson = JsonDocument.Parse(roleAssignmentContent.ToMemory());
 
-                Assert.AreEqual(expectedRoleAssignmentJson.GetProperty("id").ToString(), actualRoleDefinitionJson.RootElement.GetProperty("id").ToString());
-                Assert.AreEqual(expectedRoleAssignmentJson.GetProperty("roleDefinitionId").ToString(), actualRoleDefinitionJson.RootElement.GetProperty("roleDefinitionId").ToString());
-                Assert.AreEqual(expectedRoleAssignmentJson.GetProperty("principalId").ToString(), actualRoleDefinitionJson.RootElement.GetProperty("principalId").ToString());
-                Assert.AreEqual(expectedRoleAssignmentJson.GetProperty("scope").ToString(), actualRoleDefinitionJson.RootElement.GetProperty("scope").ToString());
+                Assert.That(actualRoleDefinitionJson.RootElement.GetProperty("id").ToString(), Is.EqualTo(expectedRoleAssignmentJson.GetProperty("id").ToString()));
+                Assert.That(actualRoleDefinitionJson.RootElement.GetProperty("roleDefinitionId").ToString(), Is.EqualTo(expectedRoleAssignmentJson.GetProperty("roleDefinitionId").ToString()));
+                Assert.That(actualRoleDefinitionJson.RootElement.GetProperty("principalId").ToString(), Is.EqualTo(expectedRoleAssignmentJson.GetProperty("principalId").ToString()));
+                Assert.That(actualRoleDefinitionJson.RootElement.GetProperty("scope").ToString(), Is.EqualTo(expectedRoleAssignmentJson.GetProperty("scope").ToString()));
             }
 
             Assert.GreaterOrEqual(roleAssignmentsJson.GetArrayLength(), 1);
@@ -238,18 +238,18 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             using var accessDecisionsJson = JsonDocument.Parse(content.ToMemory());
             var accessDecisionsEnumerator = accessDecisionsJson.RootElement.GetProperty("AccessDecisions").EnumerateArray();
 
-            Assert.AreEqual(1, accessDecisionsEnumerator.Count());
+            Assert.That(accessDecisionsEnumerator.Count(), Is.EqualTo(1));
 
             var accessDecisionJson = accessDecisionsEnumerator.First();
 
-            Assert.AreEqual("Allowed", accessDecisionJson.GetProperty("accessDecision").ToString());
-            Assert.AreEqual(actionId, accessDecisionJson.GetProperty("actionId").ToString());
+            Assert.That(accessDecisionJson.GetProperty("accessDecision").ToString(), Is.EqualTo("Allowed"));
+            Assert.That(accessDecisionJson.GetProperty("actionId").ToString(), Is.EqualTo(actionId));
 
             var roleAssignmentJson = accessDecisionJson.GetProperty("roleAssignment");
-            Assert.AreEqual(role.RoleAssignmentId, roleAssignmentJson.GetProperty("id").ToString());
-            Assert.AreEqual(role.RoleAssignmentRoleDefinitionId, roleAssignmentJson.GetProperty("roleDefinitionId").ToString());
-            Assert.AreEqual(role.RoleAssignmentPrincipalId, roleAssignmentJson.GetProperty("principalId").ToString());
-            Assert.AreEqual(scope, roleAssignmentJson.GetProperty("scope").ToString());
+            Assert.That(roleAssignmentJson.GetProperty("id").ToString(), Is.EqualTo(role.RoleAssignmentId));
+            Assert.That(roleAssignmentJson.GetProperty("roleDefinitionId").ToString(), Is.EqualTo(role.RoleAssignmentRoleDefinitionId));
+            Assert.That(roleAssignmentJson.GetProperty("principalId").ToString(), Is.EqualTo(role.RoleAssignmentPrincipalId));
+            Assert.That(roleAssignmentJson.GetProperty("scope").ToString(), Is.EqualTo(scope));
         }
     }
 }

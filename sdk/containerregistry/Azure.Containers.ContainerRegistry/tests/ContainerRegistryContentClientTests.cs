@@ -95,11 +95,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Request with digest
             GetManifestResult result = await client.GetManifestAsync(digest);
-            Assert.AreEqual(manifestContent, result.Manifest.ToString());
+            Assert.That(result.Manifest.ToString(), Is.EqualTo(manifestContent));
 
             // Request with tag
             result = await client.GetManifestAsync(tagName);
-            Assert.AreEqual(manifestContent, result.Manifest.ToString());
+            Assert.That(result.Manifest.ToString(), Is.EqualTo(manifestContent));
 
             // Request with digest that doesn't match the content
             Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -191,7 +191,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Request stream with content that matches digest.
             DownloadRegistryBlobStreamingResult result = await client.DownloadBlobStreamingAsync(digest);
-            Assert.AreEqual(expected.ToArray(), BinaryData.FromStream(result.Content).ToArray());
+            Assert.That(BinaryData.FromStream(result.Content).ToArray(), Is.EqualTo(expected.ToArray()));
 
             // Request stream with different content.
             Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -315,11 +315,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 Console.WriteLine($"Service error: {ex.Message}");
 
                 caught = true;
-                Assert.IsTrue(ex.Message.Contains("first error message"), "Exception message does not contain first error message.");
-                Assert.IsTrue(ex.Message.Contains("second error message"), "Exception message does not contain second error message.");
+                Assert.That(ex.Message.Contains("first error message"), Is.True, "Exception message does not contain first error message.");
+                Assert.That(ex.Message.Contains("second error message"), Is.True, "Exception message does not contain second error message.");
             }
 
-            Assert.IsTrue(caught);
+            Assert.That(caught, Is.True);
         }
 
         [Test]
@@ -346,10 +346,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 Console.WriteLine($"Service error: {ex.Message}");
 
                 caught = true;
-                Assert.IsTrue(ex.Message.Contains("https://aka.ms/azsdk/net/containerregistry/uploadblob/troubleshoot"), "Exception message does not contain troubleshooting guide link.");
+                Assert.That(ex.Message.Contains("https://aka.ms/azsdk/net/containerregistry/uploadblob/troubleshoot"), Is.True, "Exception message does not contain troubleshooting guide link.");
             }
 
-            Assert.IsTrue(caught);
+            Assert.That(caught, Is.True);
         }
 
         private class MockReadOnlyStream : Stream

@@ -14,15 +14,15 @@ public class GuidUtilitiesTests
     {
         var input = Guid.NewGuid();
 
-        Assert.IsTrue(GuidUtilities.TryParseGuidBytes(input.ToByteArray(), out Guid output));
-        Assert.AreEqual(input, output);
+        Assert.That(GuidUtilities.TryParseGuidBytes(input.ToByteArray(), out Guid output), Is.True);
+        Assert.That(output, Is.EqualTo(input));
     }
 
     [Test]
     public void TryParseGuidBytesReturnsFalseOnInvalidInput()
     {
-        Assert.IsFalse(GuidUtilities.TryParseGuidBytes(new byte[15], out Guid guid));
-        Assert.AreEqual(default(Guid), guid);
+        Assert.That(GuidUtilities.TryParseGuidBytes(new byte[15], out Guid guid), Is.False);
+        Assert.That(guid, Is.EqualTo(default(Guid)));
     }
 
     [Test]

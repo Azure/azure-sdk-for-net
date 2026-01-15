@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Tests
             ResourceGroupResource rg = rgOp.Value;
             var deleteOp = await rg.DeleteAsync(WaitUntil.Started);
             var response = deleteOp.GetRawResponse();
-            Assert.AreEqual(202, response.Status);
+            Assert.That(response.Status, Is.EqualTo(202));
             await deleteOp.UpdateStatusAsync();
             await deleteOp.WaitForCompletionResponseAsync();
             await deleteOp.WaitForCompletionResponseAsync(TimeSpan.FromSeconds(2));
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Tests
             var rgOp = InstrumentClientExtension(Client.GetResourceGroupResource(new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/fake")));
             var deleteOpTask = rgOp.DeleteAsync(WaitUntil.Started);
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await deleteOpTask);
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
         }
 
         [RecordedTest]
@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.Tests
             var rg1Op = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testrg"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroupResource rg1 = rg1Op.Value;
             ResourceGroupResource rg2 = await rg1.GetAsync();
-            Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
-            Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg1.Data.ResourceType, rg2.Data.ResourceType);
-            Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
-            Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
-            Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
-            Assert.AreEqual(rg1.Data.Tags, rg2.Data.Tags);
+            Assert.That(rg2.Data.Name, Is.EqualTo(rg1.Data.Name));
+            Assert.That(rg2.Data.Id, Is.EqualTo(rg1.Data.Id));
+            Assert.That(rg2.Data.ResourceType, Is.EqualTo(rg1.Data.ResourceType));
+            Assert.That(rg2.Data.Properties.ProvisioningState, Is.EqualTo(rg1.Data.Properties.ProvisioningState));
+            Assert.That(rg2.Data.Location, Is.EqualTo(rg1.Data.Location));
+            Assert.That(rg2.Data.ManagedBy, Is.EqualTo(rg1.Data.ManagedBy));
+            Assert.That(rg2.Data.Tags, Is.EqualTo(rg1.Data.Tags));
 
             ResourceIdentifier fakeId = new ResourceIdentifier(rg1.Data.Id.ToString() + "x");
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetResourceGroupResource(new ResourceIdentifier(fakeId)).GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [RecordedTest]
@@ -97,13 +97,13 @@ namespace Azure.ResourceManager.Tests
                 Name = rgName
             };
             ResourceGroupResource rg2 = await rg1.UpdateAsync(parameters);
-            Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
-            Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg1.Data.ResourceType, rg2.Data.ResourceType);
-            Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
-            Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
-            Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
-            Assert.AreEqual(rg1.Data.Tags, rg2.Data.Tags);
+            Assert.That(rg2.Data.Name, Is.EqualTo(rg1.Data.Name));
+            Assert.That(rg2.Data.Id, Is.EqualTo(rg1.Data.Id));
+            Assert.That(rg2.Data.ResourceType, Is.EqualTo(rg1.Data.ResourceType));
+            Assert.That(rg2.Data.Properties.ProvisioningState, Is.EqualTo(rg1.Data.Properties.ProvisioningState));
+            Assert.That(rg2.Data.Location, Is.EqualTo(rg1.Data.Location));
+            Assert.That(rg2.Data.ManagedBy, Is.EqualTo(rg1.Data.ManagedBy));
+            Assert.That(rg2.Data.Tags, Is.EqualTo(rg1.Data.Tags));
 
             var parameters3 = new ResourceGroupPatch
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Tests
                 Tags = {} // This does not touch the ChangeTrackingDictionary and no tags property will be sent in the patch request.
             };
             ResourceGroupResource rg3 = await rg2.UpdateAsync(parameters3);
-            Assert.AreEqual(rg1.Data.Tags, rg3.Data.Tags);
+            Assert.That(rg3.Data.Tags, Is.EqualTo(rg1.Data.Tags));
 
             var parameters4 = new ResourceGroupPatch
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Tests
             };
             parameters4.Tags.Clear();
             ResourceGroupResource rg4 = await rg3.UpdateAsync(parameters4);
-            Assert.AreEqual(0, rg4.Data.Tags.Count);
+            Assert.That(rg4.Data.Tags.Count, Is.EqualTo(0));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.UpdateAsync(null));
         }
@@ -151,20 +151,20 @@ namespace Azure.ResourceManager.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rg1Op = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testrg"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroupResource rg1 = rg1Op.Value;
-            Assert.AreEqual(0, rg1.Data.Tags.Count);
+            Assert.That(rg1.Data.Tags.Count, Is.EqualTo(0));
             ResourceGroupResource rg2 = await rg1.AddTagAsync("key", "value");
-            Assert.AreEqual(1, rg2.Data.Tags.Count);
-            Assert.IsTrue(rg2.Data.Tags.Contains(new KeyValuePair<string, string>("key", "value")));
-            Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
-            Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg1.Data.ResourceType, rg2.Data.ResourceType);
-            Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
-            Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
-            Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
+            Assert.That(rg2.Data.Tags.Count, Is.EqualTo(1));
+            Assert.That(rg2.Data.Tags.Contains(new KeyValuePair<string, string>("key", "value")), Is.True);
+            Assert.That(rg2.Data.Name, Is.EqualTo(rg1.Data.Name));
+            Assert.That(rg2.Data.Id, Is.EqualTo(rg1.Data.Id));
+            Assert.That(rg2.Data.ResourceType, Is.EqualTo(rg1.Data.ResourceType));
+            Assert.That(rg2.Data.Properties.ProvisioningState, Is.EqualTo(rg1.Data.Properties.ProvisioningState));
+            Assert.That(rg2.Data.Location, Is.EqualTo(rg1.Data.Location));
+            Assert.That(rg2.Data.ManagedBy, Is.EqualTo(rg1.Data.ManagedBy));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.AddTagAsync(null, "value"));
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await rg1.AddTagAsync(" ", "value"));
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
         }
 
         [TestCase(null)]
@@ -176,19 +176,19 @@ namespace Azure.ResourceManager.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rg1Op = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testrg"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroupResource rg1 = rg1Op.Value;
-            Assert.AreEqual(0, rg1.Data.Tags.Count);
+            Assert.That(rg1.Data.Tags.Count, Is.EqualTo(0));
             var tags = new Dictionary<string, string>()
             {
                 { "key", "value"}
             };
             ResourceGroupResource rg2 = await rg1.SetTagsAsync(tags);
-            Assert.AreEqual(tags, rg2.Data.Tags);
-            Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
-            Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg1.Data.ResourceType, rg2.Data.ResourceType);
-            Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
-            Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
-            Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
+            Assert.That(rg2.Data.Tags, Is.EqualTo(tags));
+            Assert.That(rg2.Data.Name, Is.EqualTo(rg1.Data.Name));
+            Assert.That(rg2.Data.Id, Is.EqualTo(rg1.Data.Id));
+            Assert.That(rg2.Data.ResourceType, Is.EqualTo(rg1.Data.ResourceType));
+            Assert.That(rg2.Data.Properties.ProvisioningState, Is.EqualTo(rg1.Data.Properties.ProvisioningState));
+            Assert.That(rg2.Data.Location, Is.EqualTo(rg1.Data.Location));
+            Assert.That(rg2.Data.ManagedBy, Is.EqualTo(rg1.Data.ManagedBy));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.SetTagsAsync(null));
         }
@@ -213,18 +213,18 @@ namespace Azure.ResourceManager.Tests
             {
                 { "k2", "v2"}
             };
-            Assert.AreEqual(tags2, rg2.Data.Tags);
-            Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
-            Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg1.Data.ResourceType, rg2.Data.ResourceType);
-            Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
-            Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
-            Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
+            Assert.That(rg2.Data.Tags, Is.EqualTo(tags2));
+            Assert.That(rg2.Data.Name, Is.EqualTo(rg1.Data.Name));
+            Assert.That(rg2.Data.Id, Is.EqualTo(rg1.Data.Id));
+            Assert.That(rg2.Data.ResourceType, Is.EqualTo(rg1.Data.ResourceType));
+            Assert.That(rg2.Data.Properties.ProvisioningState, Is.EqualTo(rg1.Data.Properties.ProvisioningState));
+            Assert.That(rg2.Data.Location, Is.EqualTo(rg1.Data.Location));
+            Assert.That(rg2.Data.ManagedBy, Is.EqualTo(rg1.Data.ManagedBy));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.RemoveTagAsync(null));
             Assert.DoesNotThrowAsync(async () => rg2 = await rg1.RemoveTagAsync(" "));
             //removing something that wasn't there should not have changed the tags
-            Assert.AreEqual(tags2, rg2.Data.Tags);
+            Assert.That(rg2.Data.Tags, Is.EqualTo(tags2));
         }
 
         [RecordedTest]
@@ -255,8 +255,8 @@ namespace Azure.ResourceManager.Tests
 
             int countRg1 = await GetResourceCountAsync(rg1.GetGenericResourcesAsync());
             int countRg2 = await GetResourceCountAsync(rg2.GetGenericResourcesAsync());
-            Assert.AreEqual(1, countRg1);
-            Assert.AreEqual(0, countRg2);
+            Assert.That(countRg1, Is.EqualTo(1));
+            Assert.That(countRg2, Is.EqualTo(0));
 
             var moveInfo = new ResourcesMoveContent();
             moveInfo.TargetResourceGroup = rg2.Id;
@@ -265,8 +265,8 @@ namespace Azure.ResourceManager.Tests
 
             countRg1 = await GetResourceCountAsync(rg1.GetGenericResourcesAsync());
             countRg2 = await GetResourceCountAsync(rg2.GetGenericResourcesAsync());
-            Assert.AreEqual(0, countRg1);
-            Assert.AreEqual(1, countRg2);
+            Assert.That(countRg1, Is.EqualTo(0));
+            Assert.That(countRg2, Is.EqualTo(1));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.MoveResourcesAsync(WaitUntil.Completed, null));
         }
@@ -285,8 +285,8 @@ namespace Azure.ResourceManager.Tests
 
             int countRg1 = await GetResourceCountAsync(rg1.GetGenericResourcesAsync());
             int countRg2 = await GetResourceCountAsync(rg2.GetGenericResourcesAsync());
-            Assert.AreEqual(1, countRg1);
-            Assert.AreEqual(0, countRg2);
+            Assert.That(countRg1, Is.EqualTo(1));
+            Assert.That(countRg2, Is.EqualTo(0));
 
             var moveInfo = new ResourcesMoveContent();
             moveInfo.TargetResourceGroup = rg2.Id;
@@ -296,8 +296,8 @@ namespace Azure.ResourceManager.Tests
 
             countRg1 = await GetResourceCountAsync(rg1.GetGenericResourcesAsync());
             countRg2 = await GetResourceCountAsync(rg2.GetGenericResourcesAsync());
-            Assert.AreEqual(0, countRg1);
-            Assert.AreEqual(1, countRg2);
+            Assert.That(countRg1, Is.EqualTo(0));
+            Assert.That(countRg2, Is.EqualTo(1));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Tests
             var validateOp = await rg1.ValidateMoveResourcesAsync(WaitUntil.Completed, moveInfo);
             Response response = validateOp.GetRawResponse();
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.ValidateMoveResourcesAsync(WaitUntil.Completed, null));
         }
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Tests
             var validateOp = await rg1.ValidateMoveResourcesAsync(WaitUntil.Started, moveInfo);
             Response response = await validateOp.WaitForCompletionResponseAsync();
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {

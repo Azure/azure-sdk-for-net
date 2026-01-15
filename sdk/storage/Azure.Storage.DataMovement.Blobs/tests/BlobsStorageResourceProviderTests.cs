@@ -126,8 +126,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobStorageResourceContainer resource = await provider.FromContainerAsync(uri) as BlobStorageResourceContainer;
 
             Assert.IsNotNull(resource);
-            Assert.AreEqual(uri, resource.Uri);
-            Assert.AreEqual(uri, resource.BlobContainerClient.Uri);
+            Assert.That(resource.Uri, Is.EqualTo(uri));
+            Assert.That(resource.BlobContainerClient.Uri, Is.EqualTo(uri));
             AssertCredPresent(resource.BlobContainerClient.ClientConfiguration, credType);
         }
 
@@ -162,8 +162,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             Assert.IsNotNull(resource);
             AssertBlobStorageResourceType(resource, blobType, out BlobBaseClient underlyingClient);
-            Assert.AreEqual(uri, resource.Uri);
-            Assert.AreEqual(uri, underlyingClient.Uri);
+            Assert.That(resource.Uri, Is.EqualTo(uri));
+            Assert.That(underlyingClient.Uri, Is.EqualTo(uri));
             AssertCredPresent(underlyingClient.ClientConfiguration, credType);
         }
 
@@ -195,8 +195,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             Assert.IsNotNull(resource);
             AssertBlobStorageResourceType(resource, BlobType.Block, out BlobBaseClient underlyingClient);
-            Assert.AreEqual(uri, resource.Uri);
-            Assert.AreEqual(uri, underlyingClient.Uri);
+            Assert.That(resource.Uri, Is.EqualTo(uri));
+            Assert.That(underlyingClient.Uri, Is.EqualTo(uri));
             AssertCredPresent(underlyingClient.ClientConfiguration, credType);
         }
     }

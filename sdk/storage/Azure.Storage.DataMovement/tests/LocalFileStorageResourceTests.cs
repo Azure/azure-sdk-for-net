@@ -69,8 +69,8 @@ namespace Azure.Storage.DataMovement.Tests
                 LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
                 // Assert
-                Assert.AreEqual(path, storageResource.Uri.LocalPath);
-                Assert.AreEqual(Uri.UriSchemeFile, storageResource.Uri.Scheme);
+                Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(path));
+                Assert.That(storageResource.Uri.Scheme, Is.EqualTo(Uri.UriSchemeFile));
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
             catch (FileNotFoundException ex)
             {
-                Assert.AreEqual(ex.Message, $"Could not find file '{path}'.");
+                Assert.That($"Could not find file '{path}'.", Is.EqualTo(ex.Message));
             }
         }
 
@@ -284,7 +284,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(result.ResourceLength, size);
+            Assert.That(size, Is.EqualTo(result.ResourceLength));
             Assert.NotNull(result.RawProperties);
         }
 
@@ -302,7 +302,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
             catch (FileNotFoundException ex)
             {
-                Assert.AreEqual(ex.Message, "Unable to find the specified file.");
+                Assert.That(ex.Message, Is.EqualTo("Unable to find the specified file."));
             }
         }
 
@@ -318,7 +318,7 @@ namespace Azure.Storage.DataMovement.Tests
             await storageResource.CompleteTransferAsync(false);
 
             // Assert
-            Assert.IsTrue(File.Exists(path));
+            Assert.That(File.Exists(path), Is.True);
         }
     }
 }

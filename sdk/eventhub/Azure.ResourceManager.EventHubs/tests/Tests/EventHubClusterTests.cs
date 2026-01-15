@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
             EventHubsClusterData parameter = new EventHubsClusterData(AzureLocation.EastUS2);
             EventHubsClusterResource cluster = (await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, parameter)).Value;
             Assert.NotNull(cluster);
-            Assert.AreEqual(cluster.Data.Name, clusterName);
+            Assert.That(clusterName, Is.EqualTo(cluster.Data.Name));
 
             //get the cluster
             cluster = await clusterCollection.GetAsync(clusterName);
             Assert.NotNull(cluster);
-            Assert.AreEqual(cluster.Data.Name, clusterName);
+            Assert.That(clusterName, Is.EqualTo(cluster.Data.Name));
 
             //get the namespace under cluster
             SubResource subResource = null;
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //update the cluster
             cluster.Data.Tags.Add("key1", "value1");
             cluster = (await cluster.UpdateAsync(WaitUntil.Completed, cluster.Data)).Value;
-            Assert.AreEqual(cluster.Data.Tags["key1"], "value1");
+            Assert.That(cluster.Data.Tags["key1"], Is.EqualTo("value1"));
 
             //delete the cluster
             await cluster.DeleteAsync(WaitUntil.Completed);
-            Assert.IsFalse(await clusterCollection.ExistsAsync(clusterName));
+            Assert.That((bool)await clusterCollection.ExistsAsync(clusterName), Is.False);
         }
     }
 }

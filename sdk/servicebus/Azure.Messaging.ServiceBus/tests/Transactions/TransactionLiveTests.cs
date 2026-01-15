@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
                 Assert.NotNull(receivedMessage);
-                Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
+                Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message.Body.ToString()));
                 await receiver.CompleteMessageAsync(receivedMessage);
             };
         }
@@ -64,14 +64,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
                 Assert.NotNull(receivedMessage);
-                Assert.AreEqual(message1.Body.ToString(), receivedMessage.Body.ToString());
+                Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message1.Body.ToString()));
                 await receiver.CompleteMessageAsync(receivedMessage);
 
                 receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 receivedMessage = await receiver.ReceiveMessageAsync();
 
                 Assert.NotNull(receivedMessage);
-                Assert.AreEqual(message2.Body.ToString(), receivedMessage.Body.ToString());
+                Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message2.Body.ToString()));
                 await receiver.CompleteMessageAsync(receivedMessage);
             };
         }
@@ -200,9 +200,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 var receivedMessage = await receiver.ReceiveMessageAsync();
                 Assert.NotNull(receivedMessage);
-                Assert.AreEqual(
-                    message.Body.ToString(),
-                    receivedMessage.Body.ToString());
+                Assert.That(
+                    receivedMessage.Body.ToString(),
+                    Is.EqualTo(message.Body.ToString()));
                 var sequenceNumber = receivedMessage.SequenceNumber;
                 await receiver.DeferMessageAsync(receivedMessage);
 
@@ -316,7 +316,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
                 Assert.NotNull(receivedMessage);
-                Assert.AreEqual(message1.Body.ToString(), receivedMessage.Body.ToString());
+                Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message1.Body.ToString()));
 
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
@@ -339,7 +339,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 // Assert that send did succeed
                 receivedMessage = await receiver.ReceiveMessageAsync();
                 Assert.NotNull(receivedMessage);
-                Assert.AreEqual(message2.Body.ToString(), receivedMessage.Body.ToString());
+                Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message2.Body.ToString()));
                 await receiver.CompleteMessageAsync(receivedMessage);
 
                 // validate that the Local transaction cannot span multiple entities error is not thrown when outside of a transaction
@@ -433,7 +433,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
                 Assert.NotNull(receivedMessage);
-                Assert.AreEqual(message1.Body.ToString(), receivedMessage.Body.ToString());
+                Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message1.Body.ToString()));
 
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
@@ -462,7 +462,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
                 Assert.NotNull(receivedMessage);
-                Assert.AreEqual(message1.Body.ToString(), receivedMessage.Body.ToString());
+                Assert.That(receivedMessage.Body.ToString(), Is.EqualTo(message1.Body.ToString()));
 
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
@@ -479,7 +479,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 // Assert that send failed
                 receivedMessage = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
-                Assert.Null(receivedMessage);
+                Assert.That(receivedMessage, Is.Null);
             }
         }
 

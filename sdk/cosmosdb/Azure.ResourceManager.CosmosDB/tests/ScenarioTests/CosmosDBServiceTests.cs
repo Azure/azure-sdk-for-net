@@ -74,13 +74,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task CosmosDBServiceCreateAndUpdate()
         {
             var service = await CreateCosmosDBService();
-            Assert.AreEqual(_serviceName, service.Data.Name);
+            Assert.That(service.Data.Name, Is.EqualTo(_serviceName));
 
             bool ifExists = await CosmosDBServiceCollection.ExistsAsync(_serviceName);
-            Assert.True(ifExists);
+            Assert.That(ifExists, Is.True);
 
             CosmosDBServiceResource service2 = await CosmosDBServiceCollection.GetAsync(_serviceName);
-            Assert.AreEqual(_serviceName, service2.Data.Name);
+            Assert.That(service2.Data.Name, Is.EqualTo(_serviceName));
 
             VerifyCosmosDBService(service, service2);
         }
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var service = await CreateCosmosDBService();
             bool exists = await CosmosDBServiceCollection.ExistsAsync(_serviceName);
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
             await service.DeleteAsync(WaitUntil.Completed);
 
             exists = await CosmosDBServiceCollection.ExistsAsync(_serviceName);
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
         }
 
         internal async Task<CosmosDBServiceResource> CreateCosmosDBService()
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyCosmosDBService(CosmosDBServiceResource expectedValue, CosmosDBServiceResource actualValue)
         {
-            Assert.AreEqual(expectedValue.Id, actualValue.Id);
-            Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.ResourceType, actualValue.Data.ResourceType);
+            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+            Assert.That(actualValue.Data.ResourceType, Is.EqualTo(expectedValue.Data.ResourceType));
 
-            Assert.AreEqual(expectedValue.Data.Properties.InstanceCount, actualValue.Data.Properties.InstanceCount);
+            Assert.That(actualValue.Data.Properties.InstanceCount, Is.EqualTo(expectedValue.Data.Properties.InstanceCount));
 
-            Assert.AreEqual(expectedValue.Data.Properties.InstanceSize, actualValue.Data.Properties.InstanceSize);
-            Assert.AreEqual(expectedValue.Data.Properties.ServiceType, actualValue.Data.Properties.ServiceType);
-            Assert.AreEqual(expectedValue.Data.Properties.Status, actualValue.Data.Properties.Status);
-            Assert.AreEqual(expectedValue.Data.Properties.CreatedOn, actualValue.Data.Properties.CreatedOn);
+            Assert.That(actualValue.Data.Properties.InstanceSize, Is.EqualTo(expectedValue.Data.Properties.InstanceSize));
+            Assert.That(actualValue.Data.Properties.ServiceType, Is.EqualTo(expectedValue.Data.Properties.ServiceType));
+            Assert.That(actualValue.Data.Properties.Status, Is.EqualTo(expectedValue.Data.Properties.Status));
+            Assert.That(actualValue.Data.Properties.CreatedOn, Is.EqualTo(expectedValue.Data.Properties.CreatedOn));
         }
     }
 }

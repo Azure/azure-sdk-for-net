@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
             var content = new DatabaseInviteFollowerContent("user@contoso.com");
             var invitation = await Database.InviteFollowerDatabaseAsync(content).ConfigureAwait(false);
-            Assert.IsTrue(!string.IsNullOrWhiteSpace(invitation.Value.GeneratedInvitation));
+            Assert.That(!string.IsNullOrWhiteSpace(invitation.Value.GeneratedInvitation), Is.True);
         }
 
         private async Task ReadOnlyFollowingDatabaseResourceTests(KustoDatabaseResource followingDatabase)

@@ -49,8 +49,8 @@ namespace Azure.AI.Personalizer.Tests
         private async Task GetModelProperties(PersonalizerAdministrationClient client)
         {
             PersonalizerModelProperties modelProperties = await client.GetPersonalizerModelPropertiesAsync();
-            Assert.True(modelProperties.CreationTime != null);
-            Assert.True(modelProperties.LastModifiedTime != null);
+            Assert.That(modelProperties.CreationTime != null, Is.True);
+            Assert.That(modelProperties.LastModifiedTime != null, Is.True);
         }
     }
 }

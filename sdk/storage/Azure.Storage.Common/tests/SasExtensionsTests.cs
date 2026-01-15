@@ -13,11 +13,11 @@ namespace Azure.Storage.Tests
         public void AccountSasPermission_Round_Trip()
         {
             AccountSasServices services = SasExtensions.ParseAccountServices("bfqt");
-            Assert.IsTrue(services.HasFlag(AccountSasServices.Blobs));
-            Assert.IsTrue(services.HasFlag(AccountSasServices.Files));
-            Assert.IsTrue(services.HasFlag(AccountSasServices.Queues));
-            Assert.IsTrue(services.HasFlag(AccountSasServices.Tables));
-            Assert.AreEqual(services.ToPermissionsString(), "bfqt");
+            Assert.That(services.HasFlag(AccountSasServices.Blobs), Is.True);
+            Assert.That(services.HasFlag(AccountSasServices.Files), Is.True);
+            Assert.That(services.HasFlag(AccountSasServices.Queues), Is.True);
+            Assert.That(services.HasFlag(AccountSasServices.Tables), Is.True);
+            Assert.That(services.ToPermissionsString(), Is.EqualTo("bfqt"));
         }
     }
 }

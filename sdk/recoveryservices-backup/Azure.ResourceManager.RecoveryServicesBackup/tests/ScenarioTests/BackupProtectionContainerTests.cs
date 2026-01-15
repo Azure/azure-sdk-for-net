@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Tests
             };
             var container = (await rg.GetBackupProtectionContainers()
                 .CreateOrUpdateAsync(WaitUntil.Completed, vaultName, "Azure", containerName, containerData)).Value;
-            Assert.AreEqual(container.Data.Properties.RegistrationStatus, "Registered");
-            Assert.AreEqual(container.Data.Name, containerName);
+            Assert.That(container.Data.Properties.RegistrationStatus, Is.EqualTo("Registered"));
+            Assert.That(containerName, Is.EqualTo(container.Data.Name));
 
             // Remove the auto-lock before we delete the resource group
             var deleteLock = (await storage.GetManagementLocks().GetAsync("AzureBackupProtectionLock")).Value;

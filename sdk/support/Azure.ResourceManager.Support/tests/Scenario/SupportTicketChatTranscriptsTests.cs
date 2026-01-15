@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task Exist()
         {
             var flag = await _supportTicketChatTranscriptCollection.ExistsAsync(_existSupportTicketChatTranscriptsName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
         }
 
         [RecordedTest]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Support.Tests
         {
             Assert.IsNotNull(supportTicketChatTranscript);
             Assert.IsNotEmpty(supportTicketChatTranscript.Id);
-            Assert.AreEqual(supportTicketChatTranscript.Name, _existSupportTicketChatTranscriptsName);
+            Assert.That(supportTicketChatTranscript.Name, Is.EqualTo(_existSupportTicketChatTranscriptsName));
         }
     }
 }

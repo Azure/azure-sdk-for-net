@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             };
             ArmOperation<NetworkFabricL3IsolationDomainResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.L3IsolationDomainName, data);
             NetworkFabricL3IsolationDomainResource createResult = lro.Value;
-            Assert.AreEqual(createResult.Data.Name, TestEnvironment.L3IsolationDomainName);
+            Assert.That(TestEnvironment.L3IsolationDomainName, Is.EqualTo(createResult.Data.Name));
 
             NetworkFabricL3IsolationDomainResource l3IsolationDomain = Client.GetNetworkFabricL3IsolationDomainResource(l3IsolationDomainResourceId);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....");
             NetworkFabricL3IsolationDomainResource getResult = await l3IsolationDomain.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, TestEnvironment.L3IsolationDomainName);
+            Assert.That(TestEnvironment.L3IsolationDomainName, Is.EqualTo(getResult.Data.Name));
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             ArmOperation deleteResponse = await l3IsolationDomain.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteResponse.HasCompleted);
+            Assert.That(deleteResponse.HasCompleted, Is.True);
 
             // Update Admin State
             NetworkFabricL3IsolationDomainResource l3IsolationDomainForPostAction = Client.GetNetworkFabricL3IsolationDomainResource(new ResourceIdentifier(TestEnvironment.Existing_L3ISD_ID));

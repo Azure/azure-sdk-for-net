@@ -51,7 +51,7 @@ namespace Azure.Communication.CallingServer
             {
                 Response result = await operation(_callMedia);
                 Assert.IsNotNull(result);
-                Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
+                Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.Communication.CallingServer
             {
                 Response result = operation(_callMedia);
                 Assert.IsNotNull(result);
-                Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
+                Assert.That(result.Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.Communication.CallingServer
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await operation(_callMedia));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_PlayOperations))]
@@ -90,7 +90,7 @@ namespace Azure.Communication.CallingServer
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(
                 () => operation(_callMedia));
             Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         private static IEnumerable<object?[]> TestData_PlayOperationsAsync()

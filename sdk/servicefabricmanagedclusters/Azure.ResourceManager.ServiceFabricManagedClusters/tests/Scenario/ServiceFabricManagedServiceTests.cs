@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
             // Exist
             var flag = await _clusterCollection.ExistsAsync(clusterName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             // Get
             var getCluster = await _clusterCollection.GetAsync(clusterName);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             // Delete
             await cluster.DeleteAsync(WaitUntil.Completed);
             flag = await _clusterCollection.ExistsAsync(clusterName);
-            Assert.IsFalse(flag);
+            Assert.That((bool)flag, Is.False);
         }
 
         [TestCase(true)]  // api-version '2022-09-01' is not support
@@ -69,28 +69,28 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             // AddTag
             await cluster.AddTagAsync("addtagkey", "addtagvalue");
             cluster = await _clusterCollection.GetAsync(clusterName);
-            Assert.AreEqual(1, cluster.Data.Tags.Count);
+            Assert.That(cluster.Data.Tags.Count, Is.EqualTo(1));
             KeyValuePair<string, string> tag = cluster.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
 
             // RemoveTag
             await cluster.RemoveTagAsync("addtagkey");
             cluster = await _clusterCollection.GetAsync(clusterName);
-            Assert.AreEqual(0, cluster.Data.Tags.Count);
+            Assert.That(cluster.Data.Tags.Count, Is.EqualTo(0));
         }
 
         private void ValidatePurviewAccount(ServiceFabricManagedClusterData cluster, string clusterName)
         {
             Assert.IsNotNull(cluster);
             Assert.IsNotEmpty(cluster.Id);
-            Assert.AreEqual(clusterName, cluster.Name);
-            Assert.AreEqual(DefaultLocation, cluster.Location);
-            Assert.AreEqual(19000, cluster.ClientConnectionPort);
-            Assert.AreEqual(19080, cluster.HttpGatewayConnectionPort);
-            Assert.AreEqual(ManagedClusterUpgradeMode.Automatic, cluster.ClusterUpgradeMode);
-            Assert.AreEqual(false, cluster.HasZoneResiliency);
-            Assert.AreEqual("vmadmin", cluster.AdminUserName);
+            Assert.That(cluster.Name, Is.EqualTo(clusterName));
+            Assert.That(cluster.Location, Is.EqualTo(DefaultLocation));
+            Assert.That(cluster.ClientConnectionPort, Is.EqualTo(19000));
+            Assert.That(cluster.HttpGatewayConnectionPort, Is.EqualTo(19080));
+            Assert.That(cluster.ClusterUpgradeMode, Is.EqualTo(ManagedClusterUpgradeMode.Automatic));
+            Assert.That(cluster.HasZoneResiliency, Is.EqualTo(false));
+            Assert.That(cluster.AdminUserName, Is.EqualTo("vmadmin"));
         }
     }
 }

@@ -148,7 +148,7 @@ namespace Azure.Storage.DataMovement.Tests
             string file = Path.Combine(_temp, Path.GetRandomFileName());
 
             // Act/Assert
-            Assert.IsFalse(File.Exists(file));
+            Assert.That(File.Exists(file), Is.False);
             Assert.Throws<ArgumentException>(() => {
                 PathScannerFactory scannerFactory = new PathScannerFactory(file);
                 PathScanner scanner = scannerFactory.BuildPathScanner();

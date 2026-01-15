@@ -43,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var warning = testLoggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
             var expectedWarning = "Function 'EventHubsTriggerFunction': An exception occurred when retrieving a checkpoint for " +
                                   "FullyQualifiedNamespace: 'TestNamespace'; EventHubName: 'TestEventHubName'; ConsumerGroup: 'TestConsumerGroup'; PartitionId: '0'.";
-            Assert.AreEqual(expectedWarning, warning.FormattedMessage);
+            Assert.That(warning.FormattedMessage, Is.EqualTo(expectedWarning));
             testLoggerProvider.ClearAllLogMessages();
         }
 
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var expectedWarning = "Function 'EventHubsTriggerFunction': An invalid checkpoint was found for partition: '0' of " +
                                   "FullyQualifiedNamespace: 'TestNamespace'; EventHubName: 'TestEventHubName'; ConsumerGroup: 'TestConsumerGroup'.  " +
                                   "This checkpoint is not valid and will be ignored.";
-            Assert.AreEqual(expectedWarning, warning.FormattedMessage);
+            Assert.That(warning.FormattedMessage, Is.EqualTo(expectedWarning));
             testLoggerProvider.ClearAllLogMessages();
         }
     }

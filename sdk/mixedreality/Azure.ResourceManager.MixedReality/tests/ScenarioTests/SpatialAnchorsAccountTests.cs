@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.MixedReality.Tests
             var resourceName = Recording.GenerateAssetName("spatialAnchorsAccount");
             var spatialAnchorsAccountResource = await CreateSpatialAnchorsAccount(resourceName);
             Assert.IsNotNull(spatialAnchorsAccountResource);
-            Assert.AreEqual(resourceName, spatialAnchorsAccountResource.Data.Name);
-            Assert.AreEqual(_location, spatialAnchorsAccountResource.Data.Location);
+            Assert.That(spatialAnchorsAccountResource.Data.Name, Is.EqualTo(resourceName));
+            Assert.That(spatialAnchorsAccountResource.Data.Location, Is.EqualTo(_location));
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MixedReality.Tests
             var collection = _resourceGroup.GetSpatialAnchorsAccounts();
             var exist = await collection.ExistsAsync(spatialAnchorsAccountResource.Data.Name);
             Assert.IsNotNull(exist);
-            Assert.IsTrue(exist.Value);
+            Assert.That(exist.Value, Is.True);
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MixedReality.Tests
             var spatialAnchorsAccountResource = await CreateSpatialAnchorsAccount(resourceName);
             SpatialAnchorsAccountResource getData = await _accountcollection.GetAsync(spatialAnchorsAccountResource.Data.Name);
             Assert.IsNotNull(getData.Data.Id);
-            Assert.AreEqual(resourceName, getData.Data.Name);
+            Assert.That(getData.Data.Name, Is.EqualTo(resourceName));
         }
 
         [Test]
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.MixedReality.Tests
             var collection = _resourceGroup.GetSpatialAnchorsAccounts();
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.IsTrue(list.Count >= 2);
-            Assert.IsTrue(list.Exists(item => item.Data.Name == spatialAnchorsAccountResource1.Data.Name));
-            Assert.IsTrue(list.Exists(item => item.Data.Name == spatialAnchorsAccountResource2.Data.Name));
+            Assert.That(list.Count >= 2, Is.True);
+            Assert.That(list.Exists(item => item.Data.Name == spatialAnchorsAccountResource1.Data.Name), Is.True);
+            Assert.That(list.Exists(item => item.Data.Name == spatialAnchorsAccountResource2.Data.Name), Is.True);
         }
 
         [Test]
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.MixedReality.Tests
             var spatialAnchorsAccountResource = await CreateSpatialAnchorsAccount(resourceName);
             SpatialAnchorsAccountResource getData = await spatialAnchorsAccountResource.GetAsync();
             Assert.IsNotEmpty(getData.Data.Id);
-            Assert.AreEqual(getData.Data.Id, spatialAnchorsAccountResource.Data.Id);
-            Assert.AreEqual(getData.Data.Name, spatialAnchorsAccountResource.Data.Name);
+            Assert.That(spatialAnchorsAccountResource.Data.Id, Is.EqualTo(getData.Data.Id));
+            Assert.That(spatialAnchorsAccountResource.Data.Name, Is.EqualTo(getData.Data.Name));
         }
 
         [Test]
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.MixedReality.Tests
             SpatialAnchorsAccountResource result = await spatialAnchorsAccountResource.UpdateAsync(data);
             Assert.IsNotEmpty(result.Data.Tags);
             Assert.IsNotNull(result.Data.StorageAccountName);
-            Assert.AreEqual(result.Data.Tags, data.Tags);
-            Assert.AreEqual(result.Data.StorageAccountName,data.StorageAccountName);
+            Assert.That(data.Tags, Is.EqualTo(result.Data.Tags));
+            Assert.That(data.StorageAccountName, Is.EqualTo(result.Data.StorageAccountName));
         }
 
         [Test]
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.MixedReality.Tests
             var resourceName = Recording.GenerateAssetName("spatialAnchorsAccount");
             var spatialAnchorsAccountResource = await CreateSpatialAnchorsAccount(resourceName);
             SpatialAnchorsAccountResource addTags = await spatialAnchorsAccountResource.AddTagAsync("key1", "AddTags");
-            Assert.IsTrue(addTags.Data.Tags.ContainsKey("key1"));
-            Assert.AreEqual(addTags.Data.Tags["key1"], "AddTags");
+            Assert.That(addTags.Data.Tags.ContainsKey("key1"), Is.True);
+            Assert.That(addTags.Data.Tags["key1"], Is.EqualTo("AddTags"));
             Assert.IsNotEmpty(addTags.Data.Tags);
             var setTags = new Dictionary<string, string>()
             {
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.MixedReality.Tests
                 ["key3"] = "SetTags"
             };
             SpatialAnchorsAccountResource Set = await spatialAnchorsAccountResource.SetTagsAsync(setTags);
-            Assert.AreEqual(setTags["key1"], Set.Data.Tags["key1"]);
-            Assert.IsTrue(Set.Data.Tags["key1"] != "AddTags");
+            Assert.That(Set.Data.Tags["key1"], Is.EqualTo(setTags["key1"]));
+            Assert.That(Set.Data.Tags["key1"] != "AddTags", Is.True);
             string removekey = "key3";
             SpatialAnchorsAccountResource Remove = await spatialAnchorsAccountResource.RemoveTagAsync(removekey);
             Assert.IsNotEmpty(Remove.Data.Tags);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MixedReality.Tests
             {
                 verifyDic.Add(item.Key, item.Value);
             }
-            Assert.IsFalse(verifyDic.ContainsKey(removekey));
+            Assert.That(verifyDic.ContainsKey(removekey), Is.False);
         }
 
         [Test]
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.MixedReality.Tests
             var spatialAnchorsAccount = Client.GetSpatialAnchorsAccountResource(spatialAnchorsAccountResourceId);
             SpatialAnchorsAccountResource result = await spatialAnchorsAccount.GetAsync();
             Assert.IsNotEmpty(result.Data.Id);
-            Assert.AreEqual(result.Data.Id, spatialAnchorsAccountResource.Data.Id);
-            Assert.AreEqual(result.Data.Name, spatialAnchorsAccountResource.Data.Name);
+            Assert.That(spatialAnchorsAccountResource.Data.Id, Is.EqualTo(result.Data.Id));
+            Assert.That(spatialAnchorsAccountResource.Data.Name, Is.EqualTo(result.Data.Name));
         }
 
         [Test]
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.MixedReality.Tests
             var resourceName = Recording.GenerateAssetName("spatialAnchorsAccount");
             var spatialAnchorsAccountResource = await CreateSpatialAnchorsAccount(resourceName);
             var deleted = await spatialAnchorsAccountResource.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleted.HasCompleted);
+            Assert.That(deleted.HasCompleted, Is.True);
             var collection = _resourceGroup.GetSpatialAnchorsAccounts();
             var exist = await collection.ExistsAsync(resourceName);
-            Assert.IsFalse(exist);
+            Assert.That((bool)exist, Is.False);
         }
 
         public async Task<SpatialAnchorsAccountResource> CreateSpatialAnchorsAccount(string accountName)

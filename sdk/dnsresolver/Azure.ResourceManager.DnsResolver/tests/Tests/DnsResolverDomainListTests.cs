@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var dnsResolverDomainList = await _dnsResolverDomainListCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverDomainListName, dnsResolverDomainListData);
 
             // ASSERT
-            Assert.AreEqual(dnsResolverDomainList.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
+            Assert.That(DnsResolverProvisioningState.Succeeded, Is.EqualTo(dnsResolverDomainList.Value.Data.ProvisioningState));
         }
 
         [Test]
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var dnsResolverDomainList = await _dnsResolverDomainListCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverDomainListName, dnsResolverDomainListData);
 
             // ASSERT
-            Assert.AreEqual(dnsResolverDomainList.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
-            Assert.AreEqual(dnsResolverDomainList.Value.Data.Domains.Count, 0);
+            Assert.That(DnsResolverProvisioningState.Succeeded, Is.EqualTo(dnsResolverDomainList.Value.Data.ProvisioningState));
+            Assert.That(dnsResolverDomainList.Value.Data.Domains.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 
             // ASSERT
             DnsResolverDomainListResource result = lro.Value;
-            Assert.AreNotEqual(result.Data.DomainsUri, null);
+            Assert.That(null, Is.Not.EqualTo(result.Data.DomainsUri));
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var retrievedDnsResolverDomainList = await _dnsResolverDomainListCollection.GetAsync(dnsResolverDomainListName);
 
             // ASSERT
-            Assert.AreEqual(retrievedDnsResolverDomainList.Value.Data.Name, dnsResolverDomainListName);
+            Assert.That(dnsResolverDomainListName, Is.EqualTo(retrievedDnsResolverDomainList.Value.Data.Name));
         }
 
         [Test]
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 
             // ASSERT
             var getDnsResolverDomainListResult = await _dnsResolverDomainListCollection.ExistsAsync(dnsResolverDomainListName);
-            Assert.AreEqual(getDnsResolverDomainListResult.Value, false);
+            Assert.That(getDnsResolverDomainListResult.Value, Is.EqualTo(false));
         }
     }
 }

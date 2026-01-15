@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             #endregion
 
             Assert.IsNotNull(deserializedEmployee);
-            Assert.AreEqual("Caketown", deserializedEmployee.Name);
-            Assert.AreEqual(42, deserializedEmployee.Age);
+            Assert.That(deserializedEmployee.Name, Is.EqualTo("Caketown"));
+            Assert.That(deserializedEmployee.Age, Is.EqualTo(42));
         }
 
         [RecordedTest]
@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
 
             Assert.IsNotNull(deserializedEmployee);
-            Assert.AreEqual("Caketown", deserializedEmployee.Name);
-            Assert.AreEqual(42, deserializedEmployee.Age);
+            Assert.That(deserializedEmployee.Name, Is.EqualTo("Caketown"));
+            Assert.That(deserializedEmployee.Age, Is.EqualTo(42));
         }
 
         [RecordedTest]
@@ -78,15 +78,15 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var deserializedObject = await serializer.DeserializeAsync<Employee>(content);
             var readEmployee = deserializedObject as Employee;
             Assert.IsNotNull(readEmployee);
-            Assert.AreEqual("Caketown", readEmployee.Name);
-            Assert.AreEqual(42, readEmployee.Age);
+            Assert.That(readEmployee.Name, Is.EqualTo("Caketown"));
+            Assert.That(readEmployee.Age, Is.EqualTo(42));
 
             // deserialize using the new schema to make sure we are respecting it
             var readEmployeeV2 = await serializer.DeserializeAsync<Employee_V2>(content);
             Assert.IsNotNull(readEmployee);
-            Assert.AreEqual("Caketown", readEmployeeV2.Name);
-            Assert.AreEqual(42, readEmployeeV2.Age);
-            Assert.AreEqual("Redmond", readEmployeeV2.City);
+            Assert.That(readEmployeeV2.Name, Is.EqualTo("Caketown"));
+            Assert.That(readEmployeeV2.Age, Is.EqualTo(42));
+            Assert.That(readEmployeeV2.City, Is.EqualTo("Redmond"));
         }
 
         [RecordedTest]
@@ -150,8 +150,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             var deserializedObject = await serializer.DeserializeAsync<GenericRecord>(content);
             Assert.IsNotNull(deserializedObject);
-            Assert.AreEqual("Caketown", deserializedObject.GetValue(0));
-            Assert.AreEqual(42, deserializedObject.GetValue(1));
+            Assert.That(deserializedObject.GetValue(0), Is.EqualTo("Caketown"));
+            Assert.That(deserializedObject.GetValue(1), Is.EqualTo(42));
         }
 
         [RecordedTest]
@@ -235,10 +235,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             await producer.SendAsync(new EventData[] { eventData });
             #endregion
 
-            Assert.IsFalse(eventData.IsReadOnly);
+            Assert.That(eventData.IsReadOnly, Is.False);
             string[] contentType = eventData.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("avro/binary", contentType[0]);
+            Assert.That(contentType.Length, Is.EqualTo(2));
+            Assert.That(contentType[0], Is.EqualTo("avro/binary"));
             Assert.IsNotEmpty(contentType[1]);
 
             #region Snippet:SchemaRegistryAvroDecodeEventData
@@ -258,14 +258,14 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 #else
                 // decoding should not alter the message
                 contentType = eventData.ContentType.Split('+');
-                Assert.AreEqual(2, contentType.Length);
-                Assert.AreEqual("avro/binary", contentType[0]);
+                Assert.That(contentType.Length, Is.EqualTo(2));
+                Assert.That(contentType[0], Is.EqualTo("avro/binary"));
                 Assert.IsNotEmpty(contentType[1]);
 
                 // verify the payload was decoded correctly
                 Assert.IsNotNull(deserialized);
-                Assert.AreEqual("Caketown", deserialized.Name);
-                Assert.AreEqual(42, deserialized.Age);
+                Assert.That(deserialized.Name, Is.EqualTo("Caketown"));
+                Assert.That(deserialized.Age, Is.EqualTo(42));
 #endif
                 break;
             }
@@ -293,10 +293,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 #endif
             #endregion
 
-            Assert.IsFalse(eventData.IsReadOnly);
+            Assert.That(eventData.IsReadOnly, Is.False);
             string[] contentType = eventData.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("avro/binary", contentType[0]);
+            Assert.That(contentType.Length, Is.EqualTo(2));
+            Assert.That(contentType[0], Is.EqualTo("avro/binary"));
             Assert.IsNotEmpty(contentType[1]);
 
             #region Snippet:SchemaRegistryAvroDecodeEventDataGenerics
@@ -309,14 +309,14 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             // decoding should not alter the message
             contentType = eventData.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("avro/binary", contentType[0]);
+            Assert.That(contentType.Length, Is.EqualTo(2));
+            Assert.That(contentType[0], Is.EqualTo("avro/binary"));
             Assert.IsNotEmpty(contentType[1]);
 
             // verify the payload was decoded correctly
             Assert.IsNotNull(deserialized);
-            Assert.AreEqual("Caketown", deserialized.Name);
-            Assert.AreEqual(42, deserialized.Age);
+            Assert.That(deserialized.Name, Is.EqualTo("Caketown"));
+            Assert.That(deserialized.Age, Is.EqualTo(42));
         }
 
         [RecordedTest]

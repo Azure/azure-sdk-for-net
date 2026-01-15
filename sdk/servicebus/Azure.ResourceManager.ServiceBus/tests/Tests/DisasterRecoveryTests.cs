@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             };
             ServiceBusNamespaceAuthorizationRuleResource authorizationRule = (await serviceBusNamespace1.GetServiceBusNamespaceAuthorizationRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, ruleParameter)).Value;
             Assert.NotNull(authorizationRule);
-            Assert.AreEqual(authorizationRule.Data.Rights.Count, ruleParameter.Rights.Count);
+            Assert.That(ruleParameter.Rights.Count, Is.EqualTo(authorizationRule.Data.Rights.Count));
 
             //create a disaster recovery
             string disasterRecoveryName = Recording.GenerateAssetName("disasterrecovery");
@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             };
             ServiceBusDisasterRecoveryResource disasterRecovery = (await serviceBusNamespace1.GetServiceBusDisasterRecoveries().CreateOrUpdateAsync(WaitUntil.Completed, disasterRecoveryName, parameter)).Value;
             Assert.NotNull(disasterRecovery);
-            Assert.AreEqual(disasterRecovery.Id.Name, disasterRecoveryName);
-            Assert.AreEqual(disasterRecovery.Data.PartnerNamespace, serviceBusNamespace2.Id.ToString());
+            Assert.That(disasterRecoveryName, Is.EqualTo(disasterRecovery.Id.Name));
+            Assert.That(serviceBusNamespace2.Id.ToString(), Is.EqualTo(disasterRecovery.Data.PartnerNamespace));
 
             //get the disaster recovery - primary
             disasterRecovery = await serviceBusNamespace1.GetServiceBusDisasterRecoveries().GetAsync(disasterRecoveryName);
-            Assert.AreEqual(disasterRecovery.Data.Role, ServiceBusDisasterRecoveryRole.Primary);
+            Assert.That(disasterRecovery.Data.Role, Is.EqualTo(ServiceBusDisasterRecoveryRole.Primary));
 
             //get the disaster recovery - secondary
             ServiceBusDisasterRecoveryResource disasterRecoverySec = await serviceBusNamespace2.GetServiceBusDisasterRecoveries().GetAsync(disasterRecoveryName);
-            Assert.AreEqual(disasterRecoverySec.Data.Role, ServiceBusDisasterRecoveryRole.Secondary);
+            Assert.That(disasterRecoverySec.Data.Role, Is.EqualTo(ServiceBusDisasterRecoveryRole.Secondary));
 
             //wait for completion, this may take several minutes in live and record mode
             disasterRecovery = await serviceBusNamespace1.GetServiceBusDisasterRecoveries().GetAsync(disasterRecoveryName);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //check name availability
             ServiceBusNameAvailabilityResult nameAvailability = await serviceBusNamespace1.CheckServiceBusDisasterRecoveryNameAvailabilityAsync(new ServiceBusNameAvailabilityContent(disasterRecoveryName));
-            Assert.IsFalse(nameAvailability.IsNameAvailable);
+            Assert.That(nameAvailability.IsNameAvailable, Is.False);
 
             List<ServiceBusDisasterRecoveryAuthorizationRuleResource> rules = await disasterRecovery.GetServiceBusDisasterRecoveryAuthorizationRules().GetAllAsync().ToEnumerableAsync();
-            Assert.IsTrue(rules.Count > 0);
+            Assert.That(rules.Count > 0, Is.True);
 
             //get access keys of the authorization rule
             ServiceBusDisasterRecoveryAuthorizationRuleResource rule = rules.First();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //get all disaster recoveries for a name space
             List<ServiceBusDisasterRecoveryResource> disasterRcoveries = await serviceBusNamespace1.GetServiceBusDisasterRecoveries().GetAllAsync().ToEnumerableAsync();
-            Assert.IsTrue(disasterRcoveries.Count >= 1);
+            Assert.That(disasterRcoveries.Count >= 1, Is.True);
 
             //delete disaster recovery;
             await disasterRecovery.DeleteAsync(WaitUntil.Completed);

@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 workspaceData);
 
             Assert.IsNotNull(opWorkspaceCreate);
-            Assert.IsTrue(opWorkspaceCreate.HasCompleted);
-            Assert.AreEqual(opWorkspaceCreate.Value.Data.Name, workspaceName);
+            Assert.That(opWorkspaceCreate.HasCompleted, Is.True);
+            Assert.That(workspaceName, Is.EqualTo(opWorkspaceCreate.Value.Data.Name));
 
             Response<VirtualWorkspaceResource> getOp = await workspaceCollection.GetAsync(
                 workspaceName);
 
-            Assert.AreEqual(workspaceName, getOp.Value.Data.Name);
+            Assert.That(getOp.Value.Data.Name, Is.EqualTo(workspaceName));
 
             workspaceData.FriendlyName = "Friendly Name";
             opWorkspaceCreate = await workspaceCollection.CreateOrUpdateAsync(
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 workspaceData);
 
             Assert.IsNotNull(opWorkspaceCreate);
-            Assert.IsTrue(opWorkspaceCreate.HasCompleted);
-            Assert.AreEqual(opWorkspaceCreate.Value.Data.Name, workspaceName);
-            Assert.AreEqual(opWorkspaceCreate.Value.Data.FriendlyName, "Friendly Name");
+            Assert.That(opWorkspaceCreate.HasCompleted, Is.True);
+            Assert.That(workspaceName, Is.EqualTo(opWorkspaceCreate.Value.Data.Name));
+            Assert.That(opWorkspaceCreate.Value.Data.FriendlyName, Is.EqualTo("Friendly Name"));
 
             getOp = await workspaceCollection.GetAsync(
                 workspaceName);
@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             Assert.IsNotNull(deleteOp);
 
-            Assert.AreEqual(200, deleteOp.GetRawResponse().Status);
+            Assert.That(deleteOp.GetRawResponse().Status, Is.EqualTo(200));
 
             deleteOp = await workspace.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 
-            Assert.AreEqual(204, deleteOp.GetRawResponse().Status);
+            Assert.That(deleteOp.GetRawResponse().Status, Is.EqualTo(204));
 
             try
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             }
             catch (Azure.RequestFailedException ex)
             {
-                Assert.AreEqual(404, ex.Status);
+                Assert.That(ex.Status, Is.EqualTo(404));
             }
         }
     }

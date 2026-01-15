@@ -57,13 +57,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(BlobName, result.Name);
+            Assert.That(result.Name, Is.EqualTo(BlobName));
             Assert.NotNull(result.BlobContainerName);
-            Assert.AreEqual(ContainerName, result.BlobContainerName);
+            Assert.That(result.BlobContainerName, Is.EqualTo(ContainerName));
             var container = GetContainerReference(blobServiceClient, ContainerName);
-            Assert.True(await container.ExistsAsync());
+            Assert.That((bool)await container.ExistsAsync(), Is.True);
             var blob = container.GetBlockBlobClient(BlobName);
-            Assert.False(await blob.ExistsAsync());
+            Assert.That((bool)await blob.ExistsAsync(), Is.False);
         }
 
         [Test]
@@ -86,13 +86,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(BlobName, result.Name);
+            Assert.That(result.Name, Is.EqualTo(BlobName));
             Assert.NotNull(result.BlobContainerName);
-            Assert.AreEqual(ContainerName, result.BlobContainerName);
+            Assert.That(result.BlobContainerName, Is.EqualTo(ContainerName));
             var container = GetContainerReference(blobServiceClient, ContainerName);
-            Assert.True(await container.ExistsAsync());
+            Assert.That((bool)await container.ExistsAsync(), Is.True);
             var blob = container.GetBlockBlobClient(BlobName);
-            Assert.False(await blob.ExistsAsync());
+            Assert.That((bool)await blob.ExistsAsync(), Is.False);
         }
 
         [Test]
@@ -108,11 +108,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             // Assert
             var container = GetContainerReference(blobServiceClient, ContainerName);
-            Assert.True(await container.ExistsAsync());
+            Assert.That((bool)await container.ExistsAsync(), Is.True);
             var blob = container.GetBlockBlobClient(BlobName);
-            Assert.True(await blob.ExistsAsync());
+            Assert.That((bool)await blob.ExistsAsync(), Is.True);
             string content = await blob.DownloadTextAsync();
-            Assert.AreEqual(expectedContent, content);
+            Assert.That(content, Is.EqualTo(expectedContent));
         }
 
         [Test]
@@ -146,13 +146,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             var blobData = result?.Content.ToObjectFromJson<Dictionary<string,string>>();
 
             // Assert
-            Assert.True(blobData.TryGetValue("Connection", out var resultConnection));
-            Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
-            Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
+            Assert.That(blobData.TryGetValue("Connection", out var resultConnection), Is.True);
+            Assert.That(blobData.TryGetValue("ContainerName", out var resultContainerName), Is.True);
+            Assert.That(blobData.TryGetValue("BlobName", out var resultBlobName), Is.True);
 
-            Assert.AreEqual(ConnectionName, resultConnection);
-            Assert.AreEqual(ContainerName, resultContainerName);
-            Assert.AreEqual(BlobName, resultBlobName);
+            Assert.That(resultConnection, Is.EqualTo(ConnectionName));
+            Assert.That(resultContainerName, Is.EqualTo(ContainerName));
+            Assert.That(resultBlobName, Is.EqualTo(BlobName));
         }
 
         [Test]
@@ -186,12 +186,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             var blobData = result?.Content.ToObjectFromJson<Dictionary<string, string>>();
 
             // Assert
-            Assert.True(blobData.TryGetValue("Connection", out var resultConnection));
-            Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
-            Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
+            Assert.That(blobData.TryGetValue("Connection", out var resultConnection), Is.True);
+            Assert.That(blobData.TryGetValue("ContainerName", out var resultContainerName), Is.True);
+            Assert.That(blobData.TryGetValue("BlobName", out var resultBlobName), Is.True);
 
-            Assert.AreEqual(ConnectionName, resultConnection);
-            Assert.AreEqual(ContainerName, resultContainerName);
+            Assert.That(resultConnection, Is.EqualTo(ConnectionName));
+            Assert.That(resultContainerName, Is.EqualTo(ContainerName));
             Assert.IsEmpty(resultBlobName);
         }
 
@@ -232,13 +232,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             {
                 var blobData = blob?.Content.ToObjectFromJson<Dictionary<string,string>>();
 
-                Assert.True(blobData.TryGetValue("Connection", out var resultConnection));
-                Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
-                Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
+                Assert.That(blobData.TryGetValue("Connection", out var resultConnection), Is.True);
+                Assert.That(blobData.TryGetValue("ContainerName", out var resultContainerName), Is.True);
+                Assert.That(blobData.TryGetValue("BlobName", out var resultBlobName), Is.True);
 
-                Assert.AreEqual(ConnectionName, resultConnection);
-                Assert.AreEqual(ContainerName, resultContainerName);
-                Assert.AreEqual(BlobName, resultBlobName);
+                Assert.That(resultConnection, Is.EqualTo(ConnectionName));
+                Assert.That(resultContainerName, Is.EqualTo(ContainerName));
+                Assert.That(resultBlobName, Is.EqualTo(BlobName));
             }
         }
 
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             // Assert
             foreach (var blob in result)
             {
-                Assert.AreEqual("teststring", blob);
+                Assert.That(blob, Is.EqualTo("teststring"));
             }
         }
 
@@ -317,13 +317,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             {
                 var blobData = blob?.Content.ToObjectFromJson<Dictionary<string,string>>();
 
-                Assert.True(blobData.TryGetValue("Connection", out var resultConnection));
-                Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
-                Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
+                Assert.That(blobData.TryGetValue("Connection", out var resultConnection), Is.True);
+                Assert.That(blobData.TryGetValue("ContainerName", out var resultContainerName), Is.True);
+                Assert.That(blobData.TryGetValue("BlobName", out var resultBlobName), Is.True);
 
-                Assert.AreEqual(ConnectionName, resultConnection);
-                Assert.AreEqual(ContainerName, resultContainerName);
-                Assert.AreEqual(BlobName, resultBlobName);
+                Assert.That(resultConnection, Is.EqualTo(ConnectionName));
+                Assert.That(resultContainerName, Is.EqualTo(ContainerName));
+                Assert.That(resultBlobName, Is.EqualTo(BlobName));
             }
         }
 

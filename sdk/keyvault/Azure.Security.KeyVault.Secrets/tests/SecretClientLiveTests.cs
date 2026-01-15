@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             KeyVaultSecret secret = await Client.GetSecretAsync(secretName, version2.Properties.Version);
 
-            Assert.AreEqual("value2", secret.Value);
+            Assert.That(secret.Value, Is.EqualTo("value2"));
         }
 
         [RecordedTest]
@@ -90,15 +90,15 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 RegisterForCleanup(secret.Name);
 
                 Assert.IsNotEmpty(setResult.Properties.Version);
-                Assert.AreEqual("password", setResult.Properties.ContentType);
-                Assert.AreEqual(nbf, setResult.Properties.NotBefore);
-                Assert.AreEqual(exp, setResult.Properties.ExpiresOn);
-                Assert.AreEqual(2, setResult.Properties.Tags.Count);
-                Assert.AreEqual("value1", setResult.Properties.Tags["tag1"]);
-                Assert.AreEqual("value2", setResult.Properties.Tags["tag2"]);
-                Assert.AreEqual(secretName, setResult.Name);
-                Assert.AreEqual("CrudWithExtendedPropsValue1", setResult.Value);
-                Assert.AreEqual(VaultUri, setResult.Properties.VaultUri);
+                Assert.That(setResult.Properties.ContentType, Is.EqualTo("password"));
+                Assert.That(setResult.Properties.NotBefore, Is.EqualTo(nbf));
+                Assert.That(setResult.Properties.ExpiresOn, Is.EqualTo(exp));
+                Assert.That(setResult.Properties.Tags.Count, Is.EqualTo(2));
+                Assert.That(setResult.Properties.Tags["tag1"], Is.EqualTo("value1"));
+                Assert.That(setResult.Properties.Tags["tag2"], Is.EqualTo("value2"));
+                Assert.That(setResult.Name, Is.EqualTo(secretName));
+                Assert.That(setResult.Value, Is.EqualTo("CrudWithExtendedPropsValue1"));
+                Assert.That(setResult.Properties.VaultUri, Is.EqualTo(VaultUri));
                 Assert.IsNotNull(setResult.Properties.RecoveryLevel); // Value changes based on how the Key Vault is configured.
                 Assert.That(setResult.Properties.CreatedOn, Is.Not.Null);
                 Assert.That(setResult.Properties.UpdatedOn, Is.Not.Null);
@@ -234,7 +234,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             KeyVaultSecret secret = await Client.GetSecretAsync(secretName, version2.Properties.Version);
 
-            Assert.AreEqual("value2", secret.Value);
+            Assert.That(secret.Value, Is.EqualTo("value2"));
         }
 
         [RecordedTest]
@@ -242,7 +242,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         {
             List<SecretProperties> allSecrets = await Client.GetPropertiesOfSecretVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
 
-            Assert.AreEqual(0, allSecrets.Count);
+            Assert.That(allSecrets.Count, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -477,7 +477,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Response<KeyVaultSecret> response = await client.SetSecretAsync(secretName, "secret");
             RegisterForCleanup(secretName);
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         }
     }
 }

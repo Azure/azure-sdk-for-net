@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var fieldValue = new FieldValue(fieldValueInternal, default);
 
-            Assert.AreEqual(FieldValueType.Float, fieldValue.ValueType);
+            Assert.That(fieldValue.ValueType, Is.EqualTo(FieldValueType.Float));
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsFloat());
         }
 
@@ -51,7 +51,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var fieldValue = new FieldValue(FieldValueType.Int64);
 
-            Assert.AreEqual(FieldValueType.Int64, fieldValue.ValueType);
+            Assert.That(fieldValue.ValueType, Is.EqualTo(FieldValueType.Int64));
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
         }
 
@@ -60,7 +60,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var fieldValue = new FieldValue(FieldValueType.Float);
 
-            Assert.AreEqual(FieldValueType.Float, fieldValue.ValueType);
+            Assert.That(fieldValue.ValueType, Is.EqualTo(FieldValueType.Float));
             // The service will always return a text property which our
             // AsFloat() method depends on in order to calculate the float.
             // This was introduced in 3.0 so sadly we need to maintain it.
@@ -72,7 +72,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var fieldValue = new FieldValue(FieldValueType.Date);
 
-            Assert.AreEqual(FieldValueType.Date, fieldValue.ValueType);
+            Assert.That(fieldValue.ValueType, Is.EqualTo(FieldValueType.Date));
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDate());
         }
 
@@ -81,7 +81,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var fieldValue = new FieldValue(FieldValueType.Time);
 
-            Assert.AreEqual(FieldValueType.Time, fieldValue.ValueType);
+            Assert.That(fieldValue.ValueType, Is.EqualTo(FieldValueType.Time));
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
         }
 
@@ -90,7 +90,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var fieldValue = new FieldValue(FieldValueType.SelectionMark);
 
-            Assert.AreEqual(FieldValueType.SelectionMark, fieldValue.ValueType);
+            Assert.That(fieldValue.ValueType, Is.EqualTo(FieldValueType.SelectionMark));
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
         }
     }

@@ -72,11 +72,11 @@ namespace Azure.Developer.LoadTesting.Tests
                 ));
 
             JsonDocument jsonDocument = JsonDocument.Parse(testRunOperation.Value.ToString());
-            Assert.AreEqual(_testRunId, jsonDocument.RootElement.GetProperty("testRunId").ToString());
-            Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
-            Assert.AreEqual("DONE", jsonDocument.RootElement.GetProperty("status").ToString());
-            Assert.IsTrue(testRunOperation.HasValue);
-            Assert.IsTrue(testRunOperation.HasCompleted);
+            Assert.That(jsonDocument.RootElement.GetProperty("testRunId").ToString(), Is.EqualTo(_testRunId));
+            Assert.That(jsonDocument.RootElement.GetProperty("testId").ToString(), Is.EqualTo(_testId));
+            Assert.That(jsonDocument.RootElement.GetProperty("status").ToString(), Is.EqualTo("DONE"));
+            Assert.That(testRunOperation.HasValue, Is.True);
+            Assert.That(testRunOperation.HasCompleted, Is.True);
         }
 
         [Test]
@@ -94,11 +94,11 @@ namespace Azure.Developer.LoadTesting.Tests
             await testRunOperation.WaitForCompletionAsync();
 
             var jsonDocument = JsonDocument.Parse(testRunOperation.Value.ToString());
-            Assert.AreEqual(_testRunId, jsonDocument.RootElement.GetProperty("testRunId").ToString());
-            Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
-            Assert.AreEqual("DONE", jsonDocument.RootElement.GetProperty("status").ToString());
-            Assert.IsTrue(testRunOperation.HasValue);
-            Assert.IsTrue(testRunOperation.HasCompleted);
+            Assert.That(jsonDocument.RootElement.GetProperty("testRunId").ToString(), Is.EqualTo(_testRunId));
+            Assert.That(jsonDocument.RootElement.GetProperty("testId").ToString(), Is.EqualTo(_testId));
+            Assert.That(jsonDocument.RootElement.GetProperty("status").ToString(), Is.EqualTo("DONE"));
+            Assert.That(testRunOperation.HasValue, Is.True);
+            Assert.That(testRunOperation.HasCompleted, Is.True);
         }
 
         [Test]
@@ -110,8 +110,8 @@ namespace Azure.Developer.LoadTesting.Tests
             var testRunResponse = await _loadTestRunClient.GetTestRunAsync(_testRunId);
             var testRun = testRunResponse.Value;
             Assert.NotNull(testRun);
-            Assert.AreEqual(_testRunId, testRun.TestRunId);
-            Assert.AreEqual(_testId, testRun.TestId);
+            Assert.That(testRun.TestRunId, Is.EqualTo(_testRunId));
+            Assert.That(testRun.TestId, Is.EqualTo(_testId));
         }
 
         [Test]
@@ -122,8 +122,8 @@ namespace Azure.Developer.LoadTesting.Tests
 
             var testRunFileResponse = await _loadTestRunClient.GetTestRunFileAsync(_testRunId, _fileName);
             Assert.NotNull(testRunFileResponse.Value);
-            Assert.AreEqual(_fileName, testRunFileResponse.Value.FileName);
-            Assert.AreEqual(FileValidationStatus.ValidationSuccess, testRunFileResponse.Value.ValidationStatus);
+            Assert.That(testRunFileResponse.Value.FileName, Is.EqualTo(_fileName));
+            Assert.That(testRunFileResponse.Value.ValidationStatus, Is.EqualTo(FileValidationStatus.ValidationSuccess));
         }
 
         [Test]
@@ -143,8 +143,8 @@ namespace Azure.Developer.LoadTesting.Tests
 
                 foreach (var testRun in page.Values)
                 {
-                    Assert.AreEqual(_testId, testRun.TestId);
-                    Assert.AreEqual(_testRunId, testRun.TestRunId);
+                    Assert.That(testRun.TestId, Is.EqualTo(_testId));
+                    Assert.That(testRun.TestRunId, Is.EqualTo(_testRunId));
                 }
             }
 
@@ -155,7 +155,7 @@ namespace Azure.Developer.LoadTesting.Tests
 
                 if (i < count)
                 {
-                    Assert.AreEqual(pageSizeHint, page.Values.Count);
+                    Assert.That(page.Values.Count, Is.EqualTo(pageSizeHint));
                 }
                 else
                 {
@@ -179,8 +179,8 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             var stopResponse = await _loadTestRunClient.StopTestRunAsync(_testRunId);
             Assert.NotNull(stopResponse.Value);
-            Assert.AreEqual(_testId, stopResponse.Value.TestId);
-            Assert.AreEqual(_testRunId, stopResponse.Value.TestRunId);
+            Assert.That(stopResponse.Value.TestId, Is.EqualTo(_testId));
+            Assert.That(stopResponse.Value.TestRunId, Is.EqualTo(_testRunId));
         }
 
         [Test]
@@ -213,7 +213,7 @@ namespace Azure.Developer.LoadTesting.Tests
                 );
 
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
-            Assert.AreEqual(_resourceId, jsonDocument.RootElement.GetProperty("components").GetProperty(_resourceId).GetProperty("resourceId").ToString());
+            Assert.That(jsonDocument.RootElement.GetProperty("components").GetProperty(_resourceId).GetProperty("resourceId").ToString(), Is.EqualTo(_resourceId));
         }
 
         [Test]
@@ -381,8 +381,8 @@ namespace Azure.Developer.LoadTesting.Tests
             Assert.AreEqual(_testProfileRunId, jsonDocument.RootElement.GetProperty("testProfileRunId").ToString());
             Assert.AreEqual(_testProfileId, jsonDocument.RootElement.GetProperty("testProfileId").ToString());
             Assert.AreEqual("DONE", jsonDocument.RootElement.GetProperty("status").ToString());
-            Assert.IsTrue(testProfileRunOperation.HasValue);
-            Assert.IsTrue(testProfileRunOperation.HasCompleted);
+            Assert.That(testProfileRunOperation.HasValue, Is.True);
+            Assert.That(testProfileRunOperation.HasCompleted, Is.True);
         }
 
         [Test]
@@ -404,8 +404,8 @@ namespace Azure.Developer.LoadTesting.Tests
             Assert.AreEqual(_testProfileRunId, jsonDocument.RootElement.GetProperty("testProfileRunId").ToString());
             Assert.AreEqual(_testProfileId, jsonDocument.RootElement.GetProperty("testProfileId").ToString());
             Assert.AreEqual("DONE", jsonDocument.RootElement.GetProperty("status").ToString());
-            Assert.IsTrue(testProfileRunOperation.HasValue);
-            Assert.IsTrue(testProfileRunOperation.HasCompleted);
+            Assert.That(testProfileRunOperation.HasValue, Is.True);
+            Assert.That(testProfileRunOperation.HasCompleted, Is.True);
         }
 
         [Test]

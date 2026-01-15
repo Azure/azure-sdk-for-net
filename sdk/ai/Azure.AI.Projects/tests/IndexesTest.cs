@@ -86,7 +86,7 @@ namespace Azure.AI.Projects.Tests
                 isEmpty = false;
                 ValidateIndex(version);
             }
-            Assert.IsFalse(isEmpty, "Expected at least one version of the Index to be returned.");
+            Assert.That(isEmpty, Is.False, "Expected at least one version of the Index to be returned.");
 
             Console.WriteLine($"Listing all Indices:");
             isEmpty = true;
@@ -96,7 +96,7 @@ namespace Azure.AI.Projects.Tests
                 ValidateIndex(version);
                 Console.WriteLine($"Index name: {version.Name}, index version: {version.Version}");
             }
-            Assert.IsFalse(isEmpty, "Expected at least one Index to be returned.");
+            Assert.That(isEmpty, Is.False, "Expected at least one Index to be returned.");
 
             // Remove once service supports Delete
             try
@@ -159,7 +159,7 @@ namespace Azure.AI.Projects.Tests
                 isEmpty = false;
                 ValidateIndex(version);
             }
-            Assert.IsFalse(isEmpty, "Expected at least one version of the Index to be returned.");
+            Assert.That(isEmpty, Is.False, "Expected at least one version of the Index to be returned.");
 
             Console.WriteLine($"Listing all Indices:");
             isEmpty = true;
@@ -169,7 +169,7 @@ namespace Azure.AI.Projects.Tests
                 ValidateIndex(version);
                 Console.WriteLine($"Index name: {version.Name}, index version: {version.Version}");
             }
-            Assert.IsFalse(isEmpty, "Expected at least one Index to be returned.");
+            Assert.That(isEmpty, Is.False, "Expected at least one Index to be returned.");
 
             // Remove once service supports Delete
             try

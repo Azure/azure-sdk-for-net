@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             DeviceUpdateInstanceResource instance = await CreateInstance(account, instanceName);
             await instance.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await instance.GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         //[TestCase(null)] Need to re-record

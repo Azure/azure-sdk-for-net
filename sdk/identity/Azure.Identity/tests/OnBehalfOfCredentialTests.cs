@@ -92,7 +92,7 @@ namespace Azure.Identity.Tests
                 new OnBehalfOfCredential(TenantId, ClientId, clientSecret, null, null));
             cred = new OnBehalfOfCredential(TenantId, ClientId, clientSecret, userAssertion, null);
             // Assert
-            Assert.AreEqual(clientSecret, cred.Client._clientSecret);
+            Assert.That(cred.Client._clientSecret, Is.EqualTo(clientSecret));
 
             Assert.Throws<ArgumentNullException>(() =>
                 new OnBehalfOfCredential(null, ClientId, _mockCertificate, userAssertion));
@@ -137,7 +137,7 @@ namespace Azure.Identity.Tests
                     mockConfidentialMsalClient));
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
-            Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+            Assert.That(expectedToken, Is.EqualTo(token.Token), "Should be the expected token value");
         }
 
         [Test]
@@ -170,7 +170,7 @@ namespace Azure.Identity.Tests
                     null));
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
-            Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+            Assert.That(expectedToken, Is.EqualTo(token.Token), "Should be the expected token value");
         }
 
         [Test]
@@ -220,7 +220,7 @@ namespace Azure.Identity.Tests
                     null));
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
-            Assert.AreEqual(expectedToken, token.Token, "Should be the expected token value");
+            Assert.That(token.Token, Is.EqualTo(expectedToken), "Should be the expected token value");
         }
     }
 }

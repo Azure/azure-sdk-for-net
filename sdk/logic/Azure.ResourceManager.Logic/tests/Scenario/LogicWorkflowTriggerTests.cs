@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Logic.Tests
 
         private void ValidateTrigger(LogicWorkflowTriggerResource actual)
         {
-            Assert.AreEqual(DefaultTriggerName, actual.Data.Name);
-            Assert.AreEqual("Succeeded", actual.Data.ProvisioningState.ToString());
-            Assert.AreEqual("Enabled", actual.Data.State.ToString());
+            Assert.That(actual.Data.Name, Is.EqualTo(DefaultTriggerName));
+            Assert.That(actual.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
+            Assert.That(actual.Data.State.ToString(), Is.EqualTo("Enabled"));
             Assert.NotNull(actual.Data.CreatedOn);
             Assert.NotNull(actual.Data.ChangedOn);
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Tests
         public async Task Exist()
         {
             bool flag = await _triggerCollection.ExistsAsync(DefaultTriggerName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]

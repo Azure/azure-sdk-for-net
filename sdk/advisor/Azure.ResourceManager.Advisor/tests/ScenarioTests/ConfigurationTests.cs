@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Advisor.Tests
 
             await DefaultSubscription.CreateConfigurationAsync(configName, configData);
             var data = await DefaultSubscription.GetConfigurationsAsync().ToEnumerableAsync();
-            Assert.AreEqual(TestThreshold, data.FirstOrDefault(x => x.Name.Equals(configName)).LowCpuThreshold);
-            Assert.IsFalse(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude);
+            Assert.That(data.FirstOrDefault(x => x.Name.Equals(configName)).LowCpuThreshold, Is.EqualTo(TestThreshold));
+            Assert.That(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude, Is.False);
 
             configData.LowCpuThreshold = DefaultThreshold;
             await DefaultSubscription.CreateConfigurationAsync(configName, configData);
             data = await DefaultSubscription.GetConfigurationsAsync().ToEnumerableAsync();
-            Assert.AreEqual(DefaultThreshold, data.FirstOrDefault(x => x.Name.Equals(configName)).LowCpuThreshold);
-            Assert.IsFalse(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude);
+            Assert.That(data.FirstOrDefault(x => x.Name.Equals(configName)).LowCpuThreshold, Is.EqualTo(DefaultThreshold));
+            Assert.That(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude, Is.False);
         }
 
         [Test]
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Advisor.Tests
             var resourceGroup = await CreateResourceGroupAsync();
             await resourceGroup.CreateConfigurationAsync(configName, configData);
             var data = await resourceGroup.GetConfigurationsAsync().ToEnumerableAsync();
-            Assert.IsTrue(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude);
+            Assert.That(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude, Is.True);
 
             configData.Exclude = false;
             await resourceGroup.CreateConfigurationAsync(configName, configData);
             data = await resourceGroup.GetConfigurationsAsync().ToEnumerableAsync();
-            Assert.IsFalse(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude);
+            Assert.That(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude, Is.False);
         }
     }
 }

@@ -100,15 +100,15 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             SegmentCursor cursor = segment.GetCursor();
 
             // Assert
-            Assert.AreEqual(expectedCursor.SegmentPath, cursor.SegmentPath);
-            Assert.AreEqual(expectedCursor.ShardCursors.Count, cursor.ShardCursors.Count);
+            Assert.That(cursor.SegmentPath, Is.EqualTo(expectedCursor.SegmentPath));
+            Assert.That(cursor.ShardCursors.Count, Is.EqualTo(expectedCursor.ShardCursors.Count));
             for (int i = 0; i < shardCount; i++)
             {
-                Assert.AreEqual(expectedCursor.ShardCursors[i].BlockOffset, cursor.ShardCursors[i].BlockOffset);
-                Assert.AreEqual(expectedCursor.ShardCursors[i].CurrentChunkPath, cursor.ShardCursors[i].CurrentChunkPath);
-                Assert.AreEqual(expectedCursor.ShardCursors[i].EventIndex, cursor.ShardCursors[i].EventIndex);
+                Assert.That(cursor.ShardCursors[i].BlockOffset, Is.EqualTo(expectedCursor.ShardCursors[i].BlockOffset));
+                Assert.That(cursor.ShardCursors[i].CurrentChunkPath, Is.EqualTo(expectedCursor.ShardCursors[i].CurrentChunkPath));
+                Assert.That(cursor.ShardCursors[i].EventIndex, Is.EqualTo(expectedCursor.ShardCursors[i].EventIndex));
             }
-            Assert.AreEqual(currentShardPath, cursor.CurrentShardPath);
+            Assert.That(cursor.CurrentShardPath, Is.EqualTo(currentShardPath));
 
             containerClient.Verify(r => r.GetBlobClient(manifestPath));
 
@@ -172,8 +172,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             SegmentCursor cursor = segment.GetCursor();
 
             // Assert
-            Assert.AreEqual(segmentPath, cursor.SegmentPath);
-            Assert.AreEqual(0, cursor.ShardCursors.Count);
+            Assert.That(cursor.SegmentPath, Is.EqualTo(segmentPath));
+            Assert.That(cursor.ShardCursors.Count, Is.EqualTo(0));
 
             containerClient.Verify(r => r.GetBlobClient(manifestPath));
 
@@ -294,10 +294,10 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             List<BlobChangeFeedEvent> events = await segment.GetPage(IsAsync, 25);
 
             // Assert
-            Assert.AreEqual(eventCount, events.Count);
+            Assert.That(events.Count, Is.EqualTo(eventCount));
             for (int i = 0; i < eventCount; i++)
             {
-                Assert.AreEqual(eventIds[i], events[i].Id);
+                Assert.That(events[i].Id, Is.EqualTo(eventIds[i]));
             }
 
             containerClient.Verify(r => r.GetBlobClient(manifestPath));
@@ -393,7 +393,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             List<BlobChangeFeedEvent> events = await segment.GetPage(IsAsync, 25);
 
             // Assert
-            Assert.AreEqual(0, events.Count);
+            Assert.That(events.Count, Is.EqualTo(0));
 
             containerClient.Verify(r => r.GetBlobClient(manifestPath));
             if (IsAsync)

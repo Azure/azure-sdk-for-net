@@ -230,13 +230,13 @@ namespace Azure.Storage.Files.Shares.Tests
 
         internal static void AssertPropertiesEqual(FileSmbProperties left, FileSmbProperties right)
         {
-            Assert.AreEqual(left.FileAttributes, right.FileAttributes);
-            Assert.AreEqual(left.FileCreatedOn, right.FileCreatedOn);
-            Assert.AreEqual(left.FileChangedOn, right.FileChangedOn);
-            Assert.AreEqual(left.FileId, right.FileId);
-            Assert.AreEqual(left.FileLastWrittenOn, right.FileLastWrittenOn);
-            Assert.AreEqual(left.FilePermissionKey, right.FilePermissionKey);
-            Assert.AreEqual(left.ParentId, right.ParentId);
+            Assert.That(right.FileAttributes, Is.EqualTo(left.FileAttributes));
+            Assert.That(right.FileCreatedOn, Is.EqualTo(left.FileCreatedOn));
+            Assert.That(right.FileChangedOn, Is.EqualTo(left.FileChangedOn));
+            Assert.That(right.FileId, Is.EqualTo(left.FileId));
+            Assert.That(right.FileLastWrittenOn, Is.EqualTo(left.FileLastWrittenOn));
+            Assert.That(right.FilePermissionKey, Is.EqualTo(left.FilePermissionKey));
+            Assert.That(right.ParentId, Is.EqualTo(left.ParentId));
         }
     }
 }

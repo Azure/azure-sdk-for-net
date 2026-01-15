@@ -145,11 +145,11 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             }
             catch (FunctionIndexingException e)
             {
-                Assert.AreEqual("Error indexing method '" + functionName + "'", e.Message);
+                Assert.That(e.Message, Is.EqualTo("Error indexing method '" + functionName + "'"));
                 StringAssert.StartsWith(expectedErrorMessage, e.InnerException.Message);
                 return;
             }
-            Assert.True(false, "Invoker should have failed");
+            Assert.That(false, Is.True, "Invoker should have failed");
         }
         public static IHostBuilder ConfigureDefaultTestHost(this IHostBuilder builder, params Type[] types)
         {
@@ -296,7 +296,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
                     newlyIntroducedPublicTypes.Length,
                     newlyIntroducedPublicTypes.Length == 1 ? "" : "s",
                     string.Join("\r\n", newlyIntroducedPublicTypes));
-                Assert.True(false, message);
+                Assert.That(false, Is.True, message);
             }
 
             var missingPublicTypes = expected.Except(actual).ToArray();
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
                     missingPublicTypes.Length,
                     missingPublicTypes.Length == 1 ? "" : "s",
                     string.Join("\r\n", missingPublicTypes));
-                Assert.True(false, message);
+                Assert.That(false, Is.True, message);
             }
         }
 

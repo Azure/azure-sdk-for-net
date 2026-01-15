@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             AzureFirewallResource firewall = await CreateFirewallAsync();
             Assert.IsNotNull(firewall.Data);
-            Assert.AreEqual(_firewallName, firewall.Data.Name);
+            Assert.That(firewall.Data.Name, Is.EqualTo(_firewallName));
         }
 
         [Test]
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Tests
             await CreateFirewallAsync();
             var firewall = await _resourceGroup.GetAzureFirewalls().GetAsync(_firewallName);
             Assert.IsNotNull(firewall.Value.Data);
-            Assert.AreEqual(_firewallName, firewall.Value.Data.Name);
+            Assert.That(firewall.Value.Data.Name, Is.EqualTo(_firewallName));
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             await CreateFirewallAsync();
             List<AzureFirewallResource> firewallList = await _resourceGroup.GetAzureFirewalls().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, firewallList.Count);
+            Assert.That(firewallList.Count, Is.EqualTo(1));
         }
 
         [Test]
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task Exists()
         {
             await CreateFirewallAsync();
-            Assert.True(await _resourceGroup.GetAzureFirewalls().ExistsAsync(_firewallName));
-            Assert.False(await _resourceGroup.GetAzureFirewalls().ExistsAsync(_firewallName + "0"));
+            Assert.That((bool)await _resourceGroup.GetAzureFirewalls().ExistsAsync(_firewallName), Is.True);
+            Assert.That((bool)await _resourceGroup.GetAzureFirewalls().ExistsAsync(_firewallName + "0"), Is.False);
         }
 
         [Test]
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.Network.Tests
         {
             AzureFirewallResource firewall = await CreateFirewallAsync();
             List<AzureFirewallResource> firewallList = await _resourceGroup.GetAzureFirewalls().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, firewallList.Count);
+            Assert.That(firewallList.Count, Is.EqualTo(1));
 
             await firewall.DeleteAsync(WaitUntil.Completed);
             firewallList = await _resourceGroup.GetAzureFirewalls().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(0, firewallList.Count);
+            Assert.That(firewallList.Count, Is.EqualTo(0));
         }
     }
 }

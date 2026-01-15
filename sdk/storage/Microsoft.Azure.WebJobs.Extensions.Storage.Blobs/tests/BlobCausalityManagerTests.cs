@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Guid? writer = BlobCausalityManager.GetWriterAsync(blobMock.Object, CancellationToken.None).GetAwaiter().GetResult();
 
             // Assert
-            Assert.Null(writer);
+            Assert.That(writer, Is.Null);
             blobMock.Verify();
         }
 
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Guid? writer = BlobCausalityManager.GetWriterAsync(blobMock.Object, CancellationToken.None).GetAwaiter().GetResult();
 
             // Assert
-            Assert.Null(writer);
+            Assert.That(writer, Is.Null);
             blobMock.Verify();
         }
 
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Guid? writer = BlobCausalityManager.GetWriterAsync(blobMock.Object, CancellationToken.None).GetAwaiter().GetResult();
 
             // Assert
-            Assert.Null(writer);
+            Assert.That(writer, Is.Null);
             blobMock.Verify();
         }
 
@@ -97,14 +97,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Guid? writer = BlobCausalityManager.GetWriterAsync(blobMock.Object, CancellationToken.None).GetAwaiter().GetResult();
 
             // Assert
-            Assert.AreEqual(expected, writer);
+            Assert.That(writer, Is.EqualTo(expected));
             blobMock.Verify();
         }
 
         private static void AssertWriterEqual(Guid expectedWriter, IDictionary<string, string> metadata)
         {
             Guid? owner = GetWriter(metadata);
-            Assert.AreEqual(expectedWriter, owner);
+            Assert.That(owner, Is.EqualTo(expectedWriter));
         }
 
         private static Mock<BlobBaseClient> SetupBlobMock(bool? isFetchSuccess = null, Dictionary<string, string> metadata = null)

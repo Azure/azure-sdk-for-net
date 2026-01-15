@@ -76,9 +76,9 @@ namespace Azure.AI.Translation.Document.Tests
                 default,
                 default);
 
-            Assert.AreEqual("43534534", result.Id);
-            Assert.AreEqual("PartialError", result.Error.Code);
-            Assert.AreEqual("There were some errors.", result.Error.Message);
+            Assert.That(result.Id, Is.EqualTo("43534534"));
+            Assert.That(result.Error.Code, Is.EqualTo("PartialError"));
+            Assert.That(result.Error.Message, Is.EqualTo("There were some errors."));
         }
 
         [Test]
@@ -103,9 +103,9 @@ namespace Azure.AI.Translation.Document.Tests
                 default,
                 default);
 
-            Assert.AreEqual("43534534", result.Id);
-            Assert.AreEqual("PartialError", result.Error.Code);
-            Assert.AreEqual("There were some errors.", result.Error.Message);
+            Assert.That(result.Id, Is.EqualTo("43534534"));
+            Assert.That(result.Error.Code, Is.EqualTo("PartialError"));
+            Assert.That(result.Error.Message, Is.EqualTo("There were some errors."));
         }
 
         [Test]

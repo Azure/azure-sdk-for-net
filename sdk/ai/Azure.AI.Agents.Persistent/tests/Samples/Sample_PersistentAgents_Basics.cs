@@ -58,7 +58,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
 
         AsyncPageable<PersistentThreadMessage> messagesList = client.Messages.GetMessagesAsync(thread.Id);
         List<PersistentThreadMessage> messagesOne = await messagesList.ToListAsync();
-        Assert.AreEqual(message.Id, messagesOne[0].Id);
+        Assert.That(messagesOne[0].Id, Is.EqualTo(message.Id));
 
         // Step 4: Run the agent
         #region Snippet:AgentsOverviewCreateRun
@@ -76,9 +76,9 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
-        Assert.AreEqual(
-            RunStatus.Completed,
+        Assert.That(
             run.Status,
+            Is.EqualTo(RunStatus.Completed),
             run.LastError?.Message);
         #endregion
 
@@ -151,7 +151,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         // Intermission: listing messages will retrieve the message just added
 
         List<PersistentThreadMessage> messagesList = [..client.Messages.GetMessages(thread.Id)];
-        Assert.AreEqual(message.Id, messagesList[0].Id);
+        Assert.That(messagesList[0].Id, Is.EqualTo(message.Id));
 
         // Step 4: Run the agent
         #region Snippet:AgentsOverviewCreateRunSync
@@ -169,9 +169,9 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
-        Assert.AreEqual(
-            RunStatus.Completed,
+        Assert.That(
             run.Status,
+            Is.EqualTo(RunStatus.Completed),
             run.LastError?.Message);
         #endregion
 

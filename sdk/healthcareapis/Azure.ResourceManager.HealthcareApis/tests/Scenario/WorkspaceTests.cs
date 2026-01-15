@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             string workspaceName = Recording.GenerateAssetName(_workspaceNamePrefix);
             await CreateHealthcareApisWorkspace(_resourceGroup, workspaceName);
             var flag = await _workspaceCollection.ExistsAsync(workspaceName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
         }
 
         [RecordedTest]
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             string workspaceName = Recording.GenerateAssetName(_workspaceNamePrefix);
             var workspace = await CreateHealthcareApisWorkspace(_resourceGroup, workspaceName);
             var flag = await _workspaceCollection.ExistsAsync(workspaceName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             await workspace.DeleteAsync(WaitUntil.Completed);
             flag = await _workspaceCollection.ExistsAsync(workspaceName);
-            Assert.IsFalse(flag);
+            Assert.That((bool)flag, Is.False);
         }
 
         [TestCase(null)]
@@ -91,15 +91,15 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             // AddTag
             await workspace.AddTagAsync("addtagkey", "addtagvalue");
             workspace = await _workspaceCollection.GetAsync(workspaceName);
-            Assert.AreEqual(1, workspace.Data.Tags.Count);
+            Assert.That(workspace.Data.Tags.Count, Is.EqualTo(1));
             KeyValuePair<string, string> tag = workspace.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
 
             // RemoveTag
             await workspace.RemoveTagAsync("addtagkey");
             workspace = await _workspaceCollection.GetAsync(workspaceName);
-            Assert.AreEqual(0, workspace.Data.Tags.Count);
+            Assert.That(workspace.Data.Tags.Count, Is.EqualTo(0));
         }
 
         private void ValidateHealthcareApisWorkspace(HealthcareApisWorkspaceData workspace, string workspaceName)
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             Assert.IsNotNull(workspace);
             Assert.IsNotNull(workspace.Id);
             Assert.IsNotNull(workspace.ETag);
-            Assert.AreEqual(workspaceName, workspace.Name);
-            Assert.AreEqual("Microsoft.HealthcareApis/workspaces", workspace.ResourceType.ToString());
-            Assert.AreEqual(DefaultLocation, workspace.Location);
+            Assert.That(workspace.Name, Is.EqualTo(workspaceName));
+            Assert.That(workspace.ResourceType.ToString(), Is.EqualTo("Microsoft.HealthcareApis/workspaces"));
+            Assert.That(workspace.Location, Is.EqualTo(DefaultLocation));
         }
     }
 }

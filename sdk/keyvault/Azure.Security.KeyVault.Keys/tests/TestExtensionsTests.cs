@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void ConvertToInt32Tests(byte[] buffer, int expected)
         {
             int actual = buffer.ToInt32();
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
     }
 }

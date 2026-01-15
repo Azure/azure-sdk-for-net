@@ -798,10 +798,10 @@ namespace Azure.AI.Language.TextAnalytics.Tests
 
             foreach (PiiActionResult result in piiTaskResult.Results.Documents)
             {
-                Assert.AreEqual("3", result.Id);
+                Assert.That(result.Id, Is.EqualTo("3"));
                 Assert.IsNotNull(result.Entities);
-                Assert.AreEqual(0, result.Entities.Count, "Expected no PII entities due to exclusion.");
-                Assert.AreEqual(text, result.RedactedText, "Expected redacted text to remain unchanged.");
+                Assert.That(result.Entities.Count, Is.EqualTo(0), "Expected no PII entities due to exclusion.");
+                Assert.That(result.RedactedText, Is.EqualTo(text), "Expected redacted text to remain unchanged.");
             }
         }
 
@@ -843,29 +843,33 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             AnalyzeTextPiiResult piiResult = (AnalyzeTextPiiResult)response.Value;
             // Assert — Document 1
             var doc1 = piiResult.Results.Documents.Single(d => d.Id == "1");
-            Assert.IsTrue(doc1.Entities.Any(e =>
+            Assert.That(doc1.Entities.Any(e =>
                 e.Text == "281314478878" &&
                 e.Category == "USBankAccountNumber"),
+                Is.True,
                 "Doc 1 should contain USBankAccountNumber entity for FAN.");
 
             // Assert — Document 2
             var doc2 = piiResult.Results.Documents.Single(d => d.Id == "2");
-            Assert.IsTrue(doc2.Entities.Any(e =>
+            Assert.That(doc2.Entities.Any(e =>
                 e.Text == "281314478873" &&
                 e.Category == "USBankAccountNumber"),
+                Is.True,
                 "Doc 2 should contain USBankAccountNumber entity for a normal bank acct number.");
 
             // Assert — Document 3
             var doc3 = piiResult.Results.Documents.Single(d => d.Id == "3");
 
-            Assert.IsTrue(doc3.Entities.Any(e =>
+            Assert.That(doc3.Entities.Any(e =>
                 e.Text == "281314478878" &&
                 e.Category == "USBankAccountNumber"),
+                Is.True,
                 "Doc 3 should contain USBankAccountNumber entity for FAN.");
 
-            Assert.IsTrue(doc3.Entities.Any(e =>
+            Assert.That(doc3.Entities.Any(e =>
                 e.Text == "281314478879" &&
                 e.Category == "USBankAccountNumber"),
+                Is.True,
                 "Doc 3 should contain USBankAccountNumber entity for RAN.");
         }
 
@@ -898,8 +902,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests
 
             // The raw date string should not appear in redacted text.
             const string dobText = "May 15th, 2015";
-            Assert.IsTrue(
+            Assert.That(
                 doc1.RedactedText != null && !doc1.RedactedText.Contains(dobText),
+                Is.True,
                 "Document 1 redacted text should not contain the raw date of birth."
             );
 
@@ -907,15 +912,17 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             PiiActionResult doc2 = piiResult.Results.Documents.Single(d => d.Id == "2");
 
             // There should be at least one PhoneNumber entity.
-            Assert.IsTrue(
+            Assert.That(
                 doc2.Entities.Any(e => e.Category == PiiCategory.PhoneNumber),
+                Is.True,
                 "Document 2 should contain a PhoneNumber entity."
             );
 
             // The raw phone number should not appear in redacted text.
             const string phoneText = "(555) 123-4567";
-            Assert.IsTrue(
+            Assert.That(
                 doc2.RedactedText != null && !doc2.RedactedText.Contains(phoneText),
+                Is.True,
                 "Document 2 redacted text should not contain the raw phone number."
             );
         }
@@ -978,22 +985,25 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             AnalyzeTextPiiResult piiResult = (AnalyzeTextPiiResult)response.Value;
 
             // Basic sanity checks
-            Assert.AreEqual(2, piiResult.Results.Documents.Count, "Expected 2 document results.");
+            Assert.That(piiResult.Results.Documents.Count, Is.EqualTo(2), "Expected 2 document results.");
             Assert.IsEmpty(piiResult.Results.Errors, "Did not expect any document errors.");
 
             foreach (PiiActionResult doc in piiResult.Results.Documents)
             {
                 // 1. We should have at least these three PII categories recognized:
-                Assert.IsTrue(
+                Assert.That(
                     doc.Entities.Any(e => e.Category == PiiCategory.UsSocialSecurityNumber),
+                    Is.True,
                     $"Document {doc.Id} should contain a US SSN entity.");
 
-                Assert.IsTrue(
+                Assert.That(
                     doc.Entities.Any(e => e.Category == PiiCategory.Person),
+                    Is.True,
                     $"Document {doc.Id} should contain a Person entity.");
 
-                Assert.IsTrue(
+                Assert.That(
                     doc.Entities.Any(e => e.Category == PiiCategory.Email),
+                    Is.True,
                     $"Document {doc.Id} should contain an Email entity.");
 
                 // 2. Check redaction behavior for Person and Email:
@@ -1064,7 +1074,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.IsNotNull(piiResult);
             Assert.IsNotNull(piiResult.Results);
             Assert.IsNotNull(piiResult.Results.Documents);
-            Assert.AreEqual(1, piiResult.Results.Documents.Count);
+            Assert.That(piiResult.Results.Documents.Count, Is.EqualTo(1));
 
             PiiActionResult doc = piiResult.Results.Documents[0];
             string redacted = doc.RedactedText;
@@ -1076,7 +1086,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             StringAssert.Contains("john@example.com", redacted, "Email should remain visible in redacted text.");
 
             // Only Person entities should be returned (SSN & Email filtered by high thresholds)
-            Assert.AreEqual(2, doc.Entities.Count, "Expected exactly 2 entities to be returned.");
+            Assert.That(doc.Entities.Count, Is.EqualTo(2), "Expected exactly 2 entities to be returned.");
 
             var categories = new HashSet<string>(
             doc.Entities.Select(e => e.Category.ToString())
@@ -1089,19 +1099,21 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             );
 
             // Ensure no SSN or Email entities are present
-            Assert.IsFalse(
+            Assert.That(
                 doc.Entities.Any(e => e.Category == PiiCategory.UsSocialSecurityNumber),
+                Is.False,
                 "USSocialSecurityNumber entities should be filtered out by the confidence threshold override."
             );
-            Assert.IsFalse(
+            Assert.That(
                 doc.Entities.Any(e => e.Category == PiiCategory.Email),
+                Is.False,
                 "Email entities should be filtered out by the confidence threshold override."
             );
 
             // Quick sanity on confidence
             foreach (PiiEntity e in doc.Entities)
             {
-                Assert.AreEqual(PiiCategory.Person.ToString(), e.Category, "All returned entities should be Person.");
+                Assert.That(e.Category, Is.EqualTo(PiiCategory.Person.ToString()), "All returned entities should be Person.");
                 Assert.GreaterOrEqual(e.ConfidenceScore, 0.3, "Entities should respect the default confidence floor.");
             }
         }

@@ -19,7 +19,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(new DoesNotImplementInterface(), ModelReaderWriterOptions.Json, s_badContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("DoesNotImplementInterface must implement IEnumerable or IPersistableModel", ex!.Message);
+            Assert.That(ex!.Message, Is.EqualTo("DoesNotImplementInterface must implement IEnumerable or IPersistableModel"));
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "{}";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(DoesNotImplementInterface), ModelReaderWriterOptions.Json, s_badContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("DoesNotImplementInterface must implement IPersistableModel", ex!.Message);
+            Assert.That(ex!.Message, Is.EqualTo("DoesNotImplementInterface must implement IPersistableModel"));
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "[]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(List<PersistableModel_NonPersistableElement>), new ModelReaderWriterOptions("W"), s_badContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("'DoesNotImplementInterface' must implement IPersistableModel", ex!.Message);
+            Assert.That(ex!.Message, Is.EqualTo("'DoesNotImplementInterface' must implement IPersistableModel"));
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var json = "[]";
             var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.FromString(json), typeof(List<PersistableModel_NullElement>), new ModelReaderWriterOptions("W"), s_badContext));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("'' must implement IPersistableModel", ex!.Message);
+            Assert.That(ex!.Message, Is.EqualTo("'' must implement IPersistableModel"));
         }
 
         private class BadContext : ModelReaderWriterContext

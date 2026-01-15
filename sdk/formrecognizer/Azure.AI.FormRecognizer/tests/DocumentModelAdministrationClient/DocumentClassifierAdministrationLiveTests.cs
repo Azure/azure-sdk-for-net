@@ -62,7 +62,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
 
             // Sanity check to make sure we got an actual response back from the service.
-            Assert.AreEqual(classifierId, operation.Value.ClassifierId);
+            Assert.That(operation.Value.ClassifierId, Is.EqualTo(classifierId));
         }
 
         [RecordedTest]
@@ -97,13 +97,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 }
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             DocumentClassifierDetails classifier = operation.Value;
 
-            Assert.AreEqual(classifierId, classifier.ClassifierId);
-            Assert.AreEqual(description, classifier.Description);
-            Assert.AreEqual(ServiceVersionString, classifier.ServiceVersion);
+            Assert.That(classifier.ClassifierId, Is.EqualTo(classifierId));
+            Assert.That(classifier.Description, Is.EqualTo(description));
+            Assert.That(classifier.ServiceVersion, Is.EqualTo(ServiceVersionString));
             Assert.Greater(classifier.CreatedOn, startTime);
             Assert.Greater(classifier.ExpiresOn, classifier.CreatedOn);
 
@@ -142,13 +142,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 }
             }
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             DocumentClassifierDetails classifier = operation.Value;
 
-            Assert.AreEqual(classifierId, classifier.ClassifierId);
-            Assert.AreEqual(description, classifier.Description);
-            Assert.AreEqual(ServiceVersionString, classifier.ServiceVersion);
+            Assert.That(classifier.ClassifierId, Is.EqualTo(classifierId));
+            Assert.That(classifier.Description, Is.EqualTo(description));
+            Assert.That(classifier.ServiceVersion, Is.EqualTo(ServiceVersionString));
             Assert.Greater(classifier.CreatedOn, startTime);
             Assert.Greater(classifier.ExpiresOn, classifier.CreatedOn);
 
@@ -182,7 +182,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var fakeId = "00000000-0000-0000-0000-000000000000";
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetDocumentClassifierAsync(fakeId));
-            Assert.AreEqual("NotFound", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("NotFound"));
         }
 
         #endregion Get
@@ -223,7 +223,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             foreach (string id in expectedIdMapping.Keys)
             {
-                Assert.True(idMapping.ContainsKey(id));
+                Assert.That(idMapping.ContainsKey(id), Is.True);
 
                 DocumentClassifierDetails classifier = idMapping[id];
                 DocumentClassifierDetails expected = expectedIdMapping[id];
@@ -248,7 +248,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var response = await client.DeleteDocumentClassifierAsync(classifierId);
 
-            Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
         }
 
         [RecordedTest]
@@ -258,7 +258,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var fakeId = "00000000-0000-0000-0000-000000000000";
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeleteDocumentClassifierAsync(fakeId));
-            Assert.AreEqual("NotFound", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("NotFound"));
         }
 
         #endregion Delete

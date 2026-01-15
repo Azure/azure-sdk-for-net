@@ -30,10 +30,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 b.AddAzureStorageQueues();
             }, values);
 
-            Assert.AreEqual(TimeSpan.FromSeconds(22), options.LockPeriod);
-            Assert.AreEqual(TimeSpan.FromSeconds(22), options.ListenerLockPeriod);
-            Assert.AreEqual(TimeSpan.FromSeconds(22), options.LockAcquisitionTimeout);
-            Assert.AreEqual(TimeSpan.FromSeconds(22), options.ListenerLockRecoveryPollingInterval);
+            Assert.That(options.LockPeriod, Is.EqualTo(TimeSpan.FromSeconds(22)));
+            Assert.That(options.ListenerLockPeriod, Is.EqualTo(TimeSpan.FromSeconds(22)));
+            Assert.That(options.LockAcquisitionTimeout, Is.EqualTo(TimeSpan.FromSeconds(22)));
+            Assert.That(options.ListenerLockRecoveryPollingInterval, Is.EqualTo(TimeSpan.FromSeconds(22)));
             Assert.AreEqual(TimeSpan.FromSeconds(22), options.ListenerLockRecoveryPollingInterval);
         }
 
@@ -55,11 +55,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 b.AddAzureStorageQueues();
             }, values);
 
-            Assert.AreEqual(30, options.BatchSize);
-            Assert.AreEqual(123, options.NewBatchThreshold);
-            Assert.AreEqual(TimeSpan.FromSeconds(2), options.MaxPollingInterval);
-            Assert.AreEqual(10, options.MaxDequeueCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(15), options.VisibilityTimeout);
+            Assert.That(options.BatchSize, Is.EqualTo(30));
+            Assert.That(options.NewBatchThreshold, Is.EqualTo(123));
+            Assert.That(options.MaxPollingInterval, Is.EqualTo(TimeSpan.FromSeconds(2)));
+            Assert.That(options.MaxDequeueCount, Is.EqualTo(10));
+            Assert.That(options.VisibilityTimeout, Is.EqualTo(TimeSpan.FromSeconds(15)));
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 b.AddAzureStorageQueues();
             }, values, env: "Development");
 
-            Assert.AreEqual(TimeSpan.FromSeconds(2), options.MaxPollingInterval);
+            Assert.That(options.MaxPollingInterval, Is.EqualTo(TimeSpan.FromSeconds(2)));
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 b.AddAzureStorageQueues();
             }, values, env: "Development");
 
-            Assert.AreEqual(TimeSpan.FromSeconds(42), options.MaxPollingInterval);
+            Assert.That(options.MaxPollingInterval, Is.EqualTo(TimeSpan.FromSeconds(42)));
         }
     }
 }

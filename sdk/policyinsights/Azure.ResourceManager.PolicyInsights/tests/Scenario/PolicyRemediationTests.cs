@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
 
             // Exist
             var flag = await policyRemediationCollection.ExistsAsync(policyRemediationName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             // Get
             var getPolicyRemediation = await policyRemediationCollection.GetAsync(policyRemediationName);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
             // Delete
             await policyRemediation.Value.DeleteAsync(WaitUntil.Completed);
             flag = await policyRemediationCollection.ExistsAsync(policyRemediationName);
-            Assert.IsFalse(flag);
+            Assert.That((bool)flag, Is.False);
         }
 
         [RecordedTest]
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
 
             // Exist
             var flag = await policyRemediationCollection.ExistsAsync(policyRemediationName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
 
             // Get
             var getPolicyRemediation = await policyRemediationCollection.GetAsync(policyRemediationName);
@@ -103,16 +103,16 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
             // Delete
             await policyRemediation.Value.DeleteAsync(WaitUntil.Completed);
             flag = await policyRemediationCollection.ExistsAsync(policyRemediationName);
-            Assert.IsFalse(flag);
+            Assert.That((bool)flag, Is.False);
         }
 
         private void ValidatepolicyRemediation(PolicyRemediationData policyRemediation, string policyRemediationName)
         {
             Assert.IsNotNull(policyRemediation);
             Assert.IsNotEmpty(policyRemediation.Id);
-            Assert.AreEqual(policyRemediationName, policyRemediation.Name);
-            Assert.AreEqual(1, policyRemediation.ParallelDeployments);
-            Assert.AreEqual(1, policyRemediation.ResourceCount);
+            Assert.That(policyRemediation.Name, Is.EqualTo(policyRemediationName));
+            Assert.That(policyRemediation.ParallelDeployments, Is.EqualTo(1));
+            Assert.That(policyRemediation.ResourceCount, Is.EqualTo(1));
         }
     }
 }

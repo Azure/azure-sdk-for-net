@@ -14,20 +14,20 @@ namespace Azure.MixedReality.Authentication.Tests
             Uri expected = new Uri("https://sts.eastus2.mixedreality.com");
             Uri actual = AuthenticationEndpoint.ConstructFromDomain("eastus2.mixedreality.com");
 
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
         public void ConstructFromDomainWithInvalidParameters()
         {
             ArgumentException? ex = Assert.Throws<ArgumentNullException>(() => AuthenticationEndpoint.ConstructFromDomain(null!));
-            Assert.AreEqual("accountDomain", ex!.ParamName);
+            Assert.That(ex!.ParamName, Is.EqualTo("accountDomain"));
 
             ex = Assert.Throws<ArgumentException>(() => AuthenticationEndpoint.ConstructFromDomain(string.Empty));
-            Assert.AreEqual("accountDomain", ex!.ParamName);
+            Assert.That(ex!.ParamName, Is.EqualTo("accountDomain"));
 
             ex = Assert.Throws<ArgumentException>(() => AuthenticationEndpoint.ConstructFromDomain(" "));
-            Assert.AreEqual("accountDomain", ex!.ParamName);
+            Assert.That(ex!.ParamName, Is.EqualTo("accountDomain"));
         }
     }
 }

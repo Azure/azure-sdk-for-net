@@ -26,20 +26,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             {
                 if (parameter.ParameterType == typeof(WebPubSubConnectionContext))
                 {
-                    Assert.AreEqual(result, triggerEvent.ConnectionContext);
+                    Assert.That(triggerEvent.ConnectionContext, Is.EqualTo(result));
                 }
                 else if (parameter.ParameterType == typeof(JObject))
                 {
-                    Assert.AreEqual(result, JObject.FromObject(triggerEvent.ConnectionContext));
+                    Assert.That(JObject.FromObject(triggerEvent.ConnectionContext), Is.EqualTo(result));
                 }
             }
             else if (parameter.Name == "data")
             {
-                Assert.AreEqual(result, triggerEvent.Data);
+                Assert.That(triggerEvent.Data, Is.EqualTo(result));
             }
             else if (parameter.Name == "dataType")
             {
-                Assert.AreEqual(result, triggerEvent.DataType);
+                Assert.That(triggerEvent.DataType, Is.EqualTo(result));
             }
         }
 

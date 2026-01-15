@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                         Console.WriteLine(message.Subject); // prints "Updated subject"
                         Console.WriteLine("Second send plugin executed!");
 #else
-                        Assert.AreEqual("Updated subject", message.Subject);
+                        Assert.That(message.Subject, Is.EqualTo("Updated subject"));
 #endif
                         return Task.CompletedTask;
                     },
@@ -58,7 +58,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
                         Console.WriteLine("First receive plugin executed!");
 #else
-                        Assert.AreEqual("Updated subject", message.Subject);
+                        Assert.That(message.Subject, Is.EqualTo("Updated subject"));
 #endif
                         var rawMessage = message.GetRawAmqpMessage();
                         rawMessage.Properties.Subject = "Received subject";
@@ -69,7 +69,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
                         Console.WriteLine(message.Subject); // prints "Received subject"
 #else
-                        Assert.AreEqual("Received subject", message.Subject);
+                        Assert.That(message.Subject, Is.EqualTo("Received subject"));
 #endif
                         var rawMessage = message.GetRawAmqpMessage();
                         rawMessage.Properties.Subject = "Last subject";
@@ -81,7 +81,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
                 Console.WriteLine(message.Subject);
 #else
-                Assert.AreEqual("Last subject", message.Subject);
+                Assert.That(message.Subject, Is.EqualTo("Last subject"));
 #endif
                 #endregion
             };
@@ -118,7 +118,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                         Console.WriteLine(message.Subject); // prints "Updated subject"
                         Console.WriteLine("Second send plugin executed!");
 #else
-                        Assert.AreEqual("Updated subject", message.Subject);
+                        Assert.That(message.Subject, Is.EqualTo("Updated subject"));
 #endif
                         return Task.CompletedTask;
                     },
@@ -132,7 +132,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
                         Console.WriteLine("First receive plugin executed!");
 #else
-                        Assert.AreEqual("Updated subject", message.Subject);
+                        Assert.That(message.Subject, Is.EqualTo("Updated subject"));
 #endif
                         var rawMessage = message.GetRawAmqpMessage();
                         rawMessage.Properties.Subject = "Received subject";
@@ -143,7 +143,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
                         Console.WriteLine(message.Subject); // prints "Received subject"
 #else
-                        Assert.AreEqual("Received subject", message.Subject);
+                        Assert.That(message.Subject, Is.EqualTo("Received subject"));
 #endif
                         var rawMessage = message.GetRawAmqpMessage();
                         rawMessage.Properties.Subject = "Last subject";
@@ -155,7 +155,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
                 Console.WriteLine(message.Subject);
 #else
-                Assert.AreEqual("Last subject", message.Subject);
+                Assert.That(message.Subject, Is.EqualTo("Last subject"));
 #endif
             };
         }
@@ -191,7 +191,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                         Console.WriteLine(message.Subject); // prints "Updated subject"
                         Console.WriteLine("Second send plugin executed!");
 #else
-                        Assert.AreEqual("Updated subject", message.Subject);
+                        Assert.That(message.Subject, Is.EqualTo("Updated subject"));
 #endif
                         return Task.CompletedTask;
                     },
@@ -206,7 +206,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                         Console.WriteLine("First receive plugin executed!");
                         Console.WriteLine(message.Subject); // prints "Updated subject"
 #else
-                        Assert.AreEqual("Updated subject", message.Subject);
+                        Assert.That(message.Subject, Is.EqualTo("Updated subject"));
 #endif
                         var rawMessage = message.GetRawAmqpMessage();
                         rawMessage.Properties.Subject = "Received subject";
@@ -219,7 +219,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                         Console.WriteLine("Second receive plugin executed!");
 #else
 
-                        Assert.AreEqual("Received subject", message.Subject);
+                        Assert.That(message.Subject, Is.EqualTo("Received subject"));
 #endif
                         var rawMessage = message.GetRawAmqpMessage();
                         rawMessage.Properties.Subject = "Last subject";
@@ -234,7 +234,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
                     Console.WriteLine($"Message handler executed. Subject: {args.Message.Subject}");
 #else
-                    Assert.AreEqual("Last subject", args.Message.Subject);
+                    Assert.That(args.Message.Subject, Is.EqualTo("Last subject"));
                     tcs.TrySetResult(true);
 #endif
                     return Task.CompletedTask;
@@ -291,8 +291,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                         Console.WriteLine(message.SessionId); // prints "sessionId"
                         Console.WriteLine("Second send plugin executed!");
 #else
-                        Assert.AreEqual("Updated subject", message.Subject);
-                        Assert.AreEqual("sessionId", message.SessionId);
+                        Assert.That(message.Subject, Is.EqualTo("Updated subject"));
+                        Assert.That(message.SessionId, Is.EqualTo("sessionId"));
 #endif
                         return Task.CompletedTask;
                     },
@@ -319,7 +319,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
                         Console.WriteLine(message.Subject); // prints "Received subject"
 #else
-                        Assert.AreEqual("Received subject", message.Subject);
+                        Assert.That(message.Subject, Is.EqualTo("Received subject"));
 #endif
                         var rawMessage = message.GetRawAmqpMessage();
                         rawMessage.Properties.Subject = "Last subject";
@@ -335,7 +335,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
                     Console.WriteLine(args.Message.Subject);
 #else
-                    Assert.AreEqual("Last subject", args.Message.Subject);
+                    Assert.That(args.Message.Subject, Is.EqualTo("Last subject"));
                     tcs.TrySetResult(true);
 
 #endif

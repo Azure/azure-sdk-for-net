@@ -53,7 +53,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
 
             Console.WriteLine($"Sources: {sources}");
             #endregion
-            Assert.True(updateSourcesOperation.HasCompleted);
+            Assert.That(updateSourcesOperation.HasCompleted, Is.True);
             Assert.That(sources.ToString().Contains(sourceUri));
 
             #region Snippet:QuestionAnsweringAuthoringClient_UpdateQnas_Authoring
@@ -86,8 +86,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
 
             Console.WriteLine($"Qnas: {qnas}");
             #endregion
-            Assert.True(updateQnasOperation.HasCompleted);
-            Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
+            Assert.That(updateQnasOperation.HasCompleted, Is.True);
+            Assert.That(updateQnasOperation.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(qnas.ToString().Contains(question));
             Assert.That(qnas.ToString().Contains(answer));
 
@@ -125,7 +125,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             }
             #endregion
 
-            Assert.AreEqual(204, updateSynonymsResponse.Status);
+            Assert.That(updateSynonymsResponse.Status, Is.EqualTo(204));
             var x = synonyms.ToList();
             Assert.That(synonyms.Any(synonym => synonym.Alterations[0].ToString().Contains("qnamaker")));
             Assert.That(synonyms.Any(synonym => synonym.Alterations[1].ToString().Contains("qna maker")));
@@ -148,7 +148,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Response addFeedbackResponse = Client.AddFeedback(testProjectName, addFeedbackRequestContent);
             #endregion
 
-            Assert.AreEqual(204, addFeedbackResponse.Status);
+            Assert.That(addFeedbackResponse.Status, Is.EqualTo(204));
         }
 
         [RecordedTest]
@@ -190,7 +190,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Console.WriteLine($"Sources: {sources}");
             #endregion
 
-            Assert.True(updateSourcesOperation.HasCompleted);
+            Assert.That(updateSourcesOperation.HasCompleted, Is.True);
             Assert.That(sources.ToString().Contains(sourceUri));
 
             #region Snippet:QuestionAnsweringAuthoringClient_UpdateQnasAsync_Authoring
@@ -223,8 +223,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Console.WriteLine($"Qnas: {qnas}");
             #endregion
 
-            Assert.True(updateQnasOperation.HasCompleted);
-            Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
+            Assert.That(updateQnasOperation.HasCompleted, Is.True);
+            Assert.That(updateQnasOperation.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(qnas.ToString().Contains(question));
             Assert.That(qnas.ToString().Contains(answer));
 
@@ -262,7 +262,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             }
             #endregion
 
-            Assert.AreEqual(204, updateSynonymsResponse.Status);
+            Assert.That(updateSynonymsResponse.Status, Is.EqualTo(204));
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.Alterations[0].ToString().Contains("qnamaker")));
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.Alterations[1].ToString().Contains("qna maker")));
 
@@ -284,7 +284,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Response addFeedbackResponse = await Client.AddFeedbackAsync(testProjectName, addFeedbackRequestContent);
             #endregion
 
-            Assert.AreEqual(204, addFeedbackResponse.Status);
+            Assert.That(addFeedbackResponse.Status, Is.EqualTo(204));
         }
     }
 }

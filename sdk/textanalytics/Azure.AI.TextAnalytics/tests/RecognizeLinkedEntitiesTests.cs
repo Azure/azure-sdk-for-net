@@ -100,13 +100,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(documents);
 
-            Assert.IsTrue(!results[0].HasError);
-            Assert.IsTrue(!results[2].HasError);
+            Assert.That(!results[0].HasError, Is.True);
+            Assert.That(!results[2].HasError, Is.True);
 
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
-            Assert.IsTrue(results[1].HasError);
+            Assert.That(results[1].HasError, Is.True);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
-            Assert.AreEqual(exceptionMessage, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
         }
 
         [RecordedTest]
@@ -125,8 +125,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                    async () => await client.RecognizeLinkedEntitiesBatchAsync(documents));
-            Assert.AreEqual(400, ex.Status);
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocumentBatch, ex.ErrorCode);
+            Assert.That(ex.Status, Is.EqualTo(400));
+            Assert.That(ex.ErrorCode, Is.EqualTo(TextAnalyticsErrorCode.InvalidDocumentBatch));
         }
 
         [RecordedTest]
@@ -150,7 +150,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
 
             // Assert the options classes since overloads were added and the original now instantiates a RecognizeLinkedEntitiesOptions.
-            Assert.IsTrue(options.IncludeStatistics);
+            Assert.That(options.IncludeStatistics, Is.True);
             Assert.IsNull(options.ModelVersion);
         }
 
@@ -185,7 +185,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
 
             // Assert the options classes since overloads were added and the original now instantiates a RecognizeLinkedEntitiesOptions.
-            Assert.IsTrue(options.IncludeStatistics);
+            Assert.That(options.IncludeStatistics, Is.True);
             Assert.IsNull(options.ModelVersion);
         }
 
@@ -196,7 +196,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var documents = new List<TextDocumentInput> { new TextDocumentInput(null, "Hello world") };
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.RecognizeLinkedEntitiesBatchAsync(documents));
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo(TextAnalyticsErrorCode.InvalidDocument));
         }
 
         [RecordedTest]
@@ -207,9 +207,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(documents);
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
-            Assert.IsTrue(results[0].HasError);
+            Assert.That(results[0].HasError, Is.True);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].Entities.Count());
-            Assert.AreEqual(exceptionMessage, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
         }
 
         [RecordedTest]
@@ -270,7 +270,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsClient client = GetClient();
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments, options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
-            Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer."));
         }
 
         private void ValidateInDocumenResult(LinkedEntityCollection entities, List<string> minimumExpectedOutput)
@@ -298,7 +298,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 foreach (LinkedEntityMatch match in entity.Matches)
                 {
                     Assert.That(match.Text, Is.Not.Null.And.Not.Empty);
-                    Assert.IsTrue(minimumExpectedOutput.Contains(match.Text, StringComparer.OrdinalIgnoreCase));
+                    Assert.That(minimumExpectedOutput.Contains(match.Text, StringComparer.OrdinalIgnoreCase), Is.True);
                     Assert.GreaterOrEqual(match.ConfidenceScore, 0.0);
                     Assert.GreaterOrEqual(match.Offset, 0);
                     Assert.Greater(match.Length, 0);
@@ -328,7 +328,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
 
-                Assert.False(result.HasError);
+                Assert.That(result.HasError, Is.False);
 
                 //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
                 Assert.IsNotNull(result.Statistics);
@@ -340,8 +340,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
                 else
                 {
-                    Assert.AreEqual(0, result.Statistics.CharacterCount);
-                    Assert.AreEqual(0, result.Statistics.TransactionCount);
+                    Assert.That(result.Statistics.CharacterCount, Is.EqualTo(0));
+                    Assert.That(result.Statistics.TransactionCount, Is.EqualTo(0));
                 }
 
                 ValidateInDocumenResult(result.Entities, minimumExpectedOutput[result.Id]);

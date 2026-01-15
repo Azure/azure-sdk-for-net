@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             };
             var id = "49b923e6-f458-4229-a980-c0e62fcea856";
             var roleDefinition = await collection.CreateOrUpdateAsync(WaitUntil.Completed, new ResourceIdentifier(id), data);
-            Assert.AreEqual(roleDefinition.Value.Data.Name, id);
+            Assert.That(id, Is.EqualTo(roleDefinition.Value.Data.Name));
         }
 
         [RecordedTest]
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             if (roleDefinition1 != null)
             {
                 var roleDefinition2 = await collection.GetAsync(new ResourceIdentifier(roleDefinition1.Data.Name));
-                Assert.AreEqual(roleDefinition2.Value.Data.Name, roleDefinition1.Data.Name);
+                Assert.That(roleDefinition1.Data.Name, Is.EqualTo(roleDefinition2.Value.Data.Name));
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             if (roleDefinition != null)
             {
                 var result = await collection.ExistsAsync(new ResourceIdentifier(roleDefinition.Data.Name));
-                Assert.IsTrue(result);
+                Assert.That((bool)result, Is.True);
             }
         }
     }

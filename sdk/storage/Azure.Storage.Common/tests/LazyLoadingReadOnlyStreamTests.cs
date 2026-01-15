@@ -101,7 +101,7 @@ namespace Azure.Storage.Tests
             }
 
             // Assert
-            Assert.AreEqual(1, downloadMock.Invocations.Count);
+            Assert.That(downloadMock.Invocations.Count, Is.EqualTo(1));
         }
 
         [TestCase(Constants.KB)]
@@ -128,7 +128,7 @@ namespace Azure.Storage.Tests
             int bufferSize = (int)fieldInfo.GetValue(readStream);
 
             // Assert
-            Assert.AreEqual(bufferSize, (int)Math.Min(length, Constants.DefaultStreamingDownloadSize));
+            Assert.That((int)Math.Min(length, Constants.DefaultStreamingDownloadSize), Is.EqualTo(bufferSize));
         }
     }
 }

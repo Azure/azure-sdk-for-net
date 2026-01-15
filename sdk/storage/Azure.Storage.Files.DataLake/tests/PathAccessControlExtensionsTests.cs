@@ -14,14 +14,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public void ParseOctal()
         {
-            Assert.AreEqual(RolePermissions.None, PathAccessControlExtensions.ParseOctalRolePermissions('0'));
-            Assert.AreEqual(RolePermissions.Execute, PathAccessControlExtensions.ParseOctalRolePermissions('1'));
-            Assert.AreEqual(RolePermissions.Write, PathAccessControlExtensions.ParseOctalRolePermissions('2'));
-            Assert.AreEqual(RolePermissions.Read, PathAccessControlExtensions.ParseOctalRolePermissions('4'));
-            Assert.AreEqual(RolePermissions.Execute | RolePermissions.Write, PathAccessControlExtensions.ParseOctalRolePermissions('3'));
-            Assert.AreEqual(RolePermissions.Read | RolePermissions.Execute, PathAccessControlExtensions.ParseOctalRolePermissions('5'));
-            Assert.AreEqual(RolePermissions.Read | RolePermissions.Write, PathAccessControlExtensions.ParseOctalRolePermissions('6'));
-            Assert.AreEqual(RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute, PathAccessControlExtensions.ParseOctalRolePermissions('7'));
+            Assert.That(PathAccessControlExtensions.ParseOctalRolePermissions('0'), Is.EqualTo(RolePermissions.None));
+            Assert.That(PathAccessControlExtensions.ParseOctalRolePermissions('1'), Is.EqualTo(RolePermissions.Execute));
+            Assert.That(PathAccessControlExtensions.ParseOctalRolePermissions('2'), Is.EqualTo(RolePermissions.Write));
+            Assert.That(PathAccessControlExtensions.ParseOctalRolePermissions('4'), Is.EqualTo(RolePermissions.Read));
+            Assert.That(PathAccessControlExtensions.ParseOctalRolePermissions('3'), Is.EqualTo(RolePermissions.Execute | RolePermissions.Write));
+            Assert.That(PathAccessControlExtensions.ParseOctalRolePermissions('5'), Is.EqualTo(RolePermissions.Read | RolePermissions.Execute));
+            Assert.That(PathAccessControlExtensions.ParseOctalRolePermissions('6'), Is.EqualTo(RolePermissions.Read | RolePermissions.Write));
+            Assert.That(PathAccessControlExtensions.ParseOctalRolePermissions('7'), Is.EqualTo(RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute));
         }
 
         [Test]
@@ -39,14 +39,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public void ParseSymbolic_NoSticky()
         {
-            Assert.AreEqual(RolePermissions.None, PathAccessControlExtensions.ParseSymbolicRolePermissions("---"));
-            Assert.AreEqual(RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("--x"));
-            Assert.AreEqual(RolePermissions.Write, PathAccessControlExtensions.ParseSymbolicRolePermissions("-w-"));
-            Assert.AreEqual(RolePermissions.Read, PathAccessControlExtensions.ParseSymbolicRolePermissions("r--"));
-            Assert.AreEqual(RolePermissions.Write | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("-wx"));
-            Assert.AreEqual(RolePermissions.Read | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("r-x"));
-            Assert.AreEqual(RolePermissions.Read | RolePermissions.Write, PathAccessControlExtensions.ParseSymbolicRolePermissions("rw-"));
-            Assert.AreEqual(RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("rwx", false));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("---"), Is.EqualTo(RolePermissions.None));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("--x"), Is.EqualTo(RolePermissions.Execute));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("-w-"), Is.EqualTo(RolePermissions.Write));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("r--"), Is.EqualTo(RolePermissions.Read));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("-wx"), Is.EqualTo(RolePermissions.Write | RolePermissions.Execute));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("r-x"), Is.EqualTo(RolePermissions.Read | RolePermissions.Execute));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("rw-"), Is.EqualTo(RolePermissions.Read | RolePermissions.Write));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("rwx", false), Is.EqualTo(RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute));
         }
 
         [Test]
@@ -80,24 +80,24 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public void ParseSymbolic_Sticky()
         {
-            Assert.AreEqual(RolePermissions.None, PathAccessControlExtensions.ParseSymbolicRolePermissions("---", true));
-            Assert.AreEqual(RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("--x", true));
-            Assert.AreEqual(RolePermissions.Write, PathAccessControlExtensions.ParseSymbolicRolePermissions("-w-", true));
-            Assert.AreEqual(RolePermissions.Read, PathAccessControlExtensions.ParseSymbolicRolePermissions("r--", true));
-            Assert.AreEqual(RolePermissions.Write | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("-wx", true));
-            Assert.AreEqual(RolePermissions.Read | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("r-x", true));
-            Assert.AreEqual(RolePermissions.Read | RolePermissions.Write, PathAccessControlExtensions.ParseSymbolicRolePermissions("rw-", true));
-            Assert.AreEqual(RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("rwx", true));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("---", true), Is.EqualTo(RolePermissions.None));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("--x", true), Is.EqualTo(RolePermissions.Execute));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("-w-", true), Is.EqualTo(RolePermissions.Write));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("r--", true), Is.EqualTo(RolePermissions.Read));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("-wx", true), Is.EqualTo(RolePermissions.Write | RolePermissions.Execute));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("r-x", true), Is.EqualTo(RolePermissions.Read | RolePermissions.Execute));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("rw-", true), Is.EqualTo(RolePermissions.Read | RolePermissions.Write));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("rwx", true), Is.EqualTo(RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute));
 
-            Assert.AreEqual(RolePermissions.None, PathAccessControlExtensions.ParseSymbolicRolePermissions("--T", true));
-            Assert.AreEqual(RolePermissions.Write, PathAccessControlExtensions.ParseSymbolicRolePermissions("-wT", true));
-            Assert.AreEqual(RolePermissions.Read, PathAccessControlExtensions.ParseSymbolicRolePermissions("r-T", true));
-            Assert.AreEqual(RolePermissions.Read | RolePermissions.Write, PathAccessControlExtensions.ParseSymbolicRolePermissions("rwT", true));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("--T", true), Is.EqualTo(RolePermissions.None));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("-wT", true), Is.EqualTo(RolePermissions.Write));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("r-T", true), Is.EqualTo(RolePermissions.Read));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("rwT", true), Is.EqualTo(RolePermissions.Read | RolePermissions.Write));
 
-            Assert.AreEqual(RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("--t", true));
-            Assert.AreEqual(RolePermissions.Write | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("-wt", true));
-            Assert.AreEqual(RolePermissions.Read | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("r-t", true));
-            Assert.AreEqual(RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute, PathAccessControlExtensions.ParseSymbolicRolePermissions("rwt", true));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("--t", true), Is.EqualTo(RolePermissions.Execute));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("-wt", true), Is.EqualTo(RolePermissions.Write | RolePermissions.Execute));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("r-t", true), Is.EqualTo(RolePermissions.Read | RolePermissions.Execute));
+            Assert.That(PathAccessControlExtensions.ParseSymbolicRolePermissions("rwt", true), Is.EqualTo(RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute));
         }
 
         [Test]
@@ -131,29 +131,29 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public void ToOctalString()
         {
-            Assert.AreEqual("0", RolePermissions.None.ToOctalRolePermissions());
-            Assert.AreEqual("1", RolePermissions.Execute.ToOctalRolePermissions());
-            Assert.AreEqual("2", RolePermissions.Write.ToOctalRolePermissions());
-            Assert.AreEqual("3", (RolePermissions.Write | RolePermissions.Execute).ToOctalRolePermissions());
-            Assert.AreEqual("4", (RolePermissions.Read).ToOctalRolePermissions());
-            Assert.AreEqual("5", (RolePermissions.Read | RolePermissions.Execute).ToOctalRolePermissions());
-            Assert.AreEqual("6", (RolePermissions.Read | RolePermissions.Write).ToOctalRolePermissions());
-            Assert.AreEqual("7", (RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute).ToOctalRolePermissions());
+            Assert.That(RolePermissions.None.ToOctalRolePermissions(), Is.EqualTo("0"));
+            Assert.That(RolePermissions.Execute.ToOctalRolePermissions(), Is.EqualTo("1"));
+            Assert.That(RolePermissions.Write.ToOctalRolePermissions(), Is.EqualTo("2"));
+            Assert.That((RolePermissions.Write | RolePermissions.Execute).ToOctalRolePermissions(), Is.EqualTo("3"));
+            Assert.That((RolePermissions.Read).ToOctalRolePermissions(), Is.EqualTo("4"));
+            Assert.That((RolePermissions.Read | RolePermissions.Execute).ToOctalRolePermissions(), Is.EqualTo("5"));
+            Assert.That((RolePermissions.Read | RolePermissions.Write).ToOctalRolePermissions(), Is.EqualTo("6"));
+            Assert.That((RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute).ToOctalRolePermissions(), Is.EqualTo("7"));
         }
 
         [Test]
         public void ToSymbolicString()
         {
-            Assert.AreEqual("---", RolePermissions.None.ToSymbolicRolePermissions());
-            Assert.AreEqual("--x", RolePermissions.Execute.ToSymbolicRolePermissions());
-            Assert.AreEqual("-w-", RolePermissions.Write.ToSymbolicRolePermissions());
-            Assert.AreEqual("-wx", (RolePermissions.Write | RolePermissions.Execute).ToSymbolicRolePermissions());
-            Assert.AreEqual("r--", (RolePermissions.Read).ToSymbolicRolePermissions());
-            Assert.AreEqual("r-x", (RolePermissions.Read | RolePermissions.Execute).ToSymbolicRolePermissions());
-            Assert.AreEqual("rw-", (RolePermissions.Read | RolePermissions.Write).ToSymbolicRolePermissions());
-            Assert.AreEqual("rwx", (RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute).ToSymbolicRolePermissions());
-            Assert.AreEqual("rwT", (RolePermissions.Read | RolePermissions.Write).ToSymbolicRolePermissions(true));
-            Assert.AreEqual("rwt", (RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute).ToSymbolicRolePermissions(true));
+            Assert.That(RolePermissions.None.ToSymbolicRolePermissions(), Is.EqualTo("---"));
+            Assert.That(RolePermissions.Execute.ToSymbolicRolePermissions(), Is.EqualTo("--x"));
+            Assert.That(RolePermissions.Write.ToSymbolicRolePermissions(), Is.EqualTo("-w-"));
+            Assert.That((RolePermissions.Write | RolePermissions.Execute).ToSymbolicRolePermissions(), Is.EqualTo("-wx"));
+            Assert.That((RolePermissions.Read).ToSymbolicRolePermissions(), Is.EqualTo("r--"));
+            Assert.That((RolePermissions.Read | RolePermissions.Execute).ToSymbolicRolePermissions(), Is.EqualTo("r-x"));
+            Assert.That((RolePermissions.Read | RolePermissions.Write).ToSymbolicRolePermissions(), Is.EqualTo("rw-"));
+            Assert.That((RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute).ToSymbolicRolePermissions(), Is.EqualTo("rwx"));
+            Assert.That((RolePermissions.Read | RolePermissions.Write).ToSymbolicRolePermissions(true), Is.EqualTo("rwT"));
+            Assert.That((RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute).ToSymbolicRolePermissions(true), Is.EqualTo("rwt"));
         }
 
         [Test]
@@ -173,7 +173,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             });
 
             // Assert
-            Assert.AreEqual("default:user:entityId:rwx", result);
+            Assert.That(result, Is.EqualTo("default:user:entityId:rwx"));
 
             // Act
             result = PathAccessControlExtensions.ToAccessControlListString(new List<PathAccessControlItem>()
@@ -186,13 +186,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             });
 
             // Assert
-            Assert.AreEqual("default:user:entityId:rwx,default:mask::rwx", result);
+            Assert.That(result, Is.EqualTo("default:user:entityId:rwx,default:mask::rwx"));
         }
 
         [Test]
         public void SerializeAccessControlList_Invalid()
         {
-            Assert.AreEqual(null, PathAccessControlExtensions.ToAccessControlListString(null));
+            Assert.That(PathAccessControlExtensions.ToAccessControlListString(null), Is.EqualTo(null));
         }
 
         [Test]
@@ -209,14 +209,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             IList<PathAccessControlItem> list = PathAccessControlExtensions.ParseAccessControlList("default:user:entityId:rwx");
 
             // Assert
-            Assert.AreEqual(1, list.Count);
+            Assert.That(list.Count, Is.EqualTo(1));
             AssertPathAccessControlEntryEquality(accessControlEntry, list[0]);
 
             // Act
             list = PathAccessControlExtensions.ParseAccessControlList("default:user:entityId:rwx,default:mask::rwx");
 
             // Assert
-            Assert.AreEqual(2, list.Count);
+            Assert.That(list.Count, Is.EqualTo(2));
             AssertPathAccessControlEntryEquality(accessControlEntry, list[0]);
             AssertPathAccessControlEntryEquality(new PathAccessControlItem(
                     AccessControlType.Mask,
@@ -228,7 +228,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         public void DeserializeAccessControlList_Invalid()
         {
-            Assert.AreEqual(null, PathAccessControlExtensions.ParseAccessControlList(null));
+            Assert.That(PathAccessControlExtensions.ParseAccessControlList(null), Is.EqualTo(null));
         }
     }
 }

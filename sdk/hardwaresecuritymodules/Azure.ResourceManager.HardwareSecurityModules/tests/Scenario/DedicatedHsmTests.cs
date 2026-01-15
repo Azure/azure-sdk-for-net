@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests.Scenario
                     break;
                 }
             }
-            Assert.AreEqual(dedicatedHsmCounter, 1);
+            Assert.That(dedicatedHsmCounter, Is.EqualTo(1));
         }
 
         protected async Task<VirtualNetworkResource> CreateVnet()
@@ -160,13 +160,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests.Scenario
             string expectedResourceId = string.Format(resourceIdFormat, expecrtedSubId, expecrtedRgName, expectedResourceName);
 
             Assert.NotNull(dedicatedHsmData);
-            Assert.AreEqual(expectedResourceId, dedicatedHsmData.Id.ToString());
-            Assert.AreEqual(expectedResourceLocation, dedicatedHsmData.Location.Name);
-            Assert.AreEqual(expectedResourceName, dedicatedHsmData.Name);
+            Assert.That(dedicatedHsmData.Id.ToString(), Is.EqualTo(expectedResourceId));
+            Assert.That(dedicatedHsmData.Location.Name, Is.EqualTo(expectedResourceLocation));
+            Assert.That(dedicatedHsmData.Name, Is.EqualTo(expectedResourceName));
             Assert.NotNull(dedicatedHsmData.Sku);
-            Assert.AreEqual(expectedSkuName, dedicatedHsmData.Sku.Name.ToString());
+            Assert.That(dedicatedHsmData.Sku.Name.ToString(), Is.EqualTo(expectedSkuName));
             Assert.NotNull(dedicatedHsmData.Tags);
-            Assert.True(expectedTags.Count == dedicatedHsmData.Tags.Count && !expectedTags.Except(dedicatedHsmData.Tags).Any());
+            Assert.That(expectedTags.Count == dedicatedHsmData.Tags.Count && !expectedTags.Except(dedicatedHsmData.Tags).Any(), Is.True);
         }
     }
 }

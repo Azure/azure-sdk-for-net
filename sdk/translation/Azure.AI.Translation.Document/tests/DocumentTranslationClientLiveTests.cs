@@ -49,8 +49,8 @@ namespace Azure.AI.Translation.Document.Tests
             // assert
             Assert.GreaterOrEqual(translations.Count, 1);
             TranslationStatusResult oneTranslation = translations[0];
-            Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.CreatedOn);
-            Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.LastModified);
+            Assert.That(oneTranslation.CreatedOn, Is.Not.EqualTo(new DateTimeOffset()));
+            Assert.That(oneTranslation.LastModified, Is.Not.EqualTo(new DateTimeOffset()));
             Assert.GreaterOrEqual(oneTranslation.DocumentsCanceled, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsFailed, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsInProgress, 0);
@@ -64,7 +64,7 @@ namespace Azure.AI.Translation.Document.Tests
             }
             else
             {
-                Assert.AreEqual(0, oneTranslation.TotalCharactersCharged);
+                Assert.That(oneTranslation.TotalCharactersCharged, Is.EqualTo(0));
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.AI.Translation.Document.Tests
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetSupportedFormatsAsync("document"));
 
-            Assert.AreEqual("401", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("401"));
         }
 
         [RecordedTest]
@@ -90,7 +90,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.GreaterOrEqual(documentFormats.Value.Value.Count, 0);
             foreach (DocumentTranslationFileFormat fileFormat in documentFormats.Value.Value)
             {
-                Assert.IsFalse(string.IsNullOrEmpty(fileFormat.Format));
+                Assert.That(string.IsNullOrEmpty(fileFormat.Format), Is.False);
                 Assert.IsNotNull(fileFormat.FileExtensions);
                 Assert.IsNotNull(fileFormat.FormatVersions);
             }
@@ -108,13 +108,13 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.GreaterOrEqual(glossaryFormats.Value.Value.Count, 0);
             foreach (DocumentTranslationFileFormat glossaryFormat in glossaryFormats.Value.Value)
             {
-                Assert.IsFalse(string.IsNullOrEmpty(glossaryFormat.Format));
+                Assert.That(string.IsNullOrEmpty(glossaryFormat.Format), Is.False);
                 Assert.IsNotNull(glossaryFormat.FileExtensions);
                 Assert.IsNotNull(glossaryFormat.FormatVersions);
 
                 if (glossaryFormat.Format == "XLIFF")
                 {
-                    Assert.IsFalse(string.IsNullOrEmpty(glossaryFormat.DefaultFormatVersion));
+                    Assert.That(string.IsNullOrEmpty(glossaryFormat.DefaultFormatVersion), Is.False);
                 }
             }
         }
@@ -136,8 +136,8 @@ namespace Azure.AI.Translation.Document.Tests
 
             Assert.GreaterOrEqual(translations.Count, 1);
             TranslationStatusResult oneTranslation = translations[0];
-            Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.CreatedOn);
-            Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.LastModified);
+            Assert.That(oneTranslation.CreatedOn, Is.Not.EqualTo(new DateTimeOffset()));
+            Assert.That(oneTranslation.LastModified, Is.Not.EqualTo(new DateTimeOffset()));
             Assert.GreaterOrEqual(oneTranslation.DocumentsCanceled, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsFailed, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsInProgress, 0);
@@ -151,7 +151,7 @@ namespace Azure.AI.Translation.Document.Tests
             }
             else
             {
-                Assert.AreEqual(0, oneTranslation.TotalCharactersCharged);
+                Assert.That(oneTranslation.TotalCharactersCharged, Is.EqualTo(0));
             }
         }
     }

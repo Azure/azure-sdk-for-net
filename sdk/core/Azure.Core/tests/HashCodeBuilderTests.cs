@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
             var hc2 = new HashCodeBuilder();
             hc2.Add("Hello".GetHashCode());
 
-            Assert.AreEqual(hc1.ToHashCode(), hc2.ToHashCode());
+            Assert.That(hc2.ToHashCode(), Is.EqualTo(hc1.ToHashCode()));
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace Azure.Core.Tests
             expected.Add(1);
             expected.Add(ConstComparer.ConstantValue);
 
-            Assert.AreEqual(expected.ToHashCode(), hc.ToHashCode());
+            Assert.That(hc.ToHashCode(), Is.EqualTo(expected.ToHashCode()));
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Azure.Core.Tests
             var expected = new HashCodeBuilder();
             expected.Add(EqualityComparer<string>.Default.GetHashCode(null));
 
-            Assert.AreEqual(expected.ToHashCode(), hc.ToHashCode());
+            Assert.That(hc.ToHashCode(), Is.EqualTo(expected.ToHashCode()));
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace Azure.Core.Tests
             expected.Add(1);
             expected.Add(ConstComparer.ConstantValue);
 
-            Assert.AreEqual(expected.ToHashCode(), hc.ToHashCode());
+            Assert.That(hc.ToHashCode(), Is.EqualTo(expected.ToHashCode()));
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace Azure.Core.Tests
             expected.Add(1);
             expected.Add("Hello");
 
-            Assert.AreEqual(expected.ToHashCode(), hc.ToHashCode());
+            Assert.That(hc.ToHashCode(), Is.EqualTo(expected.ToHashCode()));
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace Azure.Core.Tests
             for (int j = 0; j < hcs.Length; j++)
             {
                 if (i == j) continue;
-                Assert.AreNotEqual(hcs[i], hcs[j]);
+                    Assert.That(hcs[j], Is.Not.EqualTo(hcs[i]));
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Core.Tests
         {
             var hc = new HashCodeBuilder();
             hc.Add(1);
-            Assert.AreEqual(hc.ToHashCode(), HashCodeBuilder.Combine(1));
+            Assert.That(HashCodeBuilder.Combine(1), Is.EqualTo(hc.ToHashCode()));
         }
 
         [Test]
@@ -121,7 +121,7 @@ namespace Azure.Core.Tests
             var hc = new HashCodeBuilder();
             hc.Add(1);
             hc.Add(2);
-            Assert.AreEqual(hc.ToHashCode(), HashCodeBuilder.Combine(1, 2));
+            Assert.That(HashCodeBuilder.Combine(1, 2), Is.EqualTo(hc.ToHashCode()));
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace Azure.Core.Tests
             hc.Add(1);
             hc.Add(2);
             hc.Add(3);
-            Assert.AreEqual(hc.ToHashCode(), HashCodeBuilder.Combine(1, 2, 3));
+            Assert.That(HashCodeBuilder.Combine(1, 2, 3), Is.EqualTo(hc.ToHashCode()));
         }
 
         [Test]
@@ -142,7 +142,7 @@ namespace Azure.Core.Tests
             hc.Add(2);
             hc.Add(3);
             hc.Add(4);
-            Assert.AreEqual(hc.ToHashCode(), HashCodeBuilder.Combine(1, 2, 3, 4));
+            Assert.That(HashCodeBuilder.Combine(1, 2, 3, 4), Is.EqualTo(hc.ToHashCode()));
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace Azure.Core.Tests
             hc.Add(3);
             hc.Add(4);
             hc.Add(5);
-            Assert.AreEqual(hc.ToHashCode(), HashCodeBuilder.Combine(1, 2, 3, 4, 5));
+            Assert.That(HashCodeBuilder.Combine(1, 2, 3, 4, 5), Is.EqualTo(hc.ToHashCode()));
         }
 
         [Test]
@@ -167,7 +167,7 @@ namespace Azure.Core.Tests
             hc.Add(4);
             hc.Add(5);
             hc.Add(6);
-            Assert.AreEqual(hc.ToHashCode(), HashCodeBuilder.Combine(1, 2, 3, 4, 5, 6));
+            Assert.That(HashCodeBuilder.Combine(1, 2, 3, 4, 5, 6), Is.EqualTo(hc.ToHashCode()));
         }
 
         [Test]
@@ -181,7 +181,7 @@ namespace Azure.Core.Tests
             hc.Add(5);
             hc.Add(6);
             hc.Add(7);
-            Assert.AreEqual(hc.ToHashCode(), HashCodeBuilder.Combine(1, 2, 3, 4, 5, 6, 7));
+            Assert.That(HashCodeBuilder.Combine(1, 2, 3, 4, 5, 6, 7), Is.EqualTo(hc.ToHashCode()));
         }
 
         [Test]
@@ -196,7 +196,7 @@ namespace Azure.Core.Tests
             hc.Add(6);
             hc.Add(7);
             hc.Add(8);
-            Assert.AreEqual(hc.ToHashCode(), HashCodeBuilder.Combine(1, 2, 3, 4, 5, 6, 7, 8));
+            Assert.That(HashCodeBuilder.Combine(1, 2, 3, 4, 5, 6, 7, 8), Is.EqualTo(hc.ToHashCode()));
         }
 
         [Test]

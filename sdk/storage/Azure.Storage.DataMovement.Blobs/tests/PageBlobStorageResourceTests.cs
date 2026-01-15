@@ -46,7 +46,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             PageBlobStorageResource storageResource = new PageBlobStorageResource(blobClient);
 
             // Assert
-            Assert.AreEqual(uri, storageResource.Uri);
+            Assert.That(storageResource.Uri, Is.EqualTo(uri));
         }
 
         [RecordedTest]
@@ -119,7 +119,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 storageResource.ReadStreamAsync(),
                 e =>
                 {
-                    Assert.AreEqual("BlobNotFound", e.ErrorCode);
+                    Assert.That(e.ErrorCode, Is.EqualTo("BlobNotFound"));
                 });
         }
 
@@ -241,7 +241,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     options: new StorageResourceWriteToOffsetOptions() { Position = position }),
                 e =>
                 {
-                    Assert.AreEqual(e.ErrorCode, "InvalidHeaderValue");
+                    Assert.That(e.ErrorCode, Is.EqualTo("InvalidHeaderValue"));
                 });
             }
         }
@@ -998,7 +998,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 destinationResource.CopyFromUriAsync(sourceResource: sourceResource, overwrite: false, completeLength: length),
                 e =>
                 {
-                    Assert.IsTrue(e.Status == (int)HttpStatusCode.Unauthorized);
+                    Assert.That(e.Status == (int)HttpStatusCode.Unauthorized, Is.True);
                 });
         }
 
@@ -1534,7 +1534,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 destinationResource.CopyBlockFromUriAsync(sourceResource, new HttpRange(0, Constants.KB), false, 0),
                 e =>
                 {
-                    Assert.AreEqual(e.ErrorCode, "CannotVerifyCopySource");
+                    Assert.That(e.ErrorCode, Is.EqualTo("CannotVerifyCopySource"));
                 });
         }
 
@@ -1562,7 +1562,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(result.ResourceLength, Constants.KB);
+            Assert.That(result.ResourceLength, Is.EqualTo(Constants.KB));
             Assert.NotNull(result.RawProperties);
         }
 
@@ -1580,7 +1580,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 storageResource.GetPropertiesAsync(),
                 e =>
                 {
-                    Assert.AreEqual(e.ErrorCode, "BlobNotFound");
+                    Assert.That(e.ErrorCode, Is.EqualTo("BlobNotFound"));
                 });
         }
 
@@ -1629,13 +1629,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Metadata metadataResult = (Metadata)result.RawProperties[DataMovementConstants.ResourceProperties.Metadata];
 
             // Assert
-            Assert.AreEqual(eTag, result.ETag);
-            Assert.AreEqual(length, result.ResourceLength);
-            Assert.AreEqual(contentEncodingResult, DefaultContentEncoding);
-            Assert.AreEqual(contentDispositionResult, DefaultContentDisposition);
-            Assert.AreEqual(contentLanguageResult, DefaultContentLanguage);
-            Assert.AreEqual(contentTypeResult, DefaultContentType);
-            Assert.AreEqual(cacheControlResult, DefaultCacheControl);
+            Assert.That(result.ETag, Is.EqualTo(eTag));
+            Assert.That(result.ResourceLength, Is.EqualTo(length));
+            Assert.That(contentEncodingResult, Is.EqualTo(DefaultContentEncoding));
+            Assert.That(contentDispositionResult, Is.EqualTo(DefaultContentDisposition));
+            Assert.That(contentLanguageResult, Is.EqualTo(DefaultContentLanguage));
+            Assert.That(contentTypeResult, Is.EqualTo(DefaultContentType));
+            Assert.That(cacheControlResult, Is.EqualTo(DefaultCacheControl));
             Assert.That(metadata, Is.EqualTo(metadataResult));
             mock.Verify(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -1707,7 +1707,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await storageResource.CompleteTransferAsync(false);
 
             // Assert
-            Assert.IsTrue(await blobClient.ExistsAsync());
+            Assert.That((bool)await blobClient.ExistsAsync(), Is.True);
         }
 
         [RecordedTest]
@@ -1733,7 +1733,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             HttpAuthorization authorizationHeader = await sourceResource.GetCopyAuthorizationHeaderAsync();
 
             // Assert
-            Assert.Null(authorizationHeader);
+            Assert.That(authorizationHeader, Is.Null);
         }
 
         [RecordedTest]

@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.Tests
             await foreach (var genericResource in subscription.GetGenericResourcesAsync(expand: "createdTime"))
             {
                 Assert.NotNull(genericResource.Data.CreatedOn);
-                Assert.Null(genericResource.Data.ChangedOn);
-                Assert.Null(genericResource.Data.ProvisioningState);
+                Assert.That(genericResource.Data.ChangedOn, Is.Null);
+                Assert.That(genericResource.Data.ProvisioningState, Is.Null);
                 count++;
             }
 
             //`createdTime`, `changedTime` and `provisioningState`
             await foreach (var genericResource in subscription.GetGenericResourcesAsync(expand: "changedTime,provisioningState"))
             {
-                Assert.Null(genericResource.Data.CreatedOn);
+                Assert.That(genericResource.Data.CreatedOn, Is.Null);
                 Assert.NotNull(genericResource.Data.ChangedOn);
                 Assert.NotNull(genericResource.Data.ProvisioningState);
             }
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Tests
             _ = await CreateGenericAvailabilitySetAsync(rg2.Id);
 
             var count = await GetResourceCountAsync(rg1.GetGenericResourcesAsync());
-            Assert.AreEqual(2, count);
+            Assert.That(count, Is.EqualTo(2));
 
             count = await GetResourceCountAsync(rg2.GetGenericResourcesAsync());
-            Assert.AreEqual(1, count);
+            Assert.That(count, Is.EqualTo(1));
 
             //Assert.Throws<ArgumentNullException>(() => { genericResources.GetByResourceGroupAsync(null); });
         }
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Tests
             ResourceGroupResource rg = rgOp.Value;
             var aset = await CreateGenericAvailabilitySetAsync(rg.Id);
 
-            Assert.IsTrue(await Client.GetGenericResources().ExistsAsync(aset.Data.Id));
-            Assert.IsFalse(await Client.GetGenericResources().ExistsAsync(new ResourceIdentifier(aset.Data.Id + "1")));
+            Assert.That((bool)await Client.GetGenericResources().ExistsAsync(aset.Data.Id), Is.True);
+            Assert.That((bool)await Client.GetGenericResources().ExistsAsync(new ResourceIdentifier(aset.Data.Id + "1")), Is.False);
         }
 
         [TestCase]

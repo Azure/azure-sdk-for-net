@@ -29,7 +29,7 @@ namespace Azure.Communication.Email.Tests
             EmailSendOperation emailSendOperation = await SendEmailAndWaitForExistingOperationAsync(emailClient, emailRecipients);
             EmailSendResult statusMonitor = emailSendOperation.Value;
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
+            Assert.That(string.IsNullOrWhiteSpace(emailSendOperation.Id), Is.False);
             Console.WriteLine($"OperationId={emailSendOperation.Id}");
             Console.WriteLine($"Email send status = {statusMonitor.Status}");
         }
@@ -46,7 +46,7 @@ namespace Azure.Communication.Email.Tests
             EmailSendOperation emailSendOperation = SendEmailAndWaitForExistingOperation(emailClient, emailRecipients);
             EmailSendResult statusMonitor = emailSendOperation.Value;
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
+            Assert.That(string.IsNullOrWhiteSpace(emailSendOperation.Id), Is.False);
             Console.WriteLine($"OperationId={emailSendOperation.Id}");
             Console.WriteLine($"Email send status = {statusMonitor.Status}");
         }
@@ -61,7 +61,7 @@ namespace Azure.Communication.Email.Tests
             EmailSendOperation emailSendOperation = await SendEmailAndWaitForStatusWithManualPollingAsync(emailClient, emailRecipients);
             EmailSendResult statusMonitor = emailSendOperation.Value;
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
+            Assert.That(string.IsNullOrWhiteSpace(emailSendOperation.Id), Is.False);
             Console.WriteLine($"OperationId={emailSendOperation.Id}");
             Console.WriteLine($"Email send status = {statusMonitor.Status}");
         }
@@ -78,7 +78,7 @@ namespace Azure.Communication.Email.Tests
             EmailSendOperation emailSendOperation = await SendEmailAndWaitForStatusWithAutomaticPollingAsync(emailClient, emailRecipients);
             EmailSendResult statusMonitor = emailSendOperation.Value;
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
+            Assert.That(string.IsNullOrWhiteSpace(emailSendOperation.Id), Is.False);
             Console.WriteLine($"OperationId={emailSendOperation.Id}");
             Console.WriteLine($"Email send status = {statusMonitor.Status}");
         }
@@ -95,7 +95,7 @@ namespace Azure.Communication.Email.Tests
             EmailSendOperation emailSendOperation = SendEmailAndWaitForStatusWithAutomaticPolling(emailClient, emailRecipients);
             EmailSendResult statusMonitor = emailSendOperation.Value;
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
+            Assert.That(string.IsNullOrWhiteSpace(emailSendOperation.Id), Is.False);
             Console.WriteLine($"OperationId={emailSendOperation.Id}");
             Console.WriteLine($"Email send status = {statusMonitor.Status}");
         }

@@ -44,7 +44,7 @@ namespace Azure.Identity.Tests
                 TokenCredentialOptions option = new TokenCredentialOptions();
                 Uri authHost = option.AuthorityHost;
 
-                Assert.AreEqual(authHost, new Uri(envHostValue));
+                Assert.That(new Uri(envHostValue), Is.EqualTo(authHost));
             }
         }
 
@@ -61,8 +61,8 @@ namespace Azure.Identity.Tests
                 TokenCredentialOptions option = new TokenCredentialOptions() { AuthorityHost = customUri };
                 Uri authHost = option.AuthorityHost;
 
-                Assert.AreNotEqual(authHost, new Uri(envHostValue));
-                Assert.AreEqual(authHost, customUri);
+                Assert.That(new Uri(envHostValue), Is.Not.EqualTo(authHost));
+                Assert.That(customUri, Is.EqualTo(authHost));
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.Identity.Tests
             {
                 TokenCredentialOptions option = new TokenCredentialOptions();
 
-                Assert.AreEqual(option.AuthorityHost, AzureAuthorityHosts.AzurePublicCloud);
+                Assert.That(AzureAuthorityHosts.AzurePublicCloud, Is.EqualTo(option.AuthorityHost));
             }
         }
 
@@ -170,27 +170,27 @@ namespace Azure.Identity.Tests
 
             if (original is ISupportsDisableInstanceDiscovery && clone is ISupportsDisableInstanceDiscovery)
             {
-                Assert.AreEqual(original.DisableInstanceDiscovery, clone.DisableInstanceDiscovery);
+                Assert.That(clone.DisableInstanceDiscovery, Is.EqualTo(original.DisableInstanceDiscovery));
             }
             else
             {
-                Assert.AreNotEqual(original.DisableInstanceDiscovery, clone.DisableInstanceDiscovery);
+                Assert.That(clone.DisableInstanceDiscovery, Is.Not.EqualTo(original.DisableInstanceDiscovery));
             }
 
             if (original is ISupportsTokenCachePersistenceOptions && clone is ISupportsTokenCachePersistenceOptions)
             {
-                Assert.AreEqual(original.TokenCachePersistenceOptions, clone.TokenCachePersistenceOptions);
+                Assert.That(clone.TokenCachePersistenceOptions, Is.EqualTo(original.TokenCachePersistenceOptions));
             }
             else
             {
-                Assert.AreNotEqual(original.TokenCachePersistenceOptions, clone.TokenCachePersistenceOptions);
+                Assert.That(clone.TokenCachePersistenceOptions, Is.Not.EqualTo(original.TokenCachePersistenceOptions));
             }
 
-            Assert.AreEqual(original.Transport, clone.Transport);
+            Assert.That(clone.Transport, Is.EqualTo(original.Transport));
 
             var isCustomTransportTestProp = typeof(ClientOptions).GetProperty("IsCustomTransportSet", BindingFlags.Instance | BindingFlags.NonPublic);
 
-            Assert.AreEqual(isCustomTransportTestProp.GetValue(original), isCustomTransportTestProp.GetValue(clone));
+            Assert.That(isCustomTransportTestProp.GetValue(clone), Is.EqualTo(isCustomTransportTestProp.GetValue(original)));
 
             AssertPublicPropertiesCloned(original.Retry, clone.Retry);
 
@@ -207,7 +207,7 @@ namespace Azure.Identity.Tests
                 }
                 else
                 {
-                    Assert.AreEqual(propInfo.GetValue(original), propInfo.GetValue(clone));
+                    Assert.That(propInfo.GetValue(clone), Is.EqualTo(propInfo.GetValue(original)));
                 }
             }
         }
@@ -344,18 +344,18 @@ namespace Azure.Identity.Tests
 
             if (source is ISupportsDisableInstanceDiscovery didSource && destination is ISupportsDisableInstanceDiscovery didDestination)
             {
-                Assert.AreEqual(didSource.DisableInstanceDiscovery, didDestination.DisableInstanceDiscovery);
+                Assert.That(didDestination.DisableInstanceDiscovery, Is.EqualTo(didSource.DisableInstanceDiscovery));
             }
 
             if (source is ISupportsTokenCachePersistenceOptions tcpoSource && destination is ISupportsTokenCachePersistenceOptions tcpoDestination)
             {
-                Assert.AreEqual(tcpoSource.TokenCachePersistenceOptions.Name, tcpoDestination.TokenCachePersistenceOptions.Name);
-                Assert.AreEqual(tcpoSource.TokenCachePersistenceOptions.UnsafeAllowUnencryptedStorage, tcpoDestination.TokenCachePersistenceOptions.UnsafeAllowUnencryptedStorage);
+                Assert.That(tcpoDestination.TokenCachePersistenceOptions.Name, Is.EqualTo(tcpoSource.TokenCachePersistenceOptions.Name));
+                Assert.That(tcpoDestination.TokenCachePersistenceOptions.UnsafeAllowUnencryptedStorage, Is.EqualTo(tcpoSource.TokenCachePersistenceOptions.UnsafeAllowUnencryptedStorage));
             }
 
             if (source is ISupportsTenantId stiSource && destination is ISupportsTenantId stiDestination)
             {
-                Assert.AreEqual(stiSource.TenantId, stiDestination.TenantId);
+                Assert.That(stiDestination.TenantId, Is.EqualTo(stiSource.TenantId));
             }
         }
     }

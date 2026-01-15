@@ -37,8 +37,8 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         public async Task ClearConfiguration()
         {
             var client = CreateClient();
-            Assert.AreEqual(200, (await client.SetRoutesAsync(new List<SipTrunkRoute>())).Status);
-            Assert.AreEqual(200, (await client.SetTrunksAsync(new List<SipTrunk>())).Status);
+            Assert.That((await client.SetRoutesAsync(new List<SipTrunkRoute>())).Status, Is.EqualTo(200));
+            Assert.That((await client.SetTrunksAsync(new List<SipTrunk>())).Status, Is.EqualTo(200));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             var client = CreateClientWithTokenCredential();
 
             var response = await client.GetTrunksAsync().ConfigureAwait(false);
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             var client = CreateClientWithTokenCredential();
 
             var response = await client.SetTrunkAsync(new SipTrunk(TestData!.TrunkList[0].Fqdn,5555)).ConfigureAwait(false);
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         }
 
         [Test]
@@ -82,9 +82,9 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             var trunks = response.Value;
 
             Assert.IsNotNull(trunks);
-            Assert.AreEqual(TestData!.TrunkList.Count, trunks.Count());
-            Assert.IsTrue(TrunkAreEqual(TestData!.TrunkList[0], trunks[0]));
-            Assert.IsTrue(TrunkAreEqual(TestData!.TrunkList[1], trunks[1]));
+            Assert.That(trunks.Count(), Is.EqualTo(TestData!.TrunkList.Count));
+            Assert.That(TrunkAreEqual(TestData!.TrunkList[0], trunks[0]), Is.True);
+            Assert.That(TrunkAreEqual(TestData!.TrunkList[1], trunks[1]), Is.True);
         }
 
         [Test]
@@ -101,8 +101,8 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             var routes = response.Value;
 
             Assert.IsNotNull(routes);
-            Assert.AreEqual(1, routes.Count());
-            Assert.IsTrue(RouteAreEqual(TestData!.RuleWithoutTrunks, routes[0]));
+            Assert.That(routes.Count(), Is.EqualTo(1));
+            Assert.That(RouteAreEqual(TestData!.RuleWithoutTrunks, routes[0]), Is.True);
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             var response = await client.SetTrunkAsync(TestData!.NewTrunk).ConfigureAwait(false);
             var actualTrunks = await client.GetTrunksAsync().ConfigureAwait(false);
 
-            Assert.AreEqual(3, actualTrunks.Value.Count());
+            Assert.That(actualTrunks.Value.Count(), Is.EqualTo(3));
             Assert.IsNotNull(actualTrunks.Value.FirstOrDefault(x => x.Fqdn == TestData!.NewTrunk.Fqdn));
         }
 
@@ -134,7 +134,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             await client.SetTrunkAsync(modifiedTrunk).ConfigureAwait(false);
 
             var actualTrunk = await client.GetTrunkAsync(TestData!.TrunkList[0].Fqdn).ConfigureAwait(false);
-            Assert.AreEqual(modifiedTrunk.SipSignalingPort, actualTrunk.Value.SipSignalingPort);
+            Assert.That(actualTrunk.Value.SipSignalingPort, Is.EqualTo(modifiedTrunk.SipSignalingPort));
         }
 
         [Test]
@@ -147,12 +147,12 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 
             var client = InitializeTest();
             var initialTrunks = await client.GetTrunksAsync().ConfigureAwait(false);
-            Assert.AreEqual(TestData!.TrunkList.Count, initialTrunks.Value.Count());
+            Assert.That(initialTrunks.Value.Count(), Is.EqualTo(TestData!.TrunkList.Count));
 
             await client.DeleteTrunkAsync(TestData!.TrunkList[1].Fqdn).ConfigureAwait(false);
 
             var finalTrunks = await client.GetTrunksAsync().ConfigureAwait(false);
-            Assert.AreEqual(TestData!.TrunkList.Count-1, finalTrunks.Value.Count());
+            Assert.That(finalTrunks.Value.Count(), Is.EqualTo(TestData!.TrunkList.Count - 1));
             Assert.IsNull(finalTrunks.Value.FirstOrDefault(x => x.Fqdn == TestData!.TrunkList[1].Fqdn));
         }
 
@@ -170,7 +170,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 
             var trunk = response.Value;
             Assert.IsNotNull(trunk);
-            Assert.IsTrue(TrunkAreEqual(TestData!.TrunkList[1], trunk));
+            Assert.That(TrunkAreEqual(TestData!.TrunkList[1], trunk), Is.True);
         }
 
         [Test]
@@ -189,8 +189,8 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 
             var newRoutes = response.Value;
             Assert.IsNotNull(newRoutes);
-            Assert.AreEqual(1, newRoutes.Count);
-            Assert.IsTrue(RouteAreEqual(TestData!.RuleWithoutTrunks2, newRoutes[0]));
+            Assert.That(newRoutes.Count, Is.EqualTo(1));
+            Assert.That(RouteAreEqual(TestData!.RuleWithoutTrunks2, newRoutes[0]), Is.True);
         }
 
         [Test]
@@ -208,8 +208,8 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 
             var newTrunks = response.Value;
             Assert.IsNotNull(newTrunks);
-            Assert.AreEqual(1, newTrunks.Count);
-            Assert.IsTrue(TrunkAreEqual(TestData!.NewTrunk, newTrunks[0]));
+            Assert.That(newTrunks.Count, Is.EqualTo(1));
+            Assert.That(TrunkAreEqual(TestData!.NewTrunk, newTrunks[0]), Is.True);
         }
 
         [Test]

@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.MySql.Tests
                 };
             var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, content);
             MySqlServerResource server = lro.Value;
-            Assert.AreEqual(serverName, server.Data.Name);
+            Assert.That(server.Data.Name, Is.EqualTo(serverName));
             // Get
             MySqlServerResource serverFromGet = await serverCollection.GetAsync(serverName);
-            Assert.AreEqual(serverName, serverFromGet.Data.Name);
+            Assert.That(serverFromGet.Data.Name, Is.EqualTo(serverName));
             // List
             await foreach (MySqlServerResource serverFromList in serverCollection)
             {
-                Assert.AreEqual(serverName, serverFromList.Data.Name);
+                Assert.That(serverFromList.Data.Name, Is.EqualTo(serverName));
             }
         }
 
@@ -64,18 +64,18 @@ namespace Azure.ResourceManager.MySql.Tests
                 };
             var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, content);
             MySqlServerResource server = lro.Value;
-            Assert.AreEqual(serverName, server.Data.Name);
+            Assert.That(server.Data.Name, Is.EqualTo(serverName));
             // Update
             lro = await server.UpdateAsync(WaitUntil.Completed, new MySqlServerPatch()
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             });
             MySqlServerResource serverFromUpdate = lro.Value;
-            Assert.AreEqual(serverName, serverFromUpdate.Data.Name);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, serverFromUpdate.Data.Identity.ManagedServiceIdentityType);
+            Assert.That(serverFromUpdate.Data.Name, Is.EqualTo(serverName));
+            Assert.That(serverFromUpdate.Data.Identity.ManagedServiceIdentityType, Is.EqualTo(ManagedServiceIdentityType.SystemAssigned));
             // Get
             MySqlServerResource serverFromGet = await serverFromUpdate.GetAsync();
-            Assert.AreEqual(serverName, serverFromGet.Data.Name);
+            Assert.That(serverFromGet.Data.Name, Is.EqualTo(serverName));
             // Delete
             await serverFromGet.DeleteAsync(WaitUntil.Completed);
         }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppQuotaAvailabilityContent quotaAvailabilityContent = new("account1", NetAppQuotaAvailabilityResourceType.MicrosoftNetAppNetAppAccounts, _resourceGroup.Id.Name);
             Response<NetAppCheckAvailabilityResult> checkQuotaResult = await DefaultSubscription.CheckNetAppQuotaAvailabilityAsync(DefaultLocation, quotaAvailabilityContent);
             Assert.IsNotNull(checkQuotaResult);
-            Assert.True(checkQuotaResult.Value.IsAvailable);
+            Assert.That(checkQuotaResult.Value.IsAvailable, Is.True);
         }
 
         [RecordedTest]

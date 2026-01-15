@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.Sql.Tests
             string privateLinkName = list.FirstOrDefault().Data.Name;
 
             // 2.CheckIfExist
-            Assert.IsTrue(await collection.ExistsAsync(privateLinkName));
+            Assert.That((bool)await collection.ExistsAsync(privateLinkName), Is.True);
 
             // 3.Get
             var getPrivateLink = await collection.GetAsync(privateLinkName);
-            Assert.AreEqual(privateLinkName.ToString(), getPrivateLink.Value.Data.Name);
-            Assert.AreEqual("Microsoft.Sql/managedInstances/privateLinkResources", getPrivateLink.Value.Data.ResourceType.ToString());
+            Assert.That(getPrivateLink.Value.Data.Name, Is.EqualTo(privateLinkName.ToString()));
+            Assert.That(getPrivateLink.Value.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Sql/managedInstances/privateLinkResources"));
 
             // 4.GetIfExist
-            Assert.IsTrue(await collection.ExistsAsync(privateLinkName));
+            Assert.That((bool)await collection.ExistsAsync(privateLinkName), Is.True);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Tests
             Response<IndexDocumentsResult> response,
             params string[] expectedFailedKeys)
         {
-            Assert.AreEqual(207, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(207));
             IEnumerable<string> actualFailedKeys = response.Value.Results.Where(r => !r.Succeeded).Select(r => r.Key);
             CollectionAssert.AreEqual(expectedFailedKeys, actualFailedKeys);
         }
@@ -37,10 +37,10 @@ namespace Azure.Search.Documents.Tests
             string expectedMessage,
             int expectedStatusCode)
         {
-            Assert.AreEqual(key, result.Key);
-            Assert.IsFalse(result.Succeeded);
-            Assert.AreEqual(expectedMessage, result.ErrorMessage);
-            Assert.AreEqual(expectedStatusCode, result.Status);
+            Assert.That(result.Key, Is.EqualTo(key));
+            Assert.That(result.Succeeded, Is.False);
+            Assert.That(result.ErrorMessage, Is.EqualTo(expectedMessage));
+            Assert.That(result.Status, Is.EqualTo(expectedStatusCode));
         }
 
         private static void AssertActionSucceeded(
@@ -48,10 +48,10 @@ namespace Azure.Search.Documents.Tests
             IndexingResult result,
             int expectedStatusCode)
         {
-            Assert.AreEqual(key, result.Key);
-            Assert.IsTrue(result.Succeeded);
+            Assert.That(result.Key, Is.EqualTo(key));
+            Assert.That(result.Succeeded, Is.True);
             Assert.IsNull(result.ErrorMessage);
-            Assert.AreEqual(expectedStatusCode, result.Status);
+            Assert.That(result.Status, Is.EqualTo(expectedStatusCode));
         }
         #endregion Utilities
 
@@ -73,12 +73,12 @@ namespace Azure.Search.Documents.Tests
                 ["hotelName"] = "Freeway Flophouse"
             };
             Response<IndexDocumentsResult> response = await client.UploadDocumentsAsync(new[] { doc1, doc2 });
-            Assert.AreEqual(2, response.Value.Results.Count);
+            Assert.That(response.Value.Results.Count, Is.EqualTo(2));
             AssertActionSucceeded("1", response.Value.Results[0], 201);
             AssertActionSucceeded("2", response.Value.Results[1], 201);
             await resources.WaitForIndexingAsync();
             long count = await client.GetDocumentCountAsync();
-            Assert.AreEqual(2L, count);
+            Assert.That(count, Is.EqualTo(2L));
 
             // Merge
             response = await client.MergeDocumentsAsync(
@@ -86,13 +86,13 @@ namespace Azure.Search.Documents.Tests
                 {
                     new SearchDocument { ["hotelId"] = "1", ["hotelName"] = "Highway Haven" }
                 });
-            Assert.AreEqual(1, response.Value.Results.Count);
+            Assert.That(response.Value.Results.Count, Is.EqualTo(1));
             AssertActionSucceeded("1", response.Value.Results[0], 200);
             await resources.WaitForIndexingAsync();
             count = await client.GetDocumentCountAsync();
-            Assert.AreEqual(2L, count);
+            Assert.That(count, Is.EqualTo(2L));
             SearchDocument merged = await client.GetDocumentAsync<SearchDocument>("1");
-            Assert.AreNotEqual(doc1["hotelName"], merged["hotelName"]);
+            Assert.That(merged["hotelName"], Is.Not.EqualTo(doc1["hotelName"]));
 
             // Upload or Merge
             response = await client.MergeOrUploadDocumentsAsync(
@@ -101,31 +101,31 @@ namespace Azure.Search.Documents.Tests
                     new SearchDocument { ["hotelId"] = "2", ["hotelName"] = "Freeway Freedom" },
                     new SearchDocument { ["hotelId"] = "3", ["hotelName"] = "Basically a gas station bathroom, but with beds" },
                 });
-            Assert.AreEqual(2, response.Value.Results.Count);
+            Assert.That(response.Value.Results.Count, Is.EqualTo(2));
             AssertActionSucceeded("2", response.Value.Results[0], 200);
             AssertActionSucceeded("3", response.Value.Results[1], 201);
             await resources.WaitForIndexingAsync();
             count = await client.GetDocumentCountAsync();
-            Assert.AreEqual(3L, count);
+            Assert.That(count, Is.EqualTo(3L));
             merged = await client.GetDocumentAsync<SearchDocument>("2");
-            Assert.AreNotEqual(doc2["hotelName"], merged["hotelName"]);
+            Assert.That(merged["hotelName"], Is.Not.EqualTo(doc2["hotelName"]));
 
             // Delete by document
             response = await client.DeleteDocumentsAsync(new[] { doc1, doc2 });
-            Assert.AreEqual(2, response.Value.Results.Count);
+            Assert.That(response.Value.Results.Count, Is.EqualTo(2));
             AssertActionSucceeded("1", response.Value.Results[0], 200);
             AssertActionSucceeded("2", response.Value.Results[1], 200);
             await resources.WaitForIndexingAsync();
             count = await client.GetDocumentCountAsync();
-            Assert.AreEqual(1L, count);
+            Assert.That(count, Is.EqualTo(1L));
 
             // Delete by key
             response = await client.DeleteDocumentsAsync("hotelId", new[] { "3" });
-            Assert.AreEqual(1, response.Value.Results.Count);
+            Assert.That(response.Value.Results.Count, Is.EqualTo(1));
             AssertActionSucceeded("3", response.Value.Results[0], 200);
             await resources.WaitForIndexingAsync();
             count = await client.GetDocumentCountAsync();
-            Assert.AreEqual(0L, count);
+            Assert.That(count, Is.EqualTo(0L));
         }
 
         [Test]
@@ -258,7 +258,7 @@ namespace Azure.Search.Documents.Tests
                     }));
 
             Response<IndexDocumentsResult> response = await client.IndexDocumentsAsync(batch);
-            Assert.AreEqual(5, response.Value.Results.Count);
+            Assert.That(response.Value.Results.Count, Is.EqualTo(5));
 
             AssertPartialFailure(response, "3");
 
@@ -272,7 +272,7 @@ namespace Azure.Search.Documents.Tests
             await resources.WaitForIndexingAsync();
 
             long count = await client.GetDocumentCountAsync();
-            Assert.AreEqual(3L, count);
+            Assert.That(count, Is.EqualTo(3L));
         }
 
         [Test]
@@ -405,7 +405,7 @@ namespace Azure.Search.Documents.Tests
                     }));
 
             Response<IndexDocumentsResult> response = await client.IndexDocumentsAsync(batch);
-            Assert.AreEqual(5, response.Value.Results.Count);
+            Assert.That(response.Value.Results.Count, Is.EqualTo(5));
 
             AssertPartialFailure(response, "3");
 
@@ -419,7 +419,7 @@ namespace Azure.Search.Documents.Tests
             await resources.WaitForIndexingAsync();
 
             long count = await client.GetDocumentCountAsync();
-            Assert.AreEqual(3L, count);
+            Assert.That(count, Is.EqualTo(3L));
         }
 
         [Test]
@@ -487,7 +487,7 @@ namespace Azure.Search.Documents.Tests
                 IndexDocumentsAction.Upload(expected));
 
             Response<IndexDocumentsResult> response = await client.IndexDocumentsAsync(batch);
-            Assert.AreEqual(1, response.Value.Results.Count);
+            Assert.That(response.Value.Results.Count, Is.EqualTo(1));
 
             List<IndexingResult> results = new List<IndexingResult>(response.Value.Results);
             AssertActionSucceeded("1", results[0], 201);
@@ -496,7 +496,7 @@ namespace Azure.Search.Documents.Tests
 
             // Pull it back using the default serializer and compare
             Hotel actual = await resources.GetQueryClient().GetDocumentAsync<Hotel>("1");
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         internal struct SimpleStructHotel
@@ -565,7 +565,7 @@ namespace Azure.Search.Documents.Tests
                     }));
 
             Response<IndexDocumentsResult> response = await client.IndexDocumentsAsync(batch);
-            Assert.AreEqual(5, response.Value.Results.Count);
+            Assert.That(response.Value.Results.Count, Is.EqualTo(5));
 
             AssertPartialFailure(response, "3");
 
@@ -579,7 +579,7 @@ namespace Azure.Search.Documents.Tests
             await resources.WaitForIndexingAsync();
 
             long count = await client.GetDocumentCountAsync();
-            Assert.AreEqual(3L, count);
+            Assert.That(count, Is.EqualTo(3L));
         }
 
         [Test]
@@ -591,7 +591,7 @@ namespace Azure.Search.Documents.Tests
                 new[] { new Hotel() { HotelId = "1" } });
             Response<IndexDocumentsResult> response = await client.IndexDocumentsAsync(batch);
 
-            Assert.AreEqual(1, response.Value.Results.Count);
+            Assert.That(response.Value.Results.Count, Is.EqualTo(1));
             AssertActionSucceeded("1", response.Value.Results[0], 201);
         }
 
@@ -606,7 +606,7 @@ namespace Azure.Search.Documents.Tests
             Response<IndexDocumentsResult> response = await client.IndexDocumentsAsync(batch);
 
             AssertPartialFailure(response, "2");
-            Assert.AreEqual(2, response.Value.Results.Count);
+            Assert.That(response.Value.Results.Count, Is.EqualTo(2));
             AssertActionSucceeded("1", response.Value.Results[0], 201);
             AssertActionFailed("2", response.Value.Results[1], "Document not found.", 404);
         }
@@ -625,8 +625,8 @@ namespace Azure.Search.Documents.Tests
                     batch,
                     new IndexDocumentsOptions { ThrowOnAnyError = true }));
             RequestFailedException inner = ex.InnerException as RequestFailedException;
-            Assert.AreEqual(404, inner.Status);
-            Assert.AreEqual("Document not found.", inner.Message);
+            Assert.That(inner.Status, Is.EqualTo(404));
+            Assert.That(inner.Message, Is.EqualTo("Document not found."));
         }
 
         [Test]
@@ -646,11 +646,11 @@ namespace Azure.Search.Documents.Tests
 
             StringAssert.StartsWith("Failed to index document(s): 2, 3.", ex.Message);
             RequestFailedException inner = ex.InnerExceptions[0] as RequestFailedException;
-            Assert.AreEqual(404, inner.Status);
-            Assert.AreEqual("Document not found.", inner.Message);
+            Assert.That(inner.Status, Is.EqualTo(404));
+            Assert.That(inner.Message, Is.EqualTo("Document not found."));
             inner = ex.InnerExceptions[1] as RequestFailedException;
-            Assert.AreEqual(404, inner.Status);
-            Assert.AreEqual("Document not found.", inner.Message);
+            Assert.That(inner.Status, Is.EqualTo(404));
+            Assert.That(inner.Message, Is.EqualTo("Document not found."));
         }
 
         [Test]
@@ -665,17 +665,17 @@ namespace Azure.Search.Documents.Tests
             await resources.WaitForIndexingAsync();
 
             long count = await client.GetDocumentCountAsync();
-            Assert.AreEqual(1, count);
+            Assert.That(count, Is.EqualTo(1));
 
             document.Category = "ignored";
             batch = IndexDocumentsBatch.Delete(new[] { document });
             IndexDocumentsResult result = await client.IndexDocumentsAsync(batch);
-            Assert.AreEqual(1, result.Results.Count);
+            Assert.That(result.Results.Count, Is.EqualTo(1));
             AssertActionSucceeded("1", result.Results[0], 200);
             await resources.WaitForIndexingAsync();
 
             count = await client.GetDocumentCountAsync();
-            Assert.AreEqual(0, count);
+            Assert.That(count, Is.EqualTo(0));
         }
 
         [Test]
@@ -690,17 +690,17 @@ namespace Azure.Search.Documents.Tests
             await resources.WaitForIndexingAsync();
 
             long count = await client.GetDocumentCountAsync();
-            Assert.AreEqual(1, count);
+            Assert.That(count, Is.EqualTo(1));
 
             document["category"] = "ignored";
             batch = IndexDocumentsBatch.Delete(new[] { document });
             IndexDocumentsResult result = await client.IndexDocumentsAsync(batch);
-            Assert.AreEqual(1, result.Results.Count);
+            Assert.That(result.Results.Count, Is.EqualTo(1));
             AssertActionSucceeded("1", result.Results[0], 200);
             await resources.WaitForIndexingAsync();
 
             count = await client.GetDocumentCountAsync();
-            Assert.AreEqual(0, count);
+            Assert.That(count, Is.EqualTo(0));
         }
 
         [Test]
@@ -717,18 +717,18 @@ namespace Azure.Search.Documents.Tests
             await client.IndexDocumentsAsync(batch);
             await resources.WaitForIndexingAsync();
             long count = await client.GetDocumentCountAsync();
-            Assert.AreEqual(2, count);
+            Assert.That(count, Is.EqualTo(2));
 
             IndexDocumentsBatch<SearchDocument> trash =
                 IndexDocumentsBatch.Delete("hotelId", new[] { "1", "2" });
             IndexDocumentsResult result = await client.IndexDocumentsAsync(trash);
-            Assert.AreEqual(2, result.Results.Count);
+            Assert.That(result.Results.Count, Is.EqualTo(2));
             AssertActionSucceeded("1", result.Results[0], 200);
             AssertActionSucceeded("2", result.Results[1], 200);
             await resources.WaitForIndexingAsync();
 
             count = await client.GetDocumentCountAsync();
-            Assert.AreEqual(0, count);
+            Assert.That(count, Is.EqualTo(0));
         }
 
         /* TODO: Enable these Track 1 tests when we have support for index creation
@@ -845,7 +845,7 @@ namespace Azure.Search.Documents.Tests
                 async () => await client.IndexDocumentsAsync(
                     batch,
                     new IndexDocumentsOptions { ThrowOnAnyError = true }));
-            Assert.AreEqual(400, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(400));
             StringAssert.StartsWith("The request is invalid.", ex.Message);
 
             int errorJsonStartIndex = ex.Message.IndexOf("{");
@@ -866,7 +866,7 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
             long count = await resources.GetSearchClient().GetDocumentCountAsync();
-            Assert.AreEqual(0, count);
+            Assert.That(count, Is.EqualTo(0));
         }
 
         [Test]
@@ -1143,7 +1143,7 @@ namespace Azure.Search.Documents.Tests
             await resources.WaitForIndexingAsync();
 
             Hotel actualDoc = await client.GetDocumentAsync<Hotel>("1");
-            Assert.AreEqual(expected, actualDoc);
+            Assert.That(actualDoc, Is.EqualTo(expected));
             /*
             TODO: #10602 - Fix static merge test
             Message:
@@ -1156,7 +1156,7 @@ namespace Azure.Search.Documents.Tests
             await resources.WaitForIndexingAsync();
 
             actualDoc = await client.GetDocumentAsync<Hotel>("1");
-            Assert.AreEqual(original, actualDoc);
+            Assert.That(actualDoc, Is.EqualTo(original));
         }
 
         /* TODO: Enable this Track 1 test when we have support for naming policies
@@ -1442,7 +1442,7 @@ namespace Azure.Search.Documents.Tests
                     batch,
                     new IndexDocumentsOptions { ThrowOnAnyError = true }));
             RequestFailedException inner = ex.InnerException as RequestFailedException;
-            Assert.AreEqual(404, inner.Status);
+            Assert.That(inner.Status, Is.EqualTo(404));
             StringAssert.StartsWith("Document not found.", inner.Message);
         }
 

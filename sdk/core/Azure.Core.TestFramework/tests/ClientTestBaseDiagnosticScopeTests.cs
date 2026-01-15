@@ -87,7 +87,7 @@ namespace Azure.Core.TestFramework.Tests
         public async Task DoesNotThrowForCorrectPageableScopes()
         {
             InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
-            Assert.AreEqual(new[] {1, 2, 3, 4, 5, 6}, await client.GetPageableValidScopesAsync().ToEnumerableAsync());
+            Assert.That(await client.GetPageableValidScopesAsync().ToEnumerableAsync(), Is.EqualTo(new[] { 1, 2, 3, 4, 5, 6 }));
             await client.ForwardsAsync();
         }
 

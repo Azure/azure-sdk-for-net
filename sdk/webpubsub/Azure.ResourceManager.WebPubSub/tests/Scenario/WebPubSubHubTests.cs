@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub");
             var hub = await CreateDefaultWebPubSubHub(collection, webPubSubHubName);
             Assert.IsNotNull(hub.Data);
-            Assert.AreEqual(webPubSubHubName, hub.Data.Name);
-            Assert.AreEqual("Deny", hub.Data.Properties.AnonymousConnectPolicy);
+            Assert.That(hub.Data.Name, Is.EqualTo(webPubSubHubName));
+            Assert.That(hub.Data.Properties.AnonymousConnectPolicy, Is.EqualTo("Deny"));
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var collection = webPubSub.GetWebPubSubHubs();
             string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub");
             var hub = await CreateDefaultWebPubSubHub(collection, webPubSubHubName);
-            Assert.IsTrue(await collection.ExistsAsync(webPubSubHubName));
+            Assert.That((bool)await collection.ExistsAsync(webPubSubHubName), Is.True);
         }
 
         [Test]
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             await CreateDefaultWebPubSubHub(collection, webPubSubHubName);
             var hub = await collection.GetAsync(webPubSubHubName);
             Assert.IsNotNull(hub.Value.Data);
-            Assert.AreEqual(webPubSubHubName, hub.Value.Data.Name);
-            Assert.AreEqual("Deny", hub.Value.Data.Properties.AnonymousConnectPolicy);
+            Assert.That(hub.Value.Data.Name, Is.EqualTo(webPubSubHubName));
+            Assert.That(hub.Value.Data.Properties.AnonymousConnectPolicy, Is.EqualTo("Deny"));
         }
 
         [Test]

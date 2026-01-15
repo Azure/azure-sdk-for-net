@@ -41,12 +41,12 @@ namespace Azure.Communication.Email.Tests.Samples
             //@@ }
             //@@ catch ( RequestFailedException ex )
             //@@ {
-                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
-                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+            //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
             //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_Simple_AutoPolling_Async
 
-            Assert.False(string.IsNullOrEmpty(operationId));
+            Assert.That(string.IsNullOrEmpty(operationId), Is.False);
         }
 
         [RecordedTest]
@@ -131,12 +131,12 @@ namespace Azure.Communication.Email.Tests.Samples
             //@@ }
             //@@ catch ( RequestFailedException ex )
             //@@ {
-                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
-                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+            //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
             //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_With_MoreOptions_Async
 
-            Assert.False(string.IsNullOrEmpty(operationId));
+            Assert.That(string.IsNullOrEmpty(operationId), Is.False);
         }
 
         [Test]
@@ -218,12 +218,12 @@ namespace Azure.Communication.Email.Tests.Samples
             //@@ }
             //@@ catch ( RequestFailedException ex )
             //@@ {
-                //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
-                //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+            //@@ /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+            //@@ Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
             //@@ }
             #endregion Snippet:Azure_Communication_Email_Send_Multiple_Recipients_Async
 
-            Assert.False(string.IsNullOrEmpty(operationId));
+            Assert.That(string.IsNullOrEmpty(operationId), Is.False);
         }
 
         [Test]

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             VMwareHostResource host = lro.Value;
             Assert.IsNotNull(host);
             VMwareHostData resourceData = host.Data;
-            Assert.AreEqual(resourceData.Name, hostName);
+            Assert.That(hostName, Is.EqualTo(resourceData.Name));
 
             // Get
             VMwareHostResource result = await collection.GetAsync(hostName);
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 
             // Check exists
             bool isExist = await collection.ExistsAsync(hostName);
-            Assert.IsTrue(isExist);
+            Assert.That(isExist, Is.True);
 
             // Get if exists
             NullableResponse<VMwareHostResource> response = await collection.GetIfExistsAsync(hostName);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
                 if (item.Data.Name == hostName)
                     isExist = true;
             }
-            Assert.IsTrue(isExist);
+            Assert.That(isExist, Is.True);
 
             // Delete
             await host.DeleteAsync(WaitUntil.Completed);

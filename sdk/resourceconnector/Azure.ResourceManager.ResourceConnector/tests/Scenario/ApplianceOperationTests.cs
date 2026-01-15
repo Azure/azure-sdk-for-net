@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
             };
             var appliance = (await LocationCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, parameters)).Value;
 
-            Assert.AreEqual(appliance.Data.Name, resourceName);
-            Assert.AreEqual(appliance.Data.ProvisioningState, "Succeeded");
-            Assert.IsFalse(String.IsNullOrEmpty(appliance.Data.Identity.PrincipalId.ToString()));
-            Assert.AreEqual(appliance.Data.Identity.ManagedServiceIdentityType, ManagedServiceIdentityType.SystemAssigned);
+            Assert.That(resourceName, Is.EqualTo(appliance.Data.Name));
+            Assert.That(appliance.Data.ProvisioningState, Is.EqualTo("Succeeded"));
+            Assert.That(String.IsNullOrEmpty(appliance.Data.Identity.PrincipalId.ToString()), Is.False);
+            Assert.That(ManagedServiceIdentityType.SystemAssigned, Is.EqualTo(appliance.Data.Identity.ManagedServiceIdentityType));
 
             // GET ON CREATED APPLIANCE
             appliance = await LocationCollection.GetAsync(resourceName);
@@ -59,20 +59,20 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
             };
             appliance = await appliance.UpdateAsync(patchData);
             appliance = await appliance.GetAsync();
-            Assert.AreEqual(appliance.Data.Tags, patchData.Tags);
+            Assert.That(patchData.Tags, Is.EqualTo(appliance.Data.Tags));
 
             // // LIST BY RESOURCE GROUP
             var listResult = await LocationCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(listResult.Count, 1);
+            Assert.That(listResult.Count, Is.EqualTo(1));
             foreach (ResourceConnectorApplianceResource item in listResult)
             {
-                Assert.AreEqual(item.Data.Name, resourceName);
+                Assert.That(resourceName, Is.EqualTo(item.Data.Name));
             }
 
             // DELETE CREATED APPLIANCE
             await appliance.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await LocationCollection.ExistsAsync(resourceName)).Value;
-            Assert.IsFalse(falseResult);
+            Assert.That(falseResult, Is.False);
         }
     }
 }

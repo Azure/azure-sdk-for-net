@@ -36,7 +36,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 actual += strategy.GetNextDelay(response, i + 1);
             }
 
-            Assert.AreEqual(TimeSpan.FromMilliseconds(expected), actual);
+            Assert.That(actual, Is.EqualTo(TimeSpan.FromMilliseconds(expected)));
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 actual += strategy.GetNextDelay(response, i + 1);
             }
 
-            Assert.AreEqual(TimeSpan.FromSeconds(expected), actual);
+            Assert.That(actual, Is.EqualTo(TimeSpan.FromSeconds(expected)));
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 actual += strategy.GetNextDelay(response, i + 1);
             }
 
-            Assert.AreEqual(TimeSpan.FromMilliseconds(expected), actual);
+            Assert.That(actual, Is.EqualTo(TimeSpan.FromMilliseconds(expected)));
         }
 
         [Test]

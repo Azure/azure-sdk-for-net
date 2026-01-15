@@ -36,20 +36,20 @@ namespace Azure.ResourceManager.Tests
             FeatureResource feature = await provider.GetFeatures().GetAsync("AHUB");
             Assert.IsNotNull(feature);
             Assert.IsNotNull(feature.Data.Id);
-            Assert.AreEqual("Microsoft.Compute/AHUB", feature.Data.Name);
+            Assert.That(feature.Data.Name, Is.EqualTo("Microsoft.Compute/AHUB"));
             Assert.IsNotNull(feature.Data.Properties);
             Assert.IsNotNull(feature.Data.ResourceType);
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await provider.GetFeatures().GetAsync("DoesNotExist"));
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [RecordedTest]
         public async Task Exists()
         {
             ResourceProviderResource provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders().GetAsync("Microsoft.Compute");
-            Assert.IsTrue(await provider.GetFeatures().ExistsAsync("AHUB"));
-            Assert.IsFalse(await provider.GetFeatures().ExistsAsync("DoesNotExist"));
+            Assert.That((bool)await provider.GetFeatures().ExistsAsync("AHUB"), Is.True);
+            Assert.That((bool)await provider.GetFeatures().ExistsAsync("DoesNotExist"), Is.False);
         }
     }
 }

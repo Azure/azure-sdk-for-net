@@ -82,8 +82,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             foreach (var expectedJob in jobs)
             {
                 SparkJobDefinitionResource actualJob = await client.GetSparkJobDefinitionAsync(expectedJob.Name);
-                Assert.AreEqual(expectedJob.Name, actualJob.Name);
-                Assert.AreEqual(expectedJob.Id, actualJob.Id);
+                Assert.That(actualJob.Name, Is.EqualTo(expectedJob.Name));
+                Assert.That(actualJob.Id, Is.EqualTo(expectedJob.Id));
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await renameOperation.WaitForCompletionResponseAsync();
 
             SparkJobDefinitionResource sparkJob = await client.GetSparkJobDefinitionAsync (newSparkJobName);
-            Assert.AreEqual (newSparkJobName, sparkJob.Name);
+            Assert.That(sparkJob.Name, Is.EqualTo(newSparkJobName));
 
             SparkJobDefinitionDeleteSparkJobDefinitionOperation deleteOperation = await client.StartDeleteSparkJobDefinitionAsync (newSparkJobName);
             await deleteOperation.WaitForCompletionResponseAsync();

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             var input = ResourceDataHelper.GetBatchAccountData(StorageAccountIdentifier);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             BatchAccountResource account1 = lro.Value;
-            Assert.AreEqual(name, account1.Data.Name);
+            Assert.That(account1.Data.Name, Is.EqualTo(name));
             //2.Get
             BatchAccountResource account2 = await collection.GetAsync(name);
             ResourceDataHelper.AssertAccount(account1.Data, account2.Data);
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 3);
             //4.Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }

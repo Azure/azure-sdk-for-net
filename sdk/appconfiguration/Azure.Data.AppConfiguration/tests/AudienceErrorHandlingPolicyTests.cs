@@ -85,7 +85,7 @@ namespace Azure.Data.AppConfiguration.Tests
             });
 
             Assert.IsNotInstanceOf<RequestFailedException>(ex); // Should not be wrapped
-            Assert.AreEqual("Simulated failure WITHOUT code", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Simulated failure WITHOUT code"));
         }
 
         private void AssertWrapsError(bool isAudienceConfigured)

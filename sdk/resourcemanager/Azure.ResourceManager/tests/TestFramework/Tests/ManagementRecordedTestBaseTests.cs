@@ -26,8 +26,8 @@ namespace Azure.Core.TestFramework.Tests.Management
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             var result = client.Method();
 
-            Assert.AreEqual("ManagementTestClientProxy", client.GetType().Name);
-            Assert.AreEqual("success", result);
+            Assert.That(client.GetType().Name, Is.EqualTo("ManagementTestClientProxy"));
+            Assert.That(result, Is.EqualTo("success"));
         }
 
         [Test]
@@ -38,8 +38,8 @@ namespace Azure.Core.TestFramework.Tests.Management
             var sub = client.DefaultSubscription;
             var result = sub.Method();
 
-            Assert.AreEqual("TestResourceProxy", sub.GetType().Name);
-            Assert.AreEqual("success", result);
+            Assert.That(sub.GetType().Name, Is.EqualTo("TestResourceProxy"));
+            Assert.That(result, Is.EqualTo("success"));
         }
 
         [Test]
@@ -50,8 +50,8 @@ namespace Azure.Core.TestFramework.Tests.Management
             var operation = (await sub.GetLroAsync(WaitUntil.Completed)).Value;
             var result = operation.Method();
 
-            Assert.AreEqual("TestResourceProxy", operation.GetType().Name);
-            Assert.AreEqual("success", result);
+            Assert.That(operation.GetType().Name, Is.EqualTo("TestResourceProxy"));
+            Assert.That(result, Is.EqualTo("success"));
         }
 
         [Test]
@@ -62,8 +62,8 @@ namespace Azure.Core.TestFramework.Tests.Management
             var response = (await sub.GetLroAsync(WaitUntil.Completed)).Value;
             var result = response.Method();
 
-            Assert.AreEqual("TestResourceProxy", response.GetType().Name);
-            Assert.AreEqual("success", result);
+            Assert.That(response.GetType().Name, Is.EqualTo("TestResourceProxy"));
+            Assert.That(result, Is.EqualTo("success"));
         }
 
         [Test]
@@ -73,8 +73,8 @@ namespace Azure.Core.TestFramework.Tests.Management
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             var testResources = client.GetTestResourceCollection();
 
-            Assert.AreEqual("TestResourceCollectionProxy", testResources.GetType().Name);
-            Assert.AreEqual("success", testResources.Method());
+            Assert.That(testResources.GetType().Name, Is.EqualTo("TestResourceCollectionProxy"));
+            Assert.That(testResources.Method(), Is.EqualTo("success"));
         }
 
         [Test]
@@ -84,8 +84,8 @@ namespace Azure.Core.TestFramework.Tests.Management
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             var testResource = client.GetTestResource();
 
-            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
-            Assert.AreEqual("success", testResource.Method());
+            Assert.That(testResource.GetType().Name, Is.EqualTo("TestResourceProxy"));
+            Assert.That(testResource.Method(), Is.EqualTo("success"));
         }
 
         [Test]
@@ -95,8 +95,8 @@ namespace Azure.Core.TestFramework.Tests.Management
             var testResources = client.GetTestResourceCollection();
             await foreach (var item in testResources.GetAllAsync())
             {
-                Assert.AreEqual("TestResourceProxy", item.GetType().Name);
-                Assert.AreEqual("success", item.Method());
+                Assert.That(item.GetType().Name, Is.EqualTo("TestResourceProxy"));
+                Assert.That(item.Method(), Is.EqualTo("success"));
             }
         }
 
@@ -107,8 +107,8 @@ namespace Azure.Core.TestFramework.Tests.Management
             var testResources = client.GetTestResourceCollection();
             await foreach (var item in testResources)
             {
-                Assert.AreEqual("TestResourceProxy", item.GetType().Name);
-                Assert.AreEqual("success", item.Method());
+                Assert.That(item.GetType().Name, Is.EqualTo("TestResourceProxy"));
+                Assert.That(item.Method(), Is.EqualTo("success"));
             }
         }
 
@@ -119,8 +119,8 @@ namespace Azure.Core.TestFramework.Tests.Management
             TestResource rgOp = client.GetTestResource();
             var testResourceOp = await rgOp.GetLroAsync(WaitUntil.Completed);
             TestResource testResource = await testResourceOp.WaitForCompletionAsync();
-            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
-            Assert.AreEqual("success", testResource.Method());
+            Assert.That(testResource.GetType().Name, Is.EqualTo("TestResourceProxy"));
+            Assert.That(testResource.Method(), Is.EqualTo("success"));
         }
 
         [Test]
@@ -155,8 +155,8 @@ namespace Azure.Core.TestFramework.Tests.Management
             TestResource rgOp = client.GetTestResource();
             var testResourceOp = await rgOp.StartLroWrapperAsync(WaitUntil.Completed);
             TestResource testResource = await testResourceOp.WaitForCompletionAsync();
-            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
-            Assert.AreEqual("success", testResource.Method());
+            Assert.That(testResource.GetType().Name, Is.EqualTo("TestResourceProxy"));
+            Assert.That(testResource.Method(), Is.EqualTo("success"));
         }
 
         [Test]
@@ -169,7 +169,7 @@ namespace Azure.Core.TestFramework.Tests.Management
             TestResource testResource = await testResourceOp.WaitForCompletionAsync();
             timer.Stop();
             //method waits for 10 seconds so timer should easily be less than half of that if we skip
-            Assert.IsTrue(timer.ElapsedMilliseconds < 5000, $"WaitForCompletion took {timer.ElapsedMilliseconds}ms");
+            Assert.That(timer.ElapsedMilliseconds < 5000, Is.True, $"WaitForCompletion took {timer.ElapsedMilliseconds}ms");
         }
 
         [Test]
@@ -177,9 +177,9 @@ namespace Azure.Core.TestFramework.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource testResource = client.GetTestResource();
-            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            Assert.That(testResource.GetType().Name, Is.EqualTo("TestResourceProxy"));
             Assert.DoesNotThrowAsync(async () => testResource = await testResource.GetForwardsCallTrueAsync());
-            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            Assert.That(testResource.GetType().Name, Is.EqualTo("TestResourceProxy"));
         }
 
         [Test]
@@ -187,7 +187,7 @@ namespace Azure.Core.TestFramework.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource testResource = client.GetTestResource();
-            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            Assert.That(testResource.GetType().Name, Is.EqualTo("TestResourceProxy"));
             var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => testResource = await testResource.GetForwardsCallFalseAsync());
             StringAssert.Contains("Expected some diagnostic scopes to be created other than the Azure.Core scopes", ex.Message);
         }
@@ -197,7 +197,7 @@ namespace Azure.Core.TestFramework.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource testResource = client.GetTestResource();
-            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            Assert.That(testResource.GetType().Name, Is.EqualTo("TestResourceProxy"));
             var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => testResource = await testResource.GetForwardsCallDefaultAsync());
             StringAssert.Contains("Expected some diagnostic scopes to be created other than the Azure.Core scopes", ex.Message);
         }
@@ -218,7 +218,7 @@ namespace Azure.Core.TestFramework.Tests.Management
                 Stopwatch sw = Stopwatch.StartNew();
                 testResource = (await testResource.GetLroAsync(WaitUntil.Completed)).Value;
                 sw.Stop();
-                Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+                Assert.That(testResource.GetType().Name, Is.EqualTo("TestResourceProxy"));
                 if (mode == RecordedTestMode.Playback)
                 {
                     Assert.Less(sw.ElapsedMilliseconds, 1000);

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var createdVirtualNetworkLink = await _dnsForwardingRuleset.GetDnsForwardingRulesetVirtualNetworkLinks().CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkLinkName, virtualNetworkLinkData);
 
             // ASSERT
-            Assert.AreEqual(createdVirtualNetworkLink.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
+            Assert.That(DnsResolverProvisioningState.Succeeded, Is.EqualTo(createdVirtualNetworkLink.Value.Data.ProvisioningState));
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var retrievedVirtualNetworkLink = await _dnsForwardingRuleset.GetDnsForwardingRulesetVirtualNetworkLinks().GetAsync(virtualNetworkLinkName);
 
             // ASSERT
-            Assert.AreEqual(retrievedVirtualNetworkLink.Value.Data.Name, virtualNetworkLinkName);
+            Assert.That(virtualNetworkLinkName, Is.EqualTo(retrievedVirtualNetworkLink.Value.Data.Name));
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 
             // ASSERT
             var getVirtualNetworkLink = await _dnsForwardingRuleset.GetDnsForwardingRulesetVirtualNetworkLinks().ExistsAsync(virtualNetworkLinkName);
-            Assert.AreEqual(getVirtualNetworkLink.Value, false);
+            Assert.That(getVirtualNetworkLink.Value, Is.EqualTo(false));
         }
     }
 }

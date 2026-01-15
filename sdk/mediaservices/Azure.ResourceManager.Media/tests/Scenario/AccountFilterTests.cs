@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Media.Tests
             string accountFilterName = Recording.GenerateAssetName("accountFilter");
             var mediaAsset = await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new MediaServicesAccountFilterData());
             Assert.IsNotNull(mediaAsset);
-            Assert.AreEqual(accountFilterName, mediaAsset.Value.Data.Name);
+            Assert.That(mediaAsset.Value.Data.Name, Is.EqualTo(accountFilterName));
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Media.Tests
             string accountFilterName = Recording.GenerateAssetName("accountFilter");
             await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new MediaServicesAccountFilterData());
             bool flag = await accountFilterCollection.ExistsAsync(accountFilterName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Media.Tests
             await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new MediaServicesAccountFilterData());
             var mediaAsset = await accountFilterCollection.GetAsync(accountFilterName);
             Assert.IsNotNull(mediaAsset);
-            Assert.AreEqual(accountFilterName, mediaAsset.Value.Data.Name);
+            Assert.That(mediaAsset.Value.Data.Name, Is.EqualTo(accountFilterName));
         }
 
         [Test]
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.Media.Tests
             string accountFilterName = Recording.GenerateAssetName("accountFilter");
             var accountFilter = await accountFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountFilterName, new MediaServicesAccountFilterData());
             bool flag = await accountFilterCollection.ExistsAsync(accountFilterName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await accountFilter.Value.DeleteAsync(WaitUntil.Completed);
             flag = await accountFilterCollection.ExistsAsync(accountFilterName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

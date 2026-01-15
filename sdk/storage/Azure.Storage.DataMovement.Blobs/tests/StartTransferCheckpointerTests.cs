@@ -98,7 +98,7 @@ namespace Azure.Storage.DataMovement.Tests
                 checkpointerPath: disposingLocalDirectory.DirectoryPath,
                 id: transfer.Id,
                 jobPartNumber: 0);
-            Assert.IsTrue(File.Exists(checkpointerFileName.FullPath));
+            Assert.That(File.Exists(checkpointerFileName.FullPath), Is.True);
 
             // Check contents for checkpointer file without the SAS
             using (FileStream stream = File.OpenRead(checkpointerFileName.FullPath))
@@ -107,8 +107,8 @@ namespace Azure.Storage.DataMovement.Tests
 
                 Assert.IsNotNull(deserializedHeader);
 
-                Assert.AreEqual(sourceBlob.Uri.AbsoluteUri, deserializedHeader.SourcePath);
-                Assert.AreEqual(destinationBlob.Uri.AbsoluteUri, deserializedHeader.DestinationPath);
+                Assert.That(deserializedHeader.SourcePath, Is.EqualTo(sourceBlob.Uri.AbsoluteUri));
+                Assert.That(deserializedHeader.DestinationPath, Is.EqualTo(destinationBlob.Uri.AbsoluteUri));
             }
         }
     }

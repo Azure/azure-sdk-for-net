@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             string name = IsAsync ? "cert1" : "cert2";
             var response = await LocalRulestack.GetLocalRulestackCertificateObjects().CreateOrUpdateAsync(WaitUntil.Completed, name, new LocalRulestackCertificateObjectData(FirewallBooleanType.True));
             LocalRulestackCertificateObjectResource cert = response.Value;
-            Assert.IsTrue((name).Equals(cert.Data.Name));
+            Assert.That((name).Equals(cert.Data.Name), Is.True);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await LocalRulestack.GetLocalRulestackCertificateObjects().CreateOrUpdateAsync(WaitUntil.Completed, "cert10", null)).Value);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             LocalRulestackCertificateObjectCollection collection = LocalRulestack.GetLocalRulestackCertificateObjects();
             LocalRulestackCertificateObjectResource listsResource = await collection.GetAsync(DefaultResource1.Data.Name);
             Assert.IsNotNull(listsResource);
-            Assert.AreEqual(listsResource.Data.Name, DefaultResource1.Data.Name);
+            Assert.That(DefaultResource1.Data.Name, Is.EqualTo(listsResource.Data.Name));
         }
 
         [TestCase]
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Exists()
         {
             LocalRulestackCertificateObjectCollection collection = LocalRulestack.GetLocalRulestackCertificateObjects();
-            Assert.IsTrue(await collection.ExistsAsync(DefaultResource1.Data.Name));
-            Assert.IsFalse(await collection.ExistsAsync("invalidName"));
+            Assert.That((bool)await collection.ExistsAsync(DefaultResource1.Data.Name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync("invalidName"), Is.False);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             {
                 count++;
             }
-            Assert.AreEqual(count, 3);
+            Assert.That(count, Is.EqualTo(3));
         }
     }
 }

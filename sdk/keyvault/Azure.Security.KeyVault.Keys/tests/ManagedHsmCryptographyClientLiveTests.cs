@@ -190,14 +190,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             WrapResult encrypted = await remoteClient.WrapKeyAsync(algorithm, plaintext);
 
-            Assert.AreEqual(algorithm, encrypted.Algorithm);
-            Assert.AreEqual(key.Id, encrypted.KeyId);
+            Assert.That(encrypted.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(encrypted.KeyId, Is.EqualTo(key.Id));
             Assert.IsNotNull(encrypted.EncryptedKey);
 
             UnwrapResult decrypted = await remoteClient.UnwrapKeyAsync(algorithm, encrypted.EncryptedKey);
 
-            Assert.AreEqual(algorithm, decrypted.Algorithm);
-            Assert.AreEqual(key.Id, decrypted.KeyId);
+            Assert.That(decrypted.Algorithm, Is.EqualTo(algorithm));
+            Assert.That(decrypted.KeyId, Is.EqualTo(key.Id));
             Assert.IsNotNull(decrypted.Key);
 
             CollectionAssert.AreEqual(plaintext, decrypted.Key);

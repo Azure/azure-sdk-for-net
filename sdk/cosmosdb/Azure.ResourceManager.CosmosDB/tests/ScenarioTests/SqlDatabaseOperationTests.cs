@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlDatabaseCreateAndUpdate()
         {
             var database = await CreateSqlDatabase(null);
-            Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
+            Assert.That(database.Data.Resource.DatabaseName, Is.EqualTo(_databaseName));
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, database.Data.Options.Throughput);
 
             bool ifExists = await SqlDatabaseContainer.ExistsAsync(_databaseName);
-            Assert.True(ifExists);
+            Assert.That(ifExists, Is.True);
 
             // NOT WORKING API
             //ThroughputSettingData throughtput = await database.GetMongoDBCollectionThroughputAsync();
             CosmosDBSqlDatabaseResource database2 = await SqlDatabaseContainer.GetAsync(_databaseName);
-            Assert.AreEqual(_databaseName, database2.Data.Resource.DatabaseName);
+            Assert.That(database2.Data.Resource.DatabaseName, Is.EqualTo(_databaseName));
             //Assert.AreEqual(TestThroughput1, database2.Data.Options.Throughput);
 
             VerifyDatabases(database, database2);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 AzureLocation.WestUS, database.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, null);
 
             database = (await SqlDatabaseContainer.CreateOrUpdateAsync(WaitUntil.Completed, _databaseName, updateOptions)).Value;
-            Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
+            Assert.That(database.Data.Resource.DatabaseName, Is.EqualTo(_databaseName));
             database2 = await SqlDatabaseContainer.GetAsync(_databaseName);
             VerifyDatabases(database, database2);
         }
@@ -105,13 +105,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlDatabaseRestoreTest()
         {
             var database = await CreateSqlDatabase(null);
-            Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
+            Assert.That(database.Data.Resource.DatabaseName, Is.EqualTo(_databaseName));
 
             bool ifExists = await SqlDatabaseContainer.ExistsAsync(_databaseName);
-            Assert.True(ifExists);
+            Assert.That(ifExists, Is.True);
             var databases = await SqlDatabaseContainer.GetAllAsync().ToEnumerableAsync();
             Assert.That(databases, Has.Count.EqualTo(1));
-            Assert.AreEqual(database.Data.Name, databases[0].Data.Name);
+            Assert.That(databases[0].Data.Name, Is.EqualTo(database.Data.Name));
             DateTimeOffset timestampInUtc = DateTimeOffset.FromUnixTimeSeconds((int)database.Data.Resource.Timestamp.Value);
             AddDelayInSeconds(180);
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             await database.DeleteAsync(WaitUntil.Completed);
             bool exists = await SqlDatabaseContainer.ExistsAsync(_databaseName);
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
 
             String restoreSource = restorableDatabaseAccount.Id;
             ResourceRestoreParameters RestoreParameters = new ResourceRestoreParameters
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 AzureLocation.WestUS, resource, null, null);
 
             var database3 = (await SqlDatabaseContainer.CreateOrUpdateAsync(WaitUntil.Completed, _databaseName, updateOptions)).Value;
-            Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
+            Assert.That(database.Data.Resource.DatabaseName, Is.EqualTo(_databaseName));
             var database4 = await SqlDatabaseContainer.GetAsync(_databaseName);
             VerifyDatabases(database, database3, true);
             VerifyDatabases(database, database4, true);
 
             databases = await SqlDatabaseContainer.GetAllAsync().ToEnumerableAsync();
             Assert.That(databases, Has.Count.EqualTo(1));
-            Assert.AreEqual(database.Data.Name, databases[0].Data.Name);
+            Assert.That(databases[0].Data.Name, Is.EqualTo(database.Data.Name));
 
             // cleanup
             await database.DeleteAsync(WaitUntil.Completed);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var databases = await SqlDatabaseContainer.GetAllAsync().ToEnumerableAsync();
             Assert.That(databases, Has.Count.EqualTo(1));
-            Assert.AreEqual(database.Data.Name, databases[0].Data.Name);
+            Assert.That(databases[0].Data.Name, Is.EqualTo(database.Data.Name));
 
             VerifyDatabases(databases[0], database);
         }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var database = await CreateSqlDatabase(null);
             CosmosDBSqlDatabaseThroughputSettingResource throughput = await database.GetCosmosDBSqlDatabaseThroughputSetting().GetAsync();
 
-            Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
+            Assert.That(throughput.Data.Resource.Throughput, Is.EqualTo(TestThroughput1));
 
             CosmosDBSqlDatabaseThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResourceInfo()
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     Throughput = TestThroughput2
                 }))).Value;
 
-            Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
+            Assert.That(throughput2.Data.Resource.Throughput, Is.EqualTo(TestThroughput2));
         }
 
         [Test]
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await database.DeleteAsync(WaitUntil.Completed);
 
             bool exists = await SqlDatabaseContainer.ExistsAsync(_databaseName);
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
         }
 
         internal async Task<CosmosDBSqlDatabaseResource> CreateSqlDatabase(AutoscaleSettings autoscale)
@@ -239,16 +239,16 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private void VerifyDatabases(CosmosDBSqlDatabaseResource expectedValue, CosmosDBSqlDatabaseResource actualValue, bool isRestoreRequest = false)
         {
-            Assert.AreEqual(expectedValue.Id, actualValue.Id);
-            Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.Data.Resource.DatabaseName, actualValue.Data.Resource.DatabaseName);
-            Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
-            Assert.AreEqual(expectedValue.Data.Resource.Colls, actualValue.Data.Resource.Colls);
-            Assert.AreEqual(expectedValue.Data.Resource.Users, actualValue.Data.Resource.Users);
+            Assert.That(actualValue.Id, Is.EqualTo(expectedValue.Id));
+            Assert.That(actualValue.Data.Name, Is.EqualTo(expectedValue.Data.Name));
+            Assert.That(actualValue.Data.Resource.DatabaseName, Is.EqualTo(expectedValue.Data.Resource.DatabaseName));
+            Assert.That(actualValue.Data.Resource.Rid, Is.EqualTo(expectedValue.Data.Resource.Rid));
+            Assert.That(actualValue.Data.Resource.Colls, Is.EqualTo(expectedValue.Data.Resource.Colls));
+            Assert.That(actualValue.Data.Resource.Users, Is.EqualTo(expectedValue.Data.Resource.Users));
             if (!isRestoreRequest)
             {
-                Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
-                Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
+                Assert.That(actualValue.Data.Resource.ETag, Is.EqualTo(expectedValue.Data.Resource.ETag));
+                Assert.That(actualValue.Data.Resource.Timestamp, Is.EqualTo(expectedValue.Data.Resource.Timestamp));
             }
         }
 

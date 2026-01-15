@@ -26,7 +26,7 @@ namespace Azure.AI.Personalizer.Tests
                 }
             };
             string content = JsonSerializer.Serialize(contextFeatures, options);
-            Assert.IsTrue(content.Equals("[{\"videoType\":\"documentary\"},{\"day\":\"Monday\"}]"));
+            Assert.That(content.Equals("[{\"videoType\":\"documentary\"},{\"day\":\"Monday\"}]"), Is.True);
         }
     }
 }

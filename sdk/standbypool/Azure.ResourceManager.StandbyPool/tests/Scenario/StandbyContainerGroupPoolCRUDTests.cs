@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             StandbyContainerGroupPoolRuntimeViewResource standbyContainerGroupPool_RUNTIMEVIEW =
                 await Client.GetStandbyContainerGroupPoolRuntimeViewResource(standbyContainerGroupPoolTestProperties.StandbyContainerGroupPoolRuntimeViewResourceId).GetAsync();
 
-            Assert.AreEqual(runtimeViewName, standbyContainerGroupPool_RUNTIMEVIEW.Data.Name);
-            Assert.IsTrue(standbyContainerGroupPool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary.Count > 0);
-            Assert.IsTrue(standbyContainerGroupPool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary[0].StandbyContainerGroupInstanceCountsByState.Count > 0);
+            Assert.That(standbyContainerGroupPool_RUNTIMEVIEW.Data.Name, Is.EqualTo(runtimeViewName));
+            Assert.That(standbyContainerGroupPool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary.Count > 0, Is.True);
+            Assert.That(standbyContainerGroupPool_RUNTIMEVIEW.Data.Properties.InstanceCountSummary[0].StandbyContainerGroupInstanceCountsByState.Count > 0, Is.True);
             Assert.IsNotNull(standbyContainerGroupPool_RUNTIMEVIEW.Data.Properties.Status);
 
             // Prediction is not available in the response. This field is only populated for StandbyPools that record scale out activity over a period of time.
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.StandbyPool.Tests
 
         private void VerifyStandbyContainerGroupPool(StandbyContainerGroupPoolTestProperties expected, StandbyContainerGroupPoolResource actual)
         {
-            Assert.AreEqual(expected.StandbyPoolName, actual.Data.Name);
-            Assert.AreEqual(expected.MaxReadyCapacity, actual.Data.Properties.ElasticityProfile.MaxReadyCapacity);
+            Assert.That(actual.Data.Name, Is.EqualTo(expected.StandbyPoolName));
+            Assert.That(actual.Data.Properties.ElasticityProfile.MaxReadyCapacity, Is.EqualTo(expected.MaxReadyCapacity));
 
             if (expected.Id != null)
             {
-                Assert.AreEqual(expected.Id, actual.Data.Id);
+                Assert.That(actual.Data.Id, Is.EqualTo(expected.Id));
             }
         }
 

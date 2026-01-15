@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             //judge a app exist or not
             SpringBootAppCollection appsColletion = siteModelResource.GetSpringBootApps();
             bool result = await appsColletion.ExistsAsync(appName, CancellationToken.None);
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
 
             //get all apps
             AsyncPageable<SpringBootAppResource> appListResponse = appsColletion.GetAllAsync();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             {
                 appCount++;
             }
-            Assert.True(appCount > 0);
+            Assert.That(appCount > 0, Is.True);
 
             //get an app
             Response<SpringBootAppResource> appResponse = await appsColletion.GetAsync(appName);
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 
             var updateOperataion = await appModelResource.UpdateAsync(WaitUntil.Completed, appPatch);
             await updateOperataion.WaitForCompletionAsync();
-            Assert.IsTrue(updateOperataion.HasCompleted);
-            Assert.IsTrue(await ContainsTag(appsColletion, appName, myKeyValuePair));
+            Assert.That(updateOperataion.HasCompleted, Is.True);
+            Assert.That(await ContainsTag(appsColletion, appName, myKeyValuePair), Is.True);
         }
 
         private async Task<bool> ContainsTag(SpringBootAppCollection appsColletion, string appName, KeyValuePair<string, string> myKeyValuePair)

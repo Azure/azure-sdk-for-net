@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Tests
             options.SetApiVersion(vmType, "foo");
             options.SetApiVersion(vmType, "bar");
             options.ResourceApiVersionOverrides.TryGetValue(vmType, out var actualVersion);
-            Assert.AreEqual("bar", actualVersion);
+            Assert.That(actualVersion, Is.EqualTo("bar"));
         }
 
         [Test]
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Tests
             var options = new ArmClientOptions();
             options.SetApiVersion("Microsoft.Compute/virtualMachines", "foo");
             options.ResourceApiVersionOverrides.TryGetValue("microsoft.compute/virtualmachines", out var actualVersion);
-            Assert.AreEqual("foo", actualVersion);
+            Assert.That(actualVersion, Is.EqualTo("foo"));
             options.SetApiVersion("MICROSOFT.COMPUTE/VIRTUALMACHINES", "bar");
             options.ResourceApiVersionOverrides.TryGetValue("Microsoft.Compute/virtualMachines", out actualVersion);
-            Assert.AreEqual("bar", actualVersion);
+            Assert.That(actualVersion, Is.EqualTo("bar"));
         }
 
         [Test]
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Tests
             var options = new ArmClientOptions();
             options.SetApiVersionsFromProfile(AzureStackProfile.Profile20200901Hybrid);
             options.ResourceApiVersionOverrides.TryGetValue("Microsoft.Resources/subscriptions", out var subscriptionApiVersion);
-            Assert.AreEqual("2016-06-01", subscriptionApiVersion);
+            Assert.That(subscriptionApiVersion, Is.EqualTo("2016-06-01"));
             options.ResourceApiVersionOverrides.TryGetValue("Microsoft.Resources/resourceGroups", out var resourceGroupApiVersion);
-            Assert.AreEqual("2019-10-01", resourceGroupApiVersion);
+            Assert.That(resourceGroupApiVersion, Is.EqualTo("2019-10-01"));
         }
 
         [Test]
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Tests
             options.SetApiVersionsFromProfile(AzureStackProfile.Profile20200901Hybrid);
             options.SetApiVersion("microsoft.resources/ResourceGroups", "2021-01-01");
             options.ResourceApiVersionOverrides.TryGetValue("Microsoft.Resources/subscriptions", out var subscriptionApiVersion);
-            Assert.AreEqual("2016-06-01", subscriptionApiVersion);
+            Assert.That(subscriptionApiVersion, Is.EqualTo("2016-06-01"));
             options.ResourceApiVersionOverrides.TryGetValue("Microsoft.Resources/resourceGroups", out var resourceGroupApiVersion);
-            Assert.AreEqual("2021-01-01", resourceGroupApiVersion);
+            Assert.That(resourceGroupApiVersion, Is.EqualTo("2021-01-01"));
         }
 
         [Test]

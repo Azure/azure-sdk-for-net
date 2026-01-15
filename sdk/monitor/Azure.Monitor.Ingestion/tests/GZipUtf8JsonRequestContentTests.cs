@@ -67,7 +67,7 @@ namespace Azure.Core.Tests
             long length = 0;
             GZipUtf8JsonRequestContent gzContent = new GZipUtf8JsonRequestContent();
             gzContent.TryComputeLength(out length);
-            Assert.AreEqual(0, length);
+            Assert.That(length, Is.EqualTo(0));
             gzContent.JsonWriter.WriteStartObject();
             Enumerable.Range(1, 100).ToList().ForEach(i =>
             {

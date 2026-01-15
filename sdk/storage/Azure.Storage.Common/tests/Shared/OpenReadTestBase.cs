@@ -143,7 +143,7 @@ namespace Azure.Storage.Test.Shared
 #pragma warning restore CA2022
 
             // Assert
-            Assert.AreEqual(data.Length, outputStream.Length);
+            Assert.That(outputStream.Length, Is.EqualTo(data.Length));
             TestHelper.AssertSequenceEqual(data, outputBytes);
         }
 
@@ -170,7 +170,7 @@ namespace Azure.Storage.Test.Shared
             }
 
             // Assert
-            Assert.AreEqual(data.Length, outputStream.Length);
+            Assert.That(outputStream.Length, Is.EqualTo(data.Length));
             TestHelper.AssertSequenceEqual(data, outputBytes);
         }
 
@@ -202,7 +202,7 @@ namespace Azure.Storage.Test.Shared
             }
 
             // Assert
-            Assert.AreEqual(data.Length, outputStream.Length);
+            Assert.That(outputStream.Length, Is.EqualTo(data.Length));
             TestHelper.AssertSequenceEqual(expected, outputBytes);
         }
 
@@ -216,7 +216,7 @@ namespace Azure.Storage.Test.Shared
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 OpenReadAsync(client),
-                e => Assert.AreEqual(OpenReadAsync_Error_Code, e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo(OpenReadAsync_Error_Code)));
         }
 
         [RecordedTest]
@@ -251,7 +251,7 @@ namespace Azure.Storage.Test.Shared
                 }
 
                 // Assert
-                Assert.AreEqual(data.Length, outputStream.Length);
+                Assert.That(outputStream.Length, Is.EqualTo(data.Length));
                 TestHelper.AssertSequenceEqual(data, outputBytes);
             }
         }
@@ -486,14 +486,14 @@ namespace Azure.Storage.Test.Shared
             byte[] outputBytes = new byte[size];
             outputStream.Seek(0, SeekOrigin.Begin);
 
-            Assert.AreEqual(0, outputStream.Position);
+            Assert.That(outputStream.Position, Is.EqualTo(0));
 
 #pragma warning disable CA2022 // This test is specifically testing the behavior of the returned stream
             await outputStream.ReadAsync(outputBytes, 0, size);
 #pragma warning restore CA2022
 
             // Assert
-            Assert.AreEqual(data.Length, outputStream.Length);
+            Assert.That(outputStream.Length, Is.EqualTo(data.Length));
             TestHelper.AssertSequenceEqual(data, outputBytes);
         }
 
@@ -534,7 +534,7 @@ namespace Azure.Storage.Test.Shared
                 () => outputStream.Seek(1025, SeekOrigin.Begin),
                 new ArgumentException("You cannot seek past the last known length of the underlying blob or file.", "offset"));
 
-            Assert.AreEqual(size, outputStream.Length);
+            Assert.That(outputStream.Length, Is.EqualTo(size));
         }
 
         [RecordedTest]
@@ -560,7 +560,7 @@ namespace Azure.Storage.Test.Shared
 #pragma warning disable CA2022 // This test is specifically testing the behavior of the returned stream
             await outputStream.ReadAsync(new byte[readBytes], 0, readBytes);
 #pragma warning restore CA2022
-            Assert.AreEqual(512, outputStream.Position);
+            Assert.That(outputStream.Position, Is.EqualTo(512));
 
             // Act
             outputStream.Seek(offset, origin);
@@ -568,18 +568,18 @@ namespace Azure.Storage.Test.Shared
             // Assert
             if (origin == SeekOrigin.Begin)
             {
-                Assert.AreEqual(offset, outputStream.Position);
+                Assert.That(outputStream.Position, Is.EqualTo(offset));
             }
             else if (origin == SeekOrigin.Current)
             {
-                Assert.AreEqual(readBytes + offset, outputStream.Position);
+                Assert.That(outputStream.Position, Is.EqualTo(readBytes + offset));
             }
             else
             {
-                Assert.AreEqual(size + offset, outputStream.Position);
+                Assert.That(outputStream.Position, Is.EqualTo(size + offset));
             }
 
-            Assert.AreEqual(size, outputStream.Length);
+            Assert.That(outputStream.Length, Is.EqualTo(size));
         }
 
         [RecordedTest]
@@ -619,8 +619,8 @@ namespace Azure.Storage.Test.Shared
             await openReadStream.CopyToAsync(outputStream);
 
             // Assert
-            Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
-            Assert.AreEqual(size, openReadStream.Length);
+            Assert.That(outputStream.ToArray().Length, Is.EqualTo(expectedData.Length));
+            Assert.That(openReadStream.Length, Is.EqualTo(size));
             TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
         }
 
@@ -661,7 +661,7 @@ namespace Azure.Storage.Test.Shared
             await openReadStream.CopyToAsync(outputStream);
 
             // Assert
-            Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
+            Assert.That(outputStream.ToArray().Length, Is.EqualTo(expectedData.Length));
             TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
         }
 
@@ -701,7 +701,7 @@ namespace Azure.Storage.Test.Shared
             // Assert
             TestHelper.AssertSequenceEqual(expectedDataBeforeModify, outputBytesBeforeModify);
             TestHelper.AssertSequenceEqual(expectedDataAfterModify, outputBytesAfterModify);
-            Assert.AreNotEqual(emptyBytes, outputBytesAfterModify);
+            Assert.That(outputBytesAfterModify, Is.Not.EqualTo(emptyBytes));
         }
 
         [RecordedTest]
@@ -739,7 +739,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             TestHelper.AssertSequenceEqual(expectedDataBeforeModify, outputBytesBeforeModify);
-            Assert.AreNotEqual(expectedDataAfterModify, outputBytesAfterModify);
+            Assert.That(outputBytesAfterModify, Is.Not.EqualTo(expectedDataAfterModify));
             TestHelper.AssertSequenceEqual(emptyBytes, outputBytesAfterModify);
         }
     }

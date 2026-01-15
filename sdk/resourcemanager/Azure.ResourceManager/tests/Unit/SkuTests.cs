@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Tests
         {
             ArmSku sku1 = new ArmSku(name1, null, null, null, null);
             ArmSku sku2 = new ArmSku(name2, null, null, null, null);
-            Assert.AreEqual(expected, sku1.Equals(sku2), "Skus did not match expected equals");
-            Assert.AreEqual(expected, sku1.GetHashCode() == sku2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
+            Assert.That(sku1.Equals(sku2), Is.EqualTo(expected), "Skus did not match expected equals");
+            Assert.That(sku1.GetHashCode() == sku2.GetHashCode(), Is.EqualTo(expected), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
         }
 
         [TestCase(true, "name", "name", "family", "family")]
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Tests
         {
             ArmSku sku1 = new ArmSku(name1, null, null, family1, null);
             ArmSku sku2 = new ArmSku(name2, null, null, family2, null);
-            Assert.AreEqual(expected, sku1 == sku2);
+            Assert.That(sku1 == sku2, Is.EqualTo(expected));
         }
 
         [TestCase(false, "name", "name", "family", "family")]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Tests
         {
             ArmSku sku1 = new ArmSku(name1, null, null, family1, null);
             ArmSku sku2 = new ArmSku(name2, null, null, family2, null);
-            Assert.AreEqual(expected, sku1 != sku2);
+            Assert.That(sku1 != sku2, Is.EqualTo(expected));
         }
 
         [TestCase(true, "family", "family")]
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.Tests
         {
             ArmSku sku1 = new ArmSku(null, null, null, family1, null);
             ArmSku sku2 = new ArmSku(null, null, null, family2, null);
-            Assert.AreEqual(expected, sku1.Equals(sku2), "Skus did not match expected equals");
-            Assert.AreEqual(expected, sku1.GetHashCode() == sku2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
+            Assert.That(sku1.Equals(sku2), Is.EqualTo(expected), "Skus did not match expected equals");
+            Assert.That(sku1.GetHashCode() == sku2.GetHashCode(), Is.EqualTo(expected), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
         }
 
         [TestCase(true, "size", "size")]
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Tests
         {
             ArmSku sku1 = new ArmSku(null, null, size1, null, null);
             ArmSku sku2 = new ArmSku(null, null, size2, null, null);
-            Assert.AreEqual(expected, sku1.Equals(sku2), "Skus did not match expected equals");
-            Assert.AreEqual(expected, sku1.GetHashCode() == sku2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
+            Assert.That(sku1.Equals(sku2), Is.EqualTo(expected), "Skus did not match expected equals");
+            Assert.That(sku1.GetHashCode() == sku2.GetHashCode(), Is.EqualTo(expected), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
         }
 
         [TestCase(true, ArmSkuTier.Basic, ArmSkuTier.Basic)]
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Tests
         {
             ArmSku sku1 = new ArmSku(null, tier1, null, null, null);
             ArmSku sku2 = new ArmSku(null, tier2, null, null, null);
-            Assert.AreEqual(expected, sku1.Equals(sku2), "Skus did not match expected equals");
-            Assert.AreEqual(expected, sku1.GetHashCode() == sku2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
+            Assert.That(sku1.Equals(sku2), Is.EqualTo(expected), "Skus did not match expected equals");
+            Assert.That(sku1.GetHashCode() == sku2.GetHashCode(), Is.EqualTo(expected), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
         }
 
         [TestCase(true, 1, 1)]
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Tests
         {
             ArmSku sku1 = capacity1 == null ? new ArmSku(null, null, null, null, null) : new ArmSku(null, null, null, null, capacity1);
             ArmSku sku2 = capacity2 == null ? new ArmSku(null, null, null, null, null) : new ArmSku(null, null, null, null, capacity2);
-            Assert.AreEqual(expected, sku1.Equals(sku2), "Skus did not match expected equals");
-            Assert.AreEqual(expected, sku1.GetHashCode() == sku2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
+            Assert.That(sku1.Equals(sku2), Is.EqualTo(expected), "Skus did not match expected equals");
+            Assert.That(sku1.GetHashCode() == sku2.GetHashCode(), Is.EqualTo(expected), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Tests
         {
             ArmSku sku1 = new ArmSku(null, null, null, null, null);
             ArmSku sku2 = null;
-            Assert.IsFalse(sku1.Equals(sku2));
+            Assert.That(sku1.Equals(sku2), Is.False);
         }
 
         [Test]
@@ -126,15 +126,15 @@ namespace Azure.ResourceManager.Tests
             ArmSku sku1 = new ArmSku(null, null, null, null, null);
             object sku2 = new ArmSku("SkuName", null, null, null, null);
             object stringSku = "random";
-            Assert.IsFalse(sku1.Equals(stringSku));
+            Assert.That(sku1.Equals(stringSku), Is.False);
 
             object nullSku = null;
-            Assert.IsFalse(sku1.Equals(nullSku));
+            Assert.That(sku1.Equals(nullSku), Is.False);
 
             object sameSku = sku1;
-            Assert.IsTrue(sku1.Equals(sameSku));
+            Assert.That(sku1.Equals(sameSku), Is.True);
 
-            Assert.IsFalse(sku1.Equals(sku2));
+            Assert.That(sku1.Equals(sku2), Is.False);
         }
 
         [Test]
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Tests
         {
             ArmSku sku1 = new ArmSku(null, null, null, null, null);
             ArmSku sku2 = sku1;
-            Assert.IsTrue(sku1.Equals(sku2));
+            Assert.That(sku1.Equals(sku2), Is.True);
         }
 
         [Test]
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Tests
             const string expected = "{\"name\":\"NameForSku\",\"tier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":123456789}";
             ArmSku sku = new("NameForSku", ArmSkuTier.Basic, "SizeForSku", "FamilyForSku", 123456789);
             var binary = ModelReaderWriter.Write(sku, _wireOptions);
-            Assert.AreEqual(expected, binary.ToString());
+            Assert.That(binary.ToString(), Is.EqualTo(expected));
         }
 
         [Test]
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Tests
             const string expected = "{\"name\":null}";
             ArmSku sku = new(null, null, null, null, null);
             var binary = ModelReaderWriter.Write(sku, _wireOptions);
-            Assert.AreEqual(expected, binary.ToString());
+            Assert.That(binary.ToString(), Is.EqualTo(expected));
         }
 
         [Test]
@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.Tests
             using var jsonDocument = JsonDocument.Parse(json);
             JsonElement element = jsonDocument.RootElement;
             ArmSku sku = ArmSku.DeserializeArmSku(element);
-            Assert.AreEqual("NameForSku", sku.Name);
-            Assert.AreEqual(123456789, sku.Capacity);
+            Assert.That(sku.Name, Is.EqualTo("NameForSku"));
+            Assert.That(sku.Capacity, Is.EqualTo(123456789));
         }
 
         [Test]

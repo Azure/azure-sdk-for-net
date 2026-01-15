@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             NetworkCloudRackResource rack = Client.GetNetworkCloudRackResource(firstRack.Id);
             var updateResult = await rack.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.AreEqual(testValue, updateResult.Value.Data.Tags[testKey]);
+            Assert.That(updateResult.Value.Data.Tags[testKey], Is.EqualTo(testValue));
 
             // Update: Remove patched Tags
             patch.Tags.Remove(testKey);

@@ -55,7 +55,7 @@ namespace Azure.Communication.Messages.Tests
             catch (RequestFailedException requestFailedException)
             {
                 //assert
-                Assert.AreEqual(400, requestFailedException.Status);
+                Assert.That(requestFailedException.Status, Is.EqualTo(400));
             }
 
             return Task.CompletedTask;
@@ -77,7 +77,7 @@ namespace Azure.Communication.Messages.Tests
                 Assert.IsNotNull(template.Name);
                 Assert.IsNotNull(template.Language);
                 Assert.IsNotNull(template.Status);
-                Assert.IsTrue(template is WhatsAppMessageTemplateItem);
+                Assert.That(template is WhatsAppMessageTemplateItem, Is.True);
             }
         }
 

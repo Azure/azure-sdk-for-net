@@ -58,9 +58,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var client = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>());
             var receiver = new ServiceBusSessionReceiver(client.Connection, "fake", default, CancellationToken.None);
             await receiver.CloseAsync();
-            Assert.IsTrue(receiver.IsClosed);
+            Assert.That(receiver.IsClosed, Is.True);
 
-            Assert.IsTrue(((AmqpReceiver)receiver.InnerReceiver).RequestResponseLockedMessages.IsDisposed);
+            Assert.That(((AmqpReceiver)receiver.InnerReceiver).RequestResponseLockedMessages.IsDisposed, Is.True);
         }
     }
 }

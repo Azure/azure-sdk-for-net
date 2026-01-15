@@ -134,11 +134,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             // Assert / Verify
-            Assert.AreEqual(blobItems.Count, destinationItems.Count);
+            Assert.That(destinationItems.Count, Is.EqualTo(blobItems.Count));
             foreach (var item in destinationItems)
             {
-                Assert.IsTrue(blobItems.Any(b => new BlobUriBuilder(b.Uri).BlobName == new BlobUriBuilder(item.Uri).BlobName));
-                Assert.IsTrue(item is BlockBlobStorageResource);
+                Assert.That(blobItems.Any(b => new BlobUriBuilder(b.Uri).BlobName == new BlobUriBuilder(item.Uri).BlobName), Is.True);
+                Assert.That(item is BlockBlobStorageResource, Is.True);
             }
         }
 
@@ -194,11 +194,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             // Assert / Verify
-            Assert.AreEqual(blobItems.Count, destinationItems.Count);
+            Assert.That(destinationItems.Count, Is.EqualTo(blobItems.Count));
             blobItems.Zip(destinationItems, (b, d) =>
             {
-                Assert.AreEqual(new BlobUriBuilder(b.Uri).BlobName, new BlobUriBuilder(d.Uri).BlobName);
-                Assert.AreEqual(b.ResourceId, d.ResourceId);
+                Assert.That(new BlobUriBuilder(d.Uri).BlobName, Is.EqualTo(new BlobUriBuilder(b.Uri).BlobName));
+                Assert.That(d.ResourceId, Is.EqualTo(b.ResourceId));
                 return true;
             });
         }

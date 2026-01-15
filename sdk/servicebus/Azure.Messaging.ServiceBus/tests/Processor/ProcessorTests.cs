@@ -137,17 +137,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Identifier = identifier
             };
             var processor = client.CreateProcessor("queueName", options);
-            Assert.AreEqual(options.AutoCompleteMessages, processor.AutoCompleteMessages);
-            Assert.AreEqual(options.MaxConcurrentCalls, processor.MaxConcurrentCalls);
-            Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
-            Assert.AreEqual(options.Identifier, processor.Identifier);
-            Assert.AreEqual(options.ReceiveMode, processor.ReceiveMode);
-            Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
-            Assert.AreEqual(options.MaxReceiveWaitTime, processor.MaxReceiveWaitTime);
-            Assert.AreEqual(fullyQualifiedNamespace, processor.FullyQualifiedNamespace);
-            Assert.AreEqual(EntityNameFormatter.FormatDeadLetterPath("queueName"), processor.EntityPath);
-            Assert.IsFalse(processor.IsClosed);
-            Assert.IsFalse(processor.IsProcessing);
+            Assert.That(processor.AutoCompleteMessages, Is.EqualTo(options.AutoCompleteMessages));
+            Assert.That(processor.MaxConcurrentCalls, Is.EqualTo(options.MaxConcurrentCalls));
+            Assert.That(processor.PrefetchCount, Is.EqualTo(options.PrefetchCount));
+            Assert.That(processor.Identifier, Is.EqualTo(options.Identifier));
+            Assert.That(processor.ReceiveMode, Is.EqualTo(options.ReceiveMode));
+            Assert.That(processor.MaxAutoLockRenewalDuration, Is.EqualTo(options.MaxAutoLockRenewalDuration));
+            Assert.That(processor.MaxReceiveWaitTime, Is.EqualTo(options.MaxReceiveWaitTime));
+            Assert.That(processor.FullyQualifiedNamespace, Is.EqualTo(fullyQualifiedNamespace));
+            Assert.That(processor.EntityPath, Is.EqualTo(EntityNameFormatter.FormatDeadLetterPath("queueName")));
+            Assert.That(processor.IsClosed, Is.False);
+            Assert.That(processor.IsProcessing, Is.False);
         }
 
         [Test]
@@ -189,26 +189,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 new Mock<ServiceBusReceiver>().Object,
                 CancellationToken.None);
 
-            Assert.IsFalse(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.False);
 
             msg.IsSettled = false;
             await args.AbandonMessageAsync(msg);
-            Assert.IsTrue(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.True);
 
             await args.CompleteMessageAsync(msg);
-            Assert.IsTrue(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.True);
 
             msg.IsSettled = false;
             await args.DeadLetterMessageAsync(msg);
-            Assert.IsTrue(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.True);
 
             msg.IsSettled = false;
             await args.DeadLetterMessageAsync(msg, "reason");
-            Assert.IsTrue(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.True);
 
             msg.IsSettled = false;
             await args.DeferMessageAsync(msg);
-            Assert.IsTrue(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.True);
         }
 
         [Test]
@@ -257,31 +257,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 mockReceiver.Object,
                 CancellationToken.None);
 
-            Assert.IsFalse(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.False);
 
             msg.IsSettled = false;
             Assert.That(async () => await args.AbandonMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.False);
 
             Assert.That(async () => await args.CompleteMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.False);
 
             msg.IsSettled = false;
             Assert.That(async () => await args.DeadLetterMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.False);
 
             msg.IsSettled = false;
             Assert.That(async () => await args.DeadLetterMessageAsync(msg, "reason"),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.False);
 
             msg.IsSettled = false;
             Assert.That(async () => await args.DeferMessageAsync(msg),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(msg.IsSettled);
+            Assert.That(msg.IsSettled, Is.False);
         }
 
         [Test]
@@ -342,29 +342,29 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             mockProcessor.ProcessMessageAsync += args =>
             {
                 processMessageCalled = true;
-                Assert.AreEqual("1", args.Message.MessageId);
-                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
-                Assert.AreEqual("entityPath", args.EntityPath);
+                Assert.That(args.Message.MessageId, Is.EqualTo("1"));
+                Assert.That(args.FullyQualifiedNamespace, Is.EqualTo("namespace"));
+                Assert.That(args.EntityPath, Is.EqualTo("entityPath"));
                 return Task.CompletedTask;
             };
 
             mockProcessor.ProcessErrorAsync += args =>
             {
                 processErrorCalled = true;
-                Assert.AreEqual(
-                    ServiceBusFailureReason.MessageSizeExceeded,
-                    ((ServiceBusException)args.Exception).Reason);
-                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
-                Assert.AreEqual("entityPath", args.EntityPath);
-                Assert.AreEqual(ServiceBusErrorSource.Abandon, args.ErrorSource);
+                Assert.That(
+                    ((ServiceBusException)args.Exception).Reason,
+                    Is.EqualTo(ServiceBusFailureReason.MessageSizeExceeded));
+                Assert.That(args.FullyQualifiedNamespace, Is.EqualTo("namespace"));
+                Assert.That(args.EntityPath, Is.EqualTo("entityPath"));
+                Assert.That(args.ErrorSource, Is.EqualTo(ServiceBusErrorSource.Abandon));
                 return Task.CompletedTask;
             };
 
             await mockProcessor.OnProcessMessageAsync(processArgs);
             await mockProcessor.OnProcessErrorAsync(errorArgs);
 
-            Assert.IsTrue(processMessageCalled);
-            Assert.IsTrue(processErrorCalled);
+            Assert.That(processMessageCalled, Is.True);
+            Assert.That(processErrorCalled, Is.True);
         }
 
         [Test]
@@ -397,11 +397,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             mockProcessor.ProcessErrorAsync += _ => Task.CompletedTask;
 
             await mockProcessor.OnProcessMessageAsync(processArgs);
-            Assert.IsFalse(lockLostEventRaised);
+            Assert.That(lockLostEventRaised, Is.False);
             await processArgs.OnMessageLockLostAsync(new MessageLockLostEventArgs(message, null));
-            Assert.IsTrue(lockLostEventRaised);
+            Assert.That(lockLostEventRaised, Is.True);
 
-            Assert.IsTrue(processMessageCalled);
+            Assert.That(processMessageCalled, Is.True);
         }
 
         [Test]
@@ -467,7 +467,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             var mockProcessor = new Mock<ServiceBusProcessor> { CallBase = true };
             mockProcessor.Object.UpdateConcurrency(5);
-            Assert.AreEqual(5, mockProcessor.Object.MaxConcurrentCalls);
+            Assert.That(mockProcessor.Object.MaxConcurrentCalls, Is.EqualTo(5));
         }
 
         [Test]
@@ -475,7 +475,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             var mockProcessor = new Mock<ServiceBusProcessor>() { CallBase = true };
             mockProcessor.Object.UpdatePrefetchCount(10);
-            Assert.AreEqual(10, mockProcessor.Object.PrefetchCount);
+            Assert.That(mockProcessor.Object.PrefetchCount, Is.EqualTo(10));
         }
 
         [Test]

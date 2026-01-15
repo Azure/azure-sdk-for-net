@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
 
             // assert
             Assert.NotNull(profile);
-            Assert.True(profile.HasData);
+            Assert.That(profile.HasData, Is.True);
             Assert.NotNull(profile.Id);
             Assert.NotNull(profile.Id.Name);
             Assert.NotNull(profile.Data);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
                 count++;
 
             // assert
-            Assert.AreEqual(4, count);
+            Assert.That(count, Is.EqualTo(4));
         }
 
         [TestCase]
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
                 count++;
 
             //assert
-            Assert.AreEqual(1, count);
+            Assert.That(count, Is.EqualTo(1));
         }
 
         [TestCase]
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var exists = collection.ExistsAsync(profileName).Result.Value;
 
             // assert
-            Assert.False(exists);
+            Assert.That(exists, Is.False);
         }
     }
 }

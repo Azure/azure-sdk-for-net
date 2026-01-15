@@ -20,7 +20,7 @@ namespace Azure.Storage.Tests
                 throw new InvalidOperationException();
             }
 
-            Assert.AreEqual(2, counter);
+            Assert.That(counter, Is.EqualTo(2));
         }
     }
 }

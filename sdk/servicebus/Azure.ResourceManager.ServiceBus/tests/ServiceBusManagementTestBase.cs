@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.NotNull(sBNamespace.Data.Sku);
             if (useDefaults)
             {
-                Assert.AreEqual(DefaultLocation, sBNamespace.Data.Location);
-                Assert.AreEqual(ServiceBusSkuTier.Standard, sBNamespace.Data.Sku.Tier);
+                Assert.That(sBNamespace.Data.Location, Is.EqualTo(DefaultLocation));
+                Assert.That(sBNamespace.Data.Sku.Tier, Is.EqualTo(ServiceBusSkuTier.Standard));
             }
         }
 

@@ -27,7 +27,7 @@ namespace Azure.Communication.CallingServer
             CallRecording callRecordingClient = client.GetCallRecording();
             Response response = await callRecordingClient.DeleteRecordingAsync(contentEndpoint);
             Assert.IsNotNull(response);
-            Assert.AreEqual(200, response.Status);
+            Assert.That(response.Status, Is.EqualTo(200));
         }
 
         [Test]

@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
     {
         public static void AssertResource(ResourceData r1, ResourceData r2)
         {
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
+            Assert.That(r2.Name, Is.EqualTo(r1.Name));
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
         }
 
         public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
-            Assert.AreEqual(r1.Location, r2.Location);
-            Assert.AreEqual(r1.Tags, r2.Tags);
+            Assert.That(r2.Name, Is.EqualTo(r1.Name));
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.That(r2.Location, Is.EqualTo(r1.Location));
+            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
         }
 
         #region BotService
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
         public static void AssertBotServiceData(BotData data1, BotData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.AreEqual(data1.Properties.AppPasswordHint, data2.Properties.AppPasswordHint);
-            Assert.AreEqual(data1.Properties.DisplayName, data2.Properties.DisplayName);
-            Assert.AreEqual(data1.Kind, data2.Kind);
+            Assert.That(data2.Properties.AppPasswordHint, Is.EqualTo(data1.Properties.AppPasswordHint));
+            Assert.That(data2.Properties.DisplayName, Is.EqualTo(data1.Properties.DisplayName));
+            Assert.That(data2.Kind, Is.EqualTo(data1.Kind));
         }
         #endregion
 
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
         public static void AssertBotChannel(BotChannelData data1, BotChannelData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.AreEqual(data1.Sku, data2.Sku);
-            Assert.AreEqual(data1.Kind, data2.Kind);
-            Assert.AreEqual(data1.Properties.ProvisioningState, data2.Properties.ProvisioningState);
+            Assert.That(data2.Sku, Is.EqualTo(data1.Sku));
+            Assert.That(data2.Kind, Is.EqualTo(data1.Kind));
+            Assert.That(data2.Properties.ProvisioningState, Is.EqualTo(data1.Properties.ProvisioningState));
         }
         #endregion
 
@@ -156,9 +156,9 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
         public static void AssertBotConnectionSettingData(BotConnectionSettingData data1, BotConnectionSettingData data2)
         {
             AssertTrackedResource(data1, data2);
-            Assert.AreEqual(data1.Sku, data2.Sku);
-            Assert.AreEqual(data1.Kind, data2.Kind);
-            Assert.AreEqual(data1.Properties.Parameters.Count, data2.Properties.Parameters.Count);
+            Assert.That(data2.Sku, Is.EqualTo(data1.Sku));
+            Assert.That(data2.Kind, Is.EqualTo(data1.Kind));
+            Assert.That(data2.Properties.Parameters.Count, Is.EqualTo(data1.Properties.Parameters.Count));
         }
         #endregion
     }

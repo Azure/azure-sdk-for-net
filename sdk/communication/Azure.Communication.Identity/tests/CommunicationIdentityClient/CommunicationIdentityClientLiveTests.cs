@@ -71,7 +71,7 @@ namespace Azure.Communication.Identity.Tests
             Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
             Response<AccessToken> tokenResponse = await client.GetTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
             Assert.IsNotNull(tokenResponse.Value);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
+            Assert.That(string.IsNullOrWhiteSpace(tokenResponse.Value.Token), Is.False);
             ValidateScopesIfNotSanitized();
 
             void ValidateScopesIfNotSanitized()
@@ -100,7 +100,7 @@ namespace Azure.Communication.Identity.Tests
             Response<AccessToken> tokenResponse = await client.GetTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
 
             Assert.IsNotNull(tokenResponse.Value);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
+            Assert.That(string.IsNullOrWhiteSpace(tokenResponse.Value.Token), Is.False);
             ValidateScopesIfNotSanitized();
 
             void ValidateScopesIfNotSanitized()
@@ -141,7 +141,7 @@ namespace Azure.Communication.Identity.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("scopes", ex.ParamName);
+                Assert.That(ex.ParamName, Is.EqualTo("scopes"));
                 return;
             }
             Assert.Fail("RevokeTokensAsync should have thrown an exception.");
@@ -163,7 +163,7 @@ namespace Azure.Communication.Identity.Tests
             Response<CommunicationUserIdentifierAndToken> accessToken = await client.CreateUserAndTokenAsync(scopes: scopes.Select(x => new CommunicationTokenScope(x)));
 
             Assert.IsNotNull(accessToken.Value.AccessToken);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(accessToken.Value.AccessToken.Token));
+            Assert.That(string.IsNullOrWhiteSpace(accessToken.Value.AccessToken.Token), Is.False);
             ValidateScopesIfNotSanitized();
 
             void ValidateScopesIfNotSanitized()
@@ -187,13 +187,14 @@ namespace Azure.Communication.Identity.Tests
             Response<CommunicationUserIdentifierAndToken> accessToken = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn: tokenExpiresIn);
 
             Assert.IsNotNull(accessToken.Value.AccessToken);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(accessToken.Value.AccessToken.Token));
+            Assert.That(string.IsNullOrWhiteSpace(accessToken.Value.AccessToken.Token), Is.False);
 
             if (Mode == RecordedTestMode.Live)
             {
                 TimeSpan tokenTimeSpan;
                 var tokenExpirationWithinAllowedDeviation = TokenExpirationWithinAllowedDeviation(tokenExpiresIn, accessToken.Value.AccessToken.ExpiresOn, TOKEN_EXPIRATION_ALLOWED_DEVIATION, out tokenTimeSpan);
-                Assert.True(tokenExpirationWithinAllowedDeviation,
+                Assert.That(tokenExpirationWithinAllowedDeviation,
+                    Is.True,
                     $"Token expiration is outside of allowed {TOKEN_EXPIRATION_ALLOWED_DEVIATION * 100}% deviation." +
                     $"Expected minutes: {tokenExpiresIn.TotalMinutes}, actual minutes: {tokenTimeSpan.TotalMinutes:0.##}.");
             }
@@ -232,7 +233,7 @@ namespace Azure.Communication.Identity.Tests
             catch (ArgumentOutOfRangeException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains(TOKEN_EXPIRATION_OVERFLOW_MESSAGE));
+                Assert.That(ex.Message.Contains(TOKEN_EXPIRATION_OVERFLOW_MESSAGE), Is.True);
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -251,13 +252,14 @@ namespace Azure.Communication.Identity.Tests
             Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.VoIP }, tokenExpiresIn: tokenExpiresIn);
 
             Assert.IsNotNull(accessToken.Value);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(accessToken.Value.Token));
+            Assert.That(string.IsNullOrWhiteSpace(accessToken.Value.Token), Is.False);
 
             if (Mode == RecordedTestMode.Live)
             {
                 TimeSpan tokenTimeSpan;
                 var tokenExpirationWithinAllowedDeviation = TokenExpirationWithinAllowedDeviation(tokenExpiresIn, accessToken.Value.ExpiresOn, TOKEN_EXPIRATION_ALLOWED_DEVIATION, out tokenTimeSpan);
-                Assert.True(tokenExpirationWithinAllowedDeviation,
+                Assert.That(tokenExpirationWithinAllowedDeviation,
+                    Is.True,
                     $"Token expiration is outside of allowed {TOKEN_EXPIRATION_ALLOWED_DEVIATION * 100}% deviation." +
                     $"Expected minutes: {tokenExpiresIn.TotalMinutes}, actual minutes: {tokenTimeSpan.TotalMinutes:0.##}.");
             }
@@ -298,7 +300,7 @@ namespace Azure.Communication.Identity.Tests
             catch (ArgumentOutOfRangeException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains(TOKEN_EXPIRATION_OVERFLOW_MESSAGE));
+                Assert.That(ex.Message.Contains(TOKEN_EXPIRATION_OVERFLOW_MESSAGE), Is.True);
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -350,7 +352,7 @@ namespace Azure.Communication.Identity.Tests
             CommunicationIdentityClient client = CreateClient();
             Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(CTEOptions);
             Assert.IsNotNull(tokenResponse.Value);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
+            Assert.That(string.IsNullOrWhiteSpace(tokenResponse.Value.Token), Is.False);
         }
 
         [Test]
@@ -370,7 +372,7 @@ namespace Azure.Communication.Identity.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual(paramName, ex.ParamName);
+                Assert.That(ex.ParamName, Is.EqualTo(paramName));
                 return;
             }
             Assert.Fail("An exception should have been thrown.");
@@ -389,7 +391,7 @@ namespace Azure.Communication.Identity.Tests
             catch (RequestFailedException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains("401"));
+                Assert.That(ex.Message.Contains("401"), Is.True);
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -407,7 +409,7 @@ namespace Azure.Communication.Identity.Tests
             catch (RequestFailedException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains("401"));
+                Assert.That(ex.Message.Contains("401"), Is.True);
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -432,7 +434,7 @@ namespace Azure.Communication.Identity.Tests
             catch (RequestFailedException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains("400"));
+                Assert.That(ex.Message.Contains("400"), Is.True);
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -455,7 +457,7 @@ namespace Azure.Communication.Identity.Tests
             catch (RequestFailedException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains("400"));
+                Assert.That(ex.Message.Contains("400"), Is.True);
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -480,7 +482,7 @@ namespace Azure.Communication.Identity.Tests
             catch (RequestFailedException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains("400"));
+                Assert.That(ex.Message.Contains("400"), Is.True);
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -503,7 +505,7 @@ namespace Azure.Communication.Identity.Tests
             catch (RequestFailedException ex)
             {
                 Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains("400"));
+                Assert.That(ex.Message.Contains("400"), Is.True);
                 Console.WriteLine(ex.Message);
                 return;
             }
@@ -537,12 +539,12 @@ namespace Azure.Communication.Identity.Tests
             CommunicationIdentityClient client = CreateClient();
             Response<CommunicationUserIdentifier> createResponse = await client.CreateUserAsync(customId);
 
-            Assert.IsTrue((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status);
+            Assert.That((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status, Is.True);
             Assert.IsNotNull(createResponse.Value.Id);
 
             Response<CommunicationUserIdentifier> createResponse2 = await client.CreateUserAsync(customId);
-            Assert.AreEqual((int)HttpStatusCode.Created, createResponse2.GetRawResponse().Status);
-            Assert.AreEqual(createResponse.Value.Id, createResponse2.Value.Id);
+            Assert.That(createResponse2.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
+            Assert.That(createResponse2.Value.Id, Is.EqualTo(createResponse.Value.Id));
         }
 
         [Test]
@@ -553,14 +555,14 @@ namespace Azure.Communication.Identity.Tests
             Response<CommunicationUserIdentifierAndToken> createResponse = await client.CreateUserAndTokenAsync(customId,
                 new List<CommunicationTokenScope> { CommunicationTokenScope.VoIP },
                 TimeSpan.FromHours(2));
-            Assert.IsTrue((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status
-                || (int)HttpStatusCode.OK == createResponse.GetRawResponse().Status);
+            Assert.That((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status
+                || (int)HttpStatusCode.OK == createResponse.GetRawResponse().Status, Is.True);
             Assert.IsNotNull(createResponse.Value.User);
 
             Response<CommunicationUserDetail> getResponse = await client.GetUserDetailAsync(createResponse.Value.User);
-            Assert.AreEqual((int)HttpStatusCode.OK, getResponse.GetRawResponse().Status);
-            Assert.AreEqual(createResponse.Value.User.Id, getResponse.Value.User.Id);
-            Assert.AreEqual(customId, getResponse.Value.CustomId);
+            Assert.That(getResponse.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
+            Assert.That(getResponse.Value.User.Id, Is.EqualTo(createResponse.Value.User.Id));
+            Assert.That(getResponse.Value.CustomId, Is.EqualTo(customId));
             Assert.IsNotNull(getResponse.Value.LastTokenIssuedAt);
         }
 

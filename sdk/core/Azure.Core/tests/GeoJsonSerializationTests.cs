@@ -30,7 +30,7 @@ namespace Azure.Core.Tests
             var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}] }}";
 
             var point = AssertRoundtrip<GeoPoint>(input);
-            Assert.AreEqual(P(0), point.Coordinates);
+            Assert.That(point.Coordinates, Is.EqualTo(P(0)));
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace Azure.Core.Tests
             var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}], \"bbox\": null }}";
 
             var point = AssertRoundtrip<GeoPoint>(input);
-            Assert.AreEqual(P(0), point.Coordinates);
+            Assert.That(point.Coordinates, Is.EqualTo(P(0)));
         }
 
         [Test]
@@ -50,33 +50,33 @@ namespace Azure.Core.Tests
             var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}], \"bbox\": [ {PS(1)}, {PS(2)} ] }}";
 
             var point = AssertRoundtrip<GeoPoint>(input);
-            Assert.AreEqual(P(0), point.Coordinates);
-            Assert.AreEqual(P(1).Longitude, point.BoundingBox.West);
-            Assert.AreEqual(P(1).Latitude, point.BoundingBox.South);
+            Assert.That(point.Coordinates, Is.EqualTo(P(0)));
+            Assert.That(point.BoundingBox.West, Is.EqualTo(P(1).Longitude));
+            Assert.That(point.BoundingBox.South, Is.EqualTo(P(1).Latitude));
 
-            Assert.AreEqual(P(2).Longitude, point.BoundingBox.East);
-            Assert.AreEqual(P(2).Latitude, point.BoundingBox.North);
+            Assert.That(point.BoundingBox.East, Is.EqualTo(P(2).Longitude));
+            Assert.That(point.BoundingBox.North, Is.EqualTo(P(2).Latitude));
 
-            Assert.AreEqual(P(1).Altitude, point.BoundingBox.MinAltitude);
-            Assert.AreEqual(P(2).Altitude, point.BoundingBox.MaxAltitude);
+            Assert.That(point.BoundingBox.MinAltitude, Is.EqualTo(P(1).Altitude));
+            Assert.That(point.BoundingBox.MaxAltitude, Is.EqualTo(P(2).Altitude));
 
             if (_points == 2)
             {
-                Assert.AreEqual(P(1).Longitude, point.BoundingBox[0]);
-                Assert.AreEqual(P(1).Latitude, point.BoundingBox[1]);
+                Assert.That(point.BoundingBox[0], Is.EqualTo(P(1).Longitude));
+                Assert.That(point.BoundingBox[1], Is.EqualTo(P(1).Latitude));
 
-                Assert.AreEqual(P(2).Longitude, point.BoundingBox[2]);
-                Assert.AreEqual(P(2).Latitude, point.BoundingBox[3]);
+                Assert.That(point.BoundingBox[2], Is.EqualTo(P(2).Longitude));
+                Assert.That(point.BoundingBox[3], Is.EqualTo(P(2).Latitude));
             }
             else
             {
-                Assert.AreEqual(P(1).Longitude, point.BoundingBox[0]);
-                Assert.AreEqual(P(1).Latitude, point.BoundingBox[1]);
-                Assert.AreEqual(P(1).Altitude, point.BoundingBox[2]);
+                Assert.That(point.BoundingBox[0], Is.EqualTo(P(1).Longitude));
+                Assert.That(point.BoundingBox[1], Is.EqualTo(P(1).Latitude));
+                Assert.That(point.BoundingBox[2], Is.EqualTo(P(1).Altitude));
 
-                Assert.AreEqual(P(2).Longitude, point.BoundingBox[3]);
-                Assert.AreEqual(P(2).Latitude, point.BoundingBox[4]);
-                Assert.AreEqual(P(2).Altitude, point.BoundingBox[5]);
+                Assert.That(point.BoundingBox[3], Is.EqualTo(P(2).Longitude));
+                Assert.That(point.BoundingBox[4], Is.EqualTo(P(2).Latitude));
+                Assert.That(point.BoundingBox[5], Is.EqualTo(P(2).Altitude));
             }
         }
 
@@ -98,20 +98,20 @@ namespace Azure.Core.Tests
                         $" }}";
 
             var point = AssertRoundtrip<GeoPoint>(input);
-            Assert.AreEqual(P(0), point.Coordinates);
-            Assert.AreEqual(1, point.CustomProperties["additionalNumber"]);
-            Assert.AreEqual(2.2, point.CustomProperties["additionalNumber2"]);
-            Assert.AreEqual(9999999999999999999L, point.CustomProperties["additionalNumber3"]);
-            Assert.AreEqual("hello", point.CustomProperties["additionalString"]);
-            Assert.AreEqual(null, point.CustomProperties["additionalNull"]);
-            Assert.AreEqual(true, point.CustomProperties["additionalBool"]);
-            Assert.AreEqual(new object[] {1, 2.2, 9999999999999999999L, "hello", true, null}, point.CustomProperties["additionalArray"]);
+            Assert.That(point.Coordinates, Is.EqualTo(P(0)));
+            Assert.That(point.CustomProperties["additionalNumber"], Is.EqualTo(1));
+            Assert.That(point.CustomProperties["additionalNumber2"], Is.EqualTo(2.2));
+            Assert.That(point.CustomProperties["additionalNumber3"], Is.EqualTo(9999999999999999999L));
+            Assert.That(point.CustomProperties["additionalString"], Is.EqualTo("hello"));
+            Assert.That(point.CustomProperties["additionalNull"], Is.EqualTo(null));
+            Assert.That(point.CustomProperties["additionalBool"], Is.EqualTo(true));
+            Assert.That(point.CustomProperties["additionalArray"], Is.EqualTo(new object[] { 1, 2.2, 9999999999999999999L, "hello", true, null }));
 
-            Assert.AreEqual(true, point.TryGetCustomProperty("additionalObject", out var obj));
-            Assert.True(obj is IReadOnlyDictionary<string, object>);
+            Assert.That(point.TryGetCustomProperty("additionalObject", out var obj), Is.EqualTo(true));
+            Assert.That(obj is IReadOnlyDictionary<string, object>, Is.True);
             var dictionary = (IReadOnlyDictionary<string, object>) obj;
-            Assert.AreEqual(1, dictionary["additionalNumber"]);
-            Assert.AreEqual(2.2, dictionary["additionalNumber2"]);
+            Assert.That(dictionary["additionalNumber"], Is.EqualTo(1));
+            Assert.That(dictionary["additionalNumber2"], Is.EqualTo(2.2));
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace Azure.Core.Tests
             var input = $" {{ \"type\": \"Polygon\", \"coordinates\": [ [ [{PS(0)}], [{PS(1)}], [{PS(2)}], [{PS(3)}], [{PS(4)}], [{PS(0)}] ] ] }}";
 
             var polygon = AssertRoundtrip<GeoPolygon>(input);
-            Assert.AreEqual(1, polygon.Rings.Count);
+            Assert.That(polygon.Rings.Count, Is.EqualTo(1));
 
             CollectionAssert.AreEqual(new[]
             {
@@ -142,7 +142,7 @@ namespace Azure.Core.Tests
                         $" ] }}";
 
             var polygon = AssertRoundtrip<GeoPolygon>(input);
-            Assert.AreEqual(2, polygon.Rings.Count);
+            Assert.That(polygon.Rings.Count, Is.EqualTo(2));
 
             CollectionAssert.AreEqual(new[]
             {
@@ -171,10 +171,10 @@ namespace Azure.Core.Tests
             var input = $"{{ \"type\": \"MultiPoint\", \"coordinates\": [ [{PS(0)}], [{PS(1)}] ] }}";
 
             var multipoint = AssertRoundtrip<GeoPointCollection>(input);
-            Assert.AreEqual(2, multipoint.Points.Count);
+            Assert.That(multipoint.Points.Count, Is.EqualTo(2));
 
-            Assert.AreEqual(P(0), multipoint.Points[0].Coordinates);
-            Assert.AreEqual(P(1), multipoint.Points[1].Coordinates);
+            Assert.That(multipoint.Points[0].Coordinates, Is.EqualTo(P(0)));
+            Assert.That(multipoint.Points[1].Coordinates, Is.EqualTo(P(1)));
         }
 
         [Test]
@@ -183,7 +183,7 @@ namespace Azure.Core.Tests
             var input = $"{{ \"type\": \"MultiLineString\", \"coordinates\": [ [ [{PS(0)}], [{PS(1)}] ], [ [{PS(2)}], [{PS(3)}] ] ] }}";
 
             var polygon = AssertRoundtrip<GeoLineStringCollection>(input);
-            Assert.AreEqual(2, polygon.Lines.Count);
+            Assert.That(polygon.Lines.Count, Is.EqualTo(2));
 
             CollectionAssert.AreEqual(new[]
             {
@@ -212,7 +212,7 @@ namespace Azure.Core.Tests
 
             var polygon = multiPolygon.Polygons[0];
 
-            Assert.AreEqual(1, polygon.Rings.Count);
+            Assert.That(polygon.Rings.Count, Is.EqualTo(1));
 
             CollectionAssert.AreEqual(new[]
             {
@@ -225,7 +225,7 @@ namespace Azure.Core.Tests
             }, polygon.Rings[0].Coordinates);
 
             polygon = multiPolygon.Polygons[1];
-            Assert.AreEqual(2, polygon.Rings.Count);
+            Assert.That(polygon.Rings.Count, Is.EqualTo(2));
 
             CollectionAssert.AreEqual(new[]
             {
@@ -255,13 +255,13 @@ namespace Azure.Core.Tests
 
             var collection = AssertRoundtrip<GeoCollection>(input);
             var point = (GeoPoint) collection.Geometries[0];
-            Assert.AreEqual(P(0), point.Coordinates);
+            Assert.That(point.Coordinates, Is.EqualTo(P(0)));
 
             var lineString = (GeoLineString) collection.Geometries[1];
-            Assert.AreEqual(P(1), lineString.Coordinates[0]);
-            Assert.AreEqual(P(2), lineString.Coordinates[1]);
+            Assert.That(lineString.Coordinates[0], Is.EqualTo(P(1)));
+            Assert.That(lineString.Coordinates[1], Is.EqualTo(P(2)));
 
-            Assert.AreEqual(2, collection.Geometries.Count);
+            Assert.That(collection.Geometries.Count, Is.EqualTo(2));
         }
 
         private string PS(int number)
@@ -341,7 +341,7 @@ namespace Azure.Core.Tests
 
             var point = AssertRoundtripMRW(input);
 
-            Assert.AreEqual(P(0), point.Coordinates);
+            Assert.That(point.Coordinates, Is.EqualTo(P(0)));
         }
 
         [Test]
@@ -351,15 +351,15 @@ namespace Azure.Core.Tests
 
             var point = AssertRoundtripMRW(input);
 
-            Assert.AreEqual(-122.091954, point.Coordinates.Longitude, 1e-10);
-            Assert.AreEqual(47.607148, point.Coordinates.Latitude, 1e-10);
+            Assert.That(point.Coordinates.Longitude, Is.EqualTo(-122.091954).Within(1e-10));
+            Assert.That(point.Coordinates.Latitude, Is.EqualTo(47.607148).Within(1e-10));
             Assert.IsNotNull(point.BoundingBox);
-            Assert.AreEqual(-180, point.BoundingBox.West);
-            Assert.AreEqual(-90, point.BoundingBox.South);
-            Assert.AreEqual(180, point.BoundingBox.East);
-            Assert.AreEqual(90, point.BoundingBox.North);
-            Assert.AreEqual("Test Point", point.CustomProperties["name"]);
-            Assert.AreEqual(42, point.CustomProperties["value"]);
+            Assert.That(point.BoundingBox.West, Is.EqualTo(-180));
+            Assert.That(point.BoundingBox.South, Is.EqualTo(-90));
+            Assert.That(point.BoundingBox.East, Is.EqualTo(180));
+            Assert.That(point.BoundingBox.North, Is.EqualTo(90));
+            Assert.That(point.CustomProperties["name"], Is.EqualTo("Test Point"));
+            Assert.That(point.CustomProperties["value"], Is.EqualTo(42));
         }
 
         [Test]

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             var createOperation = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, cloudHsmClusterBody);
             CloudHsmClusterResource cloudHsmClusterResult = createOperation.Value;
 
-            Assert.AreEqual(resourceName, cloudHsmClusterResult.Data.Name);
+            Assert.That(cloudHsmClusterResult.Data.Name, Is.EqualTo(resourceName));
             ValidateCloudHsmResource(
                 cloudHsmClusterResult.Data,
                 DefaultSubscription.Data.SubscriptionId,
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
                     break;
                 }
             }
-            Assert.AreEqual(cloudhsmCount, 1);
+            Assert.That(cloudhsmCount, Is.EqualTo(1));
         }
 
         private void ValidateCloudHsmResource(
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             string expectedResourceId = string.Format(resourceIdFormat, expecrtedSubId, expecrtedRgName, expectedResourceName);
 
             Assert.NotNull(cloudHsmClusterData);
-            Assert.AreEqual(expectedResourceId, cloudHsmClusterData.Id.ToString());
-            Assert.AreEqual(expectedResourceLocation, cloudHsmClusterData.Location.Name);
-            Assert.AreEqual(expectedResourceName, cloudHsmClusterData.Name);
+            Assert.That(cloudHsmClusterData.Id.ToString(), Is.EqualTo(expectedResourceId));
+            Assert.That(cloudHsmClusterData.Location.Name, Is.EqualTo(expectedResourceLocation));
+            Assert.That(cloudHsmClusterData.Name, Is.EqualTo(expectedResourceName));
             Assert.NotNull(cloudHsmClusterData.Sku);
-            Assert.AreEqual(expectedSkuFamily, cloudHsmClusterData.Sku.Family.ToString());
-            Assert.AreEqual(expectedSkuName, cloudHsmClusterData.Sku.Name.ToString());
+            Assert.That(cloudHsmClusterData.Sku.Family.ToString(), Is.EqualTo(expectedSkuFamily));
+            Assert.That(cloudHsmClusterData.Sku.Name.ToString(), Is.EqualTo(expectedSkuName));
             Assert.NotNull(cloudHsmClusterData.Tags);
-            Assert.True(expectedTags.Count == cloudHsmClusterData.Tags.Count && !expectedTags.Except(cloudHsmClusterData.Tags).Any());
+            Assert.That(expectedTags.Count == cloudHsmClusterData.Tags.Count && !expectedTags.Except(cloudHsmClusterData.Tags).Any(), Is.True);
             //Assert.AreEqual(expectedIdentityType, cloudHsmClusterData.Identity.ManagedServiceIdentityType);
             //Assert.AreEqual(managedIdentityExpextedCount, cloudHsmClusterData.Identity.UserAssignedIdentities.Count);
         }

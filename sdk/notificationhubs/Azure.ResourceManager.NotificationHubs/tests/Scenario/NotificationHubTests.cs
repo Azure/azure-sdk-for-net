@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string notificationHubName = Recording.GenerateAssetName("azNotificationHub");
             var notificationHub = await CreateNotificationHub(_notificationHubNamespaceResource, notificationHubName);
             Assert.IsNotNull(notificationHub);
-            Assert.AreEqual(notificationHubName, notificationHub.Data.Name);
+            Assert.That(notificationHub.Data.Name, Is.EqualTo(notificationHubName));
         }
 
         [RecordedTest]
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string notificationHubName = Recording.GenerateAssetName("azNotificationHub");
             await CreateNotificationHub(_notificationHubNamespaceResource, notificationHubName);
             bool flag = await _notificationHubCollection.ExistsAsync(notificationHubName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             await CreateNotificationHub(_notificationHubNamespaceResource, notificationHubName);
             var notificationHub = await _notificationHubCollection.GetAsync(notificationHubName);
             Assert.IsNotNull(notificationHub);
-            Assert.AreEqual(notificationHubName, notificationHub.Value.Data.Name);
+            Assert.That(notificationHub.Value.Data.Name, Is.EqualTo(notificationHubName));
         }
 
         [RecordedTest]
@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
             string notificationHubName = Recording.GenerateAssetName("azNotificationHub");
             var notificationHub = await CreateNotificationHub(_notificationHubNamespaceResource, notificationHubName);
             bool flag = await _notificationHubCollection.ExistsAsync(notificationHubName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await notificationHub.DeleteAsync(WaitUntil.Completed);
             flag = await _notificationHubCollection.ExistsAsync(notificationHubName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [RecordedTest]

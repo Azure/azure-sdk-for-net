@@ -30,7 +30,7 @@ namespace Azure.Communication.CallingServer
             Stream metadata = await callRecordingClient.DownloadStreamingAsync(metadataEndpoint);
             Assert.IsNotNull(metadata);
             JsonElement actual = JsonDocument.Parse(metadata).RootElement;
-            Assert.AreEqual(documentId, actual.GetProperty("chunkDocumentId").ToString());
+            Assert.That(actual.GetProperty("chunkDocumentId").ToString(), Is.EqualTo(documentId));
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Azure.Communication.CallingServer
                 Stream metadata = await callRecordingClient.DownloadStreamingAsync(metadataEndpoint);
                 Assert.IsNotNull(metadata);
                 JsonElement actual = JsonDocument.Parse(metadata).RootElement;
-                Assert.AreEqual(nonExistentDocumentId, actual.GetProperty("chunkDocumentId").ToString());
+                Assert.That(actual.GetProperty("chunkDocumentId").ToString(), Is.EqualTo(nonExistentDocumentId));
             }
             catch (RequestFailedException ex)
             {
@@ -82,7 +82,7 @@ namespace Azure.Communication.CallingServer
             CallRecording callRecordingClient = client.GetCallRecording();
             Response<Stream> response = await callRecordingClient.DownloadStreamingAsync(metadataEndpoint, new HttpRange(0, length));
             Assert.IsNotNull(response);
-            Assert.AreEqual(length, response.GetRawResponse().Headers.ContentLength);
+            Assert.That(response.GetRawResponse().Headers.ContentLength, Is.EqualTo(length));
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace Azure.Communication.CallingServer
             Stream metadata = await callRecordingClient.DownloadStreamingAsync(metadataEndpoint);
             Assert.IsNotNull(metadata);
             JsonElement actual = JsonDocument.Parse(metadata).RootElement;
-            Assert.AreEqual(documentId, actual.GetProperty("chunkDocumentId").ToString());
+            Assert.That(actual.GetProperty("chunkDocumentId").ToString(), Is.EqualTo(documentId));
         }
     }
 }

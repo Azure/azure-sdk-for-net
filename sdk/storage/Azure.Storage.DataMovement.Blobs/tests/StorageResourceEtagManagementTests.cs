@@ -246,7 +246,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // to assert each child resource is initialized with the correct etag, mock the backing client
             // and assert the client is recieving the etag in its calls.
-            Assert.AreEqual(blobTypes.Count, children.Count);
+            Assert.That(children.Count, Is.EqualTo(blobTypes.Count));
             for (int i = 0; i < blobTypes.Count; i++)
             {
                 ETag expectedEtag = etags[i];

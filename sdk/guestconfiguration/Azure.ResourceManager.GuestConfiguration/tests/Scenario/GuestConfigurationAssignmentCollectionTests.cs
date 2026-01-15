@@ -41,24 +41,24 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             // Create a new guest configuration assignment
             ArmOperation<GuestConfigurationVmAssignmentResource> createAssignmentOperation = await guestConfigurationAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, GuestConfigurationManagementUtilities.DefaultAssignmentName, gcAssignmentData);
             await createAssignmentOperation.WaitForCompletionAsync();
-            Assert.IsTrue(createAssignmentOperation.HasCompleted);
-            Assert.IsTrue(createAssignmentOperation.HasValue);
+            Assert.That(createAssignmentOperation.HasCompleted, Is.True);
+            Assert.That(createAssignmentOperation.HasValue, Is.True);
 
             // Get created guest configuration assignment
             Response<GuestConfigurationVmAssignmentResource> getGuestAssignmentResponse = await guestConfigurationAssignmentCollection.GetAsync(GuestConfigurationManagementUtilities.DefaultAssignmentName);
             GuestConfigurationVmAssignmentResource guestAssignmentResourceRetrieved = getGuestAssignmentResponse.Value;
             Assert.IsNotNull(guestAssignmentResourceRetrieved);
-            Assert.AreEqual(gcAssignmentData.Location, guestAssignmentResourceRetrieved.Data.Location);
+            Assert.That(guestAssignmentResourceRetrieved.Data.Location, Is.EqualTo(gcAssignmentData.Location));
 
             // Update guest configuration assignment
             string updatedContext = "Azure Policy Updated";
             gcAssignmentData.Properties.Context = updatedContext;
             ArmOperation<GuestConfigurationVmAssignmentResource> updateAssignmentOperation = await guestConfigurationAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, GuestConfigurationManagementUtilities.DefaultAssignmentName, gcAssignmentData);
             await updateAssignmentOperation.WaitForCompletionAsync();
-            Assert.IsTrue(updateAssignmentOperation.HasCompleted);
-            Assert.IsTrue(updateAssignmentOperation.HasValue);
+            Assert.That(updateAssignmentOperation.HasCompleted, Is.True);
+            Assert.That(updateAssignmentOperation.HasValue, Is.True);
             GuestConfigurationVmAssignmentResource updatedGuestAssignmentResourceRetrieved = updateAssignmentOperation.Value;
-            Assert.AreEqual(updatedContext, updatedGuestAssignmentResourceRetrieved.Data.Properties.Context);
+            Assert.That(updatedGuestAssignmentResourceRetrieved.Data.Properties.Context, Is.EqualTo(updatedContext));
         }
 
         [TestCase]

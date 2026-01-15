@@ -122,10 +122,10 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 #endif
             #endregion
 
-            Assert.IsFalse(eventData.IsReadOnly);
+            Assert.That(eventData.IsReadOnly, Is.False);
             string[] contentType = eventData.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("application/json", contentType[0]);
+            Assert.That(contentType.Length, Is.EqualTo(2));
+            Assert.That(contentType[0], Is.EqualTo("application/json"));
             Assert.IsNotEmpty(contentType[1]);
 
             #region Snippet:SchemaRegistryJsonDeserializeEventDataGenerics

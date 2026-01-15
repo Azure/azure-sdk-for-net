@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
 
             Assert.IsNotNull(brokerListenerResource);
             Assert.IsNotNull(brokerListenerResource.Data);
-            Assert.AreEqual(brokerListenerResource.Data.Name, BrokersListenersName);
+            Assert.That(BrokersListenersName, Is.EqualTo(brokerListenerResource.Data.Name));
 
             // Create new BrokerListener
             IotOperationsBrokerListenerData brokerListenerResourceData =

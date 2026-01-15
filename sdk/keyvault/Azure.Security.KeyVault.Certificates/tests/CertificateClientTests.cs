@@ -29,16 +29,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public void CreateIssuerArgumentValidation()
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateIssuerAsync(null));
-            Assert.AreEqual("issuer", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("issuer"));
 
             CertificateIssuer issuer = new CertificateIssuer();
             ex = Assert.ThrowsAsync<ArgumentException>(() => Client.CreateIssuerAsync(issuer));
-            Assert.AreEqual("issuer", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("issuer"));
             StringAssert.StartsWith("issuer.Name cannot be null or an empty string.", ex.Message);
 
             issuer = new CertificateIssuer("test");
             ex = Assert.ThrowsAsync<ArgumentException>(() => Client.CreateIssuerAsync(issuer));
-            Assert.AreEqual("issuer", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("issuer"));
             StringAssert.StartsWith("issuer.Provider cannot be null or an empty string.", ex.Message);
         }
 
@@ -46,10 +46,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public void GetIssuerArgumentValidation()
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetIssuerAsync(null));
-            Assert.AreEqual("issuerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("issuerName"));
 
             ex = Assert.ThrowsAsync<ArgumentException>(() => Client.GetIssuerAsync(string.Empty));
-            Assert.AreEqual("issuerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("issuerName"));
             StringAssert.StartsWith("Value cannot be an empty string.", ex.Message);
         }
 
@@ -57,11 +57,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public void UpdateIssuerArgumentValidation()
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateIssuerAsync(null));
-            Assert.AreEqual("issuer", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("issuer"));
 
             CertificateIssuer issuer = new CertificateIssuer();
             ex = Assert.ThrowsAsync<ArgumentException>(() => Client.UpdateIssuerAsync(issuer));
-            Assert.AreEqual("issuer", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("issuer"));
             StringAssert.StartsWith("issuer.Name cannot be null or an empty string.", ex.Message);
         }
 
@@ -69,27 +69,27 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public void DeleteIssuerArgumentValidation()
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.DeleteIssuerAsync(null));
-            Assert.AreEqual("issuerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("issuerName"));
 
             ex = Assert.ThrowsAsync<ArgumentException>(() => Client.DeleteIssuerAsync(string.Empty));
-            Assert.AreEqual("issuerName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("issuerName"));
         }
 
         [Test]
         public void SetContactsArgumentValidation()
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetContactsAsync(null));
-            Assert.AreEqual("contacts", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("contacts"));
         }
 
         [Test]
         public void GetCertificatePolicyArgumentValidation()
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetCertificatePolicyAsync(null));
-            Assert.AreEqual("certificateName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("certificateName"));
 
             ex = Assert.ThrowsAsync<ArgumentException>(() => Client.GetCertificatePolicyAsync(string.Empty));
-            Assert.AreEqual("certificateName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("certificateName"));
             StringAssert.StartsWith("Value cannot be an empty string.", ex.Message);
         }
 
@@ -99,10 +99,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificatePolicy policy = new CertificatePolicy(WellKnownIssuerNames.Self, "CN=Azure SDK");
 
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateCertificatePolicyAsync(null, policy));
-            Assert.AreEqual("certificateName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("certificateName"));
 
             ex = Assert.ThrowsAsync<ArgumentException>(() => Client.UpdateCertificatePolicyAsync(string.Empty, policy));
-            Assert.AreEqual("certificateName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("certificateName"));
             StringAssert.StartsWith("Value cannot be an empty string.", ex.Message);
         }
 
@@ -117,13 +117,13 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public void DownloadCertificateParameterValidation()
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.DownloadCertificateAsync((string)null));
-            Assert.AreEqual("certificateName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("certificateName"));
 
             ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.DownloadCertificateAsync(string.Empty));
-            Assert.AreEqual("certificateName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("certificateName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.DownloadCertificateAsync((DownloadCertificateOptions)null));
-            Assert.AreEqual("options", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("options"));
         }
 
         [Test]
@@ -231,8 +231,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateClient client = InstrumentClient(new CertificateClient(new Uri("https://heathskeyvault.vault.azure.net"), new MockCredential(), options));
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.DownloadCertificateAsync("test"));
-            Assert.AreEqual(403, ex.Status);
-            Assert.AreEqual("Forbidden", ex.ErrorCode);
+            Assert.That(ex.Status, Is.EqualTo(403));
+            Assert.That(ex.ErrorCode, Is.EqualTo("Forbidden"));
         }
 
         [Test]
@@ -265,7 +265,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateClient client = InstrumentClient(new CertificateClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
 
             var certificates = await client.GetPropertiesOfCertificatesAsync().ToEnumerableAsync();
-            Assert.AreEqual(3, certificates.Count);
+            Assert.That(certificates.Count, Is.EqualTo(3));
         }
 
         [Test]
@@ -298,7 +298,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateClient client = InstrumentClient(new CertificateClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
 
             var versions = await client.GetPropertiesOfCertificateVersionsAsync("1").ToEnumerableAsync();
-            Assert.AreEqual(3, versions.Count);
+            Assert.That(versions.Count, Is.EqualTo(3));
         }
 
         [Test]
@@ -331,7 +331,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateClient client = InstrumentClient(new CertificateClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
 
             var certificates = await client.GetDeletedCertificatesAsync().ToEnumerableAsync();
-            Assert.AreEqual(3, certificates.Count);
+            Assert.That(certificates.Count, Is.EqualTo(3));
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
                 counter++;
             }
 
-            Assert.IsTrue(counter > 0);
+            Assert.That(counter > 0, Is.True);
         }
 
         [RecordedTest]
@@ -44,7 +44,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
                 counter++;
             }
 
-            Assert.IsTrue(counter > 0);
+            Assert.That(counter > 0, Is.True);
         }
 
         [RecordedTest]
@@ -61,7 +61,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             }
             catch (RequestFailedException e)
             {
-                Assert.AreEqual((int)HttpStatusCode.NotFound, e.Status);
+                Assert.That(e.Status, Is.EqualTo((int)HttpStatusCode.NotFound));
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
                 counter++;
             }
 
-            Assert.IsTrue(counter > 0);
+            Assert.That(counter > 0, Is.True);
         }
 
         [RecordedTest]
@@ -94,7 +94,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             }
             catch (RequestFailedException e)
             {
-                Assert.AreEqual((int)HttpStatusCode.NotFound, e.Status);
+                Assert.That(e.Status, Is.EqualTo((int)HttpStatusCode.NotFound));
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             }
             catch (RequestFailedException e)
             {
-                Assert.AreEqual((int)HttpStatusCode.NotFound, e.Status);
+                Assert.That(e.Status, Is.EqualTo((int)HttpStatusCode.NotFound));
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
                 counter++;
             }
 
-            Assert.IsTrue(counter > 0);
+            Assert.That(counter > 0, Is.True);
         }
 
         [RecordedTest]
@@ -150,7 +150,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             }
             catch (RequestFailedException e)
             {
-                Assert.AreEqual((int)HttpStatusCode.NotFound, e.Status);
+                Assert.That(e.Status, Is.EqualTo((int)HttpStatusCode.NotFound));
             }
         }
 

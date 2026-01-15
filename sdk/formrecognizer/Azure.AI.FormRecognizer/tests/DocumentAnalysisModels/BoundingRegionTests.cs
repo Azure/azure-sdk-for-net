@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             BoundingRegion region = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
 
-            Assert.False(region.Equals(null));
+            Assert.That(region.Equals(null), Is.False);
         }
 
         [Test]
@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BoundingRegion region = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
             var list = new List<object>() { 10, 50f, 60f, 70f, 80f };
 
-            Assert.False(region.Equals(list));
+            Assert.That(region.Equals(list), Is.False);
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BoundingRegion region = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
             object objRegion = GetBoundingRegion(11, 50f, 60f, 70f, 80f);
 
-            Assert.False(region.Equals(objRegion));
+            Assert.That(region.Equals(objRegion), Is.False);
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BoundingRegion region = GetBoundingRegion(10, 50f, 50f, 50f, 50f);
             object objRegion = GetBoundingRegion(10, 50f, 50f);
 
-            Assert.False(region.Equals(objRegion));
+            Assert.That(region.Equals(objRegion), Is.False);
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BoundingRegion region = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
             object objRegion = GetBoundingRegion(10, 50f, 60f, 70f, 85f);
 
-            Assert.False(region.Equals(objRegion));
+            Assert.That(region.Equals(objRegion), Is.False);
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BoundingRegion region = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
             object objRegion = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
 
-            Assert.True(region.Equals(objRegion));
+            Assert.That(region.Equals(objRegion), Is.True);
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BoundingRegion region = GetBoundingRegion(10, 50f, 60f, 70f, 80f, 90f, 100f);
             object objRegion = GetBoundingRegion(10, 90f, 100f, 50f, 60f, 70f, 80f);
 
-            Assert.True(region.Equals(objRegion));
+            Assert.That(region.Equals(objRegion), Is.True);
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BoundingRegion region1 = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
             BoundingRegion region2 = GetBoundingRegion(11, 50f, 60f, 70f, 80f);
 
-            Assert.False(region1.Equals(region2));
+            Assert.That(region1.Equals(region2), Is.False);
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BoundingRegion region1 = GetBoundingRegion(10, 50f, 50f, 50f, 50f);
             BoundingRegion region2 = GetBoundingRegion(10, 50f, 50f);
 
-            Assert.False(region1.Equals(region2));
+            Assert.That(region1.Equals(region2), Is.False);
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BoundingRegion region1 = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
             BoundingRegion region2 = GetBoundingRegion(10, 50f, 60f, 70f, 85f);
 
-            Assert.False(region1.Equals(region2));
+            Assert.That(region1.Equals(region2), Is.False);
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BoundingRegion region1 = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
             BoundingRegion region2 = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
 
-            Assert.True(region1.Equals(region2));
+            Assert.That(region1.Equals(region2), Is.True);
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BoundingRegion region1 = GetBoundingRegion(10, 50f, 60f, 70f, 80f, 90f, 100f);
             BoundingRegion region2 = GetBoundingRegion(10, 90f, 100f, 50f, 60f, 70f, 80f);
 
-            Assert.True(region1.Equals(region2));
+            Assert.That(region1.Equals(region2), Is.True);
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BoundingRegion region1 = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
             BoundingRegion region2 = GetBoundingRegion(11, 50f, 60f, 70f, 80f);
 
-            Assert.AreNotEqual(region1.GetHashCode(), region2.GetHashCode());
+            Assert.That(region2.GetHashCode(), Is.Not.EqualTo(region1.GetHashCode()));
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BoundingRegion region1 = GetBoundingRegion(10, 50f, 50f, 50f, 50f);
             BoundingRegion region2 = GetBoundingRegion(10, 50f, 50f);
 
-            Assert.AreNotEqual(region1.GetHashCode(), region2.GetHashCode());
+            Assert.That(region2.GetHashCode(), Is.Not.EqualTo(region1.GetHashCode()));
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BoundingRegion region1 = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
             BoundingRegion region2 = GetBoundingRegion(10, 50f, 60f, 70f, 85f);
 
-            Assert.AreNotEqual(region1.GetHashCode(), region2.GetHashCode());
+            Assert.That(region2.GetHashCode(), Is.Not.EqualTo(region1.GetHashCode()));
         }
 
         [Test]
@@ -152,7 +152,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BoundingRegion region1 = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
             BoundingRegion region2 = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
 
-            Assert.AreEqual(region1.GetHashCode(), region2.GetHashCode());
+            Assert.That(region2.GetHashCode(), Is.EqualTo(region1.GetHashCode()));
         }
 
         [Test]
@@ -161,7 +161,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BoundingRegion region1 = GetBoundingRegion(10, 50f, 60f, 70f, 80f, 90f, 100f);
             BoundingRegion region2 = GetBoundingRegion(10, 90f, 100f, 50f, 60f, 70f, 80f);
 
-            Assert.AreEqual(region1.GetHashCode(), region2.GetHashCode());
+            Assert.That(region2.GetHashCode(), Is.EqualTo(region1.GetHashCode()));
         }
 
         [Test]
@@ -169,7 +169,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             BoundingRegion region = GetBoundingRegion(10, 50f, 60f, 70f, 80f);
 
-            Assert.AreEqual("Page: 10, Polygon: {X=50, Y=60},{X=70, Y=80}", region.ToString());
+            Assert.That(region.ToString(), Is.EqualTo("Page: 10, Polygon: {X=50, Y=60},{X=70, Y=80}"));
         }
 
         public BoundingRegion GetBoundingRegion(int pageNumber, float px, float py)

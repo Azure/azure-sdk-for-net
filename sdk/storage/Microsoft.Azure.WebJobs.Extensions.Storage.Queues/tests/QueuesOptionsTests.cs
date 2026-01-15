@@ -18,10 +18,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             int processorCount = Environment.ProcessorCount;
             QueuesOptions options = new QueuesOptions();
 
-            Assert.AreEqual(16, options.BatchSize);
-            Assert.AreEqual(8 * processorCount, options.NewBatchThreshold);
-            Assert.AreEqual(QueuePollingIntervals.DefaultMaximum, options.MaxPollingInterval);
-            Assert.AreEqual(QueueMessageEncoding.Base64, options.MessageEncoding);
+            Assert.That(options.BatchSize, Is.EqualTo(16));
+            Assert.That(options.NewBatchThreshold, Is.EqualTo(8 * processorCount));
+            Assert.That(options.MaxPollingInterval, Is.EqualTo(QueuePollingIntervals.DefaultMaximum));
+            Assert.That(options.MessageEncoding, Is.EqualTo(QueueMessageEncoding.Base64));
         }
 
         [Test]
@@ -34,21 +34,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             // Unless explicitly set, NewBatchThreshold will be computed based
             // on the current BatchSize
             options.BatchSize = 20;
-            Assert.AreEqual(10 * processorCount, options.NewBatchThreshold);
+            Assert.That(options.NewBatchThreshold, Is.EqualTo(10 * processorCount));
             options.BatchSize = 1;
-            Assert.AreEqual(0 * processorCount, options.NewBatchThreshold);
+            Assert.That(options.NewBatchThreshold, Is.EqualTo(0 * processorCount));
             options.BatchSize = 32;
-            Assert.AreEqual(16 * processorCount, options.NewBatchThreshold);
+            Assert.That(options.NewBatchThreshold, Is.EqualTo(16 * processorCount));
 
             // Once set, the set value holds
             options.NewBatchThreshold = 1000;
-            Assert.AreEqual(1000, options.NewBatchThreshold);
+            Assert.That(options.NewBatchThreshold, Is.EqualTo(1000));
             options.BatchSize = 8;
-            Assert.AreEqual(1000, options.NewBatchThreshold);
+            Assert.That(options.NewBatchThreshold, Is.EqualTo(1000));
 
             // Value can be set to zero
             options.NewBatchThreshold = 0;
-            Assert.AreEqual(0, options.NewBatchThreshold);
+            Assert.That(options.NewBatchThreshold, Is.EqualTo(0));
         }
 
         [Test]
@@ -56,10 +56,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         {
             QueuesOptions options = new QueuesOptions();
 
-            Assert.AreEqual(TimeSpan.Zero, options.VisibilityTimeout);
+            Assert.That(options.VisibilityTimeout, Is.EqualTo(TimeSpan.Zero));
 
             options.VisibilityTimeout = TimeSpan.FromSeconds(30);
-            Assert.AreEqual(TimeSpan.FromSeconds(30), options.VisibilityTimeout);
+            Assert.That(options.VisibilityTimeout, Is.EqualTo(TimeSpan.FromSeconds(30)));
         }
 
         [Test]
@@ -71,8 +71,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 { "MessageEncoding", "Base64" }
             };
             var options = jo.ToObject<QueuesOptions>();
-            Assert.AreEqual(TimeSpan.FromMilliseconds(5000), options.MaxPollingInterval);
-            Assert.AreEqual(QueueMessageEncoding.Base64, options.MessageEncoding);
+            Assert.That(options.MaxPollingInterval, Is.EqualTo(TimeSpan.FromMilliseconds(5000)));
+            Assert.That(options.MessageEncoding, Is.EqualTo(QueueMessageEncoding.Base64));
         }
     }
 }

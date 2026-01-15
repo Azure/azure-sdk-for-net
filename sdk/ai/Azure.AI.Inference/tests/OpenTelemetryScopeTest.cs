@@ -53,7 +53,7 @@ namespace Azure.AI.Inference.Tests
         {
             // No activity means telemetry should be switched off.
             using var scope = OpenTelemetryScope.Start(_requestOptions, _endpoint);
-            Assert.IsNull(Activity.Current);
+            Assert.That(Activity.Current, Is.Null);
         }
 
         [Test, NonParallelizable]
@@ -358,7 +358,7 @@ namespace Azure.AI.Inference.Tests
             using (var actListener = new ValidatingActivityListener())
             using (var meterListener = new ValidatingMeterListener())
             {
-                Assert.Null(OpenTelemetryScope.Start(_requestOptions, _endpoint));
+                Assert.That(OpenTelemetryScope.Start(_requestOptions, _endpoint), Is.Null);
                 actListener.ValidateTelemetryIsOff();
                 meterListener.ValidateMetricsAreOff();
             }
@@ -384,7 +384,7 @@ namespace Azure.AI.Inference.Tests
                 string errorType = null;
                 using (var scope = OpenTelemetryScope.Start(_requestOptions, _endpoint))
                 {
-                    Assert.IsNull(Activity.Current);
+                    Assert.That(Activity.Current, Is.Null);
                     switch (rtype)
                     {
                         case RunType.Basic:
@@ -499,7 +499,7 @@ namespace Azure.AI.Inference.Tests
         private void AssertActivityEnabled(Activity activity, ChatCompletionsOptions requestOptions)
         {
             Assert.IsNotNull(activity);
-            Assert.AreEqual(activity.DisplayName, _requestOptions.Model == null ? "chat" : $"chat {_requestOptions.Model}");
+            Assert.That(_requestOptions.Model == null ? "chat" : $"chat {_requestOptions.Model}", Is.EqualTo(activity.DisplayName));
         }
 
         private void TestActivityOnOffHelper(bool enableOTel)
@@ -526,8 +526,8 @@ namespace Azure.AI.Inference.Tests
                 }
                 else
                 {
-                    Assert.IsNull(Activity.Current);
-                    Assert.IsNull(scope);
+                    Assert.That(Activity.Current, Is.Null);
+                    Assert.That(scope, Is.Null);
                 }
             }
 

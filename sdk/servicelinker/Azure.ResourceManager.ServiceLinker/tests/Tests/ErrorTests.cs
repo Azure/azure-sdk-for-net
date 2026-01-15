@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
             }
             catch (RequestFailedException e)
             {
-                Assert.AreEqual(404, e.Status);
+                Assert.That(e.Status, Is.EqualTo(404));
             }
         }
     }

@@ -92,7 +92,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             "System.Tuple`1[[System.Tuple`1[[Some.Type, Microsoft.AspNetCore.DataProtection, Culture=neutral]], mscorlib, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Culture=neutral, PublicKeyToken=b77a5c561934e089")]
         public void ParsesFullyQualifiedTypeName(string typeName, string expected)
         {
-            Assert.AreEqual(expected, new MockTypeForwardingActivator().Parse(typeName));
+            Assert.That(new MockTypeForwardingActivator().Parse(typeName), Is.EqualTo(expected));
         }
 
         [TestCase(typeof(List<string>))]
@@ -100,7 +100,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         public void CreateInstance_DoesNotForwardingTypesExternalTypes(Type type)
         {
             new DecryptorTypeForwardingActivator(null).CreateInstance(typeof(object), type.AssemblyQualifiedName, out var forwarded);
-            Assert.False(forwarded, "Should not have forwarded types that are not in Microsoft.AspNetCore.DataProjection");
+            Assert.That(forwarded, Is.False, "Should not have forwarded types that are not in Microsoft.AspNetCore.DataProjection");
         }
 
         [TestCaseSource(nameof(AssemblyVersions))]
@@ -120,9 +120,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             assemblyName.Version = newVersion;
             var newName = $"{typeName}, {assemblyName}";
 
-            Assert.AreNotEqual(typeInfo.AssemblyQualifiedName, newName);
+            Assert.That(newName, Is.Not.EqualTo(typeInfo.AssemblyQualifiedName));
             Assert.IsInstanceOf<ClassWithParameterlessCtor>(activator.CreateInstance(typeof(object), newName, out var forwarded));
-            Assert.True(forwarded);
+            Assert.That(forwarded, Is.True);
         }
 
         public static IEnumerable<Version[]> AssemblyVersions

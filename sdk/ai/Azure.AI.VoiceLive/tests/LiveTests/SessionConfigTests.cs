@@ -51,7 +51,7 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.IsNotNull(updatedVoice);
 
             var standardVoice = SafeCast<AzureStandardVoice>(updatedVoice);
-            Assert.AreEqual(voice.Name, standardVoice.Name);
+            Assert.That(standardVoice.Name, Is.EqualTo(voice.Name));
         }
 
         [LiveOnly]
@@ -89,7 +89,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             // Ensure no tool call was made
             var responseDone = responseItems.Where((r) => r is SessionUpdateResponseFunctionCallArgumentsDone);
-            Assert.IsTrue(responseDone.Count() == 0);
+            Assert.That(responseDone.Count() == 0, Is.True);
         }
 
         [LiveOnly]
@@ -129,7 +129,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             // Ensure a tool call was made
             var responseDone = responseItems.Where((r) => r is SessionUpdateResponseFunctionCallArgumentsDone);
-            Assert.IsTrue(responseDone.Count() == 1);
+            Assert.That(responseDone.Count() == 1, Is.True);
         }
 
         [LiveOnly]
@@ -169,12 +169,12 @@ namespace Azure.AI.VoiceLive.Tests
 
             // Ensure a tool call was made
             var responseDone = responseItems.Where((r) => r is SessionUpdateResponseDone);
-            Assert.IsTrue(responseDone.Count() == 1);
+            Assert.That(responseDone.Count() == 1, Is.True);
 
             var response = SafeCast<SessionUpdateResponseDone>(responseDone.First());
             var item = SafeCast<ResponseFunctionCallItem>(response.Response.Output[0]);
 
-            Assert.AreEqual(FunctionCalls.AdditionDefinition.Name, item.Name);
+            Assert.That(item.Name, Is.EqualTo(FunctionCalls.AdditionDefinition.Name));
         }
 
         [LiveOnly]
@@ -210,26 +210,26 @@ namespace Azure.AI.VoiceLive.Tests
             var responseCreated = await GetNextUpdate<SessionUpdateResponseCreated>(updatesEnum).ConfigureAwait(false);
             var responseItems = await CollectResponseUpdates(updatesEnum, TimeoutToken).ConfigureAwait(false);
             var responseDone = responseItems.Where((r) => r is SessionUpdateResponseDone);
-            Assert.IsTrue(responseDone.Count() == 1);
+            Assert.That(responseDone.Count() == 1, Is.True);
 
             var visimeDeltas = responseItems.Where((r) =>
             {
                 return r is SessionUpdateResponseAnimationVisemeDelta;
             });
-            Assert.IsTrue(visimeDeltas.Count() > 0);
+            Assert.That(visimeDeltas.Count() > 0, Is.True);
 
             int lastOffset = 0;
             foreach (var delta in visimeDeltas)
             {
                 var visemeDelta = SafeCast<SessionUpdateResponseAnimationVisemeDelta>(delta);
-                Assert.IsTrue(visemeDelta.VisemeId >= 0 && visemeDelta.VisemeId <= 21, $"VisemeId {visemeDelta.VisemeId} was not between 0 & 21");
-                Assert.IsTrue(visemeDelta.AudioOffsetMs >= 0, $"Audio offset {visemeDelta.AudioOffset} was < 0");
-                Assert.IsTrue(visemeDelta.AudioOffsetMs > lastOffset, $"Audio offset {visemeDelta.AudioOffset} was not > last offset {lastOffset}");
+                Assert.That(visemeDelta.VisemeId >= 0 && visemeDelta.VisemeId <= 21, Is.True, $"VisemeId {visemeDelta.VisemeId} was not between 0 & 21");
+                Assert.That(visemeDelta.AudioOffsetMs >= 0, Is.True, $"Audio offset {visemeDelta.AudioOffset} was < 0");
+                Assert.That(visemeDelta.AudioOffsetMs > lastOffset, Is.True, $"Audio offset {visemeDelta.AudioOffset} was not > last offset {lastOffset}");
                 lastOffset = visemeDelta.AudioOffsetMs;
             }
 
             var visemeDone = responseItems.Where((r) => r is SessionUpdateResponseAnimationVisemeDone);
-            Assert.IsTrue(visemeDone.Count() == 1);
+            Assert.That(visemeDone.Count() == 1, Is.True);
         }
 
         [Ignore("Investigating")]
@@ -266,19 +266,19 @@ namespace Azure.AI.VoiceLive.Tests
             var responseCreated = await GetNextUpdate<SessionUpdateResponseCreated>(updatesEnum).ConfigureAwait(false);
             var responseItems = await CollectResponseUpdates(updatesEnum, TimeoutToken).ConfigureAwait(false);
             var responseDone = responseItems.Where((r) => r is SessionUpdateResponseDone);
-            Assert.IsTrue(responseDone.Count() == 1);
+            Assert.That(responseDone.Count() == 1, Is.True);
 
             var blendDeltas = responseItems.Where((r) =>
             {
                 return r is SessionUpdateResponseAnimationBlendshapeDelta;
             });
-            Assert.IsTrue(blendDeltas.Count() > 0);
+            Assert.That(blendDeltas.Count() > 0, Is.True);
 
             int lastIndex = 0;
             foreach (var delta in blendDeltas)
             {
                 var blendDelta = SafeCast<SessionUpdateResponseAnimationBlendshapeDelta>(delta);
-                Assert.IsTrue(blendDelta.FrameIndex > lastIndex);
+                Assert.That(blendDelta.FrameIndex > lastIndex, Is.True);
                 lastIndex = blendDelta.FrameIndex;
             }
         }
@@ -303,12 +303,12 @@ namespace Azure.AI.VoiceLive.Tests
             // Should get two updates back.
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
             var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
-            Assert.IsFalse(sessionCreated.Session.MaxResponseOutputTokens.NumericValue.HasValue);
-            Assert.AreEqual(MaxResponseOutputTokensOption.CreateInfiniteMaxTokensOption(), sessionCreated.Session.MaxResponseOutputTokens);
+            Assert.That(sessionCreated.Session.MaxResponseOutputTokens.NumericValue.HasValue, Is.False);
+            Assert.That(sessionCreated.Session.MaxResponseOutputTokens, Is.EqualTo(MaxResponseOutputTokensOption.CreateInfiniteMaxTokensOption()));
 
             var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
-            Assert.IsTrue(sessionUpdated.Session.MaxResponseOutputTokens.NumericValue.HasValue);
-            Assert.AreEqual(20, sessionUpdated.Session.MaxResponseOutputTokens.NumericValue);
+            Assert.That(sessionUpdated.Session.MaxResponseOutputTokens.NumericValue.HasValue, Is.True);
+            Assert.That(sessionUpdated.Session.MaxResponseOutputTokens.NumericValue, Is.EqualTo(20));
 
             await session.AddItemAsync(new UserMessageItem("Tell me a joke"), null, TimeoutToken).ConfigureAwait(false);
             var conversationItemCreated = await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
@@ -316,10 +316,10 @@ namespace Azure.AI.VoiceLive.Tests
             var responseCreated = await GetNextUpdate<SessionUpdateResponseCreated>(updatesEnum).ConfigureAwait(false);
             var responseItems = await CollectResponseUpdates(updatesEnum, TimeoutToken).ConfigureAwait(false);
             var responseDone = responseItems.Where((r) => r is SessionUpdateResponseDone);
-            Assert.IsTrue(responseDone.Count() == 1);
+            Assert.That(responseDone.Count() == 1, Is.True);
 
             var response = SafeCast<SessionUpdateResponseDone>(responseDone.First());
-            Assert.IsTrue(response.Response.Usage.OutputTokens <= 20, $"Number of tokens used {response.Response.Usage.OutputTokens} > 20");
+            Assert.That(response.Response.Usage.OutputTokens <= 20, Is.True, $"Number of tokens used {response.Response.Usage.OutputTokens} > 20");
         }
 
         [LiveOnly]
@@ -346,8 +346,8 @@ namespace Azure.AI.VoiceLive.Tests
             // Should get two updates back.
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
             var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
-            Assert.IsFalse(sessionCreated.Session.MaxResponseOutputTokens.NumericValue.HasValue);
-            Assert.AreEqual(MaxResponseOutputTokensOption.CreateInfiniteMaxTokensOption(), sessionCreated.Session.MaxResponseOutputTokens);
+            Assert.That(sessionCreated.Session.MaxResponseOutputTokens.NumericValue.HasValue, Is.False);
+            Assert.That(sessionCreated.Session.MaxResponseOutputTokens, Is.EqualTo(MaxResponseOutputTokensOption.CreateInfiniteMaxTokensOption()));
 
             var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
         }
@@ -380,7 +380,7 @@ namespace Azure.AI.VoiceLive.Tests
             var responseCreated = await GetNextUpdate<SessionUpdateResponseCreated>(updatesEnum).ConfigureAwait(false);
             var responseItems = await CollectResponseUpdates(updatesEnum, TimeoutToken).ConfigureAwait(false);
             var responseDone = responseItems.Where((r) => r is SessionUpdateResponseDone);
-            Assert.IsTrue(responseDone.Count() == 1);
+            Assert.That(responseDone.Count() == 1, Is.True);
         }
         /*
         [TestCase]

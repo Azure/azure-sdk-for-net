@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             NetworkFabricInternetGatewayResource result = await networkFabricInternetGateway.GetAsync();
             NetworkFabricInternetGatewayData resourceData = result.Data;
             Assert.IsNotNull(resourceData);
-            Assert.AreEqual(resourceData.Name, TestEnvironment.InternetGatewayName);
+            Assert.That(TestEnvironment.InternetGatewayName, Is.EqualTo(resourceData.Name));
             TestContext.Out.WriteLine($"Get Operation Succeeded on id: {resourceData.Id}");
 
             TestContext.Out.WriteLine($"Entered into the Internet Gateway update");

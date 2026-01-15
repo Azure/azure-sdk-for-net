@@ -67,8 +67,8 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests
 
             MockRequest request = mockTransport.SingleRequest;
 
-            Assert.AreEqual(RequestMethod.Get, request.Method);
-            Assert.IsTrue(request.Uri.ToString().Contains(ManagedPrivateEndpointsClientOptions.ServiceVersion.V2020_12_01.ToVersionString()));
+            Assert.That(request.Method, Is.EqualTo(RequestMethod.Get));
+            Assert.That(request.Uri.ToString().Contains(ManagedPrivateEndpointsClientOptions.ServiceVersion.V2020_12_01.ToVersionString()), Is.True);
         }
     }
 }

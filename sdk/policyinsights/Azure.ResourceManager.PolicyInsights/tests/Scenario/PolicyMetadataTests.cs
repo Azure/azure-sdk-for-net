@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
             string metadataName = "CIS_Azure_1.3.0_7.1";
             var metadata = await _metadataCollection.GetAsync(metadataName);
             Assert.IsNotNull(metadata);
-            Assert.AreEqual(metadataName, metadata.Value.Data.Name);
-            Assert.AreEqual("Microsoft.PolicyInsights/policyMetadata", metadata.Value.Data.ResourceType.ToString());
-            Assert.AreEqual("Shared", metadata.Value.Data.Owner);
+            Assert.That(metadata.Value.Data.Name, Is.EqualTo(metadataName));
+            Assert.That(metadata.Value.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.PolicyInsights/policyMetadata"));
+            Assert.That(metadata.Value.Data.Owner, Is.EqualTo("Shared"));
             Assert.IsNotNull(metadata.Value.Data.AdditionalContentUri);
         }
 
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
             var metadata = await _metadataCollection.GetAsync(metadataName);
             Assert.IsNotNull(metadata);
             Assert.IsNotEmpty(metadata.Value.Data.Id);
-            Assert.AreEqual(metadataName, metadata.Value.Data.Name);
-            Assert.AreEqual("7", metadata.Value.Data.AdditionalContentUri);
+            Assert.That(metadata.Value.Data.Name, Is.EqualTo(metadataName));
+            Assert.That(metadata.Value.Data.AdditionalContentUri, Is.EqualTo("7"));
         }
     }
 }

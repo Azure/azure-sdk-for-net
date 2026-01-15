@@ -40,29 +40,29 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             var apiManagementService = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
-            Assert.AreEqual(apiManagementService.Data.Name, apiName);
+            Assert.That(apiName, Is.EqualTo(apiManagementService.Data.Name));
 
             // TagOperation
             await apiManagementService.AddTagAsync("testkey", "testvalue");
             apiManagementService = (await apiManagementService.GetAsync()).Value;
-            Assert.IsTrue(apiManagementService.Data.Tags.ContainsKey("testkey"));
-            Assert.AreEqual(apiManagementService.Data.Tags["testkey"], "testvalue");
+            Assert.That(apiManagementService.Data.Tags.ContainsKey("testkey"), Is.True);
+            Assert.That(apiManagementService.Data.Tags["testkey"], Is.EqualTo("testvalue"));
 
             var tags = new Dictionary<string, string>() { { "newkey", "newvalue" } };
             await apiManagementService.SetTagsAsync(tags);
             apiManagementService = (await apiManagementService.GetAsync()).Value;
-            Assert.IsTrue(apiManagementService.Data.Tags.ContainsKey("newkey"));
-            Assert.AreEqual(apiManagementService.Data.Tags["newkey"], "newvalue");
+            Assert.That(apiManagementService.Data.Tags.ContainsKey("newkey"), Is.True);
+            Assert.That(apiManagementService.Data.Tags["newkey"], Is.EqualTo("newvalue"));
 
             await apiManagementService.RemoveTagAsync("newkey");
             apiManagementService = (await apiManagementService.GetAsync()).Value;
-            Assert.AreEqual(apiManagementService.Data.Tags.Count, 0);
+            Assert.That(apiManagementService.Data.Tags.Count, Is.EqualTo(0));
 
             // Update
             var patch = new ApiManagementServicePatch() { Tags = { { "newkey", "newvalue" } } };
             var updated = await apiManagementService.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.IsTrue(updated.Value.Data.Tags.ContainsKey("newkey"));
-            Assert.AreEqual(updated.Value.Data.Tags["newkey"], "newvalue");
+            Assert.That(updated.Value.Data.Tags.ContainsKey("newkey"), Is.True);
+            Assert.That(updated.Value.Data.Tags["newkey"], Is.EqualTo("newvalue"));
 
             // Delete
             await apiManagementService.DeleteAsync(WaitUntil.Completed);
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data);
             var apiManagementServiceTrue = await collection.ExistsAsync(apiName);
             var apiManagementServiceFalse = await collection.ExistsAsync("foo");
-            Assert.IsTrue(apiManagementServiceTrue);
-            Assert.IsFalse(apiManagementServiceFalse);
+            Assert.That((bool)apiManagementServiceTrue, Is.True);
+            Assert.That((bool)apiManagementServiceFalse, Is.False);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             var scope = DefaultSubscription.Id;
             var denyAssignmentCollection = Client.GetDenyAssignments(scope);
             Assert.ThrowsAsync<RequestFailedException>(() => denyAssignmentCollection.GetAsync(randomGuid));
-            Assert.IsFalse(await denyAssignmentCollection.ExistsAsync(randomGuid));
+            Assert.That((bool)await denyAssignmentCollection.ExistsAsync(randomGuid), Is.False);
         }
 
         [RecordedTest]

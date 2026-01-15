@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
 
         public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
-            Assert.AreEqual(r1.Location, r2.Location);
-            Assert.AreEqual(r1.Tags, r2.Tags);
+            Assert.That(r2.Name, Is.EqualTo(r1.Name));
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
+            Assert.That(r2.Location, Is.EqualTo(r1.Location));
+            Assert.That(r2.Tags, Is.EqualTo(r1.Tags));
         }
 
         #region AvailabilitySet
         public static void AssertAvailabilitySet(AvailabilitySetData set1, AvailabilitySetData set2)
         {
             AssertTrackedResource(set1, set2);
-            Assert.AreEqual(set1.PlatformFaultDomainCount, set2.PlatformFaultDomainCount);
-            Assert.AreEqual(set1.PlatformUpdateDomainCount, set2.PlatformUpdateDomainCount);
-            Assert.AreEqual(set1.ProximityPlacementGroup, set2.ProximityPlacementGroup);
-            Assert.AreEqual(set1.ProximityPlacementGroup?.Id, set2.ProximityPlacementGroup?.Id);
+            Assert.That(set2.PlatformFaultDomainCount, Is.EqualTo(set1.PlatformFaultDomainCount));
+            Assert.That(set2.PlatformUpdateDomainCount, Is.EqualTo(set1.PlatformUpdateDomainCount));
+            Assert.That(set2.ProximityPlacementGroup, Is.EqualTo(set1.ProximityPlacementGroup));
+            Assert.That(set2.ProximityPlacementGroup?.Id, Is.EqualTo(set1.ProximityPlacementGroup?.Id));
         }
 
         public static AvailabilitySetData GetBasicAvailabilitySetData(AzureLocation location)
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         public static void AssertGroup(DedicatedHostGroupData group1, DedicatedHostGroupData group2)
         {
             AssertTrackedResource(group1, group2);
-            Assert.AreEqual(group1.PlatformFaultDomainCount, group2.PlatformFaultDomainCount);
-            Assert.AreEqual(group1.SupportAutomaticPlacement, group2.SupportAutomaticPlacement);
+            Assert.That(group2.PlatformFaultDomainCount, Is.EqualTo(group1.PlatformFaultDomainCount));
+            Assert.That(group2.SupportAutomaticPlacement, Is.EqualTo(group1.SupportAutomaticPlacement));
         }
 
         public static DedicatedHostGroupData GetBasicDedicatedHostGroup(AzureLocation location, int platformFaultDomainCount)
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         public static void AssertHost(DedicatedHostData host1, DedicatedHostData host2)
         {
             AssertTrackedResource(host1, host2);
-            Assert.AreEqual(host1.Sku.Name, host2.Sku.Name);
-            Assert.AreEqual(host1.Sku.Tier, host2.Sku.Tier);
-            Assert.AreEqual(host1.Sku.Capacity, host2.Sku.Capacity);
-            Assert.AreEqual(host1.PlatformFaultDomain, host2.PlatformFaultDomain);
+            Assert.That(host2.Sku.Name, Is.EqualTo(host1.Sku.Name));
+            Assert.That(host2.Sku.Tier, Is.EqualTo(host1.Sku.Tier));
+            Assert.That(host2.Sku.Capacity, Is.EqualTo(host1.Sku.Capacity));
+            Assert.That(host2.PlatformFaultDomain, Is.EqualTo(host1.PlatformFaultDomain));
         }
 
         public static DedicatedHostData GetBasicDedicatedHost(AzureLocation location, string skuName, int platformFaultDomain)
@@ -107,25 +107,25 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         public static void AssertDisk(ManagedDiskData disk1, ManagedDiskData disk2)
         {
             AssertTrackedResource(disk1, disk2);
-            Assert.AreEqual(disk1.BurstingEnabled, disk2.BurstingEnabled);
-            Assert.AreEqual(disk1.DiskAccessId, disk2.DiskAccessId);
-            Assert.AreEqual(disk1.DiskIopsReadOnly, disk2.DiskIopsReadOnly);
-            Assert.AreEqual(disk1.DiskIopsReadWrite, disk2.DiskIopsReadWrite);
-            Assert.AreEqual(disk1.DiskSizeGB, disk2.DiskSizeGB);
-            Assert.AreEqual(disk1.ManagedBy, disk2.ManagedBy);
-            Assert.AreEqual(disk1.Encryption?.DiskEncryptionSetId, disk2.Encryption?.DiskEncryptionSetId);
-            Assert.AreEqual(disk1.Encryption?.EncryptionType, disk2.Encryption?.EncryptionType);
-            Assert.AreEqual(disk1.CreationData?.CreateOption, disk2.CreationData?.CreateOption);
-            Assert.AreEqual(disk1.CreationData?.ImageReference?.Id, disk2.CreationData?.ImageReference?.Id);
-            Assert.AreEqual(disk1.CreationData?.ImageReference?.Lun, disk2.CreationData?.ImageReference?.Lun);
-            Assert.AreEqual(disk1.CreationData?.GalleryImageReference?.Id, disk2.CreationData?.GalleryImageReference?.Id);
-            Assert.AreEqual(disk1.CreationData?.GalleryImageReference?.Lun, disk2.CreationData?.GalleryImageReference?.Lun);
-            Assert.AreEqual(disk1.CreationData?.LogicalSectorSize, disk2.CreationData?.LogicalSectorSize);
-            Assert.AreEqual(disk1.CreationData?.SourceResourceId, disk2.CreationData?.SourceResourceId);
-            Assert.AreEqual(disk1.CreationData?.SourceUniqueId, disk2.CreationData?.SourceUniqueId);
-            Assert.AreEqual(disk1.CreationData?.SourceUri, disk2.CreationData?.SourceUri);
-            Assert.AreEqual(disk1.CreationData?.StorageAccountId, disk2.CreationData?.StorageAccountId);
-            Assert.AreEqual(disk1.CreationData?.UploadSizeBytes, disk2.CreationData?.UploadSizeBytes);
+            Assert.That(disk2.BurstingEnabled, Is.EqualTo(disk1.BurstingEnabled));
+            Assert.That(disk2.DiskAccessId, Is.EqualTo(disk1.DiskAccessId));
+            Assert.That(disk2.DiskIopsReadOnly, Is.EqualTo(disk1.DiskIopsReadOnly));
+            Assert.That(disk2.DiskIopsReadWrite, Is.EqualTo(disk1.DiskIopsReadWrite));
+            Assert.That(disk2.DiskSizeGB, Is.EqualTo(disk1.DiskSizeGB));
+            Assert.That(disk2.ManagedBy, Is.EqualTo(disk1.ManagedBy));
+            Assert.That(disk2.Encryption?.DiskEncryptionSetId, Is.EqualTo(disk1.Encryption?.DiskEncryptionSetId));
+            Assert.That(disk2.Encryption?.EncryptionType, Is.EqualTo(disk1.Encryption?.EncryptionType));
+            Assert.That(disk2.CreationData?.CreateOption, Is.EqualTo(disk1.CreationData?.CreateOption));
+            Assert.That(disk2.CreationData?.ImageReference?.Id, Is.EqualTo(disk1.CreationData?.ImageReference?.Id));
+            Assert.That(disk2.CreationData?.ImageReference?.Lun, Is.EqualTo(disk1.CreationData?.ImageReference?.Lun));
+            Assert.That(disk2.CreationData?.GalleryImageReference?.Id, Is.EqualTo(disk1.CreationData?.GalleryImageReference?.Id));
+            Assert.That(disk2.CreationData?.GalleryImageReference?.Lun, Is.EqualTo(disk1.CreationData?.GalleryImageReference?.Lun));
+            Assert.That(disk2.CreationData?.LogicalSectorSize, Is.EqualTo(disk1.CreationData?.LogicalSectorSize));
+            Assert.That(disk2.CreationData?.SourceResourceId, Is.EqualTo(disk1.CreationData?.SourceResourceId));
+            Assert.That(disk2.CreationData?.SourceUniqueId, Is.EqualTo(disk1.CreationData?.SourceUniqueId));
+            Assert.That(disk2.CreationData?.SourceUri, Is.EqualTo(disk1.CreationData?.SourceUri));
+            Assert.That(disk2.CreationData?.StorageAccountId, Is.EqualTo(disk1.CreationData?.StorageAccountId));
+            Assert.That(disk2.CreationData?.UploadSizeBytes, Is.EqualTo(disk1.CreationData?.UploadSizeBytes));
         }
 
         public static ManagedDiskData GetEmptyDiskData(AzureLocation location, IDictionary<string, string> tags = null)
@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         public static void AssertGallery(GalleryData gallery1, GalleryData gallery2)
         {
             AssertTrackedResource(gallery1, gallery2);
-            Assert.AreEqual(gallery1.Description, gallery2.Description);
-            Assert.AreEqual(gallery1.Identifier?.UniqueName, gallery2.Identifier?.UniqueName);
+            Assert.That(gallery2.Description, Is.EqualTo(gallery1.Description));
+            Assert.That(gallery2.Identifier?.UniqueName, Is.EqualTo(gallery1.Identifier?.UniqueName));
         }
 
         public static GalleryData GetBasicGalleryData(AzureLocation location, string description = null)
@@ -164,12 +164,12 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         public static void AssertGalleryImage(GalleryImageData image1, GalleryImageData image2)
         {
             AssertTrackedResource(image1, image2);
-            Assert.AreEqual(image1.Identifier.Offer, image2.Identifier.Offer);
-            Assert.AreEqual(image1.Identifier.Publisher, image2.Identifier.Publisher);
-            Assert.AreEqual(image1.Identifier.Sku, image2.Identifier.Sku);
-            Assert.AreEqual(image1.OSType, image2.OSType);
-            Assert.AreEqual(image1.OSState, image2.OSState);
-            Assert.AreEqual(image1.Description, image2.Description);
+            Assert.That(image2.Identifier.Offer, Is.EqualTo(image1.Identifier.Offer));
+            Assert.That(image2.Identifier.Publisher, Is.EqualTo(image1.Identifier.Publisher));
+            Assert.That(image2.Identifier.Sku, Is.EqualTo(image1.Identifier.Sku));
+            Assert.That(image2.OSType, Is.EqualTo(image1.OSType));
+            Assert.That(image2.OSState, Is.EqualTo(image1.OSState));
+            Assert.That(image2.Description, Is.EqualTo(image1.Description));
         }
 
         public static GalleryImageData GetBasicGalleryImageData(AzureLocation location, SupportedOperatingSystemType osType, GalleryImageIdentifier identifier)
@@ -259,8 +259,8 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         #region VirtualMachineScaleSet
         public static void AssertVirtualMachineScaleSet(VirtualMachineScaleSetData vmss1, VirtualMachineScaleSetData vmss2)
         {
-            Assert.AreEqual(vmss1.Id, vmss2.Id);
-            Assert.AreEqual(vmss1.Name, vmss2.Name);
+            Assert.That(vmss2.Id, Is.EqualTo(vmss1.Id));
+            Assert.That(vmss2.Name, Is.EqualTo(vmss1.Name));
         }
 
         public static VirtualMachineScaleSetData GetBasicLinuxVirtualMachineScaleSetData(AzureLocation location, string computerNamePrefix, ResourceIdentifier subnetId, int capacity = 2, string adminUsername = "adminuser")

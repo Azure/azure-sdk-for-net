@@ -52,8 +52,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await foreach (var trigger in client.GetTriggersByWorkspaceAsync())
             {
                 TriggerResource actualTrigger = await client.GetTriggerAsync(trigger.Name);
-                Assert.AreEqual(trigger.Name, actualTrigger.Name);
-                Assert.AreEqual(trigger.Id, actualTrigger.Id);
+                Assert.That(actualTrigger.Name, Is.EqualTo(trigger.Name));
+                Assert.That(actualTrigger.Id, Is.EqualTo(trigger.Id));
             }
         }
 
@@ -96,11 +96,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await using DisposableTrigger trigger = await DisposableTrigger.Create (client, Recording);
             TriggerSubscribeTriggerToEventsOperation subOperation = await client.StartSubscribeTriggerToEventsAsync (trigger.Name);
             TriggerSubscriptionOperationStatus subResponse = await subOperation.WaitForCompletionAsync();
-            Assert.AreEqual (EventSubscriptionStatus.Enabled, subResponse.Status);
+            Assert.That(subResponse.Status, Is.EqualTo(EventSubscriptionStatus.Enabled));
 
             TriggerUnsubscribeTriggerFromEventsOperation unsubOperation = await client.StartUnsubscribeTriggerFromEventsAsync (trigger.Name);
             TriggerSubscriptionOperationStatus unsubResponse = await unsubOperation.WaitForCompletionAsync();
-            Assert.AreEqual (EventSubscriptionStatus.Disabled, unsubResponse.Status);
+            Assert.That(unsubResponse.Status, Is.EqualTo(EventSubscriptionStatus.Disabled));
         }
 
         [RecordedTest]
@@ -110,7 +110,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
 
             await using DisposableTrigger trigger = await DisposableTrigger.Create (client, Recording);
             TriggerSubscriptionOperationStatus statusOperation = await client.GetEventSubscriptionStatusAsync (trigger.Name);
-            Assert.AreEqual (statusOperation.TriggerName, trigger.Name);
+            Assert.That(trigger.Name, Is.EqualTo(statusOperation.TriggerName));
         }
     }
 }

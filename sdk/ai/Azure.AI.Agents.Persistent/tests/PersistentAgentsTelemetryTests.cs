@@ -115,7 +115,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress
             || run.Status == RunStatus.RequiresAction);
-        Assert.AreEqual(RunStatus.Completed, run.Status, message: run.LastError?.Message?.ToString());
+        Assert.That(run.Status, Is.EqualTo(RunStatus.Completed), run.LastError?.Message?.ToString());
         return run;
     }
 
@@ -169,17 +169,17 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         _exporter.ForceFlush();
 
         var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "create_agent my-agent");
-        Assert.IsNull(createAgentSpan);
+        Assert.That(createAgentSpan, Is.Null);
         var createThreadSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "create_thread");
-        Assert.IsNull(createThreadSpan);
+        Assert.That(createThreadSpan, Is.Null);
         var createMessageSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "create_message");
-        Assert.IsNull(createMessageSpan);
+        Assert.That(createMessageSpan, Is.Null);
         var startThreadRunSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "start_thread_run");
-        Assert.IsNull(startThreadRunSpan);
+        Assert.That(startThreadRunSpan, Is.Null);
         var getThreadRunSpan = _exporter.GetExportedActivities().LastOrDefault(s => s.DisplayName == "get_thread_run");
-        Assert.IsNull(getThreadRunSpan);
+        Assert.That(getThreadRunSpan, Is.Null);
         var listMessagesSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "list_messages");
-        Assert.IsNull(listMessagesSpan);
+        Assert.That(listMessagesSpan, Is.Null);
     }
 
     [RecordedTest]
@@ -405,7 +405,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
                 run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs, toolApprovals: null);
             }
         }
-        Assert.AreEqual(RunStatus.Completed, run.Status, run.LastError?.Message);
+        Assert.That(run.Status, Is.EqualTo(RunStatus.Completed), run.LastError?.Message);
 
         // Enumerate messages and run steps to trigger spans
         await foreach (var messageInList in client.Messages.GetMessagesAsync(thread.Id))
@@ -654,7 +654,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         };
         foreach (Activity listMessagesSpan in spans)
         {
-            Assert.IsTrue(_traceVerifier.CheckSpanAttributes(listMessagesSpan, expectedListMessagesAttributes));
+            Assert.That(_traceVerifier.CheckSpanAttributes(listMessagesSpan, expectedListMessagesAttributes), Is.True);
             events.AddRange(listMessagesSpan.Events);
         }
 
@@ -677,7 +677,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
                 { "gen_ai.event.content", "{\"content\":{\"text\":{\"value\":\"*\",\"annotations\":\"*\"}},\"role\":\"assistant\"}" }
             })
         };
-        Assert.IsTrue(_traceVerifier.CheckSpanEvents(events, expectedListMessagesEvents, allowAdditionalEvents: true));
+        Assert.That(_traceVerifier.CheckSpanEvents(events, expectedListMessagesEvents, allowAdditionalEvents: true), Is.True);
 
         // Verify list_run_steps span
         events = [];
@@ -696,7 +696,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         foreach (Activity listRunStepsSpan in spans)
         {
             runStepsSpanEvents.AddRange(listRunStepsSpan.Events);
-            Assert.IsTrue(_traceVerifier.CheckSpanAttributes(listRunStepsSpan, expectedListRunStepsAttributes));
+            Assert.That(_traceVerifier.CheckSpanAttributes(listRunStepsSpan, expectedListRunStepsAttributes), Is.True);
         }
 
         Assert.Greater(runStepsSpanEvents.Count(), 5, "Deep research typically have more than 5 steps.");
@@ -731,7 +731,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
                 }
             )
         ];
-        Assert.IsTrue(_traceVerifier.CheckSpanEvents(runStepsSpanEvents, expectedListRunStepsEvents, allowAdditionalEvents: true));
+        Assert.That(_traceVerifier.CheckSpanEvents(runStepsSpanEvents, expectedListRunStepsEvents, allowAdditionalEvents: true), Is.True);
     }
 
     [RecordedTest]
@@ -1305,7 +1305,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             { "gen_ai.agent.name", agentName },
             { "gen_ai.agent.id", "*" }
         };
-        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(createAgentSpan, expectedCreateAgentAttributes));
+        Assert.That(_traceVerifier.CheckSpanAttributes(createAgentSpan, expectedCreateAgentAttributes), Is.True);
         var expectedCreateAgentEvents = new List<(string, Dictionary<string, object>)>
         {
             ("gen_ai.system.message", new Dictionary<string, object>
@@ -1314,7 +1314,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
                 { "gen_ai.event.content", content }
             })
         };
-        Assert.IsTrue(_traceVerifier.CheckSpanEvents(createAgentSpan, expectedCreateAgentEvents));
+        Assert.That(_traceVerifier.CheckSpanEvents(createAgentSpan, expectedCreateAgentEvents), Is.True);
     }
 
     private void CheckCreateThreadSpan(Activity createThreadSpan, string modelName, RunStatus? status = null, string operation="create_thread")
@@ -1335,7 +1335,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             expectedProcessThreadRunAttributes["gen_ai.thread.run.id"] = "*";
             expectedProcessThreadRunAttributes["gen_ai.thread.run.status"] = status.Value.ToString();
         }
-        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(createThreadSpan, expectedProcessThreadRunAttributes));
+        Assert.That(_traceVerifier.CheckSpanAttributes(createThreadSpan, expectedProcessThreadRunAttributes), Is.True);
     }
 
     private void CheckCreateMessageSpan(Activity createMessageActivity, string content)
@@ -1350,7 +1350,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             { "gen_ai.thread.id", "*" },
             { "gen_ai.message.id", "*" }
         };
-        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(createMessageActivity, expectedCreateMessageAttributes));
+        Assert.That(_traceVerifier.CheckSpanAttributes(createMessageActivity, expectedCreateMessageAttributes), Is.True);
 
         var expectedCreateMessageEvents = new List<(string, Dictionary<string, object>)>
         {
@@ -1361,7 +1361,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
                 { "gen_ai.event.content", content }
             })
         };
-        Assert.IsTrue(_traceVerifier.CheckSpanEvents(createMessageActivity, expectedCreateMessageEvents));
+        Assert.That(_traceVerifier.CheckSpanEvents(createMessageActivity, expectedCreateMessageEvents), Is.True);
     }
 
     private void CheckSubmitToolOutputSpan(Activity submitActivity, string content)
@@ -1376,7 +1376,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             { "gen_ai.thread.id", "*" },
             { "gen_ai.thread.run.id", "*" }
         };
-        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(submitActivity, expectedSubmitToolOutputsAttributes));
+        Assert.That(_traceVerifier.CheckSpanAttributes(submitActivity, expectedSubmitToolOutputsAttributes), Is.True);
 
         var expectedSubmitToolOutputsEvents = new List<(string, Dictionary<string, object>)>
         {
@@ -1385,7 +1385,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
                 { "gen_ai.event.content", content }
             })
         };
-        Assert.IsTrue(_traceVerifier.CheckSpanEvents(submitActivity, expectedSubmitToolOutputsEvents));
+        Assert.That(_traceVerifier.CheckSpanEvents(submitActivity, expectedSubmitToolOutputsEvents), Is.True);
     }
 
     private void CheckListMessages(Activity listActivity, string[] contents, string[] roles)
@@ -1400,7 +1400,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             { "az.namespace", "Microsoft.CognitiveServices" },
             { "gen_ai.thread.id", "*" }
         };
-        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(listActivity, expectedListMessagesAttributes));
+        Assert.That(_traceVerifier.CheckSpanAttributes(listActivity, expectedListMessagesAttributes), Is.True);
 
         List<(string, Dictionary<string, object>)> expectedListMessagesEvents = [];
         for (int i = 0; i < contents.Length; i++)
@@ -1419,7 +1419,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             }
             expectedListMessagesEvents.Add((roles[i], newData));
         }
-        Assert.IsTrue(_traceVerifier.CheckSpanEvents(listActivity, expectedListMessagesEvents));
+        Assert.That(_traceVerifier.CheckSpanEvents(listActivity, expectedListMessagesEvents), Is.True);
     }
 
     private void CheckProcessThreadRun(Activity threadRun, string modelName, string[] contents, string[] roles)
@@ -1441,7 +1441,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             { "gen_ai.thread.run.status", "completed" },
             { "gen_ai.message.id", "*" }
         };
-        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(threadRun, expectedProcessThreadRunAttributesAfterTool));
+        Assert.That(_traceVerifier.CheckSpanAttributes(threadRun, expectedProcessThreadRunAttributesAfterTool), Is.True);
         List<(string, Dictionary<string, object>)> expectedProcessThreadRunEventsAfterTool = [];
         for (int i=0; i<contents.Length; i++)
         {
@@ -1468,7 +1468,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             }
             expectedProcessThreadRunEventsAfterTool.Add((roles[i], newData));
         }
-        Assert.IsTrue(_traceVerifier.CheckSpanEvents(threadRun, expectedProcessThreadRunEventsAfterTool));
+        Assert.That(_traceVerifier.CheckSpanEvents(threadRun, expectedProcessThreadRunEventsAfterTool), Is.True);
     }
 
     private void CheckRunSteps(Activity runStepActivity, string[] contents, string[] events)
@@ -1484,7 +1484,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             { "gen_ai.thread.id", "*" },
             { "gen_ai.thread.run.id", "*" }
         };
-        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(runStepActivity, expectedListRunStepsAttributes));
+        Assert.That(_traceVerifier.CheckSpanAttributes(runStepActivity, expectedListRunStepsAttributes), Is.True);
 
         List<(string, Dictionary<string, object>)> expectedListRunStepsEvents = [];
         for (int i=0; i<contents.Length; i++)
@@ -1511,7 +1511,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             }
             expectedListRunStepsEvents.Add((events[i], data));
         }
-        Assert.IsTrue(_traceVerifier.CheckSpanEvents(runStepActivity, expectedListRunStepsEvents));
+        Assert.That(_traceVerifier.CheckSpanEvents(runStepActivity, expectedListRunStepsEvents), Is.True);
     }
 
     public void CheckThreadRunAttribute(Activity threadRunActivity, string modelName, string operation= "get_thread_run", string status=default)
@@ -1538,7 +1538,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         {
             expectedGetThreadRunAttributes["gen_ai.thread.run.status"] = status;
         }
-        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(threadRunActivity, expectedGetThreadRunAttributes));
+        Assert.That(_traceVerifier.CheckSpanAttributes(threadRunActivity, expectedGetThreadRunAttributes), Is.True);
     }
     private async Task WaitMayBe(int timeout = 1000)
     {

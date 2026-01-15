@@ -50,9 +50,9 @@ namespace Azure.Storage.Blobs.Tests
             Response<BlockList> response = await blobClient.GetBlockListAsync();
 
             // Assert
-            Assert.AreEqual(1, response.Value.CommittedBlocks.Count());
-            Assert.AreEqual(blockId0, response.Value.CommittedBlocks.First().Name);
-            Assert.AreEqual(bigBlockSize, response.Value.CommittedBlocks.First().SizeLong);
+            Assert.That(response.Value.CommittedBlocks.Count(), Is.EqualTo(1));
+            Assert.That(response.Value.CommittedBlocks.First().Name, Is.EqualTo(blockId0));
+            Assert.That(response.Value.CommittedBlocks.First().SizeLong, Is.EqualTo(bigBlockSize));
             Assert.Throws<OverflowException>(() => _ = response.Value.CommittedBlocks.First().Size); // if no overflow then we didn't actually test handling of long lengths
         }
 
@@ -82,11 +82,11 @@ namespace Azure.Storage.Blobs.Tests
             BlockList blockList = await blobContainerClient.GetBlockBlobClient(blobName).GetBlockListAsync();
 
             // Assert
-            Assert.AreEqual(numBlocks * blockSize, blockList.BlobContentLength);
-            Assert.AreEqual(numBlocks, blockList.CommittedBlocks.Count());
+            Assert.That(blockList.BlobContentLength, Is.EqualTo(numBlocks * blockSize));
+            Assert.That(blockList.CommittedBlocks.Count(), Is.EqualTo(numBlocks));
             foreach (var block in blockList.CommittedBlocks)
             {
-                Assert.AreEqual(blockSize, block.SizeLong);
+                Assert.That(block.SizeLong, Is.EqualTo(blockSize));
             }
         }
 
@@ -116,10 +116,10 @@ namespace Azure.Storage.Blobs.Tests
             BlockList blockList = await blobContainerClient.GetBlockBlobClient(blobName).GetBlockListAsync();
 
             // Assert
-            Assert.AreEqual(firstBlockSize + secondBlockSize, blockList.BlobContentLength);
-            Assert.AreEqual(2, blockList.CommittedBlocks.Count());
-            Assert.AreEqual(firstBlockSize, blockList.CommittedBlocks.ElementAt(0).SizeLong);
-            Assert.AreEqual(secondBlockSize, blockList.CommittedBlocks.ElementAt(1).SizeLong);
+            Assert.That(blockList.BlobContentLength, Is.EqualTo(firstBlockSize + secondBlockSize));
+            Assert.That(blockList.CommittedBlocks.Count(), Is.EqualTo(2));
+            Assert.That(blockList.CommittedBlocks.ElementAt(0).SizeLong, Is.EqualTo(firstBlockSize));
+            Assert.That(blockList.CommittedBlocks.ElementAt(1).SizeLong, Is.EqualTo(secondBlockSize));
         }
     }
 }

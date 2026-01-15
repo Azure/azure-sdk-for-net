@@ -21,7 +21,7 @@ namespace Azure.Core.Tests
         public void DoesNotThrowWhenValueIsAccessedWithValue()
         {
             var target = new TestValueResponse<string>(new MockResponse(200), "test");
-            Assert.AreEqual("test", target.Value);
+            Assert.That(target.Value, Is.EqualTo("test"));
             Assert.That(target.ToString(), Does.Not.Contain("<null>"));
             Assert.That(target.ToString(), Does.Contain("test"));
         }

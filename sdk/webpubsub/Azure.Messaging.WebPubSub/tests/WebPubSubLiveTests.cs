@@ -53,9 +53,9 @@ namespace Azure.Rest.WebPubSub.Tests
             await client.LifetimeTask.OrTimeout();
             var frames = client.ReceivedFrames;
 
-            Assert.AreEqual(3, frames.Count);
-            Assert.AreEqual(textContent, frames[0].MessageAsString);
-            Assert.AreEqual(jsonContent.ToString(), frames[1].MessageAsString);
+            Assert.That(frames.Count, Is.EqualTo(3));
+            Assert.That(frames[0].MessageAsString, Is.EqualTo(textContent));
+            Assert.That(frames[1].MessageAsString, Is.EqualTo(jsonContent.ToString()));
             CollectionAssert.AreEquivalent(binaryContent.ToArray(), frames[2].MessageBytes);
         }
 
@@ -89,9 +89,9 @@ namespace Azure.Rest.WebPubSub.Tests
             await client.LifetimeTask.OrTimeout();
             var frames = client.ReceivedFrames;
 
-            Assert.AreEqual(3, frames.Count);
-            Assert.AreEqual(textContent, frames[0].MessageAsString);
-            Assert.AreEqual(jsonContent.ToString(), frames[1].MessageAsString);
+            Assert.That(frames.Count, Is.EqualTo(3));
+            Assert.That(frames[0].MessageAsString, Is.EqualTo(textContent));
+            Assert.That(frames[1].MessageAsString, Is.EqualTo(jsonContent.ToString()));
             CollectionAssert.AreEquivalent(binaryContent.ToArray(), frames[2].MessageBytes);
         }
 
@@ -124,24 +124,25 @@ namespace Azure.Rest.WebPubSub.Tests
             await client.LifetimeTask.OrTimeout();
             var frames = client.ReceivedFrames;
 
-            Assert.AreEqual(4, frames.Count);
+            Assert.That(frames.Count, Is.EqualTo(4));
             // first message must be the "connected" message
             var connected = JsonSerializer.Deserialize<ConnectedMessage>(frames[0].MessageAsString, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
             Assert.NotNull(connected);
-            Assert.AreEqual("connected", connected.Event);
-            Assert.AreEqual(JsonSerializer.Serialize(new {
+            Assert.That(connected.Event, Is.EqualTo("connected"));
+            Assert.That(frames[1].MessageAsString, Is.EqualTo(JsonSerializer.Serialize(new
+            {
                 type = "message",
                 from = "server",
                 dataType = "text",
                 data = textContent
-            }), frames[1].MessageAsString);
-            Assert.AreEqual(JsonSerializer.Serialize(new
+            })));
+            Assert.That(frames[2].MessageAsString, Is.EqualTo(JsonSerializer.Serialize(new
             {
                 type = "message",
                 from = "server",
                 dataType = "json",
                 data = jsonContent
-            }), frames[2].MessageAsString);
+            })));
             CollectionAssert.AreEquivalent(JsonSerializer.Serialize(new
             {
                 type = "message",

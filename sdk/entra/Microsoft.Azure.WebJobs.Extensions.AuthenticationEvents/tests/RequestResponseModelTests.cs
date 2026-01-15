@@ -27,8 +27,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                         await eventsResponseHandler.SetValueAsync(Payload.TokenIssuanceStart.ActionResponse, CancellationToken.None);
                     });
 
-                    Assert.AreEqual(HttpStatusCode.OK, httpResponseMessage.StatusCode);
-                    Assert.True(DoesPayloadMatch(Payload.TokenIssuanceStart.ExpectedPayload, await httpResponseMessage.Content.ReadAsStringAsync()));
+                    Assert.That(httpResponseMessage.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+                    Assert.That(DoesPayloadMatch(Payload.TokenIssuanceStart.ExpectedPayload, await httpResponseMessage.Content.ReadAsStringAsync()), Is.True);
                 });
         }
 
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         public void QueryParameterTest()
         {
             WebJobsTokenIssuanceStartRequest tokenIssuanceStartRequest = new WebJobsTokenIssuanceStartRequest(new HttpRequestMessage(HttpMethod.Get, "http://test?param1=test1&param2=test2"));
-            Assert.True(DoesPayloadMatch(Payload.TokenIssuanceStart.TokenIssuanceStartQueryParameter, tokenIssuanceStartRequest.ToString()));
+            Assert.That(DoesPayloadMatch(Payload.TokenIssuanceStart.TokenIssuanceStartQueryParameter, tokenIssuanceStartRequest.ToString()), Is.True);
         }
 
         /// <summary>Tests the OnTokenIssuanceStart request and response object model for CSharp for version: 10_01_2021</summary>
@@ -58,8 +58,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 }
             });
 
-            Assert.AreEqual(HttpStatusCode.OK, httpResponseMessage.StatusCode);
-            Assert.True(DoesPayloadMatch(Payload.TokenIssuanceStart.ExpectedPayload, await httpResponseMessage.Content.ReadAsStringAsync()));
+            Assert.That(httpResponseMessage.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(DoesPayloadMatch(Payload.TokenIssuanceStart.ExpectedPayload, await httpResponseMessage.Content.ReadAsStringAsync()), Is.True);
         }
 
         /// <summary>Test the request object to verify the correct HttpStatusCode is respond</summary>
@@ -86,8 +86,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 }
             });
 
-            Assert.AreEqual(httpStatusCode, httpResponseMessage.StatusCode);
-            Assert.AreEqual(reasonPhrase, httpResponseMessage.ReasonPhrase);
+            Assert.That(httpResponseMessage.StatusCode, Is.EqualTo(httpStatusCode));
+            Assert.That(httpResponseMessage.ReasonPhrase, Is.EqualTo(reasonPhrase));
         }
 
         /// <summary>Tests the OnTokenIssuanceStart request and response object model when the response is set to null</summary>
@@ -105,8 +105,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 }
             });
 
-            Assert.AreEqual(HttpStatusCode.InternalServerError, httpResponseMessage.StatusCode);
-            Assert.True(DoesPayloadMatch(Payload.TokenIssuanceStart.NullResponsePayload, await httpResponseMessage.Content.ReadAsStringAsync()));
+            Assert.That(httpResponseMessage.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
+            Assert.That(DoesPayloadMatch(Payload.TokenIssuanceStart.NullResponsePayload, await httpResponseMessage.Content.ReadAsStringAsync()), Is.True);
         }
 
         [Test]
@@ -134,8 +134,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 }
             });
 
-            Assert.AreEqual(httpResponseMessage.StatusCode, expectReturnCode);
-            Assert.True(DoesPayloadMatch(expectedResponse, await httpResponseMessage.Content.ReadAsStringAsync()));
+            Assert.That(expectReturnCode, Is.EqualTo(httpResponseMessage.StatusCode));
+            Assert.That(DoesPayloadMatch(expectedResponse, await httpResponseMessage.Content.ReadAsStringAsync()), Is.True);
         }
     }
 }

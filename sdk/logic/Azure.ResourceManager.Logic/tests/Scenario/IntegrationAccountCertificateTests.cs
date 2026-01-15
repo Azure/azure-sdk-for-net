@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string certificateName = Recording.GenerateAssetName("cert");
             var cert = await CreateCertificate(certificateName);
             Assert.IsNotNull(cert);
-            Assert.AreEqual(certificateName, cert.Data.Name);
+            Assert.That(cert.Data.Name, Is.EqualTo(certificateName));
         }
 
         [RecordedTest]
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string certificateName = Recording.GenerateAssetName("cert");
             await CreateCertificate(certificateName);
             bool flag = await _certificateCollection.ExistsAsync(certificateName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Tests
             await CreateCertificate(certificateName);
             var cert = await _certificateCollection.GetAsync(certificateName);
             Assert.IsNotNull(cert);
-            Assert.AreEqual(certificateName, cert.Value.Data.Name);
+            Assert.That(cert.Value.Data.Name, Is.EqualTo(certificateName));
         }
 
         [RecordedTest]
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Logic.Tests
             string certificateName = Recording.GenerateAssetName("cert");
             var cert = await CreateCertificate(certificateName);
             bool flag = await _certificateCollection.ExistsAsync(certificateName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await cert.DeleteAsync(WaitUntil.Completed);
             flag = await _certificateCollection.ExistsAsync(certificateName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

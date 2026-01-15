@@ -88,7 +88,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages.Count, Is.EqualTo(1));
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -105,7 +105,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages.Count, Is.EqualTo(1));
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -119,13 +119,13 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
 
             ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Started, s_batchDocuments);
-            Assert.IsFalse(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
+            Assert.That(operation.HasCompleted, Is.False);
+            Assert.That(operation.HasValue, Is.False);
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasCompleted, Is.True);
+            Assert.That(operation.HasValue, Is.True);
             ValidateOperationProperties(operation);
         }
 
@@ -145,7 +145,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages.Count, Is.EqualTo(1));
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -168,7 +168,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages.Count, Is.EqualTo(1));
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -191,13 +191,13 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages.Count, Is.EqualTo(1));
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
-            Assert.IsFalse(resultCollection[0].HasError);
-            Assert.IsTrue(resultCollection[1].HasError);
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultCollection[1].Error.ErrorCode.ToString());
+            Assert.That(resultCollection[0].HasError, Is.False);
+            Assert.That(resultCollection[1].HasError, Is.True);
+            Assert.That(resultCollection[1].Error.ErrorCode.ToString(), Is.EqualTo(TextAnalyticsErrorCode.InvalidDocument));
         }
 
         [RecordedTest]
@@ -210,7 +210,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages.Count, Is.EqualTo(1));
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -224,13 +224,13 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
 
             ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Started, s_batchConvenienceDocuments);
-            Assert.IsFalse(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
+            Assert.That(operation.HasCompleted, Is.False);
+            Assert.That(operation.HasValue, Is.False);
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasCompleted, Is.True);
+            Assert.That(operation.HasValue, Is.True);
             ValidateOperationProperties(operation);
         }
 
@@ -250,7 +250,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            Assert.That(resultInPages.Count, Is.EqualTo(1));
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
@@ -269,7 +269,7 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, s_batchConvenienceDocuments, batchActions);
-            Assert.IsTrue(operation.HasCompleted);
+            Assert.That(operation.HasCompleted, Is.True);
 
             AnalyzeActionsResult actionsResult = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
             IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults = actionsResult.ExtractiveSummarizeResults;
@@ -281,14 +281,14 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void ValidateOperationProperties(ExtractiveSummarizeOperation operation)
         {
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
+            Assert.That(operation.HasCompleted, Is.True);
+            Assert.That(operation.CreatedOn, Is.Not.EqualTo(new DateTimeOffset()));
             // TODO: Re-enable this check (https://github.com/Azure/azure-sdk-for-net/issues/31855).
             // Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
 
             if (operation.ExpiresOn.HasValue)
             {
-                Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn.Value);
+                Assert.That(operation.ExpiresOn.Value, Is.Not.EqualTo(new DateTimeOffset()));
             }
         }
 
@@ -304,12 +304,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 ExtractiveSummarySentence sentence = sentences.ElementAt(i);
                 string originalDocument = s_batchConvenienceDocuments.Where(document => document.Contains(sentence.Text)).FirstOrDefault();
 
-                Assert.False(string.IsNullOrEmpty(originalDocument));
+                Assert.That(string.IsNullOrEmpty(originalDocument), Is.False);
                 Assert.GreaterOrEqual(sentence.Offset, 0);
                 Assert.GreaterOrEqual(sentence.RankScore, 0.0);
                 Assert.LessOrEqual(sentence.RankScore, 1.0);
-                Assert.AreEqual(sentence.Text.Length, sentence.Length);
-                Assert.AreEqual(originalDocument.Substring(sentence.Offset, sentence.Length), sentence.Text);
+                Assert.That(sentence.Length, Is.EqualTo(sentence.Text.Length));
+                Assert.That(sentence.Text, Is.EqualTo(originalDocument.Substring(sentence.Offset, sentence.Length)));
 
                 if (i > 0)
                 {
@@ -351,7 +351,7 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (ExtractiveSummarizeResult result in results)
             {
                 Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
-                Assert.False(result.HasError);
+                Assert.That(result.HasError, Is.False);
                 Assert.IsNotNull(result.Warnings);
 
                 if (includeStatistics)
@@ -361,8 +361,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
                 else
                 {
-                    Assert.AreEqual(0, result.Statistics.CharacterCount);
-                    Assert.AreEqual(0, result.Statistics.TransactionCount);
+                    Assert.That(result.Statistics.CharacterCount, Is.EqualTo(0));
+                    Assert.That(result.Statistics.TransactionCount, Is.EqualTo(0));
                 }
 
                 ValidateDocumentResult(result.Sentences, maxSentenceCount, expectedOrder);

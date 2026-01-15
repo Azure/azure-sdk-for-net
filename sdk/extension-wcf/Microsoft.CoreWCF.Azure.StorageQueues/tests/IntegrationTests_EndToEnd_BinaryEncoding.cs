@@ -64,8 +64,8 @@ namespace CoreWCF
             channel.Create("TestService_EndToEnd");
 
             var testService = host.Services.GetRequiredService<TestService_EndToEnd>();
-            Assert.True(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)));
-            Assert.AreEqual("TestService_EndToEnd", testService.ReceivedName);
+            Assert.That(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)), Is.True);
+            Assert.That(testService.ReceivedName, Is.EqualTo("TestService_EndToEnd"));
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace CoreWCF
             channel.Create("TestService_EndToEnd");
 
             var testService = host.Services.GetRequiredService<TestService_EndToEnd>();
-            Assert.False(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)));
+            Assert.That(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)), Is.False);
         }
     }
 }

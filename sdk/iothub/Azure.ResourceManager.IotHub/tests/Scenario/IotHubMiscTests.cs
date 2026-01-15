@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             {
                 Assert.IsNotNull(q.Name.Value);
                 Assert.IsNotNull(q.Name.LocalizedValue);
-                Assert.IsTrue(q.Limit > 0);
+                Assert.That(q.Limit > 0, Is.True);
             }
         }
     }

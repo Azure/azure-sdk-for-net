@@ -31,12 +31,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 PrefetchCount = 5
             };
             var receiver = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>()).CreateReceiver(queueName, options);
-            Assert.AreEqual(queueName, receiver.EntityPath);
-            Assert.AreEqual(fullyQualifiedNamespace, receiver.FullyQualifiedNamespace);
+            Assert.That(receiver.EntityPath, Is.EqualTo(queueName));
+            Assert.That(receiver.FullyQualifiedNamespace, Is.EqualTo(fullyQualifiedNamespace));
             Assert.IsNotNull(receiver.Identifier);
-            Assert.IsFalse(receiver.IsSessionReceiver);
-            Assert.AreEqual(ServiceBusReceiveMode.ReceiveAndDelete, receiver.ReceiveMode);
-            Assert.AreEqual(5, receiver.PrefetchCount);
+            Assert.That(receiver.IsSessionReceiver, Is.False);
+            Assert.That(receiver.ReceiveMode, Is.EqualTo(ServiceBusReceiveMode.ReceiveAndDelete));
+            Assert.That(receiver.PrefetchCount, Is.EqualTo(5));
         }
 
         [TestCase(true)]
@@ -63,19 +63,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             {
                 SubQueue = SubQueue.None
             });
-            Assert.AreEqual("queueName", receiver.EntityPath);
+            Assert.That(receiver.EntityPath, Is.EqualTo("queueName"));
 
             receiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
             {
                 SubQueue = SubQueue.DeadLetter
             });
-            Assert.AreEqual("queueName/$DeadLetterQueue", receiver.EntityPath);
+            Assert.That(receiver.EntityPath, Is.EqualTo("queueName/$DeadLetterQueue"));
 
             receiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
             {
                 SubQueue = SubQueue.TransferDeadLetter
             });
-            Assert.AreEqual("queueName/$Transfer/$DeadLetterQueue", receiver.EntityPath);
+            Assert.That(receiver.EntityPath, Is.EqualTo("queueName/$Transfer/$DeadLetterQueue"));
         }
 
         [Test]
@@ -192,8 +192,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
             var actuallyReceivedMessages =
                 await receiver.ReceiveMessagesAsync(10, TimeSpan.FromSeconds(0)).ConfigureAwait(false);
-            Assert.AreEqual(receivedMessages.Count, actuallyReceivedMessages.Count);
-            Assert.AreEqual(receivedMessages[0].MessageId, actuallyReceivedMessages[0].MessageId);
+            Assert.That(actuallyReceivedMessages.Count, Is.EqualTo(receivedMessages.Count));
+            Assert.That(actuallyReceivedMessages[0].MessageId, Is.EqualTo(receivedMessages[0].MessageId));
         }
 
         [Test]
@@ -366,9 +366,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
             var receiver = client.CreateReceiver("queue");
             await receiver.CloseAsync();
-            Assert.IsTrue(receiver.IsClosed);
+            Assert.That(receiver.IsClosed, Is.True);
 
-            Assert.IsTrue(((AmqpReceiver)receiver.InnerReceiver).RequestResponseLockedMessages.IsDisposed);
+            Assert.That(((AmqpReceiver)receiver.InnerReceiver).RequestResponseLockedMessages.IsDisposed, Is.True);
         }
 
         [Test]
@@ -396,7 +396,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using var receiver = client.CreateReceiver("fake", options);
 
             var identifier = receiver.Identifier;
-            Assert.AreEqual(setIdentifier, identifier);
+            Assert.That(identifier, Is.EqualTo(setIdentifier));
         }
 
         [Test]
@@ -459,7 +459,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
             await using var receiver = client.CreateReceiver("fake");
             receiver.PrefetchCount = 10;
-            Assert.AreEqual(10, receiver.PrefetchCount);
+            Assert.That(receiver.PrefetchCount, Is.EqualTo(10));
         }
 
         [Test]
@@ -505,7 +505,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
             var receiver = mockReceiver.Object;
             var deleteCount = await receiver.PurgeMessagesAsync();
-            Assert.AreEqual(expectedDeleteCount, deleteCount);
+            Assert.That(deleteCount, Is.EqualTo(expectedDeleteCount));
 
             mockReceiver
                 .Verify(receiver => receiver.DeleteMessagesAsync(
@@ -548,7 +548,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
             var receiver = mockReceiver.Object;
             var deleteCount = await receiver.PurgeMessagesAsync();
-            Assert.AreEqual(expectedDeleteCount, deleteCount);
+            Assert.That(deleteCount, Is.EqualTo(expectedDeleteCount));
 
             mockReceiver
                 .Verify(receiver => receiver.DeleteMessagesAsync(
@@ -590,7 +590,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
             var receiver = mockReceiver.Object;
             var deleteCount = await receiver.PurgeMessagesAsync(expectedDate);
-            Assert.AreEqual(expectedDeleteCount, deleteCount);
+            Assert.That(deleteCount, Is.EqualTo(expectedDeleteCount));
 
             mockReceiver
                 .Verify(receiver => receiver.DeleteMessagesAsync(
@@ -635,7 +635,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
             var receiver = mockReceiver.Object;
             var deleteCount = await receiver.PurgeMessagesAsync(expectedDate);
-            Assert.AreEqual(expectedDeleteCount, deleteCount);
+            Assert.That(deleteCount, Is.EqualTo(expectedDeleteCount));
 
             mockReceiver
                 .Verify(receiver => receiver.DeleteMessagesAsync(
@@ -681,7 +681,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var receiver = new ServiceBusReceiver(mockConnection.Object, "fake", false, new ServiceBusReceiverOptions());
             var returnedCount = await receiver.DeleteMessagesAsync(expectedCount);
 
-            Assert.AreEqual(expectedCount, returnedCount);
+            Assert.That(returnedCount, Is.EqualTo(expectedCount));
 
             mockTransportReceiver
                 .Verify(receiver => receiver.DeleteMessagesAsync(
@@ -724,7 +724,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
             var receiver = new ServiceBusReceiver(mockConnection.Object, "fake", false, new ServiceBusReceiverOptions());
             var returnedCount = await receiver.DeleteMessagesAsync(requestedCount, expectedDate, cancellationSource.Token);
-            Assert.AreEqual(expectedCount, returnedCount);
+            Assert.That(returnedCount, Is.EqualTo(expectedCount));
 
             mockTransportReceiver
                 .Verify(receiver => receiver.DeleteMessagesAsync(

@@ -588,18 +588,18 @@ namespace Azure.ResourceManager.Network.Tests
             CompareApplicationGatewayBase(gw1,gw2);
 
             //compare WAF
-            Assert.AreEqual(gw1.WebApplicationFirewallConfiguration.Enabled, gw2.WebApplicationFirewallConfiguration.Enabled);
-            Assert.AreEqual(gw1.WebApplicationFirewallConfiguration.FirewallMode, gw2.WebApplicationFirewallConfiguration.FirewallMode);
-            Assert.AreEqual(gw1.WebApplicationFirewallConfiguration.RuleSetType, gw2.WebApplicationFirewallConfiguration.RuleSetType);
-            Assert.AreEqual(gw1.WebApplicationFirewallConfiguration.RuleSetVersion, gw2.WebApplicationFirewallConfiguration.RuleSetVersion);
+            Assert.That(gw2.WebApplicationFirewallConfiguration.Enabled, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.Enabled));
+            Assert.That(gw2.WebApplicationFirewallConfiguration.FirewallMode, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.FirewallMode));
+            Assert.That(gw2.WebApplicationFirewallConfiguration.RuleSetType, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.RuleSetType));
+            Assert.That(gw2.WebApplicationFirewallConfiguration.RuleSetVersion, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.RuleSetVersion));
             if (gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups != null)
             {
                 Assert.NotNull(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups);
-                Assert.AreEqual(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count, gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count);
+                Assert.That(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count));
                 for (int i = 0; i < gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count; i++)
                 {
-                    Assert.AreEqual(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].RuleGroupName, gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].RuleGroupName);
-                    Assert.AreEqual(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].Rules, gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].Rules);
+                    Assert.That(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].RuleGroupName, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].RuleGroupName));
+                    Assert.That(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].Rules, Is.EqualTo(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].Rules));
                 }
             }
             else
@@ -608,29 +608,29 @@ namespace Azure.ResourceManager.Network.Tests
             }
 
             // ssl policy
-            Assert.AreEqual(gw1.SslPolicy.PolicyType, gw2.SslPolicy.PolicyType);
-            Assert.AreEqual(gw1.SslPolicy.PolicyName, gw2.SslPolicy.PolicyName);
-            Assert.AreEqual(gw1.SslPolicy.MinProtocolVersion, gw2.SslPolicy.MinProtocolVersion);
+            Assert.That(gw2.SslPolicy.PolicyType, Is.EqualTo(gw1.SslPolicy.PolicyType));
+            Assert.That(gw2.SslPolicy.PolicyName, Is.EqualTo(gw1.SslPolicy.PolicyName));
+            Assert.That(gw2.SslPolicy.MinProtocolVersion, Is.EqualTo(gw1.SslPolicy.MinProtocolVersion));
         }
 
         private void CompareApplicationGatewayBase(ApplicationGatewayData gw1, ApplicationGatewayData gw2)
         {
             // compare count of child resources
-            Assert.AreEqual(gw1.GatewayIPConfigurations.Count, gw2.GatewayIPConfigurations.Count);
-            Assert.AreEqual(gw1.FrontendIPConfigurations.Count, gw2.FrontendIPConfigurations.Count);
-            Assert.AreEqual(gw1.FrontendPorts.Count, gw2.FrontendPorts.Count);
-            Assert.AreEqual(gw1.Probes.Count, gw2.Probes.Count);
-            Assert.AreEqual(gw1.BackendAddressPools.Count, gw2.BackendAddressPools.Count);
-            Assert.AreEqual(gw1.BackendHttpSettingsCollection.Count, gw2.BackendHttpSettingsCollection.Count);
-            Assert.AreEqual(gw1.HttpListeners.Count, gw2.HttpListeners.Count);
-            Assert.AreEqual(gw1.RequestRoutingRules.Count, gw2.RequestRoutingRules.Count);
-            Assert.AreEqual(gw1.RedirectConfigurations.Count, gw2.RedirectConfigurations.Count);
-            Assert.AreEqual(gw1.AuthenticationCertificates.Count, gw2.AuthenticationCertificates.Count);
+            Assert.That(gw2.GatewayIPConfigurations.Count, Is.EqualTo(gw1.GatewayIPConfigurations.Count));
+            Assert.That(gw2.FrontendIPConfigurations.Count, Is.EqualTo(gw1.FrontendIPConfigurations.Count));
+            Assert.That(gw2.FrontendPorts.Count, Is.EqualTo(gw1.FrontendPorts.Count));
+            Assert.That(gw2.Probes.Count, Is.EqualTo(gw1.Probes.Count));
+            Assert.That(gw2.BackendAddressPools.Count, Is.EqualTo(gw1.BackendAddressPools.Count));
+            Assert.That(gw2.BackendHttpSettingsCollection.Count, Is.EqualTo(gw1.BackendHttpSettingsCollection.Count));
+            Assert.That(gw2.HttpListeners.Count, Is.EqualTo(gw1.HttpListeners.Count));
+            Assert.That(gw2.RequestRoutingRules.Count, Is.EqualTo(gw1.RequestRoutingRules.Count));
+            Assert.That(gw2.RedirectConfigurations.Count, Is.EqualTo(gw1.RedirectConfigurations.Count));
+            Assert.That(gw2.AuthenticationCertificates.Count, Is.EqualTo(gw1.AuthenticationCertificates.Count));
 
             // compare sku
-            Assert.AreEqual(gw1.Sku.Name, gw2.Sku.Name);
-            Assert.AreEqual(gw1.Sku.Tier, gw2.Sku.Tier);
-            Assert.AreEqual(gw1.Sku.Capacity, gw2.Sku.Capacity);
+            Assert.That(gw2.Sku.Name, Is.EqualTo(gw1.Sku.Name));
+            Assert.That(gw2.Sku.Tier, Is.EqualTo(gw1.Sku.Tier));
+            Assert.That(gw2.Sku.Capacity, Is.EqualTo(gw1.Sku.Capacity));
 
             // compare connectionDraining
             for (int i = 0; i < gw1.BackendHttpSettingsCollection.Count; i++)
@@ -638,12 +638,12 @@ namespace Azure.ResourceManager.Network.Tests
                 if (gw1.BackendHttpSettingsCollection[i].ConnectionDraining != null)
                 {
                     Assert.NotNull(gw2.BackendHttpSettingsCollection[i].ConnectionDraining);
-                    Assert.AreEqual(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled);
-                    Assert.AreEqual(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSeconds, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSeconds);
+                    Assert.That(gw2.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled, Is.EqualTo(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled));
+                    Assert.That(gw2.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSeconds, Is.EqualTo(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSeconds));
                 }
                 else
                 {
-                    Assert.Null(gw2.BackendHttpSettingsCollection[i].ConnectionDraining);
+                    Assert.That(gw2.BackendHttpSettingsCollection[i].ConnectionDraining, Is.Null);
                 }
             }
         }
@@ -686,11 +686,11 @@ namespace Azure.ResourceManager.Network.Tests
             var applicationGatewayCollection = GetApplicationGatewayCollection(resourceGroupName);
             Operation<ApplicationGatewayResource> putAppGw = await applicationGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, appGwName, appGw);
             Response<ApplicationGatewayResource> putAppGwResponse = await putAppGw.WaitForCompletionAsync();
-            Assert.AreEqual("Succeeded", putAppGwResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(putAppGwResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             // Get AppGw
             Response<ApplicationGatewayResource> getGateway = await applicationGatewayCollection.GetAsync(appGwName);
-            Assert.AreEqual(appGwName, getGateway.Value.Data.Name);
+            Assert.That(getGateway.Value.Data.Name, Is.EqualTo(appGwName));
             CompareApplicationGateway(appGw, getGateway.Value.Data);
 
             // Get available WAF rule sets (validate first result set/group)
@@ -761,17 +761,17 @@ namespace Azure.ResourceManager.Network.Tests
             Operation<ApplicationGatewayBackendHealth> backendHealthOperation = await getGateway.Value.BackendHealthAsync(WaitUntil.Started, "true");
             Response<ApplicationGatewayBackendHealth> backendHealth = await backendHealthOperation.WaitForCompletionAsync();
 
-            Assert.AreEqual(2, backendHealth.Value.BackendAddressPools.Count);
-            Assert.AreEqual(1, backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection.Count);
-            Assert.AreEqual(1, backendHealth.Value.BackendAddressPools[1].BackendHttpSettingsCollection.Count);
-            Assert.True(backendHealth.Value.BackendAddressPools[1].BackendAddressPool.BackendIPConfigurations.Any());
+            Assert.That(backendHealth.Value.BackendAddressPools.Count, Is.EqualTo(2));
+            Assert.That(backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection.Count, Is.EqualTo(1));
+            Assert.That(backendHealth.Value.BackendAddressPools[1].BackendHttpSettingsCollection.Count, Is.EqualTo(1));
+            Assert.That(backendHealth.Value.BackendAddressPools[1].BackendAddressPool.BackendIPConfigurations.Any(), Is.True);
 
             //Start AppGw
             await getGateway.Value.StartAsync(WaitUntil.Completed);
 
             // Get AppGw and make sure nics are added to backend
             getGateway = await applicationGatewayCollection.GetAsync(appGwName);
-            Assert.AreEqual(2, getGateway.Value.Data.BackendAddressPools[1].BackendIPConfigurations.Count);
+            Assert.That(getGateway.Value.Data.BackendAddressPools[1].BackendIPConfigurations.Count, Is.EqualTo(2));
 
             //Stop AppGw
             await getGateway.Value.StopAsync(WaitUntil.Completed);
@@ -841,11 +841,11 @@ namespace Azure.ResourceManager.Network.Tests
             var applicationGatewayCollection = resourceGroup.GetApplicationGateways();
             var putAppGw = await applicationGatewayCollection.CreateOrUpdateAsync(WaitUntil.Started, appGwName, appGw);
             var putAppGwResponse = await putAppGw.WaitForCompletionAsync();
-            Assert.AreEqual("Succeeded", putAppGwResponse.Value.Data.ProvisioningState.ToString());
+            Assert.That(putAppGwResponse.Value.Data.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
 
             // Get AppGw
             Response<ApplicationGatewayResource> getGateway = await applicationGatewayCollection.GetAsync(appGwName);
-            Assert.AreEqual(appGwName, getGateway.Value.Data.Name);
+            Assert.That(getGateway.Value.Data.Name, Is.EqualTo(appGwName));
             CompareApplicationGatewayBase(appGw, getGateway.Value.Data);
 
             // Add NIC to application gateway backend address pool.
@@ -868,9 +868,9 @@ namespace Azure.ResourceManager.Network.Tests
             Operation<ApplicationGatewayBackendHealth> backendHealthOperation = InstrumentOperation(await getGateway.Value.BackendHealthAsync(WaitUntil.Started, "true"));
             Response<ApplicationGatewayBackendHealth> backendHealth = await backendHealthOperation.WaitForCompletionAsync();
 
-            Assert.AreEqual(2, backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers.Count);
-            Assert.AreEqual(nicPrivateIpAdd1, backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers[0].Address);
-            Assert.AreEqual(nicPrivateIpAdd2, backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers[1].Address);
+            Assert.That(backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers.Count, Is.EqualTo(2));
+            Assert.That(backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers[0].Address, Is.EqualTo(nicPrivateIpAdd1));
+            Assert.That(backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers[1].Address, Is.EqualTo(nicPrivateIpAdd2));
 
             //Start AppGw
             // TODO: ADO 6162, but consider to move this into another test
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get AppGw and make sure nics are added to backend
             getGateway = await applicationGatewayCollection.GetAsync(appGwName);
-            Assert.AreEqual(2, getGateway.Value.Data.BackendAddressPools[1].BackendIPConfigurations.Count);
+            Assert.That(getGateway.Value.Data.BackendAddressPools[1].BackendIPConfigurations.Count, Is.EqualTo(2));
 
             //Stop AppGw
             // TODO: ADO 6162, but consider to move this into another test
@@ -895,13 +895,13 @@ namespace Azure.ResourceManager.Network.Tests
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             ApplicationGatewayAvailableSslOptionsInfo sslOptionsInfo = await subscription.GetApplicationGatewayAvailableSslOptionsAsync();
             Assert.NotNull(sslOptionsInfo);
-            Assert.AreEqual(sslOptionsInfo.Name, "default");
-            Assert.AreEqual(sslOptionsInfo.Id.ResourceType, sslOptionsInfo.ResourceType);
-            Assert.AreEqual(sslOptionsInfo.DefaultPolicy, ApplicationGatewaySslPolicyName.AppGwSslPolicy20220101);
-            Assert.AreEqual(sslOptionsInfo.PredefinedPolicies.Count, 5);
+            Assert.That(sslOptionsInfo.Name, Is.EqualTo("default"));
+            Assert.That(sslOptionsInfo.ResourceType, Is.EqualTo(sslOptionsInfo.Id.ResourceType));
+            Assert.That(ApplicationGatewaySslPolicyName.AppGwSslPolicy20220101, Is.EqualTo(sslOptionsInfo.DefaultPolicy));
+            Assert.That(sslOptionsInfo.PredefinedPolicies.Count, Is.EqualTo(5));
             foreach (var predefinedPolicy in sslOptionsInfo.PredefinedPolicies)
             {
-                Assert.AreEqual(predefinedPolicy.Id.ResourceType, "Microsoft.Network/ApplicationGatewayAvailableSslOptions/ApplicationGatewaySslPredefinedPolicy");
+                Assert.That(predefinedPolicy.Id.ResourceType, Is.EqualTo("Microsoft.Network/ApplicationGatewayAvailableSslOptions/ApplicationGatewaySslPredefinedPolicy"));
             }
         }
 
@@ -918,14 +918,14 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 ++cnt;
                 Assert.NotNull(policy);
-                Assert.AreEqual(policy.Id.ResourceType, policy.ResourceType);
+                Assert.That(policy.ResourceType, Is.EqualTo(policy.Id.ResourceType));
             }
-            Assert.AreEqual(cnt, 5);
+            Assert.That(cnt, Is.EqualTo(5));
 
             string predefinedPolicyName = predefinedPolicies[0].Name;
             ApplicationGatewaySslPredefinedPolicy predefinedPolicy = await subscription.GetApplicationGatewaySslPredefinedPolicyAsync(predefinedPolicyName);
-            Assert.AreEqual(predefinedPolicy.Name, predefinedPolicyName);
-            Assert.AreEqual(predefinedPolicy.Id.ResourceType, predefinedPolicy.ResourceType);
+            Assert.That(predefinedPolicyName, Is.EqualTo(predefinedPolicy.Name));
+            Assert.That(predefinedPolicy.ResourceType, Is.EqualTo(predefinedPolicy.Id.ResourceType));
         }
     }
 }

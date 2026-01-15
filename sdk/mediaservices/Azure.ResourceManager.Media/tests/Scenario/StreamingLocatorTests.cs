@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Media.Tests
             string streamingLocatorName = Recording.GenerateAssetName("streamingLocator");
             var streamingLocator = await CreateStreamingLocator(streamingLocatorName);
             Assert.IsNotNull(streamingLocator);
-            Assert.AreEqual(streamingLocatorName, streamingLocator.Data.Name);
+            Assert.That(streamingLocator.Data.Name, Is.EqualTo(streamingLocatorName));
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Media.Tests
             string streamingLocatorName = Recording.GenerateAssetName("streamingLocator");
             await CreateStreamingLocator(streamingLocatorName);
             bool flag = await streamingLocatorCollection.ExistsAsync(streamingLocatorName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Tests
             await CreateStreamingLocator(streamingLocatorName);
             var streamingLocator = await streamingLocatorCollection.GetAsync(streamingLocatorName);
             Assert.IsNotNull(streamingLocator);
-            Assert.AreEqual(streamingLocatorName, streamingLocator.Value.Data.Name);
+            Assert.That(streamingLocator.Value.Data.Name, Is.EqualTo(streamingLocatorName));
         }
 
         [Test]
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Media.Tests
             string streamingLocatorName = Recording.GenerateAssetName("streamingLocator");
             var streamingLocator = await CreateStreamingLocator(streamingLocatorName);
             bool flag = await streamingLocatorCollection.ExistsAsync(streamingLocatorName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await streamingLocator.DeleteAsync(WaitUntil.Completed);
             flag = await streamingLocatorCollection.ExistsAsync(streamingLocatorName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

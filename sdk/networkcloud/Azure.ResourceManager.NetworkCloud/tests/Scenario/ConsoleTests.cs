@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             // Create
             ArmOperation<NetworkCloudVirtualMachineConsoleResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ConsoleName, data);
-            Assert.AreEqual(ConsoleName, createResult.Value.Data.Name);
+            Assert.That(createResult.Value.Data.Name, Is.EqualTo(ConsoleName));
 
             // Get
             var getResult = await console.GetAsync();
-            Assert.AreEqual(ConsoleName, getResult.Value.Data.Name);
+            Assert.That(getResult.Value.Data.Name, Is.EqualTo(ConsoleName));
 
             // List
             var listByVirtualMachine = new List<NetworkCloudVirtualMachineConsoleResource>();
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 }
             };
             ArmOperation<NetworkCloudVirtualMachineConsoleResource> updateResult = await console.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
+            Assert.That(updateResult.Value.Data.Tags, Is.EqualTo(patch.Tags));
 
             // Delete
             var deleteResult = await console.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            Assert.IsTrue(deleteResult.HasCompleted);
+            Assert.That(deleteResult.HasCompleted, Is.True);
         }
     }
 }

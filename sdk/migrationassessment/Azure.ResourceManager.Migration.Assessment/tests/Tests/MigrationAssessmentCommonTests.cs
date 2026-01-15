@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
                 await assessmentProjectCollection.CreateOrUpdateAsync(WaitUntil.Completed, assessmentProjName, assessmentProjectData);
             await response.WaitForCompletionAsync();
             assessmentProjectResource = response.Value;
-            Assert.IsTrue(response.HasCompleted);
+            Assert.That(response.HasCompleted, Is.True);
             Assert.IsNotNull(assessmentProjectResource);
         }
 
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             var groupResponse =
                 await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupName, data);
             var groupResource = groupResponse.Value;
-            Assert.IsTrue(groupResponse.HasCompleted);
+            Assert.That(groupResponse.HasCompleted, Is.True);
             Assert.IsNotNull(groupResource);
 
             // Get Assessment Group
             groupResource = await collection.GetAsync(groupName);
-            Assert.AreEqual(MigrationAssessmentGroupStatus.Completed, groupResource.Data.GroupStatus);
+            Assert.That(groupResource.Data.GroupStatus, Is.EqualTo(MigrationAssessmentGroupStatus.Completed));
             Assert.IsNotNull(groupResource.Id);
 
             // Get All Assessment Groups
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             };
             var updateMachinesResponse = await groupResource.UpdateMachinesAsync(WaitUntil.Completed, content);
             var updatedGroupResource = updateMachinesResponse.Value;
-            Assert.IsTrue(updateMachinesResponse.HasCompleted);
+            Assert.That(updateMachinesResponse.HasCompleted, Is.True);
             Assert.IsNotNull(updatedGroupResource);
 
             // Delete Assessment Group
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             var assessmentOptionResponse = await collection.GetAsync(assessmentOptionsName);
             var assessmentOptionsResource = assessmentOptionResponse.Value;
             Assert.IsNotNull(assessmentOptionsResource);
-            Assert.AreEqual(assessmentOptionsResource.Data.Name, assessmentOptionsName);
+            Assert.That(assessmentOptionsName, Is.EqualTo(assessmentOptionsResource.Data.Name));
 
             // Get All Assessment Options
             var allAssessmentOptions = await collection.GetAllAsync().ToEnumerableAsync();

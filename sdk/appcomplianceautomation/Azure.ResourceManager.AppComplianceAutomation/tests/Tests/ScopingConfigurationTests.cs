@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             // Delete scoping configuration: send request
             var operation = await appComplianceReportScopingConfiguration.DeleteAsync(WaitUntil.Completed);
             // Delete scoping configuration: verify result
-            Assert.IsTrue(operation.HasCompleted);
+            Assert.That(operation.HasCompleted, Is.True);
         }
     }
 }

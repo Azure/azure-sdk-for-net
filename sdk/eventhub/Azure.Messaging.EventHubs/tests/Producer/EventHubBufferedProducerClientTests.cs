@@ -1730,7 +1730,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await Task.Yield();
             var thrownException = Assert.ThrowsAsync<EventHubsException>(async () => await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token), "The attempt to start publishing should have surfaced an exception.");
-            Assert.True(thrownException.IsTransient, "Exception thrown should be transient");
+            Assert.That(thrownException.IsTransient, Is.True, "Exception thrown should be transient");
             Assert.That(thrownException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceTimeout), "Exception thrown should have a reason of ServiceCommunicationProblem.");
         }
 

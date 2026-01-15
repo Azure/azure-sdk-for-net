@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 IPv6ConnectedPrefix = TestEnvironment.L3Ipv6Prefix,
             };
             ArmOperation<NetworkCloudL3NetworkResource> NetworkCloudL3NetworkResourceOp = await l3NetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, l3NetworkName, data);
-            Assert.AreEqual(NetworkCloudL3NetworkResourceOp.Value.Data.Name ,l3NetworkName);
+            Assert.That(l3NetworkName, Is.EqualTo(NetworkCloudL3NetworkResourceOp.Value.Data.Name));
 
             // Get
             NetworkCloudL3NetworkResource getResult = await l3Network.GetAsync();
-            Assert.AreEqual(getResult.Data.Name, l3NetworkName);
+            Assert.That(l3NetworkName, Is.EqualTo(getResult.Data.Name));
 
             // List by Resource Group
             var listByResourceGroup = new List<NetworkCloudL3NetworkResource>();
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     },
             };
             NetworkCloudL3NetworkResource updateResult = await l3Network.UpdateAsync(patch);
-            Assert.AreEqual(updateResult.Data.Tags, patch.Tags);
+            Assert.That(patch.Tags, Is.EqualTo(updateResult.Data.Tags));
 
             // Delete
             var deleteResponse = await l3Network.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            Assert.IsTrue(deleteResponse.HasCompleted);
+            Assert.That(deleteResponse.HasCompleted, Is.True);
         }
     }
 }

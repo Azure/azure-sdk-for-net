@@ -37,12 +37,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             await collector.FlushAsync();
 
             // Partitions aren't flushed in a specific order.
-            Assert.AreEqual(2, client.SentBatches.Count);
+            Assert.That(client.SentBatches.Count, Is.EqualTo(2));
             var batches = client.SentBatches;
 
             var item0 = batches[0].Events[0].Body.ToArray();
             var item1 = batches[1].Events[0].Body.ToArray();
-            Assert.AreEqual(3, item0[0] + item1[0]); // either order.
+            Assert.That(item0[0] + item1[0], Is.EqualTo(3)); // either order.
         }
 
         [Test]
@@ -61,8 +61,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.IsEmpty(client.SentBatches);
 
             await collector.FlushAsync();
-            Assert.AreEqual(1, client.SentBatches.Count);
-            Assert.AreEqual(payload, client.SentBatches[0].GetEventPayload(0));
+            Assert.That(client.SentBatches.Count, Is.EqualTo(1));
+            Assert.That(client.SentBatches[0].GetEventPayload(0), Is.EqualTo(payload));
         }
 
         // If we send enough events, that will eventually tip over and flush.
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 await collector.AddAsync(e1);
             }
 
-            Assert.True(client.SentBatches.Count > 0);
+            Assert.That(client.SentBatches.Count > 0, Is.True);
         }
 
         // If we send enough events, that will eventually tip over and flush.
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 await collector.AddAsync(e1);
             }
 
-            Assert.True(client.SentBatches.Count > 0);
+            Assert.That(client.SentBatches.Count > 0, Is.True);
         }
 
         [Test]
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             try
             {
                 await collector.AddAsync(e1);
-                Assert.False(true);
+                Assert.That(true, Is.False);
             }
             catch (InvalidOperationException e)
             {
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                     if (!expected.Remove(payloadStr))
                     {
                         // Already removed!
-                        Assert.False(true, "event payload occurred multiple times");
+                        Assert.That(true, Is.False, "event payload occurred multiple times");
                     }
                 }
             }
@@ -236,16 +236,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             await collector.AddAsync(new EventData(new byte[] { 0x1 }));
             await collector.AddAsync(new EventData(new byte[] { 0x2 }));
 
-            Assert.AreEqual(0, client.SentBatches.Count);
+            Assert.That(client.SentBatches.Count, Is.EqualTo(0));
 
             // Adding a third event should trigger a batch with the first two events
             // to be sent.
             await collector.AddAsync(new EventData(new byte[] { 0x3 }));
-            Assert.AreEqual(1, client.SentBatches.Count);
+            Assert.That(client.SentBatches.Count, Is.EqualTo(1));
 
             // Flushing should trigger a batch with the third event to be sent.
             await collector.FlushAsync();
-            Assert.AreEqual(2, client.SentBatches.Count);
+            Assert.That(client.SentBatches.Count, Is.EqualTo(2));
         }
 
         internal class TestEventHubProducerClient : IEventHubProducerClient
@@ -320,7 +320,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
                         // Assert they all have the same partition key (could be null)
                         var partitionKey = Events.First().PartitionKey;
-                        Assert.AreEqual(partitionKey, eventData.PartitionKey);
+                        Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey));
 
                         return true;
                     }

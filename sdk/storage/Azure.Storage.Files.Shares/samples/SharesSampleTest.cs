@@ -85,7 +85,7 @@ namespace Azure.Storage.Files.Shares.Samples.Tests
                 Sample01a_HelloWorld.Download(ConnectionString, shareName, localFilePath);
 
                 // Verify the contents
-                Assert.AreEqual(SampleFileContent, File.ReadAllText(localFilePath));
+                Assert.That(File.ReadAllText(localFilePath), Is.EqualTo(SampleFileContent));
             }
             finally
             {
@@ -124,7 +124,7 @@ namespace Azure.Storage.Files.Shares.Samples.Tests
                 await Sample01b_HelloWorldAsync.DownloadAsync(ConnectionString, shareName, localFilePath);
 
                 // Verify the contents
-                Assert.AreEqual(SampleFileContent, File.ReadAllText(localFilePath));
+                Assert.That(File.ReadAllText(localFilePath), Is.EqualTo(SampleFileContent));
             }
             finally
             {

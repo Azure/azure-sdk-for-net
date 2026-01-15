@@ -76,33 +76,33 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 // check to see if the job schedule exists
                 bool result = await client.JobScheduleExistsAsync(jobScheduleId);
-                Assert.True(result);
+                Assert.That(result, Is.True);
 
                 // get the job schedule and verify
                 BatchJobSchedule batchJobSchedule = await client.GetJobScheduleAsync(jobScheduleId);
                 Assert.NotNull(batchJobSchedule);
-                Assert.AreEqual(batchJobSchedule.JobSpecification.PoolInfo.AutoPoolSpecification.Pool.VirtualMachineConfiguration.ImageReference.Sku, "2019-datacenter-smalldisk");
+                Assert.That(batchJobSchedule.JobSpecification.PoolInfo.AutoPoolSpecification.Pool.VirtualMachineConfiguration.ImageReference.Sku, Is.EqualTo("2019-datacenter-smalldisk"));
 
                 // disable the schedule
                 response = await client.DisableJobScheduleAsync(jobScheduleId);
-                Assert.AreEqual(204, response.Status);
+                Assert.That(response.Status, Is.EqualTo(204));
 
                 // enable the schedule
                 response = await client.EnableJobScheduleAsync(jobScheduleId);
-                Assert.AreEqual(204, response.Status);
+                Assert.That(response.Status, Is.EqualTo(204));
 
                 TerminateJobScheduleOperation terminateJobScheduleOperation = await client.TerminateJobScheduleAsync(jobScheduleId, force: true);
                 await terminateJobScheduleOperation.WaitForCompletionAsync().ConfigureAwait(false);
-                Assert.IsTrue(terminateJobScheduleOperation.HasCompleted);
-                Assert.IsTrue(terminateJobScheduleOperation.HasValue);
+                Assert.That(terminateJobScheduleOperation.HasCompleted, Is.True);
+                Assert.That(terminateJobScheduleOperation.HasValue, Is.True);
             }
             finally
             {
                 DeleteJobScheduleOperation operation = await client.DeleteJobScheduleAsync(jobScheduleId, force: true);
                 await operation.WaitForCompletionAsync();
-                Assert.IsTrue(operation.HasCompleted);
-                Assert.IsTrue(operation.HasValue);
-                Assert.IsTrue(operation.Value);
+                Assert.That(operation.HasCompleted, Is.True);
+                Assert.That(operation.HasValue, Is.True);
+                Assert.That(operation.Value, Is.True);
             }
         }
 
@@ -152,8 +152,8 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 TerminateJobScheduleOperation terminateJobScheduleOperation = await client.TerminateJobScheduleAsync(jobScheduleId, force: false);
                 await terminateJobScheduleOperation.WaitForCompletionAsync().ConfigureAwait(false);
-                Assert.IsTrue(terminateJobScheduleOperation.HasCompleted);
-                Assert.IsTrue(terminateJobScheduleOperation.HasValue);
+                Assert.That(terminateJobScheduleOperation.HasCompleted, Is.True);
+                Assert.That(terminateJobScheduleOperation.HasValue, Is.True);
             }
             finally
             {
@@ -213,7 +213,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                         found = true;
                 }
 
-                Assert.True(found);
+                Assert.That(found, Is.True);
 
                 // update the job schedule
                 int jobCount = 0;
@@ -222,7 +222,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     jobCount++;
                 }
 
-                Assert.AreEqual(1, jobCount);
+                Assert.That(jobCount, Is.EqualTo(1));
             }
             finally
             {
@@ -276,7 +276,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.NotNull(batchJobSchedule);
 
                 response = await client.ReplaceJobScheduleAsync(jobScheduleId, batchJobSchedule);
-                Assert.AreEqual(200, response.Status);
+                Assert.That(response.Status, Is.EqualTo(200));
 
                 // blocked due to not having a model
                 //await client.UpdateJobScheduleAsync()
@@ -333,12 +333,12 @@ namespace Azure.Compute.Batch.Tests.Integration
                 batchJobScheduleUpdateContent.Metadata.Add(new BatchMetadataItem("name", "value"));
 
                 response = await client.UpdateJobScheduleAsync(jobScheduleId, batchJobScheduleUpdateContent);
-                Assert.AreEqual(200, response.Status);
+                Assert.That(response.Status, Is.EqualTo(200));
 
                 BatchJobSchedule patchJobSchedule = await client.GetJobScheduleAsync(jobScheduleId);
 
                 Assert.IsNotNull(patchJobSchedule);
-                Assert.AreEqual(patchJobSchedule.Metadata.First().Value, "value");
+                Assert.That(patchJobSchedule.Metadata.First().Value, Is.EqualTo("value"));
             }
             finally
             {

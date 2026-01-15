@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var applicationId = Recording.Random.NewGuid().ToString();
             var subapp = await CreateSubscriptionApplicationResource(applicationId);
             bool flag = await _subAppCollection.ExistsAsync(applicationId);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -89,22 +89,22 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var applicationId = Recording.Random.NewGuid().ToString();
             var subapp = await CreateSubscriptionApplicationResource(applicationId);
             bool flag = await _subAppCollection.ExistsAsync(applicationId);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await subapp.DeleteAsync(WaitUntil.Completed);
             flag = await _subAppCollection.ExistsAsync(applicationId);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         private void ValidateSubscriptionApplication(SubscriptionSecurityApplicationResource subApp, string applicationId)
         {
             Assert.IsNotNull(subApp);
             Assert.IsNotNull(subApp.Data.Id);
-            Assert.AreEqual(applicationId, subApp.Data.Name);
-            Assert.AreEqual(ApplicationSourceResourceType.Assessments, subApp.Data.SourceResourceType);
-            Assert.AreEqual("Microsoft.Security/applications", subApp.Data.ResourceType.ToString());
-            Assert.AreEqual("GCP Admin's application", subApp.Data.DisplayName);
-            Assert.AreEqual("An application on critical GCP recommendations", subApp.Data.Description);
+            Assert.That(subApp.Data.Name, Is.EqualTo(applicationId));
+            Assert.That(subApp.Data.SourceResourceType, Is.EqualTo(ApplicationSourceResourceType.Assessments));
+            Assert.That(subApp.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/applications"));
+            Assert.That(subApp.Data.DisplayName, Is.EqualTo("GCP Admin's application"));
+            Assert.That(subApp.Data.Description, Is.EqualTo("An application on critical GCP recommendations"));
         }
     }
 }

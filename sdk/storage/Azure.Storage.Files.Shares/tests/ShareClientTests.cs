@@ -41,8 +41,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             var builder = new ShareUriBuilder(share.Uri);
 
-            Assert.AreEqual(shareName, builder.ShareName);
-            Assert.AreEqual("", builder.DirectoryOrFilePath);
+            Assert.That(builder.ShareName, Is.EqualTo(shareName));
+            Assert.That(builder.DirectoryOrFilePath, Is.Empty);
             //Assert.AreEqual("accountName", builder.AccountName);
         }
 
@@ -135,8 +135,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareClient share = new ShareClient(connectionString.ToString(true), shareName);
 
-            Assert.AreEqual(shareName, share.Name);
-            Assert.AreEqual(accountName, share.AccountName);
+            Assert.That(share.Name, Is.EqualTo(shareName));
+            Assert.That(share.AccountName, Is.EqualTo(accountName));
         }
 
         [Test]
@@ -151,8 +151,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareClient shareClient = new ShareClient(shareEndpoint, credentials);
 
-            Assert.AreEqual(accountName, shareClient.AccountName);
-            Assert.AreEqual(shareName, shareClient.Name);
+            Assert.That(shareClient.AccountName, Is.EqualTo(accountName));
+            Assert.That(shareClient.Name, Is.EqualTo(shareName));
         }
 
         [RecordedTest]
@@ -300,14 +300,14 @@ namespace Azure.Storage.Files.Shares.Tests
             };
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadShare.CreatePermissionAsync(filePermission),
-                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("InvalidAuthenticationInfo")));
         }
 
         [Test]
         public void Ctor_DevelopmentThrows()
         {
             var ex = Assert.Throws<ArgumentException>(() => new ShareClient("UseDevelopmentStorage=true", "share"));
-            Assert.AreEqual("connectionString", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("connectionString"));
         }
 
         [RecordedTest]
@@ -318,17 +318,17 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
             var builder = new ShareUriBuilder(share.Uri);
 
-            Assert.AreEqual("", builder.Snapshot);
+            Assert.That(builder.Snapshot, Is.Empty);
 
             share = InstrumentClient(share.WithSnapshot("foo"));
             builder = new ShareUriBuilder(share.Uri);
 
-            Assert.AreEqual("foo", builder.Snapshot);
+            Assert.That(builder.Snapshot, Is.EqualTo("foo"));
 
             share = InstrumentClient(share.WithSnapshot(null));
             builder = new ShareUriBuilder(share.Uri);
 
-            Assert.AreEqual("", builder.Snapshot);
+            Assert.That(builder.Snapshot, Is.Empty);
             var accountName = new ShareUriBuilder(share.Uri).AccountName;
             TestHelper.AssertCacheableProperty(accountName, () => share.AccountName);
             TestHelper.AssertCacheableProperty(string.Empty, () => share.GetRootDirectoryClient().Name); // make sure shareName is not used when using directory client Name property
@@ -351,7 +351,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
                 // Ensure that we grab the whole ETag value from the service without removing the quotes
-                Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+                Assert.That($"\"{response.GetRawResponse().Headers.ETag}\"", Is.EqualTo(response.Value.ETag.ToString()));
             }
             finally
             {
@@ -397,7 +397,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
-            Assert.AreEqual(ShareAccessTier.Hot.ToString(), propertiesResponse.Value.AccessTier);
+            Assert.That(propertiesResponse.Value.AccessTier, Is.EqualTo(ShareAccessTier.Hot.ToString()));
             Assert.IsNotNull(propertiesResponse.Value.AccessTierChangeTime);
 
             // Cleanup
@@ -424,8 +424,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
-            Assert.AreEqual(500, propertiesResponse.Value.ProvisionedIops);
-            Assert.AreEqual(125, propertiesResponse.Value.ProvisionedBandwidthMiBps);
+            Assert.That(propertiesResponse.Value.ProvisionedIops, Is.EqualTo(500));
+            Assert.That(propertiesResponse.Value.ProvisionedBandwidthMiBps, Is.EqualTo(125));
 
             // Cleanup
             await share.DeleteAsync();
@@ -449,7 +449,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
-            Assert.AreEqual(ShareAccessTier.Premium.ToString(), propertiesResponse.Value.AccessTier);
+            Assert.That(propertiesResponse.Value.AccessTier, Is.EqualTo(ShareAccessTier.Premium.ToString()));
 
             // Cleanup
             await share.DeleteAsync();
@@ -469,7 +469,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.CreateAsync(),
-                e => Assert.AreEqual("ShareAlreadyExists", e.ErrorCode));
+                e => Assert.That(e.ErrorCode, Is.EqualTo("ShareAlreadyExists")));
 
             // Cleanup
             await share.DeleteAsync(false);
@@ -495,8 +495,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 share.CreateAsync(),
                 e =>
                 {
-                    Assert.AreEqual("AuthenticationFailed", e.ErrorCode);
-                    Assert.IsTrue(e.Message.Contains("AuthenticationErrorDetail"));
+                    Assert.That(e.ErrorCode, Is.EqualTo("AuthenticationFailed"));
+                    Assert.That(e.Message.Contains("AuthenticationErrorDetail"), Is.True);
                 });
         }
 
@@ -511,7 +511,7 @@ namespace Azure.Storage.Files.Shares.Tests
             {
                 Response<ShareInfo> result = await share.CreateAsync(quotaInGB: 1);
 
-                Assert.AreNotEqual(default, result.GetRawResponse().Headers.RequestId, $"{nameof(result)} may not be populated");
+                Assert.That(result.GetRawResponse().Headers.RequestId, Is.Not.EqualTo(default), $"{nameof(result)} may not be populated");
             }
             finally
             {
@@ -534,7 +534,7 @@ namespace Azure.Storage.Files.Shares.Tests
                     share.CreateAsync(quotaInGB: 1),
                     e =>
                     {
-                        Assert.AreEqual(ShareErrorCode.AuthorizationFailure.ToString(), e.ErrorCode);
+                        Assert.That(e.ErrorCode, Is.EqualTo(ShareErrorCode.AuthorizationFailure.ToString()));
                         pass = true;
                     }
                     );
@@ -712,11 +712,11 @@ namespace Azure.Storage.Files.Shares.Tests
                 Assert.AreEqual(ShareProtocols.Nfs, response.Value.Protocols);
                 if (enableSnapshotVirtualDirectoryAccess == true || enableSnapshotVirtualDirectoryAccess == null)
                 {
-                    Assert.IsTrue(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                    Assert.That(response.Value.EnableSnapshotVirtualDirectoryAccess, Is.True);
                 }
                 else
                 {
-                    Assert.IsFalse(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                    Assert.That(response.Value.EnableSnapshotVirtualDirectoryAccess, Is.False);
                 }
             }
             finally
@@ -747,7 +747,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
                 // Assert
                 Response<ShareProperties> response = await share.GetPropertiesAsync();
-                Assert.IsTrue(response.Value.EnablePaidBursting);
+                Assert.That(response.Value.EnablePaidBursting, Is.True);
                 Assert.AreEqual(5000, response.Value.PaidBurstingMaxIops);
                 Assert.AreEqual(1000, response.Value.PaidBurstingMaxBandwidthMibps);
 
@@ -756,7 +756,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 ShareItem shareItem = shares.SingleOrDefault(r => r.Name == share.Name);
 
                 // Assert
-                Assert.IsTrue(shareItem.Properties.EnablePaidBursting);
+                Assert.That(shareItem.Properties.EnablePaidBursting, Is.True);
                 Assert.AreEqual(5000, shareItem.Properties.PaidBurstingMaxIops);
                 Assert.AreEqual(1000, shareItem.Properties.PaidBurstingMaxBandwidthMibps);
             }
@@ -922,7 +922,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<bool> response = await share.ExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -938,7 +938,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<bool> response = await share.ExistsAsync();
 
             // Assert
-            Assert.IsTrue(response.Value);
+            Assert.That(response.Value, Is.True);
 
             // Cleanup
             await share.DeleteIfExistsAsync();
@@ -979,7 +979,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<bool> response = await share.DeleteIfExistsAsync();
 
             // Assert
-            Assert.IsTrue(response.Value);
+            Assert.That(response.Value, Is.True);
         }
 
         [RecordedTest]
@@ -994,7 +994,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<bool> response = await share.DeleteIfExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -1011,7 +1011,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<bool> response = await shareWithSnapshot.DeleteIfExistsAsync();
 
             // Assert
-            Assert.IsFalse(response.Value);
+            Assert.That(response.Value, Is.False);
         }
 
         [RecordedTest]
@@ -2079,11 +2079,11 @@ namespace Azure.Storage.Files.Shares.Tests
                 Assert.AreEqual(ShareProtocols.Nfs, response.Value.Protocols);
                 if (enableSnapshotVirtualDirectoryAccess == true || enableSnapshotVirtualDirectoryAccess == null)
                 {
-                    Assert.IsTrue(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                    Assert.That(response.Value.EnableSnapshotVirtualDirectoryAccess, Is.True);
                 }
                 else
                 {
-                    Assert.IsFalse(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                    Assert.That(response.Value.EnableSnapshotVirtualDirectoryAccess, Is.False);
                 }
             }
             finally
@@ -2112,7 +2112,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
-            Assert.IsTrue(response.Value.EnablePaidBursting);
+            Assert.That(response.Value.EnablePaidBursting, Is.True);
             Assert.AreEqual(5000, response.Value.PaidBurstingMaxIops);
             Assert.AreEqual(1000, response.Value.PaidBurstingMaxBandwidthMibps);
         }
@@ -2281,9 +2281,9 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<bool> snapshot0Exists = await snapshotShareClient0.ExistsAsync();
             Response<bool> snapshot1Exists = await snapshotShareClient1.ExistsAsync();
 
-            Assert.IsFalse(shareExists);
-            Assert.IsFalse(snapshot0Exists);
-            Assert.IsFalse(snapshot1Exists);
+            Assert.That((bool)shareExists, Is.False);
+            Assert.That((bool)snapshot0Exists, Is.False);
+            Assert.That((bool)snapshot1Exists, Is.False);
         }
 
         [RecordedTest]
@@ -2306,8 +2306,8 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<bool> shareExistsResponse = await share.ExistsAsync();
             Response<bool> snapshotExistsResponse = await snapshotShareClient.ExistsAsync();
 
-            Assert.IsTrue(shareExistsResponse.Value);
-            Assert.IsFalse(snapshotExistsResponse.Value);
+            Assert.That(shareExistsResponse.Value, Is.True);
+            Assert.That(snapshotExistsResponse.Value, Is.False);
 
             // Cleanup
             await share.DeleteAsync();
@@ -2538,7 +2538,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e =>
                 {
                     Assert.AreEqual(ShareErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode);
-                    Assert.IsTrue(e.Message.Contains($"Additional Information:{Environment.NewLine}HeaderName: x-ms-lease-duration{Environment.NewLine}HeaderValue: 10"));
+                    Assert.That(e.Message.Contains($"Additional Information:{Environment.NewLine}HeaderName: x-ms-lease-duration{Environment.NewLine}HeaderValue: 10"), Is.True);
                 });
         }
 
@@ -3070,27 +3070,27 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareClient container = InstrumentClient(new ShareClient(
                 connectionString,
                 GetNewShareName()));
-            Assert.IsTrue(container.CanGenerateSasUri);
+            Assert.That(container.CanGenerateSasUri, Is.True);
 
             // Act - ShareClient(string connectionString, string blobContainerName, BlobClientOptions options)
             ShareClient container2 = InstrumentClient(new ShareClient(
                 connectionString,
                 GetNewShareName(),
                 GetOptions()));
-            Assert.IsTrue(container2.CanGenerateSasUri);
+            Assert.That(container2.CanGenerateSasUri, Is.True);
 
             // Act - ShareClient(Uri blobContainerUri, BlobClientOptions options = default)
             ShareClient container3 = InstrumentClient(new ShareClient(
                 blobEndpoint,
                 GetOptions()));
-            Assert.IsFalse(container3.CanGenerateSasUri);
+            Assert.That(container3.CanGenerateSasUri, Is.False);
 
             // Act - ShareClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             ShareClient container4 = InstrumentClient(new ShareClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
-            Assert.IsTrue(container4.CanGenerateSasUri);
+            Assert.That(container4.CanGenerateSasUri, Is.True);
         }
 
         [RecordedTest]
@@ -3108,7 +3108,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 connectionString,
                 GetNewShareName()));
             ShareDirectoryClient directory = share.GetRootDirectoryClient();
-            Assert.IsTrue(directory.CanGenerateSasUri);
+            Assert.That(directory.CanGenerateSasUri, Is.True);
 
             // Act - ShareClient(string connectionString, string blobContainerName, BlobClientOptions options)
             ShareClient share2 = InstrumentClient(new ShareClient(
@@ -3116,14 +3116,14 @@ namespace Azure.Storage.Files.Shares.Tests
                 GetNewShareName(),
                 GetOptions()));
             ShareDirectoryClient directory2 = share.GetRootDirectoryClient();
-            Assert.IsTrue(directory2.CanGenerateSasUri);
+            Assert.That(directory2.CanGenerateSasUri, Is.True);
 
             // Act - ShareClient(Uri blobContainerUri, BlobClientOptions options = default)
             ShareClient share3 = InstrumentClient(new ShareClient(
                 blobEndpoint,
                 GetOptions()));
             ShareDirectoryClient directory3 = share3.GetRootDirectoryClient();
-            Assert.IsFalse(directory3.CanGenerateSasUri);
+            Assert.That(directory3.CanGenerateSasUri, Is.False);
 
             // Act - ShareClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             ShareClient share4 = InstrumentClient(new ShareClient(
@@ -3131,7 +3131,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
             ShareDirectoryClient directory4 = share4.GetRootDirectoryClient();
-            Assert.IsTrue(directory4.CanGenerateSasUri);
+            Assert.That(directory4.CanGenerateSasUri, Is.True);
         }
 
         [RecordedTest]
@@ -3149,7 +3149,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 connectionString,
                 GetNewShareName()));
             ShareDirectoryClient directory = share.GetDirectoryClient(GetNewDirectoryName());
-            Assert.IsTrue(directory.CanGenerateSasUri);
+            Assert.That(directory.CanGenerateSasUri, Is.True);
 
             // Act - ShareClient(string connectionString, string blobContainerName, BlobClientOptions options)
             ShareClient share2 = InstrumentClient(new ShareClient(
@@ -3157,14 +3157,14 @@ namespace Azure.Storage.Files.Shares.Tests
                 GetNewShareName(),
                 GetOptions()));
             ShareDirectoryClient directory2 = share.GetDirectoryClient(GetNewDirectoryName());
-            Assert.IsTrue(directory2.CanGenerateSasUri);
+            Assert.That(directory2.CanGenerateSasUri, Is.True);
 
             // Act - ShareClient(Uri blobContainerUri, BlobClientOptions options = default)
             ShareClient share3 = InstrumentClient(new ShareClient(
                 blobEndpoint,
                 GetOptions()));
             ShareDirectoryClient directory3 = share3.GetDirectoryClient(GetNewDirectoryName());
-            Assert.IsFalse(directory3.CanGenerateSasUri);
+            Assert.That(directory3.CanGenerateSasUri, Is.False);
 
             // Act - ShareClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             ShareClient share4 = InstrumentClient(new ShareClient(
@@ -3172,7 +3172,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
             ShareDirectoryClient directory4 = share4.GetDirectoryClient(GetNewDirectoryName());
-            Assert.IsTrue(directory4.CanGenerateSasUri);
+            Assert.That(directory4.CanGenerateSasUri, Is.True);
         }
 
         [RecordedTest]
@@ -3186,14 +3186,14 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareClient share = InstrumentClient(new ShareClient(
                 shareEndpoint,
                 GetOptions()));
-            Assert.IsFalse(share.CanGenerateSasUri);
+            Assert.That(share.CanGenerateSasUri, Is.False);
 
             // Act
             string snapshot = "2020-04-17T20:37:16.5129130Z";
             ShareClient snapshotShare = share.WithSnapshot(snapshot);
 
             // Assert
-            Assert.IsFalse(snapshotShare.CanGenerateSasUri);
+            Assert.That(snapshotShare.CanGenerateSasUri, Is.False);
         }
 
         [RecordedTest]
@@ -3210,14 +3210,14 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareClient share = InstrumentClient(new ShareClient(
                 connectionString,
                 GetNewShareName()));
-            Assert.IsTrue(share.CanGenerateSasUri);
+            Assert.That(share.CanGenerateSasUri, Is.True);
 
             // Act
             string snapshot = "2020-04-17T20:37:16.5129130Z";
             ShareClient snapshotShare = share.WithSnapshot(snapshot);
 
             // Assert
-            Assert.IsTrue(snapshotShare.CanGenerateSasUri);
+            Assert.That(snapshotShare.CanGenerateSasUri, Is.True);
         }
 
         [RecordedTest]
@@ -3228,13 +3228,13 @@ namespace Azure.Storage.Files.Shares.Tests
             directory.Setup(x => x.CanGenerateSasUri).Returns(false);
 
             // Assert
-            Assert.IsFalse(directory.Object.CanGenerateSasUri);
+            Assert.That(directory.Object.CanGenerateSasUri, Is.False);
 
             // Act
             directory.Setup(x => x.CanGenerateSasUri).Returns(true);
 
             // Assert
-            Assert.IsTrue(directory.Object.CanGenerateSasUri);
+            Assert.That(directory.Object.CanGenerateSasUri, Is.True);
         }
 
         [RecordedTest]

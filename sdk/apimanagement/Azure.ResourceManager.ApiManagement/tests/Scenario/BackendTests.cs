@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var backendContract = (await backendResponse.GetAsync()).Value;
 
             Assert.NotNull(backendContract);
-            Assert.AreEqual(backendId, backendContract.Data.Name);
+            Assert.That(backendContract.Data.Name, Is.EqualTo(backendId));
             Assert.NotNull(backendContract.Data.Description);
             Assert.NotNull(backendContract.Data.Credentials.Authorization);
             Assert.NotNull(backendContract.Data.Credentials.Query);
             Assert.NotNull(backendContract.Data.Credentials.Header);
-            Assert.AreEqual(BackendProtocol.Http, backendContract.Data.Protocol);
-            Assert.AreEqual(1, backendContract.Data.Credentials.Query.Keys.Count);
-            Assert.AreEqual(1, backendContract.Data.Credentials.Header.Keys.Count);
+            Assert.That(backendContract.Data.Protocol, Is.EqualTo(BackendProtocol.Http));
+            Assert.That(backendContract.Data.Credentials.Query.Keys.Count, Is.EqualTo(1));
+            Assert.That(backendContract.Data.Credentials.Header.Keys.Count, Is.EqualTo(1));
             Assert.NotNull(backendContract.Data.Credentials.Authorization);
-            Assert.AreEqual("basic", backendContract.Data.Credentials.Authorization.Scheme);
+            Assert.That(backendContract.Data.Credentials.Authorization.Scheme, Is.EqualTo("basic"));
 
             var listBackends = await backendCollection.GetAllAsync().ToEnumerableAsync();
 
@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // get to check it was patched
             backendContract = await backendCollection.GetAsync(backendId);
             Assert.NotNull(backendContract);
-            Assert.AreEqual(backendId, backendContract.Data.Name);
-            Assert.AreEqual(patchedDescription, backendContract.Data.Description);
+            Assert.That(backendContract.Data.Name, Is.EqualTo(backendId));
+            Assert.That(backendContract.Data.Description, Is.EqualTo(patchedDescription));
 
             // delete the backend
             await backendContract.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await backendCollection.ExistsAsync(backendId)).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
         }
     }
 }

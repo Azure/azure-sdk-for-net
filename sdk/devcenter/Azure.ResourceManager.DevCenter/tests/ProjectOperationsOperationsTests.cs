@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             // List Projects
             List<DevCenterProjectResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
+            Assert.That(resources.Any(r => r.Id == createdResource.Id), Is.True);
 
             // Get
             Response<DevCenterProjectResource> retrievedProject = await resourceCollection.GetAsync(projectName);

@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             await foreach (var tempManagedRuleSetDefinition in subscription.GetManagedRuleSetsAsync())
             {
                 count++;
-                Assert.AreEqual(tempManagedRuleSetDefinition.ResourceType, new ResourceType("Microsoft.Cdn/CdnWebApplicationFirewallManagedRuleSets"));
+                Assert.That(new ResourceType("Microsoft.Cdn/CdnWebApplicationFirewallManagedRuleSets"), Is.EqualTo(tempManagedRuleSetDefinition.ResourceType));
             }
-            Assert.AreEqual(count, 1);
+            Assert.That(count, Is.EqualTo(1));
         }
     }
 }

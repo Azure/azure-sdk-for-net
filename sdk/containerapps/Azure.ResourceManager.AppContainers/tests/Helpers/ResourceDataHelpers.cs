@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.AppContainers.Tests.Helpers
 
         public static void AssertResource(ResourceData r1, ResourceData r2)
         {
-            Assert.AreEqual(r1.Name, r2.Name);
-            Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
+            Assert.That(r2.Name, Is.EqualTo(r1.Name));
+            Assert.That(r2.Id, Is.EqualTo(r1.Id));
+            Assert.That(r2.ResourceType, Is.EqualTo(r1.ResourceType));
         }
 
         #region ContainerAppAuthConfigData
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.AppContainers.Tests.Helpers
         public static void AssertContainerAppAuthConfigData(ContainerAppAuthConfigData data1, ContainerAppAuthConfigData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.GlobalValidation.UnauthenticatedClientAction, data2.GlobalValidation.UnauthenticatedClientAction);
-            Assert.AreEqual(data1.Platform.IsEnabled, data2.Platform.IsEnabled);
-            Assert.AreEqual(data1.GlobalValidation.UnauthenticatedClientAction, data2.GlobalValidation.UnauthenticatedClientAction);
+            Assert.That(data2.GlobalValidation.UnauthenticatedClientAction, Is.EqualTo(data1.GlobalValidation.UnauthenticatedClientAction));
+            Assert.That(data2.Platform.IsEnabled, Is.EqualTo(data1.Platform.IsEnabled));
+            Assert.That(data2.GlobalValidation.UnauthenticatedClientAction, Is.EqualTo(data1.GlobalValidation.UnauthenticatedClientAction));
         }
         #endregion
 
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.AppContainers.Tests.Helpers
         {
             AssertResource(data1, data2);
             //Assert.AreEqual(data1.Configuration.Dapr.AppId, data2.Configuration.Dapr.AppId);
-            Assert.AreEqual(data1.CustomDomainVerificationId, data2.CustomDomainVerificationId);
-            Assert.AreEqual(data1.EnvironmentId, data2.EnvironmentId);
+            Assert.That(data2.CustomDomainVerificationId, Is.EqualTo(data1.CustomDomainVerificationId));
+            Assert.That(data2.EnvironmentId, Is.EqualTo(data1.EnvironmentId));
         }
         #endregion
 
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.AppContainers.Tests.Helpers
         public static void GetCertificateData(ContainerAppCertificateData data1, ContainerAppCertificateData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Properties.Value, data2.Properties.Value);
-            Assert.AreEqual(data1.Properties.Issuer, data2.Properties.Issuer);
-            Assert.AreEqual(data1.Properties.Password, data2.Properties.Password);
-            Assert.AreEqual(data1.Properties.Thumbprint, data2.Properties.Thumbprint);
+            Assert.That(data2.Properties.Value, Is.EqualTo(data1.Properties.Value));
+            Assert.That(data2.Properties.Issuer, Is.EqualTo(data1.Properties.Issuer));
+            Assert.That(data2.Properties.Password, Is.EqualTo(data1.Properties.Password));
+            Assert.That(data2.Properties.Thumbprint, Is.EqualTo(data1.Properties.Thumbprint));
         }
         #endregion
 
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.AppContainers.Tests.Helpers
         public static void AssertEnviroment(ContainerAppConnectedEnvironmentData data1, ContainerAppConnectedEnvironmentData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.DaprAIConnectionString, data2.DaprAIConnectionString);
-            Assert.AreEqual(data1.DefaultDomain , data2.DefaultDomain);
-            Assert.AreEqual(data1.DeploymentErrors, data2.DeploymentErrors);
-            Assert.AreEqual(data1.ExtendedLocation, data2.ExtendedLocation);
+            Assert.That(data2.DaprAIConnectionString, Is.EqualTo(data1.DaprAIConnectionString));
+            Assert.That(data2.DefaultDomain, Is.EqualTo(data1.DefaultDomain));
+            Assert.That(data2.DeploymentErrors, Is.EqualTo(data1.DeploymentErrors));
+            Assert.That(data2.ExtendedLocation, Is.EqualTo(data1.ExtendedLocation));
         }
         #endregion
 
@@ -243,11 +243,11 @@ SecretRef = "masterkey",
         public static void AssertCompoment(ContainerAppDaprComponentData data1, ContainerAppDaprComponentData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.ComponentType, data2.ComponentType);
-            Assert.AreEqual(data1.Metadata.Count, data2.Metadata.Count);
-            Assert.AreEqual(data1.Version, data2.Version);
-            Assert.AreEqual(data1.IgnoreErrors, data2.IgnoreErrors);
-            Assert.AreEqual(data1.InitTimeout, data2.InitTimeout);
+            Assert.That(data2.ComponentType, Is.EqualTo(data1.ComponentType));
+            Assert.That(data2.Metadata.Count, Is.EqualTo(data1.Metadata.Count));
+            Assert.That(data2.Version, Is.EqualTo(data1.Version));
+            Assert.That(data2.IgnoreErrors, Is.EqualTo(data1.IgnoreErrors));
+            Assert.That(data2.InitTimeout, Is.EqualTo(data1.InitTimeout));
         }
         #endregion
 
@@ -270,10 +270,10 @@ SecretRef = "masterkey",
         public static void AssertConnectedEnviromentStorageData(ContainerAppConnectedEnvironmentStorageData data1, ContainerAppConnectedEnvironmentStorageData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.ConnectedEnvironmentStorageAzureFile.AccountName, data2.ConnectedEnvironmentStorageAzureFile.AccountName);
-            Assert.AreEqual(data1.ConnectedEnvironmentStorageAzureFile.AccountKey, data2.ConnectedEnvironmentStorageAzureFile.AccountKey);
-            Assert.AreEqual(data1.ConnectedEnvironmentStorageAzureFile.ShareName, data2.ConnectedEnvironmentStorageAzureFile.ShareName);
-            Assert.AreEqual(data1.ConnectedEnvironmentStorageAzureFile.AccessMode, data2.ConnectedEnvironmentStorageAzureFile.AccessMode);
+            Assert.That(data2.ConnectedEnvironmentStorageAzureFile.AccountName, Is.EqualTo(data1.ConnectedEnvironmentStorageAzureFile.AccountName));
+            Assert.That(data2.ConnectedEnvironmentStorageAzureFile.AccountKey, Is.EqualTo(data1.ConnectedEnvironmentStorageAzureFile.AccountKey));
+            Assert.That(data2.ConnectedEnvironmentStorageAzureFile.ShareName, Is.EqualTo(data1.ConnectedEnvironmentStorageAzureFile.ShareName));
+            Assert.That(data2.ConnectedEnvironmentStorageAzureFile.AccessMode, Is.EqualTo(data1.ConnectedEnvironmentStorageAzureFile.AccessMode));
         }
         #endregion
 
@@ -296,10 +296,10 @@ SecretRef = "masterkey",
         public static void AssertManagedEnviromentStorageData(ContainerAppManagedEnvironmentStorageData data1, ContainerAppManagedEnvironmentStorageData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.ManagedEnvironmentStorageAzureFile.AccountName, data2.ManagedEnvironmentStorageAzureFile.AccountName);
-            Assert.AreEqual(data1.ManagedEnvironmentStorageAzureFile.AccountKey, data2.ManagedEnvironmentStorageAzureFile.AccountKey);
-            Assert.AreEqual(data1.ManagedEnvironmentStorageAzureFile.ShareName, data2.ManagedEnvironmentStorageAzureFile.ShareName);
-            Assert.AreEqual(data1.ManagedEnvironmentStorageAzureFile.AccessMode, data2.ManagedEnvironmentStorageAzureFile.AccessMode);
+            Assert.That(data2.ManagedEnvironmentStorageAzureFile.AccountName, Is.EqualTo(data1.ManagedEnvironmentStorageAzureFile.AccountName));
+            Assert.That(data2.ManagedEnvironmentStorageAzureFile.AccountKey, Is.EqualTo(data1.ManagedEnvironmentStorageAzureFile.AccountKey));
+            Assert.That(data2.ManagedEnvironmentStorageAzureFile.ShareName, Is.EqualTo(data1.ManagedEnvironmentStorageAzureFile.ShareName));
+            Assert.That(data2.ManagedEnvironmentStorageAzureFile.AccessMode, Is.EqualTo(data1.ManagedEnvironmentStorageAzureFile.AccessMode));
         }
         #endregion
 
@@ -374,11 +374,11 @@ Name = "testcontainerappsjob-1102",
         public static void AssertContainerAppJobData(ContainerAppJobData data1, ContainerAppJobData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Location, data2.Location);
-            Assert.AreEqual(data1.EnvironmentId, data2.EnvironmentId);
-            Assert.AreEqual(data1.Configuration.TriggerType, data2.Configuration.TriggerType);
-            Assert.AreEqual(data1.Configuration.ReplicaRetryLimit, data2.Configuration.ReplicaRetryLimit);
-            Assert.AreEqual(data1.Configuration.ManualTriggerConfig.ReplicaCompletionCount, data2.Configuration.ManualTriggerConfig.ReplicaCompletionCount);
+            Assert.That(data2.Location, Is.EqualTo(data1.Location));
+            Assert.That(data2.EnvironmentId, Is.EqualTo(data1.EnvironmentId));
+            Assert.That(data2.Configuration.TriggerType, Is.EqualTo(data1.Configuration.TriggerType));
+            Assert.That(data2.Configuration.ReplicaRetryLimit, Is.EqualTo(data1.Configuration.ReplicaRetryLimit));
+            Assert.That(data2.Configuration.ManualTriggerConfig.ReplicaCompletionCount, Is.EqualTo(data1.Configuration.ManualTriggerConfig.ReplicaCompletionCount));
         }
         #endregion
 
@@ -399,9 +399,9 @@ Name = "testcontainerappsjob-1102",
         public static void AssertCertificateData(ContainerAppManagedCertificateData data1, ContainerAppManagedCertificateData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Location, data2.Location);
-            Assert.AreEqual(data1.Properties.SubjectName, data2.Properties.SubjectName);
-            Assert.AreEqual(data1.Properties.DomainControlValidation, data2.Properties.DomainControlValidation);
+            Assert.That(data2.Location, Is.EqualTo(data1.Location));
+            Assert.That(data2.Properties.SubjectName, Is.EqualTo(data1.Properties.SubjectName));
+            Assert.That(data2.Properties.DomainControlValidation, Is.EqualTo(data1.Properties.DomainControlValidation));
         }
         #endregion
 
@@ -426,11 +426,11 @@ Name = "testcontainerappsjob-1102",
         public static void AssertContainerAppManagedEnvironmentData(ContainerAppManagedEnvironmentData data1, ContainerAppManagedEnvironmentData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data2.DaprAIConnectionString, data1.DaprAIConnectionString);
-            Assert.AreEqual(data1.Location, data2.Location);
-            Assert.AreEqual(data1.IsZoneRedundant, data2.IsZoneRedundant);
-            Assert.AreEqual(data1.CustomDomainConfiguration.SubjectName, data2.CustomDomainConfiguration.SubjectName);
-            Assert.AreEqual(data1.CustomDomainConfiguration.DnsSuffix, data2.CustomDomainConfiguration.DnsSuffix);
+            Assert.That(data1.DaprAIConnectionString, Is.EqualTo(data2.DaprAIConnectionString));
+            Assert.That(data2.Location, Is.EqualTo(data1.Location));
+            Assert.That(data2.IsZoneRedundant, Is.EqualTo(data1.IsZoneRedundant));
+            Assert.That(data2.CustomDomainConfiguration.SubjectName, Is.EqualTo(data1.CustomDomainConfiguration.SubjectName));
+            Assert.That(data2.CustomDomainConfiguration.DnsSuffix, Is.EqualTo(data1.CustomDomainConfiguration.DnsSuffix));
         }
         #endregion
 
@@ -468,12 +468,12 @@ Name = "testcontainerappsjob-1102",
         public static void AssertContainerAppSourceControlData(ContainerAppSourceControlData data1, ContainerAppSourceControlData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Branch, data2.Branch);
-            Assert.AreEqual(data1.RepoUri, data2.RepoUri);
-            Assert.AreEqual(data1.GitHubActionConfiguration.RegistryInfo.RegistryUserName, data2.GitHubActionConfiguration.RegistryInfo.RegistryUserName);
-            Assert.AreEqual(data1.GitHubActionConfiguration.RegistryInfo.RegistryPassword, data2.GitHubActionConfiguration.RegistryInfo.RegistryPassword);
-            Assert.AreEqual(data1.GitHubActionConfiguration.AzureCredentials.ClientId, data2.GitHubActionConfiguration.AzureCredentials.TenantId);
-            Assert.AreEqual(data1.GitHubActionConfiguration.AzureCredentials.ClientSecret, data2.GitHubActionConfiguration.AzureCredentials.ClientSecret);
+            Assert.That(data2.Branch, Is.EqualTo(data1.Branch));
+            Assert.That(data2.RepoUri, Is.EqualTo(data1.RepoUri));
+            Assert.That(data2.GitHubActionConfiguration.RegistryInfo.RegistryUserName, Is.EqualTo(data1.GitHubActionConfiguration.RegistryInfo.RegistryUserName));
+            Assert.That(data2.GitHubActionConfiguration.RegistryInfo.RegistryPassword, Is.EqualTo(data1.GitHubActionConfiguration.RegistryInfo.RegistryPassword));
+            Assert.That(data2.GitHubActionConfiguration.AzureCredentials.TenantId, Is.EqualTo(data1.GitHubActionConfiguration.AzureCredentials.ClientId));
+            Assert.That(data2.GitHubActionConfiguration.AzureCredentials.ClientSecret, Is.EqualTo(data1.GitHubActionConfiguration.AzureCredentials.ClientSecret));
         }
         #endregion
 
@@ -519,9 +519,9 @@ Name = "testcontainerappsjob-1102",
         public static void AssertSessionPoolData(SessionPoolData data1, SessionPoolData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Name, data2.Name);
-            Assert.AreEqual(data1.Secrets, data2.Secrets);
-            Assert.AreEqual(data1.ContainerType, data2.ContainerType);
+            Assert.That(data2.Name, Is.EqualTo(data1.Name));
+            Assert.That(data2.Secrets, Is.EqualTo(data1.Secrets));
+            Assert.That(data2.ContainerType, Is.EqualTo(data1.ContainerType));
         }
         # endregion
     }

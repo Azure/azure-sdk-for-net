@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.TestCase
             var input = ResourceDataHelpers.GetVaultData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             DataProtectionBackupVaultResource resource = lro.Value;
-            Assert.AreEqual(name, resource.Data.Name);
+            Assert.That(resource.Data.Name, Is.EqualTo(name));
             //2.Get
             DataProtectionBackupVaultResource resource2 = await collection.GetAsync(name);
             ResourceDataHelpers.AssertVaultData(resource.Data, resource2.Data);
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 3);
             //4Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //resourceTests

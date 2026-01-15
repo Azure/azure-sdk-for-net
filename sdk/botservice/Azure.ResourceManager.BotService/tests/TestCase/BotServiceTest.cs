@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.BotService.Tests
             var collection = resourceGroup.GetBots();
             var input = ResourceDataHelpers.GetBotData(msaAppId);
             var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, botName, input)).Value;
-            Assert.AreEqual(botName, resource.Data.Name);
+            Assert.That(resource.Data.Name, Is.EqualTo(botName));
             //2.Get
             var resource2 = (await resource.GetAsync()).Value;
             ResourceDataHelpers.AssertBotServiceData(resource.Data, resource2.Data);
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.BotService.Tests
             }
             Assert.GreaterOrEqual(count, 1);
             //4.Exist
-            Assert.IsTrue(await collection.ExistsAsync(botName));
-            Assert.IsFalse(await collection.ExistsAsync(botName + "1"));
+            Assert.That((bool)await collection.ExistsAsync(botName), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(botName + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resouece operation

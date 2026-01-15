@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Tests
             var json = jsonDocument.RootElement;
             var resource2 = WritableSubResource.DeserializeWritableSubResource(json);
             var binary2 = ModelReaderWriter.Write(resource2, _wireOptions);
-            Assert.AreEqual(expected, jsonString);
-            Assert.AreEqual(jsonString, binary2.ToString());
+            Assert.That(jsonString, Is.EqualTo(expected));
+            Assert.That(binary2.ToString(), Is.EqualTo(jsonString));
 
             var resource3 = new WritableSubResource();
             resource3.Id = new ResourceIdentifier(id);
             var binary3 = ModelReaderWriter.Write(resource3, _wireOptions);
-            Assert.AreEqual(jsonString, binary3.ToString());
+            Assert.That(binary3.ToString(), Is.EqualTo(jsonString));
         }
     }
 }

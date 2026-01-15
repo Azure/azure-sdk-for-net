@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
 
             Assert.IsNotNull(dataflowEndpointsResource);
             Assert.IsNotNull(dataflowEndpointsResource.Data);
-            Assert.AreEqual(dataflowEndpointsResource.Data.Name, DataflowEndpointsName);
+            Assert.That(DataflowEndpointsName, Is.EqualTo(dataflowEndpointsResource.Data.Name));
 
             // Create new DataflowEndpoint
 

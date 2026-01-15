@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             List<AppConfigurationPrivateLinkResource> linkResources = await ConfigStore.GetAppConfigurationPrivateLinkResources().GetAllAsync().ToEnumerableAsync();
 
-            Assert.IsTrue(linkResources.Count > 0);
+            Assert.That(linkResources.Count > 0, Is.True);
         }
 
         [Ignore("Error resource id without '/' in the beginning")]
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             bool linkResource = await ConfigStore.GetAppConfigurationPrivateLinkResources().ExistsAsync("configurationStores");
 
-            Assert.IsTrue(linkResource);
+            Assert.That(linkResource, Is.True);
         }
     }
 }

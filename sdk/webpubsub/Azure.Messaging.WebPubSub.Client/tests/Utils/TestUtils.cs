@@ -23,7 +23,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
 
         public static void AssertTimeout(params Task[] task)
         {
-            Assert.False(Task.WaitAll(task, 500));
+            Assert.That(Task.WaitAll(task, 500), Is.False);
         }
 
         public static Task OrTimeout(this Task task, int milliseconds = DefaultTimeout, [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null, [CallerLineNumber] int? lineNumber = null)

@@ -44,16 +44,16 @@ namespace Azure.ResourceManager.Peering.Tests
             };
             var prefix = await _peeringServicePrefixCollection.CreateOrUpdateAsync(WaitUntil.Completed, prefixName, data);
             Assert.IsNotNull(prefix);
-            Assert.AreEqual(prefixName, prefix.Value.Data.Name);
+            Assert.That(prefix.Value.Data.Name, Is.EqualTo(prefixName));
 
             // Exist
             bool flag = await _peeringServicePrefixCollection.ExistsAsync(prefixName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             // Get
             var getResponse = await _peeringServicePrefixCollection.GetAsync(prefixName);
             Assert.IsNotNull(getResponse);
-            Assert.AreEqual(prefixName, getResponse.Value.Data.Name);
+            Assert.That(getResponse.Value.Data.Name, Is.EqualTo(prefixName));
 
             // GetAll
             var list = await _peeringServicePrefixCollection.GetAllAsync().ToEnumerableAsync();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Peering.Tests
             // Delete
             await prefix.Value.DeleteAsync(WaitUntil.Completed);
             flag = await _peeringServicePrefixCollection.ExistsAsync(prefixName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

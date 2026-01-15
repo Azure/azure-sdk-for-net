@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             var modelResource = Client.GetBillingBenefitsSavingsPlanOrderResource(resource);
             var response = await modelResource.ElevateAsync();
 
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.NotNull(response.Value);
             Assert.IsNotEmpty(response.Value.Id);
-            Assert.True(response.Value.Id.ToString().Contains("/providers/Microsoft.BillingBenefits/savingsplanorders/"));
-            Assert.True(response.Value.Id.ToString().Contains("/providers/Microsoft.Authorization/roleAssignments/"));
+            Assert.That(response.Value.Id.ToString().Contains("/providers/Microsoft.BillingBenefits/savingsplanorders/"), Is.True);
+            Assert.That(response.Value.Id.ToString().Contains("/providers/Microsoft.Authorization/roleAssignments/"), Is.True);
             Assert.IsNotEmpty(response.Value.Name);
             Assert.IsNotEmpty(response.Value.PrincipalId);
             Assert.IsNotEmpty(response.Value.RoleDefinitionId);
-            Assert.True(response.Value.RoleDefinitionId.ToString().Contains("/providers/Microsoft.Authorization/roleDefinitions/"));
+            Assert.That(response.Value.RoleDefinitionId.ToString().Contains("/providers/Microsoft.Authorization/roleDefinitions/"), Is.True);
             Assert.IsNotEmpty(response.Value.Scope);
-            Assert.True(response.Value.Scope.ToString().Contains("/providers/Microsoft.BillingBenefits/savingsplanorders/"));
+            Assert.That(response.Value.Scope.ToString().Contains("/providers/Microsoft.BillingBenefits/savingsplanorders/"), Is.True);
         }
 
         [TestCase]
@@ -86,23 +86,23 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 
         private void ValidateResponseProperties(BillingBenefitsSavingsPlanOrderResource model)
         {
-            Assert.IsTrue(model.HasData);
-            Assert.AreEqual("eef82110-c91b-4395-9420-fcfcbefc5a47", model.Data.BillingScopeId.ToString());
+            Assert.That(model.HasData, Is.True);
+            Assert.That(model.Data.BillingScopeId.ToString(), Is.EqualTo("eef82110-c91b-4395-9420-fcfcbefc5a47"));
             Assert.NotNull(model.Data.Id);
             Assert.IsNotEmpty(model.Data.Name);
             Assert.IsNotEmpty(model.Data.DisplayName);
             Assert.NotNull(model.Data.ResourceType);
-            Assert.AreEqual("microsoft.billingbenefits", model.Data.ResourceType.Namespace);
-            Assert.AreEqual("savingsPlanOrders", model.Data.ResourceType.Type);
+            Assert.That(model.Data.ResourceType.Namespace, Is.EqualTo("microsoft.billingbenefits"));
+            Assert.That(model.Data.ResourceType.Type, Is.EqualTo("savingsPlanOrders"));
             Assert.NotNull(model.Data.Sku);
-            Assert.AreEqual("Compute_Savings_Plan", model.Data.Sku.Name);
-            Assert.AreEqual("Compute_Savings_Plan", model.Data.SkuName);
+            Assert.That(model.Data.Sku.Name, Is.EqualTo("Compute_Savings_Plan"));
+            Assert.That(model.Data.SkuName, Is.EqualTo("Compute_Savings_Plan"));
             Assert.NotNull(model.Data.Term);
             Assert.NotNull(model.Data.BenefitStartOn);
             Assert.IsNotEmpty(model.Data.BillingAccountId);
             Assert.IsNotEmpty(model.Data.BillingProfileId);
             Assert.NotNull(model.Data.SavingsPlans);
-            Assert.AreEqual(1, model.Data.SavingsPlans.Count);
+            Assert.That(model.Data.SavingsPlans.Count, Is.EqualTo(1));
         }
     }
 }

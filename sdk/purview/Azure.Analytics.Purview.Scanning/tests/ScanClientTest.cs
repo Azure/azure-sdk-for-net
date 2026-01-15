@@ -40,13 +40,13 @@ namespace Azure.Analytics.Purview.Scanning.Tests
                 }
             };
             Response createResponse = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data), new());
-            Assert.AreEqual(200, createResponse.Status);
+            Assert.That(createResponse.Status, Is.EqualTo(200));
             //Get
             Response getResponse = await client.GetFilterAsync(new());
-            Assert.AreEqual(200, getResponse.Status);
+            Assert.That(getResponse.Status, Is.EqualTo(200));
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(getResponse));
             JsonElement fetchBodyJson = jsonDocument.RootElement;
-            Assert.AreEqual("https://foo.file.core.windows.net/share1/user/temp", fetchBodyJson.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].GetString());
+            Assert.That(fetchBodyJson.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].GetString(), Is.EqualTo("https://foo.file.core.windows.net/share1/user/temp"));
         }
         [RecordedTest]
         public async Task ScanRunOperations()
@@ -55,16 +55,16 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             string runUUID = "32767c50-ccd7-c3fd-5aea-94abe54044de";
             //Run
             Response runScanResponse = await client.RunScanAsync(runUUID, null, new());
-            Assert.AreEqual(202, runScanResponse.Status);
+            Assert.That(runScanResponse.Status, Is.EqualTo(202));
             //Get list
             var getScanRunListResponseList = client.GetRunsAsync(new()).GetAsyncEnumerator();
             await getScanRunListResponseList.MoveNextAsync();
             using var jsonDocument = JsonDocument.Parse(getScanRunListResponseList.Current);
             JsonElement getScanRunListBodyJson = jsonDocument.RootElement;
-            Assert.AreEqual(runUUID, getScanRunListBodyJson.GetProperty("id").GetString());
+            Assert.That(getScanRunListBodyJson.GetProperty("id").GetString(), Is.EqualTo(runUUID));
             //Cancel
             Response cancelScanResponse = await client.CancelScanAsync(runUUID, new());
-            Assert.AreEqual(202, cancelScanResponse.Status);
+            Assert.That(cancelScanResponse.Status, Is.EqualTo(202));
         }
         [RecordedTest]
         public async Task ScanTriggerOperations()
@@ -94,10 +94,10 @@ namespace Azure.Analytics.Purview.Scanning.Tests
                 }
             };
             Response createResponse = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
-            Assert.AreEqual(201, createResponse.Status);
+            Assert.That(createResponse.Status, Is.EqualTo(201));
             //Delete
             Response deleteResponse = await client.DeleteTriggerAsync(new());
-            Assert.AreEqual(200, deleteResponse.Status);
+            Assert.That(deleteResponse.Status, Is.EqualTo(200));
         }
         [RecordedTest]
         public async Task ScanOperations()
@@ -125,16 +125,16 @@ namespace Azure.Analytics.Purview.Scanning.Tests
                 }
             };
             Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
-            Assert.AreEqual(201, createResponse.Status);
+            Assert.That(createResponse.Status, Is.EqualTo(201));
             //Get
             Response getResponse = await client.GetPropertiesAsync(new());
-            Assert.AreEqual(200, getResponse.Status);
+            Assert.That(getResponse.Status, Is.EqualTo(200));
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(getResponse));
             JsonElement getBodyJson = jsonDocument.RootElement;
-            Assert.AreEqual("datasources/test-datasource1009/scans/test-scan1009-2", getBodyJson.GetProperty("id").GetString());
+            Assert.That(getBodyJson.GetProperty("id").GetString(), Is.EqualTo("datasources/test-datasource1009/scans/test-scan1009-2"));
             //Delete
             Response deleteResponse = await client.DeleteAsync(new());
-            Assert.AreEqual(200, deleteResponse.Status);
+            Assert.That(deleteResponse.Status, Is.EqualTo(200));
         }
 
         private static BinaryData GetContentFromResponse(Response r)

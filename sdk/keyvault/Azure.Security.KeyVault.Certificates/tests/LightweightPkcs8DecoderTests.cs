@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             byte[] data = Convert.FromBase64String(InvalidEcSecp521r1PrivateKey);
 
             Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeECDsaPkcs8(data, null));
-            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Invalid PKCS#8 Data"));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             byte[] data = Convert.FromBase64String(EcPrime256v1PrivateKeyImported);
 
             Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeECDsaPkcs8(data, null));
-            Assert.AreEqual("Unsupported PKCS#8 Data", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Unsupported PKCS#8 Data"));
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             byte[] data = Convert.FromBase64String(RsaPrivateKey);
 
             Exception ex = Assert.Throws<InvalidDataException>(() => LightweightPkcs8Decoder.DecodeECDsaPkcs8(data, null));
-            Assert.AreEqual("Invalid PKCS#8 Data", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Invalid PKCS#8 Data"));
         }
 
         // Not using TestCaseSource because params too long for friendly test case rendering.
@@ -93,8 +93,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
                 using ECDsa keyPair = LightweightPkcs8Decoder.DecodeECDsaPkcs8(data, publicKey);
 
-                Assert.AreEqual(keyCurveName.GetKeySize(), keyPair.KeySize);
-                Assert.IsTrue(keyPair.VerifyData(Encoding.UTF8.GetBytes("test"), signatureBytes, HashAlgorithmName.SHA256));
+                Assert.That(keyPair.KeySize, Is.EqualTo(keyCurveName.GetKeySize()));
+                Assert.That(keyPair.VerifyData(Encoding.UTF8.GetBytes("test"), signatureBytes, HashAlgorithmName.SHA256), Is.True);
             }
             catch (Exception ex) when (
                 (ex is CryptographicException || (ex is TargetInvocationException && ex.InnerException is CryptographicException)) &&

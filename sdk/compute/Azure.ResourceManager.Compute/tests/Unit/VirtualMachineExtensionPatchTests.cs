@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Compute.Tests.Unit
                 ProtectedSettingsFromKeyVault = binarySetting
             };
 
-            Assert.AreEqual(secretUri, data.KeyVaultProtectedSettings.SecretUri.ToString());
-            Assert.AreEqual(vaultId, data.KeyVaultProtectedSettings.SourceVaultId.ToString());
+            Assert.That(data.KeyVaultProtectedSettings.SecretUri.ToString(), Is.EqualTo(secretUri));
+            Assert.That(data.KeyVaultProtectedSettings.SourceVaultId.ToString(), Is.EqualTo(vaultId));
         }
 
         [TestCase]
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Compute.Tests.Unit
             var newBinaryDataSetting = data.ProtectedSettingsFromKeyVault;
             var root = newBinaryDataSetting.ToObjectFromJson<JsonElement>();
 
-            Assert.AreEqual(secretUri, root.GetProperty("secretUrl").GetString());
-            Assert.AreEqual(newVaultId, root.GetProperty("sourceVault").GetProperty("id").GetString());
+            Assert.That(root.GetProperty("secretUrl").GetString(), Is.EqualTo(secretUri));
+            Assert.That(root.GetProperty("sourceVault").GetProperty("id").GetString(), Is.EqualTo(newVaultId));
         }
 
         [TestCase]
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Compute.Tests.Unit
             var binaryDataSetting = data.ProtectedSettingsFromKeyVault;
             var root = binaryDataSetting.ToObjectFromJson<JsonElement>();
 
-            Assert.AreEqual(secretUri, root.GetProperty("secretUrl").GetString());
-            Assert.AreEqual(vaultId, root.GetProperty("sourceVault").GetProperty("id").GetString());
+            Assert.That(root.GetProperty("secretUrl").GetString(), Is.EqualTo(secretUri));
+            Assert.That(root.GetProperty("sourceVault").GetProperty("id").GetString(), Is.EqualTo(vaultId));
         }
     }
 }

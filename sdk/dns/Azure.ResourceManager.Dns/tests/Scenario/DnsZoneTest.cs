@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             var dnsZone = await CreateDnsZone(dnsZoneName, _resourceGroup);
             Assert.NotNull(dnsZone);
-            Assert.AreEqual(dnsZoneName, dnsZone.Data.Name);
+            Assert.That(dnsZone.Data.Name, Is.EqualTo(dnsZoneName));
         }
 
         [RecordedTest]
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             var dnsZone = await CreateDnsZone(dnsZoneName, _resourceGroup);
             bool flag = await _dnsZoneCollection.ExistsAsync(dnsZoneName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await dnsZone.DeleteAsync(WaitUntil.Completed);
             flag = await _dnsZoneCollection.ExistsAsync(dnsZoneName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
 
         [RecordedTest]
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             await CreateDnsZone(dnsZoneName, _resourceGroup);
             bool flag = await _dnsZoneCollection.ExistsAsync(dnsZoneName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             await CreateDnsZone(dnsZoneName, _resourceGroup);
             var dnsZone = await _dnsZoneCollection.GetAsync(dnsZoneName);
             Assert.IsNotNull(dnsZone);
-            Assert.AreEqual(dnsZoneName, dnsZone.Value.Data.Name);
+            Assert.That(dnsZone.Value.Data.Name, Is.EqualTo(dnsZoneName));
         }
 
         [RecordedTest]
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             await CreateDnsZone(dnsZoneName, _resourceGroup);
             var list = await _dnsZoneCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(list);
-            Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(dnsZoneName, list.FirstOrDefault().Data.Name);
+            Assert.That(list.Count, Is.EqualTo(1));
+            Assert.That(list.FirstOrDefault().Data.Name, Is.EqualTo(dnsZoneName));
         }
 
         [TestCase(null)]
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
                 Thread.Sleep(30000);
             }
             dnsZone = await _dnsZoneCollection.GetAsync(dnsZoneName);
-            Assert.AreEqual(1, dnsZone.Data.Tags.Count);
+            Assert.That(dnsZone.Data.Tags.Count, Is.EqualTo(1));
             KeyValuePair<string, string> tag = dnsZone.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
-            Assert.AreEqual("addtagkey", tag.Key);
-            Assert.AreEqual("addtagvalue", tag.Value);
+            Assert.That(tag.Key, Is.EqualTo("addtagkey"));
+            Assert.That(tag.Value, Is.EqualTo("addtagvalue"));
 
             // RemoveTag
             await dnsZone.RemoveTagAsync("addtagkey");
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
                 Thread.Sleep(30000);
             }
             dnsZone = await _dnsZoneCollection.GetAsync(dnsZoneName);
-            Assert.AreEqual(0, dnsZone.Data.Tags.Count);
+            Assert.That(dnsZone.Data.Tags.Count, Is.EqualTo(0));
         }
 
         [RecordedTest]
@@ -215,15 +215,15 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsNotNull(recordSets[0].DnsNSRecords);
             Assert.IsNotNull(recordSets[1].DnsSoaRecordInfo);
 
-            Assert.AreEqual(2, recordSets[2].DnsAaaaRecords.Count);
-            Assert.AreEqual("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d55", recordSets[2].DnsAaaaRecords.First().IPv6Address.ToString());
+            Assert.That(recordSets[2].DnsAaaaRecords.Count, Is.EqualTo(2));
+            Assert.That(recordSets[2].DnsAaaaRecords.First().IPv6Address.ToString(), Is.EqualTo("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d55"));
             Assert.AreEqual(1, recordSets[3].DnsAaaaRecords.Count);
-            Assert.AreEqual("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d57", recordSets[3].DnsAaaaRecords.First().IPv6Address.ToString());
+            Assert.That(recordSets[3].DnsAaaaRecords.First().IPv6Address.ToString(), Is.EqualTo("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d57"));
 
             Assert.AreEqual(2, recordSets[4].DnsCaaRecords.Count);
-            Assert.AreEqual("caa1.contoso.com", recordSets[4].DnsCaaRecords.First().Value.ToString());
+            Assert.That(recordSets[4].DnsCaaRecords.First().Value.ToString(), Is.EqualTo("caa1.contoso.com"));
             Assert.AreEqual(1, recordSets[5].DnsCaaRecords.Count);
-            Assert.AreEqual("caa3.contoso.com", recordSets[5].DnsCaaRecords.First().Value.ToString());
+            Assert.That(recordSets[5].DnsCaaRecords.First().Value.ToString(), Is.EqualTo("caa3.contoso.com"));
 
             Assert.AreEqual("mymail1.contoso.com", recordSets[6].DnsMXRecords.First().Exchange.ToString());
         }

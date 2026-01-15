@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             List<EdgeOrderItemResource> orderItemsResult = await orderItems.ToEnumerableAsync();
 
             Assert.NotNull(orderItemsResult);
-            Assert.IsTrue(orderItemsResult.Count >= 1);
+            Assert.That(orderItemsResult.Count >= 1, Is.True);
         }
 
         [TestCase, Order(2)]
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             List<EdgeOrderItemResource> orderItemsResult = await orderItems.ToEnumerableAsync();
 
             Assert.NotNull(orderItemsResult);
-            Assert.IsTrue(orderItemsResult.Count >= 1);
+            Assert.That(orderItemsResult.Count >= 1, Is.True);
         }
     }
 }

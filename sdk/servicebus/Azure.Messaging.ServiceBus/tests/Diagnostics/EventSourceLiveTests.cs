@@ -79,8 +79,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId.ToString(), item.MessageId);
-                        Assert.AreEqual(item.DeliveryCount, 1);
+                        Assert.That(item.MessageId, Is.EqualTo(messageEnum.Current.MessageId.ToString()));
+                        Assert.That(item.DeliveryCount, Is.EqualTo(1));
                         lockTokens.Add(item.LockToken);
                     }
                 }
@@ -88,8 +88,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.RequestAuthorizationStartEvent, e => e.Payload.Contains(receiver.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.RequestAuthorizationCompleteEvent, e => e.Payload.Contains(receiver.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateReceiveLinkCompleteEvent, e => e.Payload.Contains(receiver.Identifier));
-                Assert.IsTrue(_listener.EventsById(ServiceBusEventSource.ReceiveMessageStartEvent).Any());
-                Assert.IsTrue(_listener.EventsById(ServiceBusEventSource.ReceiveMessageCompleteEvent).Any());
+                Assert.That(_listener.EventsById(ServiceBusEventSource.ReceiveMessageStartEvent).Any(), Is.True);
+                Assert.That(_listener.EventsById(ServiceBusEventSource.ReceiveMessageCompleteEvent).Any(), Is.True);
 
                 var receiveCompleteEvents = _listener.EventsById(ServiceBusEventSource.ReceiveMessageCompleteEvent);
                 foreach (string lockToken in lockTokens)
@@ -103,16 +103,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                             break;
                         }
                     }
-                    Assert.IsTrue(found, $"Locktoken {lockToken} not found in event logs");
+                    Assert.That(found, Is.True, $"Locktoken {lockToken} not found in event logs");
                 }
 
-                Assert.AreEqual(0, remainingMessages);
+                Assert.That(remainingMessages, Is.EqualTo(0));
                 messageEnum.Reset();
 
                 foreach (var item in await receiver.PeekMessagesAsync(messageCount))
                 {
                     messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId.ToString(), item.MessageId);
+                    Assert.That(item.MessageId, Is.EqualTo(messageEnum.Current.MessageId.ToString()));
                 }
 
                 _listener.SingleEventById(ServiceBusEventSource.CreateManagementLinkStartEvent, e => e.Payload.Contains(receiver.Identifier));
@@ -148,7 +148,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.ReceiveLinkClosedEvent, e => e.Payload.Contains(receiver.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.ManagementLinkClosedEvent, e => e.Payload.Contains(receiver.Identifier));
 
-                Assert.IsFalse(_listener.EventsById(ServiceBusEventSource.MaxMessagesExceedsPrefetchEvent).Any());
+                Assert.That(_listener.EventsById(ServiceBusEventSource.MaxMessagesExceedsPrefetchEvent).Any(), Is.False);
                 receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions { PrefetchCount = 10 });
                 await receiver.ReceiveMessagesAsync(20, TimeSpan.FromSeconds(1));
                 _listener.SingleEventById(ServiceBusEventSource.MaxMessagesExceedsPrefetchEvent, e => e.Payload.Contains(receiver.Identifier));
@@ -494,11 +494,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 bool ContainsEntityPath(EventWrittenEventArgs args) => args.Payload.Contains(processor.EntityPath);
 
-                Assert.False(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any(ContainsEntityPath));
-                Assert.False(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any(ContainsEntityPath));
-                Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorAcceptSessionTimeoutEvent).Any(e => e.Level == EventLevel.Verbose && ContainsEntityPath(e)));
-                Assert.True(_listener.EventsById(ServiceBusEventSource.RunOperationExceptionVerboseEvent).Any(e => e.Level == EventLevel.Verbose));
-                Assert.False(_listener.EventsById(ServiceBusEventSource.RunOperationExceptionEvent).Any(ContainsEntityPath));
+                Assert.That(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any(ContainsEntityPath), Is.False);
+                Assert.That(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any(ContainsEntityPath), Is.False);
+                Assert.That(_listener.EventsById(ServiceBusEventSource.ProcessorAcceptSessionTimeoutEvent).Any(e => e.Level == EventLevel.Verbose && ContainsEntityPath(e)), Is.True);
+                Assert.That(_listener.EventsById(ServiceBusEventSource.RunOperationExceptionVerboseEvent).Any(e => e.Level == EventLevel.Verbose), Is.True);
+                Assert.That(_listener.EventsById(ServiceBusEventSource.RunOperationExceptionEvent).Any(ContainsEntityPath), Is.False);
             }
         }
 
@@ -520,10 +520,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 await processor.StopProcessingAsync();
 
-                Assert.False(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any());
-                Assert.False(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any(e => e.Payload.Contains(processor.EntityPath)));
-                Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorStoppingAcceptSessionCanceledEvent)
-                    .Any(e => e.Level == EventLevel.Verbose));
+                Assert.That(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any(), Is.False);
+                Assert.That(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any(e => e.Payload.Contains(processor.EntityPath)), Is.False);
+                Assert.That(_listener.EventsById(ServiceBusEventSource.ProcessorStoppingAcceptSessionCanceledEvent)
+                    .Any(e => e.Level == EventLevel.Verbose), Is.True);
             }
         }
 
@@ -545,9 +545,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 await processor.StopProcessingAsync();
 
-                Assert.False(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any());
-                Assert.False(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any(e => e.Payload.Contains(processor.EntityPath)));
-                Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorStoppingReceiveCanceledEvent).Any());
+                Assert.That(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any(), Is.False);
+                Assert.That(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any(e => e.Payload.Contains(processor.EntityPath)), Is.False);
+                Assert.That(_listener.EventsById(ServiceBusEventSource.ProcessorStoppingReceiveCanceledEvent).Any(), Is.True);
             }
         }
 
@@ -575,9 +575,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 await processor.StopProcessingAsync();
 
-                Assert.False(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any());
-                Assert.False(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any(e => e.Payload.Contains(processor.EntityPath)));
-                Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorStoppingReceiveCanceledEvent).Any());
+                Assert.That(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any(), Is.False);
+                Assert.That(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any(e => e.Payload.Contains(processor.EntityPath)), Is.False);
+                Assert.That(_listener.EventsById(ServiceBusEventSource.ProcessorStoppingReceiveCanceledEvent).Any(), Is.True);
             }
         }
 
@@ -615,7 +615,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await Task.Delay(TimeSpan.FromSeconds(5));
 
                 _listener.SingleEventById(ServiceBusEventSource.SendLinkClosedEvent, e => e.Payload.Contains(sender.Identifier));
-                Assert.False(_listener.EventsById(ServiceBusEventSource.ReceiveLinkClosedEvent).Any(e => e.Payload.Contains(receiver.Identifier)));
+                Assert.That(_listener.EventsById(ServiceBusEventSource.ReceiveLinkClosedEvent).Any(e => e.Payload.Contains(receiver.Identifier)), Is.False);
             }
         }
 
@@ -638,7 +638,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await Task.Delay(TimeSpan.FromSeconds(5));
 
                 _listener.SingleEventById(ServiceBusEventSource.ReceiveLinkClosedEvent, e => e.Payload.Contains(receiver.Identifier));
-                Assert.False(_listener.EventsById(ServiceBusEventSource.SendLinkClosedEvent).Any(e => e.Payload.Contains(sender.Identifier)));
+                Assert.That(_listener.EventsById(ServiceBusEventSource.SendLinkClosedEvent).Any(e => e.Payload.Contains(sender.Identifier)), Is.False);
             }
         }
 

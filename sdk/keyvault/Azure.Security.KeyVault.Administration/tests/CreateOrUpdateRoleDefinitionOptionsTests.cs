@@ -14,8 +14,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
         {
             CreateOrUpdateRoleDefinitionOptions options = new(KeyVaultRoleScope.Global);
 
-            Assert.AreEqual(KeyVaultRoleScope.Global, options.RoleScope);
-            Assert.AreNotEqual(Guid.Empty, options.RoleDefinitionName);
+            Assert.That(options.RoleScope, Is.EqualTo(KeyVaultRoleScope.Global));
+            Assert.That(options.RoleDefinitionName, Is.Not.Empty);
         }
 
         [Test]
@@ -25,8 +25,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             CreateOrUpdateRoleDefinitionOptions options = new(KeyVaultRoleScope.Global, roleDefinitionName);
 
-            Assert.AreEqual(KeyVaultRoleScope.Global, options.RoleScope);
-            Assert.AreEqual(roleDefinitionName, options.RoleDefinitionName);
+            Assert.That(options.RoleScope, Is.EqualTo(KeyVaultRoleScope.Global));
+            Assert.That(options.RoleDefinitionName, Is.EqualTo(roleDefinitionName));
         }
 
         [Test]
@@ -56,10 +56,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             RoleDefinitionCreateParameters parameters = options.ToParameters(KeyVaultRoleType.CustomRole);
 
-            Assert.AreEqual(KeyVaultRoleType.CustomRole, parameters.Properties.RoleType);
-            Assert.AreEqual("Test Role Definition", parameters.Properties.RoleName);
-            Assert.AreEqual("This is only a test.", parameters.Properties.Description);
-            Assert.AreEqual(1, parameters.Properties.Permissions.Count);
+            Assert.That(parameters.Properties.RoleType, Is.EqualTo(KeyVaultRoleType.CustomRole));
+            Assert.That(parameters.Properties.RoleName, Is.EqualTo("Test Role Definition"));
+            Assert.That(parameters.Properties.Description, Is.EqualTo("This is only a test."));
+            Assert.That(parameters.Properties.Permissions.Count, Is.EqualTo(1));
             CollectionAssert.AreEqual(parameters.Properties.Permissions[0].DataActions, new[] { KeyVaultDataAction.BackupHsmKeys });
             CollectionAssert.AreEqual(parameters.Properties.AssignableScopes, new[] { KeyVaultRoleScope.Global });
         }

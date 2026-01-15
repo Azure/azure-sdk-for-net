@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             privateEndpointConnectionData.ConnectionState.Description = "Update descriptions";
             AppConfigurationPrivateEndpointConnectionResource privateEndpointConnection = (await ConfigStore.GetAppConfigurationPrivateEndpointConnections().CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, privateEndpointConnectionData)).Value;
 
-            Assert.IsTrue(privateEndpointConnectionName.Equals(privateEndpointConnection.Data.Name));
-            Assert.IsTrue(PrivateEndpointResource.Data.Id.Equals(privateEndpointConnection.Data.PrivateEndpoint.Id));
-            Assert.IsTrue(privateEndpointConnection.Data.ConnectionState.Description.Equals("Update descriptions"));
+            Assert.That(privateEndpointConnectionName.Equals(privateEndpointConnection.Data.Name), Is.True);
+            Assert.That(PrivateEndpointResource.Data.Id.Equals(privateEndpointConnection.Data.PrivateEndpoint.Id), Is.True);
+            Assert.That(privateEndpointConnection.Data.ConnectionState.Description.Equals("Update descriptions"), Is.True);
         }
 
         [Test]
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             string privateEndpointConnectionName = connections.First().Data.Name;
             AppConfigurationPrivateEndpointConnectionResource privateEndpointConnection = await ConfigStore.GetAppConfigurationPrivateEndpointConnections().GetAsync(privateEndpointConnectionName);
 
-            Assert.IsTrue(privateEndpointConnectionName.Equals(privateEndpointConnection.Data.Name));
-            Assert.IsTrue(privateEndpointConnection.Data.ConnectionState.Status == Models.AppConfigurationPrivateLinkServiceConnectionStatus.Approved);
+            Assert.That(privateEndpointConnectionName.Equals(privateEndpointConnection.Data.Name), Is.True);
+            Assert.That(privateEndpointConnection.Data.ConnectionState.Status == Models.AppConfigurationPrivateLinkServiceConnectionStatus.Approved, Is.True);
         }
 
         [Test]
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName2, configurationStoreData);
             List<AppConfigurationStoreResource> configurationStores = await ResGroup.GetAppConfigurationStores().GetAllAsync().ToEnumerableAsync();
 
-            Assert.IsTrue(configurationStores.Count >= 0);
-            Assert.IsTrue(configurationStores.Where(x => x.Data.Name == configurationStoreName1).FirstOrDefault().Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled);
+            Assert.That(configurationStores.Count >= 0, Is.True);
+            Assert.That(configurationStores.Where(x => x.Data.Name == configurationStoreName1).FirstOrDefault().Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled, Is.True);
         }
     }
 }

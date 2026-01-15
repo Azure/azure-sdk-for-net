@@ -105,7 +105,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             DecryptResult decryptResult = cryptoClient.Decrypt(decryptParams);
             #endregion
 
-            Assert.AreEqual(plaintext, decryptResult.Plaintext);
+            Assert.That(decryptResult.Plaintext, Is.EqualTo(plaintext));
 
             // Delete and purge the key.
             DeleteKeyOperation operation = managedHsmClient.StartDeleteKey(octKeyOptions.Name);

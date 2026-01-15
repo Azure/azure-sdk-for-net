@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Media.Tests
             string streamingEndpointName = Recording.GenerateAssetName("streamingEndpoint");
             var streamingEndpoint = await CreateStreamingEndpoint(streamingEndpointName);
             Assert.IsNotNull(streamingEndpoint);
-            Assert.AreEqual(streamingEndpointName, streamingEndpoint.Data.Name);
+            Assert.That(streamingEndpoint.Data.Name, Is.EqualTo(streamingEndpointName));
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media.Tests
             };
             var response = await streamingEndpoint.UpdateAsync(WaitUntil.Completed, data);
             Assert.IsNotNull(response);
-            Assert.AreEqual(streamingEndpointName, response.Value.Data.Name);
+            Assert.That(response.Value.Data.Name, Is.EqualTo(streamingEndpointName));
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Tests
             string streamingEndpointName = Recording.GenerateAssetName("streamingEndpoint");
             await CreateStreamingEndpoint(streamingEndpointName);
             bool flag = await _mediaService.GetStreamingEndpoints().ExistsAsync(streamingEndpointName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Media.Tests
             await CreateStreamingEndpoint(streamingEndpointName);
             var streamingEndpoint = await _mediaService.GetStreamingEndpoints().GetAsync(streamingEndpointName);
             Assert.IsNotNull(streamingEndpoint);
-            Assert.AreEqual(streamingEndpointName, streamingEndpoint.Value.Data.Name);
+            Assert.That(streamingEndpoint.Value.Data.Name, Is.EqualTo(streamingEndpointName));
         }
 
         [Test]
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.Media.Tests
             await CreateStreamingEndpoint(streamingEndpointName);
             var list = await _mediaService.GetStreamingEndpoints().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.IsTrue(list.Exists(item => item.Data.Name == "default"));
-            Assert.IsTrue(list.Exists(item => item.Data.Name == streamingEndpointName));
+            Assert.That(list.Exists(item => item.Data.Name == "default"), Is.True);
+            Assert.That(list.Exists(item => item.Data.Name == streamingEndpointName), Is.True);
         }
 
         [Test]
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Media.Tests
             string streamingEndpointName = Recording.GenerateAssetName("streamingEndpoint");
             var streamingEndpoint = await CreateStreamingEndpoint(streamingEndpointName);
             bool flag = await _mediaService.GetStreamingEndpoints().ExistsAsync(streamingEndpointName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await streamingEndpoint.DeleteAsync(WaitUntil.Completed);
             flag = await _mediaService.GetStreamingEndpoints().ExistsAsync(streamingEndpointName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

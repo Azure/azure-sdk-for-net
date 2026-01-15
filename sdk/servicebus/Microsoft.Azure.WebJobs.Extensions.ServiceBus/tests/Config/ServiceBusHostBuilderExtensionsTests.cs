@@ -29,11 +29,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         {
             ServiceBusOptions options = CreateOptionsFromConfigBackCompat();
 
-            Assert.AreEqual(123, options.PrefetchCount);
-            Assert.AreEqual(123, options.MaxConcurrentCalls);
-            Assert.AreEqual(123, options.MaxMessageBatchSize);
-            Assert.False(options.AutoCompleteMessages);
-            Assert.AreEqual(TimeSpan.FromSeconds(15), options.MaxAutoLockRenewalDuration);
+            Assert.That(options.PrefetchCount, Is.EqualTo(123));
+            Assert.That(options.MaxConcurrentCalls, Is.EqualTo(123));
+            Assert.That(options.MaxMessageBatchSize, Is.EqualTo(123));
+            Assert.That(options.AutoCompleteMessages, Is.False);
+            Assert.That(options.MaxAutoLockRenewalDuration, Is.EqualTo(TimeSpan.FromSeconds(15)));
         }
 
         [Test]
@@ -52,11 +52,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
                 },
                 jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
-            Assert.AreEqual(123, result.PrefetchCount);
+            Assert.That(result.PrefetchCount, Is.EqualTo(123));
 
-            Assert.AreEqual(123, result.MaxConcurrentCalls);
-            Assert.False(result.AutoCompleteMessages);
-            Assert.AreEqual(TimeSpan.FromSeconds(15), result.MaxAutoLockRenewalDuration);
+            Assert.That(result.MaxConcurrentCalls, Is.EqualTo(123));
+            Assert.That(result.AutoCompleteMessages, Is.False);
+            Assert.That(result.MaxAutoLockRenewalDuration, Is.EqualTo(TimeSpan.FromSeconds(15)));
         }
 
         [Test]
@@ -64,18 +64,18 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         {
             ServiceBusOptions options = CreateOptionsFromConfig();
 
-            Assert.AreEqual(123, options.PrefetchCount);
-            Assert.AreEqual(123, options.MaxConcurrentCalls);
-            Assert.AreEqual(20, options.MaxConcurrentSessions);
-            Assert.AreEqual(5, options.MaxConcurrentCallsPerSession);
-            Assert.AreEqual(20, options.MaxMessageBatchSize);
-            Assert.AreEqual(10, options.MinMessageBatchSize);
-            Assert.AreEqual(TimeSpan.FromSeconds(1), options.MaxBatchWaitTime);
-            Assert.False(options.AutoCompleteMessages);
-            Assert.AreEqual(TimeSpan.FromSeconds(15), options.MaxAutoLockRenewalDuration);
-            Assert.AreEqual(ServiceBusTransportType.AmqpWebSockets, options.TransportType);
-            Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)options.WebProxy).Address.AbsoluteUri);
-            Assert.AreEqual(10, options.ClientRetryOptions.MaxRetries);
+            Assert.That(options.PrefetchCount, Is.EqualTo(123));
+            Assert.That(options.MaxConcurrentCalls, Is.EqualTo(123));
+            Assert.That(options.MaxConcurrentSessions, Is.EqualTo(20));
+            Assert.That(options.MaxConcurrentCallsPerSession, Is.EqualTo(5));
+            Assert.That(options.MaxMessageBatchSize, Is.EqualTo(20));
+            Assert.That(options.MinMessageBatchSize, Is.EqualTo(10));
+            Assert.That(options.MaxBatchWaitTime, Is.EqualTo(TimeSpan.FromSeconds(1)));
+            Assert.That(options.AutoCompleteMessages, Is.False);
+            Assert.That(options.MaxAutoLockRenewalDuration, Is.EqualTo(TimeSpan.FromSeconds(15)));
+            Assert.That(options.TransportType, Is.EqualTo(ServiceBusTransportType.AmqpWebSockets));
+            Assert.That(((WebProxy)options.WebProxy).Address.AbsoluteUri, Is.EqualTo("http://proxyserver:8080/"));
+            Assert.That(options.ClientRetryOptions.MaxRetries, Is.EqualTo(10));
         }
 
         [Test]
@@ -94,13 +94,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
                 },
                 jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
-            Assert.AreEqual(123, result.PrefetchCount);
+            Assert.That(result.PrefetchCount, Is.EqualTo(123));
 
-            Assert.AreEqual(123, result.MaxConcurrentCalls);
-            Assert.False(result.AutoCompleteMessages);
-            Assert.AreEqual(TimeSpan.FromSeconds(15), result.MaxAutoLockRenewalDuration);
-            Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)result.WebProxy).Address.AbsoluteUri);
-            Assert.AreEqual(10, result.ClientRetryOptions.MaxRetries);
+            Assert.That(result.MaxConcurrentCalls, Is.EqualTo(123));
+            Assert.That(result.AutoCompleteMessages, Is.False);
+            Assert.That(result.MaxAutoLockRenewalDuration, Is.EqualTo(TimeSpan.FromSeconds(15)));
+            Assert.That(((WebProxy)result.WebProxy).Address.AbsoluteUri, Is.EqualTo("http://proxyserver:8080/"));
+            Assert.That(result.ClientRetryOptions.MaxRetries, Is.EqualTo(10));
         }
 
         [Test]
@@ -119,14 +119,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
                 },
                 jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
-            Assert.AreEqual(123, result.PrefetchCount);
+            Assert.That(result.PrefetchCount, Is.EqualTo(123));
 
-            Assert.AreEqual(123, result.MaxConcurrentCalls);
-            Assert.False(result.AutoCompleteMessages);
-            Assert.AreEqual(Timeout.InfiniteTimeSpan, result.MaxAutoLockRenewalDuration);
-            Assert.AreEqual(Timeout.InfiniteTimeSpan, result.MaxBatchWaitTime);
-            Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)result.WebProxy).Address.AbsoluteUri);
-            Assert.AreEqual(10, result.ClientRetryOptions.MaxRetries);
+            Assert.That(result.MaxConcurrentCalls, Is.EqualTo(123));
+            Assert.That(result.AutoCompleteMessages, Is.False);
+            Assert.That(result.MaxAutoLockRenewalDuration, Is.EqualTo(Timeout.InfiniteTimeSpan));
+            Assert.That(result.MaxBatchWaitTime, Is.EqualTo(Timeout.InfiniteTimeSpan));
+            Assert.That(((WebProxy)result.WebProxy).Address.AbsoluteUri, Is.EqualTo("http://proxyserver:8080/"));
+            Assert.That(result.ClientRetryOptions.MaxRetries, Is.EqualTo(10));
         }
 
         private static ServiceBusOptions CreateOptionsFromConfig()
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
 
             var exception = Assert.Throws<ArgumentNullException>(() => host.Services.GetServices<IExtensionConfigProvider>());
 
-            Assert.AreEqual("options", exception.ParamName);
+            Assert.That(exception.ParamName, Is.EqualTo("options"));
         }
 
         [Test]

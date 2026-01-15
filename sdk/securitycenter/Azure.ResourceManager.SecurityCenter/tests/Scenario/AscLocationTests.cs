@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task Exist()
         {
             bool flag = await _ascLocationCollection.ExistsAsync(_existAscLocationName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             Assert.IsNotNull(ascLocation);
             Assert.IsNotNull(ascLocation.Data.Id);
-            Assert.AreEqual(ascLocationName, ascLocation.Data.Name);
-            Assert.AreEqual("Microsoft.Security/locations", ascLocation.Data.ResourceType.ToString());
+            Assert.That(ascLocation.Data.Name, Is.EqualTo(ascLocationName));
+            Assert.That(ascLocation.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/locations"));
         }
     }
 }

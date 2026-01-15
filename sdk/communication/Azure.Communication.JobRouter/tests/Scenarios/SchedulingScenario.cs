@@ -62,7 +62,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
                 x => x.Value.Status == RouterJobStatus.WaitingForActivation,
                 TimeSpan.FromSeconds(30));
-            Assert.AreEqual(RouterJobStatus.WaitingForActivation, job.Value.Status);
+            Assert.That(job.Value.Status, Is.EqualTo(RouterJobStatus.WaitingForActivation));
             Assert.NotNull(job.Value.ScheduledAt);
             Assert.That(job.Value.ScheduledAt, Is.EqualTo(timeToEnqueueJob).Within(30).Seconds);
 
@@ -72,23 +72,23 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     MatchingMode = new QueueAndMatchMode()
                 });
 
-            Assert.AreEqual(RouterJobStatus.Queued, updateJobToStartMatching.Value.Status);
+            Assert.That(updateJobToStartMatching.Value.Status, Is.EqualTo(RouterJobStatus.Queued));
             Assert.NotNull(updateJobToStartMatching.Value.ScheduledAt);
-            Assert.AreEqual(typeof(QueueAndMatchMode), updateJobToStartMatching.Value.MatchingMode.GetType());
+            Assert.That(updateJobToStartMatching.Value.MatchingMode.GetType(), Is.EqualTo(typeof(QueueAndMatchMode)));
 
             var worker = await Poll(async () => await client.GetWorkerAsync(registerWorker.Value.Id),
                 w => w.Value.Offers.Any(x => x.JobId == updateJobToStartMatching.Value.Id),
                 TimeSpan.FromSeconds(10));
-            Assert.IsTrue(worker.Value.Offers.Any(x => x.JobId == updateJobToStartMatching.Value.Id), "Offers should be sent to worker");
+            Assert.That(worker.Value.Offers.Any(x => x.JobId == updateJobToStartMatching.Value.Id), Is.True, "Offers should be sent to worker");
 
             var offer = worker.Value.Offers.Single(x => x.JobId == updateJobToStartMatching.Value.Id);
-            Assert.AreEqual(1, offer.CapacityCost);
+            Assert.That(offer.CapacityCost, Is.EqualTo(1));
             Assert.IsNotNull(offer.OfferedAt);
             Assert.IsNotNull(offer.ExpiresAt);
 
             var accept = await client.AcceptJobOfferAsync(worker.Value.Id, offer.OfferId);
-            Assert.AreEqual(createJob.Value.Id, accept.Value.JobId);
-            Assert.AreEqual(worker.Value.Id, accept.Value.WorkerId);
+            Assert.That(accept.Value.JobId, Is.EqualTo(createJob.Value.Id));
+            Assert.That(accept.Value.WorkerId, Is.EqualTo(worker.Value.Id));
 
             Assert.ThrowsAsync<RequestFailedException>(async () =>
                 await client.DeclineJobOfferAsync(
@@ -101,21 +101,21 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             {
                 Note = $"Job completed by {workerId1}"
             });
-            Assert.AreEqual(200, complete.Status);
+            Assert.That(complete.Status, Is.EqualTo(200));
 
             var close = await client.CloseJobAsync(new CloseJobOptions(createJob.Value.Id, accept.Value.AssignmentId)
             {
                 Note = $"Job closed by {workerId1}"
             });
-            Assert.AreEqual(200, complete.Status);
+            Assert.That(complete.Status, Is.EqualTo(200));
 
             var finalJobState = await client.GetJobAsync(createJob.Value.Id);
             Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].AssignedAt);
-            Assert.AreEqual(worker.Value.Id, finalJobState.Value.Assignments[accept.Value.AssignmentId].WorkerId);
+            Assert.That(finalJobState.Value.Assignments[accept.Value.AssignmentId].WorkerId, Is.EqualTo(worker.Value.Id));
             Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].CompletedAt);
             Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].ClosedAt);
             Assert.IsNotEmpty(finalJobState.Value.Notes);
-            Assert.IsTrue(finalJobState.Value.Notes.Count == 2);
+            Assert.That(finalJobState.Value.Notes.Count == 2, Is.True);
             Assert.NotNull(finalJobState.Value.ScheduledAt);
 
             // delete worker for straggling offers if any

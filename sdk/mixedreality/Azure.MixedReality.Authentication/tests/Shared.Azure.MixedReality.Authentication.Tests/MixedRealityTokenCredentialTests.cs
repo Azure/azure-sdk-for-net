@@ -19,7 +19,7 @@ namespace Azure.MixedReality.Authentication.Tests
             MixedRealityAccountKeyCredential credential = new MixedRealityAccountKeyCredential(s_testAccountId, "my_account_key");
             TokenCredential actual = MixedRealityTokenCredential.GetMixedRealityCredential(s_testAccountId, s_testEndpoint, credential);
 
-            Assert.AreNotEqual(credential, actual);
+            Assert.That(actual, Is.Not.EqualTo(credential));
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace Azure.MixedReality.Authentication.Tests
             StaticAccessTokenCredential credential = new StaticAccessTokenCredential(default);
             TokenCredential actual = MixedRealityTokenCredential.GetMixedRealityCredential(s_testAccountId, s_testEndpoint, credential);
 
-            Assert.AreEqual(credential, actual);
+            Assert.That(actual, Is.EqualTo(credential));
         }
     }
 }

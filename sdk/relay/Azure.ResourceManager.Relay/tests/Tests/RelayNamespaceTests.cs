@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Relay.Tests
                 };
 
             _relayNamespace = (await _relayNamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, relayNamespaceData)).Value;
-            Assert.AreEqual(RelaySkuName.Standard, _relayNamespace.Data.Sku.Name);
+            Assert.That(_relayNamespace.Data.Sku.Name, Is.EqualTo(RelaySkuName.Standard));
 
             var listOfRelayNamespaces = await _relayNamespaceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, listOfRelayNamespaces.Count);
+            Assert.That(listOfRelayNamespaces.Count, Is.EqualTo(1));
 
             /*await _relayNamespace.DeleteAsync(WaitUntil.Completed);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _relayNamespace.GetAsync(); });

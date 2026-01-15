@@ -118,10 +118,10 @@ namespace Azure.Identity.Tests
             var (response, request) = await SendRequestAndCapture(targetUrl, CreateTestConfig(proxyUrl));
 
             // Assert
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.AreEqual(expectedUrl, request.Uri.ToString());
-            Assert.IsTrue(request.Headers.TryGetValue("Host", out var hostHeader));
-            Assert.AreEqual(DefaultSniName, hostHeader);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(request.Uri.ToString(), Is.EqualTo(expectedUrl));
+            Assert.That(request.Headers.TryGetValue("Host", out var hostHeader), Is.True);
+            Assert.That(hostHeader, Is.EqualTo(DefaultSniName));
         }
 
         [Test]
@@ -132,9 +132,9 @@ namespace Azure.Identity.Tests
             var (response, request) = await SendRequestAndCapture(targetUrl);
 
             // Assert
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.IsTrue(request.Uri.Query.Contains("api-version=2.0"), $"Expected query to contain api-version=2.0 but got: {request.Uri.Query}");
-            Assert.IsTrue(request.Uri.Query.Contains("scope=test"));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(request.Uri.Query.Contains("api-version=2.0"), Is.True, $"Expected query to contain api-version=2.0 but got: {request.Uri.Query}");
+            Assert.That(request.Uri.Query.Contains("scope=test"), Is.True);
         }
 
         [Test]
@@ -153,11 +153,11 @@ namespace Azure.Identity.Tests
             var response = await httpClient.SendAsync(request);
 
             // Assert
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.IsTrue(capturedRequest.Headers.TryGetValue("Authorization", out var authHeader));
-            Assert.AreEqual("Bearer test-token", authHeader);
-            Assert.IsTrue(capturedRequest.Headers.TryGetValue("X-Custom-Header", out var customHeader));
-            Assert.AreEqual("custom-value", customHeader);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(capturedRequest.Headers.TryGetValue("Authorization", out var authHeader), Is.True);
+            Assert.That(authHeader, Is.EqualTo("Bearer test-token"));
+            Assert.That(capturedRequest.Headers.TryGetValue("X-Custom-Header", out var customHeader), Is.True);
+            Assert.That(customHeader, Is.EqualTo("custom-value"));
         }
 
         [Test]
@@ -167,15 +167,15 @@ namespace Azure.Identity.Tests
             var requestContent = new StringContent("{\"grant_type\":\"client_credentials\"}", Encoding.UTF8, "application/json");
             // Test with success response
             var (response, request) = await SendRequestAndCapture(content: requestContent, method: HttpMethod.Post);
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             Assert.IsNotNull(request.Content);
-            Assert.IsTrue(request.Content.TryComputeLength(out var length) && length > 0);
+            Assert.That(request.Content.TryComputeLength(out var length) && length > 0, Is.True);
 
             // Test with error response
             var mockTransport = CreateMockTransport("{\"error\":\"unauthorized\"}", 401);
             var httpClient = CreateTestHttpClient(CreateTestConfig(transport: mockTransport));
             var errorResponse = await httpClient.GetAsync("https://login.microsoftonline.com/token");
-            Assert.AreEqual(HttpStatusCode.Unauthorized, errorResponse.StatusCode);
+            Assert.That(errorResponse.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
         }
 
         [Test]
@@ -197,9 +197,9 @@ namespace Azure.Identity.Tests
             var response = await httpClient.GetAsync("https://login.microsoftonline.com/token");
 
             // Assert
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.IsTrue(response.Headers.Contains("X-Custom-Response"));
-            Assert.IsTrue(response.Content.Headers.Contains("Content-Type"));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(response.Headers.Contains("X-Custom-Response"), Is.True);
+            Assert.That(response.Content.Headers.Contains("Content-Type"), Is.True);
         }
 
         [Test]
@@ -210,7 +210,7 @@ namespace Azure.Identity.Tests
 
             var (handler, initialInnerHandler) = await CreateHandlerAndMakeRequests(config);
 
-            Assert.AreSame(initialInnerHandler, handler.InnerHandler, "Handler should NOT be reloaded when no CA file is configured");
+            Assert.That(handler.InnerHandler, Is.SameAs(initialInnerHandler), "Handler should NOT be reloaded when no CA file is configured");
         }
 
         [Test]
@@ -224,7 +224,7 @@ namespace Azure.Identity.Tests
 
             var (handler, initialInnerHandler) = await CreateHandlerAndMakeRequests(config);
 
-            Assert.AreSame(initialInnerHandler, handler.InnerHandler, "Handler should NOT be reloaded when CA file is empty");
+            Assert.That(handler.InnerHandler, Is.SameAs(initialInnerHandler), "Handler should NOT be reloaded when CA file is empty");
         }
 
         [Test]
@@ -259,7 +259,7 @@ namespace Azure.Identity.Tests
 
             var cert1Thumbprint = PemReader.LoadCertificate(cert1.AsSpan(), allowCertificateOnly: true).Thumbprint;
             var cert2Thumbprint = PemReader.LoadCertificate(cert2.AsSpan(), allowCertificateOnly: true).Thumbprint;
-            Assert.AreNotEqual(cert1Thumbprint, cert2Thumbprint, "Test certificates should have different thumbprints");
+            Assert.That(cert2Thumbprint, Is.Not.EqualTo(cert1Thumbprint), "Test certificates should have different thumbprints");
 
             // Act - Make requests before and after CA change
             var response1 = await httpClient.GetAsync("https://login.microsoftonline.com/token");
@@ -271,10 +271,10 @@ namespace Azure.Identity.Tests
             var response3 = await httpClient.GetAsync("https://login.microsoftonline.com/token");
 
             // Assert
-            Assert.AreEqual(HttpStatusCode.OK, response1.StatusCode);
-            Assert.AreEqual(HttpStatusCode.OK, response2.StatusCode);
-            Assert.AreEqual(HttpStatusCode.OK, response3.StatusCode);
-            Assert.AreEqual(3, requestCount);
+            Assert.That(response1.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(response2.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(response3.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(requestCount, Is.EqualTo(3));
 
             // Verify handler was reloaded - the inner handler instance should be different
             var finalInnerHandler = handler.InnerHandler;
@@ -329,9 +329,9 @@ namespace Azure.Identity.Tests
             // Assert - All requests should succeed despite CA file change
             foreach (var response in responses)
             {
-                Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+                Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
                 var content = await response.Content.ReadAsStringAsync();
-                Assert.IsTrue(content.Contains("request"), "Response should contain request counter");
+                Assert.That(content.Contains("request"), Is.True, "Response should contain request counter");
             }
 
             // Verify handler was reloaded during concurrent requests
@@ -360,9 +360,9 @@ namespace Azure.Identity.Tests
             var response2 = await httpClient.GetAsync("https://login.microsoftonline.com/token");
 
             // Assert - Both requests should succeed (second uses cached handler when file is missing)
-            Assert.AreEqual(HttpStatusCode.OK, response1.StatusCode);
-            Assert.AreEqual(HttpStatusCode.OK, response2.StatusCode);
-            Assert.AreSame(initialInnerHandler, handler.InnerHandler,
+            Assert.That(response1.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(response2.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(handler.InnerHandler, Is.SameAs(initialInnerHandler),
                 "Handler should NOT be reloaded when CA file read fails (uses cached handler)");
         }
 
@@ -409,8 +409,8 @@ namespace Azure.Identity.Tests
             var response2 = await httpClient.GetAsync("https://login.microsoftonline.com/token");
 
             // Assert - All requests succeed
-            Assert.AreEqual(HttpStatusCode.OK, response1.StatusCode);
-            Assert.AreEqual(HttpStatusCode.OK, response2.StatusCode);
+            Assert.That(response1.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(response2.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
             // Verify the handler has certificate validation configured (proving CA data was used)
             var innerHandler = handler.InnerHandler as HttpClientHandler;
@@ -456,7 +456,7 @@ namespace Azure.Identity.Tests
 
             // Test handler works with custom CA for requests (using mock transport)
             var (response, _) = await SendRequestAndCapture(config: CreateTestConfig(caData: validCaPem));
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
 
         [Test]
@@ -480,7 +480,7 @@ namespace Azure.Identity.Tests
         {
             // Test that handler works without CA data (uses default certificate validation)
             var (response, _) = await SendRequestAndCapture(config: CreateTestConfig(caData: null));
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
 
         [Test]
@@ -524,16 +524,16 @@ namespace Azure.Identity.Tests
                 using (var chain = new X509Chain())
                 {
                     Assert.DoesNotThrow(() => callback(null, testCert, chain, System.Net.Security.SslPolicyErrors.None));
-                    Assert.IsTrue(chain.ChainPolicy.ExtraStore.Count > 0, "CA should be added to ExtraStore");
-                    Assert.AreEqual(X509RevocationMode.NoCheck, chain.ChainPolicy.RevocationMode);
-                    Assert.AreEqual(X509VerificationFlags.AllowUnknownCertificateAuthority, chain.ChainPolicy.VerificationFlags);
+                    Assert.That(chain.ChainPolicy.ExtraStore.Count > 0, Is.True, "CA should be added to ExtraStore");
+                    Assert.That(chain.ChainPolicy.RevocationMode, Is.EqualTo(X509RevocationMode.NoCheck));
+                    Assert.That(chain.ChainPolicy.VerificationFlags, Is.EqualTo(X509VerificationFlags.AllowUnknownCertificateAuthority));
                 }
 
                 // Test null certificate case
                 using (var chain = new X509Chain())
                 {
                     var result = callback(null, null, chain, System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors);
-                    Assert.IsFalse(result, "Should return false for null certificate");
+                    Assert.That(result, Is.False, "Should return false for null certificate");
                 }
 
                 // Test that non-chain SSL errors are rejected immediately (before chain validation)
@@ -541,13 +541,13 @@ namespace Azure.Identity.Tests
                 using (var chain = new X509Chain())
                 {
                     var result = callback(null, testCert, chain, System.Net.Security.SslPolicyErrors.RemoteCertificateNameMismatch);
-                    Assert.IsFalse(result, "Should reject RemoteCertificateNameMismatch");
+                    Assert.That(result, Is.False, "Should reject RemoteCertificateNameMismatch");
                 }
 
                 using (var chain = new X509Chain())
                 {
                     var result = callback(null, testCert, chain, System.Net.Security.SslPolicyErrors.RemoteCertificateNotAvailable);
-                    Assert.IsFalse(result, "Should reject RemoteCertificateNotAvailable");
+                    Assert.That(result, Is.False, "Should reject RemoteCertificateNotAvailable");
                 }
             }
         }
@@ -587,7 +587,7 @@ namespace Azure.Identity.Tests
             }
 
             // Verify handler was NOT reloaded
-            Assert.AreSame(initialInnerHandler, handler.InnerHandler,
+            Assert.That(handler.InnerHandler, Is.SameAs(initialInnerHandler),
                 "Handler should NOT be reloaded when CA file becomes empty");
         }
 
@@ -626,7 +626,7 @@ namespace Azure.Identity.Tests
             }
 
             // Verify handler was NOT reloaded
-            Assert.AreSame(initialInnerHandler, handler.InnerHandler,
+            Assert.That(handler.InnerHandler, Is.SameAs(initialInnerHandler),
                 "Handler should NOT be reloaded when CA file read fails (uses cached handler)");
         }
 

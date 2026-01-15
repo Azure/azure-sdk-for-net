@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
             vnetData.Properties.InfraVnetProfile.Hci.MocGroup = "target-group";
             vnetData.Properties.InfraVnetProfile.Hci.MocLocation = "MocLocation";
             var vnet = vnetCollection.CreateOrUpdate(WaitUntil.Completed, "azvnet-netsdk", vnetData);
-            Assert.AreEqual(vnet.Value.Data.Properties.ProvisioningState, HybridContainerServiceProvisioningState.Succeeded);
+            Assert.That(HybridContainerServiceProvisioningState.Succeeded, Is.EqualTo(vnet.Value.Data.Properties.ProvisioningState));
         }
 
         //The provisioned cluster is singleton.
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
             vnetData.Properties.InfraVnetProfile.Hci.MocGroup = "target-group";
             vnetData.Properties.InfraVnetProfile.Hci.MocLocation = "MocLocation";
             var vnet = vnetCollection.CreateOrUpdate(WaitUntil.Completed, "azvnet-sdk", vnetData);
-            Assert.AreEqual(vnet.Value.Data.Properties.ProvisioningState, HybridContainerServiceProvisioningState.Succeeded);
+            Assert.That(HybridContainerServiceProvisioningState.Succeeded, Is.EqualTo(vnet.Value.Data.Properties.ProvisioningState));
 
             // Connected Cluster base cluster
             string connectedClusterId = "/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourceGroups/hav-ga-rg/providers/Microsoft.Kubernetes/connectedClusters/test-cls-netsdk";
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
             clusterData.Properties = new ProvisionedClusterProperties(linuxProfile, controlPlane, kubernetesVersion, networkProfile, storageProfile, clusterVmAccessProfile, agentPoolProfiles, cloudProviderProfile, null, null, null, null, null);
 
             var cluster = clusterClient.CreateOrUpdate(WaitUntil.Completed, clusterData);
-            Assert.AreEqual(cluster.Value.Data.Properties.ProvisioningState, HybridContainerServiceResourceProvisioningState.Succeeded);
+            Assert.That(HybridContainerServiceResourceProvisioningState.Succeeded, Is.EqualTo(cluster.Value.Data.Properties.ProvisioningState));
         }
     }
 }

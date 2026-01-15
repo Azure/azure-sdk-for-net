@@ -48,10 +48,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
             // Assert
             // If renewal was successful then result should wait as much as IDelayStrategy decided (see mock above).
             // Otherwise if it failed due to non-transient reason (i.e. pop recepit got lost) it would delay infinitely leading to assertion error below.
-            Assert.IsTrue(commandResult1.Wait.Wait(TimeSpan.FromSeconds(10)));
-            Assert.IsTrue(commandResult2.Wait.Wait(TimeSpan.FromSeconds(10)));
+            Assert.That(commandResult1.Wait.Wait(TimeSpan.FromSeconds(10)), Is.True);
+            Assert.That(commandResult2.Wait.Wait(TimeSpan.FromSeconds(10)), Is.True);
             // Check the counter too
-            Assert.AreEqual(2, counter);
+            Assert.That(counter, Is.EqualTo(2));
         }
     }
 }

@@ -53,8 +53,8 @@ namespace Azure.Storage.DataMovement.Tests
             await transfer.WaitForCompletionAsync(cancellationToken);
 
             await testEventsRaised.AssertContainerCompletedCheck(expectedItemTransferCount);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
 
             List<IResourceEnumerationItem> sourceFiles = await getSourceFilesAsync(cancellationToken);
             List<IResourceEnumerationItem> destinationFiles = await getDestinationFilesAsync(cancellationToken);

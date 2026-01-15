@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Tests
             ResourceProviderResource provider = await subscription.GetResourceProviders().GetAsync("Microsoft.Compute");
             FeatureResource featureFromCollection = await GetFirst(provider.GetFeatures().GetAllAsync());
             FeatureResource feature = await featureFromCollection.GetAsync();
-            Assert.AreEqual(featureFromCollection.Data.Id, feature.Data.Id);
-            Assert.AreEqual(featureFromCollection.Data.Name, feature.Data.Name);
-            Assert.AreEqual(featureFromCollection.Data.Properties.State, feature.Data.Properties.State);
-            Assert.AreEqual(featureFromCollection.Data.ResourceType, feature.Data.ResourceType);
+            Assert.That(feature.Data.Id, Is.EqualTo(featureFromCollection.Data.Id));
+            Assert.That(feature.Data.Name, Is.EqualTo(featureFromCollection.Data.Name));
+            Assert.That(feature.Data.Properties.State, Is.EqualTo(featureFromCollection.Data.Properties.State));
+            Assert.That(feature.Data.ResourceType, Is.EqualTo(featureFromCollection.Data.ResourceType));
 
             ResourceIdentifier invalidId = new ResourceIdentifier(feature.Data.Id.ToString() + "x");
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetFeatureResource(invalidId).GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         private async Task<FeatureResource> GetFirst(AsyncPageable<FeatureResource> asyncPageable, bool? isRegistered = null)
@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.Tests
             ResourceProviderResource provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders().GetAsync("Microsoft.Compute");
             FeatureResource feature = await provider.GetFeatures().GetAsync("AHUB");
             FeatureResource afterRegister = await feature.RegisterAsync();
-            Assert.AreEqual(feature.Data.Id, afterRegister.Data.Id);
-            Assert.AreEqual(feature.Data.Name, afterRegister.Data.Name);
-            Assert.AreEqual("Pending", afterRegister.Data.Properties.State);
-            Assert.AreEqual(feature.Data.ResourceType, afterRegister.Data.ResourceType);
+            Assert.That(afterRegister.Data.Id, Is.EqualTo(feature.Data.Id));
+            Assert.That(afterRegister.Data.Name, Is.EqualTo(feature.Data.Name));
+            Assert.That(afterRegister.Data.Properties.State, Is.EqualTo("Pending"));
+            Assert.That(afterRegister.Data.ResourceType, Is.EqualTo(feature.Data.ResourceType));
 
             FeatureResource afterUnRegister = await feature.UnregisterAsync();
-            Assert.AreEqual(feature.Data.Id, afterUnRegister.Data.Id);
-            Assert.AreEqual(feature.Data.Name, afterUnRegister.Data.Name);
-            Assert.AreEqual("Unregistering", afterUnRegister.Data.Properties.State);
-            Assert.AreEqual(feature.Data.ResourceType, afterUnRegister.Data.ResourceType);
+            Assert.That(afterUnRegister.Data.Id, Is.EqualTo(feature.Data.Id));
+            Assert.That(afterUnRegister.Data.Name, Is.EqualTo(feature.Data.Name));
+            Assert.That(afterUnRegister.Data.Properties.State, Is.EqualTo("Unregistering"));
+            Assert.That(afterUnRegister.Data.ResourceType, Is.EqualTo(feature.Data.ResourceType));
         }
     }
 }

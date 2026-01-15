@@ -54,26 +54,26 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             discoveredDeviceData.Properties.Endpoints.Inbound.Add("myendpoint1", new DiscoveredInboundEndpoints("Microsoft.Devices/IoTHubs", "https://myendpoint1.westeurope-1.iothub.azure.net", "1", [AuthenticationMethod.Certificate], "", null, null));
             var discoveredDeviceCreateOrUpdateResponse = await discoveredDevicesCollection.CreateOrUpdateAsync(WaitUntil.Completed, discoveredDeviceName, discoveredDeviceData, CancellationToken.None);
             Assert.IsNotNull(discoveredDeviceCreateOrUpdateResponse.Value);
-            Assert.AreEqual(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.Manufacturer, discoveredDeviceData.Properties.Manufacturer);
-            Assert.AreEqual(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.Model, discoveredDeviceData.Properties.Model);
-            Assert.AreEqual(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.OperatingSystem, discoveredDeviceData.Properties.OperatingSystem);
-            Assert.AreEqual(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.OperatingSystemVersion, discoveredDeviceData.Properties.OperatingSystemVersion);
-            Assert.AreEqual(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.Endpoints.Inbound["myendpoint1"].Address, discoveredDeviceData.Properties.Endpoints.Inbound["myendpoint1"].Address);
-            Assert.AreEqual(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.Endpoints.Inbound["myendpoint1"].EndpointType, discoveredDeviceData.Properties.Endpoints.Inbound["myendpoint1"].EndpointType);
-            Assert.AreEqual(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.DiscoveryId, discoveredDeviceData.Properties.DiscoveryId);
-            Assert.AreEqual(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.Version, discoveredDeviceData.Properties.Version);
+            Assert.That(discoveredDeviceData.Properties.Manufacturer, Is.EqualTo(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.Manufacturer));
+            Assert.That(discoveredDeviceData.Properties.Model, Is.EqualTo(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.Model));
+            Assert.That(discoveredDeviceData.Properties.OperatingSystem, Is.EqualTo(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.OperatingSystem));
+            Assert.That(discoveredDeviceData.Properties.OperatingSystemVersion, Is.EqualTo(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.OperatingSystemVersion));
+            Assert.That(discoveredDeviceData.Properties.Endpoints.Inbound["myendpoint1"].Address, Is.EqualTo(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.Endpoints.Inbound["myendpoint1"].Address));
+            Assert.That(discoveredDeviceData.Properties.Endpoints.Inbound["myendpoint1"].EndpointType, Is.EqualTo(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.Endpoints.Inbound["myendpoint1"].EndpointType));
+            Assert.That(discoveredDeviceData.Properties.DiscoveryId, Is.EqualTo(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.DiscoveryId));
+            Assert.That(discoveredDeviceData.Properties.Version, Is.EqualTo(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.Version));
 
             // Read DeviceRegistry DiscoveredDevice
             var discoveredDeviceReadResponse = await discoveredDevicesCollection.GetAsync(discoveredDeviceName, CancellationToken.None);
             Assert.IsNotNull(discoveredDeviceReadResponse.Value);
-            Assert.AreEqual(discoveredDeviceReadResponse.Value.Data.Properties.Manufacturer, discoveredDeviceData.Properties.Manufacturer);
-            Assert.AreEqual(discoveredDeviceReadResponse.Value.Data.Properties.Model, discoveredDeviceData.Properties.Model);
-            Assert.AreEqual(discoveredDeviceReadResponse.Value.Data.Properties.OperatingSystem, discoveredDeviceData.Properties.OperatingSystem);
-            Assert.AreEqual(discoveredDeviceReadResponse.Value.Data.Properties.OperatingSystemVersion, discoveredDeviceData.Properties.OperatingSystemVersion);
-            Assert.AreEqual(discoveredDeviceReadResponse.Value.Data.Properties.Endpoints.Inbound["myendpoint1"].Address, discoveredDeviceData.Properties.Endpoints.Inbound["myendpoint1"].Address);
-            Assert.AreEqual(discoveredDeviceReadResponse.Value.Data.Properties.Endpoints.Inbound["myendpoint1"].EndpointType, discoveredDeviceData.Properties.Endpoints.Inbound["myendpoint1"].EndpointType);
-            Assert.AreEqual(discoveredDeviceReadResponse.Value.Data.Properties.DiscoveryId, discoveredDeviceData.Properties.DiscoveryId);
-            Assert.AreEqual(discoveredDeviceReadResponse.Value.Data.Properties.Version, discoveredDeviceData.Properties.Version);
+            Assert.That(discoveredDeviceData.Properties.Manufacturer, Is.EqualTo(discoveredDeviceReadResponse.Value.Data.Properties.Manufacturer));
+            Assert.That(discoveredDeviceData.Properties.Model, Is.EqualTo(discoveredDeviceReadResponse.Value.Data.Properties.Model));
+            Assert.That(discoveredDeviceData.Properties.OperatingSystem, Is.EqualTo(discoveredDeviceReadResponse.Value.Data.Properties.OperatingSystem));
+            Assert.That(discoveredDeviceData.Properties.OperatingSystemVersion, Is.EqualTo(discoveredDeviceReadResponse.Value.Data.Properties.OperatingSystemVersion));
+            Assert.That(discoveredDeviceData.Properties.Endpoints.Inbound["myendpoint1"].Address, Is.EqualTo(discoveredDeviceReadResponse.Value.Data.Properties.Endpoints.Inbound["myendpoint1"].Address));
+            Assert.That(discoveredDeviceData.Properties.Endpoints.Inbound["myendpoint1"].EndpointType, Is.EqualTo(discoveredDeviceReadResponse.Value.Data.Properties.Endpoints.Inbound["myendpoint1"].EndpointType));
+            Assert.That(discoveredDeviceData.Properties.DiscoveryId, Is.EqualTo(discoveredDeviceReadResponse.Value.Data.Properties.DiscoveryId));
+            Assert.That(discoveredDeviceData.Properties.Version, Is.EqualTo(discoveredDeviceReadResponse.Value.Data.Properties.Version));
 
             // List DeviceRegistry DiscoveredDevice by Resource Group
             var discoveredDeviceResourcesListByResourceGroup = new List<DeviceRegistryNamespaceDiscoveredDeviceResource>();
@@ -98,14 +98,14 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             };
             var discoveredDeviceUpdateResponse = await discoveredDevice.UpdateAsync(WaitUntil.Completed, discoveredDevicePatchData, CancellationToken.None);
             Assert.IsNotNull(discoveredDeviceUpdateResponse.Value);
-            Assert.AreEqual(discoveredDeviceUpdateResponse.Value.Data.Properties.Manufacturer, discoveredDeviceData.Properties.Manufacturer);
-            Assert.AreEqual(discoveredDeviceUpdateResponse.Value.Data.Properties.Model, discoveredDeviceData.Properties.Model);
-            Assert.AreEqual(discoveredDeviceUpdateResponse.Value.Data.Properties.OperatingSystem, discoveredDeviceData.Properties.OperatingSystem);
-            Assert.AreEqual(discoveredDeviceUpdateResponse.Value.Data.Properties.OperatingSystemVersion, discoveredDevicePatchData.Properties.OperatingSystemVersion);
-            Assert.AreEqual(discoveredDeviceUpdateResponse.Value.Data.Properties.Endpoints.Inbound["myendpoint1"].Address, discoveredDeviceData.Properties.Endpoints.Inbound["myendpoint1"].Address);
-            Assert.AreEqual(discoveredDeviceUpdateResponse.Value.Data.Properties.Endpoints.Inbound["myendpoint1"].EndpointType, discoveredDeviceData.Properties.Endpoints.Inbound["myendpoint1"].EndpointType);
-            Assert.AreEqual(discoveredDeviceUpdateResponse.Value.Data.Properties.DiscoveryId, discoveredDeviceData.Properties.DiscoveryId);
-            Assert.AreEqual(discoveredDeviceUpdateResponse.Value.Data.Properties.Version, discoveredDeviceData.Properties.Version);
+            Assert.That(discoveredDeviceData.Properties.Manufacturer, Is.EqualTo(discoveredDeviceUpdateResponse.Value.Data.Properties.Manufacturer));
+            Assert.That(discoveredDeviceData.Properties.Model, Is.EqualTo(discoveredDeviceUpdateResponse.Value.Data.Properties.Model));
+            Assert.That(discoveredDeviceData.Properties.OperatingSystem, Is.EqualTo(discoveredDeviceUpdateResponse.Value.Data.Properties.OperatingSystem));
+            Assert.That(discoveredDevicePatchData.Properties.OperatingSystemVersion, Is.EqualTo(discoveredDeviceUpdateResponse.Value.Data.Properties.OperatingSystemVersion));
+            Assert.That(discoveredDeviceData.Properties.Endpoints.Inbound["myendpoint1"].Address, Is.EqualTo(discoveredDeviceUpdateResponse.Value.Data.Properties.Endpoints.Inbound["myendpoint1"].Address));
+            Assert.That(discoveredDeviceData.Properties.Endpoints.Inbound["myendpoint1"].EndpointType, Is.EqualTo(discoveredDeviceUpdateResponse.Value.Data.Properties.Endpoints.Inbound["myendpoint1"].EndpointType));
+            Assert.That(discoveredDeviceData.Properties.DiscoveryId, Is.EqualTo(discoveredDeviceUpdateResponse.Value.Data.Properties.DiscoveryId));
+            Assert.That(discoveredDeviceData.Properties.Version, Is.EqualTo(discoveredDeviceUpdateResponse.Value.Data.Properties.Version));
 
             // Delete DeviceRegistry Device
             try

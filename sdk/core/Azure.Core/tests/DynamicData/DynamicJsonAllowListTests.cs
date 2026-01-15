@@ -186,9 +186,9 @@ namespace Azure.Core.Tests
             // Existing property
             json.Foo = model;
 
-            Assert.AreEqual("a", (string)json.Foo.StringProperty);
-            Assert.AreEqual("b", (string)json.Foo.NestedProperty.StringProperty);
-            Assert.AreEqual("c", (string)json.Foo.NestedProperty.NestedProperty.StringProperty);
+            Assert.That((string)json.Foo.StringProperty, Is.EqualTo("a"));
+            Assert.That((string)json.Foo.NestedProperty.StringProperty, Is.EqualTo("b"));
+            Assert.That((string)json.Foo.NestedProperty.NestedProperty.StringProperty, Is.EqualTo("c"));
         }
 
         [Test]
@@ -274,8 +274,8 @@ namespace Azure.Core.Tests
 
             Assert.DoesNotThrow(() => json.Foo = anon);
             Assert.DoesNotThrow(() => json.Bar = anon);
-            Assert.AreEqual("twenty", (string)json.Foo.One.Two.Three.Four.Five.Six.Seven.Eight.Nine.Ten.Eleven.Twelve.Thirteen.Fourteen.Fifteen.Sixteen.Seventeen.Eighteen.Nineteen.Twenty);
-            Assert.AreEqual("twenty", (string)json.Bar.One.Two.Three.Four.Five.Six.Seven.Eight.Nine.Ten.Eleven.Twelve.Thirteen.Fourteen.Fifteen.Sixteen.Seventeen.Eighteen.Nineteen.Twenty);
+            Assert.That((string)json.Foo.One.Two.Three.Four.Five.Six.Seven.Eight.Nine.Ten.Eleven.Twelve.Thirteen.Fourteen.Fifteen.Sixteen.Seventeen.Eighteen.Nineteen.Twenty, Is.EqualTo("twenty"));
+            Assert.That((string)json.Bar.One.Two.Three.Four.Five.Six.Seven.Eight.Nine.Ten.Eleven.Twelve.Thirteen.Fourteen.Fifteen.Sixteen.Seventeen.Eighteen.Nineteen.Twenty, Is.EqualTo("twenty"));
         }
 
         [Test]
@@ -299,9 +299,9 @@ namespace Azure.Core.Tests
             // New property
             json.Bar = model;
 
-            Assert.AreEqual("a", (string)json.Bar.StringProperty);
-            Assert.AreEqual("b", (string)json.Bar.NestedProperty.StringProperty);
-            Assert.AreEqual("c", (string)json.Bar.NestedProperty.NestedProperty.StringProperty);
+            Assert.That((string)json.Bar.StringProperty, Is.EqualTo("a"));
+            Assert.That((string)json.Bar.NestedProperty.StringProperty, Is.EqualTo("b"));
+            Assert.That((string)json.Bar.NestedProperty.NestedProperty.StringProperty, Is.EqualTo("c"));
         }
 
         [Test]
@@ -325,9 +325,9 @@ namespace Azure.Core.Tests
             // Existing property
             json.Foo = model;
 
-            Assert.AreEqual("a", (string)json.Foo.StringProperty);
-            Assert.AreEqual(1, (int)json.Foo.NestedProperty.IntProperty);
-            Assert.AreEqual("b", (string)json.Foo.NestedProperty.NestedProperty.StringProperty);
+            Assert.That((string)json.Foo.StringProperty, Is.EqualTo("a"));
+            Assert.That((int)json.Foo.NestedProperty.IntProperty, Is.EqualTo(1));
+            Assert.That((string)json.Foo.NestedProperty.NestedProperty.StringProperty, Is.EqualTo("b"));
         }
 
         [Test]
@@ -351,9 +351,9 @@ namespace Azure.Core.Tests
             // New property
             json.Bar = model;
 
-            Assert.AreEqual("a", (string)json.Bar.StringProperty);
-            Assert.AreEqual(1, (int)json.Bar.NestedProperty.IntProperty);
-            Assert.AreEqual("b", (string)json.Bar.NestedProperty.NestedProperty.StringProperty);
+            Assert.That((string)json.Bar.StringProperty, Is.EqualTo("a"));
+            Assert.That((int)json.Bar.NestedProperty.IntProperty, Is.EqualTo(1));
+            Assert.That((string)json.Bar.NestedProperty.NestedProperty.StringProperty, Is.EqualTo("b"));
         }
 
         [Test]
@@ -441,11 +441,11 @@ namespace Azure.Core.Tests
             // New property
             json.Bar = model;
 
-            Assert.AreEqual("a", (string)json.Foo.StringProperty);
-            Assert.AreEqual(1, (int)json.Foo.ObjectProperty);
+            Assert.That((string)json.Foo.StringProperty, Is.EqualTo("a"));
+            Assert.That((int)json.Foo.ObjectProperty, Is.EqualTo(1));
 
-            Assert.AreEqual("a", (string)json.Bar.StringProperty);
-            Assert.AreEqual(1, (int)json.Bar.ObjectProperty);
+            Assert.That((string)json.Bar.StringProperty, Is.EqualTo("a"));
+            Assert.That((int)json.Bar.ObjectProperty, Is.EqualTo(1));
         }
 
         [Test]
@@ -466,20 +466,20 @@ namespace Azure.Core.Tests
             // New property
             json.Bar = model;
 
-            Assert.AreEqual("a", (string)json.Foo.StringProperty);
-            Assert.AreEqual(1, (int)json.Foo.ObjectProperty);
+            Assert.That((string)json.Foo.StringProperty, Is.EqualTo("a"));
+            Assert.That((int)json.Foo.ObjectProperty, Is.EqualTo(1));
 
-            Assert.AreEqual("a", (string)json.Bar.StringProperty);
-            Assert.AreEqual(1, (int)json.Bar.ObjectProperty);
+            Assert.That((string)json.Bar.StringProperty, Is.EqualTo("a"));
+            Assert.That((int)json.Bar.ObjectProperty, Is.EqualTo(1));
 
             model.StringProperty = "b";
             model.ObjectProperty = 2;
 
-            Assert.AreEqual("a", (string)json.Foo.StringProperty);
-            Assert.AreEqual(1, (int)json.Foo.ObjectProperty);
+            Assert.That((string)json.Foo.StringProperty, Is.EqualTo("a"));
+            Assert.That((int)json.Foo.ObjectProperty, Is.EqualTo(1));
 
-            Assert.AreEqual("a", (string)json.Bar.StringProperty);
-            Assert.AreEqual(1, (int)json.Bar.ObjectProperty);
+            Assert.That((string)json.Bar.StringProperty, Is.EqualTo("a"));
+            Assert.That((int)json.Bar.ObjectProperty, Is.EqualTo(1));
 
             json.Foo.StringProperty = "b";
             json.Foo.ObjectProperty = 2;
@@ -487,11 +487,11 @@ namespace Azure.Core.Tests
             json.Bar.StringProperty = "c";
             json.Bar.ObjectProperty = 3;
 
-            Assert.AreEqual("b", (string)json.Foo.StringProperty);
-            Assert.AreEqual(2, (int)json.Foo.ObjectProperty);
+            Assert.That((string)json.Foo.StringProperty, Is.EqualTo("b"));
+            Assert.That((int)json.Foo.ObjectProperty, Is.EqualTo(2));
 
-            Assert.AreEqual("c", (string)json.Bar.StringProperty);
-            Assert.AreEqual(3, (int)json.Bar.ObjectProperty);
+            Assert.That((string)json.Bar.StringProperty, Is.EqualTo("c"));
+            Assert.That((int)json.Bar.ObjectProperty, Is.EqualTo(3));
         }
 
         [Test]
@@ -512,26 +512,26 @@ namespace Azure.Core.Tests
             // New property
             json.Bar = model;
 
-            Assert.AreEqual("a", (string)json.Foo.StringProperty);
-            Assert.AreEqual(1, (int)json.Foo.ObjectProperty);
+            Assert.That((string)json.Foo.StringProperty, Is.EqualTo("a"));
+            Assert.That((int)json.Foo.ObjectProperty, Is.EqualTo(1));
 
-            Assert.AreEqual("a", (string)json.Bar.StringProperty);
-            Assert.AreEqual(1, (int)json.Bar.ObjectProperty);
+            Assert.That((string)json.Bar.StringProperty, Is.EqualTo("a"));
+            Assert.That((int)json.Bar.ObjectProperty, Is.EqualTo(1));
 
             model.StringProperty = "b";
             model.ObjectProperty = BinaryData.FromString("no");
 
-            Assert.AreEqual("a", (string)json.Foo.StringProperty);
-            Assert.AreEqual(1, (int)json.Foo.ObjectProperty);
+            Assert.That((string)json.Foo.StringProperty, Is.EqualTo("a"));
+            Assert.That((int)json.Foo.ObjectProperty, Is.EqualTo(1));
 
-            Assert.AreEqual("a", (string)json.Bar.StringProperty);
-            Assert.AreEqual(1, (int)json.Bar.ObjectProperty);
+            Assert.That((string)json.Bar.StringProperty, Is.EqualTo("a"));
+            Assert.That((int)json.Bar.ObjectProperty, Is.EqualTo(1));
 
             json.Foo.StringProperty = "b";
             json.Bar.StringProperty = "c";
 
-            Assert.AreEqual("b", (string)json.Foo.StringProperty);
-            Assert.AreEqual("c", (string)json.Bar.StringProperty);
+            Assert.That((string)json.Foo.StringProperty, Is.EqualTo("b"));
+            Assert.That((string)json.Bar.StringProperty, Is.EqualTo("c"));
 
             Assert.Throws<NotSupportedException>(() => { json.Foo.ObjectProperty = BinaryData.FromString("no"); });
             Assert.Throws<NotSupportedException>(() => { json.Bar.ObjectProperty = BinaryData.FromString("no"); });
@@ -605,7 +605,7 @@ namespace Azure.Core.Tests
             List<List<string>> list = new();
             list.Add(new List<string>() { "a" });
 
-            Assert.AreEqual("a", list[0][0]);
+            Assert.That(list[0][0], Is.EqualTo("a"));
 
             // Existing property
             json.Foo = list;
@@ -613,8 +613,8 @@ namespace Azure.Core.Tests
             // New property
             json.Bar = list;
 
-            Assert.AreEqual("a", (string)json.Foo[0][0]);
-            Assert.AreEqual("a", (string)json.Bar[0][0]);
+            Assert.That((string)json.Foo[0][0], Is.EqualTo("a"));
+            Assert.That((string)json.Bar[0][0], Is.EqualTo("a"));
         }
 
         [Test]

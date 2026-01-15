@@ -32,8 +32,8 @@ namespace Azure.Search.Documents.Tests
             var endpoint = new Uri($"https://{serviceName}.search.windows.net");
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
             Assert.NotNull(service);
-            Assert.AreEqual(endpoint, service.Endpoint);
-            Assert.AreEqual(serviceName, service.ServiceName);
+            Assert.That(service.Endpoint, Is.EqualTo(endpoint));
+            Assert.That(service.ServiceName, Is.EqualTo(serviceName));
 
             Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(null, new AzureKeyCredential("fake")));
             Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(endpoint, credential: null));
@@ -51,9 +51,9 @@ namespace Azure.Search.Documents.Tests
             var indexName = "my-index-name";
             var client = service.GetSearchClient(indexName);
             Assert.NotNull(client);
-            Assert.AreEqual(endpoint, client.Endpoint);
-            Assert.AreEqual(serviceName, client.ServiceName);
-            Assert.AreEqual(indexName, client.IndexName);
+            Assert.That(client.Endpoint, Is.EqualTo(endpoint));
+            Assert.That(client.ServiceName, Is.EqualTo(serviceName));
+            Assert.That(client.IndexName, Is.EqualTo(indexName));
 
             Assert.Throws<ArgumentNullException>(() => service.GetSearchClient(null));
             Assert.Throws<ArgumentException>(() => service.GetSearchClient(string.Empty));
@@ -71,7 +71,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             TestPipelinePolicy custom = new TestPipelinePolicy();
-            Assert.AreEqual(0, custom.RequestCount);
+            Assert.That(custom.RequestCount, Is.EqualTo(0));
 
             SearchClientOptions options = new SearchClientOptions(ServiceVersion);
             options.AddPolicy(custom, HttpPipelinePosition.PerCall);
@@ -80,7 +80,7 @@ namespace Azure.Search.Documents.Tests
             SearchClient client = serviceClient.GetSearchClient(resources.IndexName);
             _ = await client.GetDocumentCountAsync();
 
-            Assert.AreEqual(1, custom.RequestCount);
+            Assert.That(custom.RequestCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexClient client = resources.GetIndexClient();
             Response<SearchServiceStatistics> response = await client.GetServiceStatisticsAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.IsNotNull(response.Value);
             Assert.IsNotNull(response.Value.Counters);
             Assert.IsNotNull(response.Value.Counters.DataSourceCounter);
@@ -140,11 +140,11 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexClient client = resources.GetIndexClient();
             Response<ListIndexStatsSummary> response = await client.GetIndexStatsSummaryAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.IsNotNull(response.Value);
             Assert.IsNotNull(response.Value.IndexesStatistics);
             Assert.GreaterOrEqual(response.Value.IndexesStatistics.Count, 1);
-            Assert.True(response.Value.IndexesStatistics.Any(summary => summary.Name == resources.IndexName));
+            Assert.That(response.Value.IndexesStatistics.Any(summary => summary.Name == resources.IndexName), Is.True);
         }
 
         [Test]
@@ -155,10 +155,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateIndex(null));
-            Assert.AreEqual("index", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("index"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateIndexAsync(null));
-            Assert.AreEqual("index", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("index"));
         }
 
         [Test]
@@ -174,12 +174,12 @@ namespace Azure.Search.Documents.Tests
             SearchIndexClient client = resources.GetIndexClient();
             SearchIndex actualIndex = await client.CreateIndexAsync(expectedIndex);
 
-            Assert.AreEqual(expectedIndex.Name, actualIndex.Name);
+            Assert.That(actualIndex.Name, Is.EqualTo(expectedIndex.Name));
             Assert.That(actualIndex.Fields, Is.EqualTo(expectedIndex.Fields).Using(SearchFieldComparer.Shared));
-            Assert.AreEqual(expectedIndex.Suggesters.Count, actualIndex.Suggesters.Count);
-            Assert.AreEqual(expectedIndex.Suggesters[0].Name, actualIndex.Suggesters[0].Name);
-            Assert.AreEqual(expectedIndex.ScoringProfiles.Count, actualIndex.ScoringProfiles.Count);
-            Assert.AreEqual(expectedIndex.ScoringProfiles[0].Name, actualIndex.ScoringProfiles[0].Name);
+            Assert.That(actualIndex.Suggesters.Count, Is.EqualTo(expectedIndex.Suggesters.Count));
+            Assert.That(actualIndex.Suggesters[0].Name, Is.EqualTo(expectedIndex.Suggesters[0].Name));
+            Assert.That(actualIndex.ScoringProfiles.Count, Is.EqualTo(expectedIndex.ScoringProfiles.Count));
+            Assert.That(actualIndex.ScoringProfiles[0].Name, Is.EqualTo(expectedIndex.ScoringProfiles[0].Name));
         }
 
         [Test]
@@ -196,16 +196,16 @@ namespace Azure.Search.Documents.Tests
             SearchIndexClient client = resources.GetIndexClient();
             SearchIndex actualIndex = await client.CreateIndexAsync(expectedIndex);
 
-            Assert.AreEqual(expectedIndex.ScoringProfiles.Count, actualIndex.ScoringProfiles.Count);
-            Assert.AreEqual(expectedIndex.ScoringProfiles[0].Name, actualIndex.ScoringProfiles[0].Name);
-            Assert.AreEqual(ScoringFunctionAggregation.Product, actualIndex.ScoringProfiles[0].FunctionAggregation);
+            Assert.That(actualIndex.ScoringProfiles.Count, Is.EqualTo(expectedIndex.ScoringProfiles.Count));
+            Assert.That(actualIndex.ScoringProfiles[0].Name, Is.EqualTo(expectedIndex.ScoringProfiles[0].Name));
+            Assert.That(actualIndex.ScoringProfiles[0].FunctionAggregation, Is.EqualTo(ScoringFunctionAggregation.Product));
 
             SearchIndex fetchedIndex = await client.GetIndexAsync(resources.IndexName);
-            Assert.AreEqual(ScoringFunctionAggregation.Product, fetchedIndex.ScoringProfiles[0].FunctionAggregation);
+            Assert.That(fetchedIndex.ScoringProfiles[0].FunctionAggregation, Is.EqualTo(ScoringFunctionAggregation.Product));
 
             actualIndex.ScoringProfiles[0].FunctionAggregation = ScoringFunctionAggregation.Sum;
             SearchIndex updatedIndex = await client.CreateOrUpdateIndexAsync(actualIndex);
-            Assert.AreEqual(ScoringFunctionAggregation.Sum, updatedIndex.ScoringProfiles[0].FunctionAggregation);
+            Assert.That(updatedIndex.ScoringProfiles[0].FunctionAggregation, Is.EqualTo(ScoringFunctionAggregation.Sum));
         }
 
         [Test]
@@ -228,14 +228,14 @@ namespace Azure.Search.Documents.Tests
             await client.CreateIndexAsync(expectedIndex);
 
             SearchIndex fetchedIndex = await client.GetIndexAsync(resources.IndexName);
-            Assert.AreEqual(true, fetchedIndex.PurviewEnabled);
-            Assert.IsTrue(fetchedIndex.Fields.First(f => f.Name == "sensitivityLabel") is SearchField sf && sf.SensitivityLabel == true);
+            Assert.That(fetchedIndex.PurviewEnabled, Is.EqualTo(true));
+            Assert.That(fetchedIndex.Fields.First(f => f.Name == "sensitivityLabel") is SearchField sf && sf.SensitivityLabel == true, Is.True);
 
             fetchedIndex.PurviewEnabled = false;
             var updatedIndex = await client.CreateOrUpdateIndexAsync(fetchedIndex);
 
             fetchedIndex = await client.GetIndexAsync(fetchedIndex.Name);
-            Assert.AreEqual(false, fetchedIndex.PurviewEnabled);
+            Assert.That(fetchedIndex.PurviewEnabled, Is.EqualTo(false));
         }
 
         [Test]
@@ -246,10 +246,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateOrUpdateIndex(null));
-            Assert.AreEqual("index", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("index"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateOrUpdateIndexAsync(null));
-            Assert.AreEqual("index", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("index"));
         }
 
         [Test]
@@ -296,14 +296,14 @@ namespace Azure.Search.Documents.Tests
                 allowIndexDowntime: true,
                 onlyIfUnchanged: true);
 
-            Assert.AreEqual(createdIndex.Name, updatedIndex.Name);
+            Assert.That(updatedIndex.Name, Is.EqualTo(createdIndex.Name));
             Assert.That(updatedIndex.Fields, Is.EqualTo(updatedIndex.Fields).Using(SearchFieldComparer.Shared));
-            Assert.AreEqual(createdIndex.Suggesters.Count, updatedIndex.Suggesters.Count);
-            Assert.AreEqual(createdIndex.Suggesters[0].Name, updatedIndex.Suggesters[0].Name);
-            Assert.AreEqual(createdIndex.ScoringProfiles.Count, updatedIndex.ScoringProfiles.Count);
-            Assert.AreEqual(createdIndex.ScoringProfiles[0].Name, updatedIndex.ScoringProfiles[0].Name);
-            Assert.AreEqual(createdIndex.Analyzers.Count, updatedIndex.Analyzers.Count);
-            Assert.AreEqual(createdIndex.Analyzers[0].Name, updatedIndex.Analyzers[0].Name);
+            Assert.That(updatedIndex.Suggesters.Count, Is.EqualTo(createdIndex.Suggesters.Count));
+            Assert.That(updatedIndex.Suggesters[0].Name, Is.EqualTo(createdIndex.Suggesters[0].Name));
+            Assert.That(updatedIndex.ScoringProfiles.Count, Is.EqualTo(createdIndex.ScoringProfiles.Count));
+            Assert.That(updatedIndex.ScoringProfiles[0].Name, Is.EqualTo(createdIndex.ScoringProfiles[0].Name));
+            Assert.That(updatedIndex.Analyzers.Count, Is.EqualTo(createdIndex.Analyzers.Count));
+            Assert.That(updatedIndex.Analyzers[0].Name, Is.EqualTo(createdIndex.Analyzers[0].Name));
         }
 
         [Test]
@@ -314,10 +314,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetIndex(null));
-            Assert.AreEqual("indexName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetIndexAsync(null));
-            Assert.AreEqual("indexName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexName"));
         }
 
         [Test]
@@ -329,8 +329,8 @@ namespace Azure.Search.Documents.Tests
             SearchIndex index = await client.GetIndexAsync(resources.IndexName);
 
             // TODO: Replace with comparison of actual SearchIndex once test framework uses Azure.Search.Documents instead.
-            Assert.AreEqual(resources.IndexName, index.Name);
-            Assert.AreEqual(15, index.Fields.Count);
+            Assert.That(index.Name, Is.EqualTo(resources.IndexName));
+            Assert.That(index.Fields.Count, Is.EqualTo(15));
         }
 
         [Test]
@@ -346,7 +346,7 @@ namespace Azure.Search.Documents.Tests
                 found |= string.Equals(resources.IndexName, index.Name, StringComparison.InvariantCultureIgnoreCase);
             }
 
-            Assert.IsTrue(found, "Shared index not found");
+            Assert.That(found, Is.True, "Shared index not found");
         }
 
         [Test]
@@ -378,7 +378,7 @@ namespace Azure.Search.Documents.Tests
                 found |= string.Equals(resources.IndexName, name, StringComparison.InvariantCultureIgnoreCase);
             }
 
-            Assert.IsTrue(found, "Shared index name not found");
+            Assert.That(found, Is.True, "Shared index name not found");
         }
 
         [Test]
@@ -389,16 +389,16 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndex((string)null));
-            Assert.AreEqual("indexName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexName"));
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndex((SearchIndex)null));
-            Assert.AreEqual("index", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("index"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexAsync((string)null));
-            Assert.AreEqual("indexName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("indexName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexAsync((SearchIndex)null));
-            Assert.AreEqual("index", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("index"));
         }
 
         [Test]
@@ -409,10 +409,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateSynonymMap(null));
-            Assert.AreEqual("synonymMap", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("synonymMap"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateSynonymMapAsync(null));
-            Assert.AreEqual("synonymMap", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("synonymMap"));
         }
 
         [Test]
@@ -423,10 +423,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateOrUpdateSynonymMap(null));
-            Assert.AreEqual("synonymMap", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("synonymMap"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateOrUpdateSynonymMapAsync(null));
-            Assert.AreEqual("synonymMap", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("synonymMap"));
         }
 
         [Test]
@@ -437,10 +437,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetSynonymMap(null));
-            Assert.AreEqual("synonymMapName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("synonymMapName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetSynonymMapAsync(null));
-            Assert.AreEqual("synonymMapName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("synonymMapName"));
         }
 
         [Test]
@@ -451,16 +451,16 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSynonymMap((string)null));
-            Assert.AreEqual("synonymMapName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("synonymMapName"));
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSynonymMap((SynonymMap)null));
-            Assert.AreEqual("synonymMap", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("synonymMap"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSynonymMapAsync((string)null));
-            Assert.AreEqual("synonymMapName", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("synonymMapName"));
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSynonymMapAsync((SynonymMap)null));
-            Assert.AreEqual("synonymMap", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("synonymMap"));
         }
 
         [Test]
@@ -473,9 +473,9 @@ namespace Azure.Search.Documents.Tests
             SearchIndexClient client = resources.GetIndexClient();
 
             SynonymMap createdMap = await client.CreateSynonymMapAsync(new SynonymMap(synonymMapName, "msft=>Microsoft"));
-            Assert.AreEqual(synonymMapName, createdMap.Name);
-            Assert.AreEqual("solr", createdMap.Format);
-            Assert.AreEqual("msft=>Microsoft", createdMap.Synonyms);
+            Assert.That(createdMap.Name, Is.EqualTo(synonymMapName));
+            Assert.That(createdMap.Format, Is.EqualTo("solr"));
+            Assert.That(createdMap.Synonyms, Is.EqualTo("msft=>Microsoft"));
 
             SynonymMap updatedMap = await client.CreateOrUpdateSynonymMapAsync(
                 new SynonymMap(synonymMapName, "ms,msft=>Microsoft")
@@ -483,9 +483,9 @@ namespace Azure.Search.Documents.Tests
                     ETag = createdMap.ETag,
                 },
                 onlyIfUnchanged: true);
-            Assert.AreEqual(synonymMapName, updatedMap.Name);
-            Assert.AreEqual("solr", updatedMap.Format);
-            Assert.AreEqual("ms,msft=>Microsoft", updatedMap.Synonyms);
+            Assert.That(updatedMap.Name, Is.EqualTo(synonymMapName));
+            Assert.That(updatedMap.Format, Is.EqualTo("solr"));
+            Assert.That(updatedMap.Synonyms, Is.EqualTo("ms,msft=>Microsoft"));
 
             RequestFailedException ex = await CatchAsync<RequestFailedException>(async () =>
                 await client.CreateOrUpdateSynonymMapAsync(
@@ -494,7 +494,7 @@ namespace Azure.Search.Documents.Tests
                         ETag = createdMap.ETag,
                     },
                     onlyIfUnchanged: true));
-            Assert.AreEqual((int)HttpStatusCode.PreconditionFailed, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.PreconditionFailed));
 
             Response<IReadOnlyList<string>> names = await client.GetSynonymMapNamesAsync();
             foreach (string name in names.Value)
@@ -502,7 +502,7 @@ namespace Azure.Search.Documents.Tests
                 if (string.Equals(updatedMap.Name, name, StringComparison.OrdinalIgnoreCase))
                 {
                     SynonymMap fetchedMap = await client.GetSynonymMapAsync(name);
-                    Assert.AreEqual(updatedMap.Synonyms, fetchedMap.Synonyms);
+                    Assert.That(fetchedMap.Synonyms, Is.EqualTo(updatedMap.Synonyms));
                 }
             }
 
@@ -521,7 +521,7 @@ namespace Azure.Search.Documents.Tests
             Response<IReadOnlyList<AnalyzedTokenInfo>> result = await client.AnalyzeTextAsync(resources.IndexName, request);
             IReadOnlyList<AnalyzedTokenInfo> tokens = result.Value;
 
-            Assert.AreEqual(new[] { "The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog." }, tokens.Select(t => t.Token));
+            Assert.That(tokens.Select(t => t.Token), Is.EqualTo(new[] { "The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog." }));
         }
 
         [Test]
@@ -540,8 +540,8 @@ namespace Azure.Search.Documents.Tests
             Response<IReadOnlyList<AnalyzedTokenInfo>> result = await client.AnalyzeTextAsync(resources.IndexName, request);
             IReadOnlyList<AnalyzedTokenInfo> tokens = result.Value;
 
-            Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual("i dare you to read it in a normal voice.", tokens[0].Token);
+            Assert.That(tokens.Count, Is.EqualTo(1));
+            Assert.That(tokens[0].Token, Is.EqualTo("i dare you to read it in a normal voice."));
 
             request = new("Item ① in my ⑽ point rant is that 75⁰F is uncomfortably warm.")
             {
@@ -551,8 +551,8 @@ namespace Azure.Search.Documents.Tests
             result = await client.AnalyzeTextAsync(resources.IndexName, request);
             tokens = result.Value;
 
-            Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual("Item 1 in my (10) point rant is that 750F is uncomfortably warm.", tokens[0].Token);
+            Assert.That(tokens.Count, Is.EqualTo(1));
+            Assert.That(tokens[0].Token, Is.EqualTo("Item 1 in my (10) point rant is that 750F is uncomfortably warm."));
         }
 
         [Test]
@@ -591,8 +591,8 @@ namespace Azure.Search.Documents.Tests
             SearchIndexClient client = resources.GetIndexClient();
             SearchIndex createdIndex = await client.CreateIndexAsync(index);
 
-            Assert.AreEqual(1, createdIndex.ScoringProfiles.Count);
-            Assert.AreEqual(scoringProfileName, createdIndex.ScoringProfiles[0].Name);
+            Assert.That(createdIndex.ScoringProfiles.Count, Is.EqualTo(1));
+            Assert.That(createdIndex.ScoringProfiles[0].Name, Is.EqualTo(scoringProfileName));
         }
 
         [Test]
@@ -639,7 +639,7 @@ namespace Azure.Search.Documents.Tests
             KnowledgeBase actualAgent = await client.CreateKnowledgeBaseAsync(knowledgeBase);
             KnowledgeBase expectedAgent = knowledgeBase;
 
-            Assert.AreEqual(expectedAgent.Name, actualAgent.Name);
+            Assert.That(actualAgent.Name, Is.EqualTo(expectedAgent.Name));
             Assert.That(actualAgent.Models, Is.EqualTo(expectedAgent.Models).Using(KnowledgeBaseModelComparer.Instance));
             Assert.That(actualAgent.KnowledgeSources, Is.EqualTo(expectedAgent.KnowledgeSources).Using(KnowledgeSourceReferenceComparer.Instance));
 
@@ -719,7 +719,7 @@ namespace Azure.Search.Documents.Tests
                 await client.GetKnowledgeBaseAsync(resources.KnowledgeBaseName);
             });
 
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -767,8 +767,8 @@ namespace Azure.Search.Documents.Tests
             createdAgent.Description = "Updated description";
             KnowledgeBase updatedAgent = await client.CreateOrUpdateKnowledgeBaseAsync(createdAgent);
 
-            Assert.AreEqual(createdAgent.Name, updatedAgent.Name);
-            Assert.AreEqual(createdAgent.Description, updatedAgent.Description);
+            Assert.That(updatedAgent.Name, Is.EqualTo(createdAgent.Name));
+            Assert.That(updatedAgent.Description, Is.EqualTo(createdAgent.Description));
             Assert.That(createdAgent.Models, Is.EqualTo(updatedAgent.Models).Using(KnowledgeBaseModelComparer.Instance));
             Assert.That(createdAgent.KnowledgeSources, Is.EqualTo(updatedAgent.KnowledgeSources).Using(KnowledgeSourceReferenceComparer.Instance));
 
@@ -786,7 +786,7 @@ namespace Azure.Search.Documents.Tests
             SearchIndexClient client = resources.GetIndexClient();
             KnowledgeBase agent = await client.GetKnowledgeBaseAsync(resources.KnowledgeBaseName);
 
-            Assert.AreEqual(resources.KnowledgeBaseName, agent.Name);
+            Assert.That(agent.Name, Is.EqualTo(resources.KnowledgeBaseName));
         }
 
         [Test]
@@ -804,7 +804,7 @@ namespace Azure.Search.Documents.Tests
                 found |= string.Equals(resources.KnowledgeBaseName, agent.Name, StringComparison.InvariantCultureIgnoreCase);
             }
 
-            Assert.IsTrue(found, "Knowledge agent not found");
+            Assert.That(found, Is.True, "Knowledge agent not found");
         }
 
         [Test]
@@ -822,11 +822,11 @@ namespace Azure.Search.Documents.Tests
 
             createdKs.Description = "Updated description";
             RemoteSharePointKnowledgeSource updatedKs = (RemoteSharePointKnowledgeSource)await client.CreateOrUpdateKnowledgeSourceAsync(createdKs);
-            Assert.AreEqual("Updated description", updatedKs.Description);
+            Assert.That(updatedKs.Description, Is.EqualTo("Updated description"));
 
             KnowledgeSource fetchedKs = await client.GetKnowledgeSourceAsync(remoteSharePointKnowledgeSource.Name);
             Assert.IsNotNull(fetchedKs);
-            Assert.AreEqual("Updated description", fetchedKs.Description);
+            Assert.That(fetchedKs.Description, Is.EqualTo("Updated description"));
 
             await client.DeleteKnowledgeSourceAsync(remoteSharePointKnowledgeSource.Name);
         }
@@ -845,20 +845,20 @@ namespace Azure.Search.Documents.Tests
 
             KnowledgeSource createdKs = await client.CreateKnowledgeSourceAsync(webKs);
             Assert.IsNotNull(createdKs);
-            Assert.IsTrue(createdKs is WebKnowledgeSource);
+            Assert.That(createdKs is WebKnowledgeSource, Is.True);
             var createdWebKs = createdKs as WebKnowledgeSource;
-            Assert.AreEqual(1, createdWebKs.WebParameters.Domains.AllowedDomains.Count);
-            Assert.AreEqual(1, createdWebKs.WebParameters.Domains.BlockedDomains.Count);
+            Assert.That(createdWebKs.WebParameters.Domains.AllowedDomains.Count, Is.EqualTo(1));
+            Assert.That(createdWebKs.WebParameters.Domains.BlockedDomains.Count, Is.EqualTo(1));
 
             createdWebKs.Description = "Updated description";
             WebKnowledgeSource updatedKs = (WebKnowledgeSource)await client.CreateOrUpdateKnowledgeSourceAsync(createdWebKs);
-            Assert.AreEqual("Updated description", updatedKs.Description);
-            Assert.AreEqual(1, updatedKs.WebParameters.Domains.AllowedDomains.Count);
-            Assert.AreEqual(1, updatedKs.WebParameters.Domains.BlockedDomains.Count);
+            Assert.That(updatedKs.Description, Is.EqualTo("Updated description"));
+            Assert.That(updatedKs.WebParameters.Domains.AllowedDomains.Count, Is.EqualTo(1));
+            Assert.That(updatedKs.WebParameters.Domains.BlockedDomains.Count, Is.EqualTo(1));
 
             KnowledgeSource fetchedKs = await client.GetKnowledgeSourceAsync(webKs.Name);
             Assert.IsNotNull(fetchedKs);
-            Assert.AreEqual("Updated description", fetchedKs.Description);
+            Assert.That(fetchedKs.Description, Is.EqualTo("Updated description"));
 
             await client.DeleteKnowledgeSourceAsync(webKs.Name);
         }

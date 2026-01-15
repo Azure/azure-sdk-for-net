@@ -13,7 +13,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void SplitReturnsNullForAll()
         {
-            Assert.IsNull(SettingFields.All.Split());
+            Assert.That(SettingFields.All.Split(), Is.Null);
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace Azure.Data.AppConfiguration.Tests
             IEnumerable<string> splitFields = fields.Split();
             string fieldString = splitFields.Single();
 
-            Assert.AreEqual(fieldString, expectedFieldString);
+            Assert.That(expectedFieldString, Is.EqualTo(fieldString));
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace Azure.Data.AppConfiguration.Tests
             SettingFields fields = SettingFields.Key | SettingFields.ContentType | SettingFields.LastModified | SettingFields.IsReadOnly;
             IEnumerable<string> splitFields = fields.Split();
 
-            Assert.AreEqual(splitFields.Count(), 4);
+            Assert.That(splitFields.Count(), Is.EqualTo(4));
             CollectionAssert.Contains(splitFields, "key");
             CollectionAssert.Contains(splitFields, "content_type");
             CollectionAssert.Contains(splitFields, "last_modified");
@@ -60,7 +60,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 // If this assertion fails, it's likely that a new enum value has been added to SettingFields
                 // but a corresponding entry has not been added to s_serviceNameMap in SettingFieldsExtensions.
-                Assert.AreEqual(splitFields.Count(), 1, $"{nameof(SettingFields)} enum value {fields} could not be mapped to a string.");
+                Assert.That(splitFields.Count(), Is.EqualTo(1), $"{nameof(SettingFields)} enum value {fields} could not be mapped to a string.");
             }
         }
     }

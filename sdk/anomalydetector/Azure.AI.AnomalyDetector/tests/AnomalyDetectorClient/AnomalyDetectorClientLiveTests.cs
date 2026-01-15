@@ -95,7 +95,7 @@ namespace Azure.AI.AnomalyDetector.Tests
                 model_number++;
             }
 
-            Assert.IsTrue(model_number >= 0);
+            Assert.That(model_number >= 0, Is.True);
         }
     }
 }

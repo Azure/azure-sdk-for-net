@@ -38,7 +38,7 @@ namespace Azure.Core.Tests
             var servicePoint = ServicePointManager.FindServicePoint(testServer.Address);
 
             Assert.GreaterOrEqual(servicePoint.ConnectionLimit, 50);
-            Assert.AreEqual(300_000, servicePoint.ConnectionLeaseTimeout);
+            Assert.That(servicePoint.ConnectionLeaseTimeout, Is.EqualTo(300_000));
         }
     }
 #endif

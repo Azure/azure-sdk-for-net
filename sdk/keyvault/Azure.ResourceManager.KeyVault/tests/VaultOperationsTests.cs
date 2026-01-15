@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             ArmOperation<KeyVaultResource> rawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, content);
             KeyVaultData createdVault = rawVault.Value.Data;
             Assert.IsNotNull(createdVault);
-            Assert.AreEqual(VaultName, createdVault.Name);
+            Assert.That(createdVault.Name, Is.EqualTo(VaultName));
         }
 
         [Test]
@@ -216,10 +216,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             await foreach (var v in vaults)
             {
-                Assert.True(resourceIds.Remove(v.Id));
+                Assert.That(resourceIds.Remove(v.Id), Is.True);
             }
 
-            Assert.True(resourceIds.Count == 0);
+            Assert.That(resourceIds.Count == 0, Is.True);
 
             AsyncPageable<KeyVaultResource> allVaults = VaultCollection.GetAllAsync(top);
             Assert.NotNull(vaults);
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             // Recover in default mode
             ArmOperation<KeyVaultResource> recoveredRawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName,parameters).ConfigureAwait(false);
             KeyVaultResource recoveredVault = recoveredRawVault.Value;
-            Assert.True(recoveredVault.Data.IsEqual(vaultValue.Data));
+            Assert.That(recoveredVault.Data.IsEqual(vaultValue.Data), Is.True);
 
             // Get recovered vault
             Response<KeyVaultResource> getResult =  await VaultCollection.GetAsync(VaultName);
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             ArmOperation<KeyVaultResource> recoveredRawVault2 = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
             KeyVaultResource recoveredVault2 = recoveredRawVault.Value;
 
-            Assert.True(recoveredVault2.Data.IsEqual(vaultValue.Data));
+            Assert.That(recoveredVault2.Data.IsEqual(vaultValue.Data), Is.True);
 
             // Get recovered vault
             getResult = await VaultCollection.GetAsync(VaultName);
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 await createdVault.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
                 Response<DeletedKeyVaultResource> deletedVault = await DeletedVaultCollection.GetAsync(Location, vaultName).ConfigureAwait(false);
-                Assert.IsTrue(deletedVault.Value.Data.Name.Equals(createdVault.Data.Name));
+                Assert.That(deletedVault.Value.Data.Name.Equals(createdVault.Data.Name), Is.True);
             }
 
             List<DeletedKeyVaultResource> deletedVaults = Subscription.GetDeletedKeyVaultsAsync().ToEnumerableAsync().Result;
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                     break;
             }
 
-            Assert.True(resourceIds.Count == 0);
+            Assert.That(resourceIds.Count == 0, Is.True);
         }
 
         private void ValidateVault(
@@ -340,19 +340,19 @@ namespace Azure.ResourceManager.KeyVault.Tests
             string resourceIdFormat = "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.KeyVault/vaults/{2}";
             string expectedResourceId = string.Format(resourceIdFormat, expectedSubId, expectedResourceGroupName, expectedVaultName);
 
-            Assert.AreEqual(expectedResourceId, vaultData.Id.ToString());
-            Assert.AreEqual(expectedLocation, vaultData.Location);
-            Assert.AreEqual(Mode == RecordedTestMode.Live ? expectedTenantId : Guid.Empty, vaultData.Properties.TenantId);
-            Assert.AreEqual(expectedSku, vaultData.Properties.Sku.Name);
-            Assert.AreEqual(expectedVaultName, vaultData.Name);
-            Assert.AreEqual(expectedEnabledForDeployment, vaultData.Properties.EnabledForDeployment);
-            Assert.AreEqual(expectedEnabledForTemplateDeployment, vaultData.Properties.EnabledForTemplateDeployment);
-            Assert.AreEqual(expectedEnabledForDiskEncryption, vaultData.Properties.EnabledForDiskEncryption);
-            Assert.AreEqual(expectedEnableSoftDelete, vaultData.Properties.EnableSoftDelete);
-            Assert.True(expectedTags.DictionaryEqual(vaultData.Tags));
+            Assert.That(vaultData.Id.ToString(), Is.EqualTo(expectedResourceId));
+            Assert.That(vaultData.Location, Is.EqualTo(expectedLocation));
+            Assert.That(vaultData.Properties.TenantId, Is.EqualTo(Mode == RecordedTestMode.Live ? expectedTenantId : Guid.Empty));
+            Assert.That(vaultData.Properties.Sku.Name, Is.EqualTo(expectedSku));
+            Assert.That(vaultData.Name, Is.EqualTo(expectedVaultName));
+            Assert.That(vaultData.Properties.EnabledForDeployment, Is.EqualTo(expectedEnabledForDeployment));
+            Assert.That(vaultData.Properties.EnabledForTemplateDeployment, Is.EqualTo(expectedEnabledForTemplateDeployment));
+            Assert.That(vaultData.Properties.EnabledForDiskEncryption, Is.EqualTo(expectedEnabledForDiskEncryption));
+            Assert.That(vaultData.Properties.EnableSoftDelete, Is.EqualTo(expectedEnableSoftDelete));
+            Assert.That(expectedTags.DictionaryEqual(vaultData.Tags), Is.True);
             if (Mode == RecordedTestMode.Live)
             {
-                Assert.True(expectedPolicies.IsEqual(vaultData.Properties.AccessPolicies));
+                Assert.That(expectedPolicies.IsEqual(vaultData.Properties.AccessPolicies), Is.True);
             }
         }
 
@@ -390,11 +390,11 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 expectedTags);
 
             Assert.NotNull(vaultData.Properties.NetworkRuleSet);
-            Assert.AreEqual(networkRuleSet.DefaultAction, vaultData.Properties.NetworkRuleSet.DefaultAction);
-            Assert.AreEqual(networkRuleSet.Bypass, vaultData.Properties.NetworkRuleSet.Bypass);
-            Assert.True(vaultData.Properties.NetworkRuleSet.IPRules != null && vaultData.Properties.NetworkRuleSet.IPRules.Count == 2);
-            Assert.AreEqual(networkRuleSet.IPRules[0].AddressRange, vaultData.Properties.NetworkRuleSet.IPRules[0].AddressRange);
-            Assert.AreEqual(networkRuleSet.IPRules[1].AddressRange, vaultData.Properties.NetworkRuleSet.IPRules[1].AddressRange);
+            Assert.That(vaultData.Properties.NetworkRuleSet.DefaultAction, Is.EqualTo(networkRuleSet.DefaultAction));
+            Assert.That(vaultData.Properties.NetworkRuleSet.Bypass, Is.EqualTo(networkRuleSet.Bypass));
+            Assert.That(vaultData.Properties.NetworkRuleSet.IPRules != null && vaultData.Properties.NetworkRuleSet.IPRules.Count == 2, Is.True);
+            Assert.That(vaultData.Properties.NetworkRuleSet.IPRules[0].AddressRange, Is.EqualTo(networkRuleSet.IPRules[0].AddressRange));
+            Assert.That(vaultData.Properties.NetworkRuleSet.IPRules[1].AddressRange, Is.EqualTo(networkRuleSet.IPRules[1].AddressRange));
         }
     }
 }

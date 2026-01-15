@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var privateEndpointConnections = await PrivateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             var privateEndpointConnection = privateEndpointConnections[0];
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
-            Assert.AreEqual("Pending", privateEndpointConnection.Data.ConnectionState.Status);
+            Assert.That(privateEndpointConnection.Data.ConnectionState.Status, Is.EqualTo("Pending"));
 
             _ = await PrivateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnection.Data.Name, new CosmosDBPrivateEndpointConnectionData()
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             privateEndpoint= await privateEndpoint.GetAsync();
             privateEndpointConnection = await PrivateEndpointConnectionCollection.GetAsync(privateEndpointConnection.Data.Name);
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
-            Assert.AreEqual("Approved", privateEndpointConnection.Data.ConnectionState.Status);
+            Assert.That(privateEndpointConnection.Data.ConnectionState.Status, Is.EqualTo("Approved"));
         }
 
         [RecordedTest]
@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var privateEndpointConnections = await PrivateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             var name = privateEndpointConnections[0].Data.Name;
-            Assert.IsTrue(await PrivateEndpointConnectionCollection.ExistsAsync(name));
+            Assert.That((bool)await PrivateEndpointConnectionCollection.ExistsAsync(name), Is.True);
             var id = PrivateEndpointConnectionCollection.Id;
             id = CosmosDBPrivateEndpointConnectionResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, name);
             var privateEndpointConnection = this.ArmClient.GetCosmosDBPrivateEndpointConnectionResource(id);
 
             await privateEndpointConnection.DeleteAsync(WaitUntil.Completed);
             bool exists = await PrivateEndpointConnectionCollection.ExistsAsync(name);
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
         }
 
         protected async Task<PrivateEndpointResource> CreatePrivateEndpoint()
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // Services will give diffferent ids and names for the incoming private endpoint connections, so comparing them is meaningless
             //Assert.AreEqual(expectedValue.Id, actualValue.Id);
             //Assert.AreEqual(expectedValue.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.ConnectionState.Status, actualValue.Data.ConnectionState.Status);
-            Assert.AreEqual(expectedValue.ConnectionState.Description, actualValue.Data.ConnectionState.Description);
-            Assert.AreEqual(expectedValue.ConnectionState.ActionsRequired, actualValue.Data.ConnectionState.ActionsRequired);
+            Assert.That(actualValue.Data.ConnectionState.Status, Is.EqualTo(expectedValue.ConnectionState.Status));
+            Assert.That(actualValue.Data.ConnectionState.Description, Is.EqualTo(expectedValue.ConnectionState.Description));
+            Assert.That(actualValue.Data.ConnectionState.ActionsRequired, Is.EqualTo(expectedValue.ConnectionState.ActionsRequired));
         }
     }
 }

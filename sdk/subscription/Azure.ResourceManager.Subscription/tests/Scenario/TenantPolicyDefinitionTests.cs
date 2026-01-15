@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Subscription.Tests
             var list = await _tenantPolicyDefinitionCollection.GetAllAsync().ToEnumerableAsync();
             string policyName = list.FirstOrDefault().Data.Name;
             bool flag = await _tenantPolicyDefinitionCollection.ExistsAsync(policyName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Subscription.Tests
             string policyName = list.FirstOrDefault().Data.Name;
             var policy = await _tenantPolicyDefinitionCollection.GetAsync(policyName);
             Assert.IsNotNull(policy);
-            Assert.AreEqual(policyName, policy.Value.Data.Name);
+            Assert.That(policy.Value.Data.Name, Is.EqualTo(policyName));
         }
     }
 }

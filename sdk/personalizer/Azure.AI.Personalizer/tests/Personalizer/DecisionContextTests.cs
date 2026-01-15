@@ -25,9 +25,9 @@ namespace Azure.AI.Personalizer.Tests
                     new List<object>() { new { videoType = "documentary", videoLength = 35, director = "CarlSagan" }, new { mostWatchedByAge = "30-35" } }
             ));
             DecisionContext decisionContext = new DecisionContext(contextFeatures.Select(f => BinaryData.FromObjectAsJson(f)).ToList(), actions);
-            Assert.AreEqual(decisionContext.ContextFeatures.Count, 1);
-            Assert.AreEqual(decisionContext.Documents.Count, 1);
-            Assert.AreEqual(decisionContext.Documents[0].ActionFeatures.Count, 2);
+            Assert.That(decisionContext.ContextFeatures.Count, Is.EqualTo(1));
+            Assert.That(decisionContext.Documents.Count, Is.EqualTo(1));
+            Assert.That(decisionContext.Documents[0].ActionFeatures.Count, Is.EqualTo(2));
 
             string expectedJson =
                 "{\"FromUrl\":[{" +
@@ -56,8 +56,8 @@ namespace Azure.AI.Personalizer.Tests
                 IgnoreNullValues = true
             };
             var contextJson = JsonSerializer.Serialize(decisionContext, jsonSerializerOptions);
-            #pragma warning restore SYSLIB0020
-            Assert.IsTrue(contextJson.Equals(expectedJson));
+#pragma warning restore SYSLIB0020
+            Assert.That(contextJson.Equals(expectedJson), Is.True);
         }
     }
 }

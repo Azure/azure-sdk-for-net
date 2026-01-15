@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string integrationAccountName = SessionRecording.GenerateAssetName("intergrationAccount");
             var integrationAccount = await CreateIntegrationAccount(_resourceGroup, integrationAccountName);
             Assert.IsNotNull(integrationAccount);
-            Assert.AreEqual(integrationAccountName, integrationAccount.Data.Name);
+            Assert.That(integrationAccount.Data.Name, Is.EqualTo(integrationAccountName));
         }
 
         [RecordedTest]
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Logic.Tests
             string integrationAccountName = SessionRecording.GenerateAssetName("intergrationAccount");
             await CreateIntegrationAccount(_resourceGroup, integrationAccountName);
             bool flag = await _integrationAccountCollection.ExistsAsync(integrationAccountName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
         }
 
         [RecordedTest]
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Tests
             await CreateIntegrationAccount(_resourceGroup, integrationAccountName);
             var integrationAccount = await _integrationAccountCollection.GetAsync(integrationAccountName);
             Assert.IsNotNull(integrationAccount);
-            Assert.AreEqual(integrationAccountName, integrationAccount.Value.Data.Name);
+            Assert.That(integrationAccount.Value.Data.Name, Is.EqualTo(integrationAccountName));
         }
 
         [RecordedTest]
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.Logic.Tests
             string integrationAccountName = SessionRecording.GenerateAssetName("intergrationAccount");
             var integrationAccount = await CreateIntegrationAccount(_resourceGroup, integrationAccountName);
             bool flag = await _integrationAccountCollection.ExistsAsync(integrationAccountName);
-            Assert.IsTrue(flag);
+            Assert.That(flag, Is.True);
 
             await integrationAccount.DeleteAsync(WaitUntil.Completed);
             flag = await _integrationAccountCollection.ExistsAsync(integrationAccountName);
-            Assert.IsFalse(flag);
+            Assert.That(flag, Is.False);
         }
     }
 }

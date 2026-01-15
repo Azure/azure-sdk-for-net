@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             var input = ResourceDataHelpers.GetRunbookData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             AutomationRunbookResource runbook = lro.Value;
-            Assert.AreEqual(name, runbook.Data.Name);
+            Assert.That(runbook.Data.Name, Is.EqualTo(name));
             //2.Get
             AutomationRunbookResource runbook2 = await runbook.GetAsync();
             ResourceDataHelpers.AssertRunbook(runbook.Data, runbook2.Data);
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 3);
             //4.Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync(name + "1"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resource

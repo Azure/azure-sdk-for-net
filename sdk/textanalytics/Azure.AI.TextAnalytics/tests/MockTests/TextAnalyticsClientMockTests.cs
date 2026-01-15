@@ -105,8 +105,8 @@ namespace Azure.AI.TextAnalytics.Tests
             var response = await client.RecognizeEntitiesBatchAsync(documents, new TextAnalyticsRequestOptions());
             var resultCollection = response.Value;
 
-            Assert.AreEqual("1", resultCollection[0].Id);
-            Assert.AreEqual("2", resultCollection[1].Id);
+            Assert.That(resultCollection[0].Id, Is.EqualTo("1"));
+            Assert.That(resultCollection[1].Id, Is.EqualTo("2"));
         }
 
         [Test]
@@ -205,10 +205,10 @@ namespace Azure.AI.TextAnalytics.Tests
             var response = await client.RecognizeEntitiesBatchAsync(documents, new TextAnalyticsRequestOptions());
             var resultCollection = response.Value;
 
-            Assert.AreEqual("4", resultCollection[0].Id);
-            Assert.AreEqual("5", resultCollection[1].Id);
-            Assert.AreEqual("2", resultCollection[2].Id);
-            Assert.AreEqual("3", resultCollection[3].Id);
+            Assert.That(resultCollection[0].Id, Is.EqualTo("4"));
+            Assert.That(resultCollection[1].Id, Is.EqualTo("5"));
+            Assert.That(resultCollection[2].Id, Is.EqualTo("2"));
+            Assert.That(resultCollection[3].Id, Is.EqualTo("3"));
         }
 
         [Test]
@@ -344,7 +344,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             DocumentSentiment response = await client.AnalyzeSentimentAsync("today is a hot day");
 
-            Assert.AreEqual(string.Empty, response.Sentences.FirstOrDefault().Text);
+            Assert.That(response.Sentences.FirstOrDefault().Text, Is.Empty);
         }
 
         [Test]
@@ -438,7 +438,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             DocumentSentiment response = await client.AnalyzeSentimentAsync("today is a hot day");
 
-            Assert.AreEqual(TextSentiment.Mixed, response.Sentences.FirstOrDefault().Sentiment);
+            Assert.That(response.Sentences.FirstOrDefault().Sentiment, Is.EqualTo(TextSentiment.Mixed));
         }
 
         [Test]
@@ -548,14 +548,14 @@ namespace Azure.AI.TextAnalytics.Tests
             DocumentSentiment response = await client.AnalyzeSentimentAsync("The park was clean. It was clean.");
 
             SentenceOpinion opinionS1 = response.Sentences.ElementAt(0).Opinions.FirstOrDefault();
-            Assert.AreEqual("park", opinionS1.Target.Text);
-            Assert.AreEqual(TextSentiment.Positive, opinionS1.Target.Sentiment);
-            Assert.AreEqual("clean", opinionS1.Assessments.FirstOrDefault().Text);
+            Assert.That(opinionS1.Target.Text, Is.EqualTo("park"));
+            Assert.That(opinionS1.Target.Sentiment, Is.EqualTo(TextSentiment.Positive));
+            Assert.That(opinionS1.Assessments.FirstOrDefault().Text, Is.EqualTo("clean"));
 
             SentenceOpinion opinionS2 = response.Sentences.ElementAt(1).Opinions.FirstOrDefault();
-            Assert.AreEqual("park", opinionS2.Target.Text);
-            Assert.AreEqual(TextSentiment.Positive, opinionS2.Target.Sentiment);
-            Assert.AreEqual("clean", opinionS2.Assessments.FirstOrDefault().Text);
+            Assert.That(opinionS2.Target.Text, Is.EqualTo("park"));
+            Assert.That(opinionS2.Target.Sentiment, Is.EqualTo(TextSentiment.Positive));
+            Assert.That(opinionS2.Assessments.FirstOrDefault().Text, Is.EqualTo("clean"));
         }
 
         [Test]
@@ -641,7 +641,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             LinkedEntityCollection response = await client.RecognizeLinkedEntitiesAsync(documents);
 
-            Assert.AreEqual(string.Empty, response.FirstOrDefault().Matches.FirstOrDefault().Text);
+            Assert.That(response.FirstOrDefault().Matches.FirstOrDefault().Text, Is.Empty);
         }
 
         [Test]
@@ -689,9 +689,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ExtractKeyPhrasesResultCollection result = await client.ExtractKeyPhrasesBatchAsync(documents);
             var resultError = result[1];
-            Assert.IsTrue(resultError.HasError);
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultError.Error.ErrorCode.ToString());
-            Assert.AreEqual("Document text is empty.", resultError.Error.Message);
+            Assert.That(resultError.HasError, Is.True);
+            Assert.That(resultError.Error.ErrorCode.ToString(), Is.EqualTo(TextAnalyticsErrorCode.InvalidDocument));
+            Assert.That(resultError.Error.Message, Is.EqualTo("Document text is empty."));
         }
     }
 }

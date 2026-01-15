@@ -56,15 +56,15 @@ namespace Azure.ResourceManager.Consumption.Tests
         private void ValidateConsumptionReservationDetail(ConsumptionReservationDetail detail)
         {
             Assert.IsNotNull(detail);
-            Assert.AreEqual(_reservationId, detail.ReservationId);
-            Assert.AreEqual(_reservationOrderId, detail.ReservationOrderId);
+            Assert.That(detail.ReservationId, Is.EqualTo(_reservationId));
+            Assert.That(detail.ReservationOrderId, Is.EqualTo(_reservationOrderId));
         }
 
         private void ValidateConsumptionReservationSummary(ConsumptionReservationSummary detail)
         {
             Assert.IsNotNull(detail);
-            Assert.AreEqual(_reservationId, detail.ReservationId);
-            Assert.AreEqual(_reservationOrderId, detail.ReservationOrderId);
+            Assert.That(detail.ReservationId, Is.EqualTo(_reservationId));
+            Assert.That(detail.ReservationOrderId, Is.EqualTo(_reservationOrderId));
             Assert.IsNotEmpty(detail.SkuName);
             Assert.IsNotEmpty(detail.Kind);
         }

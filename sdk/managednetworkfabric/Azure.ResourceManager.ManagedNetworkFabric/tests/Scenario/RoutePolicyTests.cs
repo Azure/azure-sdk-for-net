@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             };
             ArmOperation<NetworkFabricRoutePolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.RoutePolicyName, data);
             NetworkFabricRoutePolicyResource createResult = lro.Value;
-            Assert.AreEqual(createResult.Data.Name, TestEnvironment.RoutePolicyName);
+            Assert.That(TestEnvironment.RoutePolicyName, Is.EqualTo(createResult.Data.Name));
 
             NetworkFabricRoutePolicyResource routePolicy = Client.GetNetworkFabricRoutePolicyResource(routePolicyResourceId);
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....");
             NetworkFabricRoutePolicyResource getResult = await routePolicy.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, TestEnvironment.RoutePolicyName);
+            Assert.That(TestEnvironment.RoutePolicyName, Is.EqualTo(getResult.Data.Name));
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             var deleteResponse = await routePolicy.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteResponse.HasCompleted);
+            Assert.That(deleteResponse.HasCompleted, Is.True);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
 
             Assert.IsNotNull(brokerAuthenticationResource);
             Assert.IsNotNull(brokerAuthenticationResource.Data);
-            Assert.AreEqual(brokerAuthenticationResource.Data.Name, BrokersAuthenticationsName);
+            Assert.That(BrokersAuthenticationsName, Is.EqualTo(brokerAuthenticationResource.Data.Name));
 
             // Create BrokerAuthentication
             IotOperationsBrokerAuthenticationData brokerAuthenticationResourceData =

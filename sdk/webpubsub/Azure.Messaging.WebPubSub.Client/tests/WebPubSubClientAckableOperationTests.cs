@@ -79,9 +79,9 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
 
             client.HandleAckMessage(new AckMessage(1, false, new AckMessageError("error", "message")));
             var ex = Assert.ThrowsAsync<SendMessageFailedException>(() => t);
-            Assert.AreEqual(1u, ex.AckId);
-            Assert.AreEqual("error", ex.Code);
-            Assert.AreEqual("Received non-success acknowledge from the service: message", ex.Message);
+            Assert.That(ex.AckId, Is.EqualTo(1u));
+            Assert.That(ex.Code, Is.EqualTo("error"));
+            Assert.That(ex.Message, Is.EqualTo("Received non-success acknowledge from the service: message"));
         }
 
         [Test]

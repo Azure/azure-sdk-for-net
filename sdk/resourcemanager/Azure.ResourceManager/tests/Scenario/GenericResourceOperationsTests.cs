@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Tests
             var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Compute/availabilitySets/testavset";
             var genericResourceOperations = Client.GetGenericResource(new ResourceIdentifier(asetid));
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());
-            Assert.AreEqual(404, exception.Status);
-            Assert.True(exception.Message.Contains("ResourceNotFound"));
+            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.That(exception.Message.Contains("ResourceNotFound"), Is.True);
         }
 
         [TestCase]
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Tests
             var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.NotAValidNameSpace123/availabilitySets/testavset";
             var genericResourceOperations = Client.GetGenericResource(new ResourceIdentifier(asetid));
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
         }
 
         [TestCase]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Tests
             var client = GetArmClient(options);
             var genericResourceOperations = client.GetGenericResource(rg.Id);
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());
-            Assert.IsTrue(exception.Message.Contains("InvalidApiVersionParameter"));
+            Assert.That(exception.Message.Contains("InvalidApiVersionParameter"), Is.True);
         }
 
         [TestCase]
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Tests
             var genericResourceOperations = Client.GetGenericResource(rg.Id);
             var genericResource = await genericResourceOperations.GetAsync();
             Assert.IsNotNull(genericResource.Value);
-            Assert.IsTrue(genericResource.Value.Data.Name.Equals(rgName));
+            Assert.That(genericResource.Value.Data.Name.Equals(rgName), Is.True);
         }
 
         [TestCase]
@@ -115,25 +115,25 @@ namespace Azure.ResourceManager.Tests
             ResourceGroupResource rg = rgOp.Value;
             var aset = await CreateGenericAvailabilitySetAsync(rg.Id);
 
-            Assert.AreEqual(0, aset.Data.Tags.Count);
+            Assert.That(aset.Data.Tags.Count, Is.EqualTo(0));
 
             aset = await aset.AddTagAsync("key", "value");
 
-            Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
-            Assert.AreEqual("value", aset.Data.Tags["key"]);
-            Assert.AreEqual(1, aset.Data.Tags.Count);
+            Assert.That(aset.Data.Tags.ContainsKey("key"), Is.True);
+            Assert.That(aset.Data.Tags["key"], Is.EqualTo("value"));
+            Assert.That(aset.Data.Tags.Count, Is.EqualTo(1));
 
             GenericResource aset2 = await aset.AddTagAsync("key2", "value2");
 
-            Assert.IsTrue(aset2.Data.Tags.ContainsKey("key2"));
-            Assert.AreEqual("value2", aset2.Data.Tags["key2"]);
-            Assert.AreEqual(2, aset2.Data.Tags.Count);
+            Assert.That(aset2.Data.Tags.ContainsKey("key2"), Is.True);
+            Assert.That(aset2.Data.Tags["key2"], Is.EqualTo("value2"));
+            Assert.That(aset2.Data.Tags.Count, Is.EqualTo(2));
 
             GenericResource aset3 = await aset2.AddTagAsync("key", "value3");
 
-            Assert.IsTrue(aset3.Data.Tags.ContainsKey("key"));
-            Assert.AreEqual("value3", aset3.Data.Tags["key"]);
-            Assert.AreEqual(2, aset3.Data.Tags.Count);
+            Assert.That(aset3.Data.Tags.ContainsKey("key"), Is.True);
+            Assert.That(aset3.Data.Tags["key"], Is.EqualTo("value3"));
+            Assert.That(aset3.Data.Tags.Count, Is.EqualTo(2));
         }
 
         [TestCase]
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Tests
 
             ResourceIdentifier fakeId = new ResourceIdentifier(aset2.Id.ToString() + "x");
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetGenericResource(new ResourceIdentifier(fakeId)).GetAsync());
-            Assert.AreEqual(404, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(404));
         }
 
         [TestCase]
@@ -161,23 +161,23 @@ namespace Azure.ResourceManager.Tests
             ResourceGroupResource rg = rgOp.Value;
             var aset = await CreateGenericAvailabilitySetAsync(rg.Id);
 
-            Assert.AreEqual(0, aset.Data.Tags.Count);
+            Assert.That(aset.Data.Tags.Count, Is.EqualTo(0));
 
             Dictionary<string, string> tags = new Dictionary<string, string>();
             tags.Add("key", "value");
             aset = await aset.SetTagsAsync(tags);
 
-            Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
-            Assert.AreEqual("value", aset.Data.Tags["key"]);
-            Assert.AreEqual(1, aset.Data.Tags.Count);
+            Assert.That(aset.Data.Tags.ContainsKey("key"), Is.True);
+            Assert.That(aset.Data.Tags["key"], Is.EqualTo("value"));
+            Assert.That(aset.Data.Tags.Count, Is.EqualTo(1));
 
             Dictionary<string, string> tags2 = new Dictionary<string, string>();
             tags2.Add("key2", "value2");
             GenericResource aset2 = await aset.SetTagsAsync(tags2);
 
-            Assert.IsTrue(aset2.Data.Tags.ContainsKey("key2"));
-            Assert.AreEqual("value2", aset2.Data.Tags["key2"]);
-            Assert.AreEqual(1, aset2.Data.Tags.Count);
+            Assert.That(aset2.Data.Tags.ContainsKey("key2"), Is.True);
+            Assert.That(aset2.Data.Tags["key2"], Is.EqualTo("value2"));
+            Assert.That(aset2.Data.Tags.Count, Is.EqualTo(1));
         }
 
         [TestCase]
@@ -193,13 +193,13 @@ namespace Azure.ResourceManager.Tests
             tags.Add("key2", "value2");
             aset = await aset.SetTagsAsync(tags);
 
-            Assert.AreEqual(2, aset.Data.Tags.Count);
+            Assert.That(aset.Data.Tags.Count, Is.EqualTo(2));
 
             aset = await aset.RemoveTagAsync("key");
 
-            Assert.IsFalse(aset.Data.Tags.ContainsKey("key"));
-            Assert.IsTrue(aset.Data.Tags.ContainsKey("key2"));
-            Assert.AreEqual(1, aset.Data.Tags.Count);
+            Assert.That(aset.Data.Tags.ContainsKey("key"), Is.False);
+            Assert.That(aset.Data.Tags.ContainsKey("key2"), Is.True);
+            Assert.That(aset.Data.Tags.Count, Is.EqualTo(1));
         }
 
         [TestCase]
@@ -215,19 +215,19 @@ namespace Azure.ResourceManager.Tests
             var asetOp = await aset.UpdateAsync(WaitUntil.Completed, data);
             aset = asetOp.Value;
 
-            Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
-            Assert.AreEqual("value", aset.Data.Tags["key"]);
+            Assert.That(aset.Data.Tags.ContainsKey("key"), Is.True);
+            Assert.That(aset.Data.Tags["key"], Is.EqualTo("value"));
 
             var data2 = ConstructGenericAvailabilitySet();
             var asetOp2 = await aset.UpdateAsync(WaitUntil.Completed, data2);
             aset = asetOp2.Value;
             // Tags should not be changed with Tags:{} when constructing GenericResourceData
-            Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
-            Assert.AreEqual("value", aset.Data.Tags["key"]);
+            Assert.That(aset.Data.Tags.ContainsKey("key"), Is.True);
+            Assert.That(aset.Data.Tags["key"], Is.EqualTo("value"));
 
             data2.Tags.Clear();
             var asetOp3 = await aset.UpdateAsync(WaitUntil.Completed, data2);
-            Assert.AreEqual(0, asetOp3.Value.Data.Tags.Count);
+            Assert.That(asetOp3.Value.Data.Tags.Count, Is.EqualTo(0));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await aset.UpdateAsync(WaitUntil.Completed, null));
         }
@@ -246,8 +246,8 @@ namespace Azure.ResourceManager.Tests
             var updateOp = await aset.UpdateAsync(WaitUntil.Started, data);
             aset = await updateOp.WaitForCompletionAsync();
 
-            Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
-            Assert.AreEqual("value", aset.Data.Tags["key"]);
+            Assert.That(aset.Data.Tags.ContainsKey("key"), Is.True);
+            Assert.That(aset.Data.Tags["key"], Is.EqualTo("value"));
 
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {

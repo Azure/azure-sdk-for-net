@@ -966,7 +966,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task GetPropertiesOfKeyVersionsNonExisting()
         {
             List<KeyProperties> allKeys = await Client.GetPropertiesOfKeyVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
-            Assert.AreEqual(0, allKeys.Count);
+            Assert.That(allKeys.Count, Is.EqualTo(0));
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Tests
             var subscriptionUnderMgmtGroupCollection = mgmtGroup.GetManagementGroupSubscriptions();
             var subscriptionId = (await Client.GetDefaultSubscriptionAsync()).Id.SubscriptionId;
             var subscriptionUnderMgmtGroup = (await subscriptionUnderMgmtGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed,subscriptionId)).Value;
-            Assert.AreEqual(subscriptionUnderMgmtGroup.Data.Id.SubscriptionId,subscriptionId);
+            Assert.That(subscriptionId, Is.EqualTo(subscriptionUnderMgmtGroup.Data.Id.SubscriptionId));
         }
 
         [RecordedTest]
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Tests
             var subscriptionId = (await Client.GetDefaultSubscriptionAsync()).Id.SubscriptionId;
             var subscriptionUnderMgmtGroup = (await subscriptionUnderMgmtGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, subscriptionId)).Value;
             var subscriptionUnderMgmtGroup1 = (await subscriptionUnderMgmtGroupCollection.GetAsync(subscriptionId)).Value;
-            Assert.AreEqual(subscriptionUnderMgmtGroup.Data.Name,subscriptionUnderMgmtGroup1.Data.Name);
-            Assert.AreEqual(subscriptionUnderMgmtGroup.Data.Id.SubscriptionId,subscriptionUnderMgmtGroup1.Data.Id.SubscriptionId);
+            Assert.That(subscriptionUnderMgmtGroup1.Data.Name, Is.EqualTo(subscriptionUnderMgmtGroup.Data.Name));
+            Assert.That(subscriptionUnderMgmtGroup1.Data.Id.SubscriptionId, Is.EqualTo(subscriptionUnderMgmtGroup.Data.Id.SubscriptionId));
         }
 
         [RecordedTest]
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Tests
             {
                 count++;
             };
-            Assert.AreEqual(2, count);
+            Assert.That(count, Is.EqualTo(2));
         }
 
         [RecordedTest]
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Tests
             var subscriptionUnderMgmtGroupCollection = mgmtGroup.GetManagementGroupSubscriptions();
             var subscriptionId = (await Client.GetDefaultSubscriptionAsync()).Id.SubscriptionId;
             _ = await subscriptionUnderMgmtGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, subscriptionId);
-            Assert.IsTrue(await subscriptionUnderMgmtGroupCollection.ExistsAsync(subscriptionId));
-            Assert.IsFalse(await subscriptionUnderMgmtGroupCollection.ExistsAsync(subscriptionId + 1));
+            Assert.That((bool)await subscriptionUnderMgmtGroupCollection.ExistsAsync(subscriptionId), Is.True);
+            Assert.That((bool)await subscriptionUnderMgmtGroupCollection.ExistsAsync(subscriptionId + 1), Is.False);
         }
     }
 }

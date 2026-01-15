@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Tests
             var preDefinedTagOp = await _subscription.CreateOrUpdatePredefinedTagAsync(_tagName).ConfigureAwait(false);
             // Assert create tag value
             var createValue = await _subscription.CreateOrUpdatePredefinedTagValueAsync(_tagName, "testValue").ConfigureAwait(false);
-            Assert.IsTrue(createValue.Value.TagValue.Equals("testValue"));
+            Assert.That(createValue.Value.TagValue.Equals("testValue"), Is.True);
             // Assert delete tag value
             await _subscription.DeletePredefinedTagValueAsync(_tagName, "testValue").ConfigureAwait(false);
             var listResult = await _subscription.GetAllPredefinedTagsAsync().ToEnumerableAsync();

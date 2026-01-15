@@ -75,7 +75,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             await operation.WaitForCompletionAsync();
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             var form = operation.Value.Single();
 
@@ -90,72 +90,72 @@ namespace Azure.AI.FormRecognizer.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the business card. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("prebuilt:businesscard", form.FormType);
-            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
-            Assert.AreEqual(1, form.PageRange.LastPageNumber);
+            Assert.That(form.FormType, Is.EqualTo("prebuilt:businesscard"));
+            Assert.That(form.PageRange.FirstPageNumber, Is.EqualTo(1));
+            Assert.That(form.PageRange.LastPageNumber, Is.EqualTo(1));
 
             Assert.NotNull(form.Fields);
 
-            Assert.True(form.Fields.ContainsKey("ContactNames"));
-            Assert.True(form.Fields.ContainsKey("JobTitles"));
-            Assert.True(form.Fields.ContainsKey("Departments"));
-            Assert.True(form.Fields.ContainsKey("Emails"));
-            Assert.True(form.Fields.ContainsKey("Websites"));
-            Assert.True(form.Fields.ContainsKey("MobilePhones"));
-            Assert.True(form.Fields.ContainsKey("WorkPhones"));
-            Assert.True(form.Fields.ContainsKey("Faxes"));
-            Assert.True(form.Fields.ContainsKey("Addresses"));
-            Assert.True(form.Fields.ContainsKey("CompanyNames"));
+            Assert.That(form.Fields.ContainsKey("ContactNames"), Is.True);
+            Assert.That(form.Fields.ContainsKey("JobTitles"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Departments"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Emails"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Websites"), Is.True);
+            Assert.That(form.Fields.ContainsKey("MobilePhones"), Is.True);
+            Assert.That(form.Fields.ContainsKey("WorkPhones"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Faxes"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Addresses"), Is.True);
+            Assert.That(form.Fields.ContainsKey("CompanyNames"), Is.True);
 
             var contactNames = form.Fields["ContactNames"].Value.AsList();
-            Assert.AreEqual(1, contactNames.Count);
-            Assert.AreEqual("Dr. Avery Smith", contactNames.FirstOrDefault().ValueData.Text);
-            Assert.AreEqual(1, contactNames.FirstOrDefault().ValueData.PageNumber);
+            Assert.That(contactNames.Count, Is.EqualTo(1));
+            Assert.That(contactNames.FirstOrDefault().ValueData.Text, Is.EqualTo("Dr. Avery Smith"));
+            Assert.That(contactNames.FirstOrDefault().ValueData.PageNumber, Is.EqualTo(1));
 
             var contactNamesDict = contactNames.FirstOrDefault().Value.AsDictionary();
 
-            Assert.True(contactNamesDict.ContainsKey("FirstName"));
-            Assert.AreEqual("Avery", contactNamesDict["FirstName"].Value.AsString());
+            Assert.That(contactNamesDict.ContainsKey("FirstName"), Is.True);
+            Assert.That(contactNamesDict["FirstName"].Value.AsString(), Is.EqualTo("Avery"));
 
-            Assert.True(contactNamesDict.ContainsKey("LastName"));
-            Assert.AreEqual("Smith", contactNamesDict["LastName"].Value.AsString());
+            Assert.That(contactNamesDict.ContainsKey("LastName"), Is.True);
+            Assert.That(contactNamesDict["LastName"].Value.AsString(), Is.EqualTo("Smith"));
 
             var jobTitles = form.Fields["JobTitles"].Value.AsList();
-            Assert.AreEqual(1, jobTitles.Count);
-            Assert.AreEqual("Senior Researcher", jobTitles.FirstOrDefault().Value.AsString());
+            Assert.That(jobTitles.Count, Is.EqualTo(1));
+            Assert.That(jobTitles.FirstOrDefault().Value.AsString(), Is.EqualTo("Senior Researcher"));
 
             var departments = form.Fields["Departments"].Value.AsList();
             Assert.AreEqual(1, departments.Count);
-            Assert.AreEqual("Cloud & Al Department", departments.FirstOrDefault().Value.AsString());
+            Assert.That(departments.FirstOrDefault().Value.AsString(), Is.EqualTo("Cloud & Al Department"));
 
             var emails = form.Fields["Emails"].Value.AsList();
             Assert.AreEqual(1, emails.Count);
-            Assert.AreEqual("avery.smith@contoso.com", emails.FirstOrDefault().Value.AsString());
+            Assert.That(emails.FirstOrDefault().Value.AsString(), Is.EqualTo("avery.smith@contoso.com"));
 
             var websites = form.Fields["Websites"].Value.AsList();
             Assert.AreEqual(1, websites.Count);
-            Assert.AreEqual("https://www.contoso.com/", websites.FirstOrDefault().Value.AsString());
+            Assert.That(websites.FirstOrDefault().Value.AsString(), Is.EqualTo("https://www.contoso.com/"));
 
             // Update validation when https://github.com/Azure/azure-sdk-for-python/issues/14300 is fixed
             var mobilePhones = form.Fields["MobilePhones"].Value.AsList();
             Assert.AreEqual(1, mobilePhones.Count);
-            Assert.AreEqual(FieldValueType.PhoneNumber, mobilePhones.FirstOrDefault().Value.ValueType);
+            Assert.That(mobilePhones.FirstOrDefault().Value.ValueType, Is.EqualTo(FieldValueType.PhoneNumber));
 
             var otherPhones = form.Fields["WorkPhones"].Value.AsList();
-            Assert.AreEqual(1, otherPhones.Count);
-            Assert.AreEqual(FieldValueType.PhoneNumber, otherPhones.FirstOrDefault().Value.ValueType);
+            Assert.That(otherPhones.Count, Is.EqualTo(1));
+            Assert.That(otherPhones.FirstOrDefault().Value.ValueType, Is.EqualTo(FieldValueType.PhoneNumber));
 
             var faxes = form.Fields["Faxes"].Value.AsList();
-            Assert.AreEqual(1, faxes.Count);
-            Assert.AreEqual(FieldValueType.PhoneNumber, faxes.FirstOrDefault().Value.ValueType);
+            Assert.That(faxes.Count, Is.EqualTo(1));
+            Assert.That(faxes.FirstOrDefault().Value.ValueType, Is.EqualTo(FieldValueType.PhoneNumber));
 
             var addresses = form.Fields["Addresses"].Value.AsList();
-            Assert.AreEqual(1, addresses.Count);
-            Assert.AreEqual("2 Kingdom Street Paddington, London, W2 6BD", addresses.FirstOrDefault().Value.AsString());
+            Assert.That(addresses.Count, Is.EqualTo(1));
+            Assert.That(addresses.FirstOrDefault().Value.AsString(), Is.EqualTo("2 Kingdom Street Paddington, London, W2 6BD"));
 
             var companyNames = form.Fields["CompanyNames"].Value.AsList();
             Assert.AreEqual(1, companyNames.Count);
-            Assert.AreEqual("Contoso", companyNames.FirstOrDefault().Value.AsString());
+            Assert.That(companyNames.FirstOrDefault().Value.AsString(), Is.EqualTo("Contoso"));
         }
 
         [RecordedTest]
@@ -182,7 +182,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             await operation.WaitForCompletionAsync();
 
-            Assert.IsTrue(operation.HasValue);
+            Assert.That(operation.HasValue, Is.True);
 
             var form = operation.Value.Single();
 
@@ -197,72 +197,72 @@ namespace Azure.AI.FormRecognizer.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the business card. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual("prebuilt:businesscard", form.FormType);
-            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
-            Assert.AreEqual(1, form.PageRange.LastPageNumber);
+            Assert.That(form.FormType, Is.EqualTo("prebuilt:businesscard"));
+            Assert.That(form.PageRange.FirstPageNumber, Is.EqualTo(1));
+            Assert.That(form.PageRange.LastPageNumber, Is.EqualTo(1));
 
             Assert.NotNull(form.Fields);
 
-            Assert.True(form.Fields.ContainsKey("ContactNames"));
-            Assert.True(form.Fields.ContainsKey("JobTitles"));
-            Assert.True(form.Fields.ContainsKey("Departments"));
-            Assert.True(form.Fields.ContainsKey("Emails"));
-            Assert.True(form.Fields.ContainsKey("Websites"));
-            Assert.True(form.Fields.ContainsKey("MobilePhones"));
-            Assert.True(form.Fields.ContainsKey("WorkPhones"));
-            Assert.True(form.Fields.ContainsKey("Faxes"));
-            Assert.True(form.Fields.ContainsKey("Addresses"));
-            Assert.True(form.Fields.ContainsKey("CompanyNames"));
+            Assert.That(form.Fields.ContainsKey("ContactNames"), Is.True);
+            Assert.That(form.Fields.ContainsKey("JobTitles"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Departments"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Emails"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Websites"), Is.True);
+            Assert.That(form.Fields.ContainsKey("MobilePhones"), Is.True);
+            Assert.That(form.Fields.ContainsKey("WorkPhones"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Faxes"), Is.True);
+            Assert.That(form.Fields.ContainsKey("Addresses"), Is.True);
+            Assert.That(form.Fields.ContainsKey("CompanyNames"), Is.True);
 
             var contactNames = form.Fields["ContactNames"].Value.AsList();
-            Assert.AreEqual(1, contactNames.Count);
-            Assert.AreEqual("Dr. Avery Smith", contactNames.FirstOrDefault().ValueData.Text);
-            Assert.AreEqual(1, contactNames.FirstOrDefault().ValueData.PageNumber);
+            Assert.That(contactNames.Count, Is.EqualTo(1));
+            Assert.That(contactNames.FirstOrDefault().ValueData.Text, Is.EqualTo("Dr. Avery Smith"));
+            Assert.That(contactNames.FirstOrDefault().ValueData.PageNumber, Is.EqualTo(1));
 
             var contactNamesDict = contactNames.FirstOrDefault().Value.AsDictionary();
 
-            Assert.True(contactNamesDict.ContainsKey("FirstName"));
-            Assert.AreEqual("Avery", contactNamesDict["FirstName"].Value.AsString());
+            Assert.That(contactNamesDict.ContainsKey("FirstName"), Is.True);
+            Assert.That(contactNamesDict["FirstName"].Value.AsString(), Is.EqualTo("Avery"));
 
-            Assert.True(contactNamesDict.ContainsKey("LastName"));
-            Assert.AreEqual("Smith", contactNamesDict["LastName"].Value.AsString());
+            Assert.That(contactNamesDict.ContainsKey("LastName"), Is.True);
+            Assert.That(contactNamesDict["LastName"].Value.AsString(), Is.EqualTo("Smith"));
 
             var jobTitles = form.Fields["JobTitles"].Value.AsList();
-            Assert.AreEqual(1, jobTitles.Count);
-            Assert.AreEqual("Senior Researcher", jobTitles.FirstOrDefault().Value.AsString());
+            Assert.That(jobTitles.Count, Is.EqualTo(1));
+            Assert.That(jobTitles.FirstOrDefault().Value.AsString(), Is.EqualTo("Senior Researcher"));
 
             var departments = form.Fields["Departments"].Value.AsList();
             Assert.AreEqual(1, departments.Count);
-            Assert.AreEqual("Cloud & Al Department", departments.FirstOrDefault().Value.AsString());
+            Assert.That(departments.FirstOrDefault().Value.AsString(), Is.EqualTo("Cloud & Al Department"));
 
             var emails = form.Fields["Emails"].Value.AsList();
             Assert.AreEqual(1, emails.Count);
-            Assert.AreEqual("avery.smith@contoso.com", emails.FirstOrDefault().Value.AsString());
+            Assert.That(emails.FirstOrDefault().Value.AsString(), Is.EqualTo("avery.smith@contoso.com"));
 
             var websites = form.Fields["Websites"].Value.AsList();
             Assert.AreEqual(1, websites.Count);
-            Assert.AreEqual("https://www.contoso.com/", websites.FirstOrDefault().Value.AsString());
+            Assert.That(websites.FirstOrDefault().Value.AsString(), Is.EqualTo("https://www.contoso.com/"));
 
             // Update validation when https://github.com/Azure/azure-sdk-for-python/issues/14300 is fixed
             var mobilePhones = form.Fields["MobilePhones"].Value.AsList();
             Assert.AreEqual(1, mobilePhones.Count);
-            Assert.AreEqual(FieldValueType.PhoneNumber, mobilePhones.FirstOrDefault().Value.ValueType);
+            Assert.That(mobilePhones.FirstOrDefault().Value.ValueType, Is.EqualTo(FieldValueType.PhoneNumber));
 
             var otherPhones = form.Fields["WorkPhones"].Value.AsList();
-            Assert.AreEqual(1, otherPhones.Count);
-            Assert.AreEqual(FieldValueType.PhoneNumber, otherPhones.FirstOrDefault().Value.ValueType);
+            Assert.That(otherPhones.Count, Is.EqualTo(1));
+            Assert.That(otherPhones.FirstOrDefault().Value.ValueType, Is.EqualTo(FieldValueType.PhoneNumber));
 
             var faxes = form.Fields["Faxes"].Value.AsList();
-            Assert.AreEqual(1, faxes.Count);
-            Assert.AreEqual(FieldValueType.PhoneNumber, faxes.FirstOrDefault().Value.ValueType);
+            Assert.That(faxes.Count, Is.EqualTo(1));
+            Assert.That(faxes.FirstOrDefault().Value.ValueType, Is.EqualTo(FieldValueType.PhoneNumber));
 
             var addresses = form.Fields["Addresses"].Value.AsList();
-            Assert.AreEqual(1, addresses.Count);
-            Assert.AreEqual("2 Kingdom Street Paddington, London, W2 6BD", addresses.FirstOrDefault().Value.AsString());
+            Assert.That(addresses.Count, Is.EqualTo(1));
+            Assert.That(addresses.FirstOrDefault().Value.AsString(), Is.EqualTo("2 Kingdom Street Paddington, London, W2 6BD"));
 
             var companyNames = form.Fields["CompanyNames"].Value.AsList();
             Assert.AreEqual(1, companyNames.Count);
-            Assert.AreEqual("Contoso", companyNames.FirstOrDefault().Value.AsString());
+            Assert.That(companyNames.FirstOrDefault().Value.AsString(), Is.EqualTo("Contoso"));
         }
 
         [RecordedTest]
@@ -312,13 +312,13 @@ namespace Azure.AI.FormRecognizer.Tests
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 1);
 
-            Assert.AreEqual(0, blankForm.Fields.Count);
+            Assert.That(blankForm.Fields.Count, Is.EqualTo(0));
 
             var blankPage = blankForm.Pages.Single();
 
-            Assert.AreEqual(0, blankPage.Lines.Count);
-            Assert.AreEqual(0, blankPage.Tables.Count);
-            Assert.AreEqual(0, blankPage.SelectionMarks.Count);
+            Assert.That(blankPage.Lines.Count, Is.EqualTo(0));
+            Assert.That(blankPage.Tables.Count, Is.EqualTo(0));
+            Assert.That(blankPage.SelectionMarks.Count, Is.EqualTo(0));
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var invalidUri = new Uri("https://idont.ex.ist");
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeBusinessCardsFromUriAsync(invalidUri));
-            Assert.AreEqual("InvalidImage", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("InvalidImage"));
         }
 
         [RecordedTest]
@@ -360,7 +360,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
-            Assert.AreEqual(2, recognizedForms.Count);
+            Assert.That(recognizedForms.Count, Is.EqualTo(2));
 
             for (int formIndex = 0; formIndex < recognizedForms.Count; formIndex++)
             {
@@ -376,24 +376,24 @@ namespace Azure.AI.FormRecognizer.Tests
                     expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
-                Assert.IsTrue(recognizedForm.Fields.ContainsKey("Emails"));
+                Assert.That(recognizedForm.Fields.ContainsKey("Emails"), Is.True);
                 FormField sampleFields = recognizedForm.Fields["Emails"];
-                Assert.AreEqual(FieldValueType.List, sampleFields.Value.ValueType);
+                Assert.That(sampleFields.Value.ValueType, Is.EqualTo(FieldValueType.List));
                 var field = sampleFields.Value.AsList().Single();
 
                 if (formIndex == 0)
                 {
-                    Assert.AreEqual("johnsinger@contoso.com", field.ValueData.Text);
+                    Assert.That(field.ValueData.Text, Is.EqualTo("johnsinger@contoso.com"));
                 }
                 else if (formIndex == 1)
                 {
-                    Assert.AreEqual("avery.smith@contoso.com", field.ValueData.Text);
+                    Assert.That(field.ValueData.Text, Is.EqualTo("avery.smith@contoso.com"));
                 }
 
                 // Check for ContactNames.Page value
-                Assert.IsTrue(recognizedForm.Fields.ContainsKey("ContactNames"));
+                Assert.That(recognizedForm.Fields.ContainsKey("ContactNames"), Is.True);
                 FormField contactNameField = recognizedForm.Fields["ContactNames"].Value.AsList().Single();
-                Assert.AreEqual(formIndex + 1, contactNameField.ValueData.PageNumber);
+                Assert.That(contactNameField.ValueData.PageNumber, Is.EqualTo(formIndex + 1));
             }
         }
 
@@ -409,7 +409,7 @@ namespace Azure.AI.FormRecognizer.Tests
             {
                 ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeBusinessCardsAsync(stream, new RecognizeBusinessCardsOptions() { Locale = "not-locale" }));
             }
-            Assert.AreEqual("UnsupportedLocale", ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo("UnsupportedLocale"));
         }
     }
 }

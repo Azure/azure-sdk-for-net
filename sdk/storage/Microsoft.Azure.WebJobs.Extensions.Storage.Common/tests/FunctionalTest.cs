@@ -93,7 +93,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
             {
                 return e;
             }
-            Assert.True(false, "Expected trigger to fail"); // throws
+            Assert.That(false, Is.True, "Expected trigger to fail"); // throws
             return null;
         }
 
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
             {
                 return e;
             }
-            Assert.True(false, "Expected trigger to fail"); // throws
+            Assert.That(false, Is.True, "Expected trigger to fail"); // throws
             return null;
         }
 

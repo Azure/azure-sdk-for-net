@@ -16,10 +16,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
         public void GetProcessorCount_ReturnsOneForDynamicAndFlexSkus()
         {
             Environment.SetEnvironmentVariable(Constants.AzureWebsiteSku, Constants.DynamicSku);
-            Assert.AreEqual(1, Utility.GetProcessorCount());
+            Assert.That(Utility.GetProcessorCount(), Is.EqualTo(1));
 
             Environment.SetEnvironmentVariable(Constants.AzureWebsiteSku, Constants.FlexConsumptionSku);
-            Assert.AreEqual(1, Utility.GetProcessorCount());
+            Assert.That(Utility.GetProcessorCount(), Is.EqualTo(1));
         }
     }
 }

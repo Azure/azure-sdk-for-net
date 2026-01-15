@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             var input = ResourceDataHelper.GetBatchAccountCertificateData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             BatchAccountCertificateResource certificate1 = lro.Value;
-            Assert.AreEqual(name, certificate1.Data.Name);
+            Assert.That(certificate1.Data.Name, Is.EqualTo(name));
             //2.Get
             BatchAccountCertificateResource certificate2 = await collection.GetAsync(name);
             ResourceDataHelper.AssertCertificate(certificate1.Data, certificate2.Data);
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             }
             Assert.GreaterOrEqual(count, 1);
             //4.Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync("sha1-cff2ab63c8c955aaf71989efa641b906558d9fb8"));
+            Assert.That((bool)await collection.ExistsAsync(name), Is.True);
+            Assert.That((bool)await collection.ExistsAsync("sha1-cff2ab63c8c955aaf71989efa641b906558d9fb8"), Is.False);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }

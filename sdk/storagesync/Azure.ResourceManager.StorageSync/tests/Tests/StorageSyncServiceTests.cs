@@ -86,14 +86,14 @@ namespace Azure.ResourceManager.StorageSync.Tests
             // Verify StorageSyncServiceCollection contains a single StorageSyncService
             List<StorageSyncServiceResource> storageSyncServiceResources = await storageSyncServiceCollection.ToEnumerableAsync();
             Assert.NotNull(storageSyncServiceResources);
-            Assert.AreEqual(storageSyncServiceResources.Count(), 1);
+            Assert.That(storageSyncServiceResources.Count(), Is.EqualTo(1));
             StorageSyncManagementTestUtilities.VerifyStorageSyncServiceProperties(storageSyncServiceResource, false);
 
             // Retrieve list of StorageSyncServices for given Subscription
             var syncServiceResourcesFromSubscription = await DefaultSubscription.GetStorageSyncServicesAsync().ToEnumerableAsync(); //.ToEnumerableAsync();
 
             // Change the number if json has more results under this subscription.
-            Assert.True(1 <= syncServiceResourcesFromSubscription.Count());
+            Assert.That(1 <= syncServiceResourcesFromSubscription.Count(), Is.True);
 
             StorageSyncManagementTestUtilities.VerifyStorageSyncServiceProperties(syncServiceResourcesFromSubscription.Single(r => r.Id.Name == _storageSyncServiceName), false);
         }
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // Delete StorageSyncService before its created.
             var deleteException = Assert.ThrowsAsync<RequestFailedException>(async () => (await _resourceGroup.GetStorageSyncServiceAsync(_storageSyncServiceName)).Value?.Delete(WaitUntil.Completed));
-            Assert.AreEqual(404, deleteException.Status);
-            Assert.IsFalse((await storageSyncServiceCollection.ExistsAsync(_storageSyncServiceName)).Value);
+            Assert.That(deleteException.Status, Is.EqualTo(404));
+            Assert.That((await storageSyncServiceCollection.ExistsAsync(_storageSyncServiceName)).Value, Is.False);
 
             // Create StorageSyncService
             StorageSyncServiceResource storageSyncServiceResource = (await storageSyncServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, _storageSyncServiceName, _storageSyncServiceCreateOrUpdateContent)).Value;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
             await storageSyncServiceResource.DeleteAsync(WaitUntil.Completed);
 
             // Verify StorageSyncService has been deleted.
-            Assert.IsFalse((await _resourceGroup.GetStorageSyncServices().ExistsAsync(_storageSyncServiceName)).Value);
+            Assert.That((await _resourceGroup.GetStorageSyncServices().ExistsAsync(_storageSyncServiceName)).Value, Is.False);
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // Verify StorageSyncService with that name does not exist
             bool exists = await storageSyncServiceCollection.ExistsAsync(_storageSyncServiceName);
-            Assert.IsFalse(exists);
+            Assert.That(exists, Is.False);
 
             // Create StorageSyncService
             StorageSyncServiceResource storageSyncServiceResource = (await storageSyncServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, _storageSyncServiceName, _storageSyncServiceCreateOrUpdateContent)).Value;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
             // Verify StorageSyncService with that name now exists
             exists = await storageSyncServiceCollection.ExistsAsync(_storageSyncServiceName);
-            Assert.IsTrue(exists);
+            Assert.That(exists, Is.True);
         }
 
         [Test]

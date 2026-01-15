@@ -48,7 +48,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkBatchJob jobCreateResponse = await createOperation.WaitForCompletionAsync();
 
             // Verify the Spark batch job submission starts successfully
-            Assert.True(LivyStates.Starting == jobCreateResponse.State || LivyStates.Running == jobCreateResponse.State || LivyStates.Success == jobCreateResponse.State,
+            Assert.That(LivyStates.Starting == jobCreateResponse.State || LivyStates.Running == jobCreateResponse.State || LivyStates.Success == jobCreateResponse.State,
+                Is.True,
                 string.Format(
                     "Job: {0} did not return success. Current job state: {1}. Error (if any): {2}",
                     jobCreateResponse.Id,
@@ -60,7 +61,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             // Get the list of Spark batch jobs and check that the submitted job exists
             List<SparkBatchJob> listJobResponse = await SparkTestUtilities.ListSparkBatchJobsAsync(client);
             Assert.NotNull(listJobResponse);
-            Assert.IsTrue(listJobResponse.Any(job => job.Id == jobCreateResponse.Id));
+            Assert.That(listJobResponse.Any(job => job.Id == jobCreateResponse.Id), Is.True);
         }
 
         [RecordedTest]
@@ -79,7 +80,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkBatchJob jobCreateResponse = await createOperation.WaitForCompletionAsync();
 
             // Verify the Spark batch job exuecution completes successfully
-            Assert.True(LivyStates.Success == jobCreateResponse.State  && jobCreateResponse.Result == SparkBatchJobResultType.Succeeded,
+            Assert.That(LivyStates.Success == jobCreateResponse.State && jobCreateResponse.Result == SparkBatchJobResultType.Succeeded,
+                Is.True,
                 string.Format(
                     "Job: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
                     jobCreateResponse.Id,
@@ -92,7 +94,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             // Get the list of Spark batch jobs and check that the submitted job exists
             List<SparkBatchJob> listJobResponse = await SparkTestUtilities.ListSparkBatchJobsAsync(client);
             Assert.NotNull(listJobResponse);
-            Assert.IsTrue(listJobResponse.Any(job => job.Id == jobCreateResponse.Id));
+            Assert.That(listJobResponse.Any(job => job.Id == jobCreateResponse.Id), Is.True);
         }
 
         [RecordedTest]
@@ -110,7 +112,8 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             SparkBatchJob jobCreateResponse = await anotherOperation.WaitForCompletionAsync();
 
             // Verify the Spark batch job submission starts successfully
-            Assert.True(LivyStates.Starting == jobCreateResponse.State || LivyStates.Running == jobCreateResponse.State || LivyStates.Success == jobCreateResponse.State,
+            Assert.That(LivyStates.Starting == jobCreateResponse.State || LivyStates.Running == jobCreateResponse.State || LivyStates.Success == jobCreateResponse.State,
+                Is.True,
                 string.Format(
                     "Job: {0} did not return success. Current job state: {1}. Error (if any): {2}",
                     jobCreateResponse.Id,
@@ -122,7 +125,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             // Get the list of Spark batch jobs and check that the submitted job exists
             List<SparkBatchJob> listJobResponse = await SparkTestUtilities.ListSparkBatchJobsAsync(client);
             Assert.NotNull(listJobResponse);
-            Assert.IsTrue(listJobResponse.Any(job => job.Id == jobCreateResponse.Id));
+            Assert.That(listJobResponse.Any(job => job.Id == jobCreateResponse.Id), Is.True);
         }
 
         [RecordedTest]
@@ -146,11 +149,11 @@ namespace Azure.Analytics.Synapse.Spark.Tests
 
        internal void ValidateSparkBatchJob(SparkBatchJob expectedSparkJob, SparkBatchJob actualSparkJob)
        {
-            Assert.AreEqual(expectedSparkJob.Name, actualSparkJob.Name);
-            Assert.AreEqual(expectedSparkJob.Id, actualSparkJob.Id);
-            Assert.AreEqual(expectedSparkJob.AppId, actualSparkJob.AppId);
-            Assert.AreEqual(expectedSparkJob.SubmitterId, actualSparkJob.SubmitterId);
-            Assert.AreEqual(expectedSparkJob.ArtifactId, actualSparkJob.ArtifactId);
+            Assert.That(actualSparkJob.Name, Is.EqualTo(expectedSparkJob.Name));
+            Assert.That(actualSparkJob.Id, Is.EqualTo(expectedSparkJob.Id));
+            Assert.That(actualSparkJob.AppId, Is.EqualTo(expectedSparkJob.AppId));
+            Assert.That(actualSparkJob.SubmitterId, Is.EqualTo(expectedSparkJob.SubmitterId));
+            Assert.That(actualSparkJob.ArtifactId, Is.EqualTo(expectedSparkJob.ArtifactId));
         }
     }
 }

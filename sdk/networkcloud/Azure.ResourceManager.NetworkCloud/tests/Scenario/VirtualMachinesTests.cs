@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             ArmOperation<NetworkCloudVirtualMachineResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName, createData);
-            Assert.AreEqual(createResult.Value.Data.Name, virtualMachineName);
+            Assert.That(virtualMachineName, Is.EqualTo(createResult.Value.Data.Name));
 
             // Get
             NetworkCloudVirtualMachineResource getResult = await virtualMachine.GetAsync();
-            Assert.AreEqual(virtualMachineName, getResult.Data.Name);
+            Assert.That(getResult.Data.Name, Is.EqualTo(virtualMachineName));
 
             // Update
             NetworkCloudVirtualMachinePatch patch = new NetworkCloudVirtualMachinePatch()
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             ArmOperation<NetworkCloudVirtualMachineResource> updateResult = await virtualMachine.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
+            Assert.That(updateResult.Value.Data.Tags, Is.EqualTo(patch.Tags));
 
             // List by Resource Group
             var listByResourceGroup = new List<NetworkCloudVirtualMachineResource>();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             // Delete
             var deleteResult = await virtualMachine.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            Assert.IsTrue(deleteResult.HasCompleted);
+            Assert.That(deleteResult.HasCompleted, Is.True);
         }
     }
 }

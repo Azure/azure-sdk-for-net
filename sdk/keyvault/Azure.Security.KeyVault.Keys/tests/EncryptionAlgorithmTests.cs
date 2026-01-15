@@ -14,13 +14,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void FromRsaEncryptionPadding()
         {
             EncryptionAlgorithm sut = EncryptionAlgorithm.FromRsaEncryptionPadding(RSAEncryptionPadding.Pkcs1);
-            Assert.AreEqual(EncryptionAlgorithm.Rsa15, sut);
+            Assert.That(sut, Is.EqualTo(EncryptionAlgorithm.Rsa15));
 
             sut = EncryptionAlgorithm.FromRsaEncryptionPadding(RSAEncryptionPadding.OaepSHA1);
-            Assert.AreEqual(EncryptionAlgorithm.RsaOaep, sut);
+            Assert.That(sut, Is.EqualTo(EncryptionAlgorithm.RsaOaep));
 
             sut = EncryptionAlgorithm.FromRsaEncryptionPadding(RSAEncryptionPadding.OaepSHA256);
-            Assert.AreEqual(EncryptionAlgorithm.RsaOaep256, sut);
+            Assert.That(sut, Is.EqualTo(EncryptionAlgorithm.RsaOaep256));
 
             Assert.Throws<NotSupportedException>(() => EncryptionAlgorithm.FromRsaEncryptionPadding(RSAEncryptionPadding.OaepSHA384));
             Assert.Throws<NotSupportedException>(() => EncryptionAlgorithm.FromRsaEncryptionPadding(RSAEncryptionPadding.OaepSHA512));

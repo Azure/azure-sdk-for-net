@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var apisResponse = await ApiServiceResource.GetApis().GetAllAsync().ToEnumerableAsync();
 
             Assert.NotNull(apisResponse);
-            Assert.AreEqual(apisResponse.Count, 1);
+            Assert.That(apisResponse.Count, Is.EqualTo(1));
             var echoApi = apisResponse.First();
 
             string gatewayId = Recording.GenerateAssetName("gatewayid");
@@ -77,25 +77,25 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
             var createResponse = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewayId, gatewayContract)).Value;
             Assert.NotNull(createResponse);
-            Assert.AreEqual(gatewayId, createResponse.Data.Name);
-            Assert.AreEqual(gatewayContract.Description, createResponse.Data.Description);
+            Assert.That(createResponse.Data.Name, Is.EqualTo(gatewayId));
+            Assert.That(createResponse.Data.Description, Is.EqualTo(gatewayContract.Description));
             Assert.NotNull(createResponse.Data.LocationData);
-            Assert.AreEqual(gatewayContract.LocationData.City, createResponse.Data.LocationData.City);
-            Assert.AreEqual(gatewayContract.LocationData.CountryOrRegion, createResponse.Data.LocationData.CountryOrRegion);
-            Assert.AreEqual(gatewayContract.LocationData.District, createResponse.Data.LocationData.District);
-            Assert.AreEqual(gatewayContract.LocationData.Name, createResponse.Data.LocationData.Name);
+            Assert.That(createResponse.Data.LocationData.City, Is.EqualTo(gatewayContract.LocationData.City));
+            Assert.That(createResponse.Data.LocationData.CountryOrRegion, Is.EqualTo(gatewayContract.LocationData.CountryOrRegion));
+            Assert.That(createResponse.Data.LocationData.District, Is.EqualTo(gatewayContract.LocationData.District));
+            Assert.That(createResponse.Data.LocationData.Name, Is.EqualTo(gatewayContract.LocationData.Name));
 
             // get the gateway to check is was created
             var getResponse = (await collection.GetAsync(gatewayId)).Value;
 
             Assert.NotNull(getResponse);
-            Assert.AreEqual(gatewayId, getResponse.Data.Name);
+            Assert.That(getResponse.Data.Name, Is.EqualTo(gatewayId));
 
             // list gateways
             gatewayListResponse = await collection.GetAllAsync().ToEnumerableAsync();
 
             Assert.NotNull(gatewayListResponse);
-            Assert.AreEqual(gatewayListResponse.Count, 1);
+            Assert.That(gatewayListResponse.Count, Is.EqualTo(1));
 
             var associationContract = new AssociationContract()
             {
@@ -106,19 +106,19 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var assignResponse = (await getResponse.CreateOrUpdateGatewayApiAsync(echoApi.Data.Name, associationContract)).Value;
 
             Assert.NotNull(assignResponse);
-            Assert.AreEqual(echoApi.Data.Name, assignResponse.Name);
+            Assert.That(assignResponse.Name, Is.EqualTo(echoApi.Data.Name));
 
             // list gateway apis
             var apiGatewaysResponse = await getResponse.GetGatewayApisByServiceAsync().ToEnumerableAsync();
 
             Assert.NotNull(apiGatewaysResponse);
-            Assert.AreEqual(apiGatewaysResponse.Count, 1);
-            Assert.AreEqual(echoApi.Data.Name, apiGatewaysResponse.FirstOrDefault().Name);
+            Assert.That(apiGatewaysResponse.Count, Is.EqualTo(1));
+            Assert.That(apiGatewaysResponse.FirstOrDefault().Name, Is.EqualTo(echoApi.Data.Name));
 
             // remove the gateway
             await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
             var resultFalse = (await collection.ExistsAsync(gatewayId)).Value;
-            Assert.IsFalse(resultFalse);
+            Assert.That(resultFalse, Is.False);
         }
     }
 }

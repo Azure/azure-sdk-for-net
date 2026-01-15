@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using Aes aes = Aes.Create();
             JsonWebKey jwk = new JsonWebKey(aes);
             ReadOnlyMemory<byte> serialized = jwk.Serialize();
-            Assert.True(HasPrivateKey(jwk));
+            Assert.That(HasPrivateKey(jwk), Is.True);
 
             using MemoryStream ms = new MemoryStream(serialized.ToArray());
             JsonWebKey deserialized = new JsonWebKey();
@@ -57,14 +57,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             JsonWebKey jwk = new JsonWebKey(aes);
             CollectionAssert.AreEqual(aes.Key, jwk.K);
-            Assert.True(HasPrivateKey(jwk));
+            Assert.That(HasPrivateKey(jwk), Is.True);
 
             using Aes key = jwk.ToAes();
             CollectionAssert.AreEqual(jwk.K, key.Key);
 
             using ICryptoTransform decryptor = key.CreateDecryptor(key.Key, aes.IV);
             plaintext = decryptor.TransformFinalBlock(ciphertext, 0, ciphertext.Length);
-            Assert.AreEqual("test", Encoding.UTF8.GetString(plaintext));
+            Assert.That(Encoding.UTF8.GetString(plaintext), Is.EqualTo("test"));
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => jwk.ToAes());
 
             // This should always be expected for oct-HSM because the HSM won't release the key.
-            Assert.AreEqual("key does not contain a value", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("key does not contain a value"));
         }
 
         [TestCase(false)]
@@ -132,10 +132,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
 
             JsonWebKey jwk = new JsonWebKey(ecdsa, includePrivateParameters);
-            Assert.AreEqual(friendlyName, jwk.CurveName?.ToString());
+            Assert.That(jwk.CurveName?.ToString(), Is.EqualTo(friendlyName));
 
             ReadOnlyMemory<byte> serialized = jwk.Serialize();
-            Assert.AreEqual(includePrivateParameters, HasPrivateKey(jwk));
+            Assert.That(HasPrivateKey(jwk), Is.EqualTo(includePrivateParameters));
 
             using MemoryStream ms = new MemoryStream(serialized.ToArray());
             JsonWebKey deserialized = new JsonWebKey();
@@ -206,11 +206,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using ECDsa key = jwk.ToECDsa(includePrivateParameters);
             int bitLength = ecdsa.KeySize;
-            Assert.AreEqual(bitLength, key.KeySize);
+            Assert.That(key.KeySize, Is.EqualTo(bitLength));
 
             if (signature != null)
             {
-                Assert.IsTrue(ecdsa.VerifyData(plaintext, signature, HashAlgorithmName.SHA256));
+                Assert.That(ecdsa.VerifyData(plaintext, signature, HashAlgorithmName.SHA256), Is.True);
             }
 #endif
         }
@@ -276,7 +276,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using RSA rsa = RSA.Create();
             JsonWebKey jwk = new JsonWebKey(rsa, includePrivateParameters);
             ReadOnlyMemory<byte> serialized = jwk.Serialize();
-            Assert.AreEqual(includePrivateParameters, HasPrivateKey(jwk));
+            Assert.That(HasPrivateKey(jwk), Is.EqualTo(includePrivateParameters));
 
             using MemoryStream ms = new MemoryStream(serialized.ToArray());
             JsonWebKey deserialized = new JsonWebKey();
@@ -322,15 +322,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey jwk = new JsonWebKey(rsa, includePrivateParameters);
 
             int bitLength = jwk.N.Length * 8;
-            Assert.AreEqual(includePrivateParameters, HasPrivateKey(jwk));
+            Assert.That(HasPrivateKey(jwk), Is.EqualTo(includePrivateParameters));
 
             using RSA key = jwk.ToRSA(includePrivateParameters);
-            Assert.AreEqual(bitLength, key.KeySize);
+            Assert.That(key.KeySize, Is.EqualTo(bitLength));
 
             if (includePrivateParameters)
             {
                 plaintext = key.Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
-                Assert.AreEqual("test", Encoding.UTF8.GetString(plaintext));
+                Assert.That(Encoding.UTF8.GetString(plaintext), Is.EqualTo("test"));
             }
         }
 

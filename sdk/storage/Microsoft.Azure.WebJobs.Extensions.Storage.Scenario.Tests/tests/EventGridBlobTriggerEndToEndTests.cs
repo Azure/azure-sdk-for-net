@@ -86,7 +86,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             _blobServiceClient = new BlobServiceClient(TestEnvironment.PrimaryStorageAccountConnectionString);
             _resolvedContainerName = _nameResolver.ResolveInString(EventGridContainerName);
             _testContainer = _blobServiceClient.GetBlobContainerClient(_resolvedContainerName);
-            Assert.False(_testContainer.ExistsAsync().Result);
+            Assert.That((bool)_testContainer.ExistsAsync().Result, Is.False);
             _testContainer.CreateAsync().Wait();
         }
 
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             {
                 host.Start();
                 HttpResponseMessage response = await SendEventGridRequest(host, RegistrationRequest, "SubscriptionValidation");
-                Assert.True(response.StatusCode == HttpStatusCode.OK);
+                Assert.That(response.StatusCode == HttpStatusCode.OK, Is.True);
             }
         }
 
@@ -136,8 +136,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             {
                 host.Start();
                 HttpResponseMessage response = await SendEventGridRequest(host, NotificationRequest.Replace("[blobPathPlaceHolder]", _resolvedContainerName + "/" + TestBlobName), "Notification");
-                Assert.True(response.StatusCode == HttpStatusCode.Accepted);
-                Assert.True(prog._completedEvent.WaitOne(TimeSpan.FromSeconds(60)));
+                Assert.That(response.StatusCode == HttpStatusCode.Accepted, Is.True);
+                Assert.That(prog._completedEvent.WaitOne(TimeSpan.FromSeconds(60)), Is.True);
 
                 // wait for all messages to be processed
                 await TestHelpers.Await(() =>

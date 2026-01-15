@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
         public async Task Get()
         {
             var privateCloudResource = await  getAvsPrivateCloudResource();
-            Assert.AreEqual(privateCloudResource.Data.Name, PRIVATE_CLOUD_NAME);
+            Assert.That(privateCloudResource.Data.Name, Is.EqualTo(PRIVATE_CLOUD_NAME));
         }
 
         [TestCase, Order(2)]
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
             AvsPrivateCloudPatch patch = new AvsPrivateCloudPatch();
             patch.Tags.Add("sdk-test", "sdk-test");
             ArmOperation<AvsPrivateCloudResource> lro = await privateCloudResource.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.IsTrue( lro.Value.Data.Tags.ContainsKey("sdk-test"));
+            Assert.That(lro.Value.Data.Tags.ContainsKey("sdk-test"), Is.True);
         }
 
         [TestCase, Order(3)]

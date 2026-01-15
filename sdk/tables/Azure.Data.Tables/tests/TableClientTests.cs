@@ -178,8 +178,8 @@ namespace Azure.Data.Tables.Tests
             Assert.Multiple(
                 () =>
                 {
-                    Assert.AreEqual(expectedAccountName, client.AccountName);
-                    Assert.AreEqual(expectedTableName, client.Name);
+                    Assert.That(client.AccountName, Is.EqualTo(expectedAccountName));
+                    Assert.That(client.Name, Is.EqualTo(expectedTableName));
                 });
         }
 
@@ -188,8 +188,8 @@ namespace Azure.Data.Tables.Tests
         {
             var client = new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TableClientOptions());
 
-            Assert.AreEqual(AccountName, client.AccountName);
-            Assert.AreEqual(TableName, client.Name);
+            Assert.That(client.AccountName, Is.EqualTo(AccountName));
+            Assert.That(client.Name, Is.EqualTo(TableName));
         }
 
         [Test]
@@ -197,8 +197,8 @@ namespace Azure.Data.Tables.Tests
         {
             var client = new TableClient(new Uri($"{_url}/{TableName}?{signature}"));
 
-            Assert.AreEqual(AccountName, client.AccountName);
-            Assert.AreEqual(TableName, client.Name);
+            Assert.That(client.AccountName, Is.EqualTo(AccountName));
+            Assert.That(client.Name, Is.EqualTo(TableName));
         }
 
         /// <summary>
@@ -455,9 +455,9 @@ namespace Azure.Data.Tables.Tests
         public async Task ValidateUri()
         {
             await client.UpdateEntityAsync(new TableEntity("pkā", "rk"), ETag.All).ConfigureAwait(false);
-            Assert.AreEqual(
-                $"https://example.com/someTableName(PartitionKey='{Uri.EscapeDataString("pkā")}',RowKey='rk')?{signature}&$format=application%2Fjson%3Bodata%3Dminimalmetadata",
-                _transport.Requests[0].Uri.ToString());
+            Assert.That(
+                _transport.Requests[0].Uri.ToString(),
+                Is.EqualTo($"https://example.com/someTableName(PartitionKey='{Uri.EscapeDataString("pkā")}',RowKey='rk')?{signature}&$format=application%2Fjson%3Bodata%3Dminimalmetadata"));
         }
 
         [Test]
@@ -533,7 +533,7 @@ namespace Azure.Data.Tables.Tests
 
             var actualSas = client.GenerateSasUri(permissions, expires);
 
-            Assert.AreEqual("?" + expectedSas, actualSas.Query);
+            Assert.That(actualSas.Query, Is.EqualTo("?" + expectedSas));
             CollectionAssert.Contains(actualSas.Segments, TableName);
         }
 
@@ -571,14 +571,14 @@ namespace Azure.Data.Tables.Tests
         [TestCaseSource(nameof(TableClientsAllCtors), new object[] { false })]
         public void UriPropertyIsPopulated(TableClient client)
         {
-            Assert.AreEqual(_urlWithTableName, client.Uri);
+            Assert.That(client.Uri, Is.EqualTo(_urlWithTableName));
             Assert.That(client.Uri.AbsoluteUri, Does.Not.Contain(signature));
         }
 
         [TestCaseSource(nameof(TableClientsAllCtors), new object[] { true })]
         public void UriPropertyIsPopulatedForEmulator(TableClient client)
         {
-            Assert.AreEqual(new Uri("http://127.0.0.1:10002/devstoreaccount1/" + TableName), client.Uri);
+            Assert.That(client.Uri, Is.EqualTo(new Uri("http://127.0.0.1:10002/devstoreaccount1/" + TableName)));
             Assert.That(client.Uri.AbsoluteUri, Does.Not.Contain(signature));
         }
 

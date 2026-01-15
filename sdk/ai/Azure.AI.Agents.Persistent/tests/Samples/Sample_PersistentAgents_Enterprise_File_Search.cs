@@ -76,9 +76,9 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
-        Assert.AreEqual(
-            RunStatus.Completed,
+        Assert.That(
             run.Status,
+            Is.EqualTo(RunStatus.Completed),
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsEnterpriseFileSearchAsync_ListUpdatedMessages
@@ -176,9 +176,9 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
-        Assert.AreEqual(
-            RunStatus.Completed,
+        Assert.That(
             run.Status,
+            Is.EqualTo(RunStatus.Completed),
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsEnterpriseFileSearch_ListUpdatedMessages

@@ -58,7 +58,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             if (endpoint.Port != 443)
                 ValidateTag(activity, ServerPortKey, endpoint.Port);
             else
-                Assert.IsNull(activity.GetTagItem(ServerPortKey));
+                Assert.That(activity.GetTagItem(ServerPortKey), Is.Null);
             ValidateTag(activity, GenAiOperationNameKey, "chat");
             ValidateTag(activity, GenAiRequestMaxTokensKey, requestOptions.MaxTokens);
             ValidateTag(activity, GenAiRequestTemperatureKey, requestOptions.Temperature);
@@ -87,7 +87,7 @@ namespace Azure.AI.Inference.Tests.Utilities
                 return;
             }
 
-            Assert.AreEqual(actualChoices.Count, actualChoices.Count);
+            Assert.That(actualChoices.Count, Is.EqualTo(actualChoices.Count));
             ValidateTag(activity, GenAiResponseIdKey, response.Id);
             ValidateTag(activity, GenAiResponseModelKey, response.Model);
             ValidateTag(activity, GenAiResponseFinishReasonsKey, response.FinishReasons);
@@ -98,19 +98,19 @@ namespace Azure.AI.Inference.Tests.Utilities
             HashSet<string> expectedChoices = new HashSet<string>(response.Choices.Select(c => JsonSerializer.Serialize(c, options: s_jsonOptions)));
             for (int i = 0; i < actualChoices.Count; i++)
             {
-                Assert.AreEqual(2, actualChoices[i].Tags.Count());
-                Assert.AreEqual(GenAiSystemValue, actualChoices[i].Tags.Single(kvp => kvp.Key == GenAiSystemKey).Value);
+                Assert.That(actualChoices[i].Tags.Count(), Is.EqualTo(2));
+                Assert.That(actualChoices[i].Tags.Single(kvp => kvp.Key == GenAiSystemKey).Value, Is.EqualTo(GenAiSystemValue));
 
                 var content = actualChoices[i].Tags.Where(kvp => kvp.Key == GenAiEventContent);
-                Assert.AreEqual(1, content.Count());
+                Assert.That(content.Count(), Is.EqualTo(1));
                 TelemetryUtils.AssertChoiceEventsAreEqual(response.Choices[i], content.Single().Value.ToString());
             }
         }
 
         private void ValidateError(Activity activity, string errorType, string errorDescription)
         {
-            Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
-            Assert.AreEqual(errorDescription, activity.StatusDescription);
+            Assert.That(activity.Status, Is.EqualTo(ActivityStatusCode.Error));
+            Assert.That(activity.StatusDescription, Is.EqualTo(errorDescription));
             ValidateTag(activity, ErrorTypeKey, errorType);
         }
 
@@ -125,7 +125,7 @@ namespace Azure.AI.Inference.Tests.Utilities
                     break;
                 }
             }
-            Assert.AreNotEqual(actual, default);
+            Assert.That(default, Is.Not.EqualTo(actual));
             Assert.Greater(actual.Timestamp, new DateTimeOffset(new DateTime(2024, 6, 1)));
             ValidateEventTags(actual.Tags, expected);
         }
@@ -148,20 +148,20 @@ namespace Azure.AI.Inference.Tests.Utilities
 
         private static void ValidateTag(Activity activity, string key, object value)
         {
-            Assert.AreEqual(value, activity.GetTagItem(key));
+            Assert.That(activity.GetTagItem(key), Is.EqualTo(value));
         }
 
         private static void ValidateIntTag(Activity activity, string key, long? value)
         {
             if (!value.HasValue)
             {
-                Assert.IsNull(activity.GetTagItem(key));
+                Assert.That(activity.GetTagItem(key), Is.Null);
             }
             else
             {
                 Assert.NotNull(activity.GetTagItem(key));
                 Assert.That(int.TryParse(activity.GetTagItem(key).ToString(), out int intActual));
-                Assert.AreEqual(value, intActual);
+                Assert.That(intActual, Is.EqualTo(value));
             }
         }
 
@@ -169,11 +169,11 @@ namespace Azure.AI.Inference.Tests.Utilities
         {
             // Though technically we can add the same named tag multiple times, we are not doing it in
             // our code.
-            Assert.AreEqual(tags.Count, actuals.Count());
+            Assert.That(actuals.Count(), Is.EqualTo(tags.Count));
             foreach (KeyValuePair<string, object> actual in actuals)
             {
                 Assert.That(tags.ContainsKey(actual.Key));
-                Assert.AreEqual(tags[actual.Key], actual.Value);
+                Assert.That(actual.Value, Is.EqualTo(tags[actual.Key]));
             }
         }
 

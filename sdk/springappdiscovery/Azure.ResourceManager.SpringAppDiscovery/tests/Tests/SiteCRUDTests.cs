@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 
             //create a site
             var createSiteOperation = await siteColletion.CreateOrUpdateAsync(WaitUntil.Completed, siteName, modelData, CancellationToken.None);
-            Assert.IsTrue(createSiteOperation.HasCompleted);
-            Assert.IsTrue(createSiteOperation.HasValue);
+            Assert.That(createSiteOperation.HasCompleted, Is.True);
+            Assert.That(createSiteOperation.HasValue, Is.True);
 
             //judge a site exist or not
-            Assert.IsTrue(await siteColletion.ExistsAsync(siteName));
+            Assert.That((bool)await siteColletion.ExistsAsync(siteName), Is.True);
 
             //get a site
             Response<SpringBootSiteResource> getSiteResponse = await siteColletion.GetAsync(siteName);
             SpringBootSiteResource siteResource = getSiteResponse.Value;
             NullableResponse<SpringBootSiteResource> getIfExistResponse = await siteColletion.GetIfExistsAsync(siteName);
-            Assert.True(getIfExistResponse.HasValue);
+            Assert.That(getIfExistResponse.HasValue, Is.True);
 
             //get all sites
             AsyncPageable<SpringBootSiteResource> getSiteAllResponse = siteColletion.GetAllAsync(CancellationToken.None);
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             {
                 siteCount++;
             }
-            Assert.True(siteCount > 0);
+            Assert.That(siteCount > 0, Is.True);
 
             //delete a site
             var deletetServerOperationAgain = await siteResource.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            Assert.IsTrue(deletetServerOperationAgain.HasCompleted);
+            Assert.That(deletetServerOperationAgain.HasCompleted, Is.True);
         }
     }
 }

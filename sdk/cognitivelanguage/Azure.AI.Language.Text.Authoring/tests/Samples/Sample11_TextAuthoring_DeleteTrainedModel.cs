@@ -32,7 +32,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Console.WriteLine($"Trained model deleted. Response status: {response.Status}");
             #endregion
 
-            Assert.AreEqual(204, response.Status, "Expected the status to indicate successful deletion.");
+            Assert.That(response.Status, Is.EqualTo(204), "Expected the status to indicate successful deletion.");
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Console.WriteLine($"Trained model deleted. Response status: {response.Status}");
             #endregion
 
-            Assert.AreEqual(204, response.Status, "Expected the status to indicate successful deletion.");
+            Assert.That(response.Status, Is.EqualTo(204), "Expected the status to indicate successful deletion.");
         }
     }
 }

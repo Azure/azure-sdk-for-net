@@ -48,8 +48,8 @@ namespace Azure.AI.TextAnalytics.Tests
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document);
 
             CheckAnalyzeSentimentProperties(docSentiment);
-            Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
-            Assert.AreEqual("Positive", docSentiment.Sentences.FirstOrDefault().Sentiment.ToString());
+            Assert.That(docSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
+            Assert.That(docSentiment.Sentences.FirstOrDefault().Sentiment.ToString(), Is.EqualTo("Positive"));
         }
 
         [RecordedTest]
@@ -61,8 +61,8 @@ namespace Azure.AI.TextAnalytics.Tests
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document);
 
             CheckAnalyzeSentimentProperties(docSentiment);
-            Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
-            Assert.AreEqual("Positive", docSentiment.Sentences.FirstOrDefault().Sentiment.ToString());
+            Assert.That(docSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
+            Assert.That(docSentiment.Sentences.FirstOrDefault().Sentiment.ToString(), Is.EqualTo("Positive"));
         }
 
         [RecordedTest]
@@ -74,7 +74,7 @@ namespace Azure.AI.TextAnalytics.Tests
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, "es");
 
             CheckAnalyzeSentimentProperties(docSentiment);
-            Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
+            Assert.That(docSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
         }
 
         [RecordedTest]
@@ -87,7 +87,7 @@ namespace Azure.AI.TextAnalytics.Tests
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, options: new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
 
             CheckAnalyzeSentimentProperties(docSentiment, opinionMining: true);
-            Assert.AreEqual("Mixed", docSentiment.Sentiment.ToString());
+            Assert.That(docSentiment.Sentiment.ToString(), Is.EqualTo("Mixed"));
         }
 
         [RecordedTest]
@@ -100,7 +100,7 @@ namespace Azure.AI.TextAnalytics.Tests
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, "en", new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
 
             CheckAnalyzeSentimentProperties(docSentiment);
-            Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
+            Assert.That(docSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
         }
 
         [RecordedTest]
@@ -114,11 +114,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             CheckAnalyzeSentimentProperties(docSentiment, opinionMining: true);
             SentenceOpinion opinion = docSentiment.Sentences.FirstOrDefault().Opinions.FirstOrDefault();
-            Assert.AreEqual("bathrooms", opinion.Target.Text);
-            Assert.AreEqual(TextSentiment.Negative, opinion.Target.Sentiment);
-            Assert.AreEqual("clean", opinion.Assessments.FirstOrDefault().Text);
-            Assert.AreEqual(TextSentiment.Negative, opinion.Assessments.FirstOrDefault().Sentiment);
-            Assert.IsTrue(opinion.Assessments.FirstOrDefault().IsNegated);
+            Assert.That(opinion.Target.Text, Is.EqualTo("bathrooms"));
+            Assert.That(opinion.Target.Sentiment, Is.EqualTo(TextSentiment.Negative));
+            Assert.That(opinion.Assessments.FirstOrDefault().Text, Is.EqualTo("clean"));
+            Assert.That(opinion.Assessments.FirstOrDefault().Sentiment, Is.EqualTo(TextSentiment.Negative));
+            Assert.That(opinion.Assessments.FirstOrDefault().IsNegated, Is.True);
         }
 
         [RecordedTest]
@@ -130,7 +130,7 @@ namespace Azure.AI.TextAnalytics.Tests
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, cancellationToken: default);
 
             CheckAnalyzeSentimentProperties(docSentiment);
-            Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
+            Assert.That(docSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
         }
 
         [RecordedTest]
@@ -142,7 +142,7 @@ namespace Azure.AI.TextAnalytics.Tests
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, "es", default);
 
             CheckAnalyzeSentimentProperties(docSentiment);
-            Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
+            Assert.That(docSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
         }
 
         [RecordedTest]
@@ -158,8 +158,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
             }
 
-            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
-            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+            Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
+            Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
         }
 
         [RecordedTest]
@@ -180,8 +180,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 CheckAnalyzeSentimentProperties(docs.DocumentSentiment, opinionMining: true);
             }
 
-            Assert.AreEqual("Mixed", results[0].DocumentSentiment.Sentiment.ToString());
-            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+            Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Mixed"));
+            Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
         }
 
         [RecordedTest]
@@ -197,8 +197,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
             }
 
-            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
-            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+            Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
+            Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
         }
 
         [RecordedTest]
@@ -214,8 +214,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
             }
 
-            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
-            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+            Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
+            Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
         }
 
         [RecordedTest]
@@ -231,8 +231,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
             }
 
-            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
-            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+            Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
+            Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
         }
 
         [RecordedTest]
@@ -248,8 +248,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
             }
 
-            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
-            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+            Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
+            Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
 
             Assert.IsNotNull(results.Statistics.ValidDocumentCount);
             Assert.IsNotNull(results.Statistics.DocumentCount);
@@ -270,8 +270,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
             }
 
-            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
-            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+            Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
+            Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
 
             Assert.IsNotNull(results.Statistics.ValidDocumentCount);
             Assert.IsNotNull(results.Statistics.DocumentCount);
@@ -292,8 +292,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
             }
 
-            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
-            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+            Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
+            Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
 
             Assert.IsNotNull(results.Statistics.ValidDocumentCount);
             Assert.IsNotNull(results.Statistics.DocumentCount);
@@ -312,12 +312,12 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (AnalyzeSentimentResult result in results)
             {
                 Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
-                Assert.False(result.HasError);
+                Assert.That(result.HasError, Is.False);
                 CheckAnalyzeSentimentProperties(result.DocumentSentiment);
             }
 
-            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
-            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+            Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
+            Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
 
             Assert.IsNotNull(results.Statistics.ValidDocumentCount);
             Assert.IsNotNull(results.Statistics.DocumentCount);
@@ -338,8 +338,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
             }
 
-            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
-            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+            Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
+            Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
         }
 
         [RecordedTest]
@@ -366,8 +366,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 CheckAnalyzeSentimentProperties(docs.DocumentSentiment, opinionMining: true);
             }
 
-            Assert.AreEqual("Mixed", results[0].DocumentSentiment.Sentiment.ToString());
-            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+            Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Mixed"));
+            Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
         }
 
         [RecordedTest]
@@ -383,8 +383,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
             }
 
-            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
-            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+            Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
+            Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
 
             Assert.IsNotNull(results.Statistics.ValidDocumentCount);
             Assert.IsNotNull(results.Statistics.DocumentCount);
@@ -405,13 +405,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents);
 
-            Assert.IsTrue(!results[0].HasError);
-            Assert.IsTrue(!results[2].HasError);
+            Assert.That(!results[0].HasError, Is.True);
+            Assert.That(!results[2].HasError, Is.True);
 
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
-            Assert.IsTrue(results[1].HasError);
+            Assert.That(results[1].HasError, Is.True);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].DocumentSentiment.GetType());
-            Assert.AreEqual(exceptionMessage, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
         }
 
         [RecordedTest]
@@ -421,7 +421,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var documents = new List<TextDocumentInput> { new TextDocumentInput(null, "Hello world") };
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeSentimentBatchAsync(documents));
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
+            Assert.That(ex.ErrorCode, Is.EqualTo(TextAnalyticsErrorCode.InvalidDocument));
         }
 
         [RecordedTest]
@@ -432,9 +432,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents);
             var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
-            Assert.IsTrue(results[0].HasError);
+            Assert.That(results[0].HasError, Is.True);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].DocumentSentiment.GetType());
-            Assert.AreEqual(exceptionMessage, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
         }
 
         [RecordedTest]
@@ -488,8 +488,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
             }
 
-            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
-            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+            Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
+            Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
         }
 
         [RecordedTest]
@@ -500,7 +500,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsClient client = GetClient();
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeSentimentBatchAsync(batchConvenienceDocuments, "en", options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
-            Assert.AreEqual("AnalyzeSentimentOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("AnalyzeSentimentOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer."));
         }
 
         [RecordedTest]
@@ -515,8 +515,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
             }
 
-            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
-            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+            Assert.That(results[0].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Positive"));
+            Assert.That(results[1].DocumentSentiment.Sentiment.ToString(), Is.EqualTo("Negative"));
         }
 
         [RecordedTest]
@@ -527,7 +527,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsClient client = GetClient();
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeSentimentBatchAsync(batchConvenienceDocuments, "en", options: new AnalyzeSentimentOptions { IncludeOpinionMining = true }));
-            Assert.AreEqual("AnalyzeSentimentOptions.IncludeOpinionMining is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("AnalyzeSentimentOptions.IncludeOpinionMining is not available in API version v3.0. Use service API version v3.1 or newer."));
         }
 
         private void CheckAnalyzeSentimentProperties(DocumentSentiment doc, bool opinionMining = default)
@@ -559,8 +559,8 @@ namespace Azure.AI.TextAnalytics.Tests
                         Assert.IsNotNull(opinions.Target.ConfidenceScores.Positive);
                         Assert.IsNotNull(opinions.Target.ConfidenceScores.Negative);
                         // Neutral should always be 0
-                        Assert.AreEqual(0, opinions.Target.ConfidenceScores.Neutral);
-                        Assert.IsTrue(CheckTotalConfidenceScoreValue(opinions.Target.ConfidenceScores));
+                        Assert.That(opinions.Target.ConfidenceScores.Neutral, Is.EqualTo(0));
+                        Assert.That(CheckTotalConfidenceScoreValue(opinions.Target.ConfidenceScores), Is.True);
                         Assert.IsNotNull(opinions.Target.Offset);
                         Assert.IsNotNull(opinions.Target.Length);
 
@@ -573,8 +573,8 @@ namespace Azure.AI.TextAnalytics.Tests
                             Assert.IsNotNull(opinion.ConfidenceScores.Positive);
                             Assert.IsNotNull(opinion.ConfidenceScores.Negative);
                             // Neutral should always be 0
-                            Assert.AreEqual(0, opinion.ConfidenceScores.Neutral);
-                            Assert.IsTrue(CheckTotalConfidenceScoreValue(opinion.ConfidenceScores));
+                            Assert.That(opinion.ConfidenceScores.Neutral, Is.EqualTo(0));
+                            Assert.That(CheckTotalConfidenceScoreValue(opinion.ConfidenceScores), Is.True);
                             Assert.IsNotNull(opinion.IsNegated);
                             Assert.IsNotNull(opinion.Offset);
                             Assert.IsNotNull(opinion.Length);

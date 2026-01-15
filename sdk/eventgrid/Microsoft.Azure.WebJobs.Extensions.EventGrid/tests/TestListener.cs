@@ -76,9 +76,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var request = CreateEventSubscribeRequest(functionName, evt);
             var response = await ext.ConvertAsync(request, CancellationToken.None);
 
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             var content = await response.Content.ReadAsStringAsync();
-            Assert.AreEqual("validation-code", JObject.Parse(content)["validationResponse"].ToString());
+            Assert.That(JObject.Parse(content)["validationResponse"].ToString(), Is.EqualTo("validation-code"));
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             var request = CreateEventSubscribeRequest("TestCloudEvent", CloudEventSubscription);
             var response = await ext.ConvertAsync(request, CancellationToken.None);
-            Assert.AreEqual(HttpStatusCode.Conflict, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
         }
 
         [Test]
@@ -104,9 +104,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             var request = new HttpRequestMessage(HttpMethod.Options, $"http://localhost/?functionName={functionName}");
             var response = await ext.ConvertAsync(request, CancellationToken.None);
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             // no WebHook-Request-Origin header, should fallback to public cloud
-            Assert.AreEqual("eventgrid.azure.net", response.Headers.GetValues("Webhook-Allowed-Origin").First());
+            Assert.That(response.Headers.GetValues("Webhook-Allowed-Origin").First(), Is.EqualTo("eventgrid.azure.net"));
         }
 
         [TestCase("eventgrid.azure.net")]
@@ -123,8 +123,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var request = new HttpRequestMessage(HttpMethod.Options, $"http://localhost/?functionName=TestCloudEvent");
             request.Headers.Add("WebHook-Request-Origin", origin);
             var response = await ext.ConvertAsync(request, CancellationToken.None);
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.AreEqual(origin, response.Headers.GetValues("Webhook-Allowed-Origin").First());
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(response.Headers.GetValues("Webhook-Allowed-Origin").First(), Is.EqualTo(origin));
         }
 
         [Test]
@@ -137,9 +137,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var request = new HttpRequestMessage(HttpMethod.Options, $"http://localhost/?functionName=TestCloudEvent");
             request.Headers.Add("WebHook-Request-Origin", "someunknown.origin.com");
             var response = await ext.ConvertAsync(request, CancellationToken.None);
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             // Unknown origin, should fallback to public cloud
-            Assert.AreEqual("eventgrid.azure.net", response.Headers.GetValues("Webhook-Allowed-Origin").First());
+            Assert.That(response.Headers.GetValues("Webhook-Allowed-Origin").First(), Is.EqualTo("eventgrid.azure.net"));
         }
 
         [Test]
@@ -151,8 +151,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             var request = new HttpRequestMessage(HttpMethod.Options, "http://localhost/?functionName=TestEventGrid");
             var response = await ext.ConvertAsync(request, CancellationToken.None);
-            Assert.AreEqual(HttpStatusCode.Conflict, response.StatusCode);
-            Assert.False(response.Headers.Contains("Webhook-Allowed-Origin"));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
+            Assert.That(response.Headers.Contains("Webhook-Allowed-Origin"), Is.False);
         }
 
         // Unsubscribe gives a 202.
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var request = CreateUnsubscribeRequest("TestEventGrid");
             var response = await ext.ConvertAsync(request, CancellationToken.None);
 
-            Assert.AreEqual(HttpStatusCode.Accepted, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
         }
 
         // Test that an event payload with multiple events causes multiple dispatches,
@@ -190,12 +190,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             // Also verifies each instance gets its own proper binding data (from FakePayload.Prop)
             _log.TryGetValue("one", out string alpha);
             _log.TryGetValue("two", out string beta);
-            Assert.AreEqual(2, _log.Count);
-            Assert.AreEqual("alpha", alpha);
-            Assert.AreEqual("beta", beta);
+            Assert.That(_log.Count, Is.EqualTo(2));
+            Assert.That(alpha, Is.EqualTo("alpha"));
+            Assert.That(beta, Is.EqualTo("beta"));
             // TODO - Verify that we return from webhook before the dispatch is finished
             // https://github.com/Azure/azure-functions-eventgrid-extension/issues/10
-            Assert.AreEqual(HttpStatusCode.Accepted, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
         }
 
         [Test]
@@ -215,14 +215,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             // verifies each instance gets its own proper binding data (from FakePayload.Prop)
             _log.TryGetValue("one", out string alpha);
-            Assert.AreEqual("alpha", alpha);
+            Assert.That(alpha, Is.EqualTo("alpha"));
 
             // validate that the time matches exactly - i.e. it should not have been translated to UTC or local time of the machine
             _log.TryGetValue("time", out string time);
-            Assert.AreEqual(dateTime, time);
+            Assert.That(time, Is.EqualTo(dateTime));
 
-            Assert.AreEqual(2, _log.Count);
-            Assert.AreEqual(HttpStatusCode.Accepted, response.StatusCode);
+            Assert.That(_log.Count, Is.EqualTo(2));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
         }
 
         [Test]
@@ -241,17 +241,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 JObject.Parse(@"{'subject':'one','eventType':'2','id':'1','dataVersion':'0','data':{'prop':'alpha'}}"));
             var response = await ext.ConvertAsync(request, CancellationToken.None);
 
-            Assert.AreEqual(2, testListener.Scopes.Count);
+            Assert.That(testListener.Scopes.Count, Is.EqualTo(2));
 
             // one of executions will fail because of dup subject
-            Assert.AreEqual(1, testListener.Scopes.Count(s => s.Exception != null));
+            Assert.That(testListener.Scopes.Count(s => s.Exception != null), Is.EqualTo(1));
 
             for (int i = 0; i < 2; i++)
             {
                 var executionScope = testListener.AssertAndRemoveScope("EventGrid.Process", new KeyValuePair<string, string>("az.namespace", "Microsoft.EventGrid"));
                 Assert.IsEmpty(executionScope.Links);
-                Assert.True(_log.TryGetValue(executionScope.Activity.Id, out var activityName));
-                Assert.AreEqual("EventGrid.Process", activityName);
+                Assert.That(_log.TryGetValue(executionScope.Activity.Id, out var activityName), Is.True);
+                Assert.That(activityName, Is.EqualTo("EventGrid.Process"));
             }
         }
 
@@ -272,14 +272,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             var response = await ext.ConvertAsync(request, CancellationToken.None);
 
-            Assert.AreEqual(1, testListener.Scopes.Count);
+            Assert.That(testListener.Scopes.Count, Is.EqualTo(1));
             var executionScope = testListener.AssertScope("EventGrid.Process",
                 new KeyValuePair<string, string>("az.namespace", "Microsoft.EventGrid"));
 
             Assert.IsEmpty(executionScope.Links);
-            Assert.Null(executionScope.Exception);
-            Assert.True(_log.TryGetValue(executionScope.Activity.Id, out var activityName));
-            Assert.AreEqual("EventGrid.Process", activityName);
+            Assert.That(executionScope.Exception, Is.Null);
+            Assert.That(_log.TryGetValue(executionScope.Activity.Id, out var activityName), Is.True);
+            Assert.That(activityName, Is.EqualTo("EventGrid.Process"));
         }
 
         [Test]
@@ -297,15 +297,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 JObject.Parse($"{{{CloudEventRequiredFields},'traceparent':'{traceparent}','data':{{'prop':'1'}}}}"));
             var response = await ext.ConvertAsync(request, CancellationToken.None);
 
-            Assert.AreEqual(1, testListener.Scopes.Count);
+            Assert.That(testListener.Scopes.Count, Is.EqualTo(1));
             var executionScope = testListener.AssertScope("EventGrid.Process",
                 new KeyValuePair<string, string>("az.namespace", "Microsoft.EventGrid"));
 
             var expectedLinks = new[] { new ClientDiagnosticListener.ProducedLink(traceparent) };
             Assert.That(executionScope.Links, Is.EquivalentTo(expectedLinks));
-            Assert.Null(executionScope.Exception);
-            Assert.True(_log.TryGetValue(executionScope.Activity.Id, out var activityName));
-            Assert.AreEqual("EventGrid.Process", activityName);
+            Assert.That(executionScope.Exception, Is.Null);
+            Assert.That(_log.TryGetValue(executionScope.Activity.Id, out var activityName), Is.True);
+            Assert.That(activityName, Is.EqualTo("EventGrid.Process"));
         }
 
         [Test]
@@ -328,36 +328,36 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             var response = await ext.ConvertAsync(request, CancellationToken.None);
 
-            Assert.AreEqual(2, testListener.Scopes.Count);
+            Assert.That(testListener.Scopes.Count, Is.EqualTo(2));
 
             // one of executions will fail because of dup subject
-            Assert.AreEqual(1, testListener.Scopes.Count(s => s.Exception != null));
+            Assert.That(testListener.Scopes.Count(s => s.Exception != null), Is.EqualTo(1));
 
             bool fullFound = false, parentOnlyFound = false;
             for (int i = 0; i < 2; i++)
             {
                 var executionScope = testListener.AssertAndRemoveScope("EventGrid.Process", new KeyValuePair<string, string>("az.namespace", "Microsoft.EventGrid"));
-                Assert.AreEqual(1, executionScope.Links.Count);
-                Assert.True(_log.TryGetValue(executionScope.Activity.Id, out var activityName));
-                Assert.AreEqual("EventGrid.Process", activityName);
+                Assert.That(executionScope.Links.Count, Is.EqualTo(1));
+                Assert.That(_log.TryGetValue(executionScope.Activity.Id, out var activityName), Is.True);
+                Assert.That(activityName, Is.EqualTo("EventGrid.Process"));
 
                 var link = executionScope.Links.Single();
                 if (link.Traceparent == traceparent1)
                 {
-                    Assert.AreEqual(tracestate1, link.Tracestate);
-                    Assert.IsFalse(fullFound);
+                    Assert.That(link.Tracestate, Is.EqualTo(tracestate1));
+                    Assert.That(fullFound, Is.False);
                     fullFound = true;
                 }
                 else
                 {
                     Assert.IsNull(link.Tracestate);
-                    Assert.IsFalse(parentOnlyFound);
+                    Assert.That(parentOnlyFound, Is.False);
                     parentOnlyFound = true;
                 }
             }
 
-            Assert.IsTrue(fullFound);
-            Assert.IsTrue(parentOnlyFound);
+            Assert.That(fullFound, Is.True);
+            Assert.That(parentOnlyFound, Is.True);
         }
 
         [Test]
@@ -381,7 +381,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             var response = await ext.ConvertAsync(request, CancellationToken.None);
 
-            Assert.AreEqual(1, testListener.Scopes.Count);
+            Assert.That(testListener.Scopes.Count, Is.EqualTo(1));
             var executionScope = testListener.AssertScope("EventGrid.Process",
                 new KeyValuePair<string, string>("az.namespace", "Microsoft.EventGrid"));
 
@@ -389,9 +389,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                                         new ClientDiagnosticListener.ProducedLink(traceparent2, null)};
 
             Assert.That(executionScope.Links, Is.EquivalentTo(expectedLinks));
-            Assert.Null(executionScope.Exception);
-            Assert.True(_log.TryGetValue(executionScope.Activity.Id, out var activityName));
-            Assert.AreEqual("EventGrid.Process", activityName);
+            Assert.That(executionScope.Exception, Is.Null);
+            Assert.That(_log.TryGetValue(executionScope.Activity.Id, out var activityName), Is.True);
+            Assert.That(activityName, Is.EqualTo("EventGrid.Process"));
         }
 
         [Test]
@@ -413,7 +413,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             var response = await ext.ConvertAsync(request, CancellationToken.None);
 
-            Assert.AreEqual(1, testListener.Scopes.Count);
+            Assert.That(testListener.Scopes.Count, Is.EqualTo(1));
             var executionScope = testListener.AssertScope("EventGrid.Process",
                 new KeyValuePair<string, string>("az.namespace", "Microsoft.EventGrid"));
 
@@ -422,8 +422,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             Assert.That(executionScope.Links, Is.EquivalentTo(expectedLinks));
             Assert.NotNull(executionScope.Exception);
-            Assert.True(_log.TryGetValue(executionScope.Activity.Id, out var activityName));
-            Assert.AreEqual("EventGrid.Process", activityName);
+            Assert.That(_log.TryGetValue(executionScope.Activity.Id, out var activityName), Is.True);
+            Assert.That(activityName, Is.EqualTo("EventGrid.Process"));
         }
 
         [Test]
@@ -438,8 +438,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var response = await ext.ConvertAsync(request, CancellationToken.None);
 
             string responseContent = await response.Content.ReadAsStringAsync();
-            Assert.AreEqual("cannot find function: 'RandomFunctionName'", responseContent);
-            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            Assert.That(responseContent, Is.EqualTo("cannot find function: 'RandomFunctionName'"));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         }
 
         [Test]
@@ -454,8 +454,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var response = await ext.ConvertAsync(request, CancellationToken.None);
 
             string responseContent = await response.Content.ReadAsStringAsync();
-            Assert.AreEqual("Exception while executing function: EventGridThrowsException", responseContent);
-            Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+            Assert.That(responseContent, Is.EqualTo("Exception while executing function: EventGridThrowsException"));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
         }
 
         [Test]
@@ -470,8 +470,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var response = await ext.ConvertAsync(request, CancellationToken.None);
 
             string responseContent = await response.Content.ReadAsStringAsync();
-            Assert.AreEqual("Exception while executing function: EventGridThrowsExceptionMultiple", responseContent);
-            Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+            Assert.That(responseContent, Is.EqualTo("Exception while executing function: EventGridThrowsExceptionMultiple"));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
         }
 
         private static EventGridExtensionConfigProvider CreateConfigProvider(IServiceProvider services)

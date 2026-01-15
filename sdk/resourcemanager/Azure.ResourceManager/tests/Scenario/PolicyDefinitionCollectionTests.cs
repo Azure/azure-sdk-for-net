@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string policyDefinitionName = Recording.GenerateAssetName("polDef-");
             SubscriptionPolicyDefinitionResource policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
-            Assert.AreEqual(policyDefinitionName, policyDefinition.Data.Name);
+            Assert.That(policyDefinition.Data.Name, Is.EqualTo(policyDefinitionName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, null, policyDefinition.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, null));
             await policyDefinition.DeleteAsync(WaitUntil.Completed);
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Tests
             ManagementGroupResource mgmtGroup = await GetCreatedManagementGroup();
             string policyDefinitionName = Recording.GenerateAssetName("polDef-");
             ManagementGroupPolicyDefinitionResource policyDefinition = await CreatePolicyDefinitionAtMgmtGroup(mgmtGroup, policyDefinitionName);
-            Assert.AreEqual(policyDefinitionName, policyDefinition.Data.Name);
+            Assert.That(policyDefinition.Data.Name, Is.EqualTo(policyDefinitionName));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, null, policyDefinition.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, null));
         }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Tests
             {
                 await foreach (var builtInPolicyDefinition in tenant.GetTenantPolicyDefinitions().GetAllAsync(filter))
                 {
-                    Assert.AreEqual(builtInPolicyDefinition.Data.PolicyType, PolicyType.BuiltIn);
+                    Assert.That(PolicyType.BuiltIn, Is.EqualTo(builtInPolicyDefinition.Data.PolicyType));
                 }
             }
         }
@@ -95,51 +95,51 @@ namespace Azure.ResourceManager.Tests
             await foreach (var tenant in Client.GetTenants().GetAllAsync())
             {
                 TenantPolicyDefinitionResource getBuiltInPolicyDefinition = await tenant.GetTenantPolicyDefinitions().GetAsync("04d53d87-841c-4f23-8a5b-21564380b55e");
-                Assert.AreEqual(getBuiltInPolicyDefinition.Data.DisplayName, "Deploy Diagnostic Settings for Service Bus to Log Analytics workspace");
+                Assert.That(getBuiltInPolicyDefinition.Data.DisplayName, Is.EqualTo("Deploy Diagnostic Settings for Service Bus to Log Analytics workspace"));
             }
         }
 
         private static void AssertValidPolicyDefinition(SubscriptionPolicyDefinitionResource model, SubscriptionPolicyDefinitionResource getResult)
         {
-            Assert.AreEqual(model.Data.Name, getResult.Data.Name);
-            Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.PolicyType, getResult.Data.PolicyType);
-            Assert.AreEqual(model.Data.Mode, getResult.Data.Mode);
-            Assert.AreEqual(model.Data.DisplayName, getResult.Data.DisplayName);
-            Assert.AreEqual(model.Data.Description, getResult.Data.Description);
-            Assert.AreEqual(model.Data.PolicyRule.ToArray(), getResult.Data.PolicyRule.ToArray());
-            Assert.AreEqual(model.Data.Metadata.ToArray(), getResult.Data.Metadata.ToArray());
+            Assert.That(getResult.Data.Name, Is.EqualTo(model.Data.Name));
+            Assert.That(getResult.Data.Id, Is.EqualTo(model.Data.Id));
+            Assert.That(getResult.Data.ResourceType, Is.EqualTo(model.Data.ResourceType));
+            Assert.That(getResult.Data.PolicyType, Is.EqualTo(model.Data.PolicyType));
+            Assert.That(getResult.Data.Mode, Is.EqualTo(model.Data.Mode));
+            Assert.That(getResult.Data.DisplayName, Is.EqualTo(model.Data.DisplayName));
+            Assert.That(getResult.Data.Description, Is.EqualTo(model.Data.Description));
+            Assert.That(getResult.Data.PolicyRule.ToArray(), Is.EqualTo(model.Data.PolicyRule.ToArray()));
+            Assert.That(getResult.Data.Metadata.ToArray(), Is.EqualTo(model.Data.Metadata.ToArray()));
             if(model.Data.Parameters != null || getResult.Data.Parameters != null)
             {
                 Assert.NotNull(model.Data.Parameters);
                 Assert.NotNull(getResult.Data.Parameters);
-                Assert.AreEqual(model.Data.Parameters.Count, getResult.Data.Parameters.Count);
+                Assert.That(getResult.Data.Parameters.Count, Is.EqualTo(model.Data.Parameters.Count));
                 foreach (KeyValuePair<string, ArmPolicyParameter> kvp in model.Data.Parameters)
                 {
-                    Assert.AreEqual(getResult.Data.Parameters.ContainsKey(kvp.Key), true);
+                    Assert.That(getResult.Data.Parameters.ContainsKey(kvp.Key), Is.EqualTo(true));
                     ArmPolicyParameter getParameterDefinitionsValue = getResult.Data.Parameters[kvp.Key];
-                    Assert.AreEqual(kvp.Value.ParameterType, getParameterDefinitionsValue.ParameterType);
+                    Assert.That(getParameterDefinitionsValue.ParameterType, Is.EqualTo(kvp.Value.ParameterType));
                     if (kvp.Value.AllowedValues != null || getParameterDefinitionsValue.AllowedValues != null)
                     {
                         Assert.NotNull(kvp.Value.AllowedValues);
                         Assert.NotNull(getParameterDefinitionsValue.AllowedValues);
-                        Assert.AreEqual(kvp.Value.AllowedValues.Count, getParameterDefinitionsValue.AllowedValues.Count);
+                        Assert.That(getParameterDefinitionsValue.AllowedValues.Count, Is.EqualTo(kvp.Value.AllowedValues.Count));
                         for (int i = 0; i < kvp.Value.AllowedValues.Count; ++i)
                         {
-                            Assert.AreEqual(kvp.Value.AllowedValues[i], getParameterDefinitionsValue.AllowedValues[i]);
+                            Assert.That(getParameterDefinitionsValue.AllowedValues[i], Is.EqualTo(kvp.Value.AllowedValues[i]));
                         }
                     }
-                    Assert.AreEqual(kvp.Value.DefaultValue, getParameterDefinitionsValue.DefaultValue);
+                    Assert.That(getParameterDefinitionsValue.DefaultValue, Is.EqualTo(kvp.Value.DefaultValue));
                     if(kvp.Value.Metadata != null || getParameterDefinitionsValue.Metadata != null)
                     {
                         Assert.NotNull(kvp.Value.Metadata);
                         Assert.NotNull(getParameterDefinitionsValue.Metadata);
-                        Assert.AreEqual(kvp.Value.Metadata.DisplayName, getParameterDefinitionsValue.Metadata.DisplayName);
-                        Assert.AreEqual(kvp.Value.Metadata.Description, getParameterDefinitionsValue.Metadata.Description);
-                        Assert.AreEqual(kvp.Value.Metadata.StrongType, getParameterDefinitionsValue.Metadata.StrongType);
-                        Assert.AreEqual(kvp.Value.Metadata.AssignPermissions, getParameterDefinitionsValue.Metadata.AssignPermissions);
-                        Assert.AreEqual(kvp.Value.Metadata.AdditionalProperties, getParameterDefinitionsValue.Metadata.AdditionalProperties);
+                        Assert.That(getParameterDefinitionsValue.Metadata.DisplayName, Is.EqualTo(kvp.Value.Metadata.DisplayName));
+                        Assert.That(getParameterDefinitionsValue.Metadata.Description, Is.EqualTo(kvp.Value.Metadata.Description));
+                        Assert.That(getParameterDefinitionsValue.Metadata.StrongType, Is.EqualTo(kvp.Value.Metadata.StrongType));
+                        Assert.That(getParameterDefinitionsValue.Metadata.AssignPermissions, Is.EqualTo(kvp.Value.Metadata.AssignPermissions));
+                        Assert.That(getParameterDefinitionsValue.Metadata.AdditionalProperties, Is.EqualTo(kvp.Value.Metadata.AdditionalProperties));
                     }
                 }
             }

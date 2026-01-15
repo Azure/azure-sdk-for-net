@@ -178,7 +178,7 @@ namespace Azure.Search.Documents.Tests
                 }
                 else if (doc["Value"] is object[] actual && actual?.Length > 0)
                 {
-                    Assert.IsTrue(actual.Any(e => !(e is T)));
+                    Assert.That(actual.Any(e => !(e is T)), Is.True);
                 }
             }
 
@@ -209,7 +209,7 @@ namespace Azure.Search.Documents.Tests
                 // TODO: Change from object[] to T when DynamicData has better conversions
                 else if (actual is object[] values && values?.Length > 0)
                 {
-                    Assert.IsTrue(values.Any(e => !(e is T)));
+                    Assert.That(values.Any(e => !(e is T)), Is.True);
                 }
             }
 
@@ -239,7 +239,7 @@ namespace Azure.Search.Documents.Tests
                 {
                     throws = true;
                 }
-                Assert.IsTrue(throws, "Expected an exception to be thrown!");
+                Assert.That(throws, Is.True, "Expected an exception to be thrown!");
             }
         }
 
@@ -730,16 +730,16 @@ namespace Azure.Search.Documents.Tests
                 new SearchDocument(),
                 new SearchDocument());
 
-            Assert.AreNotEqual(
-                new SearchDocument(),
-                new Complex().ToDocument());
+            Assert.That(
+                new Complex().ToDocument(),
+                Is.Not.EqualTo(new SearchDocument()));
             SearchTestBase.AssertApproximate(
                 new Complex().ToDocument(),
                 new Complex().ToDocument());
 
-            Assert.AreNotEqual(
-                new Complex(1, false, "hi").ToDocument(),
-                new NestedComplex(1, false, "hi").ToDocument());
+            Assert.That(
+                new NestedComplex(1, false, "hi").ToDocument(),
+                Is.Not.EqualTo(new Complex(1, false, "hi").ToDocument()));
             SearchTestBase.AssertApproximate(
                 new NestedComplex(1, false, "hi").ToDocument(),
                 new NestedComplex(1, false, "hi").ToDocument());

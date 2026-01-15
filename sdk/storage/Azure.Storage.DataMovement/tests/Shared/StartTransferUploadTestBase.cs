@@ -188,8 +188,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             await testEventsRaised.AssertSingleCompletedCheck();
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
         }
 
         [RecordedTest]
@@ -223,9 +223,9 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             await testEventsRaised.AssertSingleFailedCheck(1);
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasFailedItems);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
+            Assert.That(transfer.Status.HasFailedItems, Is.EqualTo(true));
             var testException = testEventsRaised.FailedEvents.First().Exception;
             Assert.NotNull(testException, "Excepted failure: Overwrite failure was supposed to be raised during the test");
             if (testException is RequestFailedException rfe)
@@ -234,7 +234,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
             else
             {
-                Assert.IsTrue(testException.Message.Contains(_expectedOverwriteExceptionMessage));
+                Assert.That(testException.Message.Contains(_expectedOverwriteExceptionMessage), Is.True);
             }
         }
 
@@ -270,9 +270,9 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             await testEventsRaised.AssertSingleSkippedCheck();
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasSkippedItems);
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
+            Assert.That(transfer.Status.HasSkippedItems, Is.EqualTo(true));
         }
 
         #region Single Upload Verified
@@ -329,7 +329,7 @@ namespace Azure.Storage.DataMovement.Tests
             else
             {
                 // If objectNames is popluated make sure these number of files match
-                Assert.AreEqual(objectCount, objectNames.Count);
+                Assert.That(objectNames.Count, Is.EqualTo(objectCount));
             }
 
             // Populate Options and TestRaisedOptions
@@ -384,13 +384,13 @@ namespace Azure.Storage.DataMovement.Tests
                     uploadedObjectInfo[i].TransferOperation,
                     uploadedObjectInfo[i].EventsRaised,
                     tokenSource.Token);
-                Assert.IsTrue(uploadedObjectInfo[i].TransferOperation.HasCompleted);
+                Assert.That(uploadedObjectInfo[i].TransferOperation.HasCompleted, Is.True);
 
                 // Verify Upload
                 await uploadedObjectInfo[i].EventsRaised.AssertSingleCompletedCheck();
                 using FileStream fileStream = File.OpenRead(uploadedObjectInfo[i].LocalPath);
                 using Stream stream = await OpenReadAsync(uploadedObjectInfo[i].DestinationClient);
-                Assert.AreEqual(fileStream, stream);
+                Assert.That(stream, Is.EqualTo(fileStream));
             }
         }
 
@@ -430,7 +430,7 @@ namespace Azure.Storage.DataMovement.Tests
                 options: optionsList);
 
             // Assert
-            Assert.IsTrue(progressSeen);
+            Assert.That(progressSeen, Is.True);
         }
 
         [RecordedTest]
@@ -568,13 +568,13 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             await testEventsRaised.AssertSingleSkippedCheck();
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasSkippedItems);
-            Assert.IsTrue(await ExistsAsync(objectClient));
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
+            Assert.That(transfer.Status.HasSkippedItems, Is.EqualTo(true));
+            Assert.That(await ExistsAsync(objectClient), Is.True);
             // Verify Upload - That we skipped over and didn't reupload something new.
             using Stream stream = await OpenReadAsync(objectClient);
-            Assert.AreEqual(originalStream, stream);
+            Assert.That(stream, Is.EqualTo(originalStream));
         }
 
         [RecordedTest]
@@ -624,10 +624,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasFailedItems);
-            Assert.IsTrue(await ExistsAsync(objectClient));
+            Assert.That(transfer.HasCompleted, Is.True);
+            Assert.That(transfer.Status.State, Is.EqualTo(TransferState.Completed));
+            Assert.That(transfer.Status.HasFailedItems, Is.EqualTo(true));
+            Assert.That(await ExistsAsync(objectClient), Is.True);
             await testEventRaised.AssertSingleFailedCheck(1);
             var testException = testEventRaised.FailedEvents.First().Exception;
             Assert.NotNull(testException, "Excepted failure: Overwrite failure was supposed to be raised during the test");
@@ -637,11 +637,11 @@ namespace Azure.Storage.DataMovement.Tests
             }
             else
             {
-                Assert.IsTrue(testException.Message.Contains(_expectedOverwriteExceptionMessage));
+                Assert.That(testException.Message.Contains(_expectedOverwriteExceptionMessage), Is.True);
             }
             // Verify Upload - That we skipped over and didn't reupload something new.
             using Stream stream = await OpenReadAsync(objectClient);
-            Assert.AreEqual(originalStream, stream);
+            Assert.That(stream, Is.EqualTo(originalStream));
         }
 
         [RecordedTest]

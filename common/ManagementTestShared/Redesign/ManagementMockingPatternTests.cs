@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.TestFramework
         {
             var testAssembly = Assembly.GetExecutingAssembly();
             var assemblyName = testAssembly.GetName().Name;
-            Assert.IsTrue(assemblyName.EndsWith(TestAssemblySuffix), $"The test assembly should end with {TestAssemblySuffix}");
+            Assert.That(assemblyName.EndsWith(TestAssemblySuffix), Is.True, $"The test assembly should end with {TestAssemblySuffix}");
             var rpNamespace = assemblyName.Substring(0, assemblyName.Length - TestAssemblySuffix.Length);
 
             if (rpNamespace == ResourceManagerAssemblyName || rpNamespace == TestFrameworkAssembly)
@@ -110,18 +110,18 @@ namespace Azure.ResourceManager.TestFramework
 
             var mockingExtensionType = assembly.GetType(mockingExtensionTypeName);
             Assert.IsNotNull(mockingExtensionType, $"The mocking extension class {mockingExtensionTypeName} must exist");
-            Assert.IsTrue(mockingExtensionType.IsPublic, $"The mocking extension class {mockingExtensionType} must be public");
+            Assert.That(mockingExtensionType.IsPublic, Is.True, $"The mocking extension class {mockingExtensionType} must be public");
 
             // validate the mocking extension class has a method with the exact name and parameter list
             var expectedTypes = parameters.Skip(1).Select(p => p.ParameterType).ToArray();
             var methodOnExtension = mockingExtensionType.GetMethod(method.Name, parameters.Skip(1).Select(p => p.ParameterType).ToArray());
 
             Assert.IsNotNull(methodOnExtension, $"The class {mockingExtensionType} must have method {method}");
-            Assert.IsTrue(methodOnExtension.IsVirtual, $"The method on {mockingExtensionType} must be virtual");
-            Assert.IsTrue(methodOnExtension.IsPublic, $"The method on {mockingExtensionType} must be public");
+            Assert.That(methodOnExtension.IsVirtual, Is.True, $"The method on {mockingExtensionType} must be virtual");
+            Assert.That(methodOnExtension.IsPublic, Is.True, $"The method on {mockingExtensionType} must be public");
 
             // validate they should both have or both not have the EditorBrowsable(Never) attribute
-            Assert.AreEqual(method.IsDefined(typeof(EditorBrowsableAttribute)), methodOnExtension.IsDefined(typeof(EditorBrowsableAttribute)), $"The method {method} and {methodOnExtension} should both have or neither have the EditorBrowsableAttribute on them");
+            Assert.That(methodOnExtension.IsDefined(typeof(EditorBrowsableAttribute)), Is.EqualTo(method.IsDefined(typeof(EditorBrowsableAttribute))), $"The method {method} and {methodOnExtension} should both have or neither have the EditorBrowsableAttribute on them");
 
             ValidateMocking(extendedType, mockingExtensionType, method, methodOnExtension);
         }

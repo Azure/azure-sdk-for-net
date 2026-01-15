@@ -120,31 +120,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             // Verify happy-path logging.
             var logMessages = _loggerProvider.GetAllLogMessages().ToArray();
-            Assert.AreEqual(4, logMessages.Length);
+            Assert.That(logMessages.Length, Is.EqualTo(4));
 
             // 1 initialization log
             var initLog = logMessages.Single(m => m.EventId.Name == "InitializedScanInfo");
-            Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Debug, initLog.Level);
-            Assert.AreEqual(3, initLog.State.Count());
-            Assert.AreEqual(ContainerName, initLog.GetStateValue<string>("containerName"));
-            Assert.True(!string.IsNullOrWhiteSpace(initLog.GetStateValue<string>("latestScanInfo")));
-            Assert.True(!string.IsNullOrWhiteSpace(initLog.GetStateValue<string>("{OriginalFormat}")));
+            Assert.That(initLog.Level, Is.EqualTo(Microsoft.Extensions.Logging.LogLevel.Debug));
+            Assert.That(initLog.State.Count(), Is.EqualTo(3));
+            Assert.That(initLog.GetStateValue<string>("containerName"), Is.EqualTo(ContainerName));
+            Assert.That(!string.IsNullOrWhiteSpace(initLog.GetStateValue<string>("latestScanInfo")), Is.True);
+            Assert.That(!string.IsNullOrWhiteSpace(initLog.GetStateValue<string>("{OriginalFormat}")), Is.True);
 
             // 3 polling logs
             var pollLogs = logMessages.Where(m => m.EventId.Name == "PollBlobContainer").ToArray();
-            Assert.AreEqual(3, pollLogs.Length);
+            Assert.That(pollLogs.Length, Is.EqualTo(3));
 
             void ValidatePollingLog(LogMessage pollingLog, int expectedBlobCount)
             {
-                Assert.AreEqual(Microsoft.Extensions.Logging.LogLevel.Debug, pollingLog.Level);
-                Assert.AreEqual(7, pollingLog.State.Count());
-                Assert.AreEqual(ContainerName, pollingLog.GetStateValue<string>("containerName"));
-                Assert.AreEqual(expectedBlobCount, pollingLog.GetStateValue<int>("blobCount"));
-                Assert.True(!string.IsNullOrWhiteSpace(pollingLog.GetStateValue<string>("pollMinimumTime")));
-                Assert.True(!string.IsNullOrWhiteSpace(pollingLog.GetStateValue<string>("clientRequestId")));
-                Assert.True(pollingLog.GetStateValue<long>("pollLatency") >= 0);
-                Assert.False(pollingLog.GetStateValue<bool>("hasContinuationToken"));
-                Assert.True(!string.IsNullOrWhiteSpace(pollingLog.GetStateValue<string>("{OriginalFormat}")));
+                Assert.That(pollingLog.Level, Is.EqualTo(Microsoft.Extensions.Logging.LogLevel.Debug));
+                Assert.That(pollingLog.State.Count(), Is.EqualTo(7));
+                Assert.That(pollingLog.GetStateValue<string>("containerName"), Is.EqualTo(ContainerName));
+                Assert.That(pollingLog.GetStateValue<int>("blobCount"), Is.EqualTo(expectedBlobCount));
+                Assert.That(!string.IsNullOrWhiteSpace(pollingLog.GetStateValue<string>("pollMinimumTime")), Is.True);
+                Assert.That(!string.IsNullOrWhiteSpace(pollingLog.GetStateValue<string>("clientRequestId")), Is.True);
+                Assert.That(pollingLog.GetStateValue<long>("pollLatency") >= 0, Is.True);
+                Assert.That(pollingLog.GetStateValue<bool>("hasContinuationToken"), Is.False);
+                Assert.That(!string.IsNullOrWhiteSpace(pollingLog.GetStateValue<string>("{OriginalFormat}")), Is.True);
             }
 
             ValidatePollingLog(pollLogs[0], 0);
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             _blobContainerMock.Verify(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(2));
-            Assert.AreEqual(expectedNames, executor.BlobReceipts);
+            Assert.That(executor.BlobReceipts, Is.EqualTo(expectedNames));
         }
 
         [Test]
@@ -286,7 +286,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             _blobContainerMock.Verify(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(2));
-            Assert.AreEqual(expectedNames, executor.BlobReceipts);
+            Assert.That(executor.BlobReceipts, Is.EqualTo(expectedNames));
         }
 
         [Test]
@@ -365,8 +365,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 await product.RegisterAsync(mockServiceClient.Object, _blobContainerMock.Object, executor, CancellationToken.None);
 
                 var logMessages = _loggerProvider.GetAllLogMessages();
-                Assert.IsTrue(logMessages.Any(m => m.EventId.Name == "LoggingNotEnabledOnTargetAccount"
-                    || m.FormattedMessage.Contains("LoggingNotEnabledOnTargetAccount")));
+                Assert.That(logMessages.Any(m => m.EventId.Name == "LoggingNotEnabledOnTargetAccount"
+                    || m.FormattedMessage.Contains("LoggingNotEnabledOnTargetAccount")), Is.True);
             }
         }
 
@@ -397,10 +397,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             RunExecuteWithMultiPollingInterval(firstExpectedNames, product, executor, testScanBlobLimitPerPoll / 2);
 
             // only expect the first container to have updated its scanInfo
-            Assert.AreEqual(1, testScanInfoManager.UpdateCounts[accountName][ContainerName]);
+            Assert.That(testScanInfoManager.UpdateCounts[accountName][ContainerName], Is.EqualTo(1));
             int count;
             testScanInfoManager.UpdateCounts[accountName].TryGetValue(SecondContainerName, out count);
-            Assert.AreEqual(0, count);
+            Assert.That(count, Is.EqualTo(0));
 
             await Task.Delay(10);
 
@@ -412,8 +412,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             RunExecuteWithMultiPollingInterval(secondExpectedNames, product, executor, testScanBlobLimitPerPoll / 2);
 
             // this time, only expect the second container to have updated its scanInfo
-            Assert.AreEqual(1, testScanInfoManager.UpdateCounts[accountName][ContainerName]);
-            Assert.AreEqual(1, testScanInfoManager.UpdateCounts[accountName][SecondContainerName]);
+            Assert.That(testScanInfoManager.UpdateCounts[accountName][ContainerName], Is.EqualTo(1));
+            Assert.That(testScanInfoManager.UpdateCounts[accountName][SecondContainerName], Is.EqualTo(1));
         }
 
         [Test]
@@ -456,8 +456,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             RunExecuteWithMultiPollingInterval(expectedNames, product, executor, testScanBlobLimitPerPoll);
 
             DateTime? storedTime = await testScanInfoManager.LoadLatestScanAsync(accountName, ContainerName);
-            Assert.True(storedTime < earliestErrorTime);
-            Assert.AreEqual(1, testScanInfoManager.UpdateCounts[accountName][ContainerName]);
+            Assert.That(storedTime < earliestErrorTime, Is.True);
+            Assert.That(testScanInfoManager.UpdateCounts[accountName][ContainerName], Is.EqualTo(1));
             _blobContainerMock.Verify(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(2));
         }
@@ -494,7 +494,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                     return true;
                 };
                 product.Execute();
-                Assert.AreEqual(expectedCount, count);
+                Assert.That(count, Is.EqualTo(expectedCount));
             }
         }
 

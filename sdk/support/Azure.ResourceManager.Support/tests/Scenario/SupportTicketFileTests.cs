@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task Exist()
         {
             var flag = await _supportTicketFileCollection.ExistsAsync(_existSupportTicketFileName);
-            Assert.IsTrue(flag);
+            Assert.That((bool)flag, Is.True);
         }
 
         [RecordedTest]
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Support.Tests
             supportTicketFile = await _supportTicketFileCollection.GetAsync(_existSupportTicketFileName);
             Assert.IsNotNull(supportTicketFile);
             Assert.IsNotEmpty(supportTicketFile.Value.Data.Id);
-            Assert.AreEqual(supportTicketFile.Value.Data.Name, _existSupportTicketFileName);
+            Assert.That(supportTicketFile.Value.Data.Name, Is.EqualTo(_existSupportTicketFileName));
             Assert.Greater(supportTicketFile.Value.Data.FileSize, fileSize);
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Support.Tests
         {
             Assert.IsNotNull(supportTicketFile);
             Assert.IsNotEmpty(supportTicketFile.Id);
-            Assert.AreEqual(supportTicketFile.Name, fileName);
+            Assert.That(fileName, Is.EqualTo(supportTicketFile.Name));
         }
     }
 }

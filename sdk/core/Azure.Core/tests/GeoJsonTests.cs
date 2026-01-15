@@ -11,15 +11,15 @@ namespace Azure.Core.Tests
         [Test]
         public void BoundingBoxToStringReturnsStringRepresentation()
         {
-            Assert.AreEqual("[1, 2, 3, 4]", new GeoBoundingBox(1, 2, 3, 4).ToString());
-            Assert.AreEqual("[1, 2, 5, 3, 4, 6]", new GeoBoundingBox(1, 2, 3, 4, 5, 6).ToString());
+            Assert.That(new GeoBoundingBox(1, 2, 3, 4).ToString(), Is.EqualTo("[1, 2, 3, 4]"));
+            Assert.That(new GeoBoundingBox(1, 2, 3, 4, 5, 6).ToString(), Is.EqualTo("[1, 2, 5, 3, 4, 6]"));
         }
 
         [Test]
         public void GeoObjectToStringReturnsSerializedRepresentation()
         {
             var point = new GeoPoint(1, 2);
-            Assert.AreEqual("{\"type\":\"Point\",\"coordinates\":[1,2]}", point.ToString());
+            Assert.That(point.ToString(), Is.EqualTo("{\"type\":\"Point\",\"coordinates\":[1,2]}"));
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace Azure.Core.Tests
         {
             var point = GeoPoint.Parse("{\"type\":\"Point\",\"coordinates\":[1,2]}");
             Assert.IsInstanceOf<GeoPoint>(point);
-            Assert.AreEqual(((GeoPoint)point).Coordinates, new GeoPosition(1, 2));
+            Assert.That(new GeoPosition(1, 2), Is.EqualTo(((GeoPoint)point).Coordinates));
         }
     }
 }

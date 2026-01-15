@@ -133,7 +133,7 @@ namespace Azure.Storage.Queues.Samples
             RequestFailedException ex =
                 Assert.ThrowsAsync<RequestFailedException>(
                     async () => await service.CreateQueueAsync(Randomize("sample-queue")));
-            Assert.AreEqual(403, ex.Status);
+            Assert.That(ex.Status, Is.EqualTo(403));
         }
 
         /// <summary>

@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.VoiceServices.Tests
 
             // PUT - Create
             var createOperation = await rg.GetVoiceServicesCommunicationsGateways().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, GetDefaultCommunicationsGatewayData());
-            Assert.IsTrue(createOperation.HasCompleted);
-            Assert.IsTrue(createOperation.HasValue);
+            Assert.That(createOperation.HasCompleted, Is.True);
+            Assert.That(createOperation.HasValue, Is.True);
 
             // GET - check it exists
             var getResponse = await rg.GetVoiceServicesCommunicationsGatewayAsync(resourceName);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.VoiceServices.Tests
             var updatedCommunicationsGatewayData = GetDefaultCommunicationsGatewayData();
             updatedCommunicationsGatewayData.Codecs.Add(VoiceServicesTeamsCodec.Pcmu);
             var putOperation = await rg.GetVoiceServicesCommunicationsGateways().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, updatedCommunicationsGatewayData);
-            Assert.IsTrue(putOperation.HasCompleted);
-            Assert.IsTrue(putOperation.HasValue);
+            Assert.That(putOperation.HasCompleted, Is.True);
+            Assert.That(putOperation.HasValue, Is.True);
 
             // GET - check the updated Codecs
             getResponse = await rg.GetVoiceServicesCommunicationsGatewayAsync(resourceName);
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.VoiceServices.Tests
             getResponse = await rg.GetVoiceServicesCommunicationsGatewayAsync(resourceName);
             communicationsGateway = getResponse.Value;
             Assert.IsNotNull(communicationsGateway);
-            Assert.AreEqual("tagValue", communicationsGateway.Data.Tags["tagKey"]);
+            Assert.That(communicationsGateway.Data.Tags["tagKey"], Is.EqualTo("tagValue"));
 
             // Delete
             var deleteOperation = await communicationsGateway.DeleteAsync(WaitUntil.Completed);
             await deleteOperation.WaitForCompletionResponseAsync();
-            Assert.IsTrue(deleteOperation.HasCompleted);
+            Assert.That(deleteOperation.HasCompleted, Is.True);
         }
     }
 }

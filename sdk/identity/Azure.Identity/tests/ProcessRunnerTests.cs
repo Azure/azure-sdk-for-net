@@ -46,7 +46,7 @@ namespace Azure.Identity.Tests
             using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), logPII, default);
             result = await Run(runner);
 
-            Assert.AreEqual(output, result);
+            Assert.That(result, Is.EqualTo(output));
             if (logPII)
             {
                 Assert.That(log, Contains.Substring(fileName));
@@ -69,7 +69,7 @@ namespace Azure.Identity.Tests
             using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), false, default);
             var result = await Run(runner);
 
-            Assert.AreEqual(output, result);
+            Assert.That(result, Is.EqualTo(output));
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Azure.Identity.Tests
             using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), false, default);
             var result = await Run(runner);
 
-            Assert.AreEqual(output, result);
+            Assert.That(result, Is.EqualTo(output));
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace Azure.Identity.Tests
             using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), false, default);
             var result = await Run(runner);
 
-            Assert.AreEqual(string.Join(Environment.NewLine, Enumerable.Repeat(output, 100)), result);
+            Assert.That(result, Is.EqualTo(string.Join(Environment.NewLine, Enumerable.Repeat(output, 100))));
         }
 
         [Test]
@@ -171,7 +171,7 @@ namespace Azure.Identity.Tests
             using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), logPII, default);
 
             var exception = Assert.CatchAsync<InvalidOperationException>(async () => await Run(runner));
-            Assert.AreEqual(error, exception.Message);
+            Assert.That(exception.Message, Is.EqualTo(error));
             if (logPII)
             {
                 Assert.That(log, Contains.Substring(error));
@@ -192,7 +192,7 @@ namespace Azure.Identity.Tests
             using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), false, default);
 
             var exception = Assert.CatchAsync<InvalidOperationException>(async () => await Run(runner));
-            Assert.AreEqual(error, exception.Message.Trim());
+            Assert.That(exception.Message.Trim(), Is.EqualTo(error));
         }
 
         [Test]
@@ -204,7 +204,7 @@ namespace Azure.Identity.Tests
             using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), false, default);
 
             var exception = Assert.CatchAsync<InvalidOperationException>(async () => await Run(runner));
-            Assert.AreEqual(error, exception.Message.Trim());
+            Assert.That(exception.Message.Trim(), Is.EqualTo(error));
         }
 
         [Test]
@@ -215,7 +215,7 @@ namespace Azure.Identity.Tests
             using var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(50), false, default);
 
             var exception = Assert.CatchAsync<Win32Exception>(async () => await Run(runner));
-            Assert.AreEqual(1, exception.NativeErrorCode);
+            Assert.That(exception.NativeErrorCode, Is.EqualTo(1));
         }
 
         private async Task<string> Run(ProcessRunner runner) => IsAsync ? await runner.RunAsync() : runner.Run();

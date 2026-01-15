@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             Assert.IsNotEmpty(WebJobsEventTriggerMetrics.Platform, "Platform should not be empty");
 
             var headers = message.Headers;
-            Assert.IsTrue(headers.Contains(WebJobsEventTriggerMetrics.MetricsHeader));
+            Assert.That(headers.Contains(WebJobsEventTriggerMetrics.MetricsHeader), Is.True);
             
             string headerValue = headers.GetValues(WebJobsEventTriggerMetrics.MetricsHeader).First();
             Assert.IsNotEmpty(headerValue, "Header value should not be empty or null");
@@ -49,11 +49,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             WebJobsEventTriggerMetrics.Instance.SetMetricHeaders(message);
 
             var headers = message.Headers;
-            Assert.IsTrue(headers.Contains(WebJobsEventTriggerMetrics.MetricsHeader));
+            Assert.That(headers.Contains(WebJobsEventTriggerMetrics.MetricsHeader), Is.True);
 
             string headerValue = headers.GetValues(WebJobsEventTriggerMetrics.MetricsHeader).First();
 
-            Assert.AreEqual(GetTestHeaderValue(), headerValue, "Verify format of header values matches");
+            Assert.That(headerValue, Is.EqualTo(GetTestHeaderValue()), "Verify format of header values matches");
         }
 
         [Test]
@@ -66,10 +66,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             WebJobsEventTriggerMetrics.Instance.SetMetricHeaders(message);
 
             var headers = message.Headers;
-            Assert.IsTrue(headers.Contains(WebJobsEventTriggerMetrics.MetricsHeader));
+            Assert.That(headers.Contains(WebJobsEventTriggerMetrics.MetricsHeader), Is.True);
 
             string headerValue = headers.GetValues(WebJobsEventTriggerMetrics.MetricsHeader).First();
-            Assert.AreEqual("test " + GetTestHeaderValue(), headerValue, "Verify default header values match");
+            Assert.That(headerValue, Is.EqualTo("test " + GetTestHeaderValue()), "Verify default header values match");
         }
 
         private static string GetTestHeaderValue(

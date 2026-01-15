@@ -54,10 +54,10 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual("Conversation", (string)conversationalTaskResult.Result.Prediction.ProjectKind);
+            Assert.That((string)conversationalTaskResult.Result.Prediction.ProjectKind, Is.EqualTo("Conversation"));
 
             // assert - top intent
-            Assert.AreEqual("SendEmail", (string)conversationalTaskResult.Result.Prediction.TopIntent);
+            Assert.That((string)conversationalTaskResult.Result.Prediction.TopIntent, Is.EqualTo("SendEmail"));
 
             // cast prediction
             dynamic conversationPrediction = conversationalTaskResult.Result.Prediction;
@@ -99,10 +99,10 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual("Orchestration", (string)conversationalTaskResult.Result.Prediction.ProjectKind);
+            Assert.That((string)conversationalTaskResult.Result.Prediction.ProjectKind, Is.EqualTo("Orchestration"));
 
             // assert - top intent
-            Assert.AreEqual("EmailIntent", (string)conversationalTaskResult.Result.Prediction.TopIntent);
+            Assert.That((string)conversationalTaskResult.Result.Prediction.TopIntent, Is.EqualTo("EmailIntent"));
 
             // cast prediction
             dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
@@ -116,7 +116,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
-            Assert.AreEqual("Conversation", (string)topIntent.TargetProjectKind);
+            Assert.That((string)topIntent.TargetProjectKind, Is.EqualTo("Conversation"));
 
             // assert entities and intents
             Assert.IsNotEmpty((IEnumerable)topIntent.Result.Prediction.Entities);
@@ -156,10 +156,10 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual("Orchestration", (string)conversationalTaskResult.Result.Prediction.ProjectKind);
+            Assert.That((string)conversationalTaskResult.Result.Prediction.ProjectKind, Is.EqualTo("Orchestration"));
 
             // assert - top intent
-            Assert.AreEqual("RestaurantIntent", (string)conversationalTaskResult.Result.Prediction.TopIntent);
+            Assert.That((string)conversationalTaskResult.Result.Prediction.TopIntent, Is.EqualTo("RestaurantIntent"));
 
             // cast prediction
             dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
@@ -173,7 +173,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
-            Assert.AreEqual("Luis", (string)topIntent.TargetProjectKind);
+            Assert.That((string)topIntent.TargetProjectKind, Is.EqualTo("Luis"));
         }
 
         [RecordedTest]
@@ -207,10 +207,10 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual("Orchestration", (string)conversationalTaskResult.Result.Prediction.ProjectKind);
+            Assert.That((string)conversationalTaskResult.Result.Prediction.ProjectKind, Is.EqualTo("Orchestration"));
 
             // assert - top intent
-            Assert.AreEqual("ChitChat-QnA", (string)conversationalTaskResult.Result.Prediction.TopIntent);
+            Assert.That((string)conversationalTaskResult.Result.Prediction.TopIntent, Is.EqualTo("ChitChat-QnA"));
 
             // cast prediction
             dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
@@ -224,7 +224,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
-            Assert.AreEqual("QuestionAnswering", (string)topIntent.TargetProjectKind);
+            Assert.That((string)topIntent.TargetProjectKind, Is.EqualTo("QuestionAnswering"));
         }
 
         [RecordedTest]

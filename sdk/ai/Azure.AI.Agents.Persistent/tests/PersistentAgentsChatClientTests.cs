@@ -83,7 +83,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Messages);
             Assert.GreaterOrEqual(response.Messages.Count, 1);
-            Assert.AreEqual(ChatRole.Assistant, response.Messages[0].Role);
+            Assert.That(response.Messages[0].Role, Is.EqualTo(ChatRole.Assistant));
             Assert.IsNotNull(response.ConversationId);
         }
 
@@ -167,7 +167,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
             }
 
-            Assert.IsTrue(receivedUpdate, "No valid streaming update received.");
+            Assert.That(receivedUpdate, Is.True, "No valid streaming update received.");
         }
 
         [RecordedTest]
@@ -225,7 +225,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Messages);
             Assert.GreaterOrEqual(response.Messages.Count, 1);
-            Assert.AreEqual(ChatRole.Assistant, response.Messages[0].Role);
+            Assert.That(response.Messages[0].Role, Is.EqualTo(ChatRole.Assistant));
         }
 
         [RecordedTest]
@@ -281,7 +281,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 ChatResponse response = await chatClient.GetResponseAsync(messages, new ChatOptions { ConversationId = thread.Id });
                 Assert.IsNotNull(response);
                 Assert.GreaterOrEqual(response.Messages.Count, 1);
-                Assert.IsTrue(response.Messages[0].Contents.Any(c => c is TextContent tc && tc.Text.Contains("bar")));
+                Assert.That(response.Messages[0].Contents.Any(c => c is TextContent tc && tc.Text.Contains("bar")), Is.True);
             }
             else
             {
@@ -333,7 +333,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Messages);
             Assert.GreaterOrEqual(response.Messages.Count, 1);
-            Assert.AreEqual(ChatRole.Assistant, response.Messages[0].Role);
+            Assert.That(response.Messages[0].Role, Is.EqualTo(ChatRole.Assistant));
 
             List<string> functionNames = response.Messages[0].Contents
                 .OfType<FunctionCallContent>()
@@ -353,7 +353,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.IsNotNull(chatClient.GetService(typeof(ChatClientMetadata)));
             Assert.IsNotNull(chatClient.GetService(typeof(PersistentAgentsClient)));
             Assert.IsNotNull(chatClient.GetService(typeof(PersistentAgentsChatClient)));
-            Assert.IsNull(chatClient.GetService(typeof(string)));
+            Assert.That(chatClient.GetService(typeof(string)), Is.Null);
             Assert.Throws<ArgumentNullException>(() => chatClient.GetService(null));
         }
 
@@ -371,11 +371,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             IChatClient nonThrowingChatClient = client.AsIChatClient(FakeAgentId, FakeThreadId, throwOnContentErrors: false);
 
             var exception = Assert.ThrowsAsync<InvalidOperationException>(() => throwingChatClient.GetResponseAsync(new ChatMessage(ChatRole.User, "Get Mike's favourite word")));
-            Assert.IsTrue(exception.Message.Contains("wrong-connection-id"));
+            Assert.That(exception.Message.Contains("wrong-connection-id"), Is.True);
 
             var response = await nonThrowingChatClient.GetResponseAsync(new ChatMessage(ChatRole.User, "Get Mike's favourite word"));
             var errorContent = response.Messages.SelectMany(m => m.Contents).OfType<ErrorContent>().Single();
-            Assert.IsTrue(errorContent.Message.Contains("wrong-connection-id"));
+            Assert.That(errorContent.Message.Contains("wrong-connection-id"), Is.True);
         }
 
         [RecordedTest]
@@ -448,7 +448,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             await nonThrowingChatClient.GetResponseAsync(new ChatMessage(ChatRole.User, "Get Mike's favourite word"));
 
-            Assert.IsTrue(expectedCancelRunInvoked == cancelRunInvoked);
+            Assert.That(expectedCancelRunInvoked == cancelRunInvoked, Is.True);
         }
 
         [RecordedTest]
@@ -499,9 +499,9 @@ namespace Azure.AI.Agents.Persistent.Tests
                 // Drain the stream to force all requests.
             }
 
-            Assert.IsTrue(sawGetAgent, "Expected agent GET request.");
-            Assert.IsTrue(sawCreateThread, "Expected thread create request.");
-            Assert.IsTrue(sawCreateRunStreaming, "Expected run create streaming request.");
+            Assert.That(sawGetAgent, Is.True, "Expected agent GET request.");
+            Assert.That(sawCreateThread, Is.True, "Expected thread create request.");
+            Assert.That(sawCreateRunStreaming, Is.True, "Expected run create streaming request.");
         }
 
         [RecordedTest]
@@ -588,9 +588,9 @@ namespace Azure.AI.Agents.Persistent.Tests
                 // Drain the stream.
             }
 
-            Assert.IsTrue(sawGetAgent, "Expected agent GET request.");
-            Assert.IsTrue(sawGetRuns, "Expected runs list request.");
-            Assert.IsTrue(sawSubmitToolOutputs, "Expected submit tool outputs request.");
+            Assert.That(sawGetAgent, Is.True, "Expected agent GET request.");
+            Assert.That(sawGetRuns, Is.True, "Expected runs list request.");
+            Assert.That(sawSubmitToolOutputs, Is.True, "Expected submit tool outputs request.");
         }
 
         private static void AssertMeaiUserAgentHeaderPresent(MockRequest request)
@@ -602,8 +602,8 @@ namespace Azure.AI.Agents.Persistent.Tests
                 userAgents = hasHeader ? new[] { singleUserAgent } : Array.Empty<string>();
             }
 
-            Assert.IsTrue(hasHeader, "Expected User-Agent header.");
-            Assert.IsTrue(userAgents.Any(ua => ua?.Contains("MEAI", StringComparison.Ordinal) is true), "Expected User-Agent to contain 'MEAI'.");
+            Assert.That(hasHeader, Is.True, "Expected User-Agent header.");
+            Assert.That(userAgents.Any(ua => ua?.Contains("MEAI", StringComparison.Ordinal) is true), Is.True, "Expected User-Agent to contain 'MEAI'.");
         }
 
         #region Helpers

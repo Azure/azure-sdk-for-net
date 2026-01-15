@@ -96,8 +96,8 @@ namespace Azure.Identity.Tests
 
             var authRecord = CredentialOptionsMapper.GetAuthenticationRecord(testFileSystem);
             Assert.IsNotNull(authRecord, "Authentication record should not be null with valid JSON");
-            Assert.AreEqual("test-tenant-id", authRecord.TenantId);
-            Assert.AreEqual("test-home-account-id.test-tenant-id", authRecord.HomeAccountId);
+            Assert.That(authRecord.TenantId, Is.EqualTo("test-tenant-id"));
+            Assert.That(authRecord.HomeAccountId, Is.EqualTo("test-home-account-id.test-tenant-id"));
         }
 
         [Test]
@@ -141,8 +141,8 @@ namespace Azure.Identity.Tests
 
             var authRecord = CredentialOptionsMapper.GetAuthenticationRecord(testFileSystem);
 
-            Assert.IsTrue(lowerCaseChecked, "Lower case path should be checked first");
-            Assert.IsTrue(upperCaseChecked, "Upper case path should be checked when lower case doesn't exist");
+            Assert.That(lowerCaseChecked, Is.True, "Lower case path should be checked first");
+            Assert.That(upperCaseChecked, Is.True, "Upper case path should be checked when lower case doesn't exist");
             Assert.IsNotNull(authRecord, "Authentication record should be found in upper case path");
         }
 

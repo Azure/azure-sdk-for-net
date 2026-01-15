@@ -246,14 +246,14 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
 
             // Assert file and file contents
-            Assert.AreEqual(sourceFileNames.Count, destinationFileNames.Count);
+            Assert.That(destinationFileNames.Count, Is.EqualTo(sourceFileNames.Count));
             sourceFileNames.Sort();
             destinationFileNames.Sort();
             for (int i = 0; i < sourceFileNames.Count; i++)
             {
-                Assert.AreEqual(
-                    sourceFileNames[i],
-                    destinationFileNames[i]);
+                Assert.That(
+                    destinationFileNames[i],
+                    Is.EqualTo(sourceFileNames[i]));
 
                 // Verify contents
                 string sourceFullName = string.Join("/", sourcePrefix, sourceFileNames[i]);
@@ -261,7 +261,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 ShareFileClient destinationClient = destinationDirectory.GetFileClient(destinationFileNames[i]);
                 using Stream sourceStream = await sourceClient.OpenReadAsync(cancellationToken: cancellationToken);
                 using Stream destinationStream = await destinationClient.OpenReadAsync(cancellationToken: cancellationToken);
-                Assert.AreEqual(sourceStream, destinationStream);
+                Assert.That(destinationStream, Is.EqualTo(sourceStream));
 
                 if (propertiesTestType == TransferPropertiesTestType.NoPreserve)
                 {
@@ -278,13 +278,13 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync(cancellationToken: cancellationToken);
 
                     Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
-                    Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
-                    Assert.AreEqual(_defaultContentLanguageShare, destinationProperties.ContentLanguage);
-                    Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
-                    Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
-                    Assert.AreEqual(_defaultFileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
-                    Assert.AreEqual(_defaultFileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
-                    Assert.AreEqual(_defaultFileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+                    Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(_defaultContentDisposition));
+                    Assert.That(destinationProperties.ContentLanguage, Is.EqualTo(_defaultContentLanguageShare));
+                    Assert.That(destinationProperties.CacheControl, Is.EqualTo(_defaultCacheControl));
+                    Assert.That(destinationProperties.ContentType, Is.EqualTo(_defaultContentType));
+                    Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(_defaultFileCreatedOn));
+                    Assert.That(destinationProperties.SmbProperties.FileLastWrittenOn, Is.EqualTo(_defaultFileLastWrittenOn));
+                    Assert.That(destinationProperties.SmbProperties.FileChangedOn, Is.EqualTo(_defaultFileChangedOn));
                 }
                 else //(propertiesTestType == TransferPropertiesTestType.Default ||
                      //propertiesTestType == TransferPropertiesTestType.Preserve)
@@ -293,11 +293,11 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync(cancellationToken: cancellationToken);
 
                     Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
-                    Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
-                    Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage.First());
-                    Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
-                    Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
-                    Assert.AreEqual(sourceProperties.CreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
+                    Assert.That(destinationProperties.ContentDisposition, Is.EqualTo(sourceProperties.ContentDisposition));
+                    Assert.That(destinationProperties.ContentLanguage.First(), Is.EqualTo(sourceProperties.ContentLanguage));
+                    Assert.That(destinationProperties.CacheControl, Is.EqualTo(sourceProperties.CacheControl));
+                    Assert.That(destinationProperties.ContentType, Is.EqualTo(sourceProperties.ContentType));
+                    Assert.That(destinationProperties.SmbProperties.FileCreatedOn, Is.EqualTo(sourceProperties.CreatedOn));
                 }
             }
         }

@@ -17,8 +17,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             IBindableServiceBusPath path = BindableServiceBusPath.Create(queueOrTopicNamePattern);
 
             Assert.NotNull(path);
-            Assert.AreEqual(queueOrTopicNamePattern, path.QueueOrTopicNamePattern);
-            Assert.True(path.IsBound);
+            Assert.That(path.QueueOrTopicNamePattern, Is.EqualTo(queueOrTopicNamePattern));
+            Assert.That(path.IsBound, Is.True);
         }
 
         [Test]
@@ -29,8 +29,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             IBindableServiceBusPath path = BindableServiceBusPath.Create(queueOrTopicNamePattern);
 
             Assert.NotNull(path);
-            Assert.AreEqual(queueOrTopicNamePattern, path.QueueOrTopicNamePattern);
-            Assert.False(path.IsBound);
+            Assert.That(path.QueueOrTopicNamePattern, Is.EqualTo(queueOrTopicNamePattern));
+            Assert.That(path.IsBound, Is.False);
         }
 
         [Test]

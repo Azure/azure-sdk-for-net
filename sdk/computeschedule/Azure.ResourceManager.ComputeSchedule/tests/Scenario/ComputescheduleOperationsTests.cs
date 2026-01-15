@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 foreach (ResourceOperationResult result in getOperationStatus.Results)
                 {
                     Assert.Contains(result.Operation.State, s_terminalList);
-                    Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                    Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
                 }
             }
             else
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 foreach (ResourceOperationResult result in getOperationStatus.Results)
                 {
                     Assert.Contains(result.Operation.State, s_terminalList);
-                    Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                    Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
                 }
             }
             else
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 foreach (ResourceOperationResult result in getOperationStatus.Results)
                 {
                     Assert.Contains(result.Operation.State, s_terminalList);
-                    Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                    Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
                 }
             }
             else
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 foreach (ResourceOperationResult result in getOperationStatus.Results)
                 {
                     Assert.Contains(result.Operation.State, s_terminalList);
-                    Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                    Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
                 }
             }
             else
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 foreach (ResourceOperationResult result in getOperationStatus.Results)
                 {
                     Assert.Contains(result.Operation.State, s_terminalList);
-                    Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                    Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
                 }
             }
             else
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 foreach (ResourceOperationResult result in getOperationStatus.Results)
                 {
                     Assert.Contains(result.Operation.State, s_terminalList);
-                    Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                    Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
                 }
             }
             else
@@ -377,9 +377,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
                 foreach (ResourceOperationResult result in getOperationStatus.Results)
                 {
-                    Assert.AreEqual(result.Operation.State, ScheduledActionOperationState.Cancelled);
+                    Assert.That(ScheduledActionOperationState.Cancelled, Is.EqualTo(result.Operation.State));
                     Assert.NotNull(result.Operation.ResourceOperationError);
-                    Assert.AreEqual(result.Operation.ResourceOperationError.ErrorCode, "OperationCancelledByUser");
+                    Assert.That(result.Operation.ResourceOperationError.ErrorCode, Is.EqualTo("OperationCancelledByUser"));
                 }
             }
             else
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 foreach (ResourceOperationResult result in getOperationStatus.Results)
                 {
                     Assert.Contains(result.Operation.State, s_terminalList);
-                    Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                    Assert.That(subId, Is.EqualTo(result.Operation.SubscriptionId));
                 }
             }
             else

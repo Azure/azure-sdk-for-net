@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var domainResource = createResponse.Value;
             Assert.NotNull(domainResource);
             Assert.NotNull(domainResource.Data);
-            Assert.AreEqual(DefaultLocation.Name, domainResource.Data.Location.Name);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(domainName));
-            Assert.IsTrue(domainName.StartsWith("sdk-domain-"));
+            Assert.That(domainResource.Data.Location.Name, Is.EqualTo(DefaultLocation.Name));
+            Assert.That(string.IsNullOrWhiteSpace(domainName), Is.False);
+            Assert.That(domainName.StartsWith("sdk-domain-"), Is.True);
 
             // Get
             var getResponse = await domainResource.GetAsync();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(getResponse.Value);
             Assert.NotNull(getResponse.Value.Data);
             Assert.NotNull(getResponse.Value.Data.Id);
-            Assert.AreEqual(domainName, getResponse.Value.Data.Name);
+            Assert.That(getResponse.Value.Data.Name, Is.EqualTo(domainName));
 
             // Add Tag
             var addTagResponse = await domainResource.AddTagAsync(TagKeyTest, TagValueTest);
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(addTagResponse.Value);
             Assert.NotNull(addTagResponse.Value.Data);
             Assert.NotNull(addTagResponse.Value.Data.Tags);
-            Assert.IsTrue(addTagResponse.Value.Data.Tags.ContainsKey(TagKeyTest));
-            Assert.AreEqual(TagValueTest, addTagResponse.Value.Data.Tags[TagKeyTest]);
+            Assert.That(addTagResponse.Value.Data.Tags.ContainsKey(TagKeyTest), Is.True);
+            Assert.That(addTagResponse.Value.Data.Tags[TagKeyTest], Is.EqualTo(TagValueTest));
 
             // Set Tags
             var domainTags = new Dictionary<string, string>
@@ -80,22 +80,22 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 { TagKeyOwner, TagValueOwner }
             };
             var setTagsResponse = await domainResource.SetTagsAsync(domainTags);
-            Assert.AreEqual(2, setTagsResponse.Value.Data.Tags.Count);
-            Assert.AreEqual(TagValueEnvironment, setTagsResponse.Value.Data.Tags[TagKeyEnvironment]);
-            Assert.AreEqual(TagValueOwner, setTagsResponse.Value.Data.Tags[TagKeyOwner]);
+            Assert.That(setTagsResponse.Value.Data.Tags.Count, Is.EqualTo(2));
+            Assert.That(setTagsResponse.Value.Data.Tags[TagKeyEnvironment], Is.EqualTo(TagValueEnvironment));
+            Assert.That(setTagsResponse.Value.Data.Tags[TagKeyOwner], Is.EqualTo(TagValueOwner));
 
             // Remove Tag
             await domainResource.AddTagAsync(TagKeyToRemove, TagValueToRemove);
             var removeTagResponse = await domainResource.RemoveTagAsync(TagKeyToRemove);
             Assert.NotNull(removeTagResponse);
             Assert.NotNull(removeTagResponse.Value);
-            Assert.IsFalse(removeTagResponse.Value.Data.Tags.ContainsKey(TagKeyToRemove));
+            Assert.That(removeTagResponse.Value.Data.Tags.ContainsKey(TagKeyToRemove), Is.False);
 
             // Shared Access Keys
             var keys = await domainResource.GetSharedAccessKeysAsync();
             Assert.IsNotNull(keys.Value.Key1);
             Assert.IsNotNull(keys.Value.Key2);
-            Assert.AreNotEqual(keys.Value.Key1, keys.Value.Key2);
+            Assert.That(keys.Value.Key2, Is.Not.EqualTo(keys.Value.Key1));
 
             // Regenerate Key
             var regen = new EventGridDomainRegenerateKeyContent("key1");
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // Delete
             await domainResource.DeleteAsync(WaitUntil.Completed);
             var exists = await DomainCollection.ExistsAsync(domainName);
-            Assert.IsFalse(exists.Value);
+            Assert.That(exists.Value, Is.False);
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var createResponse = await DomainCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainName, domainData);
             var domainResource = createResponse.Value;
             Assert.NotNull(domainResource);
-            Assert.AreEqual(DefaultLocation.Name, domainResource.Data.Location.Name);
+            Assert.That(domainResource.Data.Location.Name, Is.EqualTo(DefaultLocation.Name));
 
             // Domain Topic
             var topicCollection = domainResource.GetDomainTopics();
@@ -127,23 +127,23 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(topic);
             Assert.NotNull(topic.Value);
             Assert.NotNull(topic.Value.Data);
-            Assert.AreEqual(topicName, topic.Value.Data.Name);
+            Assert.That(topic.Value.Data.Name, Is.EqualTo(topicName));
 
             var getTopic = await domainResource.GetDomainTopicAsync(topicName);
             Assert.NotNull(getTopic);
             Assert.NotNull(getTopic.Value);
             Assert.NotNull(getTopic.Value.Data);
-            Assert.AreEqual(topicName, getTopic.Value.Data.Name);
+            Assert.That(getTopic.Value.Data.Name, Is.EqualTo(topicName));
 
             await topic.Value.DeleteAsync(WaitUntil.Completed);
             var exists = await topicCollection.ExistsAsync(topicName);
-            Assert.IsFalse(exists.Value);
+            Assert.That(exists.Value, Is.False);
 
             // Private Endpoint Connections
             var pecCollection = domainResource.GetEventGridDomainPrivateEndpointConnections();
             var allPecs = await pecCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(allPecs);
-            Assert.IsTrue(allPecs is IEnumerable<EventGridDomainPrivateEndpointConnectionResource>);
+            Assert.That(allPecs is IEnumerable<EventGridDomainPrivateEndpointConnectionResource>, Is.True);
 
             // Domain Network Security Perimeter Configurations
             var nspCollection = domainResource.GetDomainNetworkSecurityPerimeterConfigurations();
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var pecResource = new EventGridDomainPrivateEndpointConnectionResource(Client, pecId);
 
             var result = await pecResource.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(result.HasCompleted);
+            Assert.That(result.HasCompleted, Is.True);
 
             await domainResource.DeleteAsync(WaitUntil.Completed);
         }

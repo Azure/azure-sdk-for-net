@@ -76,10 +76,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
-            Assert.AreEqual(1, sink.Appended.Count);
-            Assert.AreEqual(s_response, info);
-            Assert.AreEqual(1, testPool.TotalRents);
-            Assert.AreEqual(0, testPool.CurrentCount);
+            Assert.That(sink.Appended.Count, Is.EqualTo(1));
+            Assert.That(info, Is.EqualTo(s_response));
+            Assert.That(testPool.TotalRents, Is.EqualTo(1));
+            Assert.That(testPool.CurrentCount, Is.EqualTo(0));
             AssertAppended(sink, content);
         }
 
@@ -103,8 +103,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
-            Assert.AreEqual(2, sink.Appended.Count);
-            Assert.AreEqual(s_response, info);
+            Assert.That(sink.Appended.Count, Is.EqualTo(2));
+            Assert.That(info, Is.EqualTo(s_response));
         }
 
         [Test]
@@ -130,12 +130,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
-            Assert.AreEqual(2, sink.Appended.Count);
-            Assert.AreEqual(s_response, info);
+            Assert.That(sink.Appended.Count, Is.EqualTo(2));
+            Assert.That(info, Is.EqualTo(s_response));
             AssertAppended(sink, content);
 
-            Assert.AreEqual(2, testPool.TotalRents);
-            Assert.AreEqual(0, testPool.CurrentCount);
+            Assert.That(testPool.TotalRents, Is.EqualTo(2));
+            Assert.That(testPool.CurrentCount, Is.EqualTo(0));
         }
 
         [Test]
@@ -161,10 +161,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
-            Assert.AreEqual(1, sink.Appended.Count);
-            Assert.AreEqual(s_response, info);
-            Assert.AreEqual(1, testPool.TotalRents);
-            Assert.AreEqual(0, testPool.CurrentCount);
+            Assert.That(sink.Appended.Count, Is.EqualTo(1));
+            Assert.That(info, Is.EqualTo(s_response));
+            Assert.That(testPool.TotalRents, Is.EqualTo(1));
+            Assert.That(testPool.CurrentCount, Is.EqualTo(0));
             AssertAppended(sink, content);
         }
 
@@ -191,9 +191,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
-            Assert.AreEqual(s_response, info);
-            Assert.AreEqual(0, testPool.CurrentCount);
-            Assert.AreEqual(20, testPool.TotalRents);
+            Assert.That(info, Is.EqualTo(s_response));
+            Assert.That(testPool.CurrentCount, Is.EqualTo(0));
+            Assert.That(testPool.TotalRents, Is.EqualTo(20));
             AssertAppended(sink, content);
 
             foreach ((byte[] bytes, _) in sink.Appended.Values)
@@ -226,12 +226,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
-            Assert.AreEqual(2, sink.Appended.Count);
+            Assert.That(sink.Appended.Count, Is.EqualTo(2));
             // First two should be merged
             CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }, sink.Appended[0].Data);
-            Assert.AreEqual(s_response, info);
-            Assert.AreEqual(2, testPool.TotalRents);
-            Assert.AreEqual(0, testPool.CurrentCount);
+            Assert.That(info, Is.EqualTo(s_response));
+            Assert.That(testPool.TotalRents, Is.EqualTo(2));
+            Assert.That(testPool.CurrentCount, Is.EqualTo(0));
             AssertAppended(sink, content);
         }
 
@@ -264,10 +264,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts);
 
-            Assert.AreEqual(s_response, info);
+            Assert.That(info, Is.EqualTo(s_response));
             foreach (var block in sink.Appended.Values)
             {
-                Assert.AreEqual(blockSize, block.Length);
+                Assert.That(block.Length, Is.EqualTo(blockSize));
             }
         }
 
@@ -346,7 +346,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         private static void AssertAppended(AppendSink sink, TestStream stream)
         {
-            Assert.AreEqual(sink.Appended.Count, sink.Appended.Count);
+            Assert.That(sink.Appended.Count, Is.EqualTo(sink.Appended.Count));
 
             CollectionAssert.AreEqual(
                 stream.AllBytes,

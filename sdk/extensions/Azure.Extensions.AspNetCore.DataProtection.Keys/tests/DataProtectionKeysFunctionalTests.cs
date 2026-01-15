@@ -43,7 +43,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var anotherDataProtector = anotherServices.GetService<IDataProtectionProvider>().CreateProtector("Fancy purpose");
             var unprotectedText = anotherDataProtector.Unprotect(protectedText);
 
-            Assert.AreEqual("Hello world!", unprotectedText);
+            Assert.That(unprotectedText, Is.EqualTo("Hello world!"));
 
             // double check that keys were protected with KeyVault
 
@@ -81,7 +81,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             // Decrypt data
             var unprotectedText = dataProtector.Unprotect(protectedText);
 
-            Assert.AreEqual("Hello world!", unprotectedText);
+            Assert.That(unprotectedText, Is.EqualTo("Hello world!"));
 
             // double check that keys were protected with KeyVault
 

@@ -15,9 +15,9 @@ namespace Azure.Storage.Tests
             StorageTransferOptions result = StorageArgument.PopulateShareFileUploadTransferOptionDefaults(
                 new StorageTransferOptions());
 
-            Assert.AreEqual(4 * Constants.MB, result.InitialTransferSize);
-            Assert.AreEqual(4 * Constants.MB, result.MaximumTransferSize);
-            Assert.AreEqual(1, result.MaximumConcurrency);
+            Assert.That(result.InitialTransferSize, Is.EqualTo(4 * Constants.MB));
+            Assert.That(result.MaximumTransferSize, Is.EqualTo(4 * Constants.MB));
+            Assert.That(result.MaximumConcurrency, Is.EqualTo(1));
         }
 
         [Test]
@@ -43,17 +43,17 @@ namespace Azure.Storage.Tests
                     MaximumConcurrency = prepopulatedValue
                 });
 
-            Assert.AreEqual(prepopulatedValue, resultInitial.InitialTransferSize);
-            Assert.AreEqual(4 * Constants.MB, resultInitial.MaximumTransferSize);
-            Assert.AreEqual(1, resultInitial.MaximumConcurrency);
+            Assert.That(resultInitial.InitialTransferSize, Is.EqualTo(prepopulatedValue));
+            Assert.That(resultInitial.MaximumTransferSize, Is.EqualTo(4 * Constants.MB));
+            Assert.That(resultInitial.MaximumConcurrency, Is.EqualTo(1));
 
-            Assert.AreEqual(4 * Constants.MB, resultMaximum.InitialTransferSize);
-            Assert.AreEqual(prepopulatedValue, resultMaximum.MaximumTransferSize);
-            Assert.AreEqual(1, resultMaximum.MaximumConcurrency);
+            Assert.That(resultMaximum.InitialTransferSize, Is.EqualTo(4 * Constants.MB));
+            Assert.That(resultMaximum.MaximumTransferSize, Is.EqualTo(prepopulatedValue));
+            Assert.That(resultMaximum.MaximumConcurrency, Is.EqualTo(1));
 
-            Assert.AreEqual(4 * Constants.MB, resultConcurrency.InitialTransferSize);
-            Assert.AreEqual(4 * Constants.MB, resultConcurrency.MaximumTransferSize);
-            Assert.AreEqual(prepopulatedValue, resultConcurrency.MaximumConcurrency);
+            Assert.That(resultConcurrency.InitialTransferSize, Is.EqualTo(4 * Constants.MB));
+            Assert.That(resultConcurrency.MaximumTransferSize, Is.EqualTo(4 * Constants.MB));
+            Assert.That(resultConcurrency.MaximumConcurrency, Is.EqualTo(prepopulatedValue));
         }
 
         [Test]

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 agData);
 
             Assert.IsNotNull(opApplicationGroupCreate);
-            Assert.IsTrue(opApplicationGroupCreate.HasCompleted);
-            Assert.AreEqual(opApplicationGroupCreate.Value.Data.Name, applicationGroupName);
+            Assert.That(opApplicationGroupCreate.HasCompleted, Is.True);
+            Assert.That(applicationGroupName, Is.EqualTo(opApplicationGroupCreate.Value.Data.Name));
 
             VirtualApplicationGroupResource desktopApplicationGroup = opApplicationGroupCreate.Value;
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             List<VirtualDesktopResource> desktopList = await desktops.ToEnumerableAsync();
 
-            Assert.AreEqual(1, desktopList.Count);
+            Assert.That(desktopList.Count, Is.EqualTo(1));
 
             VirtualDesktopResource desktop = desktopList[0];
 
@@ -78,27 +78,27 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             Assert.IsNotNull(updatedDesktop);
 
-            Assert.AreEqual("Updated", updatedDesktop.Value.Data.Description);
+            Assert.That(updatedDesktop.Value.Data.Description, Is.EqualTo("Updated"));
 
-            Assert.AreEqual("UpdatedFriendlyName", updatedDesktop.Value.Data.FriendlyName);
+            Assert.That(updatedDesktop.Value.Data.FriendlyName, Is.EqualTo("UpdatedFriendlyName"));
 
             Response<VirtualApplicationGroupResource> getOp = await agCollection.GetAsync(
                 applicationGroupName);
 
-            Assert.AreEqual(applicationGroupName, getOp.Value.Data.Name);
+            Assert.That(getOp.Value.Data.Name, Is.EqualTo(applicationGroupName));
 
             VirtualApplicationGroupResource applicationGroup = getOp.Value;
             ArmOperation deleteOp = await applicationGroup.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 
-            Assert.AreEqual(200, deleteOp.GetRawResponse().Status);
+            Assert.That(deleteOp.GetRawResponse().Status, Is.EqualTo(200));
 
             deleteOp = await applicationGroup.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 
-            Assert.AreEqual(204, deleteOp.GetRawResponse().Status);
+            Assert.That(deleteOp.GetRawResponse().Status, Is.EqualTo(204));
 
             try
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(404, ex.Status);
+                Assert.That(ex.Status, Is.EqualTo(404));
             }
 
             await opHostPoolCreate.Value.DeleteAsync(WaitUntil.Completed);

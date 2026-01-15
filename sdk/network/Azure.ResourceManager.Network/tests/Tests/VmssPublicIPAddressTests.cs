@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Tests
             var firstResult = vmssListAllPageResult.First();
 
             Assert.NotNull(vmssListAllPageResult);
-            Assert.AreEqual("Succeeded", firstResult.ProvisioningState.ToString());
+            Assert.That(firstResult.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
             Assert.NotNull(firstResult.ResourceGuid);
 
             string idItem = firstResult.Id;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Tests
             var vmssGetResult = await ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetPublicIPAddressDataAsync(nicName, ipConfigName, ipName);
 
             Assert.NotNull(vmssGetResult);
-            Assert.AreEqual("Succeeded", vmssGetResult.Value.ProvisioningState.ToString());
+            Assert.That(vmssGetResult.Value.ProvisioningState.ToString(), Is.EqualTo("Succeeded"));
             Assert.NotNull(vmssGetResult.Value.ResourceGuid);
         }
     }

@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.MySql.Tests
             };
             var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, data);
             MySqlFlexibleServerResource server = lro.Value;
-            Assert.AreEqual(serverName, server.Data.Name);
+            Assert.That(server.Data.Name, Is.EqualTo(serverName));
             // Get
             MySqlFlexibleServerResource serverFromGet = await serverCollection.GetAsync(serverName);
-            Assert.AreEqual(serverName, serverFromGet.Data.Name);
+            Assert.That(serverFromGet.Data.Name, Is.EqualTo(serverName));
             // List
             await foreach (MySqlFlexibleServerResource serverFromList in serverCollection)
             {
-                Assert.AreEqual(serverName, serverFromList.Data.Name);
+                Assert.That(serverFromList.Data.Name, Is.EqualTo(serverName));
             }
         }
 
@@ -83,18 +83,18 @@ namespace Azure.ResourceManager.MySql.Tests
             };
             var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, data);
             MySqlFlexibleServerResource server = lro.Value;
-            Assert.AreEqual(serverName, server.Data.Name);
+            Assert.That(server.Data.Name, Is.EqualTo(serverName));
             // Update
             lro = await server.UpdateAsync(WaitUntil.Completed, new MySqlFlexibleServerPatch()
             {
                 Tags = {{"key", "value"}}
             });
             MySqlFlexibleServerResource serverFromUpdate = lro.Value;
-            Assert.AreEqual(serverName, serverFromUpdate.Data.Name);
-            Assert.AreEqual("value", serverFromUpdate.Data.Tags["key"]);
+            Assert.That(serverFromUpdate.Data.Name, Is.EqualTo(serverName));
+            Assert.That(serverFromUpdate.Data.Tags["key"], Is.EqualTo("value"));
             // Get
             MySqlFlexibleServerResource serverFromGet = await serverFromUpdate.GetAsync();
-            Assert.AreEqual(serverName, serverFromGet.Data.Name);
+            Assert.That(serverFromGet.Data.Name, Is.EqualTo(serverName));
             // Delete
             await serverFromGet.DeleteAsync(WaitUntil.Completed);
         }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MySql.Tests
             };
             var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, data);
             MySqlFlexibleServerResource server = lro.Value;
-            Assert.AreEqual(serverName, server.Data.Name);
+            Assert.That(server.Data.Name, Is.EqualTo(serverName));
         }
     }
 }

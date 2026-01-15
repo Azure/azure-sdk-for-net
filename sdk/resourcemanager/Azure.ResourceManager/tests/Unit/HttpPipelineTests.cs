@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.Tests.Unit
             };
             var client = new ArmClient(new MockCredential(), "83aa47df-e3e9-49ff-877b-94304bf3d3ad", option);
             var subscription = client.GetDefaultSubscription();
-            Assert.AreEqual(2, callCount);
-            Assert.AreEqual("83aa47df-e3e9-49ff-877b-94304bf3d3ad", subscription.Data.Id.SubscriptionId);
-            Assert.AreEqual("Subscription2", subscription.Data.DisplayName);
+            Assert.That(callCount, Is.EqualTo(2));
+            Assert.That(subscription.Data.Id.SubscriptionId, Is.EqualTo("83aa47df-e3e9-49ff-877b-94304bf3d3ad"));
+            Assert.That(subscription.Data.DisplayName, Is.EqualTo("Subscription2"));
             Assert.IsEmpty(subscription.Data.Tags);
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Tests.Unit
             };
             var client = new ArmClient(new MockCredential(), "83aa47df-e3e9-49ff-877b-94304bf3d3ad", option);
             Assert.Throws<RequestFailedException>(() => client.GetDefaultSubscription());
-            Assert.AreEqual(1, callCount);
+            Assert.That(callCount, Is.EqualTo(1));
         }
 
         private const string CaeChallenge = """Bearer realm="", error_description="Continuous access evaluation resulted in challenge", error="insufficient_claims", claims="eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwgInZhbHVlIjoiMTcyNjI1ODEyMiJ9fX0=" """;

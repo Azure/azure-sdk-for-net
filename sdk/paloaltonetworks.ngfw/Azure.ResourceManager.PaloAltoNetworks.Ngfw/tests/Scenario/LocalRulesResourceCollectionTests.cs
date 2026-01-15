@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             LocalRulestackRuleData data = getLocalRulestackRuleListData(priority);
             var response = await LocalRulestack.GetLocalRulestackRules().CreateOrUpdateAsync(WaitUntil.Completed, priority, data);
             LocalRulestackRuleResource rule = response.Value;
-            Assert.IsTrue((data.RuleName).Equals(rule.Data.RuleName));
+            Assert.That((data.RuleName).Equals(rule.Data.RuleName), Is.True);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await LocalRulestack.GetLocalRulestackRules().CreateOrUpdateAsync(WaitUntil.Completed, "3", null)).Value);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             LocalRulestackRuleCollection collection = LocalRulestack.GetLocalRulestackRules();
             LocalRulestackRuleResource rulesResource = await collection.GetAsync(DefaultResource1.Data.Priority.ToString());
             Assert.IsNotNull(rulesResource);
-            Assert.AreEqual(rulesResource.Data.RuleName, DefaultResource1.Data.RuleName);
+            Assert.That(DefaultResource1.Data.RuleName, Is.EqualTo(rulesResource.Data.RuleName));
         }
 
         [TestCase]
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task Exists()
         {
             LocalRulestackRuleCollection collection = LocalRulestack.GetLocalRulestackRules();
-            Assert.IsTrue(await collection.ExistsAsync(DefaultResource1.Data.Priority.ToString()));
-            Assert.IsFalse(await collection.ExistsAsync("999"));
+            Assert.That((bool)await collection.ExistsAsync(DefaultResource1.Data.Priority.ToString()), Is.True);
+            Assert.That((bool)await collection.ExistsAsync("999"), Is.False);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
                 count++;
             }
 
-            Assert.AreEqual(count, 3);
+            Assert.That(count, Is.EqualTo(3));
         }
 
         private LocalRulestackRuleData getLocalRulestackRuleListData(string priority)
