@@ -196,12 +196,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<GroupQuotaLimitListResource>> GetAllAsync(string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GroupQuotaLimitListResource>> GetAsync(string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.GetAll");
+            using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Get");
             scope.Start();
             try
             {
@@ -248,12 +248,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<GroupQuotaLimitListResource> GetAll(string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Response<GroupQuotaLimitListResource> Get(string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.GetAll");
+            using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Get");
             scope.Start();
             try
             {

@@ -71,11 +71,8 @@ namespace Azure.Provisioning.WebPubSub
         public static Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole WebPubSubServiceOwner { get { throw null; } }
         public static Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole WebPubSubServiceReader { get { throw null; } }
         public bool Equals(Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string GetBuiltInRoleName(Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole left, Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole right) { throw null; }
         public static implicit operator Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole (string value) { throw null; }
@@ -232,7 +229,6 @@ namespace Azure.Provisioning.WebPubSub
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.WebPubSub.WebPubSubService FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.WebPubSub.WebPubSubKeys GetKeys() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
