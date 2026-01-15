@@ -91,13 +91,14 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
-        private IReadOnlyDictionary<string, FieldProvider>? _parameterNameToFieldMap;
-
         private FieldProvider FindField(string variableName)
         {
-            _parameterNameToFieldMap ??= _extraCtorParameters.ToDictionary(p => p.WireInfo.SerializedName, p => p.Field!);
-            // in this case, there must be a match
-            return _parameterNameToFieldMap[variableName];
+            // in majority of cases (more than 99.9%) we will only have one or less extra ctor parameters
+            // in the majority of rest of cases, we will only have two extra ctor parameters
+            // we have never seen more than two extra ctor parameters in real world so far
+            // it would be negative optimization to build a dictionary here instead of just searching the list linearly.
+            // considering how this extraCtorParamaters are built, we could ensure here we always have a match.
+            return _extraCtorParameters.First(p => p.WireInfo.SerializedName == variableName).Field!;
         }
 
         /// <summary>

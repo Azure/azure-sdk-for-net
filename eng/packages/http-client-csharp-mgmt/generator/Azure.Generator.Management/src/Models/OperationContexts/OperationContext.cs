@@ -124,7 +124,6 @@ internal class OperationContext
         {
             // get the diff between the current path and the parent path, we only handle the diff and defer the handling of the parent itself in the next recursion.
             var diffPath = parent.TrimAncestorFrom(current);
-            // TODO -- this only handles the simplest cases right now, we need to add more cases as the generator evolves.
             var pairs = ReverselySplitIntoPairs(diffPath);
             var appendParent = false;
             foreach (var (key, value) in pairs)
