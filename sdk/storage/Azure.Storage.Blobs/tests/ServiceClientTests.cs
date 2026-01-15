@@ -14,7 +14,6 @@ using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Tests.Shared;
-using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 
