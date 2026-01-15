@@ -106,13 +106,13 @@ This position-based matching correctly identifies that `{name}` at the same posi
 Contextual Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}
 Operation Path:  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{extensionName}
 
-Shared segments: 12 (all segments up to and including {vmName})
+Shared segments: 8 (all segments up to and including {vmName})
 
 Parameter Mappings:
 - subscriptionId → Contextual (Id.SubscriptionId) [position 1]
 - resourceGroupName → Contextual (Id.ResourceGroupName) [position 3]
-- vmName → Contextual (Id.Name) [position 11]
-- extensionName → Pass-through (must be provided by caller) [position 13, beyond shared area]
+- vmName → Contextual (Id.Name) [position 7]
+- extensionName → Pass-through (must be provided by caller) [position 9, beyond shared area]
 ```
 
 ### Step 4: Generating Method Parameters
