@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="cluster"> AzStackHCI cluster properties. </param>
         /// <param name="migrationSolutionId"> Gets or sets the Migration solution ARM Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azStackHciSiteId"/>, <paramref name="cluster"/> or <paramref name="migrationSolutionId"/> is null. </exception>
-        public AzStackHciFabricCustomProperties(ResourceIdentifier azStackHciSiteId, AzStackHciClusterProperties cluster, ResourceIdentifier migrationSolutionId)
+        public AzStackHciFabricCustomProperties(ResourceIdentifier azStackHciSiteId, AzStackHCIClusterProperties cluster, ResourceIdentifier migrationSolutionId) : base("AzStackHCI")
         {
             Argument.AssertNotNull(azStackHciSiteId, nameof(azStackHciSiteId));
             Argument.AssertNotNull(cluster, nameof(cluster));
@@ -29,12 +30,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             ApplianceName = new ChangeTrackingList<string>();
             Cluster = cluster;
             MigrationSolutionId = migrationSolutionId;
-            InstanceType = "AzStackHCI";
         }
 
         /// <summary> Initializes a new instance of <see cref="AzStackHciFabricCustomProperties"/>. </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationFabricCustomProperties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azStackHciSiteId"> Gets or sets the ARM Id of the AzStackHCI site. </param>
         /// <param name="applianceName"> Gets or sets the Appliance name. </param>
         /// <param name="cluster"> AzStackHCI cluster properties. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="fabricContainerId"> Gets or sets the fabric container Id. </param>
         /// <param name="migrationSolutionId"> Gets or sets the Migration solution ARM Id. </param>
         /// <param name="migrationHubUri"> Gets or sets the migration hub Uri. </param>
-        internal AzStackHciFabricCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier azStackHciSiteId, IReadOnlyList<string> applianceName, AzStackHciClusterProperties cluster, ResourceIdentifier fabricResourceId, ResourceIdentifier fabricContainerId, ResourceIdentifier migrationSolutionId, Uri migrationHubUri) : base(instanceType, serializedAdditionalRawData)
+        internal AzStackHciFabricCustomProperties(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier azStackHciSiteId, IReadOnlyList<string> applianceName, AzStackHCIClusterProperties cluster, ResourceIdentifier fabricResourceId, ResourceIdentifier fabricContainerId, ResourceIdentifier migrationSolutionId, Uri migrationHubUri) : base(instanceType, additionalBinaryDataProperties)
         {
             AzStackHciSiteId = azStackHciSiteId;
             ApplianceName = applianceName;
@@ -51,26 +51,26 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             FabricContainerId = fabricContainerId;
             MigrationSolutionId = migrationSolutionId;
             MigrationHubUri = migrationHubUri;
-            InstanceType = instanceType ?? "AzStackHCI";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzStackHciFabricCustomProperties"/> for deserialization. </summary>
-        internal AzStackHciFabricCustomProperties()
-        {
         }
 
         /// <summary> Gets or sets the ARM Id of the AzStackHCI site. </summary>
         public ResourceIdentifier AzStackHciSiteId { get; set; }
+
         /// <summary> Gets or sets the Appliance name. </summary>
         public IReadOnlyList<string> ApplianceName { get; }
+
         /// <summary> AzStackHCI cluster properties. </summary>
-        public AzStackHciClusterProperties Cluster { get; set; }
+        public AzStackHCIClusterProperties Cluster { get; set; }
+
         /// <summary> Gets or sets the fabric resource Id. </summary>
         public ResourceIdentifier FabricResourceId { get; }
+
         /// <summary> Gets or sets the fabric container Id. </summary>
         public ResourceIdentifier FabricContainerId { get; }
+
         /// <summary> Gets or sets the Migration solution ARM Id. </summary>
         public ResourceIdentifier MigrationSolutionId { get; set; }
+
         /// <summary> Gets or sets the migration hub Uri. </summary>
         public Uri MigrationHubUri { get; }
     }

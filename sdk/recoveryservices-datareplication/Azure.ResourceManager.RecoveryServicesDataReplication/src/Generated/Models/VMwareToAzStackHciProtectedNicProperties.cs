@@ -11,46 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> VMwareToAzStackHCI NIC properties. </summary>
-    public partial class VMwareToAzStackHciProtectedNicProperties
+    public partial class VMwareToAzStackHCIProtectedNicProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciProtectedNicProperties"/>. </summary>
-        internal VMwareToAzStackHciProtectedNicProperties()
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHCIProtectedNicProperties"/>. </summary>
+        internal VMwareToAzStackHCIProtectedNicProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciProtectedNicProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHCIProtectedNicProperties"/>. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
         /// <param name="macAddress"> Gets or sets the NIC mac address. </param>
         /// <param name="label"> Gets or sets the NIC label. </param>
@@ -59,8 +30,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="targetNetworkId"> Gets or sets the target network Id within AzStackHCI Cluster. </param>
         /// <param name="testNetworkId"> Gets or sets the target test network Id within AzStackHCI Cluster. </param>
         /// <param name="selectionTypeForFailover"> Gets or sets the selection type of the NIC. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VMwareToAzStackHciProtectedNicProperties(string nicId, string macAddress, string label, bool? isPrimaryNic, string networkName, string targetNetworkId, string testNetworkId, VmNicSelection? selectionTypeForFailover, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareToAzStackHCIProtectedNicProperties(string nicId, string macAddress, string label, bool? isPrimaryNic, string networkName, string targetNetworkId, string testNetworkId, VMNicSelection? selectionTypeForFailover, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NicId = nicId;
             MacAddress = macAddress;
@@ -70,24 +41,31 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             TargetNetworkId = targetNetworkId;
             TestNetworkId = testNetworkId;
             SelectionTypeForFailover = selectionTypeForFailover;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the NIC Id. </summary>
         public string NicId { get; }
+
         /// <summary> Gets or sets the NIC mac address. </summary>
         public string MacAddress { get; }
+
         /// <summary> Gets or sets the NIC label. </summary>
         public string Label { get; }
+
         /// <summary> Gets or sets a value indicating whether this is the primary NIC. </summary>
         public bool? IsPrimaryNic { get; }
+
         /// <summary> Gets or sets the network name. </summary>
         public string NetworkName { get; }
+
         /// <summary> Gets or sets the target network Id within AzStackHCI Cluster. </summary>
         public string TargetNetworkId { get; }
+
         /// <summary> Gets or sets the target test network Id within AzStackHCI Cluster. </summary>
         public string TestNetworkId { get; }
+
         /// <summary> Gets or sets the selection type of the NIC. </summary>
-        public VmNicSelection? SelectionTypeForFailover { get; }
+        public VMNicSelection? SelectionTypeForFailover { get; }
     }
 }

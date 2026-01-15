@@ -7,45 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Represents NRP private link service proxy. </summary>
     public partial class DataReplicationPrivateLinkServiceProxy
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationPrivateLinkServiceProxy"/>. </summary>
         public DataReplicationPrivateLinkServiceProxy()
@@ -58,35 +28,43 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="remotePrivateLinkServiceConnectionState"> Represents Private link service connection state. </param>
         /// <param name="remotePrivateEndpointConnection"> Represent remote private endpoint connection. </param>
         /// <param name="groupConnectivityInformation"> Gets or sets group connectivity information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationPrivateLinkServiceProxy(string id, DataReplicationPrivateLinkServiceConnectionState remotePrivateLinkServiceConnectionState, WritableSubResource remotePrivateEndpointConnection, IList<GroupConnectivityInformation> groupConnectivityInformation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationPrivateLinkServiceProxy(string id, DataReplicationPrivateLinkServiceConnectionState remotePrivateLinkServiceConnectionState, RemotePrivateEndpointConnection remotePrivateEndpointConnection, IList<GroupConnectivityInformation> groupConnectivityInformation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             RemotePrivateLinkServiceConnectionState = remotePrivateLinkServiceConnectionState;
             RemotePrivateEndpointConnection = remotePrivateEndpointConnection;
             GroupConnectivityInformation = groupConnectivityInformation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets private link service proxy id. </summary>
         public string Id { get; set; }
+
         /// <summary> Represents Private link service connection state. </summary>
         public DataReplicationPrivateLinkServiceConnectionState RemotePrivateLinkServiceConnectionState { get; set; }
+
         /// <summary> Represent remote private endpoint connection. </summary>
-        internal WritableSubResource RemotePrivateEndpointConnection { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier RemotePrivateEndpointConnectionId
-        {
-            get => RemotePrivateEndpointConnection is null ? default : RemotePrivateEndpointConnection.Id;
-            set
-            {
-                if (RemotePrivateEndpointConnection is null)
-                    RemotePrivateEndpointConnection = new WritableSubResource();
-                RemotePrivateEndpointConnection.Id = value;
-            }
-        }
+        internal RemotePrivateEndpointConnection RemotePrivateEndpointConnection { get; set; }
 
         /// <summary> Gets or sets group connectivity information. </summary>
         public IList<GroupConnectivityInformation> GroupConnectivityInformation { get; }
+
+        /// <summary> Gets or sets the remote private endpoint connection id. </summary>
+        public string RemotePrivateEndpointConnectionId
+        {
+            get
+            {
+                return RemotePrivateEndpointConnection is null ? default : RemotePrivateEndpointConnection.Id;
+            }
+            set
+            {
+                if (RemotePrivateEndpointConnection is null)
+                {
+                    RemotePrivateEndpointConnection = new RemotePrivateEndpointConnection();
+                }
+                RemotePrivateEndpointConnection.Id = value;
+            }
+        }
     }
 }
