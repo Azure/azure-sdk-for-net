@@ -30,7 +30,7 @@ public static class HostBuilderExtensions
         string sectionName)
             where TClient : class
             where TSettings : ClientSettings, new()
-        => host.AddKeyedClient<TClient, TSettings>(key, sectionName, default!);
+        => host.AddKeyedClient<TClient, TSettings>(key, sectionName, null!);
 
     /// <summary>
     /// Adds a keyed singleton client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
@@ -77,7 +77,7 @@ public static class HostBuilderExtensions
         string sectionName)
             where TClient : class
             where TSettings : ClientSettings, new()
-        => host.AddClient<TClient, TSettings>(sectionName, default!);
+        => host.AddClient<TClient, TSettings>(sectionName, null!);
 
     /// <summary>
     /// Adds a singleton client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
