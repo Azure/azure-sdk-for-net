@@ -29,14 +29,14 @@ internal class ResourceVisitor : ScmLibraryVisitor
             type.Update(
                 relativeFilePath: TransformRelativeFilePath(type),
                 name: TransformName(type),
-                @namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
+                @namespace: ManagementClientGenerator.Instance.TypeFactory.EffectiveNamespace);
 
             foreach (var serialization in type.SerializationProviders)
             {
                 serialization.Update(
                     relativeFilePath: TransformRelativeFilePathForSerialization(serialization),
                     name: TransformName(serialization),
-                @namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
+                @namespace: ManagementClientGenerator.Instance.TypeFactory.EffectiveNamespace);
             }
         }
     }
@@ -55,11 +55,11 @@ internal class ResourceVisitor : ScmLibraryVisitor
     {
         if (type is ModelProvider model && ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(model.Type))
         {
-            type.Update(@namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
+            type.Update(@namespace: ManagementClientGenerator.Instance.TypeFactory.EffectiveNamespace);
 
             foreach (var serialization in type.SerializationProviders)
             {
-                serialization.Update(@namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
+                serialization.Update(@namespace: ManagementClientGenerator.Instance.TypeFactory.EffectiveNamespace);
             }
         }
     }

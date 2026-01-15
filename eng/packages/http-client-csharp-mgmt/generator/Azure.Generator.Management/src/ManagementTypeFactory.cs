@@ -6,6 +6,7 @@ using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Providers.Abstraction;
 using Azure.Generator.Management.Snippets;
+using Azure.Generator.Management.Extensions;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
@@ -29,6 +30,26 @@ namespace Azure.Generator.Management
     public class ManagementTypeFactory : AzureTypeFactory
     {
         private string? _resourceProviderName;
+        private string? _effectiveNamespace;
+
+        /// <summary>
+        /// Gets the effective namespace to use for generated types, taking into account
+        /// the configured namespace option if present, otherwise using PrimaryNamespace.
+        /// </summary>
+        public string EffectiveNamespace
+        {
+            get
+            {
+                if (_effectiveNamespace == null)
+                {
+                    var customNamespace = ManagementClientGenerator.Instance.Configuration.GetNamespace();
+                    _effectiveNamespace = !string.IsNullOrWhiteSpace(customNamespace)
+                        ? customNamespace
+                        : PrimaryNamespace;
+                }
+                return _effectiveNamespace;
+            }
+        }
 
         /// <summary>
         /// The name for this resource provider.
@@ -39,11 +60,12 @@ namespace Azure.Generator.Management
         private string BuildResourceProviderName()
         {
             const string armNamespacePrefix = "Azure.ResourceManager.";
-            if (PrimaryNamespace.StartsWith(armNamespacePrefix))
+            var namespaceToUse = EffectiveNamespace;
+            if (namespaceToUse.StartsWith(armNamespacePrefix))
             {
-                return PrimaryNamespace[armNamespacePrefix.Length..].ToIdentifierName();
+                return namespaceToUse[armNamespacePrefix.Length..].ToIdentifierName();
             }
-            return PrimaryNamespace.ToIdentifierName();
+            return namespaceToUse.ToIdentifierName();
         }
 
         /// <inheritdoc/>
