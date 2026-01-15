@@ -14,12 +14,12 @@ namespace System.ClientModel.Primitives;
 public static class HostBuilderExtensions
 {
     /// <summary>
-    /// Adds a keyed singleton Azure client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
+    /// Adds a keyed singleton client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
     /// </summary>
     /// <remarks>
     /// The <typeparamref name="TClient"/> must have a constructor that takes one parameter of type <typeparamref name="TSettings"/>.
     /// </remarks>
-    /// <typeparam name="TClient">The type of Azure client.</typeparam>
+    /// <typeparam name="TClient">The type of client.</typeparam>
     /// <typeparam name="TSettings">The type of <see cref="ClientSettings"/>.</typeparam>
     /// <param name="host">The <see cref="IHostApplicationBuilder"/> to add to.</param>
     /// <param name="key">The unique key to register as.</param>
@@ -33,12 +33,12 @@ public static class HostBuilderExtensions
         => host.AddKeyedClient<TClient, TSettings>(key, sectionName, default!);
 
     /// <summary>
-    /// Adds a keyed singleton Azure client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
+    /// Adds a keyed singleton client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
     /// </summary>
     /// <remarks>
     /// The <typeparamref name="TClient"/> must have a constructor that takes one parameter of type <typeparamref name="TSettings"/>.
     /// </remarks>
-    /// <typeparam name="TClient">The type of Azure client.</typeparam>
+    /// <typeparam name="TClient">The type of client.</typeparam>
     /// <typeparam name="TSettings">The type of <see cref="ClientSettings"/>.</typeparam>
     /// <param name="host">The <see cref="IHostApplicationBuilder"/> to add to.</param>
     /// <param name="key">The unique key to register as.</param>
@@ -63,12 +63,12 @@ public static class HostBuilderExtensions
     }
 
     /// <summary>
-    /// Adds a singleton Azure client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
+    /// Adds a singleton client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
     /// </summary>
     /// <remarks>
     /// The <typeparamref name="TClient"/> must have a constructor that takes one parameter of type <typeparamref name="TSettings"/>.
     /// </remarks>
-    /// <typeparam name="TClient">The type of Azure client.</typeparam>
+    /// <typeparam name="TClient">The type of client.</typeparam>
     /// <typeparam name="TSettings">The type of <see cref="ClientSettings"/>.</typeparam>
     /// <param name="host">The <see cref="IHostApplicationBuilder"/> to add to.</param>
     /// <param name="sectionName">The section of <see cref="IConfiguration"/> to use.</param>
@@ -80,12 +80,12 @@ public static class HostBuilderExtensions
         => host.AddClient<TClient, TSettings>(sectionName, default!);
 
     /// <summary>
-    /// Adds a singleton Azure client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
+    /// Adds a singleton client of the specified type to the <see cref="IHostApplicationBuilder"/>'s service collection.
     /// </summary>
     /// <remarks>
     /// The <typeparamref name="TClient"/> must have a constructor that takes one parameter of type <typeparamref name="TSettings"/>.
     /// </remarks>
-    /// <typeparam name="TClient">The type of Azure client.</typeparam>
+    /// <typeparam name="TClient">The type of client.</typeparam>
     /// <typeparam name="TSettings">The type of <see cref="ClientSettings"/>.</typeparam>
     /// <param name="host">The <see cref="IHostApplicationBuilder"/> to add to.</param>
     /// <param name="sectionName">The section of <see cref="IConfiguration"/> to use.</param>
