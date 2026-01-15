@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
+    [CodeGenType("LanguageQuestionAnsweringInferenceModelFactory")]
     public static partial class QuestionAnsweringModelFactory
     {
         /// <summary> Represents List of Question Answers. </summary>
