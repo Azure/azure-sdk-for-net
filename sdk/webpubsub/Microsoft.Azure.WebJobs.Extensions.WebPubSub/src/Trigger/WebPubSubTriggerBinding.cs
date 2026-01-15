@@ -83,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     {
                         throw new InvalidOperationException("Web PubSub connection section name cannot be null or empty.");
                     }
-                    if (!_accessFactory.TryCreateFromSectionName(sectionName, out var access))
+                    if (!_accessFactory.TryCreateFromSectionName(sectionName, out var access) && access != null)
                     {
                         throw new InvalidOperationException($"Unable to resolve Web PubSub connection from configuration section '{sectionName}'.");
                     }

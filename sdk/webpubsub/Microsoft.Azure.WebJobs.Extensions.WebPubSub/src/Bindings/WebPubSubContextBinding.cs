@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             try
             {
                 WebPubSubServiceAccess[]? accesses = null;
-                if (attrResolved?.Connections!=null)
+                if (attrResolved?.Connections != null)
                 {
                     var resolved = new List<WebPubSubServiceAccess>(attrResolved.Connections.Length);
                     foreach (var sectionName in attrResolved.Connections)

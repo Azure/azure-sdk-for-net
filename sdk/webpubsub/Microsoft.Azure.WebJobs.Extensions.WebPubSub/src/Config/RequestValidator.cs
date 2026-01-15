@@ -21,8 +21,18 @@ internal class RequestValidator
 
     public RequestValidator(WebPubSubServiceAccess[]? accesses)
     {
-        _allowedHosts = (accesses ?? []).ToDictionary(a => a.ServiceEndpoint.Host, a => a);
-        _skipValidation = _allowedHosts.Count == 0;
+        var normalizedAccesses = accesses ?? [];
+        // Explicitly validate for duplicate hosts to provide a clear error message
+        var duplicateHostGroup = normalizedAccesses
+            .GroupBy(a => a.ServiceEndpoint.Host)
+            .FirstOrDefault(g => g.Count() > 1);
+        if (duplicateHostGroup is not null)
+        {
+            throw new ArgumentException(
+                $"Duplicate host '{duplicateHostGroup.Key}' found in accesses.",
+                nameof(accesses));
+        }
+        _allowedHosts = normalizedAccesses.ToDictionary(a => a.ServiceEndpoint.Host, a => a); _skipValidation = _allowedHosts.Count == 0;
     }
 
     public static bool IsValidationRequest(string? method, string? originHeader, out List<string>? requestHosts)
@@ -60,7 +70,7 @@ internal class RequestValidator
             // No restriction
             return true;
         }
-        var origins= ToHeaderList(originHeader);
+        var origins = ToHeaderList(originHeader);
         if (origins == null)
         {
             return false;

@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 throw new ArgumentException("Invalid Web PubSub upstream request missing required fields in header.");
             }
 
-            if (!validator.IsValidSignature(context.Origin, context.Signature, context.ConnectionId) )
+            if (!validator.IsValidSignature(context.Origin, context.Signature, context.ConnectionId))
             {
                 throw new UnauthorizedAccessException("Signature validation failed.");
             }
