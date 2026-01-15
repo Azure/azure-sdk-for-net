@@ -41,9 +41,7 @@ import {
   sortResourceMethods
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
-import {
-  getCrossLanguageDefinitionId
-} from "@azure-tools/typespec-client-generator-core";
+import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
 import { isVariableSegment } from "./utils.js";
 
 /**
@@ -66,12 +64,18 @@ export function resolveArmResources(
   // Convert resources
   const resources: ArmResourceSchema[] = [];
   const processedResources = new Set<string>();
-  const schemaToResolvedResource = new Map<ArmResourceSchema, ResolvedResource>();
+  const schemaToResolvedResource = new Map<
+    ArmResourceSchema,
+    ResolvedResource
+  >();
 
   if (provider.resources) {
     for (const resolvedResource of provider.resources) {
       // Get the model from SDK context
-      const modelId = getCrossLanguageDefinitionId(sdkContext, resolvedResource.type);
+      const modelId = getCrossLanguageDefinitionId(
+        sdkContext,
+        resolvedResource.type
+      );
       if (!modelId) {
         continue;
       }
@@ -84,7 +88,10 @@ export function resolveArmResources(
       processedResources.add(resourceKey);
 
       // Convert to our resource schema format
-      const metadata = convertResolvedResourceToMetadata(sdkContext, resolvedResource);
+      const metadata = convertResolvedResourceToMetadata(
+        sdkContext,
+        resolvedResource
+      );
 
       const resource = {
         resourceModelId: modelId,
@@ -99,8 +106,12 @@ export function resolveArmResources(
   const nonResourceMethods: NonResourceMethod[] = [];
 
   // after the parentResourceId and resource scopes are populated, we can reorganize the metadata that is missing resourceIdPattern
-  const validResources = resources.filter(r => r.metadata.resourceIdPattern !== "");
-  const incompleteResources = resources.filter(r => r.metadata.resourceIdPattern === "");
+  const validResources = resources.filter(
+    (r) => r.metadata.resourceIdPattern !== ""
+  );
+  const incompleteResources = resources.filter(
+    (r) => r.metadata.resourceIdPattern === ""
+  );
 
   // now we populate parentResourceId in all resources. Incomplete resources are also handled here because when merging their methods into others, we need correct parentResourceId
   const validResourceMap = new Map<string, ArmResourceSchema>();
@@ -120,8 +131,10 @@ export function resolveArmResources(
       // Check if this parent is a valid resource in our set
       const parentResource = validResourceMap.get(parent.resourceInstancePath);
       if (parentResource) {
-        resource.metadata.parentResourceId = parentResource.metadata.resourceIdPattern;
-        resource.metadata.parentResourceModelId = parentResource.resourceModelId;
+        resource.metadata.parentResourceId =
+          parentResource.metadata.resourceIdPattern;
+        resource.metadata.parentResourceModelId =
+          parentResource.resourceModelId;
         break;
       }
       parent = parent.parent;
@@ -135,7 +148,9 @@ export function resolveArmResources(
 
     // First try to merge with parent if it exists
     if (metadata.parentResourceModelId) {
-      const parent = validResources.find(r => r.resourceModelId === metadata.parentResourceModelId);
+      const parent = validResources.find(
+        (r) => r.resourceModelId === metadata.parentResourceModelId
+      );
       if (parent) {
         parent.metadata.methods.push(...metadata.methods);
         merged = true;
@@ -144,7 +159,9 @@ export function resolveArmResources(
 
     if (!merged) {
       // No parent or parent not found - try to find another entry for the same model
-      const sibling = validResources.find(r => r.resourceModelId === resource.resourceModelId);
+      const sibling = validResources.find(
+        (r) => r.resourceModelId === resource.resourceModelId
+      );
       if (sibling) {
         sibling.metadata.methods.push(...metadata.methods);
         merged = true;
@@ -174,11 +191,15 @@ export function resolveArmResources(
     }
   }
   // then we gather all the resourceInstancePath for all resources as candidates
-  const resourceInstancePaths: Array<string[]> = validResources.map(r => r.metadata.resourceIdPattern.split('/').filter(s => s.length > 0));
+  const resourceInstancePaths: Array<string[]> = validResources.map((r) =>
+    r.metadata.resourceIdPattern.split("/").filter((s) => s.length > 0)
+  );
   // now we assign one of the most matched resourceInstancePath in above candidates to each list operation's resourceScope
   for (const listOp of listOperations) {
     const validCandidates: Array<string[]> = [];
-    const listOperationPathSegments = listOp.operationPath.split('/').filter(s => s.length > 0);
+    const listOperationPathSegments = listOp.operationPath
+      .split("/")
+      .filter((s) => s.length > 0);
     for (const candidatePath of resourceInstancePaths) {
       if (canBeListResourceScope(listOperationPathSegments, candidatePath)) {
         validCandidates.push(candidatePath);
@@ -188,13 +209,16 @@ export function resolveArmResources(
     // we take the longest as the resourceScope of this list
     if (validCandidates.length > 0) {
       validCandidates.sort((a, b) => b.length - a.length);
-      listOp.resourceScope = '/' + validCandidates[0].join('/');
+      listOp.resourceScope = "/" + validCandidates[0].join("/");
     }
   }
   if (provider.providerOperations) {
     for (const operation of provider.providerOperations) {
       // Get method ID from the operation
-      const methodId = getMethodIdFromOperation(sdkContext, operation.operation);
+      const methodId = getMethodIdFromOperation(
+        sdkContext,
+        operation.operation
+      );
       if (!methodId) {
         continue;
       }
@@ -219,7 +243,9 @@ export function resolveArmResources(
   // Singleton resources can exist without Get operations
   const filteredResources: ArmResourceSchema[] = [];
   for (const resource of validResources) {
-    const hasReadOperation = resource.metadata.methods.some(m => m.kind === ResourceOperationKind.Read);
+    const hasReadOperation = resource.metadata.methods.some(
+      (m) => m.kind === ResourceOperationKind.Read
+    );
     if (!hasReadOperation && !resource.metadata.singletonResourceName) {
       // Move all methods to non-resource methods since there's no Get operation
       for (const method of resource.metadata.methods) {
@@ -277,7 +303,10 @@ function convertResolvedResourceToMetadata(
 
     if (lifecycle.createOrUpdate && lifecycle.createOrUpdate.length > 0) {
       for (const createOp of lifecycle.createOrUpdate) {
-        const methodId = getMethodIdFromOperation(sdkContext, createOp.operation);
+        const methodId = getMethodIdFromOperation(
+          sdkContext,
+          createOp.operation
+        );
         if (methodId) {
           methods.push({
             methodId,
@@ -292,7 +321,10 @@ function convertResolvedResourceToMetadata(
 
     if (lifecycle.update && lifecycle.update.length > 0) {
       for (const updateOp of lifecycle.update) {
-        const methodId = getMethodIdFromOperation(sdkContext, updateOp.operation);
+        const methodId = getMethodIdFromOperation(
+          sdkContext,
+          updateOp.operation
+        );
         if (methodId) {
           methods.push({
             methodId,
@@ -307,7 +339,10 @@ function convertResolvedResourceToMetadata(
 
     if (lifecycle.delete && lifecycle.delete.length > 0) {
       for (const deleteOp of lifecycle.delete) {
-        const methodId = getMethodIdFromOperation(sdkContext, deleteOp.operation);
+        const methodId = getMethodIdFromOperation(
+          sdkContext,
+          deleteOp.operation
+        );
         if (methodId) {
           methods.push({
             methodId,
@@ -356,7 +391,9 @@ function convertResolvedResourceToMetadata(
   }
 
   // Convert resource scope
-  const resourceScopeValue = convertScopeToResourceScope(resolvedResource.scope);
+  const resourceScopeValue = convertScopeToResourceScope(
+    resolvedResource.scope
+  );
 
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
@@ -371,7 +408,9 @@ function convertResolvedResourceToMetadata(
     parentResourceModelId: undefined,
     // TODO: Temporary - waiting for resolveArmResources API update to include singleton information
     // Once the API includes this, we can remove this extraction logic
-    singletonResourceName: extractSingletonName(resolvedResource.resourceInstancePath),
+    singletonResourceName: extractSingletonName(
+      resolvedResource.resourceInstancePath
+    ),
     resourceName: resolvedResource.resourceName
   };
 }
@@ -392,7 +431,9 @@ function getMethodIdFromOperation(
 /**
  * Convert scope string/object to ResourceScope enum
  */
-function convertScopeToResourceScope(scope: string | ResolvedResource | undefined): ResourceScope {
+function convertScopeToResourceScope(
+  scope: string | ResolvedResource | undefined
+): ResourceScope {
   if (!scope) {
     // TODO: does it make sense that we have something without scope??
     return ResourceScope.ResourceGroup; // Default
@@ -435,11 +476,13 @@ export function getOperationScopeFromPath(path: string): ResourceScope {
   } else if (/^\/subscriptions\/\{[^}]+\}\//.test(path)) {
     return ResourceScope.Subscription;
   } else if (
-    /^\/providers\/Microsoft\.Management\/managementGroups\/\{[^}]+\}\//.test(path)
+    /^\/providers\/Microsoft\.Management\/managementGroups\/\{[^}]+\}\//.test(
+      path
+    )
   ) {
     return ResourceScope.ManagementGroup;
   }
-  return ResourceScope.Tenant;  // all the templates work as if there is a tenant decorator when there is no such decorator
+  return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
 }
 
 /**
@@ -454,7 +497,7 @@ function formatResourceType(resourceType: ResourceType): string {
  */
 function extractSingletonName(path: string): string | undefined {
   // Check if the path ends with a fixed string instead of a parameter
-  const segments = path.split("/").filter(s => s.length > 0);
+  const segments = path.split("/").filter((s) => s.length > 0);
   const lastSegment = segments[segments.length - 1];
 
   // If the last segment is not a parameter (doesn't start with {), it's a singleton
@@ -465,18 +508,27 @@ function extractSingletonName(path: string): string | undefined {
   return undefined;
 }
 
-function canBeListResourceScope(listPathSegments: string[], resourceInstancePathSegments: string[]): boolean {
+function canBeListResourceScope(
+  listPathSegments: string[],
+  resourceInstancePathSegments: string[]
+): boolean {
   // Check if resourceInstancePath is a prefix of listPath
   if (listPathSegments.length < resourceInstancePathSegments.length) {
     return false;
   }
   for (let i = 0; i < resourceInstancePathSegments.length; i++) {
     // if both segments are variables, we consider it as a match
-    if (isVariableSegment(listPathSegments[i]) && isVariableSegment(resourceInstancePathSegments[i])) {
+    if (
+      isVariableSegment(listPathSegments[i]) &&
+      isVariableSegment(resourceInstancePathSegments[i])
+    ) {
       continue;
     }
     // if one of them is a variable, the other is not, we consider it as not a match
-    if (isVariableSegment(listPathSegments[i]) || isVariableSegment(resourceInstancePathSegments[i])) {
+    if (
+      isVariableSegment(listPathSegments[i]) ||
+      isVariableSegment(resourceInstancePathSegments[i])
+    ) {
       return false;
     }
     // both are fixed strings, they must match

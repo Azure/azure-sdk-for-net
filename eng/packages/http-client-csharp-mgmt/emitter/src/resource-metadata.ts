@@ -147,11 +147,11 @@ export function sortResourceMethods(methods: ResourceMethod[]): void {
     // First, sort by kind
     const kindOrderA = getKindSortOrder(a.kind);
     const kindOrderB = getKindSortOrder(b.kind);
-    
+
     if (kindOrderA !== kindOrderB) {
       return kindOrderA - kindOrderB;
     }
-    
+
     // For methods with the same kind, sort by methodId
     return a.methodId.localeCompare(b.methodId);
   });
