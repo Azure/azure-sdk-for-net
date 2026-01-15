@@ -1,4 +1,3 @@
-import { Program } from "@typespec/compiler";
 import { beforeEach, describe, it, vi } from "vitest";
 import {
   createEmitterContext,
