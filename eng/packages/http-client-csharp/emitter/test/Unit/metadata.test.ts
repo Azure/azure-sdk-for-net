@@ -74,7 +74,7 @@ describe("Metadata generation tests", async () => {
     // Check the content - should get version from TypeSpec @versioned decorator
     const content = metadataCalls[0][1];
     const parsed = JSON.parse(content);
-    strictEqual(parsed["api-version"], "2023-01-01-preview");
+    strictEqual(parsed.apiVersion, "2023-01-01-preview");
     
     // Note: There may be diagnostics from the test setup, but the metadata should still be generated
     // strictEqual(program.diagnostics.length, 0);
@@ -116,7 +116,7 @@ describe("Metadata generation tests", async () => {
     
     const content = metadataCalls[0][1];
     const parsed = JSON.parse(content);
-    strictEqual(parsed["api-version"], "not-specified");
+    strictEqual(parsed.apiVersion, "not-specified");
     
     strictEqual(program.diagnostics.length, 0);
   });

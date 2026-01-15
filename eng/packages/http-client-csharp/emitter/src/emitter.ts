@@ -51,7 +51,7 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
  * The metadata file contains content such as:
  * ```json
  * {
- *   "api-version": "2024-05-01"
+ *   "apiVersion": "2024-05-01"
  * }
  * ```
  * 
@@ -65,11 +65,10 @@ async function generateMetadataFile(context: EmitContext<AzureEmitterOptions>): 
     context.options["sdk-context-options"] ?? {}
   );
   
-  const apiVersion = sdkContext.sdkPackage.metadata.apiVersion;
-  
-  const metadata = {
-    "api-version": apiVersion || "not-specified"
-  };
+  // Stringify the entire metadata object from the SDK package
+  const metadata = sdkContext.sdkPackage.metadata.apiVersion 
+    ? sdkContext.sdkPackage.metadata 
+    : { apiVersion: "not-specified" };
 
   const generatedDir = resolvePath(context.emitterOutputDir, "Generated");
   await context.program.host.mkdirp(generatedDir);
