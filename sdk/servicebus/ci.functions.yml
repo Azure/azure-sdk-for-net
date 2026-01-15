@@ -14,19 +14,6 @@ trigger:
     - sdk/servicebus/Azure.Messaging.ServiceBus/tests/Infrastructure
     - sdk/servicebus/test-resources.json
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/servicebus/service.projects
-    - sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus
-    - sdk/servicebus/ci.functions.yml
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

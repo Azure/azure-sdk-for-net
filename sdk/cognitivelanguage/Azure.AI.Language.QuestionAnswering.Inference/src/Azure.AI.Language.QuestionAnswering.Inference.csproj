@@ -6,18 +6,16 @@
     <PackageTags>Azure Inference</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
     <AssemblyName>Azure.AI.Language.QuestionAnswering.Inference</AssemblyName>
     <PackageId>Azure.AI.Language.QuestionAnswering.Inference</PackageId>
     <NoWarn>$(NoWarn);AZC0034;AZC0012</NoWarn>
   </PropertyGroup>
 
-  <!-- Shared source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
