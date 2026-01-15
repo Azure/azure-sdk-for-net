@@ -30,7 +30,7 @@ public partial class Entity
 
         RequestContext context = new RequestContext { CancellationToken = cancellationToken };
         BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(file);
-        using MultiPartFormDataBinaryContent content = (MultiPartFormDataBinaryContent)businessMetadataOptions.ToRequestContent();
+        using MultiPartFormDataRequestContent content = (MultiPartFormDataRequestContent)businessMetadataOptions.ToRequestContent();
         Response response = ImportBusinessMetadata(content, content.ContentType, context);
         return Response.FromValue(BulkImportResult.DeserializeBulkImportResult(JsonDocument.Parse(response.Content).RootElement, new ModelReaderWriterOptions("W")), response);
     }
