@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> AkriConnectorsMqttConnectionConfiguration properties. </summary>
     public partial class AkriConnectorsMqttConnectionConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsMqttConnectionConfiguration"/>. </summary>
         public AkriConnectorsMqttConnectionConfiguration()
@@ -51,19 +22,15 @@ namespace Azure.ResourceManager.IotOperations.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsMqttConnectionConfiguration"/>. </summary>
-        /// <param name="authentication">
-        /// Authentication properties.
-        /// Please note <see cref="AkriConnectorsMqttAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AkriConnectorsServiceAccountAuthentication"/>.
-        /// </param>
+        /// <param name="authentication"> Authentication properties. </param>
         /// <param name="host"> Host of the Broker in the form of &lt;hostname&gt;:&lt;port&gt;. </param>
         /// <param name="protocol"> The protocol to use for the connection. Currently only `mqtt` is supported. </param>
         /// <param name="keepAliveSeconds"> KeepAlive for connection in seconds. </param>
         /// <param name="maxInflightMessages"> The max number of messages to keep in flight. For subscribe, this is the receive maximum. For publish, this is the maximum number of messages to send before waiting for an ack. </param>
         /// <param name="sessionExpirySeconds"> Session expiry in seconds. </param>
         /// <param name="tls"> TLS configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AkriConnectorsMqttConnectionConfiguration(AkriConnectorsMqttAuthentication authentication, string host, AkriConnectorsMqttProtocolType? protocol, int? keepAliveSeconds, int? maxInflightMessages, int? sessionExpirySeconds, IotOperationsTlsProperties tls, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AkriConnectorsMqttConnectionConfiguration(AkriConnectorsMqttAuthentication authentication, string host, AkriConnectorsMqttProtocolType? protocol, int? keepAliveSeconds, int? maxInflightMessages, int? sessionExpirySeconds, IotOperationsTlsProperties tls, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Authentication = authentication;
             Host = host;
@@ -72,25 +39,27 @@ namespace Azure.ResourceManager.IotOperations.Models
             MaxInflightMessages = maxInflightMessages;
             SessionExpirySeconds = sessionExpirySeconds;
             Tls = tls;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Authentication properties.
-        /// Please note <see cref="AkriConnectorsMqttAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AkriConnectorsServiceAccountAuthentication"/>.
-        /// </summary>
+        /// <summary> Authentication properties. </summary>
         public AkriConnectorsMqttAuthentication Authentication { get; set; }
+
         /// <summary> Host of the Broker in the form of &lt;hostname&gt;:&lt;port&gt;. </summary>
         public string Host { get; set; }
+
         /// <summary> The protocol to use for the connection. Currently only `mqtt` is supported. </summary>
         public AkriConnectorsMqttProtocolType? Protocol { get; set; }
+
         /// <summary> KeepAlive for connection in seconds. </summary>
         public int? KeepAliveSeconds { get; set; }
+
         /// <summary> The max number of messages to keep in flight. For subscribe, this is the receive maximum. For publish, this is the maximum number of messages to send before waiting for an ack. </summary>
         public int? MaxInflightMessages { get; set; }
+
         /// <summary> Session expiry in seconds. </summary>
         public int? SessionExpirySeconds { get; set; }
+
         /// <summary> TLS configuration. </summary>
         public IotOperationsTlsProperties Tls { get; set; }
     }

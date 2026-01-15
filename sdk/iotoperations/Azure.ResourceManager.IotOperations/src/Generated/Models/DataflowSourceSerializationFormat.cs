@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct DataflowSourceSerializationFormat : IEquatable<DataflowSourceSerializationFormat>
     {
         private readonly string _value;
+        /// <summary> JSON Format. </summary>
+        private const string JsonValue = "Json";
 
         /// <summary> Initializes a new instance of <see cref="DataflowSourceSerializationFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataflowSourceSerializationFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string JsonValue = "Json";
+            _value = value;
+        }
 
         /// <summary> JSON Format. </summary>
         public static DataflowSourceSerializationFormat Json { get; } = new DataflowSourceSerializationFormat(JsonValue);
+
         /// <summary> Determines if two <see cref="DataflowSourceSerializationFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataflowSourceSerializationFormat left, DataflowSourceSerializationFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataflowSourceSerializationFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataflowSourceSerializationFormat left, DataflowSourceSerializationFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataflowSourceSerializationFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataflowSourceSerializationFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataflowSourceSerializationFormat(string value) => new DataflowSourceSerializationFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataflowSourceSerializationFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataflowSourceSerializationFormat?(string value) => value == null ? null : new DataflowSourceSerializationFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataflowSourceSerializationFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataflowSourceSerializationFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

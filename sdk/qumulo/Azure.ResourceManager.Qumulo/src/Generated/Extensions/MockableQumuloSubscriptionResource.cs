@@ -6,87 +6,79 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Qumulo;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Qumulo.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableQumuloSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _qumuloFileSystemResourceFileSystemsClientDiagnostics;
-        private FileSystemsRestOperations _qumuloFileSystemResourceFileSystemsRestClient;
+        private ClientDiagnostics _fileSystemsClientDiagnostics;
+        private FileSystems _fileSystemsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableQumuloSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableQumuloSubscriptionResource for mocking. </summary>
         protected MockableQumuloSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableQumuloSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableQumuloSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableQumuloSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics QumuloFileSystemResourceFileSystemsClientDiagnostics => _qumuloFileSystemResourceFileSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Qumulo", QumuloFileSystemResource.ResourceType.Namespace, Diagnostics);
-        private FileSystemsRestOperations QumuloFileSystemResourceFileSystemsRestClient => _qumuloFileSystemResourceFileSystemsRestClient ??= new FileSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(QumuloFileSystemResource.ResourceType));
+        private ClientDiagnostics FileSystemsClientDiagnostics => _fileSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Qumulo.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private FileSystems FileSystemsRestClient => _fileSystemsRestClient ??= new FileSystems(FileSystemsClientDiagnostics, Pipeline, Endpoint, "2024-06-19");
 
         /// <summary>
         /// List FileSystemResource resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Qumulo.Storage/fileSystems</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Qumulo.Storage/fileSystems. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileSystemResource_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileSystems_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-19</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-19. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="QumuloFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="QumuloFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QumuloFileSystemResource> GetQumuloFileSystemResourcesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => QumuloFileSystemResourceFileSystemsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QumuloFileSystemResourceFileSystemsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QumuloFileSystemResource(Client, QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(e)), QumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, "MockableQumuloSubscriptionResource.GetQumuloFileSystemResources", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<QumuloFileSystemResourceData, QumuloFileSystemResource>(new FileSystemsGetBySubscriptionAsyncCollectionResultOfT(FileSystemsRestClient, Id.SubscriptionId, context), data => new QumuloFileSystemResource(Client, data));
         }
 
         /// <summary>
         /// List FileSystemResource resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Qumulo.Storage/fileSystems</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Qumulo.Storage/fileSystems. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileSystemResource_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileSystems_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-19</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-19. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,9 +86,11 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// <returns> A collection of <see cref="QumuloFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QumuloFileSystemResource> GetQumuloFileSystemResources(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => QumuloFileSystemResourceFileSystemsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QumuloFileSystemResourceFileSystemsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QumuloFileSystemResource(Client, QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(e)), QumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, "MockableQumuloSubscriptionResource.GetQumuloFileSystemResources", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<QumuloFileSystemResourceData, QumuloFileSystemResource>(new FileSystemsGetBySubscriptionCollectionResultOfT(FileSystemsRestClient, Id.SubscriptionId, context), data => new QumuloFileSystemResource(Client, data));
         }
     }
 }

@@ -8,44 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary> Community Resource Properties. </summary>
     public partial class VirtualEnclaveCommunityProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveCommunityProperties"/>. </summary>
         public VirtualEnclaveCommunityProperties()
@@ -69,8 +40,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="firewallSku"> SKU of the community's Azure Firewall (Basic, Standard, Premium). Standard is the default. </param>
         /// <param name="approvalSettings"> Approval requirements for various actions on the community's resources. </param>
         /// <param name="maintenanceModeConfiguration"> Maintenance Mode configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveCommunityProperties(string addressSpace, IList<string> dnsServers, VirtualEnclaveProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> resourceCollection, string managedResourceGroupName, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, IList<VirtualEnclaveGovernedService> governedServiceList, VirtualEnclaveCommunityPolicyOverride? policyOverride, IList<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments, VirtualEnclaveFirewallSku? firewallSku, VirtualEnclaveApprovalSettings approvalSettings, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualEnclaveCommunityProperties(string addressSpace, IList<string> dnsServers, VirtualEnclaveProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> resourceCollection, string managedResourceGroupName, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, IList<VirtualEnclaveGovernedService> governedServiceList, VirtualEnclaveCommunityPolicyOverride? policyOverride, IList<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments, VirtualEnclaveFirewallSku? firewallSku, VirtualEnclaveApprovalSettings approvalSettings, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressSpace = addressSpace;
             DnsServers = dnsServers;
@@ -84,38 +55,52 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             FirewallSku = firewallSku;
             ApprovalSettings = approvalSettings;
             MaintenanceModeConfiguration = maintenanceModeConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Address Space. </summary>
         public string AddressSpace { get; set; }
+
         /// <summary> DNS Servers. </summary>
         public IList<string> DnsServers { get; }
+
         /// <summary> Provisioning State. </summary>
         public VirtualEnclaveProvisioningState? ProvisioningState { get; }
+
         /// <summary> List of resource ids created by communities. </summary>
         public IReadOnlyList<ResourceIdentifier> ResourceCollection { get; }
+
         /// <summary> Managed resource group name. </summary>
         public string ManagedResourceGroupName { get; }
+
         /// <summary> Managed On Behalf Of Configuration. </summary>
         internal ManagedOnBehalfOfConfiguration ManagedOnBehalfOfConfiguration { get; }
-        /// <summary> Managed-On-Behalf-Of broker resources. </summary>
-        public IReadOnlyList<SubResource> ManagedOnBehalfOfMoboBrokerResources
-        {
-            get => ManagedOnBehalfOfConfiguration?.MoboBrokerResources;
-        }
 
         /// <summary> List of services governed by a community. </summary>
         public IList<VirtualEnclaveGovernedService> GovernedServiceList { get; }
+
         /// <summary> Policy override setting for the community. Specifies whether to apply enclave-specific policies or disable policy enforcement. </summary>
         public VirtualEnclaveCommunityPolicyOverride? PolicyOverride { get; set; }
+
         /// <summary> Community role assignments. </summary>
         public IList<VirtualEnclaveRoleAssignmentItem> CommunityRoleAssignments { get; }
+
         /// <summary> SKU of the community's Azure Firewall (Basic, Standard, Premium). Standard is the default. </summary>
         public VirtualEnclaveFirewallSku? FirewallSku { get; set; }
+
         /// <summary> Approval requirements for various actions on the community's resources. </summary>
         public VirtualEnclaveApprovalSettings ApprovalSettings { get; set; }
+
         /// <summary> Maintenance Mode configuration. </summary>
         public VirtualEnclaveMaintenanceModeConfiguration MaintenanceModeConfiguration { get; set; }
+
+        /// <summary> Managed-On-Behalf-Of broker resources. </summary>
+        public IReadOnlyList<MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources
+        {
+            get
+            {
+                return ManagedOnBehalfOfConfiguration.MoboBrokerResources;
+            }
+        }
     }
 }

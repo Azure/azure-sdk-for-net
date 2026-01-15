@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Kubernetes version profile for given major.minor release. </summary>
+    /// <summary>
+    /// Kubernetes version profile for given major.minor release.
+    /// Serialized Name: KubernetesVersion
+    /// </summary>
     public partial class KubernetesVersion
     {
         /// <summary>
@@ -52,36 +55,71 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesVersion"/>. </summary>
-        /// <param name="version"> major.minor version of Kubernetes release. </param>
-        /// <param name="capabilities"> Capabilities on this Kubernetes version. </param>
-        /// <param name="isPreview"> Whether this version is in preview mode. </param>
-        /// <param name="patchVersions"> Patch versions of Kubernetes release. </param>
+        /// <param name="version">
+        /// major.minor version of Kubernetes release
+        /// Serialized Name: KubernetesVersion.version
+        /// </param>
+        /// <param name="capabilities">
+        /// Capabilities on this Kubernetes version.
+        /// Serialized Name: KubernetesVersion.capabilities
+        /// </param>
+        /// <param name="isDefault">
+        /// Whether this version is default.
+        /// Serialized Name: KubernetesVersion.isDefault
+        /// </param>
+        /// <param name="isPreview">
+        /// Whether this version is in preview mode.
+        /// Serialized Name: KubernetesVersion.isPreview
+        /// </param>
+        /// <param name="patchVersions">
+        /// Patch versions of Kubernetes release
+        /// Serialized Name: KubernetesVersion.patchVersions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesVersion(string version, KubernetesVersionCapabilities capabilities, bool? isPreview, IReadOnlyDictionary<string, KubernetesPatchVersion> patchVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KubernetesVersion(string version, KubernetesVersionCapabilities capabilities, bool? isDefault, bool? isPreview, IReadOnlyDictionary<string, KubernetesPatchVersion> patchVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             Capabilities = capabilities;
+            IsDefault = isDefault;
             IsPreview = isPreview;
             PatchVersions = patchVersions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> major.minor version of Kubernetes release. </summary>
+        /// <summary>
+        /// major.minor version of Kubernetes release
+        /// Serialized Name: KubernetesVersion.version
+        /// </summary>
         [WirePath("version")]
         public string Version { get; }
-        /// <summary> Capabilities on this Kubernetes version. </summary>
+        /// <summary>
+        /// Capabilities on this Kubernetes version.
+        /// Serialized Name: KubernetesVersion.capabilities
+        /// </summary>
         internal KubernetesVersionCapabilities Capabilities { get; }
-        /// <summary> Gets the capabilities support plan. </summary>
+        /// <summary> Serialized Name: KubernetesVersionCapabilities.supportPlan. </summary>
         [WirePath("capabilities.supportPlan")]
         public IReadOnlyList<KubernetesSupportPlan> CapabilitiesSupportPlan
         {
             get => Capabilities?.SupportPlan;
         }
 
-        /// <summary> Whether this version is in preview mode. </summary>
+        /// <summary>
+        /// Whether this version is default.
+        /// Serialized Name: KubernetesVersion.isDefault
+        /// </summary>
+        [WirePath("isDefault")]
+        public bool? IsDefault { get; }
+        /// <summary>
+        /// Whether this version is in preview mode.
+        /// Serialized Name: KubernetesVersion.isPreview
+        /// </summary>
         [WirePath("isPreview")]
         public bool? IsPreview { get; }
-        /// <summary> Patch versions of Kubernetes release. </summary>
+        /// <summary>
+        /// Patch versions of Kubernetes release
+        /// Serialized Name: KubernetesVersion.patchVersions
+        /// </summary>
         [WirePath("patchVersions")]
         public IReadOnlyDictionary<string, KubernetesPatchVersion> PatchVersions { get; }
     }

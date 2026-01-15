@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsDigest"/>. </summary>
         /// <param name="digest"> The digest of the image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
-        public AkriConnectorsDigest(string digest)
+        public AkriConnectorsDigest(string digest) : base(AkriConnectorsTagDigestType.Digest)
         {
             Argument.AssertNotNull(digest, nameof(digest));
 
             Digest = digest;
-            TagDigestType = AkriConnectorsTagDigestType.Digest;
         }
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsDigest"/>. </summary>
         /// <param name="tagDigestType"> The tag or digest type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="digest"> The digest of the image. </param>
-        internal AkriConnectorsDigest(AkriConnectorsTagDigestType tagDigestType, IDictionary<string, BinaryData> serializedAdditionalRawData, string digest) : base(tagDigestType, serializedAdditionalRawData)
+        internal AkriConnectorsDigest(AkriConnectorsTagDigestType tagDigestType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string digest) : base(tagDigestType, additionalBinaryDataProperties)
         {
             Digest = digest;
-            TagDigestType = tagDigestType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AkriConnectorsDigest"/> for deserialization. </summary>
-        internal AkriConnectorsDigest()
-        {
         }
 
         /// <summary> The digest of the image. </summary>

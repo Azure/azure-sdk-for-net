@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Grafana
 {
-    internal class ManagedPrivateEndpointModelOperationSource : IOperationSource<ManagedPrivateEndpointModelResource>
+    /// <summary></summary>
+    internal partial class ManagedPrivateEndpointModelOperationSource : IOperationSource<ManagedPrivateEndpointModelResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ManagedPrivateEndpointModelOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ManagedPrivateEndpointModelResource IOperationSource<ManagedPrivateEndpointModelResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedPrivateEndpointModelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ManagedPrivateEndpointModelData data = ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ManagedPrivateEndpointModelResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ManagedPrivateEndpointModelResource> IOperationSource<ManagedPrivateEndpointModelResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedPrivateEndpointModelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
-            return await Task.FromResult(new ManagedPrivateEndpointModelResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ManagedPrivateEndpointModelData data = ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ManagedPrivateEndpointModelResource(_client, data);
         }
     }
 }

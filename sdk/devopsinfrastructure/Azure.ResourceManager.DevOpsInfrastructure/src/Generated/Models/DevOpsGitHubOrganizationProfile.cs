@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -17,27 +18,20 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <summary> Initializes a new instance of <see cref="DevOpsGitHubOrganizationProfile"/>. </summary>
         /// <param name="organizations"> The list of GitHub organizations/repositories the pool should be present in. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizations"/> is null. </exception>
-        public DevOpsGitHubOrganizationProfile(IEnumerable<DevOpsGitHubOrganization> organizations)
+        public DevOpsGitHubOrganizationProfile(IEnumerable<DevOpsGitHubOrganization> organizations) : base("GitHub")
         {
             Argument.AssertNotNull(organizations, nameof(organizations));
 
             Organizations = organizations.ToList();
-            Kind = "GitHub";
         }
 
         /// <summary> Initializes a new instance of <see cref="DevOpsGitHubOrganizationProfile"/>. </summary>
         /// <param name="kind"> Discriminator property for DevOpsOrganizationProfile. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="organizations"> The list of GitHub organizations/repositories the pool should be present in. </param>
-        internal DevOpsGitHubOrganizationProfile(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<DevOpsGitHubOrganization> organizations) : base(kind, serializedAdditionalRawData)
+        internal DevOpsGitHubOrganizationProfile(string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<DevOpsGitHubOrganization> organizations) : base(kind, additionalBinaryDataProperties)
         {
             Organizations = organizations;
-            Kind = kind ?? "GitHub";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DevOpsGitHubOrganizationProfile"/> for deserialization. </summary>
-        internal DevOpsGitHubOrganizationProfile()
-        {
         }
 
         /// <summary> The list of GitHub organizations/repositories the pool should be present in. </summary>

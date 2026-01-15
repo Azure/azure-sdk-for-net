@@ -5,12 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
-using System.Diagnostics.Tracing;
 using System.Threading;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -20,20 +20,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private bool _disposed;
         private AzureMonitorResource? _resource;
 
-        internal readonly MeterProvider? _meterProvider;
-        private readonly Meter _standardMetricMeter;
-        private readonly Meter _perfCounterMeter;
+        private readonly bool _enableStandardMetrics;
+        private readonly bool _enablePerfCounters;
 
-        private readonly Histogram<double> _requestDuration;
-        private readonly Histogram<double> _dependencyDuration;
+        internal readonly Lazy<MeterProvider?> _meterProvider;
+        private readonly Meter? _standardMetricMeter;
+        private readonly Meter? _perfCounterMeter;
 
-        private readonly ObservableGauge<long> _processPrivateBytesGauge;
-        private readonly ObservableGauge<double> _processCpuGauge;
-        private readonly ObservableGauge<double> _processCpuNormalizedGauge;
-        private readonly ObservableGauge<double> _requestRateGauge;
-        private readonly ObservableGauge<double> _exceptionRateGauge;
+        private readonly Histogram<double>? _requestDuration;
+        private readonly Histogram<double>? _dependencyDuration;
 
-        private readonly Process _process = Process.GetCurrentProcess();
+        private readonly ObservableGauge<long>? _processPrivateBytesGauge;
+        private readonly ObservableGauge<double>? _processCpuGauge;
+        private readonly ObservableGauge<double>? _processCpuNormalizedGauge;
+        private readonly ObservableGauge<double>? _requestRateGauge;
+        private readonly ObservableGauge<double>? _exceptionRateGauge;
+
+        private readonly Process? _process;
         private readonly int _processorCount = Environment.ProcessorCount;
         private DateTimeOffset _cachedCollectedTime = DateTimeOffset.MinValue;
         private long _cachedCollectedValue = 0;
@@ -67,60 +70,101 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal AzureMonitorResource? StandardMetricResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();
 
-        internal StandardMetricsExtractionProcessor(AzureMonitorMetricExporter metricExporter)
+        internal StandardMetricsExtractionProcessor(AzureMonitorMetricExporter metricExporter, AzureMonitorExporterOptions options)
         {
-            _meterProvider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(StandardMetricConstants.StandardMetricMeterName)
-                .AddMeter(PerfCounterConstants.PerfCounterMeterName)
-                .AddReader(new PeriodicExportingMetricReader(metricExporter)
-                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
-                .Build();
+            _enableStandardMetrics = options.EnableStandardMetrics;
+            _enablePerfCounters = options.EnablePerfCounters;
 
-            _standardMetricMeter = new Meter(StandardMetricConstants.StandardMetricMeterName);
-            _requestDuration = _standardMetricMeter.CreateHistogram<double>(StandardMetricConstants.RequestDurationInstrumentName);
-            _dependencyDuration = _standardMetricMeter.CreateHistogram<double>(StandardMetricConstants.DependencyDurationInstrumentName);
-
-            _perfCounterMeter = new Meter(PerfCounterConstants.PerfCounterMeterName);
-            _requestRateGauge = _perfCounterMeter.CreateObservableGauge<double>(PerfCounterConstants.RequestRateInstrumentationName, () => GetRequestRate());
-            _processPrivateBytesGauge = _perfCounterMeter.CreateObservableGauge<long>(PerfCounterConstants.ProcessPrivateBytesInstrumentationName, () => GetProcessPrivateBytes());
-            _processCpuGauge = _perfCounterMeter.CreateObservableGauge<double>(PerfCounterConstants.ProcessCpuInstrumentationName, () => GetProcessCPU());
-            _processCpuNormalizedGauge = _perfCounterMeter.CreateObservableGauge<double>(PerfCounterConstants.ProcessCpuNormalizedInstrumentationName, () => GetProcessCPUNormalized());
-            _exceptionRateGauge = _perfCounterMeter.CreateObservableGauge<double>(PerfCounterConstants.ExceptionRateName, () => GetExceptionRate());
-
-            AppDomain.CurrentDomain.FirstChanceException += (source, e) =>
+            // Initialize Lazy<T> for thread-safe lazy initialization of MeterProvider
+            _meterProvider = new Lazy<MeterProvider?>(() =>
             {
-                // Avoid recursion if the listener itself throws an exception while recording the measurement
-                // in its `OnMeasurementRecorded` callback.
-                if (t_handlingFirstChanceException)
-                    return;
+                if (!_enableStandardMetrics && !_enablePerfCounters)
+                {
+                    return null;
+                }
 
-                t_handlingFirstChanceException = true;
+                var meterProviderBuilder = Sdk.CreateMeterProviderBuilder();
 
-                // Increment exception count for rate calculation
-                Interlocked.Increment(ref _exceptionCount);
+                if (_enableStandardMetrics)
+                {
+                    meterProviderBuilder.AddMeter(StandardMetricConstants.StandardMetricMeterName);
+                }
 
-                t_handlingFirstChanceException = false;
-            };
+                if (_enablePerfCounters)
+                {
+                    meterProviderBuilder.AddMeter(PerfCounterConstants.PerfCounterMeterName);
+                }
 
-            InitializeCpuBaseline();
+                // Configure resource from ParentProvider - works for both DI and manual scenarios
+                var resource = ParentProvider?.GetResource();
+                if (resource != null)
+                {
+                    meterProviderBuilder.ConfigureResource(rb => rb.AddAttributes(resource.Attributes));
+                }
+
+                return meterProviderBuilder
+                    .AddReader(new PeriodicExportingMetricReader(metricExporter)
+                    { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                    .Build();
+            }, LazyThreadSafetyMode.ExecutionAndPublication);
+
+            if (_enableStandardMetrics)
+            {
+                _standardMetricMeter = new Meter(StandardMetricConstants.StandardMetricMeterName);
+                _requestDuration = _standardMetricMeter.CreateHistogram<double>(StandardMetricConstants.RequestDurationInstrumentName);
+                _dependencyDuration = _standardMetricMeter.CreateHistogram<double>(StandardMetricConstants.DependencyDurationInstrumentName);
+            }
+
+            if (_enablePerfCounters)
+            {
+                _process = Process.GetCurrentProcess();
+                _perfCounterMeter = new Meter(PerfCounterConstants.PerfCounterMeterName);
+                _requestRateGauge = _perfCounterMeter.CreateObservableGauge<double>(PerfCounterConstants.RequestRateInstrumentationName, () => GetRequestRate());
+                _processPrivateBytesGauge = _perfCounterMeter.CreateObservableGauge<long>(PerfCounterConstants.ProcessPrivateBytesInstrumentationName, () => GetProcessPrivateBytes());
+                _processCpuGauge = _perfCounterMeter.CreateObservableGauge<double>(PerfCounterConstants.ProcessCpuInstrumentationName, () => GetProcessCPU());
+                _processCpuNormalizedGauge = _perfCounterMeter.CreateObservableGauge<double>(PerfCounterConstants.ProcessCpuNormalizedInstrumentationName, () => GetProcessCPUNormalized());
+                _exceptionRateGauge = _perfCounterMeter.CreateObservableGauge<double>(PerfCounterConstants.ExceptionRateName, () => GetExceptionRate());
+
+                AppDomain.CurrentDomain.FirstChanceException += (source, e) =>
+                {
+                    // Avoid recursion if the listener itself throws an exception while recording the measurement
+                    // in its `OnMeasurementRecorded` callback.
+                    if (t_handlingFirstChanceException)
+                        return;
+
+                    t_handlingFirstChanceException = true;
+
+                    // Increment exception count for rate calculation
+                    Interlocked.Increment(ref _exceptionCount);
+
+                    t_handlingFirstChanceException = false;
+                };
+
+                InitializeCpuBaseline();
+            }
         }
 
         public override void OnEnd(Activity activity)
         {
+            EnsureMeterProviderInitialized();
+
             if (activity.Kind == ActivityKind.Server || activity.Kind == ActivityKind.Consumer)
             {
-                if (_requestDuration.Enabled)
+                if (_requestDuration != null && _requestDuration.Enabled)
                 {
                     activity.SetTag("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')");
                     ReportRequestDurationMetric(activity);
                 }
 
                 // Increment request count for rate calculation
-                Interlocked.Increment(ref _requestCount);
+                if (_enablePerfCounters)
+                {
+                    Interlocked.Increment(ref _requestCount);
+                }
             }
             if (activity.Kind == ActivityKind.Client || activity.Kind == ActivityKind.Internal || activity.Kind == ActivityKind.Producer)
             {
-                if (_dependencyDuration.Enabled)
+                if (_dependencyDuration != null && _dependencyDuration.Enabled)
                 {
                     activity.SetTag("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')");
                     ReportDependencyDurationMetric(activity);
@@ -149,7 +193,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.RequestSuccessKey, RequestData.IsSuccess(activity, statusCodeAttributeValue, OperationType.Http)));
 
             // Report metric
-            _requestDuration.Record(activity.Duration.TotalMilliseconds, tags);
+            _requestDuration?.Record(activity.Duration.TotalMilliseconds, tags);
         }
 
         private void ReportDependencyDurationMetric(Activity activity)
@@ -196,7 +240,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencyTypeKey, dependencyType));
 
             // Report metric
-            _dependencyDuration.Record(activity.Duration.TotalMilliseconds, tags);
+            _dependencyDuration?.Record(activity.Duration.TotalMilliseconds, tags);
 
             activityTagsProcessor.Return();
         }
@@ -205,8 +249,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             try
             {
-                _process.Refresh();
-                return _process.PrivateMemorySize64;
+                _process?.Refresh();
+                return _process?.PrivateMemorySize64 ?? 0;
             }
             catch (Exception ex)
             {
@@ -323,6 +367,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private bool TryCalculateCPUCounter(out double rawValue, out double normalizedValue)
         {
+            if (_process == null)
+            {
+                rawValue = default;
+                normalizedValue = default;
+                return false;
+            }
+
             var previousCollectedValue = _cachedCollectedValue;
             var previousCollectedTime = _cachedCollectedTime;
 
@@ -383,8 +434,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return true;
         }
 
+        private void EnsureMeterProviderInitialized()
+        {
+            // Access Value to trigger lazy initialization if not yet done
+            // Lazy<T> handles thread-safety automatically
+            _ = _meterProvider.Value;
+        }
+
         private void InitializeCpuBaseline()
         {
+            if (_process == null)
+            {
+                return;
+            }
+
             try
             {
                 _process.Refresh();
@@ -405,7 +468,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     try
                     {
-                        _meterProvider?.Dispose();
+                        if (_meterProvider.IsValueCreated)
+                        {
+                            _meterProvider.Value?.Dispose();
+                        }
                         _standardMetricMeter?.Dispose();
                         _perfCounterMeter?.Dispose();
                         _process?.Dispose();

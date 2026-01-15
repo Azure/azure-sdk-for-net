@@ -737,9 +737,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public AffectedObjectDetailsType(string value) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.AffectedObjectDetailsType Object { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServicesDataReplication.Models.AffectedObjectDetailsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServicesDataReplication.Models.AffectedObjectDetailsType left, Azure.ResourceManager.RecoveryServicesDataReplication.Models.AffectedObjectDetailsType right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServicesDataReplication.Models.AffectedObjectDetailsType (string value) { throw null; }
@@ -1037,9 +1035,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationHealthStatus Normal { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationHealthStatus Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationHealthStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationHealthStatus left, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationHealthStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationHealthStatus (string value) { throw null; }
@@ -1108,9 +1104,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationJobObjectType ReplicationExtension { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationJobObjectType Vault { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationJobObjectType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationJobObjectType left, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationJobObjectType right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationJobObjectType (string value) { throw null; }
@@ -1161,9 +1155,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationJobState Started { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationJobState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationJobState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationJobState left, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationJobState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationJobState (string value) { throw null; }
@@ -1253,9 +1245,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationPrivateEndpointConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationPrivateEndpointConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationPrivateEndpointConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationPrivateEndpointConnectionStatus left, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationPrivateEndpointConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationPrivateEndpointConnectionStatus (string value) { throw null; }
@@ -1445,9 +1435,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationProtectionState UnprotectedStatesBegin { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationProtectionState UnprotectedStatesEnd { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationProtectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationProtectionState left, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationProtectionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationProtectionState (string value) { throw null; }
@@ -1468,9 +1456,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationProvisioningState left, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationProvisioningState (string value) { throw null; }
@@ -1510,9 +1496,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationRecoveryPointType ApplicationConsistent { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationRecoveryPointType CrashConsistent { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationRecoveryPointType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationRecoveryPointType left, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationRecoveryPointType right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationRecoveryPointType (string value) { throw null; }
@@ -1530,9 +1514,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationResynchronizationState ResynchronizationFailed { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationResynchronizationState ResynchronizationInitiated { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationResynchronizationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationResynchronizationState left, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationResynchronizationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationResynchronizationState (string value) { throw null; }
@@ -1568,9 +1550,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationTaskState Started { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationTaskState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationTaskState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationTaskState left, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationTaskState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationTaskState (string value) { throw null; }
@@ -1593,9 +1573,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationTestFailoverState TestFailoverFailed { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationTestFailoverState TestFailoverInitiated { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationTestFailoverState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationTestFailoverState left, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationTestFailoverState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationTestFailoverState (string value) { throw null; }
@@ -1637,9 +1615,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationVaultType DisasterRecovery { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationVaultType Migrate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationVaultType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationVaultType left, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationVaultType right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationVaultType (string value) { throw null; }
@@ -1991,9 +1967,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.ProtectedItemActiveLocation Primary { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.ProtectedItemActiveLocation Recovery { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServicesDataReplication.Models.ProtectedItemActiveLocation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServicesDataReplication.Models.ProtectedItemActiveLocation left, Azure.ResourceManager.RecoveryServicesDataReplication.Models.ProtectedItemActiveLocation right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServicesDataReplication.Models.ProtectedItemActiveLocation (string value) { throw null; }
@@ -2105,9 +2079,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.VmNicSelection SelectedByUser { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.VmNicSelection SelectedByUserOverride { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServicesDataReplication.Models.VmNicSelection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServicesDataReplication.Models.VmNicSelection left, Azure.ResourceManager.RecoveryServicesDataReplication.Models.VmNicSelection right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServicesDataReplication.Models.VmNicSelection (string value) { throw null; }
@@ -2377,9 +2349,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.VMwareToAzureMigrateResyncState PreparedForResynchronization { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesDataReplication.Models.VMwareToAzureMigrateResyncState StartedResynchronization { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServicesDataReplication.Models.VMwareToAzureMigrateResyncState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.RecoveryServicesDataReplication.Models.VMwareToAzureMigrateResyncState left, Azure.ResourceManager.RecoveryServicesDataReplication.Models.VMwareToAzureMigrateResyncState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServicesDataReplication.Models.VMwareToAzureMigrateResyncState (string value) { throw null; }
