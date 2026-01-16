@@ -76,12 +76,12 @@ namespace Azure.AI.Projects
             if (options.Format != "W")
             {
                 writer.WritePropertyName("created_at"u8);
-                writer.WriteNumberValue(CreatedAt);
+                writer.WriteStringValue(CreatedAt);
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("modified_at"u8);
-                writer.WriteNumberValue(ModifiedAt);
+                writer.WriteStringValue(ModifiedAt);
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
@@ -167,8 +167,8 @@ namespace Azure.AI.Projects
             IList<EvaluatorCategory> categories = default;
             EvaluatorDefinition definition = default;
             string createdBy = default;
-            long createdAt = default;
-            long modifiedAt = default;
+            string createdAt = default;
+            string modifiedAt = default;
             string id = default;
             string name = default;
             string version = default;
@@ -230,12 +230,12 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdAt = prop.Value.GetInt64();
+                    createdAt = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("modified_at"u8))
                 {
-                    modifiedAt = prop.Value.GetInt64();
+                    modifiedAt = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("id"u8))

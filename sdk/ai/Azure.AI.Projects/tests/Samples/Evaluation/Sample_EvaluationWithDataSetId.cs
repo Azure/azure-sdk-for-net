@@ -10,6 +10,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
 using Azure.Identity;
@@ -17,7 +18,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Evals;
 
-namespace Azure.AI.Projects.Tests.Samples;
+namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
 public class Sample_EvaluationsWithDataSetID: SamplesBase
 {
@@ -272,6 +273,7 @@ public class Sample_EvaluationsWithDataSetID: SamplesBase
         #region Snippet:Sample_WaitForRun_EvaluationsWithDataSetID_Async
         while (runStatus != "failed" && runStatus != "completed")
         {
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
             run = await evaluationClient.GetEvaluationRunAsync(evaluationId: evaluationId, evaluationRunId: runId, options: new());
             runStatus = ParseClientResult(run, ["status"])["status"];
             Console.WriteLine($"Waiting for eval run to complete... current status: {runStatus}");
@@ -410,6 +412,7 @@ public class Sample_EvaluationsWithDataSetID: SamplesBase
         #region Snippet:Sample_WaitForRun_EvaluationsWithDataSetID_Sync
         while (runStatus != "failed" && runStatus != "completed")
         {
+            Thread.Sleep(TimeSpan.FromMilliseconds(500));
             run = evaluationClient.GetEvaluationRun(evaluationId: evaluationId, evaluationRunId: runId, options: new());
             runStatus = ParseClientResult(run, ["status"])["status"];
             Console.WriteLine($"Waiting for eval run to complete... current status: {runStatus}");

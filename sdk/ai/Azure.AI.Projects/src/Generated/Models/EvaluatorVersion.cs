@@ -46,7 +46,7 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IList<EvaluatorCategory> categories, EvaluatorDefinition definition, string createdBy, long createdAt, long modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IList<EvaluatorCategory> categories, EvaluatorDefinition definition, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Metadata = metadata;
@@ -83,10 +83,10 @@ namespace Azure.AI.Projects
         public string CreatedBy { get; }
 
         /// <summary> Creation date/time of the evaluator. </summary>
-        public long CreatedAt { get; }
+        public string CreatedAt { get; }
 
         /// <summary> Last modified date/time of the evaluator. </summary>
-        public long ModifiedAt { get; }
+        public string ModifiedAt { get; }
 
         /// <summary> Asset ID, a unique identifier for the asset. </summary>
         public string Id { get; }

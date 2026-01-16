@@ -38,6 +38,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
   - [Evaluations](#evalustions)
     - [Basic evaluations sample](#basic-evaluations-sample)
     - [Using uploaded datasets](#using-uploaded-datasets)
+    - [Using custom prompt-based evaluator](#using-custom-prompt-based-evaluator)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -775,6 +776,7 @@ Wait for evaluation run to arrive at the terminal state.
 ```C# Snippet:Sample_WaitForRun_Evaluations_Async
 while (runStatus != "failed" && runStatus != "completed")
 {
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
     run = await evaluationClient.GetEvaluationRunAsync(evaluationId: evaluationId, evaluationRunId: runId, options: new());
     runStatus = ParseClientResult(run, ["status"])["status"];
     Console.WriteLine($"Waiting for eval run to complete... current status: {runStatus}");
@@ -850,6 +852,89 @@ BinaryData runData = BinaryData.FromObjectAsJson(
     }
 );
 using BinaryContent runDataContent = BinaryContent.Create(runData);
+```
+
+#### Using custom prompt-based evaluator
+
+Side by side with built in evaluators, it is possible to define ones with custom logic. After the
+evaluator has been created and uploaded to catalog, it can be used as a regular evaluator:
+
+Create a prompt-based evaluator.
+
+```C# Snippet:Sampple_PromptEvaluator_EvaluationsCatalogPromptBased
+private EvaluatorVersion promptVersion = new(
+    categories: [EvaluatorCategory.Quality],
+    definition: new PromptBasedEvaluatorDefinition(
+        promptText: """
+            You are a Groundedness Evaluator.
+
+            Your task is to evaluate how well the given response is grounded in the provided ground truth.  
+            Groundedness means the response’s statements are factually supported by the ground truth.  
+            Evaluate factual alignment only — ignore grammar, fluency, or completeness.
+
+            ---
+
+            ### Input:
+            Query:
+            {{query}}
+
+            Response:
+            {{response}}
+
+            Ground Truth:
+            {{ground_truth}}
+
+            ---
+
+            ### Scoring Scale (1–5):
+            5 → Fully grounded. All claims supported by ground truth.  
+            4 → Mostly grounded. Minor unsupported details.  
+            3 → Partially grounded. About half the claims supported.  
+            2 → Mostly ungrounded. Only a few details supported.  
+            1 → Not grounded. Almost all information unsupported.
+
+            ---
+
+            ### Output Format (JSON):
+            {
+                "result": <integer from 1 to 5>,
+                "reason": "<brief explanation for the score>"
+            }
+            """
+    ),
+    evaluatorType: EvaluatorType.Custom
+) {
+    DisplayName = "Custom prompt evaluator example",
+    Description = "Custom evaluator for groundedness",
+};
+```
+
+Upload evaluator to Azure.
+
+```C# Snippet:Sample_CreateEvaluator_EvaluationsCatalogPromptBased_Async
+EvaluatorVersion promptEvaluator = await projectClient.Evaluators.CreateVersionAsync(
+    name: "myCustomEvaluatorPrompt",
+    evaluatorVersion: promptVersion
+);
+Console.WriteLine($"Created evaluator {promptEvaluator.Id}");
+```
+
+To use the evaluator we have created, the next testing criteria should be set.
+
+```C# Snippet:Sample_TestingCriteria_EvaluationsCatalogPromptBased
+object[] testingCriteria = [
+    new {
+        type = "azure_ai_evaluator",
+        name = "MyCustomEvaluation",
+        evaluator_name = promptEvaluator.Name,
+        data_mapping = new {
+            query = "{{item.query}}",
+            response = "{{item.response}}",
+            ground_truth = "{{item.ground_truth}}",
+        },
+        initialization_parameters = new { deployment_name = modelDeploymentName, threshold = 3},
+    },
+];
 ```
 
 ## Troubleshooting
