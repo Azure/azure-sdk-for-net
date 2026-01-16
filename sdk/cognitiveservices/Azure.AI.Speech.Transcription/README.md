@@ -214,6 +214,34 @@ var channelPhrases = result.PhrasesByChannel.First();
 Console.WriteLine($"\nTranscription:\n{channelPhrases.Text}");
 ```
 
+### Enhanced Mode with Translation
+
+Use LLM-powered Enhanced Mode to translate speech during transcription. Enhanced mode is automatically enabled when you create an `EnhancedModeProperties` object:
+
+```C# Snippet:TranscribeWithTranslation
+string audioFilePath = "path/to/spanish-audio.wav";
+using FileStream audioStream = File.OpenRead(audioFilePath);
+
+// Translate Spanish speech to English
+EnhancedModeProperties enhancedMode = new EnhancedModeProperties
+{
+    Task = "translate",
+    TargetLanguage = "en"  // Translate to English
+};
+
+TranscriptionOptions options = new TranscriptionOptions(audioStream)
+{
+    EnhancedMode = enhancedMode
+};
+
+ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
+TranscriptionResult result = response.Value;
+
+Console.WriteLine("Translated to English:");
+var channelPhrases = result.PhrasesByChannel.First();
+Console.WriteLine(channelPhrases.Text);
+```
+
 For more examples, see the [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitiveservices/Azure.AI.Speech.Transcription/samples) directory.
 
 ## Troubleshooting

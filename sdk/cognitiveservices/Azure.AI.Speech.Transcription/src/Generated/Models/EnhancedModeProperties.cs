@@ -25,8 +25,6 @@ namespace Azure.AI.Speech.Transcription
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        public bool? Enabled { get; }
-
         public string Task { get; set; }
 
         public string TargetLanguage { get; set; }
