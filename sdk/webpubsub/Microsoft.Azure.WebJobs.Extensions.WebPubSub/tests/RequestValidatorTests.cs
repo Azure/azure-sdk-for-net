@@ -2,8 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.Extensions.Primitives;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
@@ -15,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             var validator = new RequestValidator(null);
 
-            Assert.IsTrue(validator.IsValidHost(new[] { "abc" }));
+            Assert.IsTrue(validator.IsValidHost(["abc"]));
             Assert.IsTrue(validator.IsValidSignature("abc", "sha256=anything", "connectionId"));
         }
 
@@ -33,8 +35,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase(null, "abc")]
         public void TestIsValidationRequest_NonOptions_ReturnsFalse(string method, string originHeader)
         {
-            var result = RequestValidator.IsValidationRequest(method, originHeader, out var requestHosts);
-            Assert.IsFalse(result);
+            var result = RequestValidator.IsValidationRequest(method, new StringValues(originHeader), out var requestHosts);
+            Assert.That(result, Is.False);
             Assert.That(requestHosts, Is.Null);
         }
 
@@ -42,18 +44,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase("")]
         public void TestIsValidationRequest_MissingOrigin_ReturnsFalse(string originHeader)
         {
-            var result = RequestValidator.IsValidationRequest("OPTIONS", originHeader, out var requestHosts);
-            Assert.IsFalse(result);
-            Assert.That(requestHosts, Is.Null);
+            var result = RequestValidator.IsValidationRequest("OPTIONS", new StringValues(originHeader), out var requestHosts);
+            Assert.That(result, Is.False);
         }
 
         [Test]
         public void TestIsValidationRequest_SplitsOrigins()
         {
-            var result = RequestValidator.IsValidationRequest("OPTIONS", "a,b", out var requestHosts);
-            Assert.IsTrue(result);
+            var result = RequestValidator.IsValidationRequest("OPTIONS", new StringValues("a,b"), out var requestHosts);
+            Assert.That(result, Is.True);
             Assert.That(requestHosts, Is.Not.Null);
             Assert.That(requestHosts, Is.EqualTo(new[] { "a", "b" }).AsCollection);
+        }
+
+        [Test]
+        public void TestIsValidationRequest_MultipleOriginHeaderValues_AreAggregated()
+        {
+            var result = RequestValidator.IsValidationRequest(
+                "OPTIONS",
+                new StringValues(["a,b", "c"]),
+                out var requestHosts);
+
+            Assert.That(result, Is.True);
+            Assert.That(requestHosts, Is.Not.Null);
+            Assert.That(requestHosts, Is.EqualTo(new[] { "a", "b", "c" }).AsCollection);
         }
 
         [Test]
@@ -62,8 +76,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var access = new WebPubSubServiceAccess(new Uri("https://abc"), new KeyCredential("k"));
             var validator = new RequestValidator([access]);
 
-            Assert.IsTrue(validator.IsValidHost(new[] { "zzz", "abc" }));
-            Assert.IsFalse(validator.IsValidHost(new[] { "zzz" }));
+            Assert.That(validator.IsValidHost(new[] { "zzz", "abc" }), Is.True);
+            Assert.That(validator.IsValidHost(new[] { "zzz" }), Is.False);
         }
 
         [Test]
@@ -72,8 +86,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var access = new WebPubSubServiceAccess(new Uri("https://abc"), new KeyCredential("k"));
             var validator = new RequestValidator([access]);
 
-            Assert.IsFalse(validator.IsValidSignature(null, "sha256=anything", "connectionId"));
-            Assert.IsFalse(validator.IsValidSignature("", "sha256=anything", "connectionId"));
+            Assert.That(validator.IsValidSignature(null, "sha256=anything", "connectionId"), Is.False);
+            Assert.That(validator.IsValidSignature("", "sha256=anything", "connectionId"), Is.False);
         }
 
         [Test]
@@ -82,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var access = new WebPubSubServiceAccess(new Uri("https://abc"), new KeyCredential("k"));
             var validator = new RequestValidator([access]);
 
-            Assert.IsFalse(validator.IsValidSignature("zzz", "sha256=anything", "connectionId"));
+            Assert.That(validator.IsValidSignature("zzz", "sha256=anything", "connectionId"), Is.False);
         }
 
         [Test]
@@ -92,8 +106,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var access = new WebPubSubServiceAccess(new Uri("https://abc"), new KeyCredential(accessKey));
             var validator = new RequestValidator([access]);
 
-            Assert.IsFalse(validator.IsValidSignature("abc", null, "connectionId"));
-            Assert.IsFalse(validator.IsValidSignature("abc", string.Empty, "connectionId"));
+            Assert.That(validator.IsValidSignature("abc", null, "connectionId"), Is.False);
+            Assert.That(validator.IsValidSignature("abc", string.Empty, "connectionId"), Is.False);
         }
 
         [Test]
@@ -103,7 +117,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var access = new WebPubSubServiceAccess(new Uri("https://abc"), new KeyCredential(accessKey));
             var validator = new RequestValidator([access]);
 
-            Assert.IsFalse(validator.IsValidSignature("abc", "sha256=deadbeef", "connectionId"));
+            Assert.That(validator.IsValidSignature("abc", "sha256=deadbeef", "connectionId"), Is.False);
         }
 
         [Test]
@@ -115,7 +129,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var validator = new RequestValidator([access]);
 
             var signature = ComputeSignature(accessKey, connectionId);
-            Assert.IsTrue(validator.IsValidSignature("abc", signature, connectionId));
+            Assert.That(validator.IsValidSignature("abc", signature, connectionId), Is.True);
         }
 
         [TestCase]
@@ -124,7 +138,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var access = new WebPubSubServiceAccess(new System.Uri("http://abc"), new KeyCredential(null));
             var validator = new RequestValidator([access]);
 
-            Assert.IsTrue(validator.IsValidSignature("abc", "", "connectionId"));
+            Assert.That(validator.IsValidSignature("abc", "", "connectionId"), Is.True);
         }
 
         private static string ComputeSignature(string accessKey, string connectionId)

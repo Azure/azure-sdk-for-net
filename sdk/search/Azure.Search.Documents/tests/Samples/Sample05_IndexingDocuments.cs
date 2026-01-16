@@ -178,7 +178,7 @@ namespace Azure.Search.Documents.Tests.Samples
 #if SNIPPET
                     #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_BufferedSender2
                     await indexer.FlushAsync();
-                    Assert.AreEqual(100000, (int)await searchClient.GetDocumentCountAsync());
+                    Assert.That((int)await searchClient.GetDocumentCountAsync(), Is.EqualTo(100000));
                     #endregion
 #endif
                 }

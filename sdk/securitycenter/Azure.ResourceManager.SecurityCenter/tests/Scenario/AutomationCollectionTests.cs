@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.That(automation.Data.Name, Is.EqualTo(automationName));
             Assert.That(automation.Data.Location, Is.EqualTo(DefaultLocation));
             Assert.That(automation.Data.Sources.First().EventSource.ToString(), Is.EqualTo("Assessments"));
-            Assert.AreEqual("Microsoft.Security/automations", automation.Data.ResourceType.ToString());
+            Assert.That(automation.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.Security/automations"));
         }
     }
 }

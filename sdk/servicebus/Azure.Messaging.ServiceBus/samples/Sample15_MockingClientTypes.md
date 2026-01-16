@@ -816,7 +816,7 @@ for (int i = 0; i < numMessages; i++)
 
 // For illustrative purposes, make sure all deferred messages were received.
 
-Assert.IsEmpty(deferredMessages);
+Assert.That(deferredMessages, Is.Empty);
 ```
 
 ### Abandoning a message

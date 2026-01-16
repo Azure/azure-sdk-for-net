@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A Class representing an AvsPrivateCloudAddon along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsPrivateCloudAddonResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAvsPrivateCloudAddonResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetAvsPrivateCloudAddon method.
+    /// A class representing a AvsPrivateCloudAddon along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AvsPrivateCloudAddonResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetAvsPrivateCloudAddons method.
     /// </summary>
     public partial class AvsPrivateCloudAddonResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AvsPrivateCloudAddonResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="privateCloudName"> The privateCloudName. </param>
-        /// <param name="addonName"> The addonName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _avsPrivateCloudAddonAddonsClientDiagnostics;
-        private readonly AddonsRestOperations _avsPrivateCloudAddonAddonsRestClient;
+        private readonly ClientDiagnostics _addonsClientDiagnostics;
+        private readonly Addons _addonsRestClient;
         private readonly AvsPrivateCloudAddonData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/addons";
 
-        /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudAddonResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AvsPrivateCloudAddonResource for mocking. </summary>
         protected AvsPrivateCloudAddonResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudAddonResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudAddonResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AvsPrivateCloudAddonResource(ArmClient client, AvsPrivateCloudAddonData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.Avs
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudAddonResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudAddonResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AvsPrivateCloudAddonResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _avsPrivateCloudAddonAddonsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string avsPrivateCloudAddonAddonsApiVersion);
-            _avsPrivateCloudAddonAddonsRestClient = new AddonsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, avsPrivateCloudAddonAddonsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string avsPrivateCloudAddonApiVersion);
+            _addonsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
+            _addonsRestClient = new Addons(_addonsClientDiagnostics, Pipeline, Endpoint, avsPrivateCloudAddonApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AvsPrivateCloudAddonData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="addonName"> The addonName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string addonName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a Addon
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Addon_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Addons_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsPrivateCloudAddonResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AvsPrivateCloudAddonResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AvsPrivateCloudAddonResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPrivateCloudAddonAddonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonResource.Get");
+            using DiagnosticScope scope = _addonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonResource.Get");
             scope.Start();
             try
             {
-                var response = await _avsPrivateCloudAddonAddonsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _addonsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AvsPrivateCloudAddonData> response = Response.FromValue(AvsPrivateCloudAddonData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AvsPrivateCloudAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.Avs
         /// Get a Addon
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Addon_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Addons_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsPrivateCloudAddonResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AvsPrivateCloudAddonResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AvsPrivateCloudAddonResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPrivateCloudAddonAddonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonResource.Get");
+            using DiagnosticScope scope = _addonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonResource.Get");
             scope.Start();
             try
             {
-                var response = _avsPrivateCloudAddonAddonsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _addonsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AvsPrivateCloudAddonData> response = Response.FromValue(AvsPrivateCloudAddonData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AvsPrivateCloudAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.Avs
         /// Delete a Addon
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Addon_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Addons_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsPrivateCloudAddonResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AvsPrivateCloudAddonResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,14 +212,21 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPrivateCloudAddonAddonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonResource.Delete");
+            using DiagnosticScope scope = _addonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonResource.Delete");
             scope.Start();
             try
             {
-                var response = await _avsPrivateCloudAddonAddonsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation(_avsPrivateCloudAddonAddonsClientDiagnostics, Pipeline, _avsPrivateCloudAddonAddonsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _addonsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AvsArmOperation operation = new AvsArmOperation(_addonsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.Avs
         /// Delete a Addon
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Addon_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Addons_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsPrivateCloudAddonResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AvsPrivateCloudAddonResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,14 +261,21 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPrivateCloudAddonAddonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonResource.Delete");
+            using DiagnosticScope scope = _addonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonResource.Delete");
             scope.Start();
             try
             {
-                var response = _avsPrivateCloudAddonAddonsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AvsArmOperation(_avsPrivateCloudAddonAddonsClientDiagnostics, Pipeline, _avsPrivateCloudAddonAddonsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _addonsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AvsArmOperation operation = new AvsArmOperation(_addonsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -253,23 +286,23 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create a Addon
+        /// Update a AvsPrivateCloudAddon.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Addon_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Addons_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsPrivateCloudAddonResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AvsPrivateCloudAddonResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,14 +314,27 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _avsPrivateCloudAddonAddonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonResource.Update");
+            using DiagnosticScope scope = _addonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonResource.Update");
             scope.Start();
             try
             {
-                var response = await _avsPrivateCloudAddonAddonsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<AvsPrivateCloudAddonResource>(new AvsPrivateCloudAddonOperationSource(Client), _avsPrivateCloudAddonAddonsClientDiagnostics, Pipeline, _avsPrivateCloudAddonAddonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _addonsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsPrivateCloudAddonData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AvsArmOperation<AvsPrivateCloudAddonResource> operation = new AvsArmOperation<AvsPrivateCloudAddonResource>(
+                    new AvsPrivateCloudAddonOperationSource(Client),
+                    _addonsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -299,23 +345,23 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create a Addon
+        /// Update a AvsPrivateCloudAddon.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Addon_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Addons_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsPrivateCloudAddonResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AvsPrivateCloudAddonResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,14 +373,27 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _avsPrivateCloudAddonAddonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonResource.Update");
+            using DiagnosticScope scope = _addonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonResource.Update");
             scope.Start();
             try
             {
-                var response = _avsPrivateCloudAddonAddonsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AvsArmOperation<AvsPrivateCloudAddonResource>(new AvsPrivateCloudAddonOperationSource(Client), _avsPrivateCloudAddonAddonsClientDiagnostics, Pipeline, _avsPrivateCloudAddonAddonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _addonsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsPrivateCloudAddonData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AvsArmOperation<AvsPrivateCloudAddonResource> operation = new AvsArmOperation<AvsPrivateCloudAddonResource>(
+                    new AvsPrivateCloudAddonOperationSource(Client),
+                    _addonsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

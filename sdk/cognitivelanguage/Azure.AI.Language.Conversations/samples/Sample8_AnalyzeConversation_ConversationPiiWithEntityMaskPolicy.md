@@ -85,7 +85,7 @@ foreach (AnalyzeConversationOperationResult operationResult in operationState.Ac
                         string expectedMaskPattern = $@"\[{entity.Category}-?\d*\]";
 
                         // Perform case-insensitive regex match
-                        StringAssert.IsMatch("(?i)" + expectedMaskPattern, redactedText,
+                        Assert.That(redactedText, Does.Match("(?i)" + expectedMaskPattern),
                         $"Expected redacted text to contain an entity mask similar to '[{entity.Category}]' but got: {redactedText}");
                     }
                 }

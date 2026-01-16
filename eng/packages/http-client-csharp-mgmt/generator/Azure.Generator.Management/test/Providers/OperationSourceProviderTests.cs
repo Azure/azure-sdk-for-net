@@ -104,6 +104,12 @@ namespace Azure.Generator.Management.Tests.Providers
                 createOperation,
                 parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter],
                 longRunningServiceMetadata: lroMetadata);
+            var getMethod = InputFactory.BasicServiceMethod(
+                "getTest",
+                InputFactory.Operation(
+                    name: "getTest",
+                    responses: [responseType],
+                    parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter]));
 
             var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
             var armProviderDecorator = BuildArmProviderSchema(
@@ -113,6 +119,13 @@ namespace Azure.Generator.Management.Tests.Providers
                         ResourceOperationKind.Create,
                         createMethod,
                         createMethod.Operation.Path,
+                        ResourceScope.ResourceGroup,
+                        resourceIdPattern,
+                        null!),
+                    new ResourceMethod(
+                        ResourceOperationKind.Read,
+                        getMethod,
+                        getMethod.Operation.Path,
                         ResourceScope.ResourceGroup,
                         resourceIdPattern,
                         null!)

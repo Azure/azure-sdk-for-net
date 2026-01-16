@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Perf.Scenarios
             SuggestResults<Hotel> suggestResults = SearchClient.Suggest<Hotel>(SearchText, SuggesterName, cancellationToken: cancellationToken).Value;
 
 #if DEBUG
-            CollectionAssert.IsNotEmpty(suggestResults.Results);
+            Assert.That(suggestResults.Results, Is.Not.Empty);
 #endif
         }
 
@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Perf.Scenarios
             SuggestResults<Hotel> suggestResults = (await SearchClient.SuggestAsync<Hotel>(SearchText, SuggesterName, cancellationToken: cancellationToken)).Value;
 
 #if DEBUG
-            CollectionAssert.IsNotEmpty(suggestResults.Results);
+            Assert.That(suggestResults.Results, Is.Not.Empty);
 #endif
         }
     }

@@ -3,8 +3,8 @@
 
 using System.ComponentModel;
 using System.Threading;
-using Autorest.CSharp.Core;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs
@@ -23,10 +23,6 @@ namespace Azure.ResourceManager.Avs
         /// <description>Clusters_ListZones</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="AvsPrivateCloudClusterResource"/></description>
         /// </item>
@@ -37,8 +33,13 @@ namespace Azure.ResourceManager.Avs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<AvsClusterZone> GetZonesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudClusterClustersRestClient.CreateGetClusterZonesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AvsClusterZone.DeserializeAvsClusterZone(e), _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, "AvsPrivateCloudClusterResource.GetZones", "zones", null, cancellationToken);
+            return PageableHelpers.CreateAsyncEnumerable(async _ =>
+            {
+                using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("AvsPrivateCloudClusterResource.GetZones");
+                scope.Start();
+                var response = await GetClusterZonesAsync(cancellationToken).ConfigureAwait(false);
+                return Page<AvsClusterZone>.FromValues(response.Value.Zones, continuationToken: null, response.GetRawResponse());
+            }, null);
         }
 
         /// <summary>
@@ -53,10 +54,6 @@ namespace Azure.ResourceManager.Avs
         /// <description>Clusters_ListZones</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="AvsPrivateCloudClusterResource"/></description>
         /// </item>
@@ -67,8 +64,13 @@ namespace Azure.ResourceManager.Avs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<AvsClusterZone> GetZones(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudClusterClustersRestClient.CreateGetClusterZonesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AvsClusterZone.DeserializeAvsClusterZone(e), _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, "AvsPrivateCloudClusterResource.GetZones", "zones", null, cancellationToken);
+            return PageableHelpers.CreateEnumerable(_ =>
+            {
+                using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("AvsPrivateCloudClusterResource.GetZones");
+                scope.Start();
+                var response = GetClusterZones(cancellationToken);
+                return Page<AvsClusterZone>.FromValues(response.Value.Zones, continuationToken: null, response.GetRawResponse());
+            }, null);
         }
     }
 }
