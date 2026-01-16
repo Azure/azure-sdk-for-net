@@ -50,7 +50,6 @@ This example shows more advanced configuration options including pipeline option
       // "Key" is loaded from environment variable MyClient__Credential__Key
     },
     "Options": {
-      "ApiVersion": "2024-01-01",
       "RetryPolicy": {
         "MaxRetries": 5,
         "NetworkTimeout": "00:01:30"
