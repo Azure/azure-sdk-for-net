@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Properties of the Service Fabric Type Backend. </summary>
+    /// <summary>
+    /// Properties of the Service Fabric Type Backend.
+    /// Serialized Name: BackendServiceFabricClusterProperties
+    /// </summary>
     public partial class BackendServiceFabricClusterProperties
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BackendServiceFabricClusterProperties"/>. </summary>
-        /// <param name="managementEndpoints"> The cluster management endpoint. </param>
+        /// <param name="managementEndpoints">
+        /// The cluster management endpoint.
+        /// Serialized Name: BackendServiceFabricClusterProperties.managementEndpoints
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementEndpoints"/> is null. </exception>
         public BackendServiceFabricClusterProperties(IEnumerable<string> managementEndpoints)
         {
@@ -59,12 +65,30 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendServiceFabricClusterProperties"/>. </summary>
-        /// <param name="clientCertificateId"> The client certificate id for the management endpoint. </param>
-        /// <param name="clientCertificatethumbprint"> The client certificate thumbprint for the management endpoint. Will be ignored if certificatesIds are provided. </param>
-        /// <param name="maxPartitionResolutionRetries"> Maximum number of retries while attempting resolve the partition. </param>
-        /// <param name="managementEndpoints"> The cluster management endpoint. </param>
-        /// <param name="serverCertificateThumbprints"> Thumbprints of certificates cluster management service uses for tls communication. </param>
-        /// <param name="serverX509Names"> Server X509 Certificate Names Collection. </param>
+        /// <param name="clientCertificateId">
+        /// The client certificate id for the management endpoint.
+        /// Serialized Name: BackendServiceFabricClusterProperties.clientCertificateId
+        /// </param>
+        /// <param name="clientCertificatethumbprint">
+        /// The client certificate thumbprint for the management endpoint. Will be ignored if certificatesIds are provided
+        /// Serialized Name: BackendServiceFabricClusterProperties.clientCertificatethumbprint
+        /// </param>
+        /// <param name="maxPartitionResolutionRetries">
+        /// Maximum number of retries while attempting resolve the partition.
+        /// Serialized Name: BackendServiceFabricClusterProperties.maxPartitionResolutionRetries
+        /// </param>
+        /// <param name="managementEndpoints">
+        /// The cluster management endpoint.
+        /// Serialized Name: BackendServiceFabricClusterProperties.managementEndpoints
+        /// </param>
+        /// <param name="serverCertificateThumbprints">
+        /// Thumbprints of certificates cluster management service uses for tls communication
+        /// Serialized Name: BackendServiceFabricClusterProperties.serverCertificateThumbprints
+        /// </param>
+        /// <param name="serverX509Names">
+        /// Server X509 Certificate Names Collection
+        /// Serialized Name: BackendServiceFabricClusterProperties.serverX509Names
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackendServiceFabricClusterProperties(string clientCertificateId, string clientCertificatethumbprint, int? maxPartitionResolutionRetries, IList<string> managementEndpoints, IList<string> serverCertificateThumbprints, IList<X509CertificateName> serverX509Names, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -82,22 +106,40 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary> The client certificate id for the management endpoint. </summary>
+        /// <summary>
+        /// The client certificate id for the management endpoint.
+        /// Serialized Name: BackendServiceFabricClusterProperties.clientCertificateId
+        /// </summary>
         [WirePath("clientCertificateId")]
         public string ClientCertificateId { get; set; }
-        /// <summary> The client certificate thumbprint for the management endpoint. Will be ignored if certificatesIds are provided. </summary>
+        /// <summary>
+        /// The client certificate thumbprint for the management endpoint. Will be ignored if certificatesIds are provided
+        /// Serialized Name: BackendServiceFabricClusterProperties.clientCertificatethumbprint
+        /// </summary>
         [WirePath("clientCertificatethumbprint")]
         public string ClientCertificatethumbprint { get; set; }
-        /// <summary> Maximum number of retries while attempting resolve the partition. </summary>
+        /// <summary>
+        /// Maximum number of retries while attempting resolve the partition.
+        /// Serialized Name: BackendServiceFabricClusterProperties.maxPartitionResolutionRetries
+        /// </summary>
         [WirePath("maxPartitionResolutionRetries")]
         public int? MaxPartitionResolutionRetries { get; set; }
-        /// <summary> The cluster management endpoint. </summary>
+        /// <summary>
+        /// The cluster management endpoint.
+        /// Serialized Name: BackendServiceFabricClusterProperties.managementEndpoints
+        /// </summary>
         [WirePath("managementEndpoints")]
         public IList<string> ManagementEndpoints { get; }
-        /// <summary> Thumbprints of certificates cluster management service uses for tls communication. </summary>
+        /// <summary>
+        /// Thumbprints of certificates cluster management service uses for tls communication
+        /// Serialized Name: BackendServiceFabricClusterProperties.serverCertificateThumbprints
+        /// </summary>
         [WirePath("serverCertificateThumbprints")]
         public IList<string> ServerCertificateThumbprints { get; }
-        /// <summary> Server X509 Certificate Names Collection. </summary>
+        /// <summary>
+        /// Server X509 Certificate Names Collection
+        /// Serialized Name: BackendServiceFabricClusterProperties.serverX509Names
+        /// </summary>
         [WirePath("serverX509Names")]
         public IList<X509CertificateName> ServerX509Names { get; }
     }

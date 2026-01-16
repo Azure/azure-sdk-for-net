@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> GraphQL API Resolver Update Contract details. </summary>
+    /// <summary>
+    /// GraphQL API Resolver Update Contract details.
+    /// Serialized Name: ResolverUpdateContract
+    /// </summary>
     public partial class ResolverContractPatch
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResolverContractPatch"/>. </summary>
-        /// <param name="displayName"> Resolver Name. </param>
-        /// <param name="path"> Path is type/field being resolved. </param>
-        /// <param name="description"> Description of the resolver. May include HTML formatting tags. </param>
+        /// <param name="displayName">
+        /// Resolver Name.
+        /// Serialized Name: ResolverUpdateContract.properties.displayName
+        /// </param>
+        /// <param name="path">
+        /// Path is type/field being resolved.
+        /// Serialized Name: ResolverUpdateContract.properties.path
+        /// </param>
+        /// <param name="description">
+        /// Description of the resolver. May include HTML formatting tags.
+        /// Serialized Name: ResolverUpdateContract.properties.description
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResolverContractPatch(string displayName, string path, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resolver Name. </summary>
+        /// <summary>
+        /// Resolver Name.
+        /// Serialized Name: ResolverUpdateContract.properties.displayName
+        /// </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary> Path is type/field being resolved. </summary>
+        /// <summary>
+        /// Path is type/field being resolved.
+        /// Serialized Name: ResolverUpdateContract.properties.path
+        /// </summary>
         [WirePath("properties.path")]
         public string Path { get; set; }
-        /// <summary> Description of the resolver. May include HTML formatting tags. </summary>
+        /// <summary>
+        /// Description of the resolver. May include HTML formatting tags.
+        /// Serialized Name: ResolverUpdateContract.properties.description
+        /// </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
     }

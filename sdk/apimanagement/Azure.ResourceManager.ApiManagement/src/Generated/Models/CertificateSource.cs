@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Certificate Source. </summary>
+    /// <summary>
+    /// Certificate Source.
+    /// Serialized Name: CertificateSource
+    /// </summary>
     public readonly partial struct CertificateSource : IEquatable<CertificateSource>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string CustomValue = "Custom";
         private const string BuiltInValue = "BuiltIn";
 
-        /// <summary> Managed. </summary>
+        /// <summary>
+        /// Managed
+        /// Serialized Name: CertificateSource.Managed
+        /// </summary>
         public static CertificateSource Managed { get; } = new CertificateSource(ManagedValue);
-        /// <summary> KeyVault. </summary>
+        /// <summary>
+        /// KeyVault
+        /// Serialized Name: CertificateSource.KeyVault
+        /// </summary>
         public static CertificateSource KeyVault { get; } = new CertificateSource(KeyVaultValue);
-        /// <summary> Custom. </summary>
+        /// <summary>
+        /// Custom
+        /// Serialized Name: CertificateSource.Custom
+        /// </summary>
         public static CertificateSource Custom { get; } = new CertificateSource(CustomValue);
-        /// <summary> BuiltIn. </summary>
+        /// <summary>
+        /// BuiltIn
+        /// Serialized Name: CertificateSource.BuiltIn
+        /// </summary>
         public static CertificateSource BuiltIn { get; } = new CertificateSource(BuiltInValue);
         /// <summary> Determines if two <see cref="CertificateSource"/> values are the same. </summary>
         public static bool operator ==(CertificateSource left, CertificateSource right) => left.Equals(right);

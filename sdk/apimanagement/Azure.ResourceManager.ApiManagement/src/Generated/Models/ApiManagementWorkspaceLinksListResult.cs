@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The response of the List API Management WorkspaceLink operation. </summary>
+    /// <summary>
+    /// The response of the List API Management WorkspaceLink operation.
+    /// Serialized Name: ApiManagementWorkspaceLinksListResult
+    /// </summary>
     internal partial class ApiManagementWorkspaceLinksListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementWorkspaceLinksListResult"/>. </summary>
-        /// <param name="value"> Result of the List API Management WorkspaceLinks operation. </param>
+        /// <param name="value">
+        /// Result of the List API Management WorkspaceLinks operation.
+        /// Serialized Name: ApiManagementWorkspaceLinksListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ApiManagementWorkspaceLinksListResult(IEnumerable<ApiManagementWorkspaceLinksData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementWorkspaceLinksListResult"/>. </summary>
-        /// <param name="value"> Result of the List API Management WorkspaceLinks operation. </param>
-        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </param>
+        /// <param name="value">
+        /// Result of the List API Management WorkspaceLinks operation.
+        /// Serialized Name: ApiManagementWorkspaceLinksListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to the next set of results. Not empty if Value contains incomplete list of API Management services.
+        /// Serialized Name: ApiManagementWorkspaceLinksListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementWorkspaceLinksListResult(IReadOnlyList<ApiManagementWorkspaceLinksData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary> Result of the List API Management WorkspaceLinks operation. </summary>
+        /// <summary>
+        /// Result of the List API Management WorkspaceLinks operation.
+        /// Serialized Name: ApiManagementWorkspaceLinksListResult.value
+        /// </summary>
         public IReadOnlyList<ApiManagementWorkspaceLinksData> Value { get; }
-        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </summary>
+        /// <summary>
+        /// Link to the next set of results. Not empty if Value contains incomplete list of API Management services.
+        /// Serialized Name: ApiManagementWorkspaceLinksListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

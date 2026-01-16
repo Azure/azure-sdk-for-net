@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations. </summary>
+    /// <summary>
+    /// The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations.
+    /// Serialized Name: CertificateConfigurationStoreName
+    /// </summary>
     public readonly partial struct CertificateConfigurationStoreName : IEquatable<CertificateConfigurationStoreName>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string CertificateAuthorityValue = "CertificateAuthority";
         private const string RootValue = "Root";
 
-        /// <summary> CertificateAuthority. </summary>
+        /// <summary>
+        /// CertificateAuthority
+        /// Serialized Name: CertificateConfigurationStoreName.CertificateAuthority
+        /// </summary>
         public static CertificateConfigurationStoreName CertificateAuthority { get; } = new CertificateConfigurationStoreName(CertificateAuthorityValue);
-        /// <summary> Root. </summary>
+        /// <summary>
+        /// Root
+        /// Serialized Name: CertificateConfigurationStoreName.Root
+        /// </summary>
         public static CertificateConfigurationStoreName Root { get; } = new CertificateConfigurationStoreName(RootValue);
         /// <summary> Determines if two <see cref="CertificateConfigurationStoreName"/> values are the same. </summary>
         public static bool operator ==(CertificateConfigurationStoreName left, CertificateConfigurationStoreName right) => left.Equals(right);

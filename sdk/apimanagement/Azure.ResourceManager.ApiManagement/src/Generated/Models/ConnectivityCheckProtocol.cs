@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The request's protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value. </summary>
+    /// <summary>
+    /// The request's protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value.
+    /// Serialized Name: ConnectivityCheckProtocol
+    /// </summary>
     public readonly partial struct ConnectivityCheckProtocol : IEquatable<ConnectivityCheckProtocol>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string HttpValue = "HTTP";
         private const string HttpsValue = "HTTPS";
 
-        /// <summary> TCP. </summary>
+        /// <summary>
+        /// TCP
+        /// Serialized Name: ConnectivityCheckProtocol.TCP
+        /// </summary>
         public static ConnectivityCheckProtocol Tcp { get; } = new ConnectivityCheckProtocol(TcpValue);
-        /// <summary> HTTP. </summary>
+        /// <summary>
+        /// HTTP
+        /// Serialized Name: ConnectivityCheckProtocol.HTTP
+        /// </summary>
         public static ConnectivityCheckProtocol Http { get; } = new ConnectivityCheckProtocol(HttpValue);
-        /// <summary> HTTPS. </summary>
+        /// <summary>
+        /// HTTPS
+        /// Serialized Name: ConnectivityCheckProtocol.HTTPS
+        /// </summary>
         public static ConnectivityCheckProtocol Https { get; } = new ConnectivityCheckProtocol(HttpsValue);
         /// <summary> Determines if two <see cref="ConnectivityCheckProtocol"/> values are the same. </summary>
         public static bool operator ==(ConnectivityCheckProtocol left, ConnectivityCheckProtocol right) => left.Equals(right);

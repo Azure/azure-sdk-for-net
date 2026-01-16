@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Gateway access token. </summary>
+    /// <summary>
+    /// Gateway access token.
+    /// Serialized Name: GatewayTokenContract
+    /// </summary>
     public partial class GatewayTokenContract
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GatewayTokenContract"/>. </summary>
-        /// <param name="value"> Shared Access Authentication token value for the Gateway. </param>
+        /// <param name="value">
+        /// Shared Access Authentication token value for the Gateway.
+        /// Serialized Name: GatewayTokenContract.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GatewayTokenContract(string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Shared Access Authentication token value for the Gateway. </summary>
+        /// <summary>
+        /// Shared Access Authentication token value for the Gateway.
+        /// Serialized Name: GatewayTokenContract.value
+        /// </summary>
         [WirePath("value")]
         public string Value { get; }
     }

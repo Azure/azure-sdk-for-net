@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The format of the Operation Name for Application Insights telemetries. Default is Name. </summary>
+    /// <summary>
+    /// The format of the Operation Name for Application Insights telemetries. Default is Name.
+    /// Serialized Name: OperationNameFormat
+    /// </summary>
     public readonly partial struct OperationNameFormat : IEquatable<OperationNameFormat>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string NameValue = "Name";
         private const string UriValue = "Url";
 
-        /// <summary> API_NAME;rev=API_REVISION - OPERATION_NAME. </summary>
+        /// <summary>
+        /// API_NAME;rev=API_REVISION - OPERATION_NAME
+        /// Serialized Name: OperationNameFormat.Name
+        /// </summary>
         public static OperationNameFormat Name { get; } = new OperationNameFormat(NameValue);
-        /// <summary> HTTP_VERB URL. </summary>
+        /// <summary>
+        /// HTTP_VERB URL
+        /// Serialized Name: OperationNameFormat.Url
+        /// </summary>
         public static OperationNameFormat Uri { get; } = new OperationNameFormat(UriValue);
         /// <summary> Determines if two <see cref="OperationNameFormat"/> values are the same. </summary>
         public static bool operator ==(OperationNameFormat left, OperationNameFormat right) => left.Equals(right);

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Recipient User details. </summary>
+    /// <summary>
+    /// Recipient User details.
+    /// Serialized Name: RecipientUserContract
+    /// </summary>
     public partial class RecipientUserContract : ResourceData
     {
         /// <summary>
@@ -57,7 +60,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="userId"> API Management UserId subscribed to notification. </param>
+        /// <param name="userId">
+        /// API Management UserId subscribed to notification.
+        /// Serialized Name: RecipientUserContract.properties.userId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RecipientUserContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string userId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -65,7 +71,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> API Management UserId subscribed to notification. </summary>
+        /// <summary>
+        /// API Management UserId subscribed to notification.
+        /// Serialized Name: RecipientUserContract.properties.userId
+        /// </summary>
         [WirePath("properties.userId")]
         public string UserId { get; set; }
     }

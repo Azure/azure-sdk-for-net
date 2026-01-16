@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClientAuthenticationMethods))
+            if (Optional.IsCollectionDefined(ClientAuthenticationMethod))
             {
                 writer.WritePropertyName("clientAuthenticationMethod"u8);
                 writer.WriteStartArray();
-                foreach (var item in ClientAuthenticationMethods)
+                foreach (var item in ClientAuthenticationMethod)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("tokenEndpoint"u8);
                 writer.WriteStringValue(TokenEndpoint);
             }
-            if (Optional.IsDefined(DoesSupportState))
+            if (Optional.IsDefined(SupportState))
             {
                 writer.WritePropertyName("supportState"u8);
-                writer.WriteBooleanValue(DoesSupportState.Value);
+                writer.WriteBooleanValue(SupportState.Value);
             }
             if (Optional.IsDefined(DefaultScope))
             {
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientAuthenticationMethods), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientAuthenticationMethod), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    clientAuthenticationMethod: ");
@@ -540,13 +540,13 @@ namespace Azure.ResourceManager.ApiManagement
             }
             else
             {
-                if (Optional.IsCollectionDefined(ClientAuthenticationMethods))
+                if (Optional.IsCollectionDefined(ClientAuthenticationMethod))
                 {
-                    if (ClientAuthenticationMethods.Any())
+                    if (ClientAuthenticationMethod.Any())
                     {
                         builder.Append("    clientAuthenticationMethod: ");
                         builder.AppendLine("[");
-                        foreach (var item in ClientAuthenticationMethods)
+                        foreach (var item in ClientAuthenticationMethod)
                         {
                             builder.AppendLine($"      '{item.ToString()}'");
                         }
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DoesSupportState), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportState), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    supportState: ");
@@ -609,10 +609,10 @@ namespace Azure.ResourceManager.ApiManagement
             }
             else
             {
-                if (Optional.IsDefined(DoesSupportState))
+                if (Optional.IsDefined(SupportState))
                 {
                     builder.Append("    supportState: ");
-                    var boolValue = DoesSupportState.Value == true ? "true" : "false";
+                    var boolValue = SupportState.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

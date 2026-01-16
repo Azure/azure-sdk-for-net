@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Status of the issue. </summary>
+    /// <summary>
+    /// Status of the issue.
+    /// Serialized Name: State
+    /// </summary>
     public readonly partial struct IssueState : IEquatable<IssueState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string ResolvedValue = "resolved";
         private const string ClosedValue = "closed";
 
-        /// <summary> The issue is proposed. </summary>
+        /// <summary>
+        /// The issue is proposed.
+        /// Serialized Name: State.proposed
+        /// </summary>
         public static IssueState Proposed { get; } = new IssueState(ProposedValue);
-        /// <summary> The issue is opened. </summary>
+        /// <summary>
+        /// The issue is opened.
+        /// Serialized Name: State.open
+        /// </summary>
         public static IssueState Open { get; } = new IssueState(OpenValue);
-        /// <summary> The issue was removed. </summary>
+        /// <summary>
+        /// The issue was removed.
+        /// Serialized Name: State.removed
+        /// </summary>
         public static IssueState Removed { get; } = new IssueState(RemovedValue);
-        /// <summary> The issue is now resolved. </summary>
+        /// <summary>
+        /// The issue is now resolved.
+        /// Serialized Name: State.resolved
+        /// </summary>
         public static IssueState Resolved { get; } = new IssueState(ResolvedValue);
-        /// <summary> The issue was closed. </summary>
+        /// <summary>
+        /// The issue was closed.
+        /// Serialized Name: State.closed
+        /// </summary>
         public static IssueState Closed { get; } = new IssueState(ClosedValue);
         /// <summary> Determines if two <see cref="IssueState"/> values are the same. </summary>
         public static bool operator ==(IssueState left, IssueState right) => left.Equals(right);

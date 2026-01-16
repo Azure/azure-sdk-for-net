@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The private endpoint connection status. </summary>
+    /// <summary>
+    /// The private endpoint connection status.
+    /// Serialized Name: PrivateEndpointServiceConnectionStatus
+    /// </summary>
     public readonly partial struct ApiManagementPrivateEndpointServiceConnectionStatus : IEquatable<ApiManagementPrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Pending
+        /// </summary>
         public static ApiManagementPrivateEndpointServiceConnectionStatus Pending { get; } = new ApiManagementPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+        /// <summary>
+        /// Approved
+        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Approved
+        /// </summary>
         public static ApiManagementPrivateEndpointServiceConnectionStatus Approved { get; } = new ApiManagementPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+        /// <summary>
+        /// Rejected
+        /// Serialized Name: PrivateEndpointServiceConnectionStatus.Rejected
+        /// </summary>
         public static ApiManagementPrivateEndpointServiceConnectionStatus Rejected { get; } = new ApiManagementPrivateEndpointServiceConnectionStatus(RejectedValue);
         /// <summary> Determines if two <see cref="ApiManagementPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(ApiManagementPrivateEndpointServiceConnectionStatus left, ApiManagementPrivateEndpointServiceConnectionStatus right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The NotificationName. </summary>
+    /// <summary>
+    /// The NotificationName.
+    /// Serialized Name: NotificationName
+    /// </summary>
     public readonly partial struct NotificationName : IEquatable<NotificationName>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string AccountClosedPublisherValue = "AccountClosedPublisher";
         private const string QuotaLimitApproachingPublisherNotificationMessageValue = "QuotaLimitApproachingPublisherNotificationMessage";
 
-        /// <summary> The following email recipients and users will receive email notifications about subscription requests for API products requiring approval. </summary>
+        /// <summary>
+        /// The following email recipients and users will receive email notifications about subscription requests for API products requiring approval.
+        /// Serialized Name: NotificationName.RequestPublisherNotificationMessage
+        /// </summary>
         public static NotificationName RequestPublisherNotificationMessage { get; } = new NotificationName(RequestPublisherNotificationMessageValue);
-        /// <summary> The following email recipients and users will receive email notifications about new API product subscriptions. </summary>
+        /// <summary>
+        /// The following email recipients and users will receive email notifications about new API product subscriptions.
+        /// Serialized Name: NotificationName.PurchasePublisherNotificationMessage
+        /// </summary>
         public static NotificationName PurchasePublisherNotificationMessage { get; } = new NotificationName(PurchasePublisherNotificationMessageValue);
-        /// <summary> The following email recipients and users will receive email notifications when new applications are submitted to the application gallery. </summary>
+        /// <summary>
+        /// The following email recipients and users will receive email notifications when new applications are submitted to the application gallery.
+        /// Serialized Name: NotificationName.NewApplicationNotificationMessage
+        /// </summary>
         public static NotificationName NewApplicationNotificationMessage { get; } = new NotificationName(NewApplicationNotificationMessageValue);
-        /// <summary> The following recipients will receive blind carbon copies of all emails sent to developers. </summary>
+        /// <summary>
+        /// The following recipients will receive blind carbon copies of all emails sent to developers.
+        /// Serialized Name: NotificationName.BCC
+        /// </summary>
         public static NotificationName Bcc { get; } = new NotificationName(BccValue);
-        /// <summary> The following email recipients and users will receive email notifications when a new issue or comment is submitted on the developer portal. </summary>
+        /// <summary>
+        /// The following email recipients and users will receive email notifications when a new issue or comment is submitted on the developer portal.
+        /// Serialized Name: NotificationName.NewIssuePublisherNotificationMessage
+        /// </summary>
         public static NotificationName NewIssuePublisherNotificationMessage { get; } = new NotificationName(NewIssuePublisherNotificationMessageValue);
-        /// <summary> The following email recipients and users will receive email notifications when developer closes his account. </summary>
+        /// <summary>
+        /// The following email recipients and users will receive email notifications when developer closes his account.
+        /// Serialized Name: NotificationName.AccountClosedPublisher
+        /// </summary>
         public static NotificationName AccountClosedPublisher { get; } = new NotificationName(AccountClosedPublisherValue);
-        /// <summary> The following email recipients and users will receive email notifications when subscription usage gets close to usage quota. </summary>
+        /// <summary>
+        /// The following email recipients and users will receive email notifications when subscription usage gets close to usage quota.
+        /// Serialized Name: NotificationName.QuotaLimitApproachingPublisherNotificationMessage
+        /// </summary>
         public static NotificationName QuotaLimitApproachingPublisherNotificationMessage { get; } = new NotificationName(QuotaLimitApproachingPublisherNotificationMessageValue);
         /// <summary> Determines if two <see cref="NotificationName"/> values are the same. </summary>
         public static bool operator ==(NotificationName left, NotificationName right) => left.Equals(right);

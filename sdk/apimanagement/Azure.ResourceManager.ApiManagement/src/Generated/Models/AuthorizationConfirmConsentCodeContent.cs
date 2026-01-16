@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Authorization confirm consent code request contract. </summary>
+    /// <summary>
+    /// Authorization confirm consent code request contract.
+    /// Serialized Name: AuthorizationConfirmConsentCodeRequestContract
+    /// </summary>
     public partial class AuthorizationConfirmConsentCodeContent
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationConfirmConsentCodeContent"/>. </summary>
-        /// <param name="consentCode"> The consent code from the authorization server after authorizing and consenting. </param>
+        /// <param name="consentCode">
+        /// The consent code from the authorization server after authorizing and consenting.
+        /// Serialized Name: AuthorizationConfirmConsentCodeRequestContract.consentCode
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AuthorizationConfirmConsentCodeContent(string consentCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The consent code from the authorization server after authorizing and consenting. </summary>
+        /// <summary>
+        /// The consent code from the authorization server after authorizing and consenting.
+        /// Serialized Name: AuthorizationConfirmConsentCodeRequestContract.consentCode
+        /// </summary>
         [WirePath("consentCode")]
         public string ConsentCode { get; set; }
     }

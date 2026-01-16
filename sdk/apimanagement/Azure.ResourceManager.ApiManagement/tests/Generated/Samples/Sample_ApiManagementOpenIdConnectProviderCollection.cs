@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementCreateOpenIdConnectProvider()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateOpenIdConnectProvider.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateOpenIdConnectProvider.json
             // this example is just showing the usage of "OpenIdConnectProvider_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementOpenIdConnectProviderCollection collection = apiManagementService.GetApiManagementOpenIdConnectProviders();
 
             // invoke the operation
-            string openId = "templateOpenIdConnect3";
+            string opid = "templateOpenIdConnect3";
             ApiManagementOpenIdConnectProviderData data = new ApiManagementOpenIdConnectProviderData
             {
                 DisplayName = "templateoidprovider3",
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 UseInTestConsole = false,
                 UseInApiDocumentation = true,
             };
-            ArmOperation<ApiManagementOpenIdConnectProviderResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, openId, data);
+            ArmOperation<ApiManagementOpenIdConnectProviderResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, opid, data);
             ApiManagementOpenIdConnectProviderResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetOpenIdConnectProvider()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetOpenIdConnectProvider.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetOpenIdConnectProvider.json
             // this example is just showing the usage of "OpenIdConnectProvider_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementOpenIdConnectProviderCollection collection = apiManagementService.GetApiManagementOpenIdConnectProviders();
 
             // invoke the operation
-            string openId = "templateOpenIdConnect2";
-            ApiManagementOpenIdConnectProviderResource result = await collection.GetAsync(openId);
+            string opid = "templateOpenIdConnect2";
+            ApiManagementOpenIdConnectProviderResource result = await collection.GetAsync(opid);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ApiManagementListOpenIdConnectProviders()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListOpenIdConnectProviders.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementListOpenIdConnectProviders.json
             // this example is just showing the usage of "OpenIdConnectProvider_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ApiManagementGetOpenIdConnectProvider()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetOpenIdConnectProvider.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetOpenIdConnectProvider.json
             // this example is just showing the usage of "OpenIdConnectProvider_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementOpenIdConnectProviderCollection collection = apiManagementService.GetApiManagementOpenIdConnectProviders();
 
             // invoke the operation
-            string openId = "templateOpenIdConnect2";
-            bool result = await collection.ExistsAsync(openId);
+            string opid = "templateOpenIdConnect2";
+            bool result = await collection.ExistsAsync(opid);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ApiManagementGetOpenIdConnectProvider()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetOpenIdConnectProvider.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetOpenIdConnectProvider.json
             // this example is just showing the usage of "OpenIdConnectProvider_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -183,8 +183,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementOpenIdConnectProviderCollection collection = apiManagementService.GetApiManagementOpenIdConnectProviders();
 
             // invoke the operation
-            string openId = "templateOpenIdConnect2";
-            NullableResponse<ApiManagementOpenIdConnectProviderResource> response = await collection.GetIfExistsAsync(openId);
+            string opid = "templateOpenIdConnect2";
+            NullableResponse<ApiManagementOpenIdConnectProviderResource> response = await collection.GetIfExistsAsync(opid);
             ApiManagementOpenIdConnectProviderResource result = response.HasValue ? response.Value : null;
 
             if (result == null)

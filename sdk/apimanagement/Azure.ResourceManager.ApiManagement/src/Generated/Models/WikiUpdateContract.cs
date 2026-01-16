@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Wiki update contract details. </summary>
+    /// <summary>
+    /// Wiki update contract details.
+    /// Serialized Name: WikiUpdateContract
+    /// </summary>
     public partial class WikiUpdateContract
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WikiUpdateContract"/>. </summary>
-        /// <param name="documents"> Collection wiki documents included into this wiki. </param>
+        /// <param name="documents">
+        /// Collection wiki documents included into this wiki.
+        /// Serialized Name: WikiUpdateContract.properties.documents
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WikiUpdateContract(IList<WikiDocumentationContract> documents, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Collection wiki documents included into this wiki. </summary>
+        /// <summary>
+        /// Collection wiki documents included into this wiki.
+        /// Serialized Name: WikiUpdateContract.properties.documents
+        /// </summary>
         [WirePath("properties.documents")]
         public IList<WikiDocumentationContract> Documents { get; }
     }

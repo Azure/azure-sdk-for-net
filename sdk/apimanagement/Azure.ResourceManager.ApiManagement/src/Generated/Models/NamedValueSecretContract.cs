@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </summary>
+    /// <summary>
+    /// Client or app secret used in IdentityProviders, Aad, OpenID or OAuth.
+    /// Serialized Name: NamedValueSecretContract
+    /// </summary>
     public partial class NamedValueSecretContract
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NamedValueSecretContract"/>. </summary>
-        /// <param name="value"> This is secret value of the NamedValue entity. </param>
+        /// <param name="value">
+        /// This is secret value of the NamedValue entity.
+        /// Serialized Name: NamedValueSecretContract.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NamedValueSecretContract(string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> This is secret value of the NamedValue entity. </summary>
+        /// <summary>
+        /// This is secret value of the NamedValue entity.
+        /// Serialized Name: NamedValueSecretContract.value
+        /// </summary>
         [WirePath("value")]
         public string Value { get; }
     }

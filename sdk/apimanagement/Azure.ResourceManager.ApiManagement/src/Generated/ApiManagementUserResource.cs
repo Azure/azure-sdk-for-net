@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ApiManagement
 
         private readonly ClientDiagnostics _apiManagementUserUserClientDiagnostics;
         private readonly UserRestOperations _apiManagementUserUserRestClient;
+        private readonly ClientDiagnostics _userConfirmationPasswordClientDiagnostics;
+        private readonly UserConfirmationPasswordRestOperations _userConfirmationPasswordRestClient;
         private readonly ClientDiagnostics _userGroupClientDiagnostics;
         private readonly UserGroupRestOperations _userGroupRestClient;
         private readonly ClientDiagnostics _userIdentitiesClientDiagnostics;
         private readonly UserIdentitiesRestOperations _userIdentitiesRestClient;
-        private readonly ClientDiagnostics _userConfirmationPasswordClientDiagnostics;
-        private readonly UserConfirmationPasswordRestOperations _userConfirmationPasswordRestClient;
         private readonly UserContractData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.ApiManagement
             _apiManagementUserUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string apiManagementUserUserApiVersion);
             _apiManagementUserUserRestClient = new UserRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementUserUserApiVersion);
+            _userConfirmationPasswordClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _userConfirmationPasswordRestClient = new UserConfirmationPasswordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _userGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _userGroupRestClient = new UserGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _userIdentitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _userIdentitiesRestClient = new UserIdentitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _userConfirmationPasswordClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _userConfirmationPasswordRestClient = new UserConfirmationPasswordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -278,8 +278,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="notify"> Send an Account Closed Email notification to the User. </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag ifMatch, bool? deleteSubscriptions = null, bool? notify = null, AppType? appType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, bool? deleteSubscriptions = null, bool? notify = null, AppType? appType = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
+
             using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.Delete");
             scope.Start();
             try
@@ -310,7 +313,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -324,8 +327,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="notify"> Send an Account Closed Email notification to the User. </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, ETag ifMatch, bool? deleteSubscriptions = null, bool? notify = null, AppType? appType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, bool? deleteSubscriptions = null, bool? notify = null, AppType? appType = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
+
             using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.Delete");
             scope.Start();
             try
@@ -356,7 +362,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,9 +373,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementUserResource>> UpdateAsync(ETag ifMatch, ApiManagementUserPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementUserResource>> UpdateAsync(string ifMatch, ApiManagementUserPatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.Update");
@@ -399,7 +406,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -410,9 +417,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ApiManagementUserResource> Update(ETag ifMatch, ApiManagementUserPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
+        public virtual Response<ApiManagementUserResource> Update(string ifMatch, ApiManagementUserPatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserResource.Update");
@@ -442,7 +450,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -480,7 +488,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -518,7 +526,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -560,7 +568,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -590,58 +598,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// List of all user identities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/identities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UserIdentities_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UserIdentityContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UserIdentityContract> GetUserIdentitiesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _userIdentitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userIdentitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UserIdentityContract.DeserializeUserIdentityContract(e), _userIdentitiesClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserIdentities", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List of all user identities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/identities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UserIdentities_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserIdentityContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UserIdentityContract> GetUserIdentities(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _userIdentitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userIdentitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UserIdentityContract.DeserializeUserIdentityContract(e), _userIdentitiesClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserIdentities", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Sends confirmation
         /// <list type="bullet">
         /// <item>
@@ -654,7 +610,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -689,7 +645,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -712,6 +668,58 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// List of all user identities.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/identities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UserIdentities_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="UserIdentityContract"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<UserIdentityContract> GetUserIdentitiesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _userIdentitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userIdentitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UserIdentityContract.DeserializeUserIdentityContract(e), _userIdentitiesClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserIdentities", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List of all user identities.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/identities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UserIdentities_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="UserIdentityContract"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<UserIdentityContract> GetUserIdentities(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _userIdentitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userIdentitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UserIdentityContract.DeserializeUserIdentityContract(e), _userIdentitiesClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserIdentities", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Gets the entity state (Etag) version of the user specified by its identifier.
         /// <list type="bullet">
         /// <item>
@@ -724,7 +732,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -762,7 +770,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

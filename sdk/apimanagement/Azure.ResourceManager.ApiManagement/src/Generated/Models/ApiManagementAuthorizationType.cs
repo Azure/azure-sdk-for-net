@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Authorization type options. </summary>
+    /// <summary>
+    /// Authorization type options
+    /// Serialized Name: AuthorizationType
+    /// </summary>
     public readonly partial struct ApiManagementAuthorizationType : IEquatable<ApiManagementAuthorizationType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         private const string OAuth2Value = "OAuth2";
 
-        /// <summary> OAuth2 authorization type. </summary>
+        /// <summary>
+        /// OAuth2 authorization type
+        /// Serialized Name: AuthorizationType.OAuth2
+        /// </summary>
         public static ApiManagementAuthorizationType OAuth2 { get; } = new ApiManagementAuthorizationType(OAuth2Value);
         /// <summary> Determines if two <see cref="ApiManagementAuthorizationType"/> values are the same. </summary>
         public static bool operator ==(ApiManagementAuthorizationType left, ApiManagementAuthorizationType right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The IdentityProviderType. </summary>
+    /// <summary>
+    /// The IdentityProviderType.
+    /// Serialized Name: IdentityProviderType
+    /// </summary>
     public readonly partial struct IdentityProviderType : IEquatable<IdentityProviderType>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string AadValue = "aad";
         private const string AadB2CValue = "aadB2C";
 
-        /// <summary> Facebook as Identity provider. </summary>
+        /// <summary>
+        /// Facebook as Identity provider.
+        /// Serialized Name: IdentityProviderType.facebook
+        /// </summary>
         public static IdentityProviderType Facebook { get; } = new IdentityProviderType(FacebookValue);
-        /// <summary> Google as Identity provider. </summary>
+        /// <summary>
+        /// Google as Identity provider.
+        /// Serialized Name: IdentityProviderType.google
+        /// </summary>
         public static IdentityProviderType Google { get; } = new IdentityProviderType(GoogleValue);
-        /// <summary> Microsoft Live as Identity provider. </summary>
+        /// <summary>
+        /// Microsoft Live as Identity provider.
+        /// Serialized Name: IdentityProviderType.microsoft
+        /// </summary>
         public static IdentityProviderType Microsoft { get; } = new IdentityProviderType(MicrosoftValue);
-        /// <summary> Twitter as Identity provider. </summary>
+        /// <summary>
+        /// Twitter as Identity provider.
+        /// Serialized Name: IdentityProviderType.twitter
+        /// </summary>
         public static IdentityProviderType Twitter { get; } = new IdentityProviderType(TwitterValue);
-        /// <summary> Azure Active Directory as Identity provider. </summary>
+        /// <summary>
+        /// Azure Active Directory as Identity provider.
+        /// Serialized Name: IdentityProviderType.aad
+        /// </summary>
         public static IdentityProviderType Aad { get; } = new IdentityProviderType(AadValue);
-        /// <summary> Azure Active Directory B2C as Identity provider. </summary>
+        /// <summary>
+        /// Azure Active Directory B2C as Identity provider.
+        /// Serialized Name: IdentityProviderType.aadB2C
+        /// </summary>
         public static IdentityProviderType AadB2C { get; } = new IdentityProviderType(AadB2CValue);
         /// <summary> Determines if two <see cref="IdentityProviderType"/> values are the same. </summary>
         public static bool operator ==(IdentityProviderType left, IdentityProviderType right) => left.Equals(right);

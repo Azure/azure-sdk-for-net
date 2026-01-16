@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Network Status details. </summary>
+    /// <summary>
+    /// Network Status details.
+    /// Serialized Name: NetworkStatusContract
+    /// </summary>
     public partial class NetworkStatusContract
     {
         /// <summary>
@@ -47,8 +50,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkStatusContract"/>. </summary>
-        /// <param name="dnsServers"> Gets the list of DNS servers IPV4 addresses. </param>
-        /// <param name="connectivityStatus"> Gets the list of Connectivity Status to the Resources on which the service depends upon. </param>
+        /// <param name="dnsServers">
+        /// Gets the list of DNS servers IPV4 addresses.
+        /// Serialized Name: NetworkStatusContract.dnsServers
+        /// </param>
+        /// <param name="connectivityStatus">
+        /// Gets the list of Connectivity Status to the Resources on which the service depends upon.
+        /// Serialized Name: NetworkStatusContract.connectivityStatus
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServers"/> or <paramref name="connectivityStatus"/> is null. </exception>
         internal NetworkStatusContract(IEnumerable<string> dnsServers, IEnumerable<ConnectivityStatusContract> connectivityStatus)
         {
@@ -60,8 +69,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkStatusContract"/>. </summary>
-        /// <param name="dnsServers"> Gets the list of DNS servers IPV4 addresses. </param>
-        /// <param name="connectivityStatus"> Gets the list of Connectivity Status to the Resources on which the service depends upon. </param>
+        /// <param name="dnsServers">
+        /// Gets the list of DNS servers IPV4 addresses.
+        /// Serialized Name: NetworkStatusContract.dnsServers
+        /// </param>
+        /// <param name="connectivityStatus">
+        /// Gets the list of Connectivity Status to the Resources on which the service depends upon.
+        /// Serialized Name: NetworkStatusContract.connectivityStatus
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkStatusContract(IReadOnlyList<string> dnsServers, IReadOnlyList<ConnectivityStatusContract> connectivityStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,10 +90,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary> Gets the list of DNS servers IPV4 addresses. </summary>
+        /// <summary>
+        /// Gets the list of DNS servers IPV4 addresses.
+        /// Serialized Name: NetworkStatusContract.dnsServers
+        /// </summary>
         [WirePath("dnsServers")]
         public IReadOnlyList<string> DnsServers { get; }
-        /// <summary> Gets the list of Connectivity Status to the Resources on which the service depends upon. </summary>
+        /// <summary>
+        /// Gets the list of Connectivity Status to the Resources on which the service depends upon.
+        /// Serialized Name: NetworkStatusContract.connectivityStatus
+        /// </summary>
         [WirePath("connectivityStatus")]
         public IReadOnlyList<ConnectivityStatusContract> ConnectivityStatus { get; }
     }

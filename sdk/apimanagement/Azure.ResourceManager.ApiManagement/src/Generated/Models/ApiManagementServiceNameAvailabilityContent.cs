@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Parameters supplied to the CheckNameAvailability operation. </summary>
+    /// <summary>
+    /// Parameters supplied to the CheckNameAvailability operation.
+    /// Serialized Name: ApiManagementServiceCheckNameAvailabilityParameters
+    /// </summary>
     public partial class ApiManagementServiceNameAvailabilityContent
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> The name to check for availability. </param>
+        /// <param name="name">
+        /// The name to check for availability.
+        /// Serialized Name: ApiManagementServiceCheckNameAvailabilityParameters.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ApiManagementServiceNameAvailabilityContent(string name)
         {
@@ -56,7 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> The name to check for availability. </param>
+        /// <param name="name">
+        /// The name to check for availability.
+        /// Serialized Name: ApiManagementServiceCheckNameAvailabilityParameters.name
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementServiceNameAvailabilityContent(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,7 +78,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary> The name to check for availability. </summary>
+        /// <summary>
+        /// The name to check for availability.
+        /// Serialized Name: ApiManagementServiceCheckNameAvailabilityParameters.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
     }

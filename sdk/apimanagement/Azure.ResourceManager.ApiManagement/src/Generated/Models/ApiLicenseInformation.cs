@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> API license information. </summary>
+    /// <summary>
+    /// API license information
+    /// Serialized Name: ApiLicenseInformation
+    /// </summary>
     public partial class ApiLicenseInformation
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiLicenseInformation"/>. </summary>
-        /// <param name="name"> The license name used for the API. </param>
-        /// <param name="uri"> A URL to the license used for the API. MUST be in the format of a URL. </param>
+        /// <param name="name">
+        /// The license name used for the API
+        /// Serialized Name: ApiLicenseInformation.name
+        /// </param>
+        /// <param name="uri">
+        /// A URL to the license used for the API. MUST be in the format of a URL
+        /// Serialized Name: ApiLicenseInformation.url
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiLicenseInformation(string name, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The license name used for the API. </summary>
+        /// <summary>
+        /// The license name used for the API
+        /// Serialized Name: ApiLicenseInformation.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> A URL to the license used for the API. MUST be in the format of a URL. </summary>
+        /// <summary>
+        /// A URL to the license used for the API. MUST be in the format of a URL
+        /// Serialized Name: ApiLicenseInformation.url
+        /// </summary>
         [WirePath("url")]
         public Uri Uri { get; set; }
     }

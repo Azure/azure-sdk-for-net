@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The mode of the developer portal Content Security Policy (CSP). </summary>
+    /// <summary>
+    /// The mode of the developer portal Content Security Policy (CSP).
+    /// Serialized Name: PortalSettingsCspMode
+    /// </summary>
     public readonly partial struct PortalSettingsCspMode : IEquatable<PortalSettingsCspMode>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string DisabledValue = "disabled";
         private const string ReportOnlyValue = "reportOnly";
 
-        /// <summary> The browser will block requests not matching allowed origins. </summary>
+        /// <summary>
+        /// The browser will block requests not matching allowed origins.
+        /// Serialized Name: PortalSettingsCspMode.enabled
+        /// </summary>
         public static PortalSettingsCspMode Enabled { get; } = new PortalSettingsCspMode(EnabledValue);
-        /// <summary> The browser will not apply the origin restrictions. </summary>
+        /// <summary>
+        /// The browser will not apply the origin restrictions.
+        /// Serialized Name: PortalSettingsCspMode.disabled
+        /// </summary>
         public static PortalSettingsCspMode Disabled { get; } = new PortalSettingsCspMode(DisabledValue);
-        /// <summary> The browser will report requests not matching allowed origins without blocking them. </summary>
+        /// <summary>
+        /// The browser will report requests not matching allowed origins without blocking them.
+        /// Serialized Name: PortalSettingsCspMode.reportOnly
+        /// </summary>
         public static PortalSettingsCspMode ReportOnly { get; } = new PortalSettingsCspMode(ReportOnlyValue);
         /// <summary> Determines if two <see cref="PortalSettingsCspMode"/> values are the same. </summary>
         public static bool operator ==(PortalSettingsCspMode left, PortalSettingsCspMode right) => left.Equals(right);

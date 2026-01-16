@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the TagContract data model.
     /// Tag Contract details.
+    /// Serialized Name: TagContract
     /// </summary>
     public partial class TagContractData : ResourceData
     {
@@ -60,7 +61,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Tag name. </param>
+        /// <param name="displayName">
+        /// Tag name.
+        /// Serialized Name: TagContract.properties.displayName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TagContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -68,7 +72,10 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Tag name. </summary>
+        /// <summary>
+        /// Tag name.
+        /// Serialized Name: TagContract.properties.displayName
+        /// </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
     }

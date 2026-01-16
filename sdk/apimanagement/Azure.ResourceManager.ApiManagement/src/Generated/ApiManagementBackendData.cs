@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementBackend data model.
     /// Backend details.
+    /// Serialized Name: BackendContract
     /// </summary>
     public partial class ApiManagementBackendData : ResourceData
     {
@@ -61,20 +62,60 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="title"> Backend Title. </param>
-        /// <param name="description"> Backend Description. </param>
-        /// <param name="resourceUri"> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
-        /// <param name="properties"> Backend Properties contract. </param>
-        /// <param name="credentials"> Backend Credentials Contract Properties. </param>
-        /// <param name="proxy"> Backend gateway Contract Properties. </param>
-        /// <param name="tls"> Backend TLS Properties. </param>
-        /// <param name="circuitBreaker"> Backend Circuit Breaker Configuration. </param>
-        /// <param name="pool"></param>
-        /// <param name="typePropertiesType"> Type of the backend. A backend can be either Single or Pool. </param>
-        /// <param name="uri"> Runtime Url of the Backend. </param>
-        /// <param name="protocol"> Backend communication protocol. </param>
+        /// <param name="title">
+        /// Backend Title.
+        /// Serialized Name: BackendContract.properties.title
+        /// </param>
+        /// <param name="description">
+        /// Backend Description.
+        /// Serialized Name: BackendContract.properties.description
+        /// </param>
+        /// <param name="resourceUri">
+        /// Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps.
+        /// Serialized Name: BackendContract.properties.resourceId
+        /// </param>
+        /// <param name="properties">
+        /// Backend Properties contract
+        /// Serialized Name: BackendContract.properties.properties
+        /// </param>
+        /// <param name="credentials">
+        /// Backend Credentials Contract Properties
+        /// Serialized Name: BackendContract.properties.credentials
+        /// </param>
+        /// <param name="proxy">
+        /// Backend gateway Contract Properties
+        /// Serialized Name: BackendContract.properties.proxy
+        /// </param>
+        /// <param name="tls">
+        /// Backend TLS Properties
+        /// Serialized Name: BackendContract.properties.tls
+        /// </param>
+        /// <param name="circuitBreaker">
+        /// Backend Circuit Breaker Configuration
+        /// Serialized Name: BackendContract.properties.circuitBreaker
+        /// </param>
+        /// <param name="azureRegion">
+        /// Azure region in which the backend is deployed. Can be optionally specified to use features such as carbon-optimized load balancer.
+        /// Serialized Name: BackendContract.properties.azureRegion
+        /// </param>
+        /// <param name="pool">
+        /// Backend Pool Properties
+        /// Serialized Name: BackendContract.properties.pool
+        /// </param>
+        /// <param name="typePropertiesType">
+        /// Type of the backend. A backend can be either Single or Pool.
+        /// Serialized Name: BackendContract.properties.type
+        /// </param>
+        /// <param name="uri">
+        /// Runtime Url of the Backend. Required when backend type is 'Single'.
+        /// Serialized Name: BackendContract.properties.url
+        /// </param>
+        /// <param name="protocol">
+        /// Backend communication protocol. Required when backend type is 'Single'.
+        /// Serialized Name: BackendContract.properties.protocol
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementBackendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, BackendBaseParametersPool pool, BackendType? typePropertiesType, Uri uri, BackendProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementBackendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, string azureRegion, BackendBaseParametersPool pool, BackendType? typePropertiesType, Uri uri, BackendProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Title = title;
             Description = description;
@@ -84,6 +125,7 @@ namespace Azure.ResourceManager.ApiManagement
             Proxy = proxy;
             Tls = tls;
             CircuitBreaker = circuitBreaker;
+            AzureRegion = azureRegion;
             Pool = pool;
             TypePropertiesType = typePropertiesType;
             Uri = uri;
@@ -91,18 +133,33 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Backend Title. </summary>
+        /// <summary>
+        /// Backend Title.
+        /// Serialized Name: BackendContract.properties.title
+        /// </summary>
         [WirePath("properties.title")]
         public string Title { get; set; }
-        /// <summary> Backend Description. </summary>
+        /// <summary>
+        /// Backend Description.
+        /// Serialized Name: BackendContract.properties.description
+        /// </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
+        /// <summary>
+        /// Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps.
+        /// Serialized Name: BackendContract.properties.resourceId
+        /// </summary>
         [WirePath("properties.resourceId")]
         public Uri ResourceUri { get; set; }
-        /// <summary> Backend Properties contract. </summary>
+        /// <summary>
+        /// Backend Properties contract
+        /// Serialized Name: BackendContract.properties.properties
+        /// </summary>
         internal BackendProperties Properties { get; set; }
-        /// <summary> Backend Service Fabric Cluster Properties. </summary>
+        /// <summary>
+        /// Backend Service Fabric Cluster Properties
+        /// Serialized Name: BackendProperties.serviceFabricCluster
+        /// </summary>
         [WirePath("properties.properties.serviceFabricCluster")]
         public BackendServiceFabricClusterProperties BackendServiceFabricCluster
         {
@@ -115,18 +172,33 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Backend Credentials Contract Properties. </summary>
+        /// <summary>
+        /// Backend Credentials Contract Properties
+        /// Serialized Name: BackendContract.properties.credentials
+        /// </summary>
         [WirePath("properties.credentials")]
         public BackendCredentialsContract Credentials { get; set; }
-        /// <summary> Backend gateway Contract Properties. </summary>
+        /// <summary>
+        /// Backend gateway Contract Properties
+        /// Serialized Name: BackendContract.properties.proxy
+        /// </summary>
         [WirePath("properties.proxy")]
         public BackendProxyContract Proxy { get; set; }
-        /// <summary> Backend TLS Properties. </summary>
+        /// <summary>
+        /// Backend TLS Properties
+        /// Serialized Name: BackendContract.properties.tls
+        /// </summary>
         [WirePath("properties.tls")]
         public BackendTlsProperties Tls { get; set; }
-        /// <summary> Backend Circuit Breaker Configuration. </summary>
+        /// <summary>
+        /// Backend Circuit Breaker Configuration
+        /// Serialized Name: BackendContract.properties.circuitBreaker
+        /// </summary>
         internal BackendCircuitBreaker CircuitBreaker { get; set; }
-        /// <summary> The rules for tripping the backend. </summary>
+        /// <summary>
+        /// The rules for tripping the backend.
+        /// Serialized Name: BackendCircuitBreaker.rules
+        /// </summary>
         [WirePath("properties.circuitBreaker.rules")]
         public IList<CircuitBreakerRule> CircuitBreakerRules
         {
@@ -138,27 +210,34 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Gets or sets the pool. </summary>
-        internal BackendBaseParametersPool Pool { get; set; }
-        /// <summary> The list of backend entities belonging to a pool. </summary>
-        [WirePath("properties.pool.services")]
-        public IList<BackendPoolItem> PoolServices
-        {
-            get
-            {
-                if (Pool is null)
-                    Pool = new BackendBaseParametersPool();
-                return Pool.Services;
-            }
-        }
-
-        /// <summary> Type of the backend. A backend can be either Single or Pool. </summary>
+        /// <summary>
+        /// Azure region in which the backend is deployed. Can be optionally specified to use features such as carbon-optimized load balancer.
+        /// Serialized Name: BackendContract.properties.azureRegion
+        /// </summary>
+        [WirePath("properties.azureRegion")]
+        public string AzureRegion { get; set; }
+        /// <summary>
+        /// Backend Pool Properties
+        /// Serialized Name: BackendContract.properties.pool
+        /// </summary>
+        [WirePath("properties.pool")]
+        public BackendBaseParametersPool Pool { get; set; }
+        /// <summary>
+        /// Type of the backend. A backend can be either Single or Pool.
+        /// Serialized Name: BackendContract.properties.type
+        /// </summary>
         [WirePath("properties.type")]
         public BackendType? TypePropertiesType { get; set; }
-        /// <summary> Runtime Url of the Backend. </summary>
+        /// <summary>
+        /// Runtime Url of the Backend. Required when backend type is 'Single'.
+        /// Serialized Name: BackendContract.properties.url
+        /// </summary>
         [WirePath("properties.url")]
         public Uri Uri { get; set; }
-        /// <summary> Backend communication protocol. </summary>
+        /// <summary>
+        /// Backend communication protocol. Required when backend type is 'Single'.
+        /// Serialized Name: BackendContract.properties.protocol
+        /// </summary>
         [WirePath("properties.protocol")]
         public BackendProtocol? Protocol { get; set; }
     }

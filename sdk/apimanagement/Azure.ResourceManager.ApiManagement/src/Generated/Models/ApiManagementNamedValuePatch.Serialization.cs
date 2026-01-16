@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsSecret))
+            if (Optional.IsDefined(Secret))
             {
                 writer.WritePropertyName("secret"u8);
-                writer.WriteBooleanValue(IsSecret.Value);
+                writer.WriteBooleanValue(Secret.Value);
             }
             if (Optional.IsDefined(DisplayName))
             {

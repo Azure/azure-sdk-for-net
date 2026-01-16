@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the PortalConfigContract data model.
     /// The developer portal configuration contract.
+    /// Serialized Name: PortalConfigContract
     /// </summary>
     public partial class PortalConfigContractData : ResourceData
     {
@@ -61,12 +62,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="enableBasicAuth"> Enable or disable Basic authentication method. </param>
-        /// <param name="signin"></param>
-        /// <param name="signup"></param>
-        /// <param name="delegation"> The developer portal delegation settings. </param>
-        /// <param name="cors"> The developer portal Cross-Origin Resource Sharing (CORS) settings. </param>
-        /// <param name="csp"> The developer portal Content Security Policy (CSP) settings. </param>
+        /// <param name="enableBasicAuth">
+        /// Enable or disable Basic authentication method.
+        /// Serialized Name: PortalConfigContract.properties.enableBasicAuth
+        /// </param>
+        /// <param name="signin"> Serialized Name: PortalConfigContract.properties.signin. </param>
+        /// <param name="signup"> Serialized Name: PortalConfigContract.properties.signup. </param>
+        /// <param name="delegation">
+        /// The developer portal delegation settings.
+        /// Serialized Name: PortalConfigContract.properties.delegation
+        /// </param>
+        /// <param name="cors">
+        /// The developer portal Cross-Origin Resource Sharing (CORS) settings.
+        /// Serialized Name: PortalConfigContract.properties.cors
+        /// </param>
+        /// <param name="csp">
+        /// The developer portal Content Security Policy (CSP) settings.
+        /// Serialized Name: PortalConfigContract.properties.csp
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PortalConfigContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? enableBasicAuth, PortalConfigPropertiesSignin signin, PortalConfigPropertiesSignup signup, PortalConfigDelegationProperties delegation, PortalConfigCorsProperties cors, PortalConfigCspProperties csp, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -79,12 +92,18 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Enable or disable Basic authentication method. </summary>
+        /// <summary>
+        /// Enable or disable Basic authentication method.
+        /// Serialized Name: PortalConfigContract.properties.enableBasicAuth
+        /// </summary>
         [WirePath("properties.enableBasicAuth")]
         public bool? EnableBasicAuth { get; set; }
-        /// <summary> Gets or sets the signin. </summary>
+        /// <summary> Serialized Name: PortalConfigContract.properties.signin. </summary>
         internal PortalConfigPropertiesSignin Signin { get; set; }
-        /// <summary> Redirect anonymous users to the sign-in page. </summary>
+        /// <summary>
+        /// Redirect anonymous users to the sign-in page.
+        /// Serialized Name: PortalConfigPropertiesSignin.require
+        /// </summary>
         [WirePath("properties.signin.require")]
         public bool? Require
         {
@@ -97,9 +116,12 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Gets or sets the signup. </summary>
+        /// <summary> Serialized Name: PortalConfigContract.properties.signup. </summary>
         internal PortalConfigPropertiesSignup Signup { get; set; }
-        /// <summary> Terms of service settings. </summary>
+        /// <summary>
+        /// Terms of service settings.
+        /// Serialized Name: PortalConfigPropertiesSignup.termsOfService
+        /// </summary>
         [WirePath("properties.signup.termsOfService")]
         public PortalConfigTermsOfServiceProperties SignupTermsOfService
         {
@@ -112,12 +134,21 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> The developer portal delegation settings. </summary>
+        /// <summary>
+        /// The developer portal delegation settings.
+        /// Serialized Name: PortalConfigContract.properties.delegation
+        /// </summary>
         [WirePath("properties.delegation")]
         public PortalConfigDelegationProperties Delegation { get; set; }
-        /// <summary> The developer portal Cross-Origin Resource Sharing (CORS) settings. </summary>
+        /// <summary>
+        /// The developer portal Cross-Origin Resource Sharing (CORS) settings.
+        /// Serialized Name: PortalConfigContract.properties.cors
+        /// </summary>
         internal PortalConfigCorsProperties Cors { get; set; }
-        /// <summary> Allowed origins, e.g. `https://trusted.com`. </summary>
+        /// <summary>
+        /// Allowed origins, e.g. `https://trusted.com`.
+        /// Serialized Name: PortalConfigCorsProperties.allowedOrigins
+        /// </summary>
         [WirePath("properties.cors.allowedOrigins")]
         public IList<string> CorsAllowedOrigins
         {
@@ -129,7 +160,10 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> The developer portal Content Security Policy (CSP) settings. </summary>
+        /// <summary>
+        /// The developer portal Content Security Policy (CSP) settings.
+        /// Serialized Name: PortalConfigContract.properties.csp
+        /// </summary>
         [WirePath("properties.csp")]
         public PortalConfigCspProperties Csp { get; set; }
     }

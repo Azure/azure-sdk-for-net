@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Sampling settings for Diagnostic. </summary>
+    /// <summary>
+    /// Sampling settings for Diagnostic.
+    /// Serialized Name: SamplingSettings
+    /// </summary>
     public partial class SamplingSettings
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SamplingSettings"/>. </summary>
-        /// <param name="samplingType"> Sampling type. </param>
-        /// <param name="percentage"> Rate of sampling for fixed-rate sampling. </param>
+        /// <param name="samplingType">
+        /// Sampling type.
+        /// Serialized Name: SamplingSettings.samplingType
+        /// </param>
+        /// <param name="percentage">
+        /// Rate of sampling for fixed-rate sampling.
+        /// Serialized Name: SamplingSettings.percentage
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SamplingSettings(SamplingType? samplingType, double? percentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Sampling type. </summary>
+        /// <summary>
+        /// Sampling type.
+        /// Serialized Name: SamplingSettings.samplingType
+        /// </summary>
         [WirePath("samplingType")]
         public SamplingType? SamplingType { get; set; }
-        /// <summary> Rate of sampling for fixed-rate sampling. </summary>
+        /// <summary>
+        /// Rate of sampling for fixed-rate sampling.
+        /// Serialized Name: SamplingSettings.percentage
+        /// </summary>
         [WirePath("percentage")]
         public double? Percentage { get; set; }
     }

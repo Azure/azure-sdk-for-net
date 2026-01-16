@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Information regarding how the gateway should be exposed. </summary>
+    /// <summary>
+    /// Information regarding how the gateway should be exposed.
+    /// Serialized Name: FrontendConfiguration
+    /// </summary>
     internal partial class FrontendConfiguration
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontendConfiguration"/>. </summary>
-        /// <param name="defaultHostname"> The default hostname of the data-plane gateway to which requests can be sent. This is only applicable for API gateway with Standard SKU. </param>
+        /// <param name="defaultHostname">
+        /// The default hostname of the data-plane gateway to which requests can be sent. This is only applicable for API gateway with Standard SKU.
+        /// Serialized Name: FrontendConfiguration.defaultHostname
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontendConfiguration(string defaultHostname, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The default hostname of the data-plane gateway to which requests can be sent. This is only applicable for API gateway with Standard SKU. </summary>
+        /// <summary>
+        /// The default hostname of the data-plane gateway to which requests can be sent. This is only applicable for API gateway with Standard SKU.
+        /// Serialized Name: FrontendConfiguration.defaultHostname
+        /// </summary>
         [WirePath("defaultHostname")]
         public string DefaultHostname { get; }
     }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> API contact information. </summary>
+    /// <summary>
+    /// API contact information
+    /// Serialized Name: ApiContactInformation
+    /// </summary>
     public partial class ApiContactInformation
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiContactInformation"/>. </summary>
-        /// <param name="name"> The identifying name of the contact person/organization. </param>
-        /// <param name="uri"> The URL pointing to the contact information. MUST be in the format of a URL. </param>
-        /// <param name="email"> The email address of the contact person/organization. MUST be in the format of an email address. </param>
+        /// <param name="name">
+        /// The identifying name of the contact person/organization
+        /// Serialized Name: ApiContactInformation.name
+        /// </param>
+        /// <param name="uri">
+        /// The URL pointing to the contact information. MUST be in the format of a URL
+        /// Serialized Name: ApiContactInformation.url
+        /// </param>
+        /// <param name="email">
+        /// The email address of the contact person/organization. MUST be in the format of an email address
+        /// Serialized Name: ApiContactInformation.email
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiContactInformation(string name, Uri uri, string email, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The identifying name of the contact person/organization. </summary>
+        /// <summary>
+        /// The identifying name of the contact person/organization
+        /// Serialized Name: ApiContactInformation.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> The URL pointing to the contact information. MUST be in the format of a URL. </summary>
+        /// <summary>
+        /// The URL pointing to the contact information. MUST be in the format of a URL
+        /// Serialized Name: ApiContactInformation.url
+        /// </summary>
         [WirePath("url")]
         public Uri Uri { get; set; }
-        /// <summary> The email address of the contact person/organization. MUST be in the format of an email address. </summary>
+        /// <summary>
+        /// The email address of the contact person/organization. MUST be in the format of an email address
+        /// Serialized Name: ApiContactInformation.email
+        /// </summary>
         [WirePath("email")]
         public string Email { get; set; }
     }

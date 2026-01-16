@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Remote Private Endpoint Connection resource. </summary>
+    /// <summary>
+    /// Remote Private Endpoint Connection resource.
+    /// Serialized Name: RemotePrivateEndpointConnectionWrapper
+    /// </summary>
     public partial class RemotePrivateEndpointConnectionWrapper
     {
         /// <summary>
@@ -54,15 +57,36 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionWrapper"/>. </summary>
-        /// <param name="id"> Private Endpoint connection resource id. </param>
-        /// <param name="name"> Private Endpoint Connection Name. </param>
-        /// <param name="resourceType"> Private Endpoint Connection Resource Type. </param>
-        /// <param name="privateEndpoint"> The resource of private end point. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <param name="groupIds"> All the Group ids. </param>
+        /// <param name="id">
+        /// Private Endpoint connection resource id
+        /// Serialized Name: RemotePrivateEndpointConnectionWrapper.id
+        /// </param>
+        /// <param name="name">
+        /// Private Endpoint Connection Name
+        /// Serialized Name: RemotePrivateEndpointConnectionWrapper.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Private Endpoint Connection Resource Type
+        /// Serialized Name: RemotePrivateEndpointConnectionWrapper.type
+        /// </param>
+        /// <param name="privateEndpoint">
+        /// The resource of private end point.
+        /// Serialized Name: RemotePrivateEndpointConnectionWrapper.properties.privateEndpoint
+        /// </param>
+        /// <param name="privateLinkServiceConnectionState">
+        /// A collection of information about the state of the connection between service consumer and provider.
+        /// Serialized Name: RemotePrivateEndpointConnectionWrapper.properties.privateLinkServiceConnectionState
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the private endpoint connection resource.
+        /// Serialized Name: RemotePrivateEndpointConnectionWrapper.properties.provisioningState
+        /// </param>
+        /// <param name="groupIds">
+        /// All the Group ids.
+        /// Serialized Name: RemotePrivateEndpointConnectionWrapper.properties.groupIds
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemotePrivateEndpointConnectionWrapper(ResourceIdentifier id, string name, ResourceType? resourceType, SubResource privateEndpoint, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState, IReadOnlyList<string> groupIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RemotePrivateEndpointConnectionWrapper(string id, string name, string resourceType, SubResource privateEndpoint, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState, IReadOnlyList<string> groupIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -74,16 +98,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Private Endpoint connection resource id. </summary>
+        /// <summary>
+        /// Private Endpoint connection resource id
+        /// Serialized Name: RemotePrivateEndpointConnectionWrapper.id
+        /// </summary>
         [WirePath("id")]
-        public ResourceIdentifier Id { get; set; }
-        /// <summary> Private Endpoint Connection Name. </summary>
+        public string Id { get; set; }
+        /// <summary>
+        /// Private Endpoint Connection Name
+        /// Serialized Name: RemotePrivateEndpointConnectionWrapper.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Private Endpoint Connection Resource Type. </summary>
+        /// <summary>
+        /// Private Endpoint Connection Resource Type
+        /// Serialized Name: RemotePrivateEndpointConnectionWrapper.type
+        /// </summary>
         [WirePath("type")]
-        public ResourceType? ResourceType { get; set; }
-        /// <summary> The resource of private end point. </summary>
+        public string ResourceType { get; set; }
+        /// <summary>
+        /// The resource of private end point.
+        /// Serialized Name: RemotePrivateEndpointConnectionWrapper.properties.privateEndpoint
+        /// </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
         [WirePath("properties.privateEndpoint.id")]
@@ -92,13 +128,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
         }
 
-        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        /// <summary>
+        /// A collection of information about the state of the connection between service consumer and provider.
+        /// Serialized Name: RemotePrivateEndpointConnectionWrapper.properties.privateLinkServiceConnectionState
+        /// </summary>
         [WirePath("properties.privateLinkServiceConnectionState")]
         public ApiManagementPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
-        /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        /// <summary>
+        /// The provisioning state of the private endpoint connection resource.
+        /// Serialized Name: RemotePrivateEndpointConnectionWrapper.properties.provisioningState
+        /// </summary>
         [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
-        /// <summary> All the Group ids. </summary>
+        /// <summary>
+        /// All the Group ids.
+        /// Serialized Name: RemotePrivateEndpointConnectionWrapper.properties.groupIds
+        /// </summary>
         [WirePath("properties.groupIds")]
         public IReadOnlyList<string> GroupIds { get; }
     }

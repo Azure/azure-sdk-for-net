@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Logger update contract. </summary>
+    /// <summary>
+    /// Logger update contract.
+    /// Serialized Name: LoggerUpdateContract
+    /// </summary>
     public partial class ApiManagementLoggerPatch
     {
         /// <summary>
@@ -52,10 +55,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementLoggerPatch"/>. </summary>
-        /// <param name="loggerType"> Logger type. </param>
-        /// <param name="description"> Logger description. </param>
-        /// <param name="credentials"> Logger credentials. </param>
-        /// <param name="isBuffered"> Whether records are buffered in the logger before publishing. Default is assumed to be true. </param>
+        /// <param name="loggerType">
+        /// Logger type.
+        /// Serialized Name: LoggerUpdateContract.properties.loggerType
+        /// </param>
+        /// <param name="description">
+        /// Logger description.
+        /// Serialized Name: LoggerUpdateContract.properties.description
+        /// </param>
+        /// <param name="credentials">
+        /// Logger credentials.
+        /// Serialized Name: LoggerUpdateContract.properties.credentials
+        /// </param>
+        /// <param name="isBuffered">
+        /// Whether records are buffered in the logger before publishing. Default is assumed to be true.
+        /// Serialized Name: LoggerUpdateContract.properties.isBuffered
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementLoggerPatch(LoggerType? loggerType, string description, IDictionary<string, string> credentials, bool? isBuffered, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,16 +81,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Logger type. </summary>
+        /// <summary>
+        /// Logger type.
+        /// Serialized Name: LoggerUpdateContract.properties.loggerType
+        /// </summary>
         [WirePath("properties.loggerType")]
         public LoggerType? LoggerType { get; set; }
-        /// <summary> Logger description. </summary>
+        /// <summary>
+        /// Logger description.
+        /// Serialized Name: LoggerUpdateContract.properties.description
+        /// </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary> Logger credentials. </summary>
+        /// <summary>
+        /// Logger credentials.
+        /// Serialized Name: LoggerUpdateContract.properties.credentials
+        /// </summary>
         [WirePath("properties.credentials")]
         public IDictionary<string, string> Credentials { get; }
-        /// <summary> Whether records are buffered in the logger before publishing. Default is assumed to be true. </summary>
+        /// <summary>
+        /// Whether records are buffered in the logger before publishing. Default is assumed to be true.
+        /// Serialized Name: LoggerUpdateContract.properties.isBuffered
+        /// </summary>
         [WirePath("properties.isBuffered")]
         public bool? IsBuffered { get; set; }
     }

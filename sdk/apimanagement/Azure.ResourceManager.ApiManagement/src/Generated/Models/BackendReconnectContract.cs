@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Reconnect request parameters. </summary>
+    /// <summary>
+    /// Reconnect request parameters.
+    /// Serialized Name: BackendReconnectContract
+    /// </summary>
     public partial class BackendReconnectContract : ResourceData
     {
         /// <summary>
@@ -57,7 +60,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="after"> Duration in ISO8601 format after which reconnect will be initiated. Minimum duration of the Reconnect is PT2M. </param>
+        /// <param name="after">
+        /// Duration in ISO8601 format after which reconnect will be initiated. Minimum duration of the Reconnect is PT2M.
+        /// Serialized Name: BackendReconnectContract.properties.after
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackendReconnectContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan? after, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -65,7 +71,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Duration in ISO8601 format after which reconnect will be initiated. Minimum duration of the Reconnect is PT2M. </summary>
+        /// <summary>
+        /// Duration in ISO8601 format after which reconnect will be initiated. Minimum duration of the Reconnect is PT2M.
+        /// Serialized Name: BackendReconnectContract.properties.after
+        /// </summary>
         [WirePath("properties.after")]
         public TimeSpan? After { get; set; }
     }

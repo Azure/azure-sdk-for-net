@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The API Management gateway SKUs operation response. </summary>
+    /// <summary>
+    /// The API Management gateway SKUs operation response.
+    /// Serialized Name: GatewayResourceSkuResults
+    /// </summary>
     internal partial class GatewayResourceSkuResults
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GatewayResourceSkuResults"/>. </summary>
-        /// <param name="value"> The list of skus available for the gateway. </param>
+        /// <param name="value">
+        /// The list of skus available for the gateway.
+        /// Serialized Name: GatewayResourceSkuResults.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GatewayResourceSkuResults(IEnumerable<GatewayResourceSkuResult> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GatewayResourceSkuResults"/>. </summary>
-        /// <param name="value"> The list of skus available for the gateway. </param>
-        /// <param name="nextLink"> The uri to fetch the next page of API Management gateway Skus. </param>
+        /// <param name="value">
+        /// The list of skus available for the gateway.
+        /// Serialized Name: GatewayResourceSkuResults.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The uri to fetch the next page of API Management gateway Skus.
+        /// Serialized Name: GatewayResourceSkuResults.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GatewayResourceSkuResults(IReadOnlyList<GatewayResourceSkuResult> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary> The list of skus available for the gateway. </summary>
+        /// <summary>
+        /// The list of skus available for the gateway.
+        /// Serialized Name: GatewayResourceSkuResults.value
+        /// </summary>
         public IReadOnlyList<GatewayResourceSkuResult> Value { get; }
-        /// <summary> The uri to fetch the next page of API Management gateway Skus. </summary>
+        /// <summary>
+        /// The uri to fetch the next page of API Management gateway Skus.
+        /// Serialized Name: GatewayResourceSkuResults.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

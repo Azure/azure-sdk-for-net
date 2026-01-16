@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> NamedValue details. </summary>
+    /// <summary>
+    /// NamedValue details.
+    /// Serialized Name: NamedValueCreateContract
+    /// </summary>
     public partial class ApiManagementNamedValueCreateOrUpdateContent : ResourceData
     {
         /// <summary>
@@ -58,35 +61,65 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> Optional tags that when provided can be used to filter the NamedValue list. </param>
-        /// <param name="isSecret"> Determines whether the value is a secret and should be encrypted or not. Default value is false. </param>
-        /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
-        /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
-        /// <param name="keyVault"> KeyVault location details of the namedValue. </param>
+        /// <param name="tags">
+        /// Optional tags that when provided can be used to filter the NamedValue list.
+        /// Serialized Name: NamedValueCreateContract.properties.tags
+        /// </param>
+        /// <param name="secret">
+        /// Determines whether the value is a secret and should be encrypted or not. Default value is false.
+        /// Serialized Name: NamedValueCreateContract.properties.secret
+        /// </param>
+        /// <param name="displayName">
+        /// Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters.
+        /// Serialized Name: NamedValueCreateContract.properties.displayName
+        /// </param>
+        /// <param name="value">
+        /// Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
+        /// Serialized Name: NamedValueCreateContract.properties.value
+        /// </param>
+        /// <param name="keyVault">
+        /// KeyVault location details of the namedValue.
+        /// Serialized Name: NamedValueCreateContract.properties.keyVault
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementNamedValueCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> tags, bool? isSecret, string displayName, string value, KeyVaultContractCreateProperties keyVault, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementNamedValueCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> tags, bool? secret, string displayName, string value, KeyVaultContractCreateProperties keyVault, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
-            IsSecret = isSecret;
+            Secret = secret;
             DisplayName = displayName;
             Value = value;
             KeyVault = keyVault;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Optional tags that when provided can be used to filter the NamedValue list. </summary>
+        /// <summary>
+        /// Optional tags that when provided can be used to filter the NamedValue list.
+        /// Serialized Name: NamedValueCreateContract.properties.tags
+        /// </summary>
         [WirePath("properties.tags")]
         public IList<string> Tags { get; }
-        /// <summary> Determines whether the value is a secret and should be encrypted or not. Default value is false. </summary>
+        /// <summary>
+        /// Determines whether the value is a secret and should be encrypted or not. Default value is false.
+        /// Serialized Name: NamedValueCreateContract.properties.secret
+        /// </summary>
         [WirePath("properties.secret")]
-        public bool? IsSecret { get; set; }
-        /// <summary> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </summary>
+        public bool? Secret { get; set; }
+        /// <summary>
+        /// Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters.
+        /// Serialized Name: NamedValueCreateContract.properties.displayName
+        /// </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
+        /// <summary>
+        /// Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
+        /// Serialized Name: NamedValueCreateContract.properties.value
+        /// </summary>
         [WirePath("properties.value")]
         public string Value { get; set; }
-        /// <summary> KeyVault location details of the namedValue. </summary>
+        /// <summary>
+        /// KeyVault location details of the namedValue.
+        /// Serialized Name: NamedValueCreateContract.properties.keyVault
+        /// </summary>
         [WirePath("properties.keyVault")]
         public KeyVaultContractCreateProperties KeyVault { get; set; }
     }

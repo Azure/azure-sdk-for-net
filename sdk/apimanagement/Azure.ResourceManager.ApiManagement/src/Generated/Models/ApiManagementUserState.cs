@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </summary>
+    /// <summary>
+    /// Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active.
+    /// Serialized Name: UserState
+    /// </summary>
     public readonly partial struct ApiManagementUserState : IEquatable<ApiManagementUserState>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string PendingValue = "pending";
         private const string DeletedValue = "deleted";
 
-        /// <summary> User state is active. </summary>
+        /// <summary>
+        /// User state is active.
+        /// Serialized Name: UserState.active
+        /// </summary>
         public static ApiManagementUserState Active { get; } = new ApiManagementUserState(ActiveValue);
-        /// <summary> User is blocked. Blocked users cannot authenticate at developer portal or call API. </summary>
+        /// <summary>
+        /// User is blocked. Blocked users cannot authenticate at developer portal or call API.
+        /// Serialized Name: UserState.blocked
+        /// </summary>
         public static ApiManagementUserState Blocked { get; } = new ApiManagementUserState(BlockedValue);
-        /// <summary> User account is pending. Requires identity confirmation before it can be made active. </summary>
+        /// <summary>
+        /// User account is pending. Requires identity confirmation before it can be made active.
+        /// Serialized Name: UserState.pending
+        /// </summary>
         public static ApiManagementUserState Pending { get; } = new ApiManagementUserState(PendingValue);
-        /// <summary> User account is closed. All identities and related entities are removed. </summary>
+        /// <summary>
+        /// User account is closed. All identities and related entities are removed.
+        /// Serialized Name: UserState.deleted
+        /// </summary>
         public static ApiManagementUserState Deleted { get; } = new ApiManagementUserState(DeletedValue);
         /// <summary> Determines if two <see cref="ApiManagementUserState"/> values are the same. </summary>
         public static bool operator ==(ApiManagementUserState left, ApiManagementUserState right) => left.Equals(right);

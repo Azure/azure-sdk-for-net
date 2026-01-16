@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the PolicyRestrictionContract data model.
     /// Policy restriction contract details.
+    /// Serialized Name: PolicyRestrictionContract
     /// </summary>
     public partial class PolicyRestrictionContractData : ResourceData
     {
@@ -61,8 +62,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="scope"> Path to the policy document. </param>
-        /// <param name="requireBase"> Indicates if base policy should be enforced for the policy document. </param>
+        /// <param name="scope">
+        /// Path to the policy document.
+        /// Serialized Name: PolicyRestrictionContract.properties.scope
+        /// </param>
+        /// <param name="requireBase">
+        /// Indicates if base policy should be enforced for the policy document.
+        /// Serialized Name: PolicyRestrictionContract.properties.requireBase
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PolicyRestrictionContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, PolicyRestrictionRequireBase? requireBase, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -71,10 +78,16 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Path to the policy document. </summary>
+        /// <summary>
+        /// Path to the policy document.
+        /// Serialized Name: PolicyRestrictionContract.properties.scope
+        /// </summary>
         [WirePath("properties.scope")]
         public string Scope { get; set; }
-        /// <summary> Indicates if base policy should be enforced for the policy document. </summary>
+        /// <summary>
+        /// Indicates if base policy should be enforced for the policy document.
+        /// Serialized Name: PolicyRestrictionContract.properties.requireBase
+        /// </summary>
         [WirePath("properties.requireBase")]
         public PolicyRestrictionRequireBase? RequireBase { get; set; }
     }

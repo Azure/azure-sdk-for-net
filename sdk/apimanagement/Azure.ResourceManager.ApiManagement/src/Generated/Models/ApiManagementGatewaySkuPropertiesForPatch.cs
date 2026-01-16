@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> API Management gateway resource SKU properties for PATCH operations given nothing should be required. </summary>
+    /// <summary>
+    /// API Management gateway resource SKU properties for PATCH operations given nothing should be required.
+    /// Serialized Name: ApiManagementGatewaySkuPropertiesForPatch
+    /// </summary>
     public partial class ApiManagementGatewaySkuPropertiesForPatch
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewaySkuPropertiesForPatch"/>. </summary>
-        /// <param name="name"> Name of the Sku. </param>
-        /// <param name="capacity"> Capacity of the SKU (number of deployed units of the SKU). </param>
+        /// <param name="name">
+        /// Name of the Sku.
+        /// Serialized Name: ApiManagementGatewaySkuPropertiesForPatch.name
+        /// </param>
+        /// <param name="capacity">
+        /// Capacity of the SKU (number of deployed units of the SKU)
+        /// Serialized Name: ApiManagementGatewaySkuPropertiesForPatch.capacity
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementGatewaySkuPropertiesForPatch(ApiGatewaySkuType? name, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the Sku. </summary>
+        /// <summary>
+        /// Name of the Sku.
+        /// Serialized Name: ApiManagementGatewaySkuPropertiesForPatch.name
+        /// </summary>
         [WirePath("name")]
         public ApiGatewaySkuType? Name { get; set; }
-        /// <summary> Capacity of the SKU (number of deployed units of the SKU). </summary>
+        /// <summary>
+        /// Capacity of the SKU (number of deployed units of the SKU)
+        /// Serialized Name: ApiManagementGatewaySkuPropertiesForPatch.capacity
+        /// </summary>
         [WirePath("capacity")]
         public int? Capacity { get; set; }
     }

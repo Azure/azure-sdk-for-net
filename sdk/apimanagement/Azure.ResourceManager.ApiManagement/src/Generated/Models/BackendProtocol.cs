@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Backend communication protocol. </summary>
+    /// <summary>
+    /// Backend communication protocol. Required when backend type is 'Single'.
+    /// Serialized Name: BackendProtocol
+    /// </summary>
     public readonly partial struct BackendProtocol : IEquatable<BackendProtocol>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string HttpValue = "http";
         private const string SoapValue = "soap";
 
-        /// <summary> The Backend is a RESTful service. </summary>
+        /// <summary>
+        /// The Backend is a RESTful service.
+        /// Serialized Name: BackendProtocol.http
+        /// </summary>
         public static BackendProtocol Http { get; } = new BackendProtocol(HttpValue);
-        /// <summary> The Backend is a SOAP service. </summary>
+        /// <summary>
+        /// The Backend is a SOAP service.
+        /// Serialized Name: BackendProtocol.soap
+        /// </summary>
         public static BackendProtocol Soap { get; } = new BackendProtocol(SoapValue);
         /// <summary> Determines if two <see cref="BackendProtocol"/> values are the same. </summary>
         public static bool operator ==(BackendProtocol left, BackendProtocol right) => left.Equals(right);

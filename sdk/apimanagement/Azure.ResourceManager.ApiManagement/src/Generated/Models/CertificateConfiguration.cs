@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Certificate configuration which consist of non-trusted intermediates and root certificates. </summary>
+    /// <summary>
+    /// Certificate configuration which consist of non-trusted intermediates and root certificates.
+    /// Serialized Name: CertificateConfiguration
+    /// </summary>
     public partial class CertificateConfiguration
     {
         /// <summary>
@@ -46,17 +49,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CertificateConfiguration"/>. </summary>
-        /// <param name="storeName"> The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations. </param>
+        /// <param name="storeName">
+        /// The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations.
+        /// Serialized Name: CertificateConfiguration.storeName
+        /// </param>
         public CertificateConfiguration(CertificateConfigurationStoreName storeName)
         {
             StoreName = storeName;
         }
 
         /// <summary> Initializes a new instance of <see cref="CertificateConfiguration"/>. </summary>
-        /// <param name="encodedCertificate"> Base64 Encoded certificate. </param>
-        /// <param name="certificatePassword"> Certificate Password. </param>
-        /// <param name="storeName"> The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations. </param>
-        /// <param name="certificate"> Certificate information. </param>
+        /// <param name="encodedCertificate">
+        /// Base64 Encoded certificate.
+        /// Serialized Name: CertificateConfiguration.encodedCertificate
+        /// </param>
+        /// <param name="certificatePassword">
+        /// Certificate Password.
+        /// Serialized Name: CertificateConfiguration.certificatePassword
+        /// </param>
+        /// <param name="storeName">
+        /// The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations.
+        /// Serialized Name: CertificateConfiguration.storeName
+        /// </param>
+        /// <param name="certificate">
+        /// Certificate information.
+        /// Serialized Name: CertificateConfiguration.certificate
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CertificateConfiguration(string encodedCertificate, string certificatePassword, CertificateConfigurationStoreName storeName, CertificateInformation certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,16 +90,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary> Base64 Encoded certificate. </summary>
+        /// <summary>
+        /// Base64 Encoded certificate.
+        /// Serialized Name: CertificateConfiguration.encodedCertificate
+        /// </summary>
         [WirePath("encodedCertificate")]
         public string EncodedCertificate { get; set; }
-        /// <summary> Certificate Password. </summary>
+        /// <summary>
+        /// Certificate Password.
+        /// Serialized Name: CertificateConfiguration.certificatePassword
+        /// </summary>
         [WirePath("certificatePassword")]
         public string CertificatePassword { get; set; }
-        /// <summary> The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations. </summary>
+        /// <summary>
+        /// The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations.
+        /// Serialized Name: CertificateConfiguration.storeName
+        /// </summary>
         [WirePath("storeName")]
         public CertificateConfigurationStoreName StoreName { get; set; }
-        /// <summary> Certificate information. </summary>
+        /// <summary>
+        /// Certificate information.
+        /// Serialized Name: CertificateConfiguration.certificate
+        /// </summary>
         [WirePath("certificate")]
         public CertificateInformation Certificate { get; set; }
     }

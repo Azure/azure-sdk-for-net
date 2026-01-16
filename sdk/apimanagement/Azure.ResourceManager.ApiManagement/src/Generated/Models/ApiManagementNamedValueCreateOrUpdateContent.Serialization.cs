@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsSecret))
+            if (Optional.IsDefined(Secret))
             {
                 writer.WritePropertyName("secret"u8);
-                writer.WriteBooleanValue(IsSecret.Value);
+                writer.WriteBooleanValue(Secret.Value);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSecret), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Secret), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    secret: ");
@@ -313,10 +313,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             else
             {
-                if (Optional.IsDefined(IsSecret))
+                if (Optional.IsDefined(Secret))
                 {
                     builder.Append("    secret: ");
-                    var boolValue = IsSecret.Value == true ? "true" : "false";
+                    var boolValue = Secret.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

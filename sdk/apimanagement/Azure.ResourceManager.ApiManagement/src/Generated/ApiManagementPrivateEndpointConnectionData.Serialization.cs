@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -41,6 +42,16 @@ namespace Azure.ResourceManager.ApiManagement
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(GroupIds))
+            {
+                writer.WritePropertyName("groupIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in GroupIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
@@ -83,6 +94,7 @@ namespace Azure.ResourceManager.ApiManagement
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            IReadOnlyList<string> groupIds = default;
             SubResource privateEndpoint = default;
             ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             ApiManagementPrivateEndpointConnectionProvisioningState? provisioningState = default;
@@ -123,6 +135,20 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("groupIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            groupIds = array;
+                            continue;
+                        }
                         if (property0.NameEquals("privateEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -164,6 +190,7 @@ namespace Azure.ResourceManager.ApiManagement
                 name,
                 type,
                 systemData,
+                groupIds ?? new ChangeTrackingList<string>(),
                 privateEndpoint,
                 privateLinkServiceConnectionState,
                 provisioningState,
@@ -236,6 +263,42 @@ namespace Azure.ResourceManager.ApiManagement
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupIds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    groupIds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(GroupIds))
+                {
+                    if (GroupIds.Any())
+                    {
+                        builder.Append("    groupIds: ");
+                        builder.AppendLine("[");
+                        foreach (var item in GroupIds)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PrivateEndpointId", out propertyOverride);
             if (hasPropertyOverride)
             {

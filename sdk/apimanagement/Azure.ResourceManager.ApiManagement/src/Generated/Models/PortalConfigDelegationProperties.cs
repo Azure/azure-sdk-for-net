@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The PortalConfigDelegationProperties. </summary>
+    /// <summary>
+    /// The PortalConfigDelegationProperties.
+    /// Serialized Name: PortalConfigDelegationProperties
+    /// </summary>
     public partial class PortalConfigDelegationProperties
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PortalConfigDelegationProperties"/>. </summary>
-        /// <param name="delegateRegistration"> Enable or disable delegation for user registration. </param>
-        /// <param name="delegateSubscription"> Enable or disable delegation for product subscriptions. </param>
-        /// <param name="delegationUri"> A delegation endpoint URL. </param>
-        /// <param name="validationKey"> A base64-encoded validation key to ensure requests originate from Azure API Management service. </param>
+        /// <param name="delegateRegistration">
+        /// Enable or disable delegation for user registration.
+        /// Serialized Name: PortalConfigDelegationProperties.delegateRegistration
+        /// </param>
+        /// <param name="delegateSubscription">
+        /// Enable or disable delegation for product subscriptions.
+        /// Serialized Name: PortalConfigDelegationProperties.delegateSubscription
+        /// </param>
+        /// <param name="delegationUri">
+        /// A delegation endpoint URL.
+        /// Serialized Name: PortalConfigDelegationProperties.delegationUrl
+        /// </param>
+        /// <param name="validationKey">
+        /// A base64-encoded validation key to ensure requests originate from Azure API Management service.
+        /// Serialized Name: PortalConfigDelegationProperties.validationKey
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PortalConfigDelegationProperties(bool? delegateRegistration, bool? delegateSubscription, Uri delegationUri, string validationKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,16 +80,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Enable or disable delegation for user registration. </summary>
+        /// <summary>
+        /// Enable or disable delegation for user registration.
+        /// Serialized Name: PortalConfigDelegationProperties.delegateRegistration
+        /// </summary>
         [WirePath("delegateRegistration")]
         public bool? DelegateRegistration { get; set; }
-        /// <summary> Enable or disable delegation for product subscriptions. </summary>
+        /// <summary>
+        /// Enable or disable delegation for product subscriptions.
+        /// Serialized Name: PortalConfigDelegationProperties.delegateSubscription
+        /// </summary>
         [WirePath("delegateSubscription")]
         public bool? DelegateSubscription { get; set; }
-        /// <summary> A delegation endpoint URL. </summary>
+        /// <summary>
+        /// A delegation endpoint URL.
+        /// Serialized Name: PortalConfigDelegationProperties.delegationUrl
+        /// </summary>
         [WirePath("delegationUrl")]
         public Uri DelegationUri { get; set; }
-        /// <summary> A base64-encoded validation key to ensure requests originate from Azure API Management service. </summary>
+        /// <summary>
+        /// A base64-encoded validation key to ensure requests originate from Azure API Management service.
+        /// Serialized Name: PortalConfigDelegationProperties.validationKey
+        /// </summary>
         [WirePath("validationKey")]
         public string ValidationKey { get; set; }
     }

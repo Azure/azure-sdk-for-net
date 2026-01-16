@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Policy restriction contract details. </summary>
+    /// <summary>
+    /// Policy restriction contract details.
+    /// Serialized Name: PolicyRestrictionUpdateContract
+    /// </summary>
     public partial class PolicyRestrictionContractPatch
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyRestrictionContractPatch"/>. </summary>
-        /// <param name="scope"> Path to the policy document. </param>
-        /// <param name="requireBase"> Indicates if base policy should be enforced for the policy document. </param>
+        /// <param name="scope">
+        /// Path to the policy document.
+        /// Serialized Name: PolicyRestrictionUpdateContract.properties.scope
+        /// </param>
+        /// <param name="requireBase">
+        /// Indicates if base policy should be enforced for the policy document.
+        /// Serialized Name: PolicyRestrictionUpdateContract.properties.requireBase
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PolicyRestrictionContractPatch(string scope, PolicyRestrictionRequireBase? requireBase, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Path to the policy document. </summary>
+        /// <summary>
+        /// Path to the policy document.
+        /// Serialized Name: PolicyRestrictionUpdateContract.properties.scope
+        /// </summary>
         [WirePath("properties.scope")]
         public string Scope { get; set; }
-        /// <summary> Indicates if base policy should be enforced for the policy document. </summary>
+        /// <summary>
+        /// Indicates if base policy should be enforced for the policy document.
+        /// Serialized Name: PolicyRestrictionUpdateContract.properties.requireBase
+        /// </summary>
         [WirePath("properties.requireBase")]
         public PolicyRestrictionRequireBase? RequireBase { get; set; }
     }

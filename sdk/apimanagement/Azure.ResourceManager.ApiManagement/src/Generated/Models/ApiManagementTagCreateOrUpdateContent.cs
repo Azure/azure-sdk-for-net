@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Parameters supplied to Create/Update Tag operations. </summary>
+    /// <summary>
+    /// Parameters supplied to Create/Update Tag operations.
+    /// Serialized Name: TagCreateUpdateParameters
+    /// </summary>
     public partial class ApiManagementTagCreateOrUpdateContent
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementTagCreateOrUpdateContent"/>. </summary>
-        /// <param name="displayName"> Tag name. </param>
+        /// <param name="displayName">
+        /// Tag name.
+        /// Serialized Name: TagCreateUpdateParameters.properties.displayName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementTagCreateOrUpdateContent(string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Tag name. </summary>
+        /// <summary>
+        /// Tag name.
+        /// Serialized Name: TagCreateUpdateParameters.properties.displayName
+        /// </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
     }

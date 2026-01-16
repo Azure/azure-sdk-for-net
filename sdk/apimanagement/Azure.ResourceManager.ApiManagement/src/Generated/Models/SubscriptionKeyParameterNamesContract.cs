@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Subscription key parameter names details. </summary>
+    /// <summary>
+    /// Subscription key parameter names details.
+    /// Serialized Name: SubscriptionKeyParameterNamesContract
+    /// </summary>
     public partial class SubscriptionKeyParameterNamesContract
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionKeyParameterNamesContract"/>. </summary>
-        /// <param name="header"> Subscription key header name. </param>
-        /// <param name="query"> Subscription key query string parameter name. </param>
+        /// <param name="header">
+        /// Subscription key header name.
+        /// Serialized Name: SubscriptionKeyParameterNamesContract.header
+        /// </param>
+        /// <param name="query">
+        /// Subscription key query string parameter name.
+        /// Serialized Name: SubscriptionKeyParameterNamesContract.query
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SubscriptionKeyParameterNamesContract(string header, string query, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Subscription key header name. </summary>
+        /// <summary>
+        /// Subscription key header name.
+        /// Serialized Name: SubscriptionKeyParameterNamesContract.header
+        /// </summary>
         [WirePath("header")]
         public string Header { get; set; }
-        /// <summary> Subscription key query string parameter name. </summary>
+        /// <summary>
+        /// Subscription key query string parameter name.
+        /// Serialized Name: SubscriptionKeyParameterNamesContract.query
+        /// </summary>
         [WirePath("query")]
         public string Query { get; set; }
     }

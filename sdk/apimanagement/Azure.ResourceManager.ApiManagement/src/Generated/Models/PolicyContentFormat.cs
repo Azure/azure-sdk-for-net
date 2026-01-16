@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Format of the policyContent. </summary>
+    /// <summary>
+    /// Format of the policyContent.
+    /// Serialized Name: PolicyContentFormat
+    /// </summary>
     public readonly partial struct PolicyContentFormat : IEquatable<PolicyContentFormat>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string RawXmlValue = "rawxml";
         private const string RawXmlLinkValue = "rawxml-link";
 
-        /// <summary> The contents are inline and Content type is an XML document. </summary>
+        /// <summary>
+        /// The contents are inline and Content type is an XML document.
+        /// Serialized Name: PolicyContentFormat.xml
+        /// </summary>
         public static PolicyContentFormat Xml { get; } = new PolicyContentFormat(XmlValue);
-        /// <summary> The policy XML document is hosted on a HTTP endpoint accessible from the API Management service. </summary>
+        /// <summary>
+        /// The policy XML document is hosted on a HTTP endpoint accessible from the API Management service.
+        /// Serialized Name: PolicyContentFormat.xml-link
+        /// </summary>
         public static PolicyContentFormat XmlLink { get; } = new PolicyContentFormat(XmlLinkValue);
-        /// <summary> The contents are inline and Content type is a non XML encoded policy document. </summary>
+        /// <summary>
+        /// The contents are inline and Content type is a non XML encoded policy document.
+        /// Serialized Name: PolicyContentFormat.rawxml
+        /// </summary>
         public static PolicyContentFormat RawXml { get; } = new PolicyContentFormat(RawXmlValue);
-        /// <summary> The policy document is not XML encoded and is hosted on a HTTP endpoint accessible from the API Management service. </summary>
+        /// <summary>
+        /// The policy document is not XML encoded and is hosted on a HTTP endpoint accessible from the API Management service.
+        /// Serialized Name: PolicyContentFormat.rawxml-link
+        /// </summary>
         public static PolicyContentFormat RawXmlLink { get; } = new PolicyContentFormat(RawXmlLinkValue);
         /// <summary> Determines if two <see cref="PolicyContentFormat"/> values are the same. </summary>
         public static bool operator ==(PolicyContentFormat left, PolicyContentFormat right) => left.Equals(right);

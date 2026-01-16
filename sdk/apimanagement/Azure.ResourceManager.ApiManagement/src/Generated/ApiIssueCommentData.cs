@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiIssueComment data model.
     /// Issue Comment Contract details.
+    /// Serialized Name: IssueCommentContract
     /// </summary>
     public partial class ApiIssueCommentData : ResourceData
     {
@@ -60,11 +61,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="text"> Comment text. </param>
-        /// <param name="createdOn"> Date and time when the comment was created. </param>
-        /// <param name="userId"> A resource identifier for the user who left the comment. </param>
+        /// <param name="text">
+        /// Comment text.
+        /// Serialized Name: IssueCommentContract.properties.text
+        /// </param>
+        /// <param name="createdOn">
+        /// Date and time when the comment was created.
+        /// Serialized Name: IssueCommentContract.properties.createdDate
+        /// </param>
+        /// <param name="userId">
+        /// A resource identifier for the user who left the comment.
+        /// Serialized Name: IssueCommentContract.properties.userId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiIssueCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string text, DateTimeOffset? createdOn, ResourceIdentifier userId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiIssueCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string text, DateTimeOffset? createdOn, string userId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Text = text;
             CreatedOn = createdOn;
@@ -72,14 +82,23 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Comment text. </summary>
+        /// <summary>
+        /// Comment text.
+        /// Serialized Name: IssueCommentContract.properties.text
+        /// </summary>
         [WirePath("properties.text")]
         public string Text { get; set; }
-        /// <summary> Date and time when the comment was created. </summary>
+        /// <summary>
+        /// Date and time when the comment was created.
+        /// Serialized Name: IssueCommentContract.properties.createdDate
+        /// </summary>
         [WirePath("properties.createdDate")]
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> A resource identifier for the user who left the comment. </summary>
+        /// <summary>
+        /// A resource identifier for the user who left the comment.
+        /// Serialized Name: IssueCommentContract.properties.userId
+        /// </summary>
         [WirePath("properties.userId")]
-        public ResourceIdentifier UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

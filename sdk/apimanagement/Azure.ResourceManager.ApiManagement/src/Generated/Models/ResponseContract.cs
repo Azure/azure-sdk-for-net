@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Operation response details. </summary>
+    /// <summary>
+    /// Operation response details.
+    /// Serialized Name: ResponseContract
+    /// </summary>
     public partial class ResponseContract
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResponseContract"/>. </summary>
-        /// <param name="statusCode"> Operation response HTTP status code. </param>
+        /// <param name="statusCode">
+        /// Operation response HTTP status code.
+        /// Serialized Name: ResponseContract.statusCode
+        /// </param>
         public ResponseContract(int statusCode)
         {
             StatusCode = statusCode;
@@ -55,10 +61,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseContract"/>. </summary>
-        /// <param name="statusCode"> Operation response HTTP status code. </param>
-        /// <param name="description"> Operation response description. </param>
-        /// <param name="representations"> Collection of operation response representations. </param>
-        /// <param name="headers"> Collection of operation response headers. </param>
+        /// <param name="statusCode">
+        /// Operation response HTTP status code.
+        /// Serialized Name: ResponseContract.statusCode
+        /// </param>
+        /// <param name="description">
+        /// Operation response description.
+        /// Serialized Name: ResponseContract.description
+        /// </param>
+        /// <param name="representations">
+        /// Collection of operation response representations.
+        /// Serialized Name: ResponseContract.representations
+        /// </param>
+        /// <param name="headers">
+        /// Collection of operation response headers.
+        /// Serialized Name: ResponseContract.headers
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResponseContract(int statusCode, string description, IList<RepresentationContract> representations, IList<ParameterContract> headers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,16 +92,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary> Operation response HTTP status code. </summary>
+        /// <summary>
+        /// Operation response HTTP status code.
+        /// Serialized Name: ResponseContract.statusCode
+        /// </summary>
         [WirePath("statusCode")]
         public int StatusCode { get; set; }
-        /// <summary> Operation response description. </summary>
+        /// <summary>
+        /// Operation response description.
+        /// Serialized Name: ResponseContract.description
+        /// </summary>
         [WirePath("description")]
         public string Description { get; set; }
-        /// <summary> Collection of operation response representations. </summary>
+        /// <summary>
+        /// Collection of operation response representations.
+        /// Serialized Name: ResponseContract.representations
+        /// </summary>
         [WirePath("representations")]
         public IList<RepresentationContract> Representations { get; }
-        /// <summary> Collection of operation response headers. </summary>
+        /// <summary>
+        /// Collection of operation response headers.
+        /// Serialized Name: ResponseContract.headers
+        /// </summary>
         [WirePath("headers")]
         public IList<ParameterContract> Headers { get; }
     }

@@ -7,24 +7,51 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The AuthorizationMethod. </summary>
+    /// <summary>
+    /// The AuthorizationMethod.
+    /// Serialized Name: AuthorizationMethod
+    /// </summary>
     public enum AuthorizationMethod
     {
-        /// <summary> HEAD. </summary>
+        /// <summary>
+        /// HEAD
+        /// Serialized Name: AuthorizationMethod.HEAD
+        /// </summary>
         Head,
-        /// <summary> OPTIONS. </summary>
+        /// <summary>
+        /// OPTIONS
+        /// Serialized Name: AuthorizationMethod.OPTIONS
+        /// </summary>
         Options,
-        /// <summary> TRACE. </summary>
+        /// <summary>
+        /// TRACE
+        /// Serialized Name: AuthorizationMethod.TRACE
+        /// </summary>
         Trace,
-        /// <summary> GET. </summary>
+        /// <summary>
+        /// GET
+        /// Serialized Name: AuthorizationMethod.GET
+        /// </summary>
         Get,
-        /// <summary> POST. </summary>
+        /// <summary>
+        /// POST
+        /// Serialized Name: AuthorizationMethod.POST
+        /// </summary>
         Post,
-        /// <summary> PUT. </summary>
+        /// <summary>
+        /// PUT
+        /// Serialized Name: AuthorizationMethod.PUT
+        /// </summary>
         Put,
-        /// <summary> PATCH. </summary>
+        /// <summary>
+        /// PATCH
+        /// Serialized Name: AuthorizationMethod.PATCH
+        /// </summary>
         Patch,
-        /// <summary> DELETE. </summary>
+        /// <summary>
+        /// DELETE
+        /// Serialized Name: AuthorizationMethod.DELETE
+        /// </summary>
         Delete
     }
 }

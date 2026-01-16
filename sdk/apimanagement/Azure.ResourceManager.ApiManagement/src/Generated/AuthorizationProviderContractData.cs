@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the AuthorizationProviderContract data model.
     /// Authorization Provider contract.
+    /// Serialized Name: AuthorizationProviderContract
     /// </summary>
     public partial class AuthorizationProviderContractData : ResourceData
     {
@@ -61,9 +62,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Authorization Provider name. Must be 1 to 300 characters long. </param>
-        /// <param name="identityProvider"> Identity provider name. Must be 1 to 300 characters long. </param>
-        /// <param name="oauth2"> OAuth2 settings. </param>
+        /// <param name="displayName">
+        /// Authorization Provider name. Must be 1 to 300 characters long.
+        /// Serialized Name: AuthorizationProviderContract.properties.displayName
+        /// </param>
+        /// <param name="identityProvider">
+        /// Identity provider name. Must be 1 to 300 characters long.
+        /// Serialized Name: AuthorizationProviderContract.properties.identityProvider
+        /// </param>
+        /// <param name="oauth2">
+        /// OAuth2 settings
+        /// Serialized Name: AuthorizationProviderContract.properties.oauth2
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AuthorizationProviderContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string identityProvider, AuthorizationProviderOAuth2Settings oauth2, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,13 +83,22 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Authorization Provider name. Must be 1 to 300 characters long. </summary>
+        /// <summary>
+        /// Authorization Provider name. Must be 1 to 300 characters long.
+        /// Serialized Name: AuthorizationProviderContract.properties.displayName
+        /// </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary> Identity provider name. Must be 1 to 300 characters long. </summary>
+        /// <summary>
+        /// Identity provider name. Must be 1 to 300 characters long.
+        /// Serialized Name: AuthorizationProviderContract.properties.identityProvider
+        /// </summary>
         [WirePath("properties.identityProvider")]
         public string IdentityProvider { get; set; }
-        /// <summary> OAuth2 settings. </summary>
+        /// <summary>
+        /// OAuth2 settings
+        /// Serialized Name: AuthorizationProviderContract.properties.oauth2
+        /// </summary>
         [WirePath("properties.oauth2")]
         public AuthorizationProviderOAuth2Settings Oauth2 { get; set; }
     }

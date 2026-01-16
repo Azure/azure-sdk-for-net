@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-01";
+            _apiVersion = apiVersion ?? "2025-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/apis/", false);
             uri.AppendPath(apiId, true);
             uri.AppendPath("/revisions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -63,7 +64,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -85,6 +85,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/apis/", false);
             uri.AppendPath(apiId, true);
             uri.AppendPath("/revisions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -97,7 +98,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| apiRevision | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiRevisionListResult>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiRevisionCollection>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ApiRevisionListResult value = default;
+                        ApiRevisionCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ApiRevisionListResult.DeserializeApiRevisionListResult(document.RootElement);
+                        value = ApiRevisionCollection.DeserializeApiRevisionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -145,14 +145,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| apiRevision | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiRevisionListResult> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<ApiRevisionCollection> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ApiRevisionListResult value = default;
+                        ApiRevisionCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ApiRevisionListResult.DeserializeApiRevisionListResult(document.RootElement);
+                        value = ApiRevisionCollection.DeserializeApiRevisionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -204,14 +204,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| apiRevision | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiRevisionListResult>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiRevisionCollection>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ApiRevisionListResult value = default;
+                        ApiRevisionCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ApiRevisionListResult.DeserializeApiRevisionListResult(document.RootElement);
+                        value = ApiRevisionCollection.DeserializeApiRevisionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -242,14 +242,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="apiId"> API identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| apiRevision | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiRevisionListResult> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<ApiRevisionCollection> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ApiRevisionListResult value = default;
+                        ApiRevisionCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ApiRevisionListResult.DeserializeApiRevisionListResult(document.RootElement);
+                        value = ApiRevisionCollection.DeserializeApiRevisionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

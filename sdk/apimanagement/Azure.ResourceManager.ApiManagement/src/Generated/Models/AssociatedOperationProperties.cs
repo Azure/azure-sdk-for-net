@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Operation Entity contract Properties. </summary>
+    /// <summary>
+    /// Operation Entity contract Properties.
+    /// Serialized Name: OperationTagResourceContractProperties
+    /// </summary>
     public partial class AssociatedOperationProperties
     {
         /// <summary>
@@ -51,14 +54,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AssociatedOperationProperties"/>. </summary>
-        /// <param name="id"> Identifier of the operation in form /operations/{operationId}. </param>
-        /// <param name="name"> Operation name. </param>
-        /// <param name="apiName"> API Name. </param>
-        /// <param name="apiRevision"> API Revision. </param>
-        /// <param name="apiVersion"> API Version. </param>
-        /// <param name="description"> Operation Description. </param>
-        /// <param name="method"> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </param>
-        /// <param name="uriTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
+        /// <param name="id">
+        /// Identifier of the operation in form /operations/{operationId}.
+        /// Serialized Name: OperationTagResourceContractProperties.id
+        /// </param>
+        /// <param name="name">
+        /// Operation name.
+        /// Serialized Name: OperationTagResourceContractProperties.name
+        /// </param>
+        /// <param name="apiName">
+        /// API Name.
+        /// Serialized Name: OperationTagResourceContractProperties.apiName
+        /// </param>
+        /// <param name="apiRevision">
+        /// API Revision.
+        /// Serialized Name: OperationTagResourceContractProperties.apiRevision
+        /// </param>
+        /// <param name="apiVersion">
+        /// API Version.
+        /// Serialized Name: OperationTagResourceContractProperties.apiVersion
+        /// </param>
+        /// <param name="description">
+        /// Operation Description.
+        /// Serialized Name: OperationTagResourceContractProperties.description
+        /// </param>
+        /// <param name="method">
+        /// A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them.
+        /// Serialized Name: OperationTagResourceContractProperties.method
+        /// </param>
+        /// <param name="uriTemplate">
+        /// Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}
+        /// Serialized Name: OperationTagResourceContractProperties.urlTemplate
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AssociatedOperationProperties(string id, string name, string apiName, string apiRevision, string apiVersion, string description, string method, string uriTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,28 +100,52 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Identifier of the operation in form /operations/{operationId}. </summary>
+        /// <summary>
+        /// Identifier of the operation in form /operations/{operationId}.
+        /// Serialized Name: OperationTagResourceContractProperties.id
+        /// </summary>
         [WirePath("id")]
         public string Id { get; }
-        /// <summary> Operation name. </summary>
+        /// <summary>
+        /// Operation name.
+        /// Serialized Name: OperationTagResourceContractProperties.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> API Name. </summary>
+        /// <summary>
+        /// API Name.
+        /// Serialized Name: OperationTagResourceContractProperties.apiName
+        /// </summary>
         [WirePath("apiName")]
         public string ApiName { get; }
-        /// <summary> API Revision. </summary>
+        /// <summary>
+        /// API Revision.
+        /// Serialized Name: OperationTagResourceContractProperties.apiRevision
+        /// </summary>
         [WirePath("apiRevision")]
         public string ApiRevision { get; }
-        /// <summary> API Version. </summary>
+        /// <summary>
+        /// API Version.
+        /// Serialized Name: OperationTagResourceContractProperties.apiVersion
+        /// </summary>
         [WirePath("apiVersion")]
         public string ApiVersion { get; }
-        /// <summary> Operation Description. </summary>
+        /// <summary>
+        /// Operation Description.
+        /// Serialized Name: OperationTagResourceContractProperties.description
+        /// </summary>
         [WirePath("description")]
         public string Description { get; }
-        /// <summary> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </summary>
+        /// <summary>
+        /// A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them.
+        /// Serialized Name: OperationTagResourceContractProperties.method
+        /// </summary>
         [WirePath("method")]
         public string Method { get; }
-        /// <summary> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </summary>
+        /// <summary>
+        /// Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}
+        /// Serialized Name: OperationTagResourceContractProperties.urlTemplate
+        /// </summary>
         [WirePath("urlTemplate")]
         public string UriTemplate { get; }
     }

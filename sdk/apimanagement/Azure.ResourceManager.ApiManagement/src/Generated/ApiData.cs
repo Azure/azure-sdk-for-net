@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the Api data model.
     /// API details.
+    /// Serialized Name: ApiContract
     /// </summary>
     public partial class ApiData : ResourceData
     {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApiData"/>. </summary>
         public ApiData()
@@ -62,30 +63,96 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
-        /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
-        /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
-        /// <param name="apiType"> Type of API. </param>
-        /// <param name="apiRevision"> Describes the revision of the API. If no value is provided, default revision 1 is created. </param>
-        /// <param name="apiVersion"> Indicates the version identifier of the API if the API is versioned. </param>
-        /// <param name="isCurrent"> Indicates if API revision is current api revision. </param>
-        /// <param name="isOnline"> Indicates if API revision is accessible via the gateway. </param>
-        /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
-        /// <param name="apiVersionDescription"> Description of the API Version. </param>
-        /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
-        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
-        /// <param name="contact"> Contact information for the API. </param>
-        /// <param name="license"> License information for the API. </param>
-        /// <param name="sourceApiId"> API identifier of the source API. </param>
-        /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
-        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
-        /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
-        /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
-        /// <param name="apiVersionSet"> Version set details. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="description">
+        /// Description of the API. May include HTML formatting tags.
+        /// Serialized Name: ApiContract.properties.description
+        /// </param>
+        /// <param name="authenticationSettings">
+        /// Collection of authentication settings included into this API.
+        /// Serialized Name: ApiContract.properties.authenticationSettings
+        /// </param>
+        /// <param name="subscriptionKeyParameterNames">
+        /// Protocols over which API is made available.
+        /// Serialized Name: ApiContract.properties.subscriptionKeyParameterNames
+        /// </param>
+        /// <param name="apiType">
+        /// Type of API.
+        /// Serialized Name: ApiContract.properties.type
+        /// </param>
+        /// <param name="apiRevision">
+        /// Describes the revision of the API. If no value is provided, default revision 1 is created
+        /// Serialized Name: ApiContract.properties.apiRevision
+        /// </param>
+        /// <param name="apiVersion">
+        /// Indicates the version identifier of the API if the API is versioned
+        /// Serialized Name: ApiContract.properties.apiVersion
+        /// </param>
+        /// <param name="isCurrent">
+        /// Indicates if API revision is current api revision.
+        /// Serialized Name: ApiContract.properties.isCurrent
+        /// </param>
+        /// <param name="isOnline">
+        /// Indicates if API revision is accessible via the gateway.
+        /// Serialized Name: ApiContract.properties.isOnline
+        /// </param>
+        /// <param name="apiRevisionDescription">
+        /// Description of the API Revision.
+        /// Serialized Name: ApiContract.properties.apiRevisionDescription
+        /// </param>
+        /// <param name="apiVersionDescription">
+        /// Description of the API Version.
+        /// Serialized Name: ApiContract.properties.apiVersionDescription
+        /// </param>
+        /// <param name="apiVersionSetId">
+        /// A resource identifier for the related ApiVersionSet.
+        /// Serialized Name: ApiContract.properties.apiVersionSetId
+        /// </param>
+        /// <param name="subscriptionRequired">
+        /// Specifies whether an API or Product subscription is required for accessing the API.
+        /// Serialized Name: ApiContract.properties.subscriptionRequired
+        /// </param>
+        /// <param name="termsOfServiceLink">
+        /// A URL to the Terms of Service for the API. MUST be in the format of a URL.
+        /// Serialized Name: ApiContract.properties.termsOfServiceUrl
+        /// </param>
+        /// <param name="contact">
+        /// Contact information for the API.
+        /// Serialized Name: ApiContract.properties.contact
+        /// </param>
+        /// <param name="license">
+        /// License information for the API.
+        /// Serialized Name: ApiContract.properties.license
+        /// </param>
+        /// <param name="sourceApiId">
+        /// API identifier of the source API.
+        /// Serialized Name: ApiContract.properties.sourceApiId
+        /// </param>
+        /// <param name="displayName">
+        /// API name. Must be 1 to 300 characters long.
+        /// Serialized Name: ApiContract.properties.displayName
+        /// </param>
+        /// <param name="serviceLink">
+        /// Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long.
+        /// Serialized Name: ApiContract.properties.serviceUrl
+        /// </param>
+        /// <param name="path">
+        /// Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API.
+        /// Serialized Name: ApiContract.properties.path
+        /// </param>
+        /// <param name="protocols">
+        /// Describes on which protocols the operations in this API can be invoked.
+        /// Serialized Name: ApiContract.properties.protocols
+        /// </param>
+        /// <param name="apiVersionSet">
+        /// Version set details
+        /// Serialized Name: ApiContract.properties.apiVersionSet
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning state
+        /// Serialized Name: ApiContract.properties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IList<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? subscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IList<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -98,7 +165,7 @@ namespace Azure.ResourceManager.ApiManagement
             ApiRevisionDescription = apiRevisionDescription;
             ApiVersionDescription = apiVersionDescription;
             ApiVersionSetId = apiVersionSetId;
-            IsSubscriptionRequired = isSubscriptionRequired;
+            SubscriptionRequired = subscriptionRequired;
             TermsOfServiceLink = termsOfServiceLink;
             Contact = contact;
             License = license;
@@ -112,70 +179,136 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Description of the API. May include HTML formatting tags. </summary>
+        /// <summary>
+        /// Description of the API. May include HTML formatting tags.
+        /// Serialized Name: ApiContract.properties.description
+        /// </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary> Collection of authentication settings included into this API. </summary>
+        /// <summary>
+        /// Collection of authentication settings included into this API.
+        /// Serialized Name: ApiContract.properties.authenticationSettings
+        /// </summary>
         [WirePath("properties.authenticationSettings")]
         public AuthenticationSettingsContract AuthenticationSettings { get; set; }
-        /// <summary> Protocols over which API is made available. </summary>
+        /// <summary>
+        /// Protocols over which API is made available.
+        /// Serialized Name: ApiContract.properties.subscriptionKeyParameterNames
+        /// </summary>
         [WirePath("properties.subscriptionKeyParameterNames")]
         public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get; set; }
-        /// <summary> Type of API. </summary>
+        /// <summary>
+        /// Type of API.
+        /// Serialized Name: ApiContract.properties.type
+        /// </summary>
         [WirePath("properties.type")]
         public ApiType? ApiType { get; set; }
-        /// <summary> Describes the revision of the API. If no value is provided, default revision 1 is created. </summary>
+        /// <summary>
+        /// Describes the revision of the API. If no value is provided, default revision 1 is created
+        /// Serialized Name: ApiContract.properties.apiRevision
+        /// </summary>
         [WirePath("properties.apiRevision")]
         public string ApiRevision { get; set; }
-        /// <summary> Indicates the version identifier of the API if the API is versioned. </summary>
+        /// <summary>
+        /// Indicates the version identifier of the API if the API is versioned
+        /// Serialized Name: ApiContract.properties.apiVersion
+        /// </summary>
         [WirePath("properties.apiVersion")]
         public string ApiVersion { get; set; }
-        /// <summary> Indicates if API revision is current api revision. </summary>
+        /// <summary>
+        /// Indicates if API revision is current api revision.
+        /// Serialized Name: ApiContract.properties.isCurrent
+        /// </summary>
         [WirePath("properties.isCurrent")]
         public bool? IsCurrent { get; set; }
-        /// <summary> Indicates if API revision is accessible via the gateway. </summary>
+        /// <summary>
+        /// Indicates if API revision is accessible via the gateway.
+        /// Serialized Name: ApiContract.properties.isOnline
+        /// </summary>
         [WirePath("properties.isOnline")]
         public bool? IsOnline { get; }
-        /// <summary> Description of the API Revision. </summary>
+        /// <summary>
+        /// Description of the API Revision.
+        /// Serialized Name: ApiContract.properties.apiRevisionDescription
+        /// </summary>
         [WirePath("properties.apiRevisionDescription")]
         public string ApiRevisionDescription { get; set; }
-        /// <summary> Description of the API Version. </summary>
+        /// <summary>
+        /// Description of the API Version.
+        /// Serialized Name: ApiContract.properties.apiVersionDescription
+        /// </summary>
         [WirePath("properties.apiVersionDescription")]
         public string ApiVersionDescription { get; set; }
-        /// <summary> A resource identifier for the related ApiVersionSet. </summary>
+        /// <summary>
+        /// A resource identifier for the related ApiVersionSet.
+        /// Serialized Name: ApiContract.properties.apiVersionSetId
+        /// </summary>
         [WirePath("properties.apiVersionSetId")]
         public ResourceIdentifier ApiVersionSetId { get; set; }
-        /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
+        /// <summary>
+        /// Specifies whether an API or Product subscription is required for accessing the API.
+        /// Serialized Name: ApiContract.properties.subscriptionRequired
+        /// </summary>
         [WirePath("properties.subscriptionRequired")]
-        public bool? IsSubscriptionRequired { get; set; }
-        /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
+        public bool? SubscriptionRequired { get; set; }
+        /// <summary>
+        /// A URL to the Terms of Service for the API. MUST be in the format of a URL.
+        /// Serialized Name: ApiContract.properties.termsOfServiceUrl
+        /// </summary>
         [WirePath("properties.termsOfServiceUrl")]
         public string TermsOfServiceLink { get; set; }
-        /// <summary> Contact information for the API. </summary>
+        /// <summary>
+        /// Contact information for the API.
+        /// Serialized Name: ApiContract.properties.contact
+        /// </summary>
         [WirePath("properties.contact")]
         public ApiContactInformation Contact { get; set; }
-        /// <summary> License information for the API. </summary>
+        /// <summary>
+        /// License information for the API.
+        /// Serialized Name: ApiContract.properties.license
+        /// </summary>
         [WirePath("properties.license")]
         public ApiLicenseInformation License { get; set; }
-        /// <summary> API identifier of the source API. </summary>
+        /// <summary>
+        /// API identifier of the source API.
+        /// Serialized Name: ApiContract.properties.sourceApiId
+        /// </summary>
         [WirePath("properties.sourceApiId")]
         public ResourceIdentifier SourceApiId { get; set; }
-        /// <summary> API name. Must be 1 to 300 characters long. </summary>
+        /// <summary>
+        /// API name. Must be 1 to 300 characters long.
+        /// Serialized Name: ApiContract.properties.displayName
+        /// </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </summary>
+        /// <summary>
+        /// Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long.
+        /// Serialized Name: ApiContract.properties.serviceUrl
+        /// </summary>
         [WirePath("properties.serviceUrl")]
         public string ServiceLink { get; set; }
-        /// <summary> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </summary>
+        /// <summary>
+        /// Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API.
+        /// Serialized Name: ApiContract.properties.path
+        /// </summary>
         [WirePath("properties.path")]
         public string Path { get; set; }
-        /// <summary> Describes on which protocols the operations in this API can be invoked. </summary>
+        /// <summary>
+        /// Describes on which protocols the operations in this API can be invoked.
+        /// Serialized Name: ApiContract.properties.protocols
+        /// </summary>
         [WirePath("properties.protocols")]
         public IList<ApiOperationInvokableProtocol> Protocols { get; }
-        /// <summary> Version set details. </summary>
+        /// <summary>
+        /// Version set details
+        /// Serialized Name: ApiContract.properties.apiVersionSet
+        /// </summary>
         [WirePath("properties.apiVersionSet")]
         public ApiVersionSetContractDetails ApiVersionSet { get; set; }
-        /// <summary> The provisioning state. </summary>
+        /// <summary>
+        /// The provisioning state
+        /// Serialized Name: ApiContract.properties.provisioningState
+        /// </summary>
         [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
     }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Status of developer portal in this API Management service. </summary>
+    /// <summary>
+    /// Status of developer portal in this API Management service.
+    /// Serialized Name: DeveloperPortalStatus
+    /// </summary>
     public readonly partial struct DeveloperPortalStatus : IEquatable<DeveloperPortalStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Developer Portal is enabled for the service. </summary>
+        /// <summary>
+        /// Developer Portal is enabled for the service.
+        /// Serialized Name: DeveloperPortalStatus.Enabled
+        /// </summary>
         public static DeveloperPortalStatus Enabled { get; } = new DeveloperPortalStatus(EnabledValue);
-        /// <summary> Developer Portal is disabled for the service. </summary>
+        /// <summary>
+        /// Developer Portal is disabled for the service.
+        /// Serialized Name: DeveloperPortalStatus.Disabled
+        /// </summary>
         public static DeveloperPortalStatus Disabled { get; } = new DeveloperPortalStatus(DisabledValue);
         /// <summary> Determines if two <see cref="DeveloperPortalStatus"/> values are the same. </summary>
         public static bool operator ==(DeveloperPortalStatus left, DeveloperPortalStatus right) => left.Equals(right);

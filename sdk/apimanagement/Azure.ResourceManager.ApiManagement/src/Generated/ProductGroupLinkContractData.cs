@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ProductGroupLinkContract data model.
     /// Product-group link details.
+    /// Serialized Name: ProductGroupLinkContract
     /// </summary>
     public partial class ProductGroupLinkContractData : ResourceData
     {
@@ -60,7 +61,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> Full resource Id of a group. </param>
+        /// <param name="groupId">
+        /// Full resource Id of a group.
+        /// Serialized Name: ProductGroupLinkContract.properties.groupId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProductGroupLinkContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -68,7 +72,10 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Full resource Id of a group. </summary>
+        /// <summary>
+        /// Full resource Id of a group.
+        /// Serialized Name: ProductGroupLinkContract.properties.groupId
+        /// </summary>
         [WirePath("properties.groupId")]
         public string GroupId { get; set; }
     }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Describes The zonal capabilities of a SKU. </summary>
+    /// <summary>
+    /// Describes The zonal capabilities of a SKU.
+    /// Serialized Name: ApiManagementSkuZoneDetails
+    /// </summary>
     public partial class ApiManagementSkuZoneDetails
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSkuZoneDetails"/>. </summary>
-        /// <param name="name"> The set of zones that the SKU is available in with the specified capabilities. </param>
-        /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
+        /// <param name="name">
+        /// The set of zones that the SKU is available in with the specified capabilities.
+        /// Serialized Name: ApiManagementSkuZoneDetails.name
+        /// </param>
+        /// <param name="capabilities">
+        /// A list of capabilities that are available for the SKU in the specified list of zones.
+        /// Serialized Name: ApiManagementSkuZoneDetails.capabilities
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<ApiManagementSkuCapabilities> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,10 +72,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The set of zones that the SKU is available in with the specified capabilities. </summary>
+        /// <summary>
+        /// The set of zones that the SKU is available in with the specified capabilities.
+        /// Serialized Name: ApiManagementSkuZoneDetails.name
+        /// </summary>
         [WirePath("name")]
         public IReadOnlyList<string> Name { get; }
-        /// <summary> A list of capabilities that are available for the SKU in the specified list of zones. </summary>
+        /// <summary>
+        /// A list of capabilities that are available for the SKU in the specified list of zones.
+        /// Serialized Name: ApiManagementSkuZoneDetails.capabilities
+        /// </summary>
         [WirePath("capabilities")]
         public IReadOnlyList<ApiManagementSkuCapabilities> Capabilities { get; }
     }

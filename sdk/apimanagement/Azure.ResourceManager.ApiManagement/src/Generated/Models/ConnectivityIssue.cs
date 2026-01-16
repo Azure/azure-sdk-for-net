@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Information about an issue encountered in the process of checking for connectivity. </summary>
+    /// <summary>
+    /// Information about an issue encountered in the process of checking for connectivity.
+    /// Serialized Name: ConnectivityIssue
+    /// </summary>
     public partial class ConnectivityIssue
     {
         /// <summary>
@@ -52,10 +55,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityIssue"/>. </summary>
-        /// <param name="origin"> The origin of the issue. </param>
-        /// <param name="severity"> The severity of the issue. </param>
-        /// <param name="issueType"> The type of issue. </param>
-        /// <param name="context"> Provides additional context on the issue. </param>
+        /// <param name="origin">
+        /// The origin of the issue.
+        /// Serialized Name: ConnectivityIssue.origin
+        /// </param>
+        /// <param name="severity">
+        /// The severity of the issue.
+        /// Serialized Name: ConnectivityIssue.severity
+        /// </param>
+        /// <param name="issueType">
+        /// The type of issue.
+        /// Serialized Name: ConnectivityIssue.type
+        /// </param>
+        /// <param name="context">
+        /// Provides additional context on the issue.
+        /// Serialized Name: ConnectivityIssue.context
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectivityIssue(IssueOrigin? origin, IssueSeverity? severity, IssueType? issueType, IReadOnlyList<IDictionary<string, string>> context, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,16 +81,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The origin of the issue. </summary>
+        /// <summary>
+        /// The origin of the issue.
+        /// Serialized Name: ConnectivityIssue.origin
+        /// </summary>
         [WirePath("origin")]
         public IssueOrigin? Origin { get; }
-        /// <summary> The severity of the issue. </summary>
+        /// <summary>
+        /// The severity of the issue.
+        /// Serialized Name: ConnectivityIssue.severity
+        /// </summary>
         [WirePath("severity")]
         public IssueSeverity? Severity { get; }
-        /// <summary> The type of issue. </summary>
+        /// <summary>
+        /// The type of issue.
+        /// Serialized Name: ConnectivityIssue.type
+        /// </summary>
         [WirePath("type")]
         public IssueType? IssueType { get; }
-        /// <summary> Provides additional context on the issue. </summary>
+        /// <summary>
+        /// Provides additional context on the issue.
+        /// Serialized Name: ConnectivityIssue.context
+        /// </summary>
         [WirePath("context")]
         public IReadOnlyList<IDictionary<string, string>> Context { get; }
     }

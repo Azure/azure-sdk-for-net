@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement
             string description = default;
             IDictionary<string, string> credentials = default;
             bool? isBuffered = default;
-            ResourceIdentifier resourceId = default;
+            string resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,11 +180,7 @@ namespace Azure.ResourceManager.ApiManagement
                         }
                         if (property0.NameEquals("resourceId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceId = new ResourceIdentifier(property0.Value.GetString());
+                            resourceId = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -377,7 +373,15 @@ namespace Azure.ResourceManager.ApiManagement
                 if (Optional.IsDefined(ResourceId))
                 {
                     builder.Append("    resourceId: ");
-                    builder.AppendLine($"'{ResourceId.ToString()}'");
+                    if (ResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceId}'");
+                    }
                 }
             }
 

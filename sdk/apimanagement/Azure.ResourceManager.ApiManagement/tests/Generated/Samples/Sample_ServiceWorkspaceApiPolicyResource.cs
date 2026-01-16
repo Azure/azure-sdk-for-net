@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetWorkspaceApiPolicy()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceApiPolicy.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementGetWorkspaceApiPolicy.json
             // this example is just showing the usage of "WorkspaceApiPolicy_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementDeleteWorkspaceApiPolicy()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementDeleteWorkspaceApiPolicy.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementDeleteWorkspaceApiPolicy.json
             // this example is just showing the usage of "WorkspaceApiPolicy_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceApiPolicyResource serviceWorkspaceApiPolicy = client.GetServiceWorkspaceApiPolicyResource(serviceWorkspaceApiPolicyResourceId);
 
             // invoke the operation
-            ETag ifMatch = new ETag("*");
+            string ifMatch = "*";
             await serviceWorkspaceApiPolicy.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementCreateWorkspaceApiPolicy()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateWorkspaceApiPolicy.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementCreateWorkspaceApiPolicy.json
             // this example is just showing the usage of "WorkspaceApiPolicy_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Value = "<policies> <inbound /> <backend>    <forward-request />  </backend>  <outbound /></policies>",
                 Format = PolicyContentFormat.Xml,
             };
-            ETag? ifMatch = new ETag("*");
+            string ifMatch = "*";
             ArmOperation<ServiceWorkspaceApiPolicyResource> lro = await serviceWorkspaceApiPolicy.UpdateAsync(WaitUntil.Completed, data, ifMatch: ifMatch);
             ServiceWorkspaceApiPolicyResource result = lro.Value;
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetEntityTag_ApiManagementHeadWorkspaceApiPolicy()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadWorkspaceApiPolicy.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/preview/2025-03-01-preview/examples/ApiManagementHeadWorkspaceApiPolicy.json
             // this example is just showing the usage of "WorkspaceApiPolicy_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

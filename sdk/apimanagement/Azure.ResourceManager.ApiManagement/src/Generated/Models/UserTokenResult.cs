@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Get User Token response details. </summary>
+    /// <summary>
+    /// Get User Token response details.
+    /// Serialized Name: UserTokenResult
+    /// </summary>
     public partial class UserTokenResult
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserTokenResult"/>. </summary>
-        /// <param name="value"> Shared Access Authorization token for the User. </param>
+        /// <param name="value">
+        /// Shared Access Authorization token for the User.
+        /// Serialized Name: UserTokenResult.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UserTokenResult(string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Shared Access Authorization token for the User. </summary>
+        /// <summary>
+        /// Shared Access Authorization token for the User.
+        /// Serialized Name: UserTokenResult.value
+        /// </summary>
         [WirePath("value")]
         public string Value { get; }
     }

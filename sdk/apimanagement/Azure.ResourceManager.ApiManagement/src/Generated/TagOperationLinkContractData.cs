@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the TagOperationLinkContract data model.
     /// Tag-operation link details.
+    /// Serialized Name: TagOperationLinkContract
     /// </summary>
     public partial class TagOperationLinkContractData : ResourceData
     {
@@ -60,7 +61,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="operationId"> Full resource Id of an API operation. </param>
+        /// <param name="operationId">
+        /// Full resource Id of an API operation.
+        /// Serialized Name: TagOperationLinkContract.properties.operationId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TagOperationLinkContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string operationId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -68,7 +72,10 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Full resource Id of an API operation. </summary>
+        /// <summary>
+        /// Full resource Id of an API operation.
+        /// Serialized Name: TagOperationLinkContract.properties.operationId
+        /// </summary>
         [WirePath("properties.operationId")]
         public string OperationId { get; set; }
     }

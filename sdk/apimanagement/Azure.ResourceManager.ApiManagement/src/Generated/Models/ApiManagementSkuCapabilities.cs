@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Describes The SKU capabilities object. </summary>
+    /// <summary>
+    /// Describes The SKU capabilities object.
+    /// Serialized Name: ApiManagementSkuCapabilities
+    /// </summary>
     public partial class ApiManagementSkuCapabilities
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSkuCapabilities"/>. </summary>
-        /// <param name="name"> An invariant to describe the feature. </param>
-        /// <param name="value"> An invariant if the feature is measured by quantity. </param>
+        /// <param name="name">
+        /// An invariant to describe the feature.
+        /// Serialized Name: ApiManagementSkuCapabilities.name
+        /// </param>
+        /// <param name="value">
+        /// An invariant if the feature is measured by quantity.
+        /// Serialized Name: ApiManagementSkuCapabilities.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementSkuCapabilities(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An invariant to describe the feature. </summary>
+        /// <summary>
+        /// An invariant to describe the feature.
+        /// Serialized Name: ApiManagementSkuCapabilities.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> An invariant if the feature is measured by quantity. </summary>
+        /// <summary>
+        /// An invariant if the feature is measured by quantity.
+        /// Serialized Name: ApiManagementSkuCapabilities.value
+        /// </summary>
         [WirePath("value")]
         public string Value { get; }
     }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Parameter supplied to the Apply Network configuration operation. </summary>
+    /// <summary>
+    /// Parameter supplied to the Apply Network configuration operation.
+    /// Serialized Name: ApiManagementServiceApplyNetworkConfigurationParameters
+    /// </summary>
     public partial class ApiManagementServiceApplyNetworkConfigurationContent
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceApplyNetworkConfigurationContent"/>. </summary>
-        /// <param name="location"> Location of the Api Management service to update for a multi-region service. For a service deployed in a single region, this parameter is not required. </param>
+        /// <param name="location">
+        /// Location of the Api Management service to update for a multi-region service. For a service deployed in a single region, this parameter is not required.
+        /// Serialized Name: ApiManagementServiceApplyNetworkConfigurationParameters.location
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementServiceApplyNetworkConfigurationContent(AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Location of the Api Management service to update for a multi-region service. For a service deployed in a single region, this parameter is not required. </summary>
+        /// <summary>
+        /// Location of the Api Management service to update for a multi-region service. For a service deployed in a single region, this parameter is not required.
+        /// Serialized Name: ApiManagementServiceApplyNetworkConfigurationParameters.location
+        /// </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }
     }

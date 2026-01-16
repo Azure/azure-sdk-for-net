@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-01";
+            _apiVersion = apiVersion ?? "2025-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/groups/", false);
             uri.AppendPath(groupId, true);
             uri.AppendPath("/users", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -63,7 +64,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -85,6 +85,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/groups/", false);
             uri.AppendPath(groupId, true);
             uri.AppendPath("/users", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -97,7 +98,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UserListResult>> ListAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<UserCollection>> ListAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        UserListResult value = default;
+                        UserCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = UserListResult.DeserializeUserListResult(document.RootElement);
+                        value = UserCollection.DeserializeUserCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UserListResult> List(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<UserCollection> List(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -166,131 +166,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        UserListResult value = default;
+                        UserCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = UserListResult.DeserializeUserListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCheckEntityExistsRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string userId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceId, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(groupId, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCheckEntityExistsRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string userId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceId, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(groupId, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Checks that user entity specified by identifier is associated with the group entity. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="groupId"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="groupId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<bool>> CheckEntityExistsAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string userId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-
-            using var message = CreateCheckEntityExistsRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, groupId, userId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case int s when s >= 200 && s < 300:
-                    {
-                        bool value = true;
-                        return Response.FromValue(value, message.Response);
-                    }
-                case int s when s >= 400 && s < 500:
-                    {
-                        bool value = false;
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Checks that user entity specified by identifier is associated with the group entity. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="groupId"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="groupId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<bool> CheckEntityExists(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string userId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-
-            using var message = CreateCheckEntityExistsRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, groupId, userId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case int s when s >= 200 && s < 300:
-                    {
-                        bool value = true;
-                        return Response.FromValue(value, message.Response);
-                    }
-                case int s when s >= 400 && s < 500:
-                    {
-                        bool value = false;
+                        value = UserCollection.DeserializeUserCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -524,6 +402,128 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
+        internal RequestUriBuilder CreateCheckEntityExistsRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string userId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/workspaces/", false);
+            uri.AppendPath(workspaceId, true);
+            uri.AppendPath("/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCheckEntityExistsRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string userId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Head;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/workspaces/", false);
+            uri.AppendPath(workspaceId, true);
+            uri.AppendPath("/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Checks that user entity specified by identifier is associated with the group entity. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="groupId"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="groupId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<bool>> CheckEntityExistsAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            using var message = CreateCheckEntityExistsRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, groupId, userId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Checks that user entity specified by identifier is associated with the group entity. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="groupId"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="groupId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<bool> CheckEntityExists(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            using var message = CreateCheckEntityExistsRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, groupId, userId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string filter, int? top, int? skip)
         {
             var uri = new RawRequestUriBuilder();
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UserListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<UserCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -574,9 +574,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        UserListResult value = default;
+                        UserCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = UserListResult.DeserializeUserListResult(document.RootElement);
+                        value = UserCollection.DeserializeUserCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UserListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<UserCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string groupId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -612,9 +612,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        UserListResult value = default;
+                        UserCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = UserListResult.DeserializeUserListResult(document.RootElement);
+                        value = UserCollection.DeserializeUserCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

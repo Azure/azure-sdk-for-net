@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementPortalSignUpSetting data model.
     /// Sign-Up settings for a developer portal.
+    /// Serialized Name: PortalSignupSettings
     /// </summary>
     public partial class ApiManagementPortalSignUpSettingData : ResourceData
     {
@@ -61,8 +62,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="isSignUpDeveloperPortalEnabled"> Allow users to sign up on a developer portal. </param>
-        /// <param name="termsOfService"> Terms of service contract properties. </param>
+        /// <param name="isSignUpDeveloperPortalEnabled">
+        /// Allow users to sign up on a developer portal.
+        /// Serialized Name: PortalSignupSettings.properties.enabled
+        /// </param>
+        /// <param name="termsOfService">
+        /// Terms of service contract properties.
+        /// Serialized Name: PortalSignupSettings.properties.termsOfService
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementPortalSignUpSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isSignUpDeveloperPortalEnabled, TermsOfServiceProperties termsOfService, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -71,10 +78,16 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Allow users to sign up on a developer portal. </summary>
+        /// <summary>
+        /// Allow users to sign up on a developer portal.
+        /// Serialized Name: PortalSignupSettings.properties.enabled
+        /// </summary>
         [WirePath("properties.enabled")]
         public bool? IsSignUpDeveloperPortalEnabled { get; set; }
-        /// <summary> Terms of service contract properties. </summary>
+        /// <summary>
+        /// Terms of service contract properties.
+        /// Serialized Name: PortalSignupSettings.properties.termsOfService
+        /// </summary>
         [WirePath("properties.termsOfService")]
         public TermsOfServiceProperties TermsOfService { get; set; }
     }

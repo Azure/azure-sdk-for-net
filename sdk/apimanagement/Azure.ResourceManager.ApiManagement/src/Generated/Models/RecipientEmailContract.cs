@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Recipient Email details. </summary>
+    /// <summary>
+    /// Recipient Email details.
+    /// Serialized Name: RecipientEmailContract
+    /// </summary>
     public partial class RecipientEmailContract : ResourceData
     {
         /// <summary>
@@ -57,7 +60,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="email"> User Email subscribed to notification. </param>
+        /// <param name="email">
+        /// User Email subscribed to notification.
+        /// Serialized Name: RecipientEmailContract.properties.email
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RecipientEmailContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string email, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -65,7 +71,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> User Email subscribed to notification. </summary>
+        /// <summary>
+        /// User Email subscribed to notification.
+        /// Serialized Name: RecipientEmailContract.properties.email
+        /// </summary>
         [WirePath("properties.email")]
         public string Email { get; set; }
     }

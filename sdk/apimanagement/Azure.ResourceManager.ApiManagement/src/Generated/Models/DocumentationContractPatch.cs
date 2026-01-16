@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Documentation update contract details. </summary>
+    /// <summary>
+    /// Documentation update contract details.
+    /// Serialized Name: DocumentationUpdateContract
+    /// </summary>
     public partial class DocumentationContractPatch
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentationContractPatch"/>. </summary>
-        /// <param name="title"> documentation title. </param>
-        /// <param name="content"> Markdown documentation content. </param>
+        /// <param name="title">
+        /// documentation title.
+        /// Serialized Name: DocumentationUpdateContract.properties.title
+        /// </param>
+        /// <param name="content">
+        /// Markdown documentation content.
+        /// Serialized Name: DocumentationUpdateContract.properties.content
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DocumentationContractPatch(string title, string content, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> documentation title. </summary>
+        /// <summary>
+        /// documentation title.
+        /// Serialized Name: DocumentationUpdateContract.properties.title
+        /// </summary>
         [WirePath("properties.title")]
         public string Title { get; set; }
-        /// <summary> Markdown documentation content. </summary>
+        /// <summary>
+        /// Markdown documentation content.
+        /// Serialized Name: DocumentationUpdateContract.properties.content
+        /// </summary>
         [WirePath("properties.content")]
         public string Content { get; set; }
     }

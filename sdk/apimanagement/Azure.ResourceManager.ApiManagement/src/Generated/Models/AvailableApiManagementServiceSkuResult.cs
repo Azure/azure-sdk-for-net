@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Describes an available API Management service SKU. </summary>
+    /// <summary>
+    /// Describes an available API Management service SKU.
+    /// Serialized Name: ResourceSkuResult
+    /// </summary>
     public partial class AvailableApiManagementServiceSkuResult
     {
         /// <summary>
@@ -52,11 +54,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AvailableApiManagementServiceSkuResult"/>. </summary>
-        /// <param name="resourceType"> The type of resource the SKU applies to. </param>
-        /// <param name="sku"> Specifies API Management SKU. </param>
-        /// <param name="capacity"> Specifies the number of API Management units. </param>
+        /// <param name="resourceType">
+        /// The type of resource the SKU applies to.
+        /// Serialized Name: ResourceSkuResult.resourceType
+        /// </param>
+        /// <param name="sku">
+        /// Specifies API Management SKU.
+        /// Serialized Name: ResourceSkuResult.sku
+        /// </param>
+        /// <param name="capacity">
+        /// Specifies the number of API Management units.
+        /// Serialized Name: ResourceSkuResult.capacity
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvailableApiManagementServiceSkuResult(ResourceType? resourceType, ResourceSku sku, ApiManagementResourceSkuCapacity capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AvailableApiManagementServiceSkuResult(string resourceType, ResourceSku sku, ApiManagementResourceSkuCapacity capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Sku = sku;
@@ -64,19 +75,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of resource the SKU applies to. </summary>
+        /// <summary>
+        /// The type of resource the SKU applies to.
+        /// Serialized Name: ResourceSkuResult.resourceType
+        /// </summary>
         [WirePath("resourceType")]
-        public ResourceType? ResourceType { get; }
-        /// <summary> Specifies API Management SKU. </summary>
+        public string ResourceType { get; }
+        /// <summary>
+        /// Specifies API Management SKU.
+        /// Serialized Name: ResourceSkuResult.sku
+        /// </summary>
         internal ResourceSku Sku { get; }
-        /// <summary> Name of the Sku. </summary>
+        /// <summary>
+        /// Name of the Sku.
+        /// Serialized Name: ResourceSku.name
+        /// </summary>
         [WirePath("sku.name")]
         public ApiManagementServiceSkuType? SkuName
         {
             get => Sku?.Name;
         }
 
-        /// <summary> Specifies the number of API Management units. </summary>
+        /// <summary>
+        /// Specifies the number of API Management units.
+        /// Serialized Name: ResourceSkuResult.capacity
+        /// </summary>
         [WirePath("capacity")]
         public ApiManagementResourceSkuCapacity Capacity { get; }
     }

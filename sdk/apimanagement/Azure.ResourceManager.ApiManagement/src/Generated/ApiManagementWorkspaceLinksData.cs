@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementWorkspaceLinks data model.
     /// A single API Management WorkspaceLinks in List or Get response.
+    /// Serialized Name: ApiManagementWorkspaceLinksResource
     /// </summary>
     public partial class ApiManagementWorkspaceLinksData : ResourceData
     {
@@ -62,9 +63,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> ETag of the resource. </param>
-        /// <param name="workspaceId"> The link to the API Management service workspace. </param>
-        /// <param name="gateways"> The array of linked gateways. </param>
+        /// <param name="etag">
+        /// ETag of the resource.
+        /// Serialized Name: ApiManagementWorkspaceLinksResource.etag
+        /// </param>
+        /// <param name="workspaceId">
+        /// The link to the API Management service workspace.
+        /// Serialized Name: ApiManagementWorkspaceLinksResource.properties.workspaceId
+        /// </param>
+        /// <param name="gateways">
+        /// The array of linked gateways.
+        /// Serialized Name: ApiManagementWorkspaceLinksResource.properties.gateways
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementWorkspaceLinksData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, ResourceIdentifier workspaceId, IList<WritableSubResource> gateways, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -74,13 +84,22 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> ETag of the resource. </summary>
+        /// <summary>
+        /// ETag of the resource.
+        /// Serialized Name: ApiManagementWorkspaceLinksResource.etag
+        /// </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> The link to the API Management service workspace. </summary>
+        /// <summary>
+        /// The link to the API Management service workspace.
+        /// Serialized Name: ApiManagementWorkspaceLinksResource.properties.workspaceId
+        /// </summary>
         [WirePath("properties.workspaceId")]
         public ResourceIdentifier WorkspaceId { get; set; }
-        /// <summary> The array of linked gateways. </summary>
+        /// <summary>
+        /// The array of linked gateways.
+        /// Serialized Name: ApiManagementWorkspaceLinksResource.properties.gateways
+        /// </summary>
         [WirePath("properties.gateways")]
         public IList<WritableSubResource> Gateways { get; }
     }

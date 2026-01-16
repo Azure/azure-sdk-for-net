@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Type of API. </summary>
+    /// <summary>
+    /// Type of API.
+    /// Serialized Name: ApiType
+    /// </summary>
     public readonly partial struct ApiType : IEquatable<ApiType>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string OdataValue = "odata";
         private const string GrpcValue = "grpc";
 
-        /// <summary> http. </summary>
+        /// <summary>
+        /// http
+        /// Serialized Name: ApiType.http
+        /// </summary>
         public static ApiType Http { get; } = new ApiType(HttpValue);
-        /// <summary> soap. </summary>
+        /// <summary>
+        /// soap
+        /// Serialized Name: ApiType.soap
+        /// </summary>
         public static ApiType Soap { get; } = new ApiType(SoapValue);
-        /// <summary> websocket. </summary>
+        /// <summary>
+        /// websocket
+        /// Serialized Name: ApiType.websocket
+        /// </summary>
         public static ApiType WebSocket { get; } = new ApiType(WebSocketValue);
-        /// <summary> graphql. </summary>
+        /// <summary>
+        /// graphql
+        /// Serialized Name: ApiType.graphql
+        /// </summary>
         public static ApiType GraphQL { get; } = new ApiType(GraphQLValue);
-        /// <summary> odata. </summary>
+        /// <summary>
+        /// odata
+        /// Serialized Name: ApiType.odata
+        /// </summary>
         public static ApiType Odata { get; } = new ApiType(OdataValue);
-        /// <summary> grpc. </summary>
+        /// <summary>
+        /// grpc
+        /// Serialized Name: ApiType.grpc
+        /// </summary>
         public static ApiType Grpc { get; } = new ApiType(GrpcValue);
         /// <summary> Determines if two <see cref="ApiType"/> values are the same. </summary>
         public static bool operator ==(ApiType left, ApiType right) => left.Equals(right);

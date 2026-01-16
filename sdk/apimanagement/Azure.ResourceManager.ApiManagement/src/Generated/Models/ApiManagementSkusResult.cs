@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The List Resource Skus operation response. </summary>
+    /// <summary>
+    /// The List Resource Skus operation response.
+    /// Serialized Name: ApiManagementSkusResult
+    /// </summary>
     internal partial class ApiManagementSkusResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSkusResult"/>. </summary>
-        /// <param name="value"> The list of skus available for the subscription. </param>
+        /// <param name="value">
+        /// The list of skus available for the subscription.
+        /// Serialized Name: ApiManagementSkusResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ApiManagementSkusResult(IEnumerable<ApiManagementSku> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSkusResult"/>. </summary>
-        /// <param name="value"> The list of skus available for the subscription. </param>
-        /// <param name="nextLink"> The URI to fetch the next page of Resource Skus. Call ListNext() with this URI to fetch the next page of Resource Skus. </param>
+        /// <param name="value">
+        /// The list of skus available for the subscription.
+        /// Serialized Name: ApiManagementSkusResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URI to fetch the next page of Resource Skus. Call ListNext() with this URI to fetch the next page of Resource Skus
+        /// Serialized Name: ApiManagementSkusResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementSkusResult(IReadOnlyList<ApiManagementSku> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary> The list of skus available for the subscription. </summary>
+        /// <summary>
+        /// The list of skus available for the subscription.
+        /// Serialized Name: ApiManagementSkusResult.value
+        /// </summary>
         public IReadOnlyList<ApiManagementSku> Value { get; }
-        /// <summary> The URI to fetch the next page of Resource Skus. Call ListNext() with this URI to fetch the next page of Resource Skus. </summary>
+        /// <summary>
+        /// The URI to fetch the next page of Resource Skus. Call ListNext() with this URI to fetch the next page of Resource Skus
+        /// Serialized Name: ApiManagementSkusResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

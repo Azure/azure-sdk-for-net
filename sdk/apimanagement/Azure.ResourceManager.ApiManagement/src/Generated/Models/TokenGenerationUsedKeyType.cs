@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The Key to be used to generate token for user. </summary>
+    /// <summary>
+    /// The Key to be used to generate gateway token.
+    /// Serialized Name: KeyType
+    /// </summary>
     public enum TokenGenerationUsedKeyType
     {
-        /// <summary> primary. </summary>
+        /// <summary>
+        /// primary
+        /// Serialized Name: KeyType.primary
+        /// </summary>
         Primary,
-        /// <summary> secondary. </summary>
+        /// <summary>
+        /// secondary
+        /// Serialized Name: KeyType.secondary
+        /// </summary>
         Secondary
     }
 }

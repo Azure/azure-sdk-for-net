@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> API update contract details. </summary>
+    /// <summary>
+    /// API update contract details.
+    /// Serialized Name: ApiUpdateContract
+    /// </summary>
     public partial class ApiPatch
     {
         /// <summary>
@@ -53,27 +56,84 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiPatch"/>. </summary>
-        /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
-        /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
-        /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
-        /// <param name="apiType"> Type of API. </param>
-        /// <param name="apiRevision"> Describes the revision of the API. If no value is provided, default revision 1 is created. </param>
-        /// <param name="apiVersion"> Indicates the version identifier of the API if the API is versioned. </param>
-        /// <param name="isCurrent"> Indicates if API revision is current api revision. </param>
-        /// <param name="isOnline"> Indicates if API revision is accessible via the gateway. </param>
-        /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
-        /// <param name="apiVersionDescription"> Description of the API Version. </param>
-        /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
-        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
-        /// <param name="contact"> Contact information for the API. </param>
-        /// <param name="license"> License information for the API. </param>
-        /// <param name="displayName"> API name. </param>
-        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. </param>
-        /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
-        /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
+        /// <param name="description">
+        /// Description of the API. May include HTML formatting tags.
+        /// Serialized Name: ApiUpdateContract.properties.description
+        /// </param>
+        /// <param name="authenticationSettings">
+        /// Collection of authentication settings included into this API.
+        /// Serialized Name: ApiUpdateContract.properties.authenticationSettings
+        /// </param>
+        /// <param name="subscriptionKeyParameterNames">
+        /// Protocols over which API is made available.
+        /// Serialized Name: ApiUpdateContract.properties.subscriptionKeyParameterNames
+        /// </param>
+        /// <param name="apiType">
+        /// Type of API.
+        /// Serialized Name: ApiUpdateContract.properties.type
+        /// </param>
+        /// <param name="apiRevision">
+        /// Describes the revision of the API. If no value is provided, default revision 1 is created
+        /// Serialized Name: ApiUpdateContract.properties.apiRevision
+        /// </param>
+        /// <param name="apiVersion">
+        /// Indicates the version identifier of the API if the API is versioned
+        /// Serialized Name: ApiUpdateContract.properties.apiVersion
+        /// </param>
+        /// <param name="isCurrent">
+        /// Indicates if API revision is current api revision.
+        /// Serialized Name: ApiUpdateContract.properties.isCurrent
+        /// </param>
+        /// <param name="isOnline">
+        /// Indicates if API revision is accessible via the gateway.
+        /// Serialized Name: ApiUpdateContract.properties.isOnline
+        /// </param>
+        /// <param name="apiRevisionDescription">
+        /// Description of the API Revision.
+        /// Serialized Name: ApiUpdateContract.properties.apiRevisionDescription
+        /// </param>
+        /// <param name="apiVersionDescription">
+        /// Description of the API Version.
+        /// Serialized Name: ApiUpdateContract.properties.apiVersionDescription
+        /// </param>
+        /// <param name="apiVersionSetId">
+        /// A resource identifier for the related ApiVersionSet.
+        /// Serialized Name: ApiUpdateContract.properties.apiVersionSetId
+        /// </param>
+        /// <param name="subscriptionRequired">
+        /// Specifies whether an API or Product subscription is required for accessing the API.
+        /// Serialized Name: ApiUpdateContract.properties.subscriptionRequired
+        /// </param>
+        /// <param name="termsOfServiceLink">
+        /// A URL to the Terms of Service for the API. MUST be in the format of a URL.
+        /// Serialized Name: ApiUpdateContract.properties.termsOfServiceUrl
+        /// </param>
+        /// <param name="contact">
+        /// Contact information for the API.
+        /// Serialized Name: ApiUpdateContract.properties.contact
+        /// </param>
+        /// <param name="license">
+        /// License information for the API.
+        /// Serialized Name: ApiUpdateContract.properties.license
+        /// </param>
+        /// <param name="displayName">
+        /// API name.
+        /// Serialized Name: ApiUpdateContract.properties.displayName
+        /// </param>
+        /// <param name="serviceLink">
+        /// Absolute URL of the backend service implementing this API.
+        /// Serialized Name: ApiUpdateContract.properties.serviceUrl
+        /// </param>
+        /// <param name="path">
+        /// Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API.
+        /// Serialized Name: ApiUpdateContract.properties.path
+        /// </param>
+        /// <param name="protocols">
+        /// Describes on which protocols the operations in this API can be invoked.
+        /// Serialized Name: ApiUpdateContract.properties.protocols
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiPatch(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, string displayName, string serviceLink, string path, IList<ApiOperationInvokableProtocol> protocols, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiPatch(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? subscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, string displayName, string serviceLink, string path, IList<ApiOperationInvokableProtocol> protocols, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -86,7 +146,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ApiRevisionDescription = apiRevisionDescription;
             ApiVersionDescription = apiVersionDescription;
             ApiVersionSetId = apiVersionSetId;
-            IsSubscriptionRequired = isSubscriptionRequired;
+            SubscriptionRequired = subscriptionRequired;
             TermsOfServiceLink = termsOfServiceLink;
             Contact = contact;
             License = license;
@@ -97,61 +157,118 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Description of the API. May include HTML formatting tags. </summary>
+        /// <summary>
+        /// Description of the API. May include HTML formatting tags.
+        /// Serialized Name: ApiUpdateContract.properties.description
+        /// </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary> Collection of authentication settings included into this API. </summary>
+        /// <summary>
+        /// Collection of authentication settings included into this API.
+        /// Serialized Name: ApiUpdateContract.properties.authenticationSettings
+        /// </summary>
         [WirePath("properties.authenticationSettings")]
         public AuthenticationSettingsContract AuthenticationSettings { get; set; }
-        /// <summary> Protocols over which API is made available. </summary>
+        /// <summary>
+        /// Protocols over which API is made available.
+        /// Serialized Name: ApiUpdateContract.properties.subscriptionKeyParameterNames
+        /// </summary>
         [WirePath("properties.subscriptionKeyParameterNames")]
         public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get; set; }
-        /// <summary> Type of API. </summary>
+        /// <summary>
+        /// Type of API.
+        /// Serialized Name: ApiUpdateContract.properties.type
+        /// </summary>
         [WirePath("properties.type")]
         public ApiType? ApiType { get; set; }
-        /// <summary> Describes the revision of the API. If no value is provided, default revision 1 is created. </summary>
+        /// <summary>
+        /// Describes the revision of the API. If no value is provided, default revision 1 is created
+        /// Serialized Name: ApiUpdateContract.properties.apiRevision
+        /// </summary>
         [WirePath("properties.apiRevision")]
         public string ApiRevision { get; set; }
-        /// <summary> Indicates the version identifier of the API if the API is versioned. </summary>
+        /// <summary>
+        /// Indicates the version identifier of the API if the API is versioned
+        /// Serialized Name: ApiUpdateContract.properties.apiVersion
+        /// </summary>
         [WirePath("properties.apiVersion")]
         public string ApiVersion { get; set; }
-        /// <summary> Indicates if API revision is current api revision. </summary>
+        /// <summary>
+        /// Indicates if API revision is current api revision.
+        /// Serialized Name: ApiUpdateContract.properties.isCurrent
+        /// </summary>
         [WirePath("properties.isCurrent")]
         public bool? IsCurrent { get; set; }
-        /// <summary> Indicates if API revision is accessible via the gateway. </summary>
+        /// <summary>
+        /// Indicates if API revision is accessible via the gateway.
+        /// Serialized Name: ApiUpdateContract.properties.isOnline
+        /// </summary>
         [WirePath("properties.isOnline")]
         public bool? IsOnline { get; }
-        /// <summary> Description of the API Revision. </summary>
+        /// <summary>
+        /// Description of the API Revision.
+        /// Serialized Name: ApiUpdateContract.properties.apiRevisionDescription
+        /// </summary>
         [WirePath("properties.apiRevisionDescription")]
         public string ApiRevisionDescription { get; set; }
-        /// <summary> Description of the API Version. </summary>
+        /// <summary>
+        /// Description of the API Version.
+        /// Serialized Name: ApiUpdateContract.properties.apiVersionDescription
+        /// </summary>
         [WirePath("properties.apiVersionDescription")]
         public string ApiVersionDescription { get; set; }
-        /// <summary> A resource identifier for the related ApiVersionSet. </summary>
+        /// <summary>
+        /// A resource identifier for the related ApiVersionSet.
+        /// Serialized Name: ApiUpdateContract.properties.apiVersionSetId
+        /// </summary>
         [WirePath("properties.apiVersionSetId")]
         public ResourceIdentifier ApiVersionSetId { get; set; }
-        /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
+        /// <summary>
+        /// Specifies whether an API or Product subscription is required for accessing the API.
+        /// Serialized Name: ApiUpdateContract.properties.subscriptionRequired
+        /// </summary>
         [WirePath("properties.subscriptionRequired")]
-        public bool? IsSubscriptionRequired { get; set; }
-        /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
+        public bool? SubscriptionRequired { get; set; }
+        /// <summary>
+        /// A URL to the Terms of Service for the API. MUST be in the format of a URL.
+        /// Serialized Name: ApiUpdateContract.properties.termsOfServiceUrl
+        /// </summary>
         [WirePath("properties.termsOfServiceUrl")]
         public string TermsOfServiceLink { get; set; }
-        /// <summary> Contact information for the API. </summary>
+        /// <summary>
+        /// Contact information for the API.
+        /// Serialized Name: ApiUpdateContract.properties.contact
+        /// </summary>
         [WirePath("properties.contact")]
         public ApiContactInformation Contact { get; set; }
-        /// <summary> License information for the API. </summary>
+        /// <summary>
+        /// License information for the API.
+        /// Serialized Name: ApiUpdateContract.properties.license
+        /// </summary>
         [WirePath("properties.license")]
         public ApiLicenseInformation License { get; set; }
-        /// <summary> API name. </summary>
+        /// <summary>
+        /// API name.
+        /// Serialized Name: ApiUpdateContract.properties.displayName
+        /// </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary> Absolute URL of the backend service implementing this API. </summary>
+        /// <summary>
+        /// Absolute URL of the backend service implementing this API.
+        /// Serialized Name: ApiUpdateContract.properties.serviceUrl
+        /// </summary>
         [WirePath("properties.serviceUrl")]
         public string ServiceLink { get; set; }
-        /// <summary> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </summary>
+        /// <summary>
+        /// Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API.
+        /// Serialized Name: ApiUpdateContract.properties.path
+        /// </summary>
         [WirePath("properties.path")]
         public string Path { get; set; }
-        /// <summary> Describes on which protocols the operations in this API can be invoked. </summary>
+        /// <summary>
+        /// Describes on which protocols the operations in this API can be invoked.
+        /// Serialized Name: ApiUpdateContract.properties.protocols
+        /// </summary>
         [WirePath("properties.protocols")]
         public IList<ApiOperationInvokableProtocol> Protocols { get; }
     }

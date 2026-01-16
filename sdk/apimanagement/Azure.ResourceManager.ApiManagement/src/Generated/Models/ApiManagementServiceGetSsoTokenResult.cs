@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The response of the GetSsoToken operation. </summary>
+    /// <summary>
+    /// The response of the GetSsoToken operation.
+    /// Serialized Name: ApiManagementServiceGetSsoTokenResult
+    /// </summary>
     public partial class ApiManagementServiceGetSsoTokenResult
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceGetSsoTokenResult"/>. </summary>
-        /// <param name="redirectUri"> Redirect URL to the Publisher Portal containing the SSO token. </param>
+        /// <param name="redirectUri">
+        /// Redirect URL to the Publisher Portal containing the SSO token.
+        /// Serialized Name: ApiManagementServiceGetSsoTokenResult.redirectUri
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementServiceGetSsoTokenResult(Uri redirectUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Redirect URL to the Publisher Portal containing the SSO token. </summary>
+        /// <summary>
+        /// Redirect URL to the Publisher Portal containing the SSO token.
+        /// Serialized Name: ApiManagementServiceGetSsoTokenResult.redirectUri
+        /// </summary>
         [WirePath("redirectUri")]
         public Uri RedirectUri { get; }
     }

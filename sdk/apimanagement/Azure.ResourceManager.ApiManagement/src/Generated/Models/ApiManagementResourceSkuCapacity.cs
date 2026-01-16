@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Describes scaling information of a SKU. </summary>
+    /// <summary>
+    /// Describes scaling information of a SKU.
+    /// Serialized Name: ResourceSkuCapacity
+    /// </summary>
     public partial class ApiManagementResourceSkuCapacity
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementResourceSkuCapacity"/>. </summary>
-        /// <param name="minimum"> The minimum capacity. </param>
-        /// <param name="maximum"> The maximum capacity that can be set. </param>
-        /// <param name="default"> The default capacity. </param>
-        /// <param name="scaleType"> The scale type applicable to the sku. </param>
+        /// <param name="minimum">
+        /// The minimum capacity.
+        /// Serialized Name: ResourceSkuCapacity.minimum
+        /// </param>
+        /// <param name="maximum">
+        /// The maximum capacity that can be set.
+        /// Serialized Name: ResourceSkuCapacity.maximum
+        /// </param>
+        /// <param name="default">
+        /// The default capacity.
+        /// Serialized Name: ResourceSkuCapacity.default
+        /// </param>
+        /// <param name="scaleType">
+        /// The scale type applicable to the sku.
+        /// Serialized Name: ResourceSkuCapacity.scaleType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementResourceSkuCapacity(int? minimum, int? maximum, int? @default, ApiManagementResourceSkuCapacityScaleType? scaleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,16 +80,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The minimum capacity. </summary>
+        /// <summary>
+        /// The minimum capacity.
+        /// Serialized Name: ResourceSkuCapacity.minimum
+        /// </summary>
         [WirePath("minimum")]
         public int? Minimum { get; }
-        /// <summary> The maximum capacity that can be set. </summary>
+        /// <summary>
+        /// The maximum capacity that can be set.
+        /// Serialized Name: ResourceSkuCapacity.maximum
+        /// </summary>
         [WirePath("maximum")]
         public int? Maximum { get; }
-        /// <summary> The default capacity. </summary>
+        /// <summary>
+        /// The default capacity.
+        /// Serialized Name: ResourceSkuCapacity.default
+        /// </summary>
         [WirePath("default")]
         public int? Default { get; }
-        /// <summary> The scale type applicable to the sku. </summary>
+        /// <summary>
+        /// The scale type applicable to the sku.
+        /// Serialized Name: ResourceSkuCapacity.scaleType
+        /// </summary>
         [WirePath("scaleType")]
         public ApiManagementResourceSkuCapacityScaleType? ScaleType { get; }
     }

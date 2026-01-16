@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -78,10 +78,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="data"> Update the developer portal configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PortalConfigContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string portalConfigId, ETag ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/>, <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<PortalConfigContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string portalConfigId, string ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _portalConfigContractPortalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.CreateOrUpdate");
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -130,10 +131,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="data"> Update the developer portal configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PortalConfigContractResource> CreateOrUpdate(WaitUntil waitUntil, string portalConfigId, ETag ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/>, <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<PortalConfigContractResource> CreateOrUpdate(WaitUntil waitUntil, string portalConfigId, string ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _portalConfigContractPortalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.CreateOrUpdate");
@@ -168,7 +170,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -213,7 +215,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -258,7 +260,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -288,7 +290,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +320,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -361,7 +363,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -404,7 +406,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -449,7 +451,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

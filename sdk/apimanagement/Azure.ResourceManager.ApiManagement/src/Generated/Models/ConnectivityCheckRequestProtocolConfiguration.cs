@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Protocol-specific configuration. </summary>
+    /// <summary>
+    /// Protocol-specific configuration.
+    /// Serialized Name: ConnectivityCheckRequestProtocolConfiguration
+    /// </summary>
     internal partial class ConnectivityCheckRequestProtocolConfiguration
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestProtocolConfiguration"/>. </summary>
-        /// <param name="httpConfiguration"> Configuration for HTTP or HTTPS requests. </param>
+        /// <param name="httpConfiguration">
+        /// Configuration for HTTP or HTTPS requests.
+        /// Serialized Name: ConnectivityCheckRequestProtocolConfiguration.HTTPConfiguration
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectivityCheckRequestProtocolConfiguration(ConnectivityCheckRequestHttpConfiguration httpConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Configuration for HTTP or HTTPS requests. </summary>
+        /// <summary>
+        /// Configuration for HTTP or HTTPS requests.
+        /// Serialized Name: ConnectivityCheckRequestProtocolConfiguration.HTTPConfiguration
+        /// </summary>
         [WirePath("HTTPConfiguration")]
         public ConnectivityCheckRequestHttpConfiguration HttpConfiguration { get; set; }
     }

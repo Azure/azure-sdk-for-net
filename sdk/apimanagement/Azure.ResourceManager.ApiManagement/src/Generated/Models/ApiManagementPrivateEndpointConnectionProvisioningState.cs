@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The current provisioning state. </summary>
+    /// <summary>
+    /// The current provisioning state.
+    /// Serialized Name: PrivateEndpointConnectionProvisioningState
+    /// </summary>
     public readonly partial struct ApiManagementPrivateEndpointConnectionProvisioningState : IEquatable<ApiManagementPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Succeeded
+        /// </summary>
         public static ApiManagementPrivateEndpointConnectionProvisioningState Succeeded { get; } = new ApiManagementPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Creating
+        /// </summary>
         public static ApiManagementPrivateEndpointConnectionProvisioningState Creating { get; } = new ApiManagementPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Deleting
+        /// </summary>
         public static ApiManagementPrivateEndpointConnectionProvisioningState Deleting { get; } = new ApiManagementPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Failed
+        /// </summary>
         public static ApiManagementPrivateEndpointConnectionProvisioningState Failed { get; } = new ApiManagementPrivateEndpointConnectionProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="ApiManagementPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ApiManagementPrivateEndpointConnectionProvisioningState left, ApiManagementPrivateEndpointConnectionProvisioningState right) => left.Equals(right);

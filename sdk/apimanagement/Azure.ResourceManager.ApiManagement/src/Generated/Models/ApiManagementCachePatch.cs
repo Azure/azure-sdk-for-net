@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Cache update details. </summary>
+    /// <summary>
+    /// Cache update details.
+    /// Serialized Name: CacheUpdateParameters
+    /// </summary>
     public partial class ApiManagementCachePatch
     {
         /// <summary>
@@ -51,31 +54,55 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementCachePatch"/>. </summary>
-        /// <param name="description"> Cache description. </param>
-        /// <param name="connectionString"> Runtime connection string to cache. </param>
-        /// <param name="useFromLocation"> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </param>
-        /// <param name="resourceUri"> Original uri of entity in external system cache points to. </param>
+        /// <param name="description">
+        /// Cache description
+        /// Serialized Name: CacheUpdateParameters.properties.description
+        /// </param>
+        /// <param name="connectionString">
+        /// Runtime connection string to cache
+        /// Serialized Name: CacheUpdateParameters.properties.connectionString
+        /// </param>
+        /// <param name="useFromLocation">
+        /// Location identifier to use cache from (should be either 'default' or valid Azure region identifier)
+        /// Serialized Name: CacheUpdateParameters.properties.useFromLocation
+        /// </param>
+        /// <param name="resourceId">
+        /// Original uri of entity in external system cache points to
+        /// Serialized Name: CacheUpdateParameters.properties.resourceId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementCachePatch(string description, string connectionString, string useFromLocation, Uri resourceUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementCachePatch(string description, string connectionString, string useFromLocation, string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             ConnectionString = connectionString;
             UseFromLocation = useFromLocation;
-            ResourceUri = resourceUri;
+            ResourceId = resourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Cache description. </summary>
+        /// <summary>
+        /// Cache description
+        /// Serialized Name: CacheUpdateParameters.properties.description
+        /// </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary> Runtime connection string to cache. </summary>
+        /// <summary>
+        /// Runtime connection string to cache
+        /// Serialized Name: CacheUpdateParameters.properties.connectionString
+        /// </summary>
         [WirePath("properties.connectionString")]
         public string ConnectionString { get; set; }
-        /// <summary> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </summary>
+        /// <summary>
+        /// Location identifier to use cache from (should be either 'default' or valid Azure region identifier)
+        /// Serialized Name: CacheUpdateParameters.properties.useFromLocation
+        /// </summary>
         [WirePath("properties.useFromLocation")]
         public string UseFromLocation { get; set; }
-        /// <summary> Original uri of entity in external system cache points to. </summary>
+        /// <summary>
+        /// Original uri of entity in external system cache points to
+        /// Serialized Name: CacheUpdateParameters.properties.resourceId
+        /// </summary>
         [WirePath("properties.resourceId")]
-        public Uri ResourceUri { get; set; }
+        public string ResourceId { get; set; }
     }
 }

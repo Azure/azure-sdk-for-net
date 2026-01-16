@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the UserContract data model.
     /// User details.
+    /// Serialized Name: UserContract
     /// </summary>
     public partial class UserContractData : ResourceData
     {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UserContractData"/>. </summary>
         public UserContractData()
@@ -63,17 +64,38 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </param>
-        /// <param name="note"> Optional note about a user set by the administrator. </param>
-        /// <param name="identities"> Collection of user identities. </param>
-        /// <param name="firstName"> First name. </param>
-        /// <param name="lastName"> Last name. </param>
-        /// <param name="email"> Email address. </param>
+        /// <param name="state">
+        /// Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active.
+        /// Serialized Name: UserContract.properties.state
+        /// </param>
+        /// <param name="note">
+        /// Optional note about a user set by the administrator.
+        /// Serialized Name: UserContract.properties.note
+        /// </param>
+        /// <param name="identities">
+        /// Collection of user identities.
+        /// Serialized Name: UserContract.properties.identities
+        /// </param>
+        /// <param name="firstName">
+        /// First name.
+        /// Serialized Name: UserContract.properties.firstName
+        /// </param>
+        /// <param name="lastName">
+        /// Last name.
+        /// Serialized Name: UserContract.properties.lastName
+        /// </param>
+        /// <param name="email">
+        /// Email address.
+        /// Serialized Name: UserContract.properties.email
+        /// </param>
         /// <param name="registriesOn">
         /// Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
+        /// Serialized Name: UserContract.properties.registrationDate
         /// </param>
-        /// <param name="groups"> Collection of groups user is part of. </param>
+        /// <param name="groups">
+        /// Collection of groups user is part of.
+        /// Serialized Name: UserContract.properties.groups
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UserContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, string firstName, string lastName, string email, DateTimeOffset? registriesOn, IReadOnlyList<GroupContractProperties> groups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -88,31 +110,52 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </summary>
+        /// <summary>
+        /// Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active.
+        /// Serialized Name: UserContract.properties.state
+        /// </summary>
         [WirePath("properties.state")]
         public ApiManagementUserState? State { get; set; }
-        /// <summary> Optional note about a user set by the administrator. </summary>
+        /// <summary>
+        /// Optional note about a user set by the administrator.
+        /// Serialized Name: UserContract.properties.note
+        /// </summary>
         [WirePath("properties.note")]
         public string Note { get; set; }
-        /// <summary> Collection of user identities. </summary>
+        /// <summary>
+        /// Collection of user identities.
+        /// Serialized Name: UserContract.properties.identities
+        /// </summary>
         [WirePath("properties.identities")]
         public IList<UserIdentityContract> Identities { get; }
-        /// <summary> First name. </summary>
+        /// <summary>
+        /// First name.
+        /// Serialized Name: UserContract.properties.firstName
+        /// </summary>
         [WirePath("properties.firstName")]
         public string FirstName { get; set; }
-        /// <summary> Last name. </summary>
+        /// <summary>
+        /// Last name.
+        /// Serialized Name: UserContract.properties.lastName
+        /// </summary>
         [WirePath("properties.lastName")]
         public string LastName { get; set; }
-        /// <summary> Email address. </summary>
+        /// <summary>
+        /// Email address.
+        /// Serialized Name: UserContract.properties.email
+        /// </summary>
         [WirePath("properties.email")]
         public string Email { get; set; }
         /// <summary>
         /// Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
+        /// Serialized Name: UserContract.properties.registrationDate
         /// </summary>
         [WirePath("properties.registrationDate")]
         public DateTimeOffset? RegistriesOn { get; set; }
-        /// <summary> Collection of groups user is part of. </summary>
+        /// <summary>
+        /// Collection of groups user is part of.
+        /// Serialized Name: UserContract.properties.groups
+        /// </summary>
         [WirePath("properties.groups")]
         public IReadOnlyList<GroupContractProperties> Groups { get; }
     }

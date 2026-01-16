@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (options.Format != "W" && Optional.IsDefined(VnetId))
             {
                 writer.WritePropertyName("vnetid"u8);
-                writer.WriteStringValue(VnetId.Value);
+                writer.WriteStringValue(VnetId);
             }
             if (options.Format != "W" && Optional.IsDefined(Subnetname))
             {
@@ -87,20 +87,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Guid? vnetid = default;
+            string vnetid = default;
             string subnetname = default;
-            ResourceIdentifier subnetResourceId = default;
+            string subnetResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vnetid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    vnetid = property.Value.GetGuid();
+                    vnetid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("subnetname"u8))
@@ -110,11 +106,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("subnetResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    subnetResourceId = new ResourceIdentifier(property.Value.GetString());
+                    subnetResourceId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +140,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 if (Optional.IsDefined(VnetId))
                 {
                     builder.Append("  vnetid: ");
-                    builder.AppendLine($"'{VnetId.Value.ToString()}'");
+                    if (VnetId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{VnetId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{VnetId}'");
+                    }
                 }
             }
 
@@ -186,7 +186,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 if (Optional.IsDefined(SubnetResourceId))
                 {
                     builder.Append("  subnetResourceId: ");
-                    builder.AppendLine($"'{SubnetResourceId.ToString()}'");
+                    if (SubnetResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SubnetResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SubnetResourceId}'");
+                    }
                 }
             }
 

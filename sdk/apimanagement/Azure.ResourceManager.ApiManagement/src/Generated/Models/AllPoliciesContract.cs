@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> AllPolicies Contract details. </summary>
+    /// <summary>
+    /// AllPolicies Contract details.
+    /// Serialized Name: AllPoliciesContract
+    /// </summary>
     public partial class AllPoliciesContract : ResourceData
     {
         /// <summary>
@@ -57,8 +60,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="referencePolicyId"> Policy Identifier. </param>
-        /// <param name="complianceState"> Policy Restriction Compliance State. </param>
+        /// <param name="referencePolicyId">
+        /// Policy Identifier
+        /// Serialized Name: AllPoliciesContract.properties.referencePolicyId
+        /// </param>
+        /// <param name="complianceState">
+        /// Policy Restriction Compliance State
+        /// Serialized Name: AllPoliciesContract.properties.complianceState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AllPoliciesContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier referencePolicyId, PolicyComplianceState? complianceState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -67,10 +76,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Policy Identifier. </summary>
+        /// <summary>
+        /// Policy Identifier
+        /// Serialized Name: AllPoliciesContract.properties.referencePolicyId
+        /// </summary>
         [WirePath("properties.referencePolicyId")]
         public ResourceIdentifier ReferencePolicyId { get; set; }
-        /// <summary> Policy Restriction Compliance State. </summary>
+        /// <summary>
+        /// Policy Restriction Compliance State
+        /// Serialized Name: AllPoliciesContract.properties.complianceState
+        /// </summary>
         [WirePath("properties.complianceState")]
         public PolicyComplianceState? ComplianceState { get; set; }
     }

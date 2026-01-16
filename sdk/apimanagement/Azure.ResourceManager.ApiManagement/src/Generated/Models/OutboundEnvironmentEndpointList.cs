@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Collection of Outbound Environment Endpoints. </summary>
+    /// <summary>
+    /// Collection of Outbound Environment Endpoints
+    /// Serialized Name: OutboundEnvironmentEndpointList
+    /// </summary>
     internal partial class OutboundEnvironmentEndpointList
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpointList"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: OutboundEnvironmentEndpointList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal OutboundEnvironmentEndpointList(IEnumerable<OutboundEnvironmentEndpoint> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpointList"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: OutboundEnvironmentEndpointList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: OutboundEnvironmentEndpointList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OutboundEnvironmentEndpointList(IReadOnlyList<OutboundEnvironmentEndpoint> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,10 +84,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: OutboundEnvironmentEndpointList.value
+        /// </summary>
         [WirePath("value")]
         public IReadOnlyList<OutboundEnvironmentEndpoint> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: OutboundEnvironmentEndpointList.nextLink
+        /// </summary>
         [WirePath("nextLink")]
         public string NextLink { get; }
     }

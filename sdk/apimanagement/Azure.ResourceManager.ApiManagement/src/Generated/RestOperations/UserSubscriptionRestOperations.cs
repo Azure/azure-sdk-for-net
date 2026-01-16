@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-01";
+            _apiVersion = apiVersion ?? "2025-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/subscriptions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -61,7 +62,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/subscriptions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -93,7 +94,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SubscriptionListResult>> ListAsync(string subscriptionId, string resourceGroupName, string serviceName, string userId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SubscriptionCollection>> ListAsync(string subscriptionId, string resourceGroupName, string serviceName, string userId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        SubscriptionListResult value = default;
+                        SubscriptionCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SubscriptionListResult.DeserializeSubscriptionListResult(document.RootElement);
+                        value = SubscriptionCollection.DeserializeSubscriptionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SubscriptionListResult> List(string subscriptionId, string resourceGroupName, string serviceName, string userId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<SubscriptionCollection> List(string subscriptionId, string resourceGroupName, string serviceName, string userId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        SubscriptionListResult value = default;
+                        SubscriptionCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SubscriptionListResult.DeserializeSubscriptionListResult(document.RootElement);
+                        value = SubscriptionCollection.DeserializeSubscriptionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SubscriptionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string userId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SubscriptionCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string userId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -328,9 +328,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        SubscriptionListResult value = default;
+                        SubscriptionCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SubscriptionListResult.DeserializeSubscriptionListResult(document.RootElement);
+                        value = SubscriptionCollection.DeserializeSubscriptionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SubscriptionListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string userId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<SubscriptionCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string userId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -364,9 +364,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        SubscriptionListResult value = default;
+                        SubscriptionCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SubscriptionListResult.DeserializeSubscriptionListResult(document.RootElement);
+                        value = SubscriptionCollection.DeserializeSubscriptionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

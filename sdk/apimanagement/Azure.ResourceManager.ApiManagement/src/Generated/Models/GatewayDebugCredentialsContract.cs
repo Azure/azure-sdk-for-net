@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Gateway debug credentials. </summary>
+    /// <summary>
+    /// Gateway debug credentials.
+    /// Serialized Name: GatewayDebugCredentialsContract
+    /// </summary>
     public partial class GatewayDebugCredentialsContract
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GatewayDebugCredentialsContract"/>. </summary>
-        /// <param name="token"> Gateway debug token. </param>
+        /// <param name="token">
+        /// Gateway debug token.
+        /// Serialized Name: GatewayDebugCredentialsContract.token
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GatewayDebugCredentialsContract(string token, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gateway debug token. </summary>
+        /// <summary>
+        /// Gateway debug token.
+        /// Serialized Name: GatewayDebugCredentialsContract.token
+        /// </summary>
         [WirePath("token")]
         public string Token { get; }
     }

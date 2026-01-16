@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Configuration for HTTP or HTTPS requests. </summary>
+    /// <summary>
+    /// Configuration for HTTP or HTTPS requests.
+    /// Serialized Name: ConnectivityCheckRequestProtocolConfigurationHttpConfiguration
+    /// </summary>
     public partial class ConnectivityCheckRequestHttpConfiguration
     {
         /// <summary>
@@ -53,9 +56,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestHttpConfiguration"/>. </summary>
-        /// <param name="method"> The HTTP method to be used. </param>
-        /// <param name="validStatusCodes"> List of HTTP status codes considered valid for the request response. </param>
-        /// <param name="headers"> List of headers to be included in the request. </param>
+        /// <param name="method">
+        /// The HTTP method to be used.
+        /// Serialized Name: ConnectivityCheckRequestProtocolConfigurationHttpConfiguration.method
+        /// </param>
+        /// <param name="validStatusCodes">
+        /// List of HTTP status codes considered valid for the request response.
+        /// Serialized Name: ConnectivityCheckRequestProtocolConfigurationHttpConfiguration.validStatusCodes
+        /// </param>
+        /// <param name="headers">
+        /// List of headers to be included in the request.
+        /// Serialized Name: ConnectivityCheckRequestProtocolConfigurationHttpConfiguration.headers
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectivityCheckRequestHttpConfiguration(HttpMethodConfiguration? method, IList<long> validStatusCodes, IList<HttpHeaderConfiguration> headers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +77,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The HTTP method to be used. </summary>
+        /// <summary>
+        /// The HTTP method to be used.
+        /// Serialized Name: ConnectivityCheckRequestProtocolConfigurationHttpConfiguration.method
+        /// </summary>
         [WirePath("method")]
         public HttpMethodConfiguration? Method { get; set; }
-        /// <summary> List of HTTP status codes considered valid for the request response. </summary>
+        /// <summary>
+        /// List of HTTP status codes considered valid for the request response.
+        /// Serialized Name: ConnectivityCheckRequestProtocolConfigurationHttpConfiguration.validStatusCodes
+        /// </summary>
         [WirePath("validStatusCodes")]
         public IList<long> ValidStatusCodes { get; }
-        /// <summary> List of headers to be included in the request. </summary>
+        /// <summary>
+        /// List of headers to be included in the request.
+        /// Serialized Name: ConnectivityCheckRequestProtocolConfigurationHttpConfiguration.headers
+        /// </summary>
         [WirePath("headers")]
         public IList<HttpHeaderConfiguration> Headers { get; }
     }

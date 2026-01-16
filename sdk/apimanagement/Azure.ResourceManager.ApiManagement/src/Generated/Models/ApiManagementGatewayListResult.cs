@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The response of the List API Management gateway operation. </summary>
+    /// <summary>
+    /// The response of the List API Management gateway operation.
+    /// Serialized Name: ApiManagementGatewayListResult
+    /// </summary>
     internal partial class ApiManagementGatewayListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayListResult"/>. </summary>
-        /// <param name="value"> Result of the List API Management gateway operation. </param>
+        /// <param name="value">
+        /// Result of the List API Management gateway operation.
+        /// Serialized Name: ApiManagementGatewayListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ApiManagementGatewayListResult(IEnumerable<ApiGatewayData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayListResult"/>. </summary>
-        /// <param name="value"> Result of the List API Management gateway operation. </param>
-        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </param>
+        /// <param name="value">
+        /// Result of the List API Management gateway operation.
+        /// Serialized Name: ApiManagementGatewayListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to the next set of results. Not empty if Value contains incomplete list of API Management services.
+        /// Serialized Name: ApiManagementGatewayListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementGatewayListResult(IReadOnlyList<ApiGatewayData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary> Result of the List API Management gateway operation. </summary>
+        /// <summary>
+        /// Result of the List API Management gateway operation.
+        /// Serialized Name: ApiManagementGatewayListResult.value
+        /// </summary>
         public IReadOnlyList<ApiGatewayData> Value { get; }
-        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </summary>
+        /// <summary>
+        /// Link to the next set of results. Not empty if Value contains incomplete list of API Management services.
+        /// Serialized Name: ApiManagementGatewayListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

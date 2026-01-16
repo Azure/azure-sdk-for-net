@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType.Value);
+                writer.WriteStringValue(ResourceType);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
-            ResourceType? type = default;
+            string type = default;
             SubResource privateEndpoint = default;
             ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             string provisioningState = default;
@@ -130,11 +130,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -144,11 +140,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -262,7 +254,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
                 }
             }
 

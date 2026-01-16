@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Tenant access information update parameters. </summary>
+    /// <summary>
+    /// Tenant access information update parameters.
+    /// Serialized Name: AccessInformationCreateParameters
+    /// </summary>
     public partial class TenantAccessInfoCreateOrUpdateContent
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TenantAccessInfoCreateOrUpdateContent"/>. </summary>
-        /// <param name="principalId"> Principal (User) Identifier. </param>
-        /// <param name="primaryKey"> Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
-        /// <param name="secondaryKey"> Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
-        /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
+        /// <param name="principalId">
+        /// Principal (User) Identifier.
+        /// Serialized Name: AccessInformationCreateParameters.properties.principalId
+        /// </param>
+        /// <param name="primaryKey">
+        /// Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
+        /// Serialized Name: AccessInformationCreateParameters.properties.primaryKey
+        /// </param>
+        /// <param name="secondaryKey">
+        /// Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
+        /// Serialized Name: AccessInformationCreateParameters.properties.secondaryKey
+        /// </param>
+        /// <param name="isDirectAccessEnabled">
+        /// Determines whether direct access is enabled.
+        /// Serialized Name: AccessInformationCreateParameters.properties.enabled
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TenantAccessInfoCreateOrUpdateContent(string principalId, string primaryKey, string secondaryKey, bool? isDirectAccessEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,16 +80,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Principal (User) Identifier. </summary>
+        /// <summary>
+        /// Principal (User) Identifier.
+        /// Serialized Name: AccessInformationCreateParameters.properties.principalId
+        /// </summary>
         [WirePath("properties.principalId")]
         public string PrincipalId { get; set; }
-        /// <summary> Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
+        /// <summary>
+        /// Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
+        /// Serialized Name: AccessInformationCreateParameters.properties.primaryKey
+        /// </summary>
         [WirePath("properties.primaryKey")]
         public string PrimaryKey { get; set; }
-        /// <summary> Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
+        /// <summary>
+        /// Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
+        /// Serialized Name: AccessInformationCreateParameters.properties.secondaryKey
+        /// </summary>
         [WirePath("properties.secondaryKey")]
         public string SecondaryKey { get; set; }
-        /// <summary> Determines whether direct access is enabled. </summary>
+        /// <summary>
+        /// Determines whether direct access is enabled.
+        /// Serialized Name: AccessInformationCreateParameters.properties.enabled
+        /// </summary>
         [WirePath("properties.enabled")]
         public bool? IsDirectAccessEnabled { get; set; }
     }

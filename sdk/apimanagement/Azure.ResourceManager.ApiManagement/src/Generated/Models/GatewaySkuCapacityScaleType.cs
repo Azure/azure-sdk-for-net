@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The scale type applicable to the sku. </summary>
+    /// <summary>
+    /// The scale type applicable to the sku.
+    /// Serialized Name: GatewaySkuCapacityScaleType
+    /// </summary>
     public readonly partial struct GatewaySkuCapacityScaleType : IEquatable<GatewaySkuCapacityScaleType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string ManualValue = "Manual";
         private const string NoneValue = "None";
 
-        /// <summary> Supported scale type automatic. </summary>
+        /// <summary>
+        /// Supported scale type automatic.
+        /// Serialized Name: GatewaySkuCapacityScaleType.Automatic
+        /// </summary>
         public static GatewaySkuCapacityScaleType Automatic { get; } = new GatewaySkuCapacityScaleType(AutomaticValue);
-        /// <summary> Supported scale type manual. </summary>
+        /// <summary>
+        /// Supported scale type manual.
+        /// Serialized Name: GatewaySkuCapacityScaleType.Manual
+        /// </summary>
         public static GatewaySkuCapacityScaleType Manual { get; } = new GatewaySkuCapacityScaleType(ManualValue);
-        /// <summary> Scaling not supported. </summary>
+        /// <summary>
+        /// Scaling not supported.
+        /// Serialized Name: GatewaySkuCapacityScaleType.None
+        /// </summary>
         public static GatewaySkuCapacityScaleType None { get; } = new GatewaySkuCapacityScaleType(NoneValue);
         /// <summary> Determines if two <see cref="GatewaySkuCapacityScaleType"/> values are the same. </summary>
         public static bool operator ==(GatewaySkuCapacityScaleType left, GatewaySkuCapacityScaleType right) => left.Equals(right);

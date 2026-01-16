@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Indicates if base policy should be enforced for the policy document. </summary>
+    /// <summary>
+    /// Indicates if base policy should be enforced for the policy document.
+    /// Serialized Name: PolicyRestrictionRequireBase
+    /// </summary>
     public readonly partial struct PolicyRestrictionRequireBase : IEquatable<PolicyRestrictionRequireBase>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string TrueValue = "true";
         private const string FalseValue = "false";
 
-        /// <summary> The policy is required to have base policy. </summary>
+        /// <summary>
+        /// The policy is required to have base policy
+        /// Serialized Name: PolicyRestrictionRequireBase.true
+        /// </summary>
         public static PolicyRestrictionRequireBase True { get; } = new PolicyRestrictionRequireBase(TrueValue);
-        /// <summary> The policy does not require to have base policy. </summary>
+        /// <summary>
+        /// The policy does not require to have base policy
+        /// Serialized Name: PolicyRestrictionRequireBase.false
+        /// </summary>
         public static PolicyRestrictionRequireBase False { get; } = new PolicyRestrictionRequireBase(FalseValue);
         /// <summary> Determines if two <see cref="PolicyRestrictionRequireBase"/> values are the same. </summary>
         public static bool operator ==(PolicyRestrictionRequireBase left, PolicyRestrictionRequireBase right) => left.Equals(right);

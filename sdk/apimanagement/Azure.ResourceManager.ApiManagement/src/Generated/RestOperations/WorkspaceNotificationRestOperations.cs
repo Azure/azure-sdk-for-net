@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-01";
+            _apiVersion = apiVersion ?? "2025-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/workspaces/", false);
             uri.AppendPath(workspaceId, true);
             uri.AppendPath("/notifications", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
                 uri.AppendQuery("$top", top.Value, true);
@@ -57,7 +58,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -77,6 +77,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/workspaces/", false);
             uri.AppendPath(workspaceId, true);
             uri.AppendPath("/notifications", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
                 uri.AppendQuery("$top", top.Value, true);
@@ -85,7 +86,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NotificationListResult>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationCollection>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        NotificationListResult value = default;
+                        NotificationCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NotificationListResult.DeserializeNotificationListResult(document.RootElement);
+                        value = NotificationCollection.DeserializeNotificationCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NotificationListResult> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<NotificationCollection> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        NotificationListResult value = default;
+                        NotificationCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NotificationListResult.DeserializeNotificationListResult(document.RootElement);
+                        value = NotificationCollection.DeserializeNotificationCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, NotificationName notificationName, ETag? ifMatch)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, NotificationName notificationName, string ifMatch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ApiManagement
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, NotificationName notificationName, ETag? ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, NotificationName notificationName, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ApiManagement
             request.Uri = uri;
             if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", ifMatch.Value);
+                request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiManagementNotificationData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, NotificationName notificationName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementNotificationData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, NotificationName notificationName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiManagementNotificationData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, NotificationName notificationName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ApiManagementNotificationData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, NotificationName notificationName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NotificationListResult>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationCollection>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -427,9 +427,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        NotificationListResult value = default;
+                        NotificationCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NotificationListResult.DeserializeNotificationListResult(document.RootElement);
+                        value = NotificationCollection.DeserializeNotificationCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NotificationListResult> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<NotificationCollection> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -462,9 +462,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        NotificationListResult value = default;
+                        NotificationCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NotificationListResult.DeserializeNotificationListResult(document.RootElement);
+                        value = NotificationCollection.DeserializeNotificationCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

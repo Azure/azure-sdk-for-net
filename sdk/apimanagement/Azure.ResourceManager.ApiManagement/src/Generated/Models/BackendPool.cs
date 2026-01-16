@@ -10,8 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Backend pool information. </summary>
-    internal partial class BackendPool
+    /// <summary>
+    /// Backend pool information
+    /// Serialized Name: BackendPool
+    /// </summary>
+    public partial class BackendPool
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,16 +55,73 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendPool"/>. </summary>
-        /// <param name="services"> The list of backend entities belonging to a pool. </param>
+        /// <param name="services">
+        /// The list of backend entities belonging to a pool.
+        /// Serialized Name: BackendPool.services
+        /// </param>
+        /// <param name="failureResponse">
+        /// The response to be returned when all the backends in the pool are inactive.
+        /// Serialized Name: BackendPool.failureResponse
+        /// </param>
+        /// <param name="sessionAffinity">
+        /// The session stickiness properties of the backend pool.
+        /// Serialized Name: BackendPool.sessionAffinity
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackendPool(IList<BackendPoolItem> services, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BackendPool(IList<BackendPoolItem> services, BackendFailureResponse failureResponse, BackendSessionAffinity sessionAffinity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Services = services;
+            FailureResponse = failureResponse;
+            SessionAffinity = sessionAffinity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of backend entities belonging to a pool. </summary>
+        /// <summary>
+        /// The list of backend entities belonging to a pool.
+        /// Serialized Name: BackendPool.services
+        /// </summary>
         [WirePath("services")]
         public IList<BackendPoolItem> Services { get; }
+        /// <summary>
+        /// The response to be returned when all the backends in the pool are inactive.
+        /// Serialized Name: BackendPool.failureResponse
+        /// </summary>
+        internal BackendFailureResponse FailureResponse { get; set; }
+        /// <summary>
+        /// The status code of the response.
+        /// Serialized Name: BackendFailureResponse.statusCode
+        /// </summary>
+        [WirePath("failureResponse.statusCode")]
+        public int? FailureResponseStatusCode
+        {
+            get => FailureResponse is null ? default : FailureResponse.StatusCode;
+            set
+            {
+                if (FailureResponse is null)
+                    FailureResponse = new BackendFailureResponse();
+                FailureResponse.StatusCode = value;
+            }
+        }
+
+        /// <summary>
+        /// The session stickiness properties of the backend pool.
+        /// Serialized Name: BackendPool.sessionAffinity
+        /// </summary>
+        internal BackendSessionAffinity SessionAffinity { get; set; }
+        /// <summary>
+        /// The id that identifies the requests belonging to the same session.
+        /// Serialized Name: BackendSessionAffinity.sessionId
+        /// </summary>
+        [WirePath("sessionAffinity.sessionId")]
+        public BackendSessionId SessionId
+        {
+            get => SessionAffinity is null ? default : SessionAffinity.SessionId;
+            set
+            {
+                if (SessionAffinity is null)
+                    SessionAffinity = new BackendSessionAffinity();
+                SessionAffinity.SessionId = value;
+            }
+        }
     }
 }

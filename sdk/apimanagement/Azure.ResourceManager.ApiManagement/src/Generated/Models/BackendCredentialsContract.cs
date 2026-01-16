@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Details of the Credentials used to connect to Backend. </summary>
+    /// <summary>
+    /// Details of the Credentials used to connect to Backend.
+    /// Serialized Name: BackendCredentialsContract
+    /// </summary>
     public partial class BackendCredentialsContract
     {
         /// <summary>
@@ -55,11 +58,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendCredentialsContract"/>. </summary>
-        /// <param name="certificateIds"> List of Client Certificate Ids. </param>
-        /// <param name="certificate"> List of Client Certificate Thumbprints. Will be ignored if certificatesIds are provided. </param>
-        /// <param name="query"> Query Parameter description. </param>
-        /// <param name="header"> Header Parameter description. </param>
-        /// <param name="authorization"> Authorization header authentication. </param>
+        /// <param name="certificateIds">
+        /// List of Client Certificate Ids.
+        /// Serialized Name: BackendCredentialsContract.certificateIds
+        /// </param>
+        /// <param name="certificate">
+        /// List of Client Certificate Thumbprints. Will be ignored if certificatesIds are provided.
+        /// Serialized Name: BackendCredentialsContract.certificate
+        /// </param>
+        /// <param name="query">
+        /// Query Parameter description.
+        /// Serialized Name: BackendCredentialsContract.query
+        /// </param>
+        /// <param name="header">
+        /// Header Parameter description.
+        /// Serialized Name: BackendCredentialsContract.header
+        /// </param>
+        /// <param name="authorization">
+        /// Authorization header authentication
+        /// Serialized Name: BackendCredentialsContract.authorization
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackendCredentialsContract(IList<string> certificateIds, IList<string> certificate, IDictionary<string, IList<string>> query, IDictionary<string, IList<string>> header, BackendAuthorizationHeaderCredentials authorization, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,19 +89,34 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Client Certificate Ids. </summary>
+        /// <summary>
+        /// List of Client Certificate Ids.
+        /// Serialized Name: BackendCredentialsContract.certificateIds
+        /// </summary>
         [WirePath("certificateIds")]
         public IList<string> CertificateIds { get; }
-        /// <summary> List of Client Certificate Thumbprints. Will be ignored if certificatesIds are provided. </summary>
+        /// <summary>
+        /// List of Client Certificate Thumbprints. Will be ignored if certificatesIds are provided.
+        /// Serialized Name: BackendCredentialsContract.certificate
+        /// </summary>
         [WirePath("certificate")]
         public IList<string> Certificate { get; }
-        /// <summary> Query Parameter description. </summary>
+        /// <summary>
+        /// Query Parameter description.
+        /// Serialized Name: BackendCredentialsContract.query
+        /// </summary>
         [WirePath("query")]
         public IDictionary<string, IList<string>> Query { get; }
-        /// <summary> Header Parameter description. </summary>
+        /// <summary>
+        /// Header Parameter description.
+        /// Serialized Name: BackendCredentialsContract.header
+        /// </summary>
         [WirePath("header")]
         public IDictionary<string, IList<string>> Header { get; }
-        /// <summary> Authorization header authentication. </summary>
+        /// <summary>
+        /// Authorization header authentication
+        /// Serialized Name: BackendCredentialsContract.authorization
+        /// </summary>
         [WirePath("authorization")]
         public BackendAuthorizationHeaderCredentials Authorization { get; set; }
     }

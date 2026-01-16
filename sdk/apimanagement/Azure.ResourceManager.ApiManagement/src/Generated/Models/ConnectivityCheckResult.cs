@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Information on the connectivity status. </summary>
+    /// <summary>
+    /// Information on the connectivity status.
+    /// Serialized Name: ConnectivityCheckResponse
+    /// </summary>
     public partial class ConnectivityCheckResult
     {
         /// <summary>
@@ -52,13 +55,34 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityCheckResult"/>. </summary>
-        /// <param name="hops"> List of hops between the source and the destination. </param>
-        /// <param name="connectionStatus"> The connection status. </param>
-        /// <param name="avgLatencyInMs"> Average latency in milliseconds. </param>
-        /// <param name="minLatencyInMs"> Minimum latency in milliseconds. </param>
-        /// <param name="maxLatencyInMs"> Maximum latency in milliseconds. </param>
-        /// <param name="probesSent"> Total number of probes sent. </param>
-        /// <param name="probesFailed"> Number of failed probes. </param>
+        /// <param name="hops">
+        /// List of hops between the source and the destination.
+        /// Serialized Name: ConnectivityCheckResponse.hops
+        /// </param>
+        /// <param name="connectionStatus">
+        /// The connection status.
+        /// Serialized Name: ConnectivityCheckResponse.connectionStatus
+        /// </param>
+        /// <param name="avgLatencyInMs">
+        /// Average latency in milliseconds.
+        /// Serialized Name: ConnectivityCheckResponse.avgLatencyInMs
+        /// </param>
+        /// <param name="minLatencyInMs">
+        /// Minimum latency in milliseconds.
+        /// Serialized Name: ConnectivityCheckResponse.minLatencyInMs
+        /// </param>
+        /// <param name="maxLatencyInMs">
+        /// Maximum latency in milliseconds.
+        /// Serialized Name: ConnectivityCheckResponse.maxLatencyInMs
+        /// </param>
+        /// <param name="probesSent">
+        /// Total number of probes sent.
+        /// Serialized Name: ConnectivityCheckResponse.probesSent
+        /// </param>
+        /// <param name="probesFailed">
+        /// Number of failed probes.
+        /// Serialized Name: ConnectivityCheckResponse.probesFailed
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectivityCheckResult(IReadOnlyList<ConnectivityHop> hops, ConnectionStatus? connectionStatus, long? avgLatencyInMs, long? minLatencyInMs, long? maxLatencyInMs, long? probesSent, long? probesFailed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,25 +96,46 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of hops between the source and the destination. </summary>
+        /// <summary>
+        /// List of hops between the source and the destination.
+        /// Serialized Name: ConnectivityCheckResponse.hops
+        /// </summary>
         [WirePath("hops")]
         public IReadOnlyList<ConnectivityHop> Hops { get; }
-        /// <summary> The connection status. </summary>
+        /// <summary>
+        /// The connection status.
+        /// Serialized Name: ConnectivityCheckResponse.connectionStatus
+        /// </summary>
         [WirePath("connectionStatus")]
         public ConnectionStatus? ConnectionStatus { get; }
-        /// <summary> Average latency in milliseconds. </summary>
+        /// <summary>
+        /// Average latency in milliseconds.
+        /// Serialized Name: ConnectivityCheckResponse.avgLatencyInMs
+        /// </summary>
         [WirePath("avgLatencyInMs")]
         public long? AvgLatencyInMs { get; }
-        /// <summary> Minimum latency in milliseconds. </summary>
+        /// <summary>
+        /// Minimum latency in milliseconds.
+        /// Serialized Name: ConnectivityCheckResponse.minLatencyInMs
+        /// </summary>
         [WirePath("minLatencyInMs")]
         public long? MinLatencyInMs { get; }
-        /// <summary> Maximum latency in milliseconds. </summary>
+        /// <summary>
+        /// Maximum latency in milliseconds.
+        /// Serialized Name: ConnectivityCheckResponse.maxLatencyInMs
+        /// </summary>
         [WirePath("maxLatencyInMs")]
         public long? MaxLatencyInMs { get; }
-        /// <summary> Total number of probes sent. </summary>
+        /// <summary>
+        /// Total number of probes sent.
+        /// Serialized Name: ConnectivityCheckResponse.probesSent
+        /// </summary>
         [WirePath("probesSent")]
         public long? ProbesSent { get; }
-        /// <summary> Number of failed probes. </summary>
+        /// <summary>
+        /// Number of failed probes.
+        /// Serialized Name: ConnectivityCheckResponse.probesFailed
+        /// </summary>
         [WirePath("probesFailed")]
         public long? ProbesFailed { get; }
     }

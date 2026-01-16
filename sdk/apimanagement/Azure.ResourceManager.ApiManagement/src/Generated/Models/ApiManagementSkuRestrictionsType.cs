@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The type of restrictions. </summary>
+    /// <summary>
+    /// The type of restrictions.
+    /// Serialized Name: ApiManagementSkuRestrictionsType
+    /// </summary>
     public enum ApiManagementSkuRestrictionsType
     {
-        /// <summary> Location. </summary>
+        /// <summary>
+        /// Location
+        /// Serialized Name: ApiManagementSkuRestrictionsType.Location
+        /// </summary>
         Location,
-        /// <summary> Zone. </summary>
+        /// <summary>
+        /// Zone
+        /// Serialized Name: ApiManagementSkuRestrictionsType.Zone
+        /// </summary>
         Zone
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Type of the backend. A backend can be either Single or Pool. </summary>
+    /// <summary>
+    /// Type of the backend. A backend can be either Single or Pool.
+    /// Serialized Name: BackendType
+    /// </summary>
     public readonly partial struct BackendType : IEquatable<BackendType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string SingleValue = "Single";
         private const string PoolValue = "Pool";
 
-        /// <summary> supports single backend. </summary>
+        /// <summary>
+        /// supports single backend
+        /// Serialized Name: BackendType.Single
+        /// </summary>
         public static BackendType Single { get; } = new BackendType(SingleValue);
-        /// <summary> supports pool backend. </summary>
+        /// <summary>
+        /// supports pool backend
+        /// Serialized Name: BackendType.Pool
+        /// </summary>
         public static BackendType Pool { get; } = new BackendType(PoolValue);
         /// <summary> Determines if two <see cref="BackendType"/> values are the same. </summary>
         public static bool operator ==(BackendType left, BackendType right) => left.Equals(right);

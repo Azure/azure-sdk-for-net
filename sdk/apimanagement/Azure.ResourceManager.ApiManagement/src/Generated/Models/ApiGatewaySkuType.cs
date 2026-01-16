@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Name of the Sku. </summary>
+    /// <summary>
+    /// Name of the Sku.
+    /// Serialized Name: ApiGatewaySkuType
+    /// </summary>
     public readonly partial struct ApiGatewaySkuType : IEquatable<ApiGatewaySkuType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string WorkspaceGatewayStandardValue = "WorkspaceGatewayStandard";
         private const string WorkspaceGatewayPremiumValue = "WorkspaceGatewayPremium";
 
-        /// <summary> Standard SKU of the API gateway. </summary>
+        /// <summary>
+        /// Standard SKU of the API gateway.
+        /// Serialized Name: ApiGatewaySkuType.Standard
+        /// </summary>
         public static ApiGatewaySkuType Standard { get; } = new ApiGatewaySkuType(StandardValue);
-        /// <summary> Standard SKU of the API gateway to be used in Workspaces. </summary>
+        /// <summary>
+        /// Standard SKU of the API gateway to be used in Workspaces.
+        /// Serialized Name: ApiGatewaySkuType.WorkspaceGatewayStandard
+        /// </summary>
         public static ApiGatewaySkuType WorkspaceGatewayStandard { get; } = new ApiGatewaySkuType(WorkspaceGatewayStandardValue);
-        /// <summary> Premium SKU of the API gateway to be used in Workspaces. </summary>
+        /// <summary>
+        /// Premium SKU of the API gateway to be used in Workspaces.
+        /// Serialized Name: ApiGatewaySkuType.WorkspaceGatewayPremium
+        /// </summary>
         public static ApiGatewaySkuType WorkspaceGatewayPremium { get; } = new ApiGatewaySkuType(WorkspaceGatewayPremiumValue);
         /// <summary> Determines if two <see cref="ApiGatewaySkuType"/> values are the same. </summary>
         public static bool operator ==(ApiGatewaySkuType left, ApiGatewaySkuType right) => left.Equals(right);

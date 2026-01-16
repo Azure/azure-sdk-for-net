@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-01";
+            _apiVersion = apiVersion ?? "2025-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/workspaces/", false);
             uri.AppendPath(workspaceId, true);
             uri.AppendPath("/tags", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -65,7 +66,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("scope", scope, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -85,6 +85,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/workspaces/", false);
             uri.AppendPath(workspaceId, true);
             uri.AppendPath("/tags", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -101,7 +102,6 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("scope", scope, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TagListResult>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string filter = null, int? top = null, int? skip = null, string scope = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TagCollection>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string filter = null, int? top = null, int? skip = null, string scope = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TagListResult value = default;
+                        TagCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = TagListResult.DeserializeTagListResult(document.RootElement);
+                        value = TagCollection.DeserializeTagCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TagListResult> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string filter = null, int? top = null, int? skip = null, string scope = null, CancellationToken cancellationToken = default)
+        public Response<TagCollection> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string filter = null, int? top = null, int? skip = null, string scope = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -168,123 +168,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TagListResult value = default;
+                        TagCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = TagListResult.DeserializeTagListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetEntityStateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceId, true);
-            uri.AppendPath("/tags/", false);
-            uri.AppendPath(tagId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetEntityStateRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceId, true);
-            uri.AppendPath("/tags/", false);
-            uri.AppendPath(tagId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the entity state version of the tag specified by its identifier. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="tagId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<bool>> GetEntityStateAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
-
-            using var message = CreateGetEntityStateRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, tagId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case int s when s >= 200 && s < 300:
-                    {
-                        bool value = true;
-                        return Response.FromValue(value, message.Response);
-                    }
-                case int s when s >= 400 && s < 500:
-                    {
-                        bool value = false;
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the entity state version of the tag specified by its identifier. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="tagId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<bool> GetEntityState(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
-
-            using var message = CreateGetEntityStateRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, tagId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case int s when s >= 200 && s < 300:
-                    {
-                        bool value = true;
-                        return Response.FromValue(value, message.Response);
-                    }
-                case int s when s >= 400 && s < 500:
-                    {
-                        bool value = false;
+                        value = TagCollection.DeserializeTagCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -404,7 +290,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, ApiManagementTagCreateOrUpdateContent content, ETag? ifMatch)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, ApiManagementTagCreateOrUpdateContent content, string ifMatch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -422,7 +308,7 @@ namespace Azure.ResourceManager.ApiManagement
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, ApiManagementTagCreateOrUpdateContent content, ETag? ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, ApiManagementTagCreateOrUpdateContent content, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -443,7 +329,7 @@ namespace Azure.ResourceManager.ApiManagement
             request.Uri = uri;
             if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", ifMatch.Value);
+                request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -465,7 +351,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="tagId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TagContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, ApiManagementTagCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TagContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, ApiManagementTagCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -502,7 +388,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="tagId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TagContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, ApiManagementTagCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<TagContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, ApiManagementTagCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -528,7 +414,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, ETag ifMatch, ApiManagementTagCreateOrUpdateContent content)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, string ifMatch, ApiManagementTagCreateOrUpdateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -546,7 +432,7 @@ namespace Azure.ResourceManager.ApiManagement
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, ETag ifMatch, ApiManagementTagCreateOrUpdateContent content)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, string ifMatch, ApiManagementTagCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -584,15 +470,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="content"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="tagId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="tagId"/>, <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TagContractData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, ETag ifMatch, ApiManagementTagCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<TagContractData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, string ifMatch, ApiManagementTagCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, tagId, ifMatch, content);
@@ -620,15 +507,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="content"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="tagId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="tagId"/>, <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TagContractData> Update(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, ETag ifMatch, ApiManagementTagCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response<TagContractData> Update(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, string ifMatch, ApiManagementTagCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, tagId, ifMatch, content);
@@ -647,7 +535,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, ETag ifMatch)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, string ifMatch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -665,7 +553,7 @@ namespace Azure.ResourceManager.ApiManagement
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, ETag ifMatch)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -698,15 +586,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="tagId"/> or <paramref name="ifMatch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, ETag ifMatch, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, string ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, tagId, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -728,15 +617,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="tagId"/> or <paramref name="ifMatch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, ETag ifMatch, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, string ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, tagId, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -745,6 +635,120 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 204:
                     return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetEntityStateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/workspaces/", false);
+            uri.AppendPath(workspaceId, true);
+            uri.AppendPath("/tags/", false);
+            uri.AppendPath(tagId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetEntityStateRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Head;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/workspaces/", false);
+            uri.AppendPath(workspaceId, true);
+            uri.AppendPath("/tags/", false);
+            uri.AppendPath(tagId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the entity state version of the tag specified by its identifier. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<bool>> GetEntityStateAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
+            Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
+
+            using var message = CreateGetEntityStateRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, tagId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the entity state version of the tag specified by its identifier. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<bool> GetEntityState(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
+            Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
+
+            using var message = CreateGetEntityStateRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, tagId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -785,7 +789,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TagListResult>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string filter = null, int? top = null, int? skip = null, string scope = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TagCollection>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string filter = null, int? top = null, int? skip = null, string scope = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -799,9 +803,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TagListResult value = default;
+                        TagCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = TagListResult.DeserializeTagListResult(document.RootElement);
+                        value = TagCollection.DeserializeTagCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -822,7 +826,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TagListResult> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string filter = null, int? top = null, int? skip = null, string scope = null, CancellationToken cancellationToken = default)
+        public Response<TagCollection> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string filter = null, int? top = null, int? skip = null, string scope = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -836,9 +840,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TagListResult value = default;
+                        TagCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = TagListResult.DeserializeTagListResult(document.RootElement);
+                        value = TagCollection.DeserializeTagCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

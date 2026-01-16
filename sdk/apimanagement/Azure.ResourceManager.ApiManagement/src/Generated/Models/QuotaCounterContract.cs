@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Quota counter details. </summary>
+    /// <summary>
+    /// Quota counter details.
+    /// Serialized Name: QuotaCounterContract
+    /// </summary>
     public partial class QuotaCounterContract
     {
         /// <summary>
@@ -46,15 +49,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="QuotaCounterContract"/>. </summary>
-        /// <param name="counterKey"> The Key value of the Counter. Must not be empty. </param>
-        /// <param name="periodKey"> Identifier of the Period for which the counter was collected. Must not be empty. </param>
+        /// <param name="counterKey">
+        /// The Key value of the Counter. Must not be empty.
+        /// Serialized Name: QuotaCounterContract.counterKey
+        /// </param>
+        /// <param name="periodKey">
+        /// Identifier of the Period for which the counter was collected. Must not be empty.
+        /// Serialized Name: QuotaCounterContract.periodKey
+        /// </param>
         /// <param name="periodStartOn">
         /// The date of the start of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
+        /// Serialized Name: QuotaCounterContract.periodStartTime
         /// </param>
         /// <param name="periodEndOn">
         /// The date of the end of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
+        /// Serialized Name: QuotaCounterContract.periodEndTime
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="counterKey"/> or <paramref name="periodKey"/> is null. </exception>
         internal QuotaCounterContract(string counterKey, string periodKey, DateTimeOffset periodStartOn, DateTimeOffset periodEndOn)
@@ -69,17 +78,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaCounterContract"/>. </summary>
-        /// <param name="counterKey"> The Key value of the Counter. Must not be empty. </param>
-        /// <param name="periodKey"> Identifier of the Period for which the counter was collected. Must not be empty. </param>
+        /// <param name="counterKey">
+        /// The Key value of the Counter. Must not be empty.
+        /// Serialized Name: QuotaCounterContract.counterKey
+        /// </param>
+        /// <param name="periodKey">
+        /// Identifier of the Period for which the counter was collected. Must not be empty.
+        /// Serialized Name: QuotaCounterContract.periodKey
+        /// </param>
         /// <param name="periodStartOn">
         /// The date of the start of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
+        /// Serialized Name: QuotaCounterContract.periodStartTime
         /// </param>
         /// <param name="periodEndOn">
         /// The date of the end of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
+        /// Serialized Name: QuotaCounterContract.periodEndTime
         /// </param>
-        /// <param name="value"> Quota Value Properties. </param>
+        /// <param name="value">
+        /// Quota Value Properties
+        /// Serialized Name: QuotaCounterContract.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal QuotaCounterContract(string counterKey, string periodKey, DateTimeOffset periodStartOn, DateTimeOffset periodEndOn, QuotaCounterValueContractProperties value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -96,25 +114,34 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary> The Key value of the Counter. Must not be empty. </summary>
+        /// <summary>
+        /// The Key value of the Counter. Must not be empty.
+        /// Serialized Name: QuotaCounterContract.counterKey
+        /// </summary>
         [WirePath("counterKey")]
         public string CounterKey { get; }
-        /// <summary> Identifier of the Period for which the counter was collected. Must not be empty. </summary>
+        /// <summary>
+        /// Identifier of the Period for which the counter was collected. Must not be empty.
+        /// Serialized Name: QuotaCounterContract.periodKey
+        /// </summary>
         [WirePath("periodKey")]
         public string PeriodKey { get; }
         /// <summary>
         /// The date of the start of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
+        /// Serialized Name: QuotaCounterContract.periodStartTime
         /// </summary>
         [WirePath("periodStartTime")]
         public DateTimeOffset PeriodStartOn { get; }
         /// <summary>
         /// The date of the end of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
+        /// Serialized Name: QuotaCounterContract.periodEndTime
         /// </summary>
         [WirePath("periodEndTime")]
         public DateTimeOffset PeriodEndOn { get; }
-        /// <summary> Quota Value Properties. </summary>
+        /// <summary>
+        /// Quota Value Properties
+        /// Serialized Name: QuotaCounterContract.value
+        /// </summary>
         [WirePath("value")]
         public QuotaCounterValueContractProperties Value { get; }
     }

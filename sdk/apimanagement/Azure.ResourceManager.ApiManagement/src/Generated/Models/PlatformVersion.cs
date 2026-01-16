@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Compute Platform Version running the service. </summary>
+    /// <summary>
+    /// Compute Platform Version running the service.
+    /// Serialized Name: PlatformVersion
+    /// </summary>
     public readonly partial struct PlatformVersion : IEquatable<PlatformVersion>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string Mtv1Value = "mtv1";
         private const string Stv21Value = "stv2.1";
 
-        /// <summary> Platform version cannot be determined, as compute platform is not deployed. </summary>
+        /// <summary>
+        /// Platform version cannot be determined, as compute platform is not deployed.
+        /// Serialized Name: PlatformVersion.undetermined
+        /// </summary>
         public static PlatformVersion Undetermined { get; } = new PlatformVersion(UndeterminedValue);
-        /// <summary> Platform running the service on Single Tenant V1 platform. </summary>
+        /// <summary>
+        /// Platform running the service on Single Tenant V1 platform.
+        /// Serialized Name: PlatformVersion.stv1
+        /// </summary>
         public static PlatformVersion Stv1 { get; } = new PlatformVersion(Stv1Value);
-        /// <summary> Platform running the service on Single Tenant V2 platform. </summary>
+        /// <summary>
+        /// Platform running the service on Single Tenant V2 platform.
+        /// Serialized Name: PlatformVersion.stv2
+        /// </summary>
         public static PlatformVersion Stv2 { get; } = new PlatformVersion(Stv2Value);
-        /// <summary> Platform running the service on Multi Tenant V1 platform. </summary>
+        /// <summary>
+        /// Platform running the service on Multi Tenant V1 platform.
+        /// Serialized Name: PlatformVersion.mtv1
+        /// </summary>
         public static PlatformVersion Mtv1 { get; } = new PlatformVersion(Mtv1Value);
-        /// <summary> Platform running the service on Single Tenant V2 platform on newer Hardware. </summary>
+        /// <summary>
+        /// Platform running the service on Single Tenant V2 platform on newer Hardware.
+        /// Serialized Name: PlatformVersion.stv2.1
+        /// </summary>
         public static PlatformVersion Stv21 { get; } = new PlatformVersion(Stv21Value);
         /// <summary> Determines if two <see cref="PlatformVersion"/> values are the same. </summary>
         public static bool operator ==(PlatformVersion left, PlatformVersion right) => left.Equals(right);

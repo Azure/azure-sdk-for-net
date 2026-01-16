@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the AuthorizationAccessPolicyContract data model.
     /// Authorization access policy contract.
+    /// Serialized Name: AuthorizationAccessPolicyContract
     /// </summary>
     public partial class AuthorizationAccessPolicyContractData : ResourceData
     {
@@ -61,9 +62,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="appIds"> The allowed Azure Active Directory Application IDs. </param>
-        /// <param name="tenantId"> The Tenant Id. </param>
-        /// <param name="objectId"> The Object Id. </param>
+        /// <param name="appIds">
+        /// The allowed Azure Active Directory Application IDs
+        /// Serialized Name: AuthorizationAccessPolicyContract.properties.appIds
+        /// </param>
+        /// <param name="tenantId">
+        /// The Tenant Id
+        /// Serialized Name: AuthorizationAccessPolicyContract.properties.tenantId
+        /// </param>
+        /// <param name="objectId">
+        /// The Object Id
+        /// Serialized Name: AuthorizationAccessPolicyContract.properties.objectId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AuthorizationAccessPolicyContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> appIds, Guid? tenantId, string objectId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,13 +83,22 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The allowed Azure Active Directory Application IDs. </summary>
+        /// <summary>
+        /// The allowed Azure Active Directory Application IDs
+        /// Serialized Name: AuthorizationAccessPolicyContract.properties.appIds
+        /// </summary>
         [WirePath("properties.appIds")]
         public IList<string> AppIds { get; }
-        /// <summary> The Tenant Id. </summary>
+        /// <summary>
+        /// The Tenant Id
+        /// Serialized Name: AuthorizationAccessPolicyContract.properties.tenantId
+        /// </summary>
         [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
-        /// <summary> The Object Id. </summary>
+        /// <summary>
+        /// The Object Id
+        /// Serialized Name: AuthorizationAccessPolicyContract.properties.objectId
+        /// </summary>
         [WirePath("properties.objectId")]
         public string ObjectId { get; set; }
     }

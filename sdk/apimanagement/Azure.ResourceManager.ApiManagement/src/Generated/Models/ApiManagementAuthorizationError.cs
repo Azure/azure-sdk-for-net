@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Authorization error details. </summary>
+    /// <summary>
+    /// Authorization error details.
+    /// Serialized Name: AuthorizationError
+    /// </summary>
     public partial class ApiManagementAuthorizationError
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementAuthorizationError"/>. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message. </param>
+        /// <param name="code">
+        /// Error code
+        /// Serialized Name: AuthorizationError.code
+        /// </param>
+        /// <param name="message">
+        /// Error message
+        /// Serialized Name: AuthorizationError.message
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementAuthorizationError(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Error code. </summary>
+        /// <summary>
+        /// Error code
+        /// Serialized Name: AuthorizationError.code
+        /// </summary>
         [WirePath("code")]
         public string Code { get; set; }
-        /// <summary> Error message. </summary>
+        /// <summary>
+        /// Error message
+        /// Serialized Name: AuthorizationError.message
+        /// </summary>
         [WirePath("message")]
         public string Message { get; set; }
     }

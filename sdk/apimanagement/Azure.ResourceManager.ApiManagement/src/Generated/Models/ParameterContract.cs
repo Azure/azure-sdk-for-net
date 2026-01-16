@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Operation parameters details. </summary>
+    /// <summary>
+    /// Operation parameters details.
+    /// Serialized Name: ParameterContract
+    /// </summary>
     public partial class ParameterContract
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ParameterContract"/>. </summary>
-        /// <param name="name"> Parameter name. </param>
-        /// <param name="parameterContractType"> Parameter type. </param>
+        /// <param name="name">
+        /// Parameter name.
+        /// Serialized Name: ParameterContract.name
+        /// </param>
+        /// <param name="parameterContractType">
+        /// Parameter type.
+        /// Serialized Name: ParameterContract.type
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameterContractType"/> is null. </exception>
         public ParameterContract(string name, string parameterContractType)
         {
@@ -61,15 +70,42 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ParameterContract"/>. </summary>
-        /// <param name="name"> Parameter name. </param>
-        /// <param name="description"> Parameter description. </param>
-        /// <param name="parameterContractType"> Parameter type. </param>
-        /// <param name="defaultValue"> Default parameter value. </param>
-        /// <param name="isRequired"> Specifies whether parameter is required or not. </param>
-        /// <param name="values"> Parameter values. </param>
-        /// <param name="schemaId"> Schema identifier. </param>
-        /// <param name="typeName"> Type name defined by the schema. </param>
-        /// <param name="examples"> Exampled defined for the parameter. </param>
+        /// <param name="name">
+        /// Parameter name.
+        /// Serialized Name: ParameterContract.name
+        /// </param>
+        /// <param name="description">
+        /// Parameter description.
+        /// Serialized Name: ParameterContract.description
+        /// </param>
+        /// <param name="parameterContractType">
+        /// Parameter type.
+        /// Serialized Name: ParameterContract.type
+        /// </param>
+        /// <param name="defaultValue">
+        /// Default parameter value.
+        /// Serialized Name: ParameterContract.defaultValue
+        /// </param>
+        /// <param name="isRequired">
+        /// Specifies whether parameter is required or not.
+        /// Serialized Name: ParameterContract.required
+        /// </param>
+        /// <param name="values">
+        /// Parameter values.
+        /// Serialized Name: ParameterContract.values
+        /// </param>
+        /// <param name="schemaId">
+        /// Schema identifier.
+        /// Serialized Name: ParameterContract.schemaId
+        /// </param>
+        /// <param name="typeName">
+        /// Type name defined by the schema.
+        /// Serialized Name: ParameterContract.typeName
+        /// </param>
+        /// <param name="examples">
+        /// Exampled defined for the parameter.
+        /// Serialized Name: ParameterContract.examples
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ParameterContract(string name, string description, string parameterContractType, string defaultValue, bool? isRequired, IList<string> values, string schemaId, string typeName, IDictionary<string, ParameterExampleContract> examples, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -90,31 +126,58 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary> Parameter name. </summary>
+        /// <summary>
+        /// Parameter name.
+        /// Serialized Name: ParameterContract.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Parameter description. </summary>
+        /// <summary>
+        /// Parameter description.
+        /// Serialized Name: ParameterContract.description
+        /// </summary>
         [WirePath("description")]
         public string Description { get; set; }
-        /// <summary> Parameter type. </summary>
+        /// <summary>
+        /// Parameter type.
+        /// Serialized Name: ParameterContract.type
+        /// </summary>
         [WirePath("type")]
         public string ParameterContractType { get; set; }
-        /// <summary> Default parameter value. </summary>
+        /// <summary>
+        /// Default parameter value.
+        /// Serialized Name: ParameterContract.defaultValue
+        /// </summary>
         [WirePath("defaultValue")]
         public string DefaultValue { get; set; }
-        /// <summary> Specifies whether parameter is required or not. </summary>
+        /// <summary>
+        /// Specifies whether parameter is required or not.
+        /// Serialized Name: ParameterContract.required
+        /// </summary>
         [WirePath("required")]
         public bool? IsRequired { get; set; }
-        /// <summary> Parameter values. </summary>
+        /// <summary>
+        /// Parameter values.
+        /// Serialized Name: ParameterContract.values
+        /// </summary>
         [WirePath("values")]
         public IList<string> Values { get; }
-        /// <summary> Schema identifier. </summary>
+        /// <summary>
+        /// Schema identifier.
+        /// Serialized Name: ParameterContract.schemaId
+        /// </summary>
         [WirePath("schemaId")]
         public string SchemaId { get; set; }
-        /// <summary> Type name defined by the schema. </summary>
+        /// <summary>
+        /// Type name defined by the schema.
+        /// Serialized Name: ParameterContract.typeName
+        /// </summary>
         [WirePath("typeName")]
         public string TypeName { get; set; }
-        /// <summary> Exampled defined for the parameter. </summary>
+        /// <summary>
+        /// Exampled defined for the parameter.
+        /// Serialized Name: ParameterContract.examples
+        /// </summary>
         [WirePath("examples")]
         public IDictionary<string, ParameterExampleContract> Examples { get; }
     }

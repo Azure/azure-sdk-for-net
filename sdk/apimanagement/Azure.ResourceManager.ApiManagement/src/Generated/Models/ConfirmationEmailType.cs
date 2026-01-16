@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Determines the type of confirmation e-mail that will be sent to the newly created user. </summary>
+    /// <summary>
+    /// Determines the type of confirmation e-mail that will be sent to the newly created user.
+    /// Serialized Name: Confirmation
+    /// </summary>
     public readonly partial struct ConfirmationEmailType : IEquatable<ConfirmationEmailType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string SignUpValue = "signup";
         private const string InviteValue = "invite";
 
-        /// <summary> Send an e-mail to the user confirming they have successfully signed up. </summary>
+        /// <summary>
+        /// Send an e-mail to the user confirming they have successfully signed up.
+        /// Serialized Name: Confirmation.signup
+        /// </summary>
         public static ConfirmationEmailType SignUp { get; } = new ConfirmationEmailType(SignUpValue);
-        /// <summary> Send an e-mail inviting the user to sign-up and complete registration. </summary>
+        /// <summary>
+        /// Send an e-mail inviting the user to sign-up and complete registration.
+        /// Serialized Name: Confirmation.invite
+        /// </summary>
         public static ConfirmationEmailType Invite { get; } = new ConfirmationEmailType(InviteValue);
         /// <summary> Determines if two <see cref="ConfirmationEmailType"/> values are the same. </summary>
         public static bool operator ==(ConfirmationEmailType left, ConfirmationEmailType right) => left.Equals(right);

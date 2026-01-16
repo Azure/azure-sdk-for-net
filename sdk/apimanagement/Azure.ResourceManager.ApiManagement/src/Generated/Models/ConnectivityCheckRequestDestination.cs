@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The connectivity check operation destination. </summary>
+    /// <summary>
+    /// The connectivity check operation destination.
+    /// Serialized Name: ConnectivityCheckRequestDestination
+    /// </summary>
     public partial class ConnectivityCheckRequestDestination
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestDestination"/>. </summary>
-        /// <param name="address"> Destination address. Can either be an IP address or a FQDN. </param>
-        /// <param name="port"> Destination port. </param>
+        /// <param name="address">
+        /// Destination address. Can either be an IP address or a FQDN.
+        /// Serialized Name: ConnectivityCheckRequestDestination.address
+        /// </param>
+        /// <param name="port">
+        /// Destination port.
+        /// Serialized Name: ConnectivityCheckRequestDestination.port
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="address"/> is null. </exception>
         public ConnectivityCheckRequestDestination(string address, long port)
         {
@@ -58,8 +67,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestDestination"/>. </summary>
-        /// <param name="address"> Destination address. Can either be an IP address or a FQDN. </param>
-        /// <param name="port"> Destination port. </param>
+        /// <param name="address">
+        /// Destination address. Can either be an IP address or a FQDN.
+        /// Serialized Name: ConnectivityCheckRequestDestination.address
+        /// </param>
+        /// <param name="port">
+        /// Destination port.
+        /// Serialized Name: ConnectivityCheckRequestDestination.port
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectivityCheckRequestDestination(string address, long port, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,10 +88,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary> Destination address. Can either be an IP address or a FQDN. </summary>
+        /// <summary>
+        /// Destination address. Can either be an IP address or a FQDN.
+        /// Serialized Name: ConnectivityCheckRequestDestination.address
+        /// </summary>
         [WirePath("address")]
         public string Address { get; }
-        /// <summary> Destination port. </summary>
+        /// <summary>
+        /// Destination port.
+        /// Serialized Name: ConnectivityCheckRequestDestination.port
+        /// </summary>
         [WirePath("port")]
         public long Port { get; }
     }

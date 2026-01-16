@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Details of the Backend WebProxy Server to use in the Request to Backend. </summary>
+    /// <summary>
+    /// Details of the Backend WebProxy Server to use in the Request to Backend.
+    /// Serialized Name: BackendProxyContract
+    /// </summary>
     public partial class BackendProxyContract
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BackendProxyContract"/>. </summary>
-        /// <param name="uri"> WebProxy Server AbsoluteUri property which includes the entire URI stored in the Uri instance, including all fragments and query strings. </param>
+        /// <param name="uri">
+        /// WebProxy Server AbsoluteUri property which includes the entire URI stored in the Uri instance, including all fragments and query strings.
+        /// Serialized Name: BackendProxyContract.url
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public BackendProxyContract(Uri uri)
         {
@@ -56,9 +62,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendProxyContract"/>. </summary>
-        /// <param name="uri"> WebProxy Server AbsoluteUri property which includes the entire URI stored in the Uri instance, including all fragments and query strings. </param>
-        /// <param name="username"> Username to connect to the WebProxy server. </param>
-        /// <param name="password"> Password to connect to the WebProxy Server. </param>
+        /// <param name="uri">
+        /// WebProxy Server AbsoluteUri property which includes the entire URI stored in the Uri instance, including all fragments and query strings.
+        /// Serialized Name: BackendProxyContract.url
+        /// </param>
+        /// <param name="username">
+        /// Username to connect to the WebProxy server
+        /// Serialized Name: BackendProxyContract.username
+        /// </param>
+        /// <param name="password">
+        /// Password to connect to the WebProxy Server
+        /// Serialized Name: BackendProxyContract.password
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackendProxyContract(Uri uri, string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,13 +88,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
-        /// <summary> WebProxy Server AbsoluteUri property which includes the entire URI stored in the Uri instance, including all fragments and query strings. </summary>
+        /// <summary>
+        /// WebProxy Server AbsoluteUri property which includes the entire URI stored in the Uri instance, including all fragments and query strings.
+        /// Serialized Name: BackendProxyContract.url
+        /// </summary>
         [WirePath("url")]
         public Uri Uri { get; set; }
-        /// <summary> Username to connect to the WebProxy server. </summary>
+        /// <summary>
+        /// Username to connect to the WebProxy server
+        /// Serialized Name: BackendProxyContract.username
+        /// </summary>
         [WirePath("username")]
         public string Username { get; set; }
-        /// <summary> Password to connect to the WebProxy Server. </summary>
+        /// <summary>
+        /// Password to connect to the WebProxy Server
+        /// Serialized Name: BackendProxyContract.password
+        /// </summary>
         [WirePath("password")]
         public string Password { get; set; }
     }

@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ProductApiLinkContract data model.
     /// Product-API link details.
+    /// Serialized Name: ProductApiLinkContract
     /// </summary>
     public partial class ProductApiLinkContractData : ResourceData
     {
@@ -60,7 +61,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="apiId"> Full resource Id of an API. </param>
+        /// <param name="apiId">
+        /// Full resource Id of an API.
+        /// Serialized Name: ProductApiLinkContract.properties.apiId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProductApiLinkContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string apiId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -68,7 +72,10 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Full resource Id of an API. </summary>
+        /// <summary>
+        /// Full resource Id of an API.
+        /// Serialized Name: ProductApiLinkContract.properties.apiId
+        /// </summary>
         [WirePath("properties.apiId")]
         public string ApiId { get; set; }
     }

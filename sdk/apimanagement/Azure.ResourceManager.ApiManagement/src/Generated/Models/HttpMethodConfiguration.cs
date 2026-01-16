@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The HTTP method to be used. </summary>
+    /// <summary>
+    /// The HTTP method to be used.
+    /// Serialized Name: Method
+    /// </summary>
     public readonly partial struct HttpMethodConfiguration : IEquatable<HttpMethodConfiguration>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string GetValue = "GET";
         private const string PostValue = "POST";
 
-        /// <summary> GET. </summary>
+        /// <summary>
+        /// GET
+        /// Serialized Name: Method.GET
+        /// </summary>
         public static HttpMethodConfiguration Get { get; } = new HttpMethodConfiguration(GetValue);
-        /// <summary> POST. </summary>
+        /// <summary>
+        /// POST
+        /// Serialized Name: Method.POST
+        /// </summary>
         public static HttpMethodConfiguration Post { get; } = new HttpMethodConfiguration(PostValue);
         /// <summary> Determines if two <see cref="HttpMethodConfiguration"/> values are the same. </summary>
         public static bool operator ==(HttpMethodConfiguration left, HttpMethodConfiguration right) => left.Equals(right);

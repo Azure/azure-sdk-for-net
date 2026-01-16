@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-01";
+            _apiVersion = apiVersion ?? "2025-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/policyDescriptions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (scope != null)
             {
                 uri.AppendQuery("scope", scope.Value.ToSerialString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/policyDescriptions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (scope != null)
             {
                 uri.AppendQuery("scope", scope.Value.ToSerialString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyDescriptionListResult>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, PolicyScopeContract? scope = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyDescriptionCollection>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, PolicyScopeContract? scope = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        PolicyDescriptionListResult value = default;
+                        PolicyDescriptionCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyDescriptionListResult.DeserializePolicyDescriptionListResult(document.RootElement);
+                        value = PolicyDescriptionCollection.DeserializePolicyDescriptionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyDescriptionListResult> ListByService(string subscriptionId, string resourceGroupName, string serviceName, PolicyScopeContract? scope = null, CancellationToken cancellationToken = default)
+        public Response<PolicyDescriptionCollection> ListByService(string subscriptionId, string resourceGroupName, string serviceName, PolicyScopeContract? scope = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        PolicyDescriptionListResult value = default;
+                        PolicyDescriptionCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyDescriptionListResult.DeserializePolicyDescriptionListResult(document.RootElement);
+                        value = PolicyDescriptionCollection.DeserializePolicyDescriptionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

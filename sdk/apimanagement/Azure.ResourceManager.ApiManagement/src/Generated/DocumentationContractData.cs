@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the DocumentationContract data model.
     /// Markdown documentation details.
+    /// Serialized Name: DocumentationContract
     /// </summary>
     public partial class DocumentationContractData : ResourceData
     {
@@ -60,8 +61,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="title"> documentation title. </param>
-        /// <param name="content"> Markdown documentation content. </param>
+        /// <param name="title">
+        /// documentation title.
+        /// Serialized Name: DocumentationContract.properties.title
+        /// </param>
+        /// <param name="content">
+        /// Markdown documentation content.
+        /// Serialized Name: DocumentationContract.properties.content
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DocumentationContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string content, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -70,10 +77,16 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> documentation title. </summary>
+        /// <summary>
+        /// documentation title.
+        /// Serialized Name: DocumentationContract.properties.title
+        /// </summary>
         [WirePath("properties.title")]
         public string Title { get; set; }
-        /// <summary> Markdown documentation content. </summary>
+        /// <summary>
+        /// Markdown documentation content.
+        /// Serialized Name: DocumentationContract.properties.content
+        /// </summary>
         [WirePath("properties.content")]
         public string Content { get; set; }
     }

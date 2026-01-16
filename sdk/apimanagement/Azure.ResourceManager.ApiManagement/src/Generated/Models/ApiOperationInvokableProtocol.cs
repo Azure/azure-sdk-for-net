@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The ApiOperationInvokableProtocol. </summary>
+    /// <summary>
+    /// The ApiOperationInvokableProtocol.
+    /// Serialized Name: Protocol
+    /// </summary>
     public readonly partial struct ApiOperationInvokableProtocol : IEquatable<ApiOperationInvokableProtocol>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string WsValue = "ws";
         private const string WssValue = "wss";
 
-        /// <summary> http. </summary>
+        /// <summary>
+        /// http
+        /// Serialized Name: Protocol.http
+        /// </summary>
         public static ApiOperationInvokableProtocol Http { get; } = new ApiOperationInvokableProtocol(HttpValue);
-        /// <summary> https. </summary>
+        /// <summary>
+        /// https
+        /// Serialized Name: Protocol.https
+        /// </summary>
         public static ApiOperationInvokableProtocol Https { get; } = new ApiOperationInvokableProtocol(HttpsValue);
-        /// <summary> ws. </summary>
+        /// <summary>
+        /// ws
+        /// Serialized Name: Protocol.ws
+        /// </summary>
         public static ApiOperationInvokableProtocol Ws { get; } = new ApiOperationInvokableProtocol(WsValue);
-        /// <summary> wss. </summary>
+        /// <summary>
+        /// wss
+        /// Serialized Name: Protocol.wss
+        /// </summary>
         public static ApiOperationInvokableProtocol Wss { get; } = new ApiOperationInvokableProtocol(WssValue);
         /// <summary> Determines if two <see cref="ApiOperationInvokableProtocol"/> values are the same. </summary>
         public static bool operator ==(ApiOperationInvokableProtocol left, ApiOperationInvokableProtocol right) => left.Equals(right);

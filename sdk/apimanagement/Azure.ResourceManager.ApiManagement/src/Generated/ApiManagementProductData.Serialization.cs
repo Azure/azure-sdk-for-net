@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -50,20 +51,35 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("terms"u8);
                 writer.WriteStringValue(Terms);
             }
-            if (Optional.IsDefined(IsSubscriptionRequired))
+            if (Optional.IsDefined(SubscriptionRequired))
             {
                 writer.WritePropertyName("subscriptionRequired"u8);
-                writer.WriteBooleanValue(IsSubscriptionRequired.Value);
+                writer.WriteBooleanValue(SubscriptionRequired.Value);
             }
-            if (Optional.IsDefined(IsApprovalRequired))
+            if (Optional.IsDefined(ApprovalRequired))
             {
                 writer.WritePropertyName("approvalRequired"u8);
-                writer.WriteBooleanValue(IsApprovalRequired.Value);
+                writer.WriteBooleanValue(ApprovalRequired.Value);
             }
             if (Optional.IsDefined(SubscriptionsLimit))
             {
                 writer.WritePropertyName("subscriptionsLimit"u8);
                 writer.WriteNumberValue(SubscriptionsLimit.Value);
+            }
+            if (Optional.IsCollectionDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType"u8);
+                writer.WriteStartArray();
+                foreach (var item in AuthenticationType)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Application))
+            {
+                writer.WritePropertyName("application"u8);
+                writer.WriteObjectValue(Application, options);
             }
             if (Optional.IsDefined(State))
             {
@@ -107,6 +123,8 @@ namespace Azure.ResourceManager.ApiManagement
             bool? subscriptionRequired = default;
             bool? approvalRequired = default;
             int? subscriptionsLimit = default;
+            IList<ProductAuthType> authenticationType = default;
+            ProductEntityBaseParametersApplication application = default;
             ApiManagementProductState? state = default;
             string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -183,6 +201,29 @@ namespace Azure.ResourceManager.ApiManagement
                             subscriptionsLimit = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("authenticationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ProductAuthType> array = new List<ProductAuthType>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new ProductAuthType(item.GetString()));
+                            }
+                            authenticationType = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("application"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            application = ProductEntityBaseParametersApplication.DeserializeProductEntityBaseParametersApplication(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -216,6 +257,8 @@ namespace Azure.ResourceManager.ApiManagement
                 subscriptionRequired,
                 approvalRequired,
                 subscriptionsLimit,
+                authenticationType ?? new ChangeTrackingList<ProductAuthType>(),
+                application,
                 state,
                 displayName,
                 serializedAdditionalRawData);
@@ -333,7 +376,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSubscriptionRequired), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionRequired), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    subscriptionRequired: ");
@@ -341,15 +384,15 @@ namespace Azure.ResourceManager.ApiManagement
             }
             else
             {
-                if (Optional.IsDefined(IsSubscriptionRequired))
+                if (Optional.IsDefined(SubscriptionRequired))
                 {
                     builder.Append("    subscriptionRequired: ");
-                    var boolValue = IsSubscriptionRequired.Value == true ? "true" : "false";
+                    var boolValue = SubscriptionRequired.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApprovalRequired), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApprovalRequired), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    approvalRequired: ");
@@ -357,10 +400,10 @@ namespace Azure.ResourceManager.ApiManagement
             }
             else
             {
-                if (Optional.IsDefined(IsApprovalRequired))
+                if (Optional.IsDefined(ApprovalRequired))
                 {
                     builder.Append("    approvalRequired: ");
-                    var boolValue = IsApprovalRequired.Value == true ? "true" : "false";
+                    var boolValue = ApprovalRequired.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
@@ -377,6 +420,49 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     builder.Append("    subscriptionsLimit: ");
                     builder.AppendLine($"{SubscriptionsLimit.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    authenticationType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AuthenticationType))
+                {
+                    if (AuthenticationType.Any())
+                    {
+                        builder.Append("    authenticationType: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AuthenticationType)
+                        {
+                            builder.AppendLine($"      '{item.ToString()}'");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ApplicationEntra", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    application: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      application: {");
+                builder.Append("        entra: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Application))
+                {
+                    builder.Append("    application: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Application, options, 4, false, "    application: ");
                 }
             }
 

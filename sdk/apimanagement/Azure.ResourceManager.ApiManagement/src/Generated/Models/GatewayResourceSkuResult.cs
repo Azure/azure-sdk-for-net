@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Describes an available API Management gateway SKU. </summary>
+    /// <summary>
+    /// Describes an available API Management gateway SKU.
+    /// Serialized Name: GatewayResourceSkuResult
+    /// </summary>
     public partial class GatewayResourceSkuResult
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GatewayResourceSkuResult"/>. </summary>
-        /// <param name="resourceType"> The type of resource the SKU applies to. </param>
-        /// <param name="sku"> Specifies API Management gateway SKU. </param>
-        /// <param name="capacity"> Specifies the number of API Management gateway units. </param>
+        /// <param name="resourceType">
+        /// The type of resource the SKU applies to.
+        /// Serialized Name: GatewayResourceSkuResult.resourceType
+        /// </param>
+        /// <param name="sku">
+        /// Specifies API Management gateway SKU.
+        /// Serialized Name: GatewayResourceSkuResult.sku
+        /// </param>
+        /// <param name="capacity">
+        /// Specifies the number of API Management gateway units.
+        /// Serialized Name: GatewayResourceSkuResult.capacity
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GatewayResourceSkuResult(string resourceType, GatewaySku sku, GatewaySkuCapacity capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,19 +75,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of resource the SKU applies to. </summary>
+        /// <summary>
+        /// The type of resource the SKU applies to.
+        /// Serialized Name: GatewayResourceSkuResult.resourceType
+        /// </summary>
         [WirePath("resourceType")]
         public string ResourceType { get; }
-        /// <summary> Specifies API Management gateway SKU. </summary>
+        /// <summary>
+        /// Specifies API Management gateway SKU.
+        /// Serialized Name: GatewayResourceSkuResult.sku
+        /// </summary>
         internal GatewaySku Sku { get; }
-        /// <summary> Name of the Sku. </summary>
+        /// <summary>
+        /// Name of the Sku.
+        /// Serialized Name: GatewaySku.name
+        /// </summary>
         [WirePath("sku.name")]
         public ApiGatewaySkuType? SkuName
         {
             get => Sku?.Name;
         }
 
-        /// <summary> Specifies the number of API Management gateway units. </summary>
+        /// <summary>
+        /// Specifies the number of API Management gateway units.
+        /// Serialized Name: GatewayResourceSkuResult.capacity
+        /// </summary>
         [WirePath("capacity")]
         public GatewaySkuCapacity Capacity { get; }
     }

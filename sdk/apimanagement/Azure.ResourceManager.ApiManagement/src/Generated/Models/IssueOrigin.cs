@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The origin of the issue. </summary>
+    /// <summary>
+    /// The origin of the issue.
+    /// Serialized Name: Origin
+    /// </summary>
     public readonly partial struct IssueOrigin : IEquatable<IssueOrigin>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string InboundValue = "Inbound";
         private const string OutboundValue = "Outbound";
 
-        /// <summary> Local. </summary>
+        /// <summary>
+        /// Local
+        /// Serialized Name: Origin.Local
+        /// </summary>
         public static IssueOrigin Local { get; } = new IssueOrigin(LocalValue);
-        /// <summary> Inbound. </summary>
+        /// <summary>
+        /// Inbound
+        /// Serialized Name: Origin.Inbound
+        /// </summary>
         public static IssueOrigin Inbound { get; } = new IssueOrigin(InboundValue);
-        /// <summary> Outbound. </summary>
+        /// <summary>
+        /// Outbound
+        /// Serialized Name: Origin.Outbound
+        /// </summary>
         public static IssueOrigin Outbound { get; } = new IssueOrigin(OutboundValue);
         /// <summary> Determines if two <see cref="IssueOrigin"/> values are the same. </summary>
         public static bool operator ==(IssueOrigin left, IssueOrigin right) => left.Equals(right);

@@ -7,18 +7,36 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The PolicyScopeContract. </summary>
+    /// <summary>
+    /// The PolicyScopeContract.
+    /// Serialized Name: PolicyScopeContract
+    /// </summary>
     public enum PolicyScopeContract
     {
-        /// <summary> Tenant. </summary>
+        /// <summary>
+        /// Tenant
+        /// Serialized Name: PolicyScopeContract.Tenant
+        /// </summary>
         Tenant,
-        /// <summary> Product. </summary>
+        /// <summary>
+        /// Product
+        /// Serialized Name: PolicyScopeContract.Product
+        /// </summary>
         Product,
-        /// <summary> Api. </summary>
+        /// <summary>
+        /// Api
+        /// Serialized Name: PolicyScopeContract.Api
+        /// </summary>
         Api,
-        /// <summary> Operation. </summary>
+        /// <summary>
+        /// Operation
+        /// Serialized Name: PolicyScopeContract.Operation
+        /// </summary>
         Operation,
-        /// <summary> All. </summary>
+        /// <summary>
+        /// All
+        /// Serialized Name: PolicyScopeContract.All
+        /// </summary>
         All
     }
 }

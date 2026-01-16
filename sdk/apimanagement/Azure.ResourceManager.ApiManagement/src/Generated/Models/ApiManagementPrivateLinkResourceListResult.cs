@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> A list of private link resources. </summary>
+    /// <summary>
+    /// The response of a PrivateLinkResource list operation.
+    /// Serialized Name: PrivateLinkResourceListResult
+    /// </summary>
     internal partial class ApiManagementPrivateLinkResourceListResult
     {
         /// <summary>
@@ -46,22 +50,51 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateLinkResourceListResult"/>. </summary>
-        internal ApiManagementPrivateLinkResourceListResult()
+        /// <param name="value">
+        /// The PrivateLinkResource items on this page
+        /// Serialized Name: PrivateLinkResourceListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ApiManagementPrivateLinkResourceListResult(IEnumerable<ApiManagementPrivateLinkResourceData> value)
         {
-            Value = new ChangeTrackingList<ApiManagementPrivateLinkResourceData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateLinkResourceListResult"/>. </summary>
-        /// <param name="value"> Array of private link resources. </param>
+        /// <param name="value">
+        /// The PrivateLinkResource items on this page
+        /// Serialized Name: PrivateLinkResourceListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: PrivateLinkResourceListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementPrivateLinkResourceListResult(IReadOnlyList<ApiManagementPrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementPrivateLinkResourceListResult(IReadOnlyList<ApiManagementPrivateLinkResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of private link resources. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateLinkResourceListResult"/> for deserialization. </summary>
+        internal ApiManagementPrivateLinkResourceListResult()
+        {
+        }
+
+        /// <summary>
+        /// The PrivateLinkResource items on this page
+        /// Serialized Name: PrivateLinkResourceListResult.value
+        /// </summary>
         [WirePath("value")]
         public IReadOnlyList<ApiManagementPrivateLinkResourceData> Value { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: PrivateLinkResourceListResult.nextLink
+        /// </summary>
+        [WirePath("nextLink")]
+        public Uri NextLink { get; }
     }
 }

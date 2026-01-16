@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementNamedValue data model.
     /// NamedValue details.
+    /// Serialized Name: NamedValueContract
     /// </summary>
     public partial class ApiManagementNamedValueData : ResourceData
     {
@@ -62,17 +63,35 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> Optional tags that when provided can be used to filter the NamedValue list. </param>
-        /// <param name="isSecret"> Determines whether the value is a secret and should be encrypted or not. Default value is false. </param>
-        /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
-        /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
-        /// <param name="keyVaultDetails"> KeyVault location details of the namedValue. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="tags">
+        /// Optional tags that when provided can be used to filter the NamedValue list.
+        /// Serialized Name: NamedValueContract.properties.tags
+        /// </param>
+        /// <param name="secret">
+        /// Determines whether the value is a secret and should be encrypted or not. Default value is false.
+        /// Serialized Name: NamedValueContract.properties.secret
+        /// </param>
+        /// <param name="displayName">
+        /// Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters.
+        /// Serialized Name: NamedValueContract.properties.displayName
+        /// </param>
+        /// <param name="value">
+        /// Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
+        /// Serialized Name: NamedValueContract.properties.value
+        /// </param>
+        /// <param name="keyVaultDetails">
+        /// KeyVault location details of the namedValue.
+        /// Serialized Name: NamedValueContract.properties.keyVault
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning state
+        /// Serialized Name: NamedValueContract.properties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementNamedValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> tags, bool? isSecret, string displayName, string value, KeyVaultContractProperties keyVaultDetails, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementNamedValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> tags, bool? secret, string displayName, string value, KeyVaultContractProperties keyVaultDetails, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
-            IsSecret = isSecret;
+            Secret = secret;
             DisplayName = displayName;
             Value = value;
             KeyVaultDetails = keyVaultDetails;
@@ -80,22 +99,40 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Optional tags that when provided can be used to filter the NamedValue list. </summary>
+        /// <summary>
+        /// Optional tags that when provided can be used to filter the NamedValue list.
+        /// Serialized Name: NamedValueContract.properties.tags
+        /// </summary>
         [WirePath("properties.tags")]
         public IList<string> Tags { get; }
-        /// <summary> Determines whether the value is a secret and should be encrypted or not. Default value is false. </summary>
+        /// <summary>
+        /// Determines whether the value is a secret and should be encrypted or not. Default value is false.
+        /// Serialized Name: NamedValueContract.properties.secret
+        /// </summary>
         [WirePath("properties.secret")]
-        public bool? IsSecret { get; set; }
-        /// <summary> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </summary>
+        public bool? Secret { get; set; }
+        /// <summary>
+        /// Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters.
+        /// Serialized Name: NamedValueContract.properties.displayName
+        /// </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
+        /// <summary>
+        /// Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
+        /// Serialized Name: NamedValueContract.properties.value
+        /// </summary>
         [WirePath("properties.value")]
         public string Value { get; set; }
-        /// <summary> KeyVault location details of the namedValue. </summary>
+        /// <summary>
+        /// KeyVault location details of the namedValue.
+        /// Serialized Name: NamedValueContract.properties.keyVault
+        /// </summary>
         [WirePath("properties.keyVault")]
         public KeyVaultContractProperties KeyVaultDetails { get; set; }
-        /// <summary> The provisioning state. </summary>
+        /// <summary>
+        /// The provisioning state
+        /// Serialized Name: NamedValueContract.properties.provisioningState
+        /// </summary>
         [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
     }

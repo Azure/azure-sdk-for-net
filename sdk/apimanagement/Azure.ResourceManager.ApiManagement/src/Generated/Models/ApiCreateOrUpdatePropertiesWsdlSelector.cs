@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Criteria to limit import of WSDL to a subset of the document. </summary>
+    /// <summary>
+    /// Criteria to limit import of WSDL to a subset of the document.
+    /// Serialized Name: ApiCreateOrUpdatePropertiesWsdlSelector
+    /// </summary>
     public partial class ApiCreateOrUpdatePropertiesWsdlSelector
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiCreateOrUpdatePropertiesWsdlSelector"/>. </summary>
-        /// <param name="wsdlServiceName"> Name of service to import from WSDL. </param>
-        /// <param name="wsdlEndpointName"> Name of endpoint(port) to import from WSDL. </param>
+        /// <param name="wsdlServiceName">
+        /// Name of service to import from WSDL
+        /// Serialized Name: ApiCreateOrUpdatePropertiesWsdlSelector.wsdlServiceName
+        /// </param>
+        /// <param name="wsdlEndpointName">
+        /// Name of endpoint(port) to import from WSDL
+        /// Serialized Name: ApiCreateOrUpdatePropertiesWsdlSelector.wsdlEndpointName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiCreateOrUpdatePropertiesWsdlSelector(string wsdlServiceName, string wsdlEndpointName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of service to import from WSDL. </summary>
+        /// <summary>
+        /// Name of service to import from WSDL
+        /// Serialized Name: ApiCreateOrUpdatePropertiesWsdlSelector.wsdlServiceName
+        /// </summary>
         [WirePath("wsdlServiceName")]
         public string WsdlServiceName { get; set; }
-        /// <summary> Name of endpoint(port) to import from WSDL. </summary>
+        /// <summary>
+        /// Name of endpoint(port) to import from WSDL
+        /// Serialized Name: ApiCreateOrUpdatePropertiesWsdlSelector.wsdlEndpointName
+        /// </summary>
         [WirePath("wsdlEndpointName")]
         public string WsdlEndpointName { get; set; }
     }

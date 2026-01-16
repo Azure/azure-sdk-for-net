@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The connection status. </summary>
+    /// <summary>
+    /// The connection status.
+    /// Serialized Name: ConnectionStatus
+    /// </summary>
     public readonly partial struct ConnectionStatus : IEquatable<ConnectionStatus>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string DisconnectedValue = "Disconnected";
         private const string DegradedValue = "Degraded";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: ConnectionStatus.Unknown
+        /// </summary>
         public static ConnectionStatus Unknown { get; } = new ConnectionStatus(UnknownValue);
-        /// <summary> Connected. </summary>
+        /// <summary>
+        /// Connected
+        /// Serialized Name: ConnectionStatus.Connected
+        /// </summary>
         public static ConnectionStatus Connected { get; } = new ConnectionStatus(ConnectedValue);
-        /// <summary> Disconnected. </summary>
+        /// <summary>
+        /// Disconnected
+        /// Serialized Name: ConnectionStatus.Disconnected
+        /// </summary>
         public static ConnectionStatus Disconnected { get; } = new ConnectionStatus(DisconnectedValue);
-        /// <summary> Degraded. </summary>
+        /// <summary>
+        /// Degraded
+        /// Serialized Name: ConnectionStatus.Degraded
+        /// </summary>
         public static ConnectionStatus Degraded { get; } = new ConnectionStatus(DegradedValue);
         /// <summary> Determines if two <see cref="ConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(ConnectionStatus left, ConnectionStatus right) => left.Equals(right);

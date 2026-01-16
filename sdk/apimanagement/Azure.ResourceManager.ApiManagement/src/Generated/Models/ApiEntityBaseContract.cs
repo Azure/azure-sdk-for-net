@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> API base contract details. </summary>
+    /// <summary>
+    /// API base contract details.
+    /// Serialized Name: ApiEntityBaseContract
+    /// </summary>
     public partial class ApiEntityBaseContract
     {
         /// <summary>
@@ -52,23 +55,68 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiEntityBaseContract"/>. </summary>
-        /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
-        /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
-        /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
-        /// <param name="apiType"> Type of API. </param>
-        /// <param name="apiRevision"> Describes the revision of the API. If no value is provided, default revision 1 is created. </param>
-        /// <param name="apiVersion"> Indicates the version identifier of the API if the API is versioned. </param>
-        /// <param name="isCurrent"> Indicates if API revision is current api revision. </param>
-        /// <param name="isOnline"> Indicates if API revision is accessible via the gateway. </param>
-        /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
-        /// <param name="apiVersionDescription"> Description of the API Version. </param>
-        /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
-        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
-        /// <param name="contact"> Contact information for the API. </param>
-        /// <param name="license"> License information for the API. </param>
+        /// <param name="description">
+        /// Description of the API. May include HTML formatting tags.
+        /// Serialized Name: ApiEntityBaseContract.description
+        /// </param>
+        /// <param name="authenticationSettings">
+        /// Collection of authentication settings included into this API.
+        /// Serialized Name: ApiEntityBaseContract.authenticationSettings
+        /// </param>
+        /// <param name="subscriptionKeyParameterNames">
+        /// Protocols over which API is made available.
+        /// Serialized Name: ApiEntityBaseContract.subscriptionKeyParameterNames
+        /// </param>
+        /// <param name="apiType">
+        /// Type of API.
+        /// Serialized Name: ApiEntityBaseContract.type
+        /// </param>
+        /// <param name="apiRevision">
+        /// Describes the revision of the API. If no value is provided, default revision 1 is created
+        /// Serialized Name: ApiEntityBaseContract.apiRevision
+        /// </param>
+        /// <param name="apiVersion">
+        /// Indicates the version identifier of the API if the API is versioned
+        /// Serialized Name: ApiEntityBaseContract.apiVersion
+        /// </param>
+        /// <param name="isCurrent">
+        /// Indicates if API revision is current api revision.
+        /// Serialized Name: ApiEntityBaseContract.isCurrent
+        /// </param>
+        /// <param name="isOnline">
+        /// Indicates if API revision is accessible via the gateway.
+        /// Serialized Name: ApiEntityBaseContract.isOnline
+        /// </param>
+        /// <param name="apiRevisionDescription">
+        /// Description of the API Revision.
+        /// Serialized Name: ApiEntityBaseContract.apiRevisionDescription
+        /// </param>
+        /// <param name="apiVersionDescription">
+        /// Description of the API Version.
+        /// Serialized Name: ApiEntityBaseContract.apiVersionDescription
+        /// </param>
+        /// <param name="apiVersionSetId">
+        /// A resource identifier for the related ApiVersionSet.
+        /// Serialized Name: ApiEntityBaseContract.apiVersionSetId
+        /// </param>
+        /// <param name="subscriptionRequired">
+        /// Specifies whether an API or Product subscription is required for accessing the API.
+        /// Serialized Name: ApiEntityBaseContract.subscriptionRequired
+        /// </param>
+        /// <param name="termsOfServiceLink">
+        /// A URL to the Terms of Service for the API. MUST be in the format of a URL.
+        /// Serialized Name: ApiEntityBaseContract.termsOfServiceUrl
+        /// </param>
+        /// <param name="contact">
+        /// Contact information for the API.
+        /// Serialized Name: ApiEntityBaseContract.contact
+        /// </param>
+        /// <param name="license">
+        /// License information for the API.
+        /// Serialized Name: ApiEntityBaseContract.license
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? subscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -81,56 +129,101 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ApiRevisionDescription = apiRevisionDescription;
             ApiVersionDescription = apiVersionDescription;
             ApiVersionSetId = apiVersionSetId;
-            IsSubscriptionRequired = isSubscriptionRequired;
+            SubscriptionRequired = subscriptionRequired;
             TermsOfServiceLink = termsOfServiceLink;
             Contact = contact;
             License = license;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Description of the API. May include HTML formatting tags. </summary>
+        /// <summary>
+        /// Description of the API. May include HTML formatting tags.
+        /// Serialized Name: ApiEntityBaseContract.description
+        /// </summary>
         [WirePath("description")]
         public string Description { get; }
-        /// <summary> Collection of authentication settings included into this API. </summary>
+        /// <summary>
+        /// Collection of authentication settings included into this API.
+        /// Serialized Name: ApiEntityBaseContract.authenticationSettings
+        /// </summary>
         [WirePath("authenticationSettings")]
         public AuthenticationSettingsContract AuthenticationSettings { get; }
-        /// <summary> Protocols over which API is made available. </summary>
+        /// <summary>
+        /// Protocols over which API is made available.
+        /// Serialized Name: ApiEntityBaseContract.subscriptionKeyParameterNames
+        /// </summary>
         [WirePath("subscriptionKeyParameterNames")]
         public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get; }
-        /// <summary> Type of API. </summary>
+        /// <summary>
+        /// Type of API.
+        /// Serialized Name: ApiEntityBaseContract.type
+        /// </summary>
         [WirePath("type")]
         public ApiType? ApiType { get; }
-        /// <summary> Describes the revision of the API. If no value is provided, default revision 1 is created. </summary>
+        /// <summary>
+        /// Describes the revision of the API. If no value is provided, default revision 1 is created
+        /// Serialized Name: ApiEntityBaseContract.apiRevision
+        /// </summary>
         [WirePath("apiRevision")]
         public string ApiRevision { get; }
-        /// <summary> Indicates the version identifier of the API if the API is versioned. </summary>
+        /// <summary>
+        /// Indicates the version identifier of the API if the API is versioned
+        /// Serialized Name: ApiEntityBaseContract.apiVersion
+        /// </summary>
         [WirePath("apiVersion")]
         public string ApiVersion { get; }
-        /// <summary> Indicates if API revision is current api revision. </summary>
+        /// <summary>
+        /// Indicates if API revision is current api revision.
+        /// Serialized Name: ApiEntityBaseContract.isCurrent
+        /// </summary>
         [WirePath("isCurrent")]
         public bool? IsCurrent { get; }
-        /// <summary> Indicates if API revision is accessible via the gateway. </summary>
+        /// <summary>
+        /// Indicates if API revision is accessible via the gateway.
+        /// Serialized Name: ApiEntityBaseContract.isOnline
+        /// </summary>
         [WirePath("isOnline")]
         public bool? IsOnline { get; }
-        /// <summary> Description of the API Revision. </summary>
+        /// <summary>
+        /// Description of the API Revision.
+        /// Serialized Name: ApiEntityBaseContract.apiRevisionDescription
+        /// </summary>
         [WirePath("apiRevisionDescription")]
         public string ApiRevisionDescription { get; }
-        /// <summary> Description of the API Version. </summary>
+        /// <summary>
+        /// Description of the API Version.
+        /// Serialized Name: ApiEntityBaseContract.apiVersionDescription
+        /// </summary>
         [WirePath("apiVersionDescription")]
         public string ApiVersionDescription { get; }
-        /// <summary> A resource identifier for the related ApiVersionSet. </summary>
+        /// <summary>
+        /// A resource identifier for the related ApiVersionSet.
+        /// Serialized Name: ApiEntityBaseContract.apiVersionSetId
+        /// </summary>
         [WirePath("apiVersionSetId")]
         public ResourceIdentifier ApiVersionSetId { get; }
-        /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
+        /// <summary>
+        /// Specifies whether an API or Product subscription is required for accessing the API.
+        /// Serialized Name: ApiEntityBaseContract.subscriptionRequired
+        /// </summary>
         [WirePath("subscriptionRequired")]
-        public bool? IsSubscriptionRequired { get; }
-        /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
+        public bool? SubscriptionRequired { get; }
+        /// <summary>
+        /// A URL to the Terms of Service for the API. MUST be in the format of a URL.
+        /// Serialized Name: ApiEntityBaseContract.termsOfServiceUrl
+        /// </summary>
         [WirePath("termsOfServiceUrl")]
         public string TermsOfServiceLink { get; }
-        /// <summary> Contact information for the API. </summary>
+        /// <summary>
+        /// Contact information for the API.
+        /// Serialized Name: ApiEntityBaseContract.contact
+        /// </summary>
         [WirePath("contact")]
         public ApiContactInformation Contact { get; }
-        /// <summary> License information for the API. </summary>
+        /// <summary>
+        /// License information for the API.
+        /// Serialized Name: ApiEntityBaseContract.license
+        /// </summary>
         [WirePath("license")]
         public ApiLicenseInformation License { get; }
     }

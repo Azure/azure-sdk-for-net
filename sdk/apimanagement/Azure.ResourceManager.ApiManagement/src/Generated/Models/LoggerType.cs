@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Logger type. </summary>
+    /// <summary>
+    /// Logger type.
+    /// Serialized Name: LoggerType
+    /// </summary>
     public readonly partial struct LoggerType : IEquatable<LoggerType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string ApplicationInsightsValue = "applicationInsights";
         private const string AzureMonitorValue = "azureMonitor";
 
-        /// <summary> Azure Event Hub as log destination. </summary>
+        /// <summary>
+        /// Azure Event Hub as log destination.
+        /// Serialized Name: LoggerType.azureEventHub
+        /// </summary>
         public static LoggerType AzureEventHub { get; } = new LoggerType(AzureEventHubValue);
-        /// <summary> Azure Application Insights as log destination. </summary>
+        /// <summary>
+        /// Azure Application Insights as log destination.
+        /// Serialized Name: LoggerType.applicationInsights
+        /// </summary>
         public static LoggerType ApplicationInsights { get; } = new LoggerType(ApplicationInsightsValue);
-        /// <summary> Azure Monitor. </summary>
+        /// <summary>
+        /// Azure Monitor
+        /// Serialized Name: LoggerType.azureMonitor
+        /// </summary>
         public static LoggerType AzureMonitor { get; } = new LoggerType(AzureMonitorValue);
         /// <summary> Determines if two <see cref="LoggerType"/> values are the same. </summary>
         public static bool operator ==(LoggerType left, LoggerType right) => left.Equals(right);

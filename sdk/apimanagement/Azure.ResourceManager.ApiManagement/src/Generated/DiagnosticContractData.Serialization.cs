@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("backend"u8);
                 writer.WriteObjectValue(Backend, options);
             }
+            if (Optional.IsDefined(LargeLanguageModel))
+            {
+                writer.WritePropertyName("largeLanguageModel"u8);
+                writer.WriteObjectValue(LargeLanguageModel, options);
+            }
             if (Optional.IsDefined(IsLogClientIPEnabled))
             {
                 writer.WritePropertyName("logClientIp"u8);
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.ApiManagement
             SamplingSettings sampling = default;
             PipelineDiagnosticSettings frontend = default;
             PipelineDiagnosticSettings backend = default;
+            LLMDiagnosticSettings largeLanguageModel = default;
             bool? logClientIP = default;
             HttpCorrelationProtocol? httpCorrelationProtocol = default;
             TraceVerbosityLevel? verbosity = default;
@@ -205,6 +211,15 @@ namespace Azure.ResourceManager.ApiManagement
                             backend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("largeLanguageModel"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            largeLanguageModel = LLMDiagnosticSettings.DeserializeLLMDiagnosticSettings(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("logClientIp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -269,6 +284,7 @@ namespace Azure.ResourceManager.ApiManagement
                 sampling,
                 frontend,
                 backend,
+                largeLanguageModel,
                 logClientIP,
                 httpCorrelationProtocol,
                 verbosity,
@@ -423,6 +439,21 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     builder.Append("    backend: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Backend, options, 4, false, "    backend: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LargeLanguageModel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    largeLanguageModel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LargeLanguageModel))
+                {
+                    builder.Append("    largeLanguageModel: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LargeLanguageModel, options, 4, false, "    largeLanguageModel: ");
                 }
             }
 

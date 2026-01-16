@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Policy description details. </summary>
+    /// <summary>
+    /// Policy description details.
+    /// Serialized Name: PolicyDescriptionContract
+    /// </summary>
     public partial class PolicyDescriptionContractData : ResourceData
     {
         /// <summary>
@@ -57,8 +60,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Policy description. </param>
-        /// <param name="scope"> Binary OR value of the Snippet scope. </param>
+        /// <param name="description">
+        /// Policy description.
+        /// Serialized Name: PolicyDescriptionContract.properties.description
+        /// </param>
+        /// <param name="scope">
+        /// Binary OR value of the Snippet scope.
+        /// Serialized Name: PolicyDescriptionContract.properties.scope
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PolicyDescriptionContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, long? scope, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -67,10 +76,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Policy description. </summary>
+        /// <summary>
+        /// Policy description.
+        /// Serialized Name: PolicyDescriptionContract.properties.description
+        /// </summary>
         [WirePath("properties.description")]
         public string Description { get; }
-        /// <summary> Binary OR value of the Snippet scope. </summary>
+        /// <summary>
+        /// Binary OR value of the Snippet scope.
+        /// Serialized Name: PolicyDescriptionContract.properties.scope
+        /// </summary>
         [WirePath("properties.scope")]
         public long? Scope { get; }
     }

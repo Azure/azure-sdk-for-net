@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The ResourceCollectionValueItem. </summary>
+    /// <summary>
+    /// The ResourceCollectionValueItem.
+    /// Serialized Name: ResourceCollectionValueItem
+    /// </summary>
     public partial class ResourceCollectionValueItem : ResourceData
     {
         /// <summary>

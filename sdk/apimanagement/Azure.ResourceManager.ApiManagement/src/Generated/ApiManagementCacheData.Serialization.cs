@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("useFromLocation"u8);
                 writer.WriteStringValue(UseFromLocation);
             }
-            if (Optional.IsDefined(ResourceUri))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(ResourceUri.AbsoluteUri);
+                writer.WriteStringValue(ResourceId);
             }
             writer.WriteEndObject();
         }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement
             string description = default;
             string connectionString = default;
             string useFromLocation = default;
-            Uri resourceId = default;
+            string resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,11 +144,7 @@ namespace Azure.ResourceManager.ApiManagement
                         }
                         if (property0.NameEquals("resourceId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceId = new Uri(property0.Value.GetString());
+                            resourceId = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -307,7 +303,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceUri), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    resourceId: ");
@@ -315,10 +311,18 @@ namespace Azure.ResourceManager.ApiManagement
             }
             else
             {
-                if (Optional.IsDefined(ResourceUri))
+                if (Optional.IsDefined(ResourceId))
                 {
                     builder.Append("    resourceId: ");
-                    builder.AppendLine($"'{ResourceUri.AbsoluteUri}'");
+                    if (ResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceId}'");
+                    }
                 }
             }
 

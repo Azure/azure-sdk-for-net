@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Properties of server X509Names. </summary>
+    /// <summary>
+    /// Properties of server X509Names.
+    /// Serialized Name: X509CertificateName
+    /// </summary>
     public partial class X509CertificateName
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="X509CertificateName"/>. </summary>
-        /// <param name="name"> Common Name of the Certificate. </param>
-        /// <param name="issuerCertificateThumbprint"> Thumbprint for the Issuer of the Certificate. </param>
+        /// <param name="name">
+        /// Common Name of the Certificate.
+        /// Serialized Name: X509CertificateName.name
+        /// </param>
+        /// <param name="issuerCertificateThumbprint">
+        /// Thumbprint for the Issuer of the Certificate.
+        /// Serialized Name: X509CertificateName.issuerCertificateThumbprint
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal X509CertificateName(string name, string issuerCertificateThumbprint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Common Name of the Certificate. </summary>
+        /// <summary>
+        /// Common Name of the Certificate.
+        /// Serialized Name: X509CertificateName.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Thumbprint for the Issuer of the Certificate. </summary>
+        /// <summary>
+        /// Thumbprint for the Issuer of the Certificate.
+        /// Serialized Name: X509CertificateName.issuerCertificateThumbprint
+        /// </summary>
         [WirePath("issuerCertificateThumbprint")]
         public string IssuerCertificateThumbprint { get; set; }
     }

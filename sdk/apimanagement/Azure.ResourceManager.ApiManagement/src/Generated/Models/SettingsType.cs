@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The SettingsType. </summary>
+    /// <summary>
+    /// The SettingsType.
+    /// Serialized Name: SettingsTypeName
+    /// </summary>
     public readonly partial struct SettingsType : IEquatable<SettingsType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         private const string PublicValue = "public";
 
-        /// <summary> public. </summary>
+        /// <summary>
+        /// public
+        /// Serialized Name: SettingsTypeName.public
+        /// </summary>
         public static SettingsType Public { get; } = new SettingsType(PublicValue);
         /// <summary> Determines if two <see cref="SettingsType"/> values are the same. </summary>
         public static bool operator ==(SettingsType left, SettingsType right) => left.Equals(right);

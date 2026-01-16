@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Schema Type. Immutable. </summary>
+    /// <summary>
+    /// Schema Type. Immutable.
+    /// Serialized Name: SchemaType
+    /// </summary>
     public readonly partial struct ApiSchemaType : IEquatable<ApiSchemaType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string XmlValue = "xml";
         private const string JsonValue = "json";
 
-        /// <summary> XML schema type. </summary>
+        /// <summary>
+        /// XML schema type.
+        /// Serialized Name: SchemaType.xml
+        /// </summary>
         public static ApiSchemaType Xml { get; } = new ApiSchemaType(XmlValue);
-        /// <summary> Json schema type. </summary>
+        /// <summary>
+        /// Json schema type.
+        /// Serialized Name: SchemaType.json
+        /// </summary>
         public static ApiSchemaType Json { get; } = new ApiSchemaType(JsonValue);
         /// <summary> Determines if two <see cref="ApiSchemaType"/> values are the same. </summary>
         public static bool operator ==(ApiSchemaType left, ApiSchemaType right) => left.Equals(right);

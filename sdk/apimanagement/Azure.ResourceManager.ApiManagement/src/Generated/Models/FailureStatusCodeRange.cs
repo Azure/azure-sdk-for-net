@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The failure http status code range. </summary>
+    /// <summary>
+    /// The failure http status code range
+    /// Serialized Name: FailureStatusCodeRange
+    /// </summary>
     public partial class FailureStatusCodeRange
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FailureStatusCodeRange"/>. </summary>
-        /// <param name="min"> The minimum http status code. </param>
-        /// <param name="max"> The maximum http status code. </param>
+        /// <param name="min">
+        /// The minimum http status code.
+        /// Serialized Name: FailureStatusCodeRange.min
+        /// </param>
+        /// <param name="max">
+        /// The maximum http status code.
+        /// Serialized Name: FailureStatusCodeRange.max
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FailureStatusCodeRange(int? min, int? max, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The minimum http status code. </summary>
+        /// <summary>
+        /// The minimum http status code.
+        /// Serialized Name: FailureStatusCodeRange.min
+        /// </summary>
         [WirePath("min")]
         public int? Min { get; set; }
-        /// <summary> The maximum http status code. </summary>
+        /// <summary>
+        /// The maximum http status code.
+        /// Serialized Name: FailureStatusCodeRange.max
+        /// </summary>
         [WirePath("max")]
         public int? Max { get; set; }
     }

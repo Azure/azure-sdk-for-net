@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The PortalConfigPropertiesSignin. </summary>
+    /// <summary>
+    /// The PortalConfigPropertiesSignin.
+    /// Serialized Name: PortalConfigPropertiesSignin
+    /// </summary>
     internal partial class PortalConfigPropertiesSignin
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PortalConfigPropertiesSignin"/>. </summary>
-        /// <param name="require"> Redirect anonymous users to the sign-in page. </param>
+        /// <param name="require">
+        /// Redirect anonymous users to the sign-in page.
+        /// Serialized Name: PortalConfigPropertiesSignin.require
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PortalConfigPropertiesSignin(bool? require, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Redirect anonymous users to the sign-in page. </summary>
+        /// <summary>
+        /// Redirect anonymous users to the sign-in page.
+        /// Serialized Name: PortalConfigPropertiesSignin.require
+        /// </summary>
         [WirePath("require")]
         public bool? Require { get; set; }
     }

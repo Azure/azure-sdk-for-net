@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Portal Settings for the Developer Portal. </summary>
+    /// <summary>
+    /// Portal Settings for the Developer Portal.
+    /// Serialized Name: PortalSettingsContract
+    /// </summary>
     public partial class PortalSettingsContractData : ResourceData
     {
         /// <summary>
@@ -57,64 +60,106 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="uri"> A delegation Url. </param>
-        /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
-        /// <param name="isSubscriptions"> Subscriptions delegation settings. </param>
-        /// <param name="isUserRegistration"> User registration delegation settings. </param>
-        /// <param name="isRedirectEnabled"> Redirect Anonymous users to the Sign-In page. </param>
-        /// <param name="termsOfService"> Terms of service contract properties. </param>
+        /// <param name="uri">
+        /// A delegation Url.
+        /// Serialized Name: PortalSettingsContract.properties.url
+        /// </param>
+        /// <param name="validationKey">
+        /// A base64-encoded validation key to validate, that a request is coming from Azure API Management.
+        /// Serialized Name: PortalSettingsContract.properties.validationKey
+        /// </param>
+        /// <param name="subscriptions">
+        /// Subscriptions delegation settings.
+        /// Serialized Name: PortalSettingsContract.properties.subscriptions
+        /// </param>
+        /// <param name="userRegistration">
+        /// User registration delegation settings.
+        /// Serialized Name: PortalSettingsContract.properties.userRegistration
+        /// </param>
+        /// <param name="isRedirectEnabled">
+        /// Redirect Anonymous users to the Sign-In page.
+        /// Serialized Name: PortalSettingsContract.properties.enabled
+        /// </param>
+        /// <param name="termsOfService">
+        /// Terms of service contract properties.
+        /// Serialized Name: PortalSettingsContract.properties.termsOfService
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PortalSettingsContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri uri, string validationKey, SubscriptionDelegationSettingProperties isSubscriptions, RegistrationDelegationSettingProperties isUserRegistration, bool? isRedirectEnabled, TermsOfServiceProperties termsOfService, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PortalSettingsContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri uri, string validationKey, SubscriptionDelegationSettingProperties subscriptions, RegistrationDelegationSettingProperties userRegistration, bool? isRedirectEnabled, TermsOfServiceProperties termsOfService, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Uri = uri;
             ValidationKey = validationKey;
-            IsSubscriptions = isSubscriptions;
-            IsUserRegistration = isUserRegistration;
+            Subscriptions = subscriptions;
+            UserRegistration = userRegistration;
             IsRedirectEnabled = isRedirectEnabled;
             TermsOfService = termsOfService;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A delegation Url. </summary>
+        /// <summary>
+        /// A delegation Url.
+        /// Serialized Name: PortalSettingsContract.properties.url
+        /// </summary>
         [WirePath("properties.url")]
         public Uri Uri { get; set; }
-        /// <summary> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </summary>
+        /// <summary>
+        /// A base64-encoded validation key to validate, that a request is coming from Azure API Management.
+        /// Serialized Name: PortalSettingsContract.properties.validationKey
+        /// </summary>
         [WirePath("properties.validationKey")]
         public string ValidationKey { get; set; }
-        /// <summary> Subscriptions delegation settings. </summary>
-        internal SubscriptionDelegationSettingProperties IsSubscriptions { get; set; }
-        /// <summary> Enable or disable delegation for subscriptions. </summary>
+        /// <summary>
+        /// Subscriptions delegation settings.
+        /// Serialized Name: PortalSettingsContract.properties.subscriptions
+        /// </summary>
+        internal SubscriptionDelegationSettingProperties Subscriptions { get; set; }
+        /// <summary>
+        /// Enable or disable delegation for subscriptions.
+        /// Serialized Name: SubscriptionsDelegationSettingsProperties.enabled
+        /// </summary>
         [WirePath("properties.subscriptions.enabled")]
         public bool? IsSubscriptionDelegationEnabled
         {
-            get => IsSubscriptions is null ? default : IsSubscriptions.IsSubscriptionDelegationEnabled;
+            get => Subscriptions is null ? default : Subscriptions.IsSubscriptionDelegationEnabled;
             set
             {
-                if (IsSubscriptions is null)
-                    IsSubscriptions = new SubscriptionDelegationSettingProperties();
-                IsSubscriptions.IsSubscriptionDelegationEnabled = value;
+                if (Subscriptions is null)
+                    Subscriptions = new SubscriptionDelegationSettingProperties();
+                Subscriptions.IsSubscriptionDelegationEnabled = value;
             }
         }
 
-        /// <summary> User registration delegation settings. </summary>
-        internal RegistrationDelegationSettingProperties IsUserRegistration { get; set; }
-        /// <summary> Enable or disable delegation for user registration. </summary>
+        /// <summary>
+        /// User registration delegation settings.
+        /// Serialized Name: PortalSettingsContract.properties.userRegistration
+        /// </summary>
+        internal RegistrationDelegationSettingProperties UserRegistration { get; set; }
+        /// <summary>
+        /// Enable or disable delegation for user registration.
+        /// Serialized Name: RegistrationDelegationSettingsProperties.enabled
+        /// </summary>
         [WirePath("properties.userRegistration.enabled")]
         public bool? IsUserRegistrationDelegationEnabled
         {
-            get => IsUserRegistration is null ? default : IsUserRegistration.IsUserRegistrationDelegationEnabled;
+            get => UserRegistration is null ? default : UserRegistration.IsUserRegistrationDelegationEnabled;
             set
             {
-                if (IsUserRegistration is null)
-                    IsUserRegistration = new RegistrationDelegationSettingProperties();
-                IsUserRegistration.IsUserRegistrationDelegationEnabled = value;
+                if (UserRegistration is null)
+                    UserRegistration = new RegistrationDelegationSettingProperties();
+                UserRegistration.IsUserRegistrationDelegationEnabled = value;
             }
         }
 
-        /// <summary> Redirect Anonymous users to the Sign-In page. </summary>
+        /// <summary>
+        /// Redirect Anonymous users to the Sign-In page.
+        /// Serialized Name: PortalSettingsContract.properties.enabled
+        /// </summary>
         [WirePath("properties.enabled")]
         public bool? IsRedirectEnabled { get; set; }
-        /// <summary> Terms of service contract properties. </summary>
+        /// <summary>
+        /// Terms of service contract properties.
+        /// Serialized Name: PortalSettingsContract.properties.termsOfService
+        /// </summary>
         [WirePath("properties.termsOfService")]
         public TermsOfServiceProperties TermsOfService { get; set; }
     }

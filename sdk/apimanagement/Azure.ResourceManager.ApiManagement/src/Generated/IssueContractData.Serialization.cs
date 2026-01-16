@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.ApiManagement
             SystemData systemData = default;
             DateTimeOffset? createdDate = default;
             IssueState? state = default;
-            ResourceIdentifier apiId = default;
+            string apiId = default;
             string title = default;
             string description = default;
-            ResourceIdentifier userId = default;
+            string userId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,11 +160,7 @@ namespace Azure.ResourceManager.ApiManagement
                         }
                         if (property0.NameEquals("apiId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            apiId = new ResourceIdentifier(property0.Value.GetString());
+                            apiId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("title"u8))
@@ -179,11 +175,7 @@ namespace Azure.ResourceManager.ApiManagement
                         }
                         if (property0.NameEquals("userId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            userId = new ResourceIdentifier(property0.Value.GetString());
+                            userId = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -317,7 +309,15 @@ namespace Azure.ResourceManager.ApiManagement
                 if (Optional.IsDefined(ApiId))
                 {
                     builder.Append("    apiId: ");
-                    builder.AppendLine($"'{ApiId.ToString()}'");
+                    if (ApiId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApiId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApiId}'");
+                    }
                 }
             }
 
@@ -378,7 +378,15 @@ namespace Azure.ResourceManager.ApiManagement
                 if (Optional.IsDefined(UserId))
                 {
                     builder.Append("    userId: ");
-                    builder.AppendLine($"'{UserId.ToString()}'");
+                    if (UserId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserId}'");
+                    }
                 }
             }
 

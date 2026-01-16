@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Log of the entity being created, updated or deleted. </summary>
+    /// <summary>
+    /// Log of the entity being created, updated or deleted.
+    /// Serialized Name: OperationResultLogItemContract
+    /// </summary>
     public partial class OperationResultLogItemContract
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationResultLogItemContract"/>. </summary>
-        /// <param name="objectType"> The type of entity contract. </param>
-        /// <param name="action"> Action like create/update/delete. </param>
-        /// <param name="objectKey"> Identifier of the entity being created/updated/deleted. </param>
+        /// <param name="objectType">
+        /// The type of entity contract.
+        /// Serialized Name: OperationResultLogItemContract.objectType
+        /// </param>
+        /// <param name="action">
+        /// Action like create/update/delete.
+        /// Serialized Name: OperationResultLogItemContract.action
+        /// </param>
+        /// <param name="objectKey">
+        /// Identifier of the entity being created/updated/deleted.
+        /// Serialized Name: OperationResultLogItemContract.objectKey
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OperationResultLogItemContract(string objectType, string action, string objectKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of entity contract. </summary>
+        /// <summary>
+        /// The type of entity contract.
+        /// Serialized Name: OperationResultLogItemContract.objectType
+        /// </summary>
         [WirePath("objectType")]
         public string ObjectType { get; }
-        /// <summary> Action like create/update/delete. </summary>
+        /// <summary>
+        /// Action like create/update/delete.
+        /// Serialized Name: OperationResultLogItemContract.action
+        /// </summary>
         [WirePath("action")]
         public string Action { get; }
-        /// <summary> Identifier of the entity being created/updated/deleted. </summary>
+        /// <summary>
+        /// Identifier of the entity being created/updated/deleted.
+        /// Serialized Name: OperationResultLogItemContract.objectKey
+        /// </summary>
         [WirePath("objectKey")]
         public string ObjectKey { get; }
     }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Sampling type. </summary>
+    /// <summary>
+    /// Sampling type.
+    /// Serialized Name: SamplingType
+    /// </summary>
     public readonly partial struct SamplingType : IEquatable<SamplingType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         private const string FixedValue = "fixed";
 
-        /// <summary> Fixed-rate sampling. </summary>
+        /// <summary>
+        /// Fixed-rate sampling.
+        /// Serialized Name: SamplingType.fixed
+        /// </summary>
         public static SamplingType Fixed { get; } = new SamplingType(FixedValue);
         /// <summary> Determines if two <see cref="SamplingType"/> values are the same. </summary>
         public static bool operator ==(SamplingType left, SamplingType right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The KeyVaultRefreshState. </summary>
+    /// <summary>
+    /// The KeyVaultRefreshState.
+    /// Serialized Name: KeyVaultRefreshState
+    /// </summary>
     public readonly partial struct KeyVaultRefreshState : IEquatable<KeyVaultRefreshState>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string TrueValue = "true";
         private const string FalseValue = "false";
 
-        /// <summary> Entities for which KeyVault refresh failed. </summary>
+        /// <summary>
+        /// Entities for which KeyVault refresh failed.
+        /// Serialized Name: KeyVaultRefreshState.true
+        /// </summary>
         public static KeyVaultRefreshState True { get; } = new KeyVaultRefreshState(TrueValue);
-        /// <summary> Entities for which KeyVault refresh succeeded. </summary>
+        /// <summary>
+        /// Entities for which KeyVault refresh succeeded
+        /// Serialized Name: KeyVaultRefreshState.false
+        /// </summary>
         public static KeyVaultRefreshState False { get; } = new KeyVaultRefreshState(FalseValue);
         /// <summary> Determines if two <see cref="KeyVaultRefreshState"/> values are the same. </summary>
         public static bool operator ==(KeyVaultRefreshState left, KeyVaultRefreshState right) => left.Equals(right);

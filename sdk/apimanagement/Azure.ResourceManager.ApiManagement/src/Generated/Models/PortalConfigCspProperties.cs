@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The developer portal Content Security Policy (CSP) settings. </summary>
+    /// <summary>
+    /// The developer portal Content Security Policy (CSP) settings.
+    /// Serialized Name: PortalConfigCspProperties
+    /// </summary>
     public partial class PortalConfigCspProperties
     {
         /// <summary>
@@ -53,9 +56,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PortalConfigCspProperties"/>. </summary>
-        /// <param name="mode"> The mode of the developer portal Content Security Policy (CSP). </param>
-        /// <param name="reportUri"> The URLs used by the browser to report CSP violations. </param>
-        /// <param name="allowedSources"> Allowed sources, e.g. `*.trusted.com`, `trusted.com`, `https://`. </param>
+        /// <param name="mode">
+        /// The mode of the developer portal Content Security Policy (CSP).
+        /// Serialized Name: PortalConfigCspProperties.mode
+        /// </param>
+        /// <param name="reportUri">
+        /// The URLs used by the browser to report CSP violations.
+        /// Serialized Name: PortalConfigCspProperties.reportUri
+        /// </param>
+        /// <param name="allowedSources">
+        /// Allowed sources, e.g. `*.trusted.com`, `trusted.com`, `https://`.
+        /// Serialized Name: PortalConfigCspProperties.allowedSources
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PortalConfigCspProperties(PortalSettingsCspMode? mode, IList<Uri> reportUri, IList<string> allowedSources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +77,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The mode of the developer portal Content Security Policy (CSP). </summary>
+        /// <summary>
+        /// The mode of the developer portal Content Security Policy (CSP).
+        /// Serialized Name: PortalConfigCspProperties.mode
+        /// </summary>
         [WirePath("mode")]
         public PortalSettingsCspMode? Mode { get; set; }
-        /// <summary> The URLs used by the browser to report CSP violations. </summary>
+        /// <summary>
+        /// The URLs used by the browser to report CSP violations.
+        /// Serialized Name: PortalConfigCspProperties.reportUri
+        /// </summary>
         [WirePath("reportUri")]
         public IList<Uri> ReportUri { get; }
-        /// <summary> Allowed sources, e.g. `*.trusted.com`, `trusted.com`, `https://`. </summary>
+        /// <summary>
+        /// Allowed sources, e.g. `*.trusted.com`, `trusted.com`, `https://`.
+        /// Serialized Name: PortalConfigCspProperties.allowedSources
+        /// </summary>
         [WirePath("allowedSources")]
         public IList<string> AllowedSources { get; }
     }

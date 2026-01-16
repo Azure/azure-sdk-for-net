@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> List of all the Identity Providers configured on the service instance. </summary>
+    /// <summary>
+    /// List of all the Identity Providers configured on the service instance.
+    /// Serialized Name: IdentityProviderList
+    /// </summary>
     internal partial class IdentityProviderList
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IdentityProviderList"/>. </summary>
-        /// <param name="value"> Identity Provider configuration values. </param>
-        /// <param name="count"> Total record count number across all pages. </param>
-        /// <param name="nextLink"> Next page link if any. </param>
+        /// <param name="value">
+        /// Identity Provider configuration values.
+        /// Serialized Name: IdentityProviderList.value
+        /// </param>
+        /// <param name="count">
+        /// Total record count number across all pages.
+        /// Serialized Name: IdentityProviderList.count
+        /// </param>
+        /// <param name="nextLink">
+        /// Next page link if any.
+        /// Serialized Name: IdentityProviderList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IdentityProviderList(IReadOnlyList<ApiManagementIdentityProviderData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,11 +76,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Identity Provider configuration values. </summary>
+        /// <summary>
+        /// Identity Provider configuration values.
+        /// Serialized Name: IdentityProviderList.value
+        /// </summary>
         public IReadOnlyList<ApiManagementIdentityProviderData> Value { get; }
-        /// <summary> Total record count number across all pages. </summary>
+        /// <summary>
+        /// Total record count number across all pages.
+        /// Serialized Name: IdentityProviderList.count
+        /// </summary>
         public long? Count { get; }
-        /// <summary> Next page link if any. </summary>
+        /// <summary>
+        /// Next page link if any.
+        /// Serialized Name: IdentityProviderList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

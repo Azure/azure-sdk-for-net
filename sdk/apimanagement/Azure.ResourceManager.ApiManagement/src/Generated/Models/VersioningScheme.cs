@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> An value that determines where the API Version identifier will be located in a HTTP request. </summary>
+    /// <summary>
+    /// An value that determines where the API Version identifier will be located in a HTTP request.
+    /// Serialized Name: VersioningScheme
+    /// </summary>
     public readonly partial struct VersioningScheme : IEquatable<VersioningScheme>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string QueryValue = "Query";
         private const string HeaderValue = "Header";
 
-        /// <summary> Segment. </summary>
+        /// <summary>
+        /// The API Version is passed in a path segment.
+        /// Serialized Name: VersioningScheme.Segment
+        /// </summary>
         public static VersioningScheme Segment { get; } = new VersioningScheme(SegmentValue);
-        /// <summary> Query. </summary>
+        /// <summary>
+        /// The API Version is passed in a query parameter.
+        /// Serialized Name: VersioningScheme.Query
+        /// </summary>
         public static VersioningScheme Query { get; } = new VersioningScheme(QueryValue);
-        /// <summary> Header. </summary>
+        /// <summary>
+        /// The API Version is passed in a HTTP header.
+        /// Serialized Name: VersioningScheme.Header
+        /// </summary>
         public static VersioningScheme Header { get; } = new VersioningScheme(HeaderValue);
         /// <summary> Determines if two <see cref="VersioningScheme"/> values are the same. </summary>
         public static bool operator ==(VersioningScheme left, VersioningScheme right) => left.Equals(right);

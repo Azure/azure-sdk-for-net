@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> NamedValue update Parameters. </summary>
+    /// <summary>
+    /// NamedValue update Parameters.
+    /// Serialized Name: NamedValueUpdateParameters
+    /// </summary>
     public partial class ApiManagementNamedValuePatch
     {
         /// <summary>
@@ -52,35 +55,65 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementNamedValuePatch"/>. </summary>
-        /// <param name="tags"> Optional tags that when provided can be used to filter the NamedValue list. </param>
-        /// <param name="isSecret"> Determines whether the value is a secret and should be encrypted or not. Default value is false. </param>
-        /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
-        /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. </param>
-        /// <param name="keyVault"> KeyVault location details of the namedValue. </param>
+        /// <param name="tags">
+        /// Optional tags that when provided can be used to filter the NamedValue list.
+        /// Serialized Name: NamedValueUpdateParameters.properties.tags
+        /// </param>
+        /// <param name="secret">
+        /// Determines whether the value is a secret and should be encrypted or not. Default value is false.
+        /// Serialized Name: NamedValueUpdateParameters.properties.secret
+        /// </param>
+        /// <param name="displayName">
+        /// Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters.
+        /// Serialized Name: NamedValueUpdateParameters.properties.displayName
+        /// </param>
+        /// <param name="value">
+        /// Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace.
+        /// Serialized Name: NamedValueUpdateParameters.properties.value
+        /// </param>
+        /// <param name="keyVault">
+        /// KeyVault location details of the namedValue.
+        /// Serialized Name: NamedValueUpdateParameters.properties.keyVault
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementNamedValuePatch(IList<string> tags, bool? isSecret, string displayName, string value, KeyVaultContractCreateProperties keyVault, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementNamedValuePatch(IList<string> tags, bool? secret, string displayName, string value, KeyVaultContractCreateProperties keyVault, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
-            IsSecret = isSecret;
+            Secret = secret;
             DisplayName = displayName;
             Value = value;
             KeyVault = keyVault;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Optional tags that when provided can be used to filter the NamedValue list. </summary>
+        /// <summary>
+        /// Optional tags that when provided can be used to filter the NamedValue list.
+        /// Serialized Name: NamedValueUpdateParameters.properties.tags
+        /// </summary>
         [WirePath("properties.tags")]
         public IList<string> Tags { get; }
-        /// <summary> Determines whether the value is a secret and should be encrypted or not. Default value is false. </summary>
+        /// <summary>
+        /// Determines whether the value is a secret and should be encrypted or not. Default value is false.
+        /// Serialized Name: NamedValueUpdateParameters.properties.secret
+        /// </summary>
         [WirePath("properties.secret")]
-        public bool? IsSecret { get; set; }
-        /// <summary> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </summary>
+        public bool? Secret { get; set; }
+        /// <summary>
+        /// Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters.
+        /// Serialized Name: NamedValueUpdateParameters.properties.displayName
+        /// </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. </summary>
+        /// <summary>
+        /// Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace.
+        /// Serialized Name: NamedValueUpdateParameters.properties.value
+        /// </summary>
         [WirePath("properties.value")]
         public string Value { get; set; }
-        /// <summary> KeyVault location details of the namedValue. </summary>
+        /// <summary>
+        /// KeyVault location details of the namedValue.
+        /// Serialized Name: NamedValueUpdateParameters.properties.keyVault
+        /// </summary>
         [WirePath("properties.keyVault")]
         public KeyVaultContractCreateProperties KeyVault { get; set; }
     }

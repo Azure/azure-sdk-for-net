@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Invalid indicates the name provided does not match the resource provider’s naming requirements (incorrect length, unsupported characters, etc.)  AlreadyExists indicates that the name is already in use and is therefore unavailable. </summary>
+    /// <summary>
+    /// Invalid indicates the name provided does not match the resource provider’s naming requirements (incorrect length, unsupported characters, etc.)  AlreadyExists indicates that the name is already in use and is therefore unavailable.
+    /// Serialized Name: NameAvailabilityReason
+    /// </summary>
     public enum ApiManagementServiceNameUnavailableReason
     {
-        /// <summary> Valid. </summary>
+        /// <summary>
+        /// Valid
+        /// Serialized Name: NameAvailabilityReason.Valid
+        /// </summary>
         Valid,
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: NameAvailabilityReason.Invalid
+        /// </summary>
         Invalid,
-        /// <summary> AlreadyExists. </summary>
+        /// <summary>
+        /// AlreadyExists
+        /// Serialized Name: NameAvailabilityReason.AlreadyExists
+        /// </summary>
         AlreadyExists
     }
 }

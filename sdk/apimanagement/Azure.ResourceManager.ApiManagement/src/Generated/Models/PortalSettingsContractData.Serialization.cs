@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("validationKey"u8);
                 writer.WriteStringValue(ValidationKey);
             }
-            if (Optional.IsDefined(IsSubscriptions))
+            if (Optional.IsDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
-                writer.WriteObjectValue(IsSubscriptions, options);
+                writer.WriteObjectValue(Subscriptions, options);
             }
-            if (Optional.IsDefined(IsUserRegistration))
+            if (Optional.IsDefined(UserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
-                writer.WriteObjectValue(IsUserRegistration, options);
+                writer.WriteObjectValue(UserRegistration, options);
             }
             if (Optional.IsDefined(IsRedirectEnabled))
             {
@@ -329,10 +329,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             else
             {
-                if (Optional.IsDefined(IsSubscriptions))
+                if (Optional.IsDefined(Subscriptions))
                 {
                     builder.Append("    subscriptions: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, IsSubscriptions, options, 4, false, "    subscriptions: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Subscriptions, options, 4, false, "    subscriptions: ");
                 }
             }
 
@@ -349,10 +349,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             else
             {
-                if (Optional.IsDefined(IsUserRegistration))
+                if (Optional.IsDefined(UserRegistration))
                 {
                     builder.Append("    userRegistration: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, IsUserRegistration, options, 4, false, "    userRegistration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, UserRegistration, options, 4, false, "    userRegistration: ");
                 }
             }
 

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Lists Regions operation response details. </summary>
+    /// <summary>
+    /// Lists Regions operation response details.
+    /// Serialized Name: RegionListResult
+    /// </summary>
     internal partial class RegionListResult
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RegionListResult"/>. </summary>
-        /// <param name="value"> Lists of Regions. </param>
-        /// <param name="count"> Total record count number across all pages. </param>
-        /// <param name="nextLink"> Next page link if any. </param>
+        /// <param name="value">
+        /// Lists of Regions.
+        /// Serialized Name: RegionListResult.value
+        /// </param>
+        /// <param name="count">
+        /// Total record count number across all pages.
+        /// Serialized Name: RegionListResult.count
+        /// </param>
+        /// <param name="nextLink">
+        /// Next page link if any.
+        /// Serialized Name: RegionListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RegionListResult(IReadOnlyList<RegionContract> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,11 +76,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Lists of Regions. </summary>
+        /// <summary>
+        /// Lists of Regions.
+        /// Serialized Name: RegionListResult.value
+        /// </summary>
         public IReadOnlyList<RegionContract> Value { get; }
-        /// <summary> Total record count number across all pages. </summary>
+        /// <summary>
+        /// Total record count number across all pages.
+        /// Serialized Name: RegionListResult.count
+        /// </summary>
         public long? Count { get; }
-        /// <summary> Next page link if any. </summary>
+        /// <summary>
+        /// Next page link if any.
+        /// Serialized Name: RegionListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Properties specific to the Backend Type. </summary>
+    /// <summary>
+    /// Properties specific to the Backend Type.
+    /// Serialized Name: BackendProperties
+    /// </summary>
     internal partial class BackendProperties
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendProperties"/>. </summary>
-        /// <param name="serviceFabricCluster"> Backend Service Fabric Cluster Properties. </param>
+        /// <param name="serviceFabricCluster">
+        /// Backend Service Fabric Cluster Properties
+        /// Serialized Name: BackendProperties.serviceFabricCluster
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackendProperties(BackendServiceFabricClusterProperties serviceFabricCluster, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Backend Service Fabric Cluster Properties. </summary>
+        /// <summary>
+        /// Backend Service Fabric Cluster Properties
+        /// Serialized Name: BackendProperties.serviceFabricCluster
+        /// </summary>
         [WirePath("serviceFabricCluster")]
         public BackendServiceFabricClusterProperties ServiceFabricCluster { get; set; }
     }

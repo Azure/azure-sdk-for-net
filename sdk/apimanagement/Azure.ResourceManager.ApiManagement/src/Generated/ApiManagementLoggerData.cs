@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementLogger data model.
     /// Logger details.
+    /// Serialized Name: LoggerContract
     /// </summary>
     public partial class ApiManagementLoggerData : ResourceData
     {
@@ -62,16 +63,29 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="loggerType"> Logger type. </param>
-        /// <param name="description"> Logger description. </param>
+        /// <param name="loggerType">
+        /// Logger type.
+        /// Serialized Name: LoggerContract.properties.loggerType
+        /// </param>
+        /// <param name="description">
+        /// Logger description.
+        /// Serialized Name: LoggerContract.properties.description
+        /// </param>
         /// <param name="credentials">
         /// The name and SendRule connection string of the event hub for azureEventHub logger.
         /// Instrumentation key for applicationInsights logger.
+        /// Serialized Name: LoggerContract.properties.credentials
         /// </param>
-        /// <param name="isBuffered"> Whether records are buffered in the logger before publishing. Default is assumed to be true. </param>
-        /// <param name="resourceId"> Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource). </param>
+        /// <param name="isBuffered">
+        /// Whether records are buffered in the logger before publishing. Default is assumed to be true.
+        /// Serialized Name: LoggerContract.properties.isBuffered
+        /// </param>
+        /// <param name="resourceId">
+        /// Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource).
+        /// Serialized Name: LoggerContract.properties.resourceId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementLoggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LoggerType? loggerType, string description, IDictionary<string, string> credentials, bool? isBuffered, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementLoggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LoggerType? loggerType, string description, IDictionary<string, string> credentials, bool? isBuffered, string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LoggerType = loggerType;
             Description = description;
@@ -81,23 +95,36 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Logger type. </summary>
+        /// <summary>
+        /// Logger type.
+        /// Serialized Name: LoggerContract.properties.loggerType
+        /// </summary>
         [WirePath("properties.loggerType")]
         public LoggerType? LoggerType { get; set; }
-        /// <summary> Logger description. </summary>
+        /// <summary>
+        /// Logger description.
+        /// Serialized Name: LoggerContract.properties.description
+        /// </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary>
         /// The name and SendRule connection string of the event hub for azureEventHub logger.
         /// Instrumentation key for applicationInsights logger.
+        /// Serialized Name: LoggerContract.properties.credentials
         /// </summary>
         [WirePath("properties.credentials")]
         public IDictionary<string, string> Credentials { get; }
-        /// <summary> Whether records are buffered in the logger before publishing. Default is assumed to be true. </summary>
+        /// <summary>
+        /// Whether records are buffered in the logger before publishing. Default is assumed to be true.
+        /// Serialized Name: LoggerContract.properties.isBuffered
+        /// </summary>
         [WirePath("properties.isBuffered")]
         public bool? IsBuffered { get; set; }
-        /// <summary> Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource). </summary>
+        /// <summary>
+        /// Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource).
+        /// Serialized Name: LoggerContract.properties.resourceId
+        /// </summary>
         [WirePath("properties.resourceId")]
-        public ResourceIdentifier ResourceId { get; set; }
+        public string ResourceId { get; set; }
     }
 }

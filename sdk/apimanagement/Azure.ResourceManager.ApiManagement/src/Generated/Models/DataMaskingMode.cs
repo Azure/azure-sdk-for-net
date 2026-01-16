@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Data masking mode. </summary>
+    /// <summary>
+    /// Data masking mode.
+    /// Serialized Name: DataMaskingMode
+    /// </summary>
     public readonly partial struct DataMaskingMode : IEquatable<DataMaskingMode>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string MaskValue = "Mask";
         private const string HideValue = "Hide";
 
-        /// <summary> Mask the value of an entity. </summary>
+        /// <summary>
+        /// Mask the value of an entity.
+        /// Serialized Name: DataMaskingMode.Mask
+        /// </summary>
         public static DataMaskingMode Mask { get; } = new DataMaskingMode(MaskValue);
-        /// <summary> Hide the presence of an entity. </summary>
+        /// <summary>
+        /// Hide the presence of an entity.
+        /// Serialized Name: DataMaskingMode.Hide
+        /// </summary>
         public static DataMaskingMode Hide { get; } = new DataMaskingMode(HideValue);
         /// <summary> Determines if two <see cref="DataMaskingMode"/> values are the same. </summary>
         public static bool operator ==(DataMaskingMode left, DataMaskingMode right) => left.Equals(right);

@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityProviderType.Value.ToString());
             }
-            if (Optional.IsDefined(SignInTenant))
+            if (Optional.IsDefined(SigninTenant))
             {
                 writer.WritePropertyName("signinTenant"u8);
-                writer.WriteStringValue(SignInTenant);
+                writer.WriteStringValue(SigninTenant);
             }
             if (Optional.IsCollectionDefined(AllowedTenants))
             {
@@ -66,15 +66,15 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
-            if (Optional.IsDefined(SignUpPolicyName))
+            if (Optional.IsDefined(SignupPolicyName))
             {
                 writer.WritePropertyName("signupPolicyName"u8);
-                writer.WriteStringValue(SignUpPolicyName);
+                writer.WriteStringValue(SignupPolicyName);
             }
-            if (Optional.IsDefined(SignInPolicyName))
+            if (Optional.IsDefined(SigninPolicyName))
             {
                 writer.WritePropertyName("signinPolicyName"u8);
-                writer.WriteStringValue(SignInPolicyName);
+                writer.WriteStringValue(SigninPolicyName);
             }
             if (Optional.IsDefined(ProfileEditingPolicyName))
             {
@@ -100,6 +100,11 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
+            }
+            if (Optional.IsDefined(CertificateId))
+            {
+                writer.WritePropertyName("certificateId"u8);
+                writer.WriteStringValue(CertificateId);
             }
             writer.WriteEndObject();
         }
@@ -139,6 +144,7 @@ namespace Azure.ResourceManager.ApiManagement
             string clientLibrary = default;
             string clientId = default;
             string clientSecret = default;
+            ResourceIdentifier certificateId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,6 +250,15 @@ namespace Azure.ResourceManager.ApiManagement
                             clientSecret = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("certificateId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            certificateId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -269,6 +284,7 @@ namespace Azure.ResourceManager.ApiManagement
                 clientLibrary,
                 clientId,
                 clientSecret,
+                certificateId,
                 serializedAdditionalRawData);
         }
 
@@ -353,7 +369,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignInTenant), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SigninTenant), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    signinTenant: ");
@@ -361,17 +377,17 @@ namespace Azure.ResourceManager.ApiManagement
             }
             else
             {
-                if (Optional.IsDefined(SignInTenant))
+                if (Optional.IsDefined(SigninTenant))
                 {
                     builder.Append("    signinTenant: ");
-                    if (SignInTenant.Contains(Environment.NewLine))
+                    if (SigninTenant.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{SignInTenant}'''");
+                        builder.AppendLine($"{SigninTenant}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{SignInTenant}'");
+                        builder.AppendLine($"'{SigninTenant}'");
                     }
                 }
             }
@@ -435,7 +451,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignUpPolicyName), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignupPolicyName), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    signupPolicyName: ");
@@ -443,22 +459,22 @@ namespace Azure.ResourceManager.ApiManagement
             }
             else
             {
-                if (Optional.IsDefined(SignUpPolicyName))
+                if (Optional.IsDefined(SignupPolicyName))
                 {
                     builder.Append("    signupPolicyName: ");
-                    if (SignUpPolicyName.Contains(Environment.NewLine))
+                    if (SignupPolicyName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{SignUpPolicyName}'''");
+                        builder.AppendLine($"{SignupPolicyName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{SignUpPolicyName}'");
+                        builder.AppendLine($"'{SignupPolicyName}'");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignInPolicyName), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SigninPolicyName), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    signinPolicyName: ");
@@ -466,17 +482,17 @@ namespace Azure.ResourceManager.ApiManagement
             }
             else
             {
-                if (Optional.IsDefined(SignInPolicyName))
+                if (Optional.IsDefined(SigninPolicyName))
                 {
                     builder.Append("    signinPolicyName: ");
-                    if (SignInPolicyName.Contains(Environment.NewLine))
+                    if (SigninPolicyName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{SignInPolicyName}'''");
+                        builder.AppendLine($"{SigninPolicyName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{SignInPolicyName}'");
+                        builder.AppendLine($"'{SigninPolicyName}'");
                     }
                 }
             }
@@ -593,6 +609,21 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         builder.AppendLine($"'{ClientSecret}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    certificateId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CertificateId))
+                {
+                    builder.Append("    certificateId: ");
+                    builder.AppendLine($"'{CertificateId.ToString()}'");
                 }
             }
 

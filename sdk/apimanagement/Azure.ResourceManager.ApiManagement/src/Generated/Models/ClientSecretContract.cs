@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </summary>
+    /// <summary>
+    /// Client or app secret used in IdentityProviders, Aad, OpenID or OAuth.
+    /// Serialized Name: ClientSecretContract
+    /// </summary>
     public partial class ClientSecretContract
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientSecretContract"/>. </summary>
-        /// <param name="clientSecret"> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </param>
+        /// <param name="clientSecret">
+        /// Client or app secret used in IdentityProviders, Aad, OpenID or OAuth.
+        /// Serialized Name: ClientSecretContract.clientSecret
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ClientSecretContract(string clientSecret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </summary>
+        /// <summary>
+        /// Client or app secret used in IdentityProviders, Aad, OpenID or OAuth.
+        /// Serialized Name: ClientSecretContract.clientSecret
+        /// </summary>
         [WirePath("clientSecret")]
         public string ClientSecret { get; }
     }

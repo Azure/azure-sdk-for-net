@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Save Tenant Configuration Contract details. </summary>
+    /// <summary>
+    /// Save Tenant Configuration Contract details.
+    /// Serialized Name: SaveConfigurationParameter
+    /// </summary>
     public partial class ConfigurationSaveContent
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationSaveContent"/>. </summary>
-        /// <param name="branch"> The name of the Git branch in which to commit the current configuration snapshot. </param>
-        /// <param name="forceUpdate"> The value if true, the current configuration database is committed to the Git repository, even if the Git repository has newer changes that would be overwritten. </param>
+        /// <param name="branch">
+        /// The name of the Git branch in which to commit the current configuration snapshot.
+        /// Serialized Name: SaveConfigurationParameter.properties.branch
+        /// </param>
+        /// <param name="forceUpdate">
+        /// The value if true, the current configuration database is committed to the Git repository, even if the Git repository has newer changes that would be overwritten.
+        /// Serialized Name: SaveConfigurationParameter.properties.force
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConfigurationSaveContent(string branch, bool? forceUpdate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the Git branch in which to commit the current configuration snapshot. </summary>
+        /// <summary>
+        /// The name of the Git branch in which to commit the current configuration snapshot.
+        /// Serialized Name: SaveConfigurationParameter.properties.branch
+        /// </summary>
         [WirePath("properties.branch")]
         public string Branch { get; set; }
-        /// <summary> The value if true, the current configuration database is committed to the Git repository, even if the Git repository has newer changes that would be overwritten. </summary>
+        /// <summary>
+        /// The value if true, the current configuration database is committed to the Git repository, even if the Git repository has newer changes that would be overwritten.
+        /// Serialized Name: SaveConfigurationParameter.properties.force
+        /// </summary>
         [WirePath("properties.force")]
         public bool? ForceUpdate { get; set; }
     }

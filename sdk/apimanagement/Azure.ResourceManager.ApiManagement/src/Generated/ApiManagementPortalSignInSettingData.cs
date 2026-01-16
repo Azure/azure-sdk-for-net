@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing the ApiManagementPortalSignInSetting data model.
     /// Sign-In settings for the Developer Portal.
+    /// Serialized Name: PortalSigninSettings
     /// </summary>
     public partial class ApiManagementPortalSignInSettingData : ResourceData
     {
@@ -60,7 +61,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="isRedirectEnabled"> Redirect Anonymous users to the Sign-In page. </param>
+        /// <param name="isRedirectEnabled">
+        /// Redirect Anonymous users to the Sign-In page.
+        /// Serialized Name: PortalSigninSettings.properties.enabled
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApiManagementPortalSignInSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isRedirectEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -68,7 +72,10 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Redirect Anonymous users to the Sign-In page. </summary>
+        /// <summary>
+        /// Redirect Anonymous users to the Sign-In page.
+        /// Serialized Name: PortalSigninSettings.properties.enabled
+        /// </summary>
         [WirePath("properties.enabled")]
         public bool? IsRedirectEnabled { get; set; }
     }

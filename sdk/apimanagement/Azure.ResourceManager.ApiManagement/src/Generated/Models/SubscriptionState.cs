@@ -7,20 +7,41 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </summary>
+    /// <summary>
+    /// Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated.
+    /// Serialized Name: SubscriptionState
+    /// </summary>
     public enum SubscriptionState
     {
-        /// <summary> suspended. </summary>
+        /// <summary>
+        /// suspended
+        /// Serialized Name: SubscriptionState.suspended
+        /// </summary>
         Suspended,
-        /// <summary> active. </summary>
+        /// <summary>
+        /// active
+        /// Serialized Name: SubscriptionState.active
+        /// </summary>
         Active,
-        /// <summary> expired. </summary>
+        /// <summary>
+        /// expired
+        /// Serialized Name: SubscriptionState.expired
+        /// </summary>
         Expired,
-        /// <summary> submitted. </summary>
+        /// <summary>
+        /// submitted
+        /// Serialized Name: SubscriptionState.submitted
+        /// </summary>
         Submitted,
-        /// <summary> rejected. </summary>
+        /// <summary>
+        /// rejected
+        /// Serialized Name: SubscriptionState.rejected
+        /// </summary>
         Rejected,
-        /// <summary> cancelled. </summary>
+        /// <summary>
+        /// cancelled
+        /// Serialized Name: SubscriptionState.cancelled
+        /// </summary>
         Cancelled
     }
 }
