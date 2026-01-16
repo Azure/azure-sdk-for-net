@@ -4,6 +4,7 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.Extensions.Primitives;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
@@ -15,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             var validator = new RequestValidator(null);
 
-            Assert.IsTrue(validator.IsValidHost(new[] { "abc" }));
+            Assert.IsTrue(validator.IsValidHost(["abc"]));
             Assert.IsTrue(validator.IsValidSignature("abc", "sha256=anything", "connectionId"));
         }
 
@@ -33,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase(null, "abc")]
         public void TestIsValidationRequest_NonOptions_ReturnsFalse(string method, string originHeader)
         {
-            var result = RequestValidator.IsValidationRequest(method, originHeader, out var requestHosts);
+            var result = RequestValidator.IsValidationRequest(method, new StringValues(originHeader), out var requestHosts);
             Assert.IsFalse(result);
             Assert.IsNull(requestHosts);
         }
@@ -42,18 +43,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase("")]
         public void TestIsValidationRequest_MissingOrigin_ReturnsFalse(string originHeader)
         {
-            var result = RequestValidator.IsValidationRequest("OPTIONS", originHeader, out var requestHosts);
+            var result = RequestValidator.IsValidationRequest("OPTIONS", new StringValues(originHeader), out var requestHosts);
             Assert.IsFalse(result);
-            Assert.IsNull(requestHosts);
         }
 
         [Test]
         public void TestIsValidationRequest_SplitsOrigins()
         {
-            var result = RequestValidator.IsValidationRequest("OPTIONS", "a,b", out var requestHosts);
+            var result = RequestValidator.IsValidationRequest("OPTIONS", new StringValues("a,b"), out var requestHosts);
             Assert.IsTrue(result);
             Assert.IsNotNull(requestHosts);
             CollectionAssert.AreEqual(new[] { "a", "b" }, requestHosts);
+        }
+
+        [Test]
+        public void TestIsValidationRequest_MultipleOriginHeaderValues_AreAggregated()
+        {
+            var result = RequestValidator.IsValidationRequest(
+                "OPTIONS",
+                new StringValues(["a,b", "c"]),
+                out var requestHosts);
+
+            Assert.IsTrue(result);
+            Assert.IsNotNull(requestHosts);
+            CollectionAssert.AreEqual(new[] { "a", "b", "c" }, requestHosts);
         }
 
         [Test]
