@@ -177,6 +177,9 @@ function New-MarkdownReport {
 
     # Generate a markdown report from the library inventory.
 
+    # Define exclusion list for generator types that are not TypeSpec new emitters
+    $excludedGenerators = @("Swagger", "TSP-Old", "No Generator", "Provisioning")
+
     # Group by type and generator
     $mgmtLibraries = $Libraries | Where-Object { $_.type -eq "Management" }
     $dataLibraries = $Libraries | Where-Object { $_.type -eq "Data Plane" }
@@ -185,12 +188,15 @@ function New-MarkdownReport {
 
     # Count libraries by generator type (excluding provisioning from data plane)
     $mgmtSwagger = $mgmtLibraries | Where-Object { $_.generator -eq "Swagger" }
-    $mgmtNewEmitter = $mgmtLibraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator", "Provisioning") }
+    $mgmtNewEmitter = $mgmtLibraries | Where-Object { $_.generator -notin $excludedGenerators }
     $mgmtTspOld = $mgmtLibraries | Where-Object { $_.generator -eq "TSP-Old" }
 
     $dataSwagger = $dataLibraries | Where-Object { $_.generator -eq "Swagger" }
-    $dataNewEmitter = $dataLibraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator", "Provisioning") }
+    $dataNewEmitter = $dataLibraries | Where-Object { $_.generator -notin $excludedGenerators }
     $dataTspOld = $dataLibraries | Where-Object { $_.generator -eq "TSP-Old" }
+    
+    # Calculate the count of Data Plane libraries excluding provisioning
+    $dataPlaneNonProvisioning = $dataLibraries | Where-Object { $_.generator -ne "Provisioning" }
 
     # Calculate TypeSpec library counts (only those with tsp-location.yaml or Azure.AI.OpenAI with special handling)
     $mgmtTypeSpecLibs = $mgmtLibraries | Where-Object { $_.hasTspLocation -eq $true }
@@ -225,7 +231,7 @@ function New-MarkdownReport {
     $report += "  - Autorest/Swagger: $($mgmtSwagger.Count)"
     $report += "  - New Emitter (TypeSpec): $($mgmtNewEmitter.Count)"
     $report += "  - Old TypeSpec: $($mgmtTspOld.Count)"
-    $report += "- Data Plane (DPG): $($dataLibraries.Count - $provisioningLibraries.Count)"
+    $report += "- Data Plane (DPG): $($dataPlaneNonProvisioning.Count)"
     $report += "  - Autorest/Swagger: $($dataSwagger.Count)"
     $report += "  - New Emitter (TypeSpec): $($dataNewEmitter.Count)"
     $report += "  - Old TypeSpec: $($dataTspOld.Count)"
