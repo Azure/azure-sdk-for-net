@@ -74,7 +74,6 @@ namespace ServiceA {
 
   @route("foo")
   interface Foo {
-    @scenario
     @route("/test")
     test(@query("api-version") apiVersion: VersionsA): FooModel;
   }
@@ -249,7 +248,7 @@ In some scenarios, you may want each service to have its own independent top-lev
 
 ### TypeSpec Configuration
 
-To generate independent top-level clients, you can update the `client.tsp` to use the `@client` as shown below:
+To generate independent top-level clients, you can update the `client.tsp` to use the `@client` decorator as shown below:
 
 ```tsp
 import "./main.tsp";
