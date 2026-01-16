@@ -991,6 +991,7 @@ function GetSDKProjectFolder()
                 $namespace = $csharpOpts["namespace"]
             }
 
+            # TODO: This is should be removed once all package-dir usages are removed in spec repo
             if ($csharpOpts["package-dir"]) {
                 $packageDir = $csharpOpts["package-dir"]
             }
