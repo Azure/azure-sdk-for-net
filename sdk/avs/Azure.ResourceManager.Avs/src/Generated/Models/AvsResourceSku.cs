@@ -9,43 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> A SKU for a resource. </summary>
     public partial class AvsResourceSku
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AvsResourceSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
@@ -53,14 +25,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="locations"> The set of locations that the SKU is available. </param>
         /// <param name="locationInfo"> A list of locations and availability zones in those locations where the SKU is available. </param>
         /// <param name="restrictions"> The restrictions of the SKU. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="locations"/>, <paramref name="locationInfo"/> or <paramref name="restrictions"/> is null. </exception>
         internal AvsResourceSku(AvsResourceSkuResourceType resourceType, string name, IEnumerable<AzureLocation> locations, IEnumerable<AvsResourceSkuLocationInfo> locationInfo, IEnumerable<AvsResourceSkuRestrictions> restrictions)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(locations, nameof(locations));
-            Argument.AssertNotNull(locationInfo, nameof(locationInfo));
-            Argument.AssertNotNull(restrictions, nameof(restrictions));
-
             ResourceType = resourceType;
             Name = name;
             Locations = locations.ToList();
@@ -79,8 +45,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="locationInfo"> A list of locations and availability zones in those locations where the SKU is available. </param>
         /// <param name="capabilities"> Name value pairs to describe the capability. </param>
         /// <param name="restrictions"> The restrictions of the SKU. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsResourceSku(AvsResourceSkuResourceType resourceType, string name, string tier, string size, string family, IReadOnlyList<AzureLocation> locations, IReadOnlyList<AvsResourceSkuLocationInfo> locationInfo, IReadOnlyList<AvsResourceSkuCapabilities> capabilities, IReadOnlyList<AvsResourceSkuRestrictions> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AvsResourceSku(AvsResourceSkuResourceType resourceType, string name, string tier, string size, string family, IReadOnlyList<AzureLocation> locations, IReadOnlyList<AvsResourceSkuLocationInfo> locationInfo, IReadOnlyList<AvsResourceSkuCapabilities> capabilities, IReadOnlyList<AvsResourceSkuRestrictions> restrictions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             Name = name;
@@ -91,30 +57,33 @@ namespace Azure.ResourceManager.Avs.Models
             LocationInfo = locationInfo;
             Capabilities = capabilities;
             Restrictions = restrictions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AvsResourceSku"/> for deserialization. </summary>
-        internal AvsResourceSku()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>
         public AvsResourceSkuResourceType ResourceType { get; }
+
         /// <summary> The name of the SKU. </summary>
         public string Name { get; }
+
         /// <summary> The tier of virtual machines in a scale set. </summary>
         public string Tier { get; }
+
         /// <summary> The size of the SKU. </summary>
         public string Size { get; }
+
         /// <summary> The family of the SKU. </summary>
         public string Family { get; }
+
         /// <summary> The set of locations that the SKU is available. </summary>
         public IReadOnlyList<AzureLocation> Locations { get; }
+
         /// <summary> A list of locations and availability zones in those locations where the SKU is available. </summary>
         public IReadOnlyList<AvsResourceSkuLocationInfo> LocationInfo { get; }
+
         /// <summary> Name value pairs to describe the capability. </summary>
         public IReadOnlyList<AvsResourceSkuCapabilities> Capabilities { get; }
+
         /// <summary> The restrictions of the SKU. </summary>
         public IReadOnlyList<AvsResourceSkuRestrictions> Restrictions { get; }
     }
