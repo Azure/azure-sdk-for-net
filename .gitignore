@@ -182,3 +182,6 @@ tsp_client_metadata.yaml
 
 # Common toolchain intermediate files
 temp
+debug_analysis.py
+__pycache__/
+analysis_output.txt
