@@ -1985,7 +1985,7 @@ namespace Azure.Storage.Blobs.Models
             string value = default,
             DateTimeOffset signedExpiresOn = default,
             DateTimeOffset signedStartsOn = default,
-            string DelegatedUserObjectId = default)
+            string signedDelegatedUserTenantId = default)
         {
             return new UserDelegationKey(
                 signedObjectId,
@@ -1994,7 +1994,7 @@ namespace Azure.Storage.Blobs.Models
                 signedExpiresOn,
                 signedService,
                 signedVersion,
-                DelegatedUserObjectId,
+                signedDelegatedUserTenantId,
                 value);
         }
 
@@ -2029,11 +2029,11 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="signedExpiresOn"> The date-time the key expires. </param>
         /// <param name="signedService"> Abbreviation of the Azure Storage service that accepts the key. </param>
         /// <param name="signedVersion"> The service version that created the key. </param>
-        /// <param name="delegatedUserObjectId"> The delegated user tenant id in Azure AD. </param>
+        /// <param name="signedDelegatedUserTenantId"> The delegated user tenant id in Azure AD. </param>
         /// <param name="value"> The key as a base64 string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="signedObjectId"/>, <paramref name="signedTenantId"/>, <paramref name="signedService"/>, <paramref name="signedVersion"/> or <paramref name="value"/> is null. </exception>
         /// <returns> A new <see cref="Models.UserDelegationKey"/> instance for mocking. </returns>
-        public static UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, DateTimeOffset signedStartsOn = default, DateTimeOffset signedExpiresOn = default, string signedService = null, string signedVersion = null, string delegatedUserObjectId = null, string value = null)
+        public static UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, DateTimeOffset signedStartsOn = default, DateTimeOffset signedExpiresOn = default, string signedService = null, string signedVersion = null, string signedDelegatedUserTenantId = null, string value = null)
         {
             return new UserDelegationKey(
                 signedObjectId,
@@ -2042,7 +2042,7 @@ namespace Azure.Storage.Blobs.Models
                 signedExpiresOn,
                 signedService,
                 signedVersion,
-                delegatedUserObjectId,
+                signedDelegatedUserTenantId,
                 value);
         }
 
