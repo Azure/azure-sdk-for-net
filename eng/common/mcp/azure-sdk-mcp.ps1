@@ -146,14 +146,14 @@ try {
     $updateSucceeded = $true
 }
 catch {
-    if ($Run) {
-        # In MCP mode, warn and fall back to the existing installed version
+    if ($Run -and (Test-Path $exeDestination)) {
+        # In MCP mode and the executable exists, warn and fall back to the existing installed version
         log -warn "Could not update '$exeDestination': $($_.Exception.Message)"
         log -warn "Falling back to the currently installed version."
     }
     else {
-        # In update-only mode, exit with error
-        log -err "Could not update '$exeDestination': $($_.Exception.Message)"
+        # In update-only mode or the executable does not exist, exit with error
+        log -err "Could not install or update '$exeDestination': $($_.Exception.Message)"
         exit 1
     }
 }
