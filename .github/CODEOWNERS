@@ -16,17 +16,11 @@
 ################
 # Orphaned paths
 ################
-# As of 2/1/2023 these paths have no owners:
+# As of 1/15/2026 these paths have no owners:
 
 # /**
-# /.config/
 # /.devcontainer/
-# /.vscode/
 # /common/Perf/
-# /common/Stress/
-# /doc/
-# /samples/
-# /tools/
 
 ##################
 # Repository root
@@ -34,6 +28,12 @@
 # Catch all for loose files in the root, which are mostly global configuration and
 # should not be changed without team discussion.
 /*                                                                 @jsquire @Azure/azure-sdk-write-net-core
+
+# Common repository-wide assets and configuration
+/.config/                                                          @jsquire @Azure/azure-sdk-write-net-core
+/.vscode/                                                          @jsquire @m-redding
+/doc/                                                              @jsquire @scottaddie
+/samples/                                                          @jsquire @m-redding
 
 ################
 # Automation

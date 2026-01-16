@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplianceTelemetryConfigResult>> GetTelemetryConfigApplianceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplianceTelemetryConfigResult>> GetApplianceTelemetryConfigAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = AppliancesClientDiagnostics.CreateScope("MockableResourceConnectorSubscriptionResource.GetTelemetryConfigAppliance");
+            using DiagnosticScope scope = AppliancesClientDiagnostics.CreateScope("MockableResourceConnectorSubscriptionResource.GetApplianceTelemetryConfig");
             scope.Start();
             try
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AppliancesRestClient.CreateGetTelemetryConfigApplianceRequest(Id.SubscriptionId, context);
+                HttpMessage message = AppliancesRestClient.CreateGetApplianceTelemetryConfigRequest(Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplianceTelemetryConfigResult> response = Response.FromValue(ApplianceTelemetryConfigResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplianceTelemetryConfigResult> GetTelemetryConfigAppliance(CancellationToken cancellationToken = default)
+        public virtual Response<ApplianceTelemetryConfigResult> GetApplianceTelemetryConfig(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = AppliancesClientDiagnostics.CreateScope("MockableResourceConnectorSubscriptionResource.GetTelemetryConfigAppliance");
+            using DiagnosticScope scope = AppliancesClientDiagnostics.CreateScope("MockableResourceConnectorSubscriptionResource.GetApplianceTelemetryConfig");
             scope.Start();
             try
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AppliancesRestClient.CreateGetTelemetryConfigApplianceRequest(Id.SubscriptionId, context);
+                HttpMessage message = AppliancesRestClient.CreateGetApplianceTelemetryConfigRequest(Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplianceTelemetryConfigResult> response = Response.FromValue(ApplianceTelemetryConfigResult.FromResponse(result), result);
                 if (response.Value == null)
