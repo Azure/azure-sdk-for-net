@@ -20,12 +20,12 @@ namespace Azure.Generator.Tests.Visitors
         {
             MockHelpers.LoadMockGenerator(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": true }");
             var visitor = new TestNamespaceVisitor();
-            var inputType = InputFactory.Model("TestModel", "Samples");
+            var inputType = InputFactory.Model("TestModel", "SomeNamespace");
             var model = new ModelProvider(inputType);
             var updatedModel = visitor.InvokePreVisitModel(inputType, model);
 
             Assert.IsNotNull(updatedModel);
-            Assert.AreEqual("Samples.Models", updatedModel!.Type.Namespace);
+            Assert.AreEqual("SomeNamespace.Models", updatedModel!.Type.Namespace);
         }
 
         [Test]
