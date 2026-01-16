@@ -14,17 +14,16 @@ using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    /// <summary> Response of a list operation. </summary>
-    internal partial class VMHostListResponse : IJsonModel<VMHostListResponse>
+    internal partial class ElasticVmListResult : IJsonModel<ElasticVmListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="VMHostListResponse"/> for deserialization. </summary>
-        internal VMHostListResponse()
+        /// <summary> Initializes a new instance of <see cref="ElasticVmListResult"/> for deserialization. </summary>
+        internal ElasticVmListResult()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VMHostListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ElasticVmListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -35,10 +34,10 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMHostListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticVmListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMHostListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticVmListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -71,24 +70,24 @@ namespace Azure.ResourceManager.Elastic.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VMHostListResponse IJsonModel<VMHostListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ElasticVmListResult IJsonModel<ElasticVmListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VMHostListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ElasticVmListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMHostListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticVmListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMHostListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticVmListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVMHostListResponse(document.RootElement, options);
+            return DeserializeElasticVmListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VMHostListResponse DeserializeVMHostListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static ElasticVmListResult DeserializeElasticVmListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,54 +122,54 @@ namespace Azure.ResourceManager.Elastic.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VMHostListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new ElasticVmListResult(value, nextLink, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VMHostListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ElasticVmListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMHostListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticVmListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VMHostListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticVmListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VMHostListResponse IPersistableModel<VMHostListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ElasticVmListResult IPersistableModel<ElasticVmListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VMHostListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ElasticVmListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMHostListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticVmListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVMHostListResponse(document.RootElement, options);
+                        return DeserializeElasticVmListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMHostListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticVmListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VMHostListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ElasticVmListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VMHostListResponse"/> from. </param>
-        internal static VMHostListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ElasticVmListResult"/> from. </param>
+        internal static ElasticVmListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeVMHostListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeElasticVmListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

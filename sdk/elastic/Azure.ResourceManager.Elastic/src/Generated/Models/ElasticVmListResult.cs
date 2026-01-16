@@ -11,24 +11,23 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    /// <summary> Response of a list operation. </summary>
-    internal partial class VMHostListResponse
+    internal partial class ElasticVmListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VMHostListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticVmListResult"/>. </summary>
         /// <param name="value"> The VMResources items on this page. </param>
-        internal VMHostListResponse(IEnumerable<ElasticVmResourceInfo> value)
+        internal ElasticVmListResult(IEnumerable<ElasticVmResourceInfo> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMHostListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticVmListResult"/>. </summary>
         /// <param name="value"> The VMResources items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMHostListResponse(IList<ElasticVmResourceInfo> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticVmListResult(IList<ElasticVmResourceInfo> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Elastic
     [ModelReaderWriterBuildable(typeof(ElasticVersion))]
     [ModelReaderWriterBuildable(typeof(ElasticVersionProperties))]
     [ModelReaderWriterBuildable(typeof(ElasticVersionsListResponse))]
+    [ModelReaderWriterBuildable(typeof(ElasticVmListResult))]
     [ModelReaderWriterBuildable(typeof(ElasticVmResourceInfo))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarketplaceSaaSInfo))]
@@ -78,7 +79,6 @@ namespace Azure.ResourceManager.Elastic
     [ModelReaderWriterBuildable(typeof(UpgradableVersionListResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VmCollectionContent))]
-    [ModelReaderWriterBuildable(typeof(VMHostListResponse))]
     [ModelReaderWriterBuildable(typeof(VmIngestionDetailsResult))]
     public partial class AzureResourceManagerElasticContext : ModelReaderWriterContext
     {
