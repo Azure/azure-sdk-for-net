@@ -13,7 +13,7 @@ using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> HyperVToAzStackHCI Protected NIC properties. </summary>
+    /// <summary> HyperVToAzStackHCI NIC properties. </summary>
     public partial class HyperVToAzStackHciProtectedNicProperties : IJsonModel<HyperVToAzStackHciProtectedNicProperties>
     {
         /// <param name="writer"> The JSON writer. </param>

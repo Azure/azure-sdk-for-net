@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <param name="content"> Resource details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete. Use DataReplicationCheckNameAvailabilityAsync instead.", false)]
+        [Obsolete("This method is obsolete. Use CheckDataReplicationNameAvailabilityAsync instead.", false)]
         public virtual async Task<Response<DataReplicationNameAvailabilityResult>> PostCheckNameAvailabilityAsync(AzureLocation location, DataReplicationNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
-            => await DataReplicationCheckNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            => await CheckDataReplicationNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Checks the resource name availability.
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <param name="content"> Resource details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete. Use DataReplicationCheckNameAvailability instead.", false)]
+        [Obsolete("This method is obsolete. Use CheckDataReplicationNameAvailability instead.", false)]
         public virtual Response<DataReplicationNameAvailabilityResult> PostCheckNameAvailability(AzureLocation location, DataReplicationNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
-            => DataReplicationCheckNameAvailability(location, content, cancellationToken);
+            => CheckDataReplicationNameAvailability(location, content, cancellationToken);
     }
 }

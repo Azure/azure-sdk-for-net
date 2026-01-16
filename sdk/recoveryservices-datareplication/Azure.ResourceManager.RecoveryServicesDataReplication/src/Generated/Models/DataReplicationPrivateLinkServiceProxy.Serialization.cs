@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string id = default;
             DataReplicationPrivateLinkServiceConnectionState remotePrivateLinkServiceConnectionState = default;
             RemotePrivateEndpointConnection remotePrivateEndpointConnection = default;
             IList<GroupConnectivityInformation> groupConnectivityInformation = default;
@@ -111,11 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("remotePrivateLinkServiceConnectionState"u8))

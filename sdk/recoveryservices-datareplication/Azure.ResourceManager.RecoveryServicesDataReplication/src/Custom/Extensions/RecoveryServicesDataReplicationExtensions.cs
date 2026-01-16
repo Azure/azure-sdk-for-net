@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete. Use DataReplicationCheckNameAvailabilityAsync instead.", false)]
+        [Obsolete("This method is obsolete. Use CheckDataReplicationNameAvailabilityAsync instead.", false)]
         public static async Task<Response<DataReplicationNameAvailabilityResult>> PostCheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataReplicationNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
-            => await DataReplicationCheckNameAvailabilityAsync(subscriptionResource, location, content, cancellationToken).ConfigureAwait(false);
+            => await CheckDataReplicationNameAvailabilityAsync(subscriptionResource, location, content, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Checks the resource name availability.
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete. Use DataReplicationCheckNameAvailability instead.", false)]
+        [Obsolete("This method is obsolete. Use CheckDataReplicationNameAvailability instead.", false)]
         public static Response<DataReplicationNameAvailabilityResult> PostCheckNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DataReplicationNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
-            => DataReplicationCheckNameAvailability(subscriptionResource, location, content, cancellationToken);
+            => CheckDataReplicationNameAvailability(subscriptionResource, location, content, cancellationToken);
     }
 }

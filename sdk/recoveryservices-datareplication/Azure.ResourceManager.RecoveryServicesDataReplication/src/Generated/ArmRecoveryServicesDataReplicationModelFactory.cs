@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="remotePrivateEndpointConnectionId"> Gets or sets the remote private endpoint connection id. </param>
         /// <param name="groupConnectivityInformation"> Gets or sets group connectivity information. </param>
         /// <returns> A new <see cref="Models.DataReplicationPrivateLinkServiceProxy"/> instance for mocking. </returns>
-        public static DataReplicationPrivateLinkServiceProxy DataReplicationPrivateLinkServiceProxy(ResourceIdentifier id = default, DataReplicationPrivateLinkServiceConnectionState remotePrivateLinkServiceConnectionState = default, string remotePrivateEndpointConnectionId = default, IEnumerable<GroupConnectivityInformation> groupConnectivityInformation = default)
+        public static DataReplicationPrivateLinkServiceProxy DataReplicationPrivateLinkServiceProxy(string id = default, DataReplicationPrivateLinkServiceConnectionState remotePrivateLinkServiceConnectionState = default, ResourceIdentifier remotePrivateEndpointConnectionId = default, IEnumerable<GroupConnectivityInformation> groupConnectivityInformation = default)
         {
             groupConnectivityInformation ??= new ChangeTrackingList<GroupConnectivityInformation>();
 
@@ -1021,7 +1021,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> HyperVToAzStackHCI Protected NIC properties. </summary>
+        /// <summary> HyperVToAzStackHCI NIC properties. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
         /// <param name="macAddress"> Gets or sets the NIC mac address. </param>
         /// <param name="networkName"> Gets or sets the network name. </param>

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="remotePrivateEndpointConnection"> Represent remote private endpoint connection. </param>
         /// <param name="groupConnectivityInformation"> Gets or sets group connectivity information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationPrivateLinkServiceProxy(ResourceIdentifier id, DataReplicationPrivateLinkServiceConnectionState remotePrivateLinkServiceConnectionState, RemotePrivateEndpointConnection remotePrivateEndpointConnection, IList<GroupConnectivityInformation> groupConnectivityInformation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataReplicationPrivateLinkServiceProxy(string id, DataReplicationPrivateLinkServiceConnectionState remotePrivateLinkServiceConnectionState, RemotePrivateEndpointConnection remotePrivateEndpointConnection, IList<GroupConnectivityInformation> groupConnectivityInformation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             RemotePrivateLinkServiceConnectionState = remotePrivateLinkServiceConnectionState;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Gets or sets private link service proxy id. </summary>
-        public ResourceIdentifier Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary> Represents Private link service connection state. </summary>
         public DataReplicationPrivateLinkServiceConnectionState RemotePrivateLinkServiceConnectionState { get; set; }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public IList<GroupConnectivityInformation> GroupConnectivityInformation { get; }
 
         /// <summary> Gets or sets the remote private endpoint connection id. </summary>
-        public string RemotePrivateEndpointConnectionId
+        public ResourceIdentifier RemotePrivateEndpointConnectionId
         {
             get
             {

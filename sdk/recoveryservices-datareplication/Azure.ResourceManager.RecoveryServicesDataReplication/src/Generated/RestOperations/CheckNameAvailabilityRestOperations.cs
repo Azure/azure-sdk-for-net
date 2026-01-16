@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateDataReplicationCheckNameAvailabilityRequest(Guid subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckDataReplicationNameAvailabilityRequest(Guid subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

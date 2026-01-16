@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> HyperVToAzStackHCI Protected NIC properties. </summary>
+    /// <summary> HyperVToAzStackHCI NIC properties. </summary>
     public partial class HyperVToAzStackHciProtectedNicProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

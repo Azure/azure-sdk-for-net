@@ -184,9 +184,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Resource details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataReplicationNameAvailabilityResult>> DataReplicationCheckNameAvailabilityAsync(AzureLocation location, DataReplicationNameAvailabilityContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataReplicationNameAvailabilityResult>> CheckDataReplicationNameAvailabilityAsync(AzureLocation location, DataReplicationNameAvailabilityContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationSubscriptionResource.DataReplicationCheckNameAvailability");
+            using DiagnosticScope scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationSubscriptionResource.CheckDataReplicationNameAvailability");
             scope.Start();
             try
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckNameAvailabilityRestClient.CreateDataReplicationCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DataReplicationNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckDataReplicationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DataReplicationNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataReplicationNameAvailabilityResult> response = Response.FromValue(DataReplicationNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,9 +230,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Resource details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataReplicationNameAvailabilityResult> DataReplicationCheckNameAvailability(AzureLocation location, DataReplicationNameAvailabilityContent content = default, CancellationToken cancellationToken = default)
+        public virtual Response<DataReplicationNameAvailabilityResult> CheckDataReplicationNameAvailability(AzureLocation location, DataReplicationNameAvailabilityContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationSubscriptionResource.DataReplicationCheckNameAvailability");
+            using DiagnosticScope scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationSubscriptionResource.CheckDataReplicationNameAvailability");
             scope.Start();
             try
             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckNameAvailabilityRestClient.CreateDataReplicationCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DataReplicationNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckDataReplicationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DataReplicationNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataReplicationNameAvailabilityResult> response = Response.FromValue(DataReplicationNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
