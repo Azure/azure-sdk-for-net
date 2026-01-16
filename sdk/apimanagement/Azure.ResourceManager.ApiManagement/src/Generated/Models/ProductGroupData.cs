@@ -8,17 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ApiManagement
+namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary>
-    /// A class representing the ApiManagementGroup data model.
-    /// Contract details.
-    /// Serialized Name: GroupContract
+    /// The ProductGroupData.
+    /// Serialized Name: ProductGroupData
     /// </summary>
-    public partial class ApiManagementGroupData : ResourceData
+    public partial class ProductGroupData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,14 +48,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGroupData"/>. </summary>
-        public ApiManagementGroupData()
+        /// <summary> Initializes a new instance of <see cref="ProductGroupData"/>. </summary>
+        public ProductGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGroupData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -83,7 +81,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: GroupContract.properties.externalId
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, bool? isBuiltIn, ApiManagementGroupType? groupType, string externalId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ProductGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, bool? isBuiltIn, ApiManagementGroupType? groupType, string externalId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Description = description;

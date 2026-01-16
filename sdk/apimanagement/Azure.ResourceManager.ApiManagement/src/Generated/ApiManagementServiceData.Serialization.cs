@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ApiManagement
             IList<HostnameConfiguration> hostnameConfigurations = default;
             IReadOnlyList<IPAddress> publicIPAddresses = default;
             IReadOnlyList<IPAddress> privateIPAddresses = default;
-            string publicIPAddressId = default;
+            ResourceIdentifier publicIPAddressId = default;
             PublicNetworkAccess? publicNetworkAccess = default;
             ConfigurationApi configurationApi = default;
             VirtualNetworkConfiguration virtualNetworkConfiguration = default;
@@ -581,7 +581,11 @@ namespace Azure.ResourceManager.ApiManagement
                         }
                         if (property0.NameEquals("publicIpAddressId"u8))
                         {
-                            publicIPAddressId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            publicIPAddressId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -1309,15 +1313,7 @@ namespace Azure.ResourceManager.ApiManagement
                 if (Optional.IsDefined(PublicIPAddressId))
                 {
                     builder.Append("    publicIpAddressId: ");
-                    if (PublicIPAddressId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PublicIPAddressId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PublicIPAddressId}'");
-                    }
+                    builder.AppendLine($"'{PublicIPAddressId.ToString()}'");
                 }
             }
 

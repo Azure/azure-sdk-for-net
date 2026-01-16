@@ -309,10 +309,9 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ApiData item in apiManagementGateway.GetGatewayApisByServiceAsync())
+            await foreach (GatewayApiData item in apiManagementGateway.GetGatewayApisByServiceAsync())
             {
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {item.Id}");
+                Console.WriteLine($"Succeeded: {item}");
             }
 
             Console.WriteLine("Succeeded");
@@ -345,10 +344,9 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 ProvisioningState = AssociationContractPropertiesProvisioningState.Created,
             };
-            ApiData result = await apiManagementGateway.CreateOrUpdateGatewayApiAsync(apiId, associationContract: associationContract);
+            GatewayApiData result = await apiManagementGateway.CreateOrUpdateGatewayApiAsync(apiId, associationContract: associationContract);
 
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {result.Id}");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]

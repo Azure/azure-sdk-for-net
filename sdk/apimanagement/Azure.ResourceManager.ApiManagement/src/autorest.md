@@ -332,6 +332,16 @@ rename-mapping:
   DiagnosticUpdateContract.properties.logClientIp: IsLogClientIPEnabled
   DiagnosticContract.properties.logClientIp: IsLogClientIPEnabled
   AuthorizationServerContract.properties.clientAuthenticationMethod: ClientAuthenticationMethods
+  ApiEntityBaseContract.subscriptionRequired: IsSubscriptionRequired
+  CacheContract.properties.resourceId: resourceUri
+  CacheUpdateParameters.properties.resourceId: resourceUri
+#   IdentityProviderContract.properties.type: IdentityProviderType
+  IdentityProviderContract.properties.signinTenant: SignInTenant
+  IdentityProviderContract.properties.signupPolicyName: SignUpPolicyName
+  IdentityProviderContract.properties.signinPolicyName: SignInPolicyName
+  IssueContract.properties.apiId: -|arm-id
+  IssueContract.properties.userId: -|arm-id
+  LoggerContract.properties.resourceId: -|arm-id
 
 keep-plural-resource-data:
   - ApiManagementWorkspaceLinks
@@ -342,16 +352,6 @@ directive:
   - from: openapi.json
     where: $.definitions
     transform: >
-      $.ApiEntityBaseContract.properties.subscriptionRequired['x-ms-client-name'] = 'IsSubscriptionRequired';
-      $.CacheContractProperties.properties.resourceId['x-ms-client-name'] = 'resourceUri';
-      $.CacheUpdateProperties.properties.resourceId['x-ms-client-name'] = 'resourceUri';
-      $.IdentityProviderBaseParameters.properties.type['x-ms-client-name'] = 'IdentityProviderType';
-      $.IdentityProviderBaseParameters.properties.signinTenant['x-ms-client-name'] = 'SignInTenant';
-      $.IdentityProviderBaseParameters.properties.signupPolicyName['x-ms-client-name'] = 'SignUpPolicyName';
-      $.IdentityProviderBaseParameters.properties.signinPolicyName['x-ms-client-name'] = 'SignInPolicyName';
-      $.IssueContractBaseProperties.properties.apiId['x-ms-format'] = 'arm-id';
-      $.IssueContractProperties.properties.userId['x-ms-format'] = 'arm-id';
-      $.LoggerContractProperties.properties.resourceId['x-ms-format'] = 'arm-id';
       $.NamedValueEntityBaseParameters.properties.secret['x-ms-client-name'] = 'IsSecret';
       $.ProductEntityBaseParameters.properties.subscriptionRequired['x-ms-client-name'] = 'IsSubscriptionRequired';
       $.ProductEntityBaseParameters.properties.approvalRequired['x-ms-client-name'] = 'IsApprovalRequired';
@@ -617,8 +617,15 @@ directive:
     transform: >
                 $['parameters']=[
                       {
-                        "$ref": "../../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
-                      },
+                          "name": "resourceGroupName",
+                          "in": "path",
+                          "description": "The name of the resource group. The name is case insensitive.",
+                          "required": true,
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 90,
+                          "x-ms-parameter-location": "method"
+                        },
                       {
                         "name": "serviceName",
                         "in": "path",
@@ -646,19 +653,36 @@ directive:
                         "type": "string"
                       },
                       {
-                        "$ref": "../../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
-                      },
+                          "name": "api-version",
+                          "in": "query",
+                          "description": "The API version to use for this operation.",
+                          "required": true,
+                          "type": "string",
+                          "minLength": 1
+                        },
                       {
-                        "$ref": "../../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
-                      }
+                          "name": "subscriptionId",
+                          "in": "path",
+                          "description": "The ID of the target subscription.",
+                          "required": true,
+                          "type": "string",
+                          "minLength": 1
+                        }
                 ]
   - from: openapi.json
     where: $.paths.['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}'].put
     transform: >
                 $['parameters']=[
                       {
-                        "$ref": "../../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
-                      },
+                          "name": "resourceGroupName",
+                          "in": "path",
+                          "description": "The name of the resource group. The name is case insensitive.",
+                          "required": true,
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 90,
+                          "x-ms-parameter-location": "method"
+                        },
                       {
                         "name": "serviceName",
                         "in": "path",
@@ -695,10 +719,20 @@ directive:
                         "type": "string"
                       },
                       {
-                        "$ref": "../../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
-                      },
+                          "name": "api-version",
+                          "in": "query",
+                          "description": "The API version to use for this operation.",
+                          "required": true,
+                          "type": "string",
+                          "minLength": 1
+                        },
                       {
-                        "$ref": "../../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
-                      }
+                          "name": "subscriptionId",
+                          "in": "path",
+                          "description": "The ID of the target subscription.",
+                          "required": true,
+                          "type": "string",
+                          "minLength": 1
+                        }
                 ]
 ```

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: LoggerContract.properties.resourceId
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementLoggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LoggerType? loggerType, string description, IDictionary<string, string> credentials, bool? isBuffered, string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementLoggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LoggerType? loggerType, string description, IDictionary<string, string> credentials, bool? isBuffered, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LoggerType = loggerType;
             Description = description;
@@ -125,6 +125,6 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: LoggerContract.properties.resourceId
         /// </summary>
         [WirePath("properties.resourceId")]
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

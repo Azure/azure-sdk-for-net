@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Description = "Redis cache instances in West India",
                 ConnectionString = "apim.redis.cache.windows.net:6380,password=xc,ssl=True,abortConnect=False",
                 UseFromLocation = "default",
-                ResourceId = "https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Cache/redis/apimservice1",
+                ResourceUri = new Uri("https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Cache/redis/apimservice1"),
             };
             ArmOperation<ApiManagementCacheResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cacheId, data);
             ApiManagementCacheResource result = lro.Value;

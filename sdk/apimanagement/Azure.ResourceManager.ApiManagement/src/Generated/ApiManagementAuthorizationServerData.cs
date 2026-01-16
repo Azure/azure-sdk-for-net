@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement
         public ApiManagementAuthorizationServerData()
         {
             AuthorizationMethods = new ChangeTrackingList<AuthorizationMethod>();
-            ClientAuthenticationMethod = new ChangeTrackingList<ClientAuthenticationMethod>();
+            ClientAuthenticationMethods = new ChangeTrackingList<ClientAuthenticationMethod>();
             TokenBodyParameters = new ChangeTrackingList<TokenBodyParameterContract>();
             BearerTokenSendingMethods = new ChangeTrackingList<BearerTokenSendingMethod>();
             GrantTypes = new ChangeTrackingList<GrantType>();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// HTTP verbs supported by the authorization endpoint. GET must be always present. POST is optional.
         /// Serialized Name: AuthorizationServerContract.properties.authorizationMethods
         /// </param>
-        /// <param name="clientAuthenticationMethod">
+        /// <param name="clientAuthenticationMethods">
         /// Method of authentication supported by the token endpoint of this authorization server. Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within the request body in the application/x-www-form-urlencoded format.
         /// Serialized Name: AuthorizationServerContract.properties.clientAuthenticationMethod
         /// </param>
@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: AuthorizationServerContract.properties.clientSecret
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementAuthorizationServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<AuthorizationMethod> authorizationMethods, IList<ClientAuthenticationMethod> clientAuthenticationMethod, IList<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? supportState, string defaultScope, IList<BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, bool? useInTestConsole, bool? useInApiDocumentation, string clientRegistrationEndpoint, string authorizationEndpoint, IList<GrantType> grantTypes, string clientId, string clientSecret, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementAuthorizationServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<AuthorizationMethod> authorizationMethods, IList<ClientAuthenticationMethod> clientAuthenticationMethods, IList<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? supportState, string defaultScope, IList<BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, bool? useInTestConsole, bool? useInApiDocumentation, string clientRegistrationEndpoint, string authorizationEndpoint, IList<GrantType> grantTypes, string clientId, string clientSecret, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AuthorizationMethods = authorizationMethods;
-            ClientAuthenticationMethod = clientAuthenticationMethod;
+            ClientAuthenticationMethods = clientAuthenticationMethods;
             TokenBodyParameters = tokenBodyParameters;
             TokenEndpoint = tokenEndpoint;
             SupportState = supportState;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: AuthorizationServerContract.properties.clientAuthenticationMethod
         /// </summary>
         [WirePath("properties.clientAuthenticationMethod")]
-        public IList<ClientAuthenticationMethod> ClientAuthenticationMethod { get; }
+        public IList<ClientAuthenticationMethod> ClientAuthenticationMethods { get; }
         /// <summary>
         /// Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {"name" : "name value", "value": "a value"}.
         /// Serialized Name: AuthorizationServerContract.properties.tokenBodyParameters

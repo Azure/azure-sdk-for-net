@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 State = IssueState.Open,
                 Title = "New API issue",
                 Description = "New API issue description",
-                UserId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/users/1",
+                UserId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/users/1"),
             };
             ArmOperation<ApiIssueResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, issueId, data);
             ApiIssueResource result = lro.Value;

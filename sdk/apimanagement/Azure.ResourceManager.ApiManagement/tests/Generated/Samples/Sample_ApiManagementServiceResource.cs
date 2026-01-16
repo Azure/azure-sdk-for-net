@@ -232,18 +232,18 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 Sku = new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Premium, 3),
                 Zones = { "1", "2", "3" },
-                PublicIPAddressId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/publicip-apim-japan-east",
+                PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/publicip-apim-japan-east"),
                 VirtualNetworkConfiguration = new VirtualNetworkConfiguration
                 {
-                    SubnetResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet-apim-japaneast/subnets/apim2",
+                    SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet-apim-japaneast/subnets/apim2"),
                 },
                 AdditionalLocations = {new AdditionalLocation(new AzureLocation("Australia East"), new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Premium, 3))
 {
 Zones = {"1", "2", "3"},
-PublicIPAddressId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/apim-australia-east-publicip",
+PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/apim-australia-east-publicip"),
 VirtualNetworkConfiguration = new VirtualNetworkConfiguration
 {
-SubnetResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/apimaeavnet/subnets/default",
+SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/apimaeavnet/subnets/default"),
 },
 }},
                 VirtualNetworkType = VirtualNetworkType.External,
@@ -732,68 +732,7 @@ SubnetResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resource
 
             // invoke the operation
             string contentTypeId = "page";
-            ApiManagementContentType apiManagementContentType = new ApiManagementContentType
-            {
-                ContentTypeName = "Page",
-                Description = "A regular page",
-                Schema = BinaryData.FromObjectAsJson(new
-                {
-                    additionalProperties = "false",
-                    properties = new
-                    {
-                        en_us = new
-                        {
-                            type = "object",
-                            additionalProperties = "false",
-                            properties = new
-                            {
-                                description = new
-                                {
-                                    type = "string",
-                                    description = "Page description. This property gets included in SEO attributes.",
-                                    indexed = "true",
-                                    title = "Description",
-                                },
-                                documentId = new
-                                {
-                                    type = "string",
-                                    description = "Reference to page content document.",
-                                    title = "Document ID",
-                                },
-                                keywords = new
-                                {
-                                    type = "string",
-                                    description = "Page keywords. This property gets included in SEO attributes.",
-                                    indexed = "true",
-                                    title = "Keywords",
-                                },
-                                permalink = new
-                                {
-                                    type = "string",
-                                    description = "Page permalink, e.g. '/about'.",
-                                    indexed = "true",
-                                    title = "Permalink",
-                                },
-                                title = new
-                                {
-                                    type = "string",
-                                    description = "Page title. This property gets included in SEO attributes.",
-                                    indexed = "true",
-                                    title = "Title",
-                                },
-                            },
-                            required = new object[]
-            {
-"title",
-"permalink",
-"documentId"
-            },
-                        },
-                    },
-                }),
-                Version = "1.0.0",
-            };
-            ApiManagementContentType result = await apiManagementService.CreateOrUpdateContentTypeAsync(contentTypeId, apiManagementContentType);
+            ApiManagementContentType result = await apiManagementService.CreateOrUpdateContentTypeAsync(contentTypeId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -907,21 +846,7 @@ SubnetResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resource
             // invoke the operation
             string contentTypeId = "page";
             string contentItemId = "4e3cf6a5-574a-ba08-1f23-2e7a38faa6d8";
-            ApiManagementContentItem apiManagementContentItem = new ApiManagementContentItem
-            {
-                Properties =
-{
-["en_us"] = BinaryData.FromObjectAsJson(new
-{
-description = "Short story about the company.",
-documentId = "contentTypes/document/contentItems/4e3cf6a5-574a-ba08-1f23-2e7a38faa6d8",
-keywords = "company, about",
-permalink = "/about",
-title = "About",
-})
-},
-            };
-            ApiManagementContentItem result = await apiManagementService.CreateOrUpdateContentItemAsync(contentTypeId, contentItemId, apiManagementContentItem);
+            ApiManagementContentItem result = await apiManagementService.CreateOrUpdateContentItemAsync(contentTypeId, contentItemId);
 
             Console.WriteLine($"Succeeded: {result}");
         }

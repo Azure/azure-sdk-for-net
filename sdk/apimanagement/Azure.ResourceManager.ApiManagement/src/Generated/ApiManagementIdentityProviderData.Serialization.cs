@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityProviderType.Value.ToString());
             }
-            if (Optional.IsDefined(SigninTenant))
+            if (Optional.IsDefined(SignInTenant))
             {
                 writer.WritePropertyName("signinTenant"u8);
-                writer.WriteStringValue(SigninTenant);
+                writer.WriteStringValue(SignInTenant);
             }
             if (Optional.IsCollectionDefined(AllowedTenants))
             {
@@ -66,15 +66,15 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
-            if (Optional.IsDefined(SignupPolicyName))
+            if (Optional.IsDefined(SignUpPolicyName))
             {
                 writer.WritePropertyName("signupPolicyName"u8);
-                writer.WriteStringValue(SignupPolicyName);
+                writer.WriteStringValue(SignUpPolicyName);
             }
-            if (Optional.IsDefined(SigninPolicyName))
+            if (Optional.IsDefined(SignInPolicyName))
             {
                 writer.WritePropertyName("signinPolicyName"u8);
-                writer.WriteStringValue(SigninPolicyName);
+                writer.WriteStringValue(SignInPolicyName);
             }
             if (Optional.IsDefined(ProfileEditingPolicyName))
             {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SigninTenant), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignInTenant), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    signinTenant: ");
@@ -377,17 +377,17 @@ namespace Azure.ResourceManager.ApiManagement
             }
             else
             {
-                if (Optional.IsDefined(SigninTenant))
+                if (Optional.IsDefined(SignInTenant))
                 {
                     builder.Append("    signinTenant: ");
-                    if (SigninTenant.Contains(Environment.NewLine))
+                    if (SignInTenant.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{SigninTenant}'''");
+                        builder.AppendLine($"{SignInTenant}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{SigninTenant}'");
+                        builder.AppendLine($"'{SignInTenant}'");
                     }
                 }
             }
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignupPolicyName), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignUpPolicyName), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    signupPolicyName: ");
@@ -459,22 +459,22 @@ namespace Azure.ResourceManager.ApiManagement
             }
             else
             {
-                if (Optional.IsDefined(SignupPolicyName))
+                if (Optional.IsDefined(SignUpPolicyName))
                 {
                     builder.Append("    signupPolicyName: ");
-                    if (SignupPolicyName.Contains(Environment.NewLine))
+                    if (SignUpPolicyName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{SignupPolicyName}'''");
+                        builder.AppendLine($"{SignUpPolicyName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{SignupPolicyName}'");
+                        builder.AppendLine($"'{SignUpPolicyName}'");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SigninPolicyName), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignInPolicyName), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    signinPolicyName: ");
@@ -482,17 +482,17 @@ namespace Azure.ResourceManager.ApiManagement
             }
             else
             {
-                if (Optional.IsDefined(SigninPolicyName))
+                if (Optional.IsDefined(SignInPolicyName))
                 {
                     builder.Append("    signinPolicyName: ");
-                    if (SigninPolicyName.Contains(Environment.NewLine))
+                    if (SignInPolicyName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{SigninPolicyName}'''");
+                        builder.AppendLine($"{SignInPolicyName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{SigninPolicyName}'");
+                        builder.AppendLine($"'{SignInPolicyName}'");
                     }
                 }
             }

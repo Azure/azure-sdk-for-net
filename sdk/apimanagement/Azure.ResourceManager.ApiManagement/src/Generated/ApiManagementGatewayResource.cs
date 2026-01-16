@@ -1006,12 +1006,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiData> GetGatewayApisByServiceAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="GatewayApiData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GatewayApiData> GetGatewayApisByServiceAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gatewayApiRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gatewayApiRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ApiData.DeserializeApiData(e), _gatewayApiClientDiagnostics, Pipeline, "ApiManagementGatewayResource.GetGatewayApisByService", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => GatewayApiData.DeserializeGatewayApiData(e), _gatewayApiClientDiagnostics, Pipeline, "ApiManagementGatewayResource.GetGatewayApisByService", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1035,12 +1035,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiData> GetGatewayApisByService(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GatewayApiData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GatewayApiData> GetGatewayApisByService(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gatewayApiRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gatewayApiRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApiData.DeserializeApiData(e), _gatewayApiClientDiagnostics, Pipeline, "ApiManagementGatewayResource.GetGatewayApisByService", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => GatewayApiData.DeserializeGatewayApiData(e), _gatewayApiClientDiagnostics, Pipeline, "ApiManagementGatewayResource.GetGatewayApisByService", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1065,7 +1065,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
-        public virtual async Task<Response<ApiData>> CreateOrUpdateGatewayApiAsync(string apiId, AssociationContract associationContract = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GatewayApiData>> CreateOrUpdateGatewayApiAsync(string apiId, AssociationContract associationContract = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
@@ -1105,7 +1105,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
-        public virtual Response<ApiData> CreateOrUpdateGatewayApi(string apiId, AssociationContract associationContract = null, CancellationToken cancellationToken = default)
+        public virtual Response<GatewayApiData> CreateOrUpdateGatewayApi(string apiId, AssociationContract associationContract = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 

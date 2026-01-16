@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: AdditionalLocation.platformVersion
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AdditionalLocation(AzureLocation location, ApiManagementServiceSkuProperties sku, IList<string> zones, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, string publicIPAddressId, VirtualNetworkConfiguration virtualNetworkConfiguration, Uri gatewayRegionalUri, ApiManagementNatGatewayState? natGatewayState, IReadOnlyList<string> outboundPublicIPAddresses, bool? disableGateway, PlatformVersion? platformVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AdditionalLocation(AzureLocation location, ApiManagementServiceSkuProperties sku, IList<string> zones, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, VirtualNetworkConfiguration virtualNetworkConfiguration, Uri gatewayRegionalUri, ApiManagementNatGatewayState? natGatewayState, IReadOnlyList<string> outboundPublicIPAddresses, bool? disableGateway, PlatformVersion? platformVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Sku = sku;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: AdditionalLocation.publicIpAddressId
         /// </summary>
         [WirePath("publicIpAddressId")]
-        public string PublicIPAddressId { get; set; }
+        public ResourceIdentifier PublicIPAddressId { get; set; }
         /// <summary>
         /// Virtual network configuration for the location.
         /// Serialized Name: AdditionalLocation.virtualNetworkConfiguration

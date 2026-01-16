@@ -11,16 +11,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ApiManagement
+namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class IssueContractData : IUtf8JsonSerializable, IJsonModel<IssueContractData>
+    public partial class ProductGroupData : IUtf8JsonSerializable, IJsonModel<ProductGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IssueContractData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<IssueContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProductGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,61 +30,56 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IssueContractData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProductGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IssueContractData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductGroupData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("createdDate"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (Optional.IsDefined(ApiId))
-            {
-                writer.WritePropertyName("apiId"u8);
-                writer.WriteStringValue(ApiId);
-            }
-            if (Optional.IsDefined(Title))
-            {
-                writer.WritePropertyName("title"u8);
-                writer.WriteStringValue(Title);
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(UserId))
+            if (options.Format != "W" && Optional.IsDefined(IsBuiltIn))
             {
-                writer.WritePropertyName("userId"u8);
-                writer.WriteStringValue(UserId);
+                writer.WritePropertyName("builtIn"u8);
+                writer.WriteBooleanValue(IsBuiltIn.Value);
+            }
+            if (Optional.IsDefined(GroupType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(GroupType.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(ExternalId))
+            {
+                writer.WritePropertyName("externalId"u8);
+                writer.WriteStringValue(ExternalId);
             }
             writer.WriteEndObject();
         }
 
-        IssueContractData IJsonModel<IssueContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProductGroupData IJsonModel<ProductGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IssueContractData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProductGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IssueContractData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIssueContractData(document.RootElement, options);
+            return DeserializeProductGroupData(document.RootElement, options);
         }
 
-        internal static IssueContractData DeserializeIssueContractData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ProductGroupData DeserializeProductGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,12 +91,11 @@ namespace Azure.ResourceManager.ApiManagement
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            DateTimeOffset? createdDate = default;
-            IssueState? state = default;
-            ResourceIdentifier apiId = default;
-            string title = default;
+            string displayName = default;
             string description = default;
-            ResourceIdentifier userId = default;
+            bool? builtIn = default;
+            ApiManagementGroupType? type0 = default;
+            string externalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,36 +133,9 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("createdDate"u8))
+                        if (property0.NameEquals("displayName"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            createdDate = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("state"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            state = new IssueState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("apiId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            apiId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("title"u8))
-                        {
-                            title = property0.Value.GetString();
+                            displayName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -177,13 +143,27 @@ namespace Azure.ResourceManager.ApiManagement
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("userId"u8))
+                        if (property0.NameEquals("builtIn"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            userId = new ResourceIdentifier(property0.Value.GetString());
+                            builtIn = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("type"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            type0 = property0.Value.GetString().ToApiManagementGroupType();
+                            continue;
+                        }
+                        if (property0.NameEquals("externalId"u8))
+                        {
+                            externalId = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -195,17 +175,16 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IssueContractData(
+            return new ProductGroupData(
                 id,
                 name,
                 type,
                 systemData,
-                createdDate,
-                state,
-                apiId,
-                title,
+                displayName,
                 description,
-                userId,
+                builtIn,
+                type0,
+                externalId,
                 serializedAdditionalRawData);
         }
 
@@ -275,71 +254,25 @@ namespace Azure.ResourceManager.ApiManagement
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    createdDate: ");
+                builder.Append("    displayName: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(CreatedOn))
+                if (Optional.IsDefined(DisplayName))
                 {
-                    builder.Append("    createdDate: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    state: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(State))
-                {
-                    builder.Append("    state: ");
-                    builder.AppendLine($"'{State.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    apiId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ApiId))
-                {
-                    builder.Append("    apiId: ");
-                    builder.AppendLine($"'{ApiId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Title), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    title: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Title))
-                {
-                    builder.Append("    title: ");
-                    if (Title.Contains(Environment.NewLine))
+                    builder.Append("    displayName: ");
+                    if (DisplayName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{Title}'''");
+                        builder.AppendLine($"{DisplayName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{Title}'");
+                        builder.AppendLine($"'{DisplayName}'");
                     }
                 }
             }
@@ -367,18 +300,57 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserId), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsBuiltIn), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    userId: ");
+                builder.Append("    builtIn: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(UserId))
+                if (Optional.IsDefined(IsBuiltIn))
                 {
-                    builder.Append("    userId: ");
-                    builder.AppendLine($"'{UserId.ToString()}'");
+                    builder.Append("    builtIn: ");
+                    var boolValue = IsBuiltIn.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GroupType))
+                {
+                    builder.Append("    type: ");
+                    builder.AppendLine($"'{GroupType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExternalId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    externalId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExternalId))
+                {
+                    builder.Append("    externalId: ");
+                    if (ExternalId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ExternalId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ExternalId}'");
+                    }
                 }
             }
 
@@ -387,9 +359,9 @@ namespace Azure.ResourceManager.ApiManagement
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<IssueContractData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProductGroupData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IssueContractData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProductGroupData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -398,26 +370,26 @@ namespace Azure.ResourceManager.ApiManagement
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(IssueContractData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IssueContractData IPersistableModel<IssueContractData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ProductGroupData IPersistableModel<ProductGroupData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IssueContractData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProductGroupData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIssueContractData(document.RootElement, options);
+                        return DeserializeProductGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IssueContractData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IssueContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProductGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

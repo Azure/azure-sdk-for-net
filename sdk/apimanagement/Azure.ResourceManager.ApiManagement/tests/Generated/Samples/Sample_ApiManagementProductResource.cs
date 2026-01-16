@@ -134,10 +134,9 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementProductResource apiManagementProduct = client.GetApiManagementProductResource(apiManagementProductResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ApiData item in apiManagementProduct.GetProductApisAsync())
+            await foreach (ProductApiData item in apiManagementProduct.GetProductApisAsync())
             {
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {item.Id}");
+                Console.WriteLine($"Succeeded: {item}");
             }
 
             Console.WriteLine("Succeeded");
@@ -166,10 +165,9 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string apiId = "echo-api";
-            ApiData result = await apiManagementProduct.CreateOrUpdateProductApiAsync(apiId);
+            ProductApiData result = await apiManagementProduct.CreateOrUpdateProductApiAsync(apiId);
 
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {result.Id}");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
@@ -250,10 +248,9 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementProductResource apiManagementProduct = client.GetApiManagementProductResource(apiManagementProductResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ApiManagementGroupData item in apiManagementProduct.GetProductGroupsAsync())
+            await foreach (ProductGroupData item in apiManagementProduct.GetProductGroupsAsync())
             {
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {item.Id}");
+                Console.WriteLine($"Succeeded: {item}");
             }
 
             Console.WriteLine("Succeeded");
@@ -282,10 +279,9 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string groupId = "templateGroup";
-            ApiManagementGroupData result = await apiManagementProduct.CreateOrUpdateProductGroupAsync(groupId);
+            ProductGroupData result = await apiManagementProduct.CreateOrUpdateProductGroupAsync(groupId);
 
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {result.Id}");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]

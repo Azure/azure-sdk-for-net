@@ -198,10 +198,10 @@ DisableGateway = true,
             ApiManagementServiceData data = new ApiManagementServiceData(new AzureLocation("East US 2 EUAP"), new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Premium, 2), "apim@autorestsdk.com", "autorestsdk")
             {
                 Zones = { "1", "2" },
-                PublicIPAddressId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgName/providers/Microsoft.Network/publicIPAddresses/apimazvnet",
+                PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgName/providers/Microsoft.Network/publicIPAddresses/apimazvnet"),
                 VirtualNetworkConfiguration = new VirtualNetworkConfiguration
                 {
-                    SubnetResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgName/providers/Microsoft.Network/virtualNetworks/apimcus/subnets/tenant",
+                    SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgName/providers/Microsoft.Network/virtualNetworks/apimcus/subnets/tenant"),
                 },
                 VirtualNetworkType = VirtualNetworkType.External,
                 Tags =

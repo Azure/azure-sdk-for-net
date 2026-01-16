@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: IssueUpdateContract.properties.userId
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiIssuePatch(DateTimeOffset? createdOn, IssueState? state, string apiId, string title, string description, string userId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiIssuePatch(DateTimeOffset? createdOn, IssueState? state, ResourceIdentifier apiId, string title, string description, string userId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedOn = createdOn;
             State = state;
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: IssueUpdateContract.properties.apiId
         /// </summary>
         [WirePath("properties.apiId")]
-        public string ApiId { get; set; }
+        public ResourceIdentifier ApiId { get; set; }
         /// <summary>
         /// The issue title.
         /// Serialized Name: IssueUpdateContract.properties.title

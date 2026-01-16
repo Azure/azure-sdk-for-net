@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// Identity Provider Type identifier.
         /// Serialized Name: IdentityProviderContract.properties.type
         /// </param>
-        /// <param name="signinTenant">
+        /// <param name="signInTenant">
         /// The TenantId to use instead of Common when logging into Active Directory
         /// Serialized Name: IdentityProviderContract.properties.signinTenant
         /// </param>
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// OpenID Connect discovery endpoint hostname for AAD or AAD B2C.
         /// Serialized Name: IdentityProviderContract.properties.authority
         /// </param>
-        /// <param name="signupPolicyName">
+        /// <param name="signUpPolicyName">
         /// Signup Policy Name. Only applies to AAD B2C Identity Provider.
         /// Serialized Name: IdentityProviderContract.properties.signupPolicyName
         /// </param>
-        /// <param name="signinPolicyName">
+        /// <param name="signInPolicyName">
         /// Signin Policy Name. Only applies to AAD B2C Identity Provider.
         /// Serialized Name: IdentityProviderContract.properties.signinPolicyName
         /// </param>
@@ -112,14 +112,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: IdentityProviderContract.properties.certificateId
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementIdentityProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderType? identityProviderType, string signinTenant, IList<string> allowedTenants, string authority, string signupPolicyName, string signinPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientLibrary, string clientId, string clientSecret, ResourceIdentifier certificateId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementIdentityProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderType? identityProviderType, string signInTenant, IList<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientLibrary, string clientId, string clientSecret, ResourceIdentifier certificateId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IdentityProviderType = identityProviderType;
-            SigninTenant = signinTenant;
+            SignInTenant = signInTenant;
             AllowedTenants = allowedTenants;
             Authority = authority;
-            SignupPolicyName = signupPolicyName;
-            SigninPolicyName = signinPolicyName;
+            SignUpPolicyName = signUpPolicyName;
+            SignInPolicyName = signInPolicyName;
             ProfileEditingPolicyName = profileEditingPolicyName;
             PasswordResetPolicyName = passwordResetPolicyName;
             ClientLibrary = clientLibrary;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: IdentityProviderContract.properties.signinTenant
         /// </summary>
         [WirePath("properties.signinTenant")]
-        public string SigninTenant { get; set; }
+        public string SignInTenant { get; set; }
         /// <summary>
         /// List of Allowed Tenants when configuring Azure Active Directory login.
         /// Serialized Name: IdentityProviderContract.properties.allowedTenants
@@ -158,13 +158,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: IdentityProviderContract.properties.signupPolicyName
         /// </summary>
         [WirePath("properties.signupPolicyName")]
-        public string SignupPolicyName { get; set; }
+        public string SignUpPolicyName { get; set; }
         /// <summary>
         /// Signin Policy Name. Only applies to AAD B2C Identity Provider.
         /// Serialized Name: IdentityProviderContract.properties.signinPolicyName
         /// </summary>
         [WirePath("properties.signinPolicyName")]
-        public string SigninPolicyName { get; set; }
+        public string SignInPolicyName { get; set; }
         /// <summary>
         /// Profile Editing Policy Name. Only applies to AAD B2C Identity Provider.
         /// Serialized Name: IdentityProviderContract.properties.profileEditingPolicyName

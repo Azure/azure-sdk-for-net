@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: IssueContract.properties.userId
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IssueContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, IssueState? state, string apiId, string title, string description, string userId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal IssueContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, IssueState? state, ResourceIdentifier apiId, string title, string description, ResourceIdentifier userId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             State = state;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: IssueContract.properties.apiId
         /// </summary>
         [WirePath("properties.apiId")]
-        public string ApiId { get; set; }
+        public ResourceIdentifier ApiId { get; set; }
         /// <summary>
         /// The issue title.
         /// Serialized Name: IssueContract.properties.title
@@ -133,6 +133,6 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: IssueContract.properties.userId
         /// </summary>
         [WirePath("properties.userId")]
-        public string UserId { get; set; }
+        public ResourceIdentifier UserId { get; set; }
     }
 }

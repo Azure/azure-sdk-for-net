@@ -133,13 +133,9 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementGroupResource apiManagementGroup = client.GetApiManagementGroupResource(apiManagementGroupResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ApiManagementUserResource item in apiManagementGroup.GetGroupUsersAsync())
+            await foreach (ApiManagementGroupUserData item in apiManagementGroup.GetGroupUsersAsync())
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                UserContractData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+                Console.WriteLine($"Succeeded: {item}");
             }
 
             Console.WriteLine("Succeeded");
@@ -168,13 +164,9 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string userId = "59307d350af58404d8a26300";
-            ApiManagementUserResource result = await apiManagementGroup.CreateGroupUserAsync(userId);
+            ApiManagementGroupUserData result = await apiManagementGroup.CreateGroupUserAsync(userId);
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            UserContractData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]

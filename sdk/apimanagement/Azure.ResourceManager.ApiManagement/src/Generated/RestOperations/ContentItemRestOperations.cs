@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, ApiManagementContentItem apiManagementContentItem, string ifMatch)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, string ifMatch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ApiManagement
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, ApiManagementContentItem apiManagementContentItem, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -288,35 +288,29 @@ namespace Azure.ResourceManager.ApiManagement
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(apiManagementContentItem, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Creates a new developer portal's content item specified by the provided content type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="contentItemId"> Content item identifier. </param>
-        /// <param name="apiManagementContentItem"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/>, <paramref name="contentItemId"/> or <paramref name="apiManagementContentItem"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiManagementContentItem>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, ApiManagementContentItem apiManagementContentItem, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementContentItem>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
             Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
-            Argument.AssertNotNull(apiManagementContentItem, nameof(apiManagementContentItem));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId, contentItemId, apiManagementContentItem, ifMatch);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId, contentItemId, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -334,26 +328,24 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates a new developer portal's content item specified by the provided content type. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="contentItemId"> Content item identifier. </param>
-        /// <param name="apiManagementContentItem"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/>, <paramref name="contentItemId"/> or <paramref name="apiManagementContentItem"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiManagementContentItem> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, ApiManagementContentItem apiManagementContentItem, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ApiManagementContentItem> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
             Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
-            Argument.AssertNotNull(apiManagementContentItem, nameof(apiManagementContentItem));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId, contentItemId, apiManagementContentItem, ifMatch);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId, contentItemId, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

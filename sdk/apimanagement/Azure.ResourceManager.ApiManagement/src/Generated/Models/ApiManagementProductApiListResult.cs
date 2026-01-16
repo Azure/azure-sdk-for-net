@@ -7,15 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary>
-    /// Configuration of a virtual network to which API Management service is deployed.
-    /// Serialized Name: VirtualNetworkConfiguration
+    /// Paged API list representation.
+    /// Serialized Name: ApiManagementProductApiListResult
     /// </summary>
-    public partial class VirtualNetworkConfiguration
+    internal partial class ApiManagementProductApiListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,50 +48,48 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkConfiguration"/>. </summary>
-        public VirtualNetworkConfiguration()
+        /// <summary> Initializes a new instance of <see cref="ApiManagementProductApiListResult"/>. </summary>
+        internal ApiManagementProductApiListResult()
         {
+            Value = new ChangeTrackingList<ProductApiData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkConfiguration"/>. </summary>
-        /// <param name="vnetId">
-        /// The virtual network ID. This is typically a GUID. Expect a null GUID by default.
-        /// Serialized Name: VirtualNetworkConfiguration.vnetid
+        /// <summary> Initializes a new instance of <see cref="ApiManagementProductApiListResult"/>. </summary>
+        /// <param name="value">
+        /// Page values.
+        /// Serialized Name: ApiManagementProductApiListResult.value
         /// </param>
-        /// <param name="subnetname">
-        /// The name of the subnet.
-        /// Serialized Name: VirtualNetworkConfiguration.subnetname
+        /// <param name="count">
+        /// Total record count number across all pages.
+        /// Serialized Name: ApiManagementProductApiListResult.count
         /// </param>
-        /// <param name="subnetResourceId">
-        /// The full resource ID of a subnet in a virtual network to deploy the API Management service in.
-        /// Serialized Name: VirtualNetworkConfiguration.subnetResourceId
+        /// <param name="nextLink">
+        /// Next page link if any.
+        /// Serialized Name: ApiManagementProductApiListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkConfiguration(Guid? vnetId, string subnetname, ResourceIdentifier subnetResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementProductApiListResult(IReadOnlyList<ProductApiData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            VnetId = vnetId;
-            Subnetname = subnetname;
-            SubnetResourceId = subnetResourceId;
+            Value = value;
+            Count = count;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
-        /// The virtual network ID. This is typically a GUID. Expect a null GUID by default.
-        /// Serialized Name: VirtualNetworkConfiguration.vnetid
+        /// Page values.
+        /// Serialized Name: ApiManagementProductApiListResult.value
         /// </summary>
-        [WirePath("vnetid")]
-        public Guid? VnetId { get; }
+        public IReadOnlyList<ProductApiData> Value { get; }
         /// <summary>
-        /// The name of the subnet.
-        /// Serialized Name: VirtualNetworkConfiguration.subnetname
+        /// Total record count number across all pages.
+        /// Serialized Name: ApiManagementProductApiListResult.count
         /// </summary>
-        [WirePath("subnetname")]
-        public string Subnetname { get; }
+        public long? Count { get; }
         /// <summary>
-        /// The full resource ID of a subnet in a virtual network to deploy the API Management service in.
-        /// Serialized Name: VirtualNetworkConfiguration.subnetResourceId
+        /// Next page link if any.
+        /// Serialized Name: ApiManagementProductApiListResult.nextLink
         /// </summary>
-        [WirePath("subnetResourceId")]
-        public ResourceIdentifier SubnetResourceId { get; set; }
+        public string NextLink { get; }
     }
 }

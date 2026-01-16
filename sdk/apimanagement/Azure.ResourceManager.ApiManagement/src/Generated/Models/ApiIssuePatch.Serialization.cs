@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             DateTimeOffset? createdDate = default;
             IssueState? state = default;
-            string apiId = default;
+            ResourceIdentifier apiId = default;
             string title = default;
             string description = default;
             string userId = default;
@@ -143,7 +143,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         }
                         if (property0.NameEquals("apiId"u8))
                         {
-                            apiId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            apiId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("title"u8))

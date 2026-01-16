@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// A resource identifier for the related ApiVersionSet.
         /// Serialized Name: ApiEntityBaseContract.apiVersionSetId
         /// </param>
-        /// <param name="subscriptionRequired">
+        /// <param name="isSubscriptionRequired">
         /// Specifies whether an API or Product subscription is required for accessing the API.
         /// Serialized Name: ApiEntityBaseContract.subscriptionRequired
         /// </param>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: ApiEntityBaseContract.license
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? subscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ApiRevisionDescription = apiRevisionDescription;
             ApiVersionDescription = apiVersionDescription;
             ApiVersionSetId = apiVersionSetId;
-            SubscriptionRequired = subscriptionRequired;
+            IsSubscriptionRequired = isSubscriptionRequired;
             TermsOfServiceLink = termsOfServiceLink;
             Contact = contact;
             License = license;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: ApiEntityBaseContract.subscriptionRequired
         /// </summary>
         [WirePath("subscriptionRequired")]
-        public bool? SubscriptionRequired { get; }
+        public bool? IsSubscriptionRequired { get; }
         /// <summary>
         /// A URL to the Terms of Service for the API. MUST be in the format of a URL.
         /// Serialized Name: ApiEntityBaseContract.termsOfServiceUrl

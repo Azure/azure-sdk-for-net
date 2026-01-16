@@ -8,17 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ApiManagement
+namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary>
-    /// A class representing the UserContract data model.
-    /// User details.
-    /// Serialized Name: UserContract
+    /// The ApiManagementGroupUserData.
+    /// Serialized Name: ApiManagementGroupUserData
     /// </summary>
-    public partial class UserContractData : ResourceData
+    public partial class ApiManagementGroupUserData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,16 +48,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UserContractData"/>. </summary>
-        public UserContractData()
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGroupUserData"/>. </summary>
+        public ApiManagementGroupUserData()
         {
             Identities = new ChangeTrackingList<UserIdentityContract>();
             Groups = new ChangeTrackingList<GroupContractProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserContractData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGroupUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -97,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// Serialized Name: UserContract.properties.groups
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, string firstName, string lastName, string email, DateTimeOffset? registriesOn, IReadOnlyList<GroupContractProperties> groups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementGroupUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, string firstName, string lastName, string email, DateTimeOffset? registriesOn, IReadOnlyList<GroupContractProperties> groups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             State = state;
             Note = note;

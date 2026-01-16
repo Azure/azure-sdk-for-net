@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// A resource identifier for the related ApiVersionSet.
         /// Serialized Name: ApiEntityBaseContract.apiVersionSetId
         /// </param>
-        /// <param name="subscriptionRequired">
+        /// <param name="isSubscriptionRequired">
         /// Specifies whether an API or Product subscription is required for accessing the API.
         /// Serialized Name: ApiEntityBaseContract.subscriptionRequired
         /// </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Describes on which protocols the operations in this API can be invoked.
         /// Serialized Name: ApiTagResourceContractProperties.protocols
         /// </param>
-        internal AssociatedApiProperties(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? subscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, IDictionary<string, BinaryData> serializedAdditionalRawData, string id, string name, Uri serviceUri, string path, IReadOnlyList<ApiOperationInvokableProtocol> protocols) : base(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, subscriptionRequired, termsOfServiceLink, contact, license, serializedAdditionalRawData)
+        internal AssociatedApiProperties(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, IDictionary<string, BinaryData> serializedAdditionalRawData, string id, string name, Uri serviceUri, string path, IReadOnlyList<ApiOperationInvokableProtocol> protocols) : base(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceLink, contact, license, serializedAdditionalRawData)
         {
             Id = id;
             Name = name;

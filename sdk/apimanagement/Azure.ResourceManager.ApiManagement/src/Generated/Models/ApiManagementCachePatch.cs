@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Location identifier to use cache from (should be either 'default' or valid Azure region identifier)
         /// Serialized Name: CacheUpdateParameters.properties.useFromLocation
         /// </param>
-        /// <param name="resourceId">
+        /// <param name="resourceUri">
         /// Original uri of entity in external system cache points to
         /// Serialized Name: CacheUpdateParameters.properties.resourceId
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementCachePatch(string description, string connectionString, string useFromLocation, string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementCachePatch(string description, string connectionString, string useFromLocation, Uri resourceUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             ConnectionString = connectionString;
             UseFromLocation = useFromLocation;
-            ResourceId = resourceId;
+            ResourceUri = resourceUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -103,6 +103,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// Serialized Name: CacheUpdateParameters.properties.resourceId
         /// </summary>
         [WirePath("properties.resourceId")]
-        public string ResourceId { get; set; }
+        public Uri ResourceUri { get; set; }
     }
 }
