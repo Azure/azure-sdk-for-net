@@ -196,17 +196,23 @@ namespace Azure.AI.Projects.Telemetry
         }
 
         /// <summary>
-        /// Sets telemetry tags and events for agent definition, handling both PromptAgentDefinition and other types.
+        /// Sets telemetry tags and events for agent definition, handling PromptAgentDefinition, WorkflowAgentDefinition, and HostedAgentDefinition.
         /// </summary>
         /// <param name="scope">The OpenTelemetryScope instance to set tags on.</param>
         /// <param name="agentDefinition">The agent definition to process.</param>
         /// <param name="agentName">The name of the agent.</param>
         private static void SetAgentDefinitionTelemetryTags(OpenTelemetryScope scope, AgentDefinition agentDefinition, string agentName)
         {
-            if (agentDefinition is PromptAgentDefinition promptAgentDefinition)
+            // Determine agent type based on the definition type
+            string agentType = DetermineAgentType(agentDefinition);
+
+            // Always set agent type and name
+            scope.SetTagMaybe(GenAiAgentType, agentType);
+            scope.SetTagMaybe(GenAiAgentNameKey, agentName);
+
+            if (agentDefinition is Azure.AI.Projects.OpenAI.PromptAgentDefinition promptAgentDefinition)
             {
                 scope.SetTagMaybe(GenAiRequestModelKey, promptAgentDefinition.Model);
-                scope.SetTagMaybe(GenAiAgentNameKey, agentName);
                 scope.SetTagMaybe(GenAiRequestTemperatureKey, promptAgentDefinition.Temperature);
                 scope.SetTagMaybe(GenAiRequestTopPKey, promptAgentDefinition.TopP);
 
@@ -217,31 +223,131 @@ namespace Azure.AI.Projects.Telemetry
                     scope.SetTagMaybe(GenAiRequestReasoningSummary, reasoningOptions.ReasoningSummaryVerbosity);
                 }
 
-                // TODO: check if structured outputs should be events and follow content recording flag
-                //var structuredInputs = promptAgentDefinition.StructuredInputs;
+                // Add instructions event (if instructions exist)
+                if (!string.IsNullOrEmpty(promptAgentDefinition.Instructions))
+                {
+                    string traceEvent = s_traceContent ? JsonSerializer.Serialize(
+                        new[] { new EventContent(promptAgentDefinition.Instructions) },
+                        EventsContext.Default.EventContentArray
+                    ) : JsonSerializer.Serialize("", EventsContext.Default.String);
 
-                string traceEvent = s_traceContent ? JsonSerializer.Serialize(
-                    new EventContent (promptAgentDefinition.Instructions),
-                    EventsContext.Default.EventContent
-                ) : JsonSerializer.Serialize("", EventsContext.Default.String);
+                    ActivityTagsCollection messageTags = new() {
+                        { GenAiProviderNameKey, GenAiProviderNameValue},
+                        { GenAiEventContent, traceEvent }
+                    };
 
-                ActivityTagsCollection messageTags = new() {
-                    { GenAiSystemKey, GenAiSystemValue},
-                    { GenAiEventContent, traceEvent  }
+                    scope._activity?.AddEvent(
+                        new ActivityEvent(EventNameSystemMessage, tags: messageTags)
+                    );
+                }
+            }
+            else if (agentDefinition is Azure.AI.Projects.OpenAI.WorkflowAgentDefinition workflowAgentDefinition)
+            {
+                // Handle workflow agent
+                // Note: Workflow agents do not have a model, so we don't set GenAiRequestModelKey
+
+                // Get the workflow YAML using reflection since WorkflowYaml is private
+                var workflowYamlProperty = typeof(Azure.AI.Projects.OpenAI.WorkflowAgentDefinition).GetProperty("WorkflowYaml",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                string workflowYaml = workflowYamlProperty?.GetValue(workflowAgentDefinition) as string;
+
+                // Add workflow event - always create event, content depends on recording setting
+                string workflowEventContent;
+                if (s_traceContent && !string.IsNullOrEmpty(workflowYaml))
+                {
+                    // Include actual workflow YAML when content recording is enabled
+                    workflowEventContent = JsonSerializer.Serialize(
+                        new[] { new WorkflowEventContent(workflowYaml) },
+                        EventsContext.Default.WorkflowEventContentArray);
+                }
+                else
+                {
+                    // Empty array when content recording is disabled
+                    workflowEventContent = "[]";
+                }
+
+                ActivityTagsCollection workflowTags = new() {
+                    { GenAiProviderNameKey, GenAiProviderNameValue},
+                    { GenAiEventContent, workflowEventContent }
                 };
 
                 scope._activity?.AddEvent(
-                    new ActivityEvent(EventNameSystemMessage, tags: messageTags)
+                    new ActivityEvent(EventNameAgentWorkflow, tags: workflowTags)
                 );
+            }
+            // Check for ImageBasedHostedAgentDefinition BEFORE checking for HostedAgentDefinition
+            // since ImageBasedHostedAgentDefinition inherits from HostedAgentDefinition
+            else if (agentDefinition is Azure.AI.Projects.OpenAI.ImageBasedHostedAgentDefinition imageBasedHostedAgentDefinition)
+            {
+                // Handle image-based hosted agent - add all hosted-specific attributes including image
+                scope.SetTagMaybe(GenAiAgentHostedCpu, imageBasedHostedAgentDefinition.Cpu);
+                scope.SetTagMaybe(GenAiAgentHostedMemory, imageBasedHostedAgentDefinition.Memory);
+                scope.SetTagMaybe(GenAiAgentHostedImage, imageBasedHostedAgentDefinition.Image);
+
+                // Extract protocol and version from ContainerProtocolVersions if available
+                if (imageBasedHostedAgentDefinition.ContainerProtocolVersions != null &&
+                    imageBasedHostedAgentDefinition.ContainerProtocolVersions.Count > 0)
+                {
+                    var protocolVersion = imageBasedHostedAgentDefinition.ContainerProtocolVersions[0];
+
+                    // Set protocol name (convert enum to lowercase string for consistency with Python)
+                    string protocolName = protocolVersion.Protocol.ToString().ToLowerInvariant();
+                    scope.SetTagMaybe(GenAiAgentHostedProtocol, protocolName);
+                    scope.SetTagMaybe(GenAiAgentHostedProtocolVersion, protocolVersion.Version);
+                }
+            }
+            else if (agentDefinition is Azure.AI.Projects.OpenAI.HostedAgentDefinition hostedAgentDefinition)
+            {
+                // Handle non-image-based hosted agent (fallback for base HostedAgentDefinition)
+                scope.SetTagMaybe(GenAiAgentHostedCpu, hostedAgentDefinition.Cpu);
+                scope.SetTagMaybe(GenAiAgentHostedMemory, hostedAgentDefinition.Memory);
+
+                // Extract protocol and version from ContainerProtocolVersions if available
+                if (hostedAgentDefinition.ContainerProtocolVersions != null &&
+                    hostedAgentDefinition.ContainerProtocolVersions.Count > 0)
+                {
+                    var protocolVersion = hostedAgentDefinition.ContainerProtocolVersions[0];
+
+                    // Set protocol name (convert enum to lowercase string for consistency with Python)
+                    string protocolName = protocolVersion.Protocol.ToString().ToLowerInvariant();
+                    scope.SetTagMaybe(GenAiAgentHostedProtocol, protocolName);
+                    scope.SetTagMaybe(GenAiAgentHostedProtocolVersion, protocolVersion.Version);
+                }
             }
             else
             {
-                // Handle other agent definition types or set default values
+                // Unknown agent type - set minimal attributes
                 scope.SetTagMaybe(GenAiRequestModelKey, "unknown");
-                scope.SetTagMaybe(GenAiAgentNameKey, agentName);
-                scope.SetTagMaybe(GenAiRequestTemperatureKey, null);
-                scope.SetTagMaybe(GenAiRequestTopPKey, null);
             }
+        }
+
+        /// <summary>
+        /// Determines the agent type based on the agent definition.
+        /// </summary>
+        /// <param name="agentDefinition">The agent definition to analyze.</param>
+        /// <returns>The agent type string.</returns>
+        private static string DetermineAgentType(AgentDefinition agentDefinition)
+        {
+            // Check for hosted agent first (most specific)
+            if (agentDefinition is Azure.AI.Projects.OpenAI.HostedAgentDefinition)
+            {
+                return AgentTypeHosted;
+            }
+
+            // Check for workflow agent
+            if (agentDefinition is Azure.AI.Projects.OpenAI.WorkflowAgentDefinition)
+            {
+                return AgentTypeWorkflow;
+            }
+
+            // Check for prompt agent
+            if (agentDefinition is Azure.AI.Projects.OpenAI.PromptAgentDefinition)
+            {
+                return AgentTypePrompt;
+            }
+
+            // Unknown type
+            return AgentTypeUnknown;
         }
 
         private OpenTelemetryScope(string activityName, Uri endpoint, string operationName=null)
@@ -271,7 +377,7 @@ namespace Azure.AI.Projects.Telemetry
             // Record the request to telemetry.
             _commonTags = new TagList()
             {
-                { GenAiSystemKey, GenAiSystemValue},
+                { GenAiProviderNameKey, GenAiProviderNameValue},
                 { GenAiOperationNameKey, operationName},
                 { ServerAddressKey, endpoint.Host }
             };

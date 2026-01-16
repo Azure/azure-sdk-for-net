@@ -234,5 +234,33 @@ namespace Azure.AI.Projects
             message.Apply(options);
             return message;
         }
+
+        internal PipelineMessage CreateStreamAgentContainerLogsRequest(string agentName, string agentVersion, string kind, string replicaName, int? tail, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(agentVersion, true);
+            uri.AppendPath("/containers/default:logstream", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (kind != null)
+            {
+                uri.AppendQuery("kind", kind, true);
+            }
+            if (replicaName != null)
+            {
+                uri.AppendQuery("replica_name", replicaName, true);
+            }
+            if (tail != null)
+            {
+                uri.AppendQuery("tail", TypeFormatters.ConvertToString(tail), true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            message.Apply(options);
+            return message;
+        }
     }
 }

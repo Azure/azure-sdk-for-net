@@ -46,14 +46,14 @@ internal static partial class ResponseItemHelpers
         return result;
     }
 
-    private static Dictionary<Type, ModelReaderWriterContext> s_contextMap;
+    private static Dictionary<System.Type, ModelReaderWriterContext> s_contextMap;
 
     internal static ChangeTrackingList<T> ConvertItemsTo<T, U>(IEnumerable<U> sourceItems)
     {
         s_contextMap ??= new()
         {
             [typeof(ResponseItem)] = OpenAIContext.Default,
-            [typeof(InternalItemParam)] = AzureAIProjectsContext.Default,
+            [typeof(Item)] = AzureAIProjectsContext.Default,
         };
         if (!s_contextMap.ContainsKey(typeof(T)) || !s_contextMap.ContainsKey(typeof(U)))
         {
