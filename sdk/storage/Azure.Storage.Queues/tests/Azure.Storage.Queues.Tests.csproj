@@ -22,6 +22,7 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="$(AzureStorageSharedTestSources)\ObserveStructuredMessagePolicy.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\TransferValidationTestBase.cs" />
   </ItemGroup>
 </Project>
