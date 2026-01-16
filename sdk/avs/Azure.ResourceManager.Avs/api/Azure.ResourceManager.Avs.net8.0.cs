@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.Avs
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", false)]
     public partial class WorkloadNetworkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Avs.WorkloadNetworkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.WorkloadNetworkResource>, System.Collections.IEnumerable
     {
-        public WorkloadNetworkCollection() { }
+        protected WorkloadNetworkCollection() { }
         public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Avs.Models.WorkloadNetworkName workloadNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Avs.Models.WorkloadNetworkName workloadNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkResource> Get(Azure.ResourceManager.Avs.Models.WorkloadNetworkName workloadNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
