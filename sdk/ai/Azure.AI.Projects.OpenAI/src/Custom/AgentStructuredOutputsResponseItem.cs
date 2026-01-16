@@ -12,6 +12,6 @@ namespace Azure.AI.Projects.OpenAI;
 public partial class AgentStructuredOutputsResponseItem
 {
     public AgentStructuredOutputsResponseItem(BinaryData output)
-        : this(AgentResponseItemKind.StructuredOutputs, createdBy: new(),  id: null, additionalBinaryDataProperties: null, output: output)
+        : this(AgentResponseItemKind.StructuredOutputs, id: null, itemSource: new(), additionalBinaryDataProperties: null, output: output)
     { }
 }

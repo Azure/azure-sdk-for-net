@@ -1,28 +1,21 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ComponentModel;
+global using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Projects.OpenAI;
 
 // Public type renames
 
-[CodeGenType("AgentId")] public partial class AgentInfo { }
-[CodeGenType("AgentObject")] public partial class AgentRecord
+[CodeGenType("AgentRecord")] public partial class AgentRecord
 {
     [CodeGenMember("Object")]
     private string Object { get; } = "agent";
 }
 
-[CodeGenType("AgentProtocol")] public readonly partial struct AgentCommunicationMethod { }
-[CodeGenType("CreatedBy")] public partial class AgentResponseItemSource { }
-[CodeGenType("ItemType")] public readonly partial struct AgentResponseItemKind { }
-[CodeGenType("WorkflowActionOutputItemResourceStatus")] public readonly partial struct AgentWorkflowActionStatus { }
-[CodeGenType("ContainerAppAgentDefinition")] public partial class ContainerApplicationAgentDefinition { }
-
+[CodeGenType("AgentResponseItemKind")] public readonly partial struct AgentResponseItemKind { }
 [CodeGenType("MemorySearchToolCallItemResourceStatus")] public readonly partial struct MemorySearchToolCallStatus { }
+[CodeGenType("WorkflowActionOutputItemResourceStatus")] public readonly partial struct AgentWorkflowActionStatus { }
 [CodeGenType("OpenApiFunctionDefinitionFunction")] public partial class OpenAPIFunctionEntry { }
-
-[CodeGenType("LocalShellTool")] public partial class LocalShellAgentTool { }
-[CodeGenType("LocalShellToolCallItemResourceStatus")] public readonly partial struct LocalShellAgentToolCallStatus { }
-[CodeGenType("LocalShellExecAction")] public partial class LocalShellAgentToolExecutionAction { }
+[CodeGenType("AgentItemSource")] public partial class AgentItemSource { }
+[CodeGenType("WebSearchConfiguration")] public partial class ProjectWebSearchConfiguration { }

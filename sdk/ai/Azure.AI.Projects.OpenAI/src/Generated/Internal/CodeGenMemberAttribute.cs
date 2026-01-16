@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Azure.AI.Projects.OpenAI
+namespace Microsoft.TypeSpec.Generator.Customizations
 {
     [AttributeUsage((AttributeTargets.Property | AttributeTargets.Field))]
     internal partial class CodeGenMemberAttribute : CodeGenTypeAttribute
