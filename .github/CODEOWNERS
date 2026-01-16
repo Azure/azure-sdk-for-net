@@ -283,10 +283,10 @@
 # ServiceLabel: %Cognitive - Speech
 # ServiceOwners:                                                   @cahann @kayousef
 
-# PRLabel: %Transcription
-/sdk/transcription/                                                @rhurey @xitzhang @amber-yujueWang @pankopon
+# PRLabel: %Speech Transcription
+/sdk/transcription/Azure.AI.Speech.Transcription/                  @rhurey @xitzhang @amber-yujueWang @pankopon
 
-# ServiceLabel: %Transcription
+# ServiceLabel: %Speech Transcription
 # ServiceOwners:                                                   @rhurey @xitzhang @amber-yujueWang @pankopon
 
 # PRLabel: %Cognitive - Text Analytics

@@ -19,7 +19,7 @@ Use the client library to:
 
 - [.NET 6.0 SDK](https://dotnet.microsoft.com/download) or later
 - [Azure Subscription](https://azure.microsoft.com/free/)
-- An [Azure Speech resource](https://learn.microsoft.com/azure/ai-services/speech-service/overview#try-the-speech-service-for-free) or [Cognitive Services multi-service resource](https://learn.microsoft.com/azure/ai-services/multi-service-resource)
+- An [Azure AI Speech resource](https://learn.microsoft.com/azure/ai-services/speech-service/overview#try-the-speech-service-for-free)
 
 ### Install the package
 
@@ -29,7 +29,7 @@ Install the client library for .NET with [NuGet](https://www.nuget.org/):
 dotnet add package Azure.AI.Speech.Transcription --prerelease
 ```
 
-### Authentication
+### Authenticate the client
 
 Azure Speech Transcription supports two authentication methods:
 
@@ -44,15 +44,15 @@ using Azure.AI.Speech.Transcription;
 // Use DefaultAzureCredential which works with managed identities, service principals, Azure CLI, etc.
 DefaultAzureCredential credential = new DefaultAzureCredential();
 
-Uri endpoint = new Uri("https://<your-resource-name>.cognitiveservices.azure.com/");
+Uri endpoint = new Uri("https://<your-region>.api.cognitive.microsoft.com/");
 TranscriptionClient client = new TranscriptionClient(endpoint, credential);
 ```
 
 Note: To use Azure Identity authentication, you need to:
 
 1. Add the `Azure.Identity` package to your project
-2. Assign the appropriate role (e.g., "Cognitive Services User") to your managed identity or service principal
-3. Ensure your Cognitive Services resource has Entra ID authentication enabled
+2. Assign the appropriate role (e.g., "Cognitive Services Speech User") to your managed identity or service principal
+3. Ensure your Speech resource has Entra ID authentication enabled
 
 For more information on Entra ID authentication, see:
 
@@ -307,7 +307,7 @@ If you encounter issues:
 
 - Check the [troubleshooting guide](https://learn.microsoft.com/azure/ai-services/speech-service/troubleshooting)
 - Search for existing issues or create a new one on [GitHub](https://github.com/Azure/azure-sdk-for-net/issues)
-- Ask questions on [Stack Overflow](https://stackoverflow.com/questions/tagged/azure-dotnet-sdk) with the `azure-dotnet-sdk` tag
+- Ask questions on [Stack Overflow](https://stackoverflow.com/questions/tagged/.net+azure-sdk) with the `.net` and `azure-sdk` tags
 
 ## Next steps
 
