@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
 using System;
 using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
@@ -11,9 +12,9 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Elastic.Models
 {
     // This is the fix for issue #50974
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(ElasticsearchServiceUri), SerializationValueHook = nameof(WriteElasticsearchServiceUri), DeserializationValueHook = nameof(DeserializeElasticsearchServiceUri))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(KibanaServiceUri), SerializationValueHook = nameof(WriteKibanaServiceUri), DeserializationValueHook = nameof(DeserializeKibanaServiceUri))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(KibanaSsoUri), SerializationValueHook = nameof(WriteKibanaSsoUri), DeserializationValueHook = nameof(DeserializeKibanaSsoUri))]
+    [CodeGenSerialization(nameof(ElasticsearchServiceUri), SerializationValueHook = nameof(WriteElasticsearchServiceUri), DeserializationValueHook = nameof(DeserializeElasticsearchServiceUri))]
+    [CodeGenSerialization(nameof(KibanaServiceUri), SerializationValueHook = nameof(WriteKibanaServiceUri), DeserializationValueHook = nameof(DeserializeKibanaServiceUri))]
+    [CodeGenSerialization(nameof(KibanaSsoUri), SerializationValueHook = nameof(WriteKibanaSsoUri), DeserializationValueHook = nameof(DeserializeKibanaSsoUri))]
     public partial class ElasticCloudDeployment
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

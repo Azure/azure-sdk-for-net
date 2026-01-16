@@ -3,9 +3,11 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.ResourceManager.Elastic.Models
 {
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("VMHostListResponse")]
+    [CodeGenType("VMHostListResponse")]
     internal partial class ElasticVmListResult
     {
     }
