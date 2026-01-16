@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.LargeInstance.Models
 
         /// <summary> Initializes a new instance of <see cref="LargeInstanceHardwareProfile"/>. </summary>
         /// <param name="hardwareType"> Name of the hardware type (vendor and/or their product name). </param>
-        /// <param name="azureLargeInstanceSize"> Specifies the Azure Large Instance SKU. </param>
+        /// <param name="largeInstanceSize"> Specifies the Azure Large Instance SKU. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LargeInstanceHardwareProfile(LargeInstanceHardwareTypeName? hardwareType, LargeInstanceSizeName? azureLargeInstanceSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LargeInstanceHardwareProfile(LargeInstanceHardwareTypeName? hardwareType, LargeInstanceSizeName? largeInstanceSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareType = hardwareType;
-            AzureLargeInstanceSize = azureLargeInstanceSize;
+            LargeInstanceSize = largeInstanceSize;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public LargeInstanceHardwareTypeName? HardwareType { get; set; }
 
         /// <summary> Specifies the Azure Large Instance SKU. </summary>
-        public LargeInstanceSizeName? AzureLargeInstanceSize { get; set; }
+        public LargeInstanceSizeName? LargeInstanceSize { get; set; }
     }
 }

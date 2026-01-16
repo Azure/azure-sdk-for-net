@@ -11,37 +11,37 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.LargeInstance.Models
 {
     /// <summary> Describes the properties of an Azure Large Instance. </summary>
-    public partial class AzureLargeInstanceProperties
+    public partial class LargeInstanceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceProperties"/>. </summary>
-        public AzureLargeInstanceProperties()
+        /// <summary> Initializes a new instance of <see cref="LargeInstanceProperties"/>. </summary>
+        public LargeInstanceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LargeInstanceProperties"/>. </summary>
         /// <param name="hardwareProfile"> Specifies the hardware settings for the Azure Large Instance. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the Azure Large Instance disks. </param>
         /// <param name="osProfile"> Specifies the operating system settings for the Azure Large Instance. </param>
         /// <param name="networkProfile"> Specifies the network settings for the Azure Large Instance. </param>
-        /// <param name="azureLargeInstanceId"> Specifies the Azure Large Instance unique ID. </param>
+        /// <param name="largeInstanceId"> Specifies the Azure Large Instance unique ID. </param>
         /// <param name="powerState"> Resource power state. </param>
         /// <param name="proximityPlacementGroup"> Resource proximity placement group. </param>
-        /// <param name="hwRevision"> Hardware revision of an Azure Large Instance. </param>
+        /// <param name="hardwareRevision"> Hardware revision of an Azure Large Instance. </param>
         /// <param name="provisioningState"> State of provisioning of the AzureLargeInstance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureLargeInstanceProperties(LargeInstanceHardwareProfile hardwareProfile, LargeInstanceStorageProfile storageProfile, LargeInstanceOSProfile osProfile, LargeInstanceNetworkProfile networkProfile, string azureLargeInstanceId, LargeInstancePowerState? powerState, string proximityPlacementGroup, string hwRevision, LargeInstanceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LargeInstanceProperties(LargeInstanceHardwareProfile hardwareProfile, LargeInstanceStorageProfile storageProfile, LargeInstanceOSProfile osProfile, LargeInstanceNetworkProfile networkProfile, string largeInstanceId, LargeInstancePowerState? powerState, string proximityPlacementGroup, string hardwareRevision, LargeInstanceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             NetworkProfile = networkProfile;
-            AzureLargeInstanceId = azureLargeInstanceId;
+            LargeInstanceId = largeInstanceId;
             PowerState = powerState;
             ProximityPlacementGroup = proximityPlacementGroup;
-            HwRevision = hwRevision;
+            HardwareRevision = hardwareRevision;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public LargeInstanceStorageProfile StorageProfile { get; set; }
 
         /// <summary> Specifies the operating system settings for the Azure Large Instance. </summary>
-        public LargeInstanceOSProfile OsProfile { get; set; }
+        public LargeInstanceOSProfile OSProfile { get; set; }
 
         /// <summary> Specifies the network settings for the Azure Large Instance. </summary>
         public LargeInstanceNetworkProfile NetworkProfile { get; set; }
 
         /// <summary> Specifies the Azure Large Instance unique ID. </summary>
-        public string AzureLargeInstanceId { get; set; }
+        public string LargeInstanceId { get; set; }
 
         /// <summary> Resource power state. </summary>
         public LargeInstancePowerState? PowerState { get; set; }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public string ProximityPlacementGroup { get; set; }
 
         /// <summary> Hardware revision of an Azure Large Instance. </summary>
-        public string HwRevision { get; set; }
+        public string HardwareRevision { get; set; }
 
         /// <summary> State of provisioning of the AzureLargeInstance. </summary>
         public LargeInstanceProvisioningState? ProvisioningState { get; }

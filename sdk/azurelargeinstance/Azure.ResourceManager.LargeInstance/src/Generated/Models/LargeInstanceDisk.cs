@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.LargeInstance.Models
 
         /// <summary> Initializes a new instance of <see cref="LargeInstanceDisk"/>. </summary>
         /// <param name="name"> The disk name. </param>
-        /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. </param>
+        /// <param name="diskSizeInGB"> Specifies the size of an empty data disk in gigabytes. </param>
         /// <param name="lun">
         /// Specifies the logical unit number of the data disk. This value is used to
         /// identify data disks within the VM and therefore must be unique for each data
         /// disk attached to a VM.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LargeInstanceDisk(string name, int? diskSizeGB, int? lun, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LargeInstanceDisk(string name, int? diskSizeInGB, int? lun, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            DiskSizeGB = diskSizeGB;
+            DiskSizeInGB = diskSizeInGB;
             Lun = lun;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public string Name { get; set; }
 
         /// <summary> Specifies the size of an empty data disk in gigabytes. </summary>
-        public int? DiskSizeGB { get; set; }
+        public int? DiskSizeInGB { get; set; }
 
         /// <summary>
         /// Specifies the logical unit number of the data disk. This value is used to

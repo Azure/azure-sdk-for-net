@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.LargeInstance
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            AzureLargeInstanceProperties properties = default;
+            LargeInstanceProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.LargeInstance
                     {
                         continue;
                     }
-                    properties = AzureLargeInstanceProperties.DeserializeAzureLargeInstanceProperties(prop.Value, options);
+                    properties = LargeInstanceProperties.DeserializeLargeInstanceProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

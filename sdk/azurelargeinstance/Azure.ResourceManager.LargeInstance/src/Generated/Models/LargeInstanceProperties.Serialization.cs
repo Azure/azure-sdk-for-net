@@ -14,11 +14,11 @@ using Azure.ResourceManager.LargeInstance;
 namespace Azure.ResourceManager.LargeInstance.Models
 {
     /// <summary> Describes the properties of an Azure Large Instance. </summary>
-    public partial class AzureLargeInstanceProperties : IJsonModel<AzureLargeInstanceProperties>
+    public partial class LargeInstanceProperties : IJsonModel<LargeInstanceProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureLargeInstanceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LargeInstanceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureLargeInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LargeInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureLargeInstanceProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(HardwareProfile))
             {
@@ -44,20 +44,20 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile, options);
             }
-            if (Optional.IsDefined(OsProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OsProfile, options);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile, options);
             }
-            if (Optional.IsDefined(AzureLargeInstanceId))
+            if (Optional.IsDefined(LargeInstanceId))
             {
                 writer.WritePropertyName("azureLargeInstanceId"u8);
-                writer.WriteStringValue(AzureLargeInstanceId);
+                writer.WriteStringValue(LargeInstanceId);
             }
             if (Optional.IsDefined(PowerState))
             {
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WritePropertyName("proximityPlacementGroup"u8);
                 writer.WriteStringValue(ProximityPlacementGroup);
             }
-            if (Optional.IsDefined(HwRevision))
+            if (Optional.IsDefined(HardwareRevision))
             {
                 writer.WritePropertyName("hwRevision"u8);
-                writer.WriteStringValue(HwRevision);
+                writer.WriteStringValue(HardwareRevision);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -98,24 +98,24 @@ namespace Azure.ResourceManager.LargeInstance.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureLargeInstanceProperties IJsonModel<AzureLargeInstanceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LargeInstanceProperties IJsonModel<LargeInstanceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureLargeInstanceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual LargeInstanceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureLargeInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LargeInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureLargeInstanceProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureLargeInstanceProperties(document.RootElement, options);
+            return DeserializeLargeInstanceProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureLargeInstanceProperties DeserializeAzureLargeInstanceProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static LargeInstanceProperties DeserializeLargeInstanceProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.LargeInstance.Models
             LargeInstanceStorageProfile storageProfile = default;
             LargeInstanceOSProfile osProfile = default;
             LargeInstanceNetworkProfile networkProfile = default;
-            string azureLargeInstanceId = default;
+            string largeInstanceId = default;
             LargeInstancePowerState? powerState = default;
             string proximityPlacementGroup = default;
-            string hwRevision = default;
+            string hardwareRevision = default;
             LargeInstanceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
                 if (prop.NameEquals("azureLargeInstanceId"u8))
                 {
-                    azureLargeInstanceId = prop.Value.GetString();
+                    largeInstanceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("powerState"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
                 if (prop.NameEquals("hwRevision"u8))
                 {
-                    hwRevision = prop.Value.GetString();
+                    hardwareRevision = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -207,57 +207,57 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureLargeInstanceProperties(
+            return new LargeInstanceProperties(
                 hardwareProfile,
                 storageProfile,
                 osProfile,
                 networkProfile,
-                azureLargeInstanceId,
+                largeInstanceId,
                 powerState,
                 proximityPlacementGroup,
-                hwRevision,
+                hardwareRevision,
                 provisioningState,
                 additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureLargeInstanceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LargeInstanceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureLargeInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LargeInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerLargeInstanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureLargeInstanceProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureLargeInstanceProperties IPersistableModel<AzureLargeInstanceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LargeInstanceProperties IPersistableModel<LargeInstanceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureLargeInstanceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual LargeInstanceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureLargeInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LargeInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureLargeInstanceProperties(document.RootElement, options);
+                        return DeserializeLargeInstanceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureLargeInstanceProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureLargeInstanceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LargeInstanceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

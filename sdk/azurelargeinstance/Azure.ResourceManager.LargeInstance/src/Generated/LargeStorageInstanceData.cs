@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.LargeInstance
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal LargeStorageInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AzureLargeStorageInstanceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal LargeStorageInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, LargeStorageInstanceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.LargeInstance
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public AzureLargeStorageInstanceProperties Properties { get; set; }
+        public LargeStorageInstanceProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }

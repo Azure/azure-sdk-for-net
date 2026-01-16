@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 throw new FormatException($"The model {nameof(LargeInstanceIPAddress)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IpAddressValue))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddressValue);
+                writer.WriteStringValue(IPAddress);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            string ipAddressValue = default;
+            string ipAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("ipAddress"u8))
                 {
-                    ipAddressValue = prop.Value.GetString();
+                    ipAddress = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LargeInstanceIPAddress(ipAddressValue, additionalBinaryDataProperties);
+            return new LargeInstanceIPAddress(ipAddress, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

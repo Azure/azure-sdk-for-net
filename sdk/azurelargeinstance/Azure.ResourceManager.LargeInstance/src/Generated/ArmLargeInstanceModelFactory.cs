@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="LargeInstance.LargeInstanceData"/> instance for mocking. </returns>
-        public static LargeInstanceData LargeInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AzureLargeInstanceProperties properties = default)
+        public static LargeInstanceData LargeInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, LargeInstanceProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -51,53 +51,53 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <param name="storageProfile"> Specifies the storage settings for the Azure Large Instance disks. </param>
         /// <param name="osProfile"> Specifies the operating system settings for the Azure Large Instance. </param>
         /// <param name="networkProfile"> Specifies the network settings for the Azure Large Instance. </param>
-        /// <param name="azureLargeInstanceId"> Specifies the Azure Large Instance unique ID. </param>
+        /// <param name="largeInstanceId"> Specifies the Azure Large Instance unique ID. </param>
         /// <param name="powerState"> Resource power state. </param>
         /// <param name="proximityPlacementGroup"> Resource proximity placement group. </param>
-        /// <param name="hwRevision"> Hardware revision of an Azure Large Instance. </param>
+        /// <param name="hardwareRevision"> Hardware revision of an Azure Large Instance. </param>
         /// <param name="provisioningState"> State of provisioning of the AzureLargeInstance. </param>
-        /// <returns> A new <see cref="Models.AzureLargeInstanceProperties"/> instance for mocking. </returns>
-        public static AzureLargeInstanceProperties AzureLargeInstanceProperties(LargeInstanceHardwareProfile hardwareProfile = default, LargeInstanceStorageProfile storageProfile = default, LargeInstanceOSProfile osProfile = default, LargeInstanceNetworkProfile networkProfile = default, string azureLargeInstanceId = default, LargeInstancePowerState? powerState = default, string proximityPlacementGroup = default, string hwRevision = default, LargeInstanceProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.LargeInstanceProperties"/> instance for mocking. </returns>
+        public static LargeInstanceProperties LargeInstanceProperties(LargeInstanceHardwareProfile hardwareProfile = default, LargeInstanceStorageProfile storageProfile = default, LargeInstanceOSProfile osProfile = default, LargeInstanceNetworkProfile networkProfile = default, string largeInstanceId = default, LargeInstancePowerState? powerState = default, string proximityPlacementGroup = default, string hardwareRevision = default, LargeInstanceProvisioningState? provisioningState = default)
         {
-            return new AzureLargeInstanceProperties(
+            return new LargeInstanceProperties(
                 hardwareProfile,
                 storageProfile,
                 osProfile,
                 networkProfile,
-                azureLargeInstanceId,
+                largeInstanceId,
                 powerState,
                 proximityPlacementGroup,
-                hwRevision,
+                hardwareRevision,
                 provisioningState,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies the storage settings for the Azure Large Instance disks. </summary>
-        /// <param name="nfsIpAddress"> IP Address to connect to storage. </param>
-        /// <param name="osDisks">
+        /// <param name="nfsIPAddress"> IP Address to connect to storage. </param>
+        /// <param name="osDisk">
         /// Specifies information about the operating system disk used by Azure Large
         /// Instance.
         /// </param>
         /// <returns> A new <see cref="Models.LargeInstanceStorageProfile"/> instance for mocking. </returns>
-        public static LargeInstanceStorageProfile LargeInstanceStorageProfile(string nfsIpAddress = default, IEnumerable<LargeInstanceDisk> osDisks = default)
+        public static LargeInstanceStorageProfile LargeInstanceStorageProfile(string nfsIPAddress = default, IEnumerable<LargeInstanceDisk> osDisk = default)
         {
-            osDisks ??= new ChangeTrackingList<LargeInstanceDisk>();
+            osDisk ??= new ChangeTrackingList<LargeInstanceDisk>();
 
-            return new LargeInstanceStorageProfile(nfsIpAddress, osDisks.ToList(), additionalBinaryDataProperties: null);
+            return new LargeInstanceStorageProfile(nfsIPAddress, osDisk.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies the disk information fo the Azure Large Instance. </summary>
         /// <param name="name"> The disk name. </param>
-        /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. </param>
+        /// <param name="diskSizeInGB"> Specifies the size of an empty data disk in gigabytes. </param>
         /// <param name="lun">
         /// Specifies the logical unit number of the data disk. This value is used to
         /// identify data disks within the VM and therefore must be unique for each data
         /// disk attached to a VM.
         /// </param>
         /// <returns> A new <see cref="Models.LargeInstanceDisk"/> instance for mocking. </returns>
-        public static LargeInstanceDisk LargeInstanceDisk(string name = default, int? diskSizeGB = default, int? lun = default)
+        public static LargeInstanceDisk LargeInstanceDisk(string name = default, int? diskSizeInGB = default, int? lun = default)
         {
-            return new LargeInstanceDisk(name, diskSizeGB, lun, additionalBinaryDataProperties: null);
+            return new LargeInstanceDisk(name, diskSizeInGB, lun, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies the network settings for the Azure Large Instance disks. </summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="LargeInstance.LargeStorageInstanceData"/> instance for mocking. </returns>
-        public static LargeStorageInstanceData LargeStorageInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AzureLargeStorageInstanceProperties properties = default, ManagedServiceIdentity identity = default)
+        public static LargeStorageInstanceData LargeStorageInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, LargeStorageInstanceProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

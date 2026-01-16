@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.LargeInstance.Models
 {
     /// <summary> Describes the properties of an AzureLargeStorageInstance. </summary>
-    public partial class AzureLargeStorageInstanceProperties
+    public partial class LargeStorageInstanceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeStorageInstanceProperties"/>. </summary>
-        public AzureLargeStorageInstanceProperties()
+        /// <summary> Initializes a new instance of <see cref="LargeStorageInstanceProperties"/>. </summary>
+        public LargeStorageInstanceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeStorageInstanceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LargeStorageInstanceProperties"/>. </summary>
         /// <param name="azureLargeStorageInstanceUniqueIdentifier"> Specifies the AzureLargeStorageInstance unique ID. </param>
         /// <param name="storageProperties"> Specifies the storage properties for the AzureLargeStorage instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureLargeStorageInstanceProperties(string azureLargeStorageInstanceUniqueIdentifier, LargeInstanceStorageProperties storageProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LargeStorageInstanceProperties(string azureLargeStorageInstanceUniqueIdentifier, LargeInstanceStorageProperties storageProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureLargeStorageInstanceUniqueIdentifier = azureLargeStorageInstanceUniqueIdentifier;
             StorageProperties = storageProperties;

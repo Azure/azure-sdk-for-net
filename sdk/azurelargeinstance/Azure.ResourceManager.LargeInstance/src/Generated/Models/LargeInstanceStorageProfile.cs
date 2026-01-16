@@ -20,30 +20,30 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <summary> Initializes a new instance of <see cref="LargeInstanceStorageProfile"/>. </summary>
         public LargeInstanceStorageProfile()
         {
-            OsDisks = new ChangeTrackingList<LargeInstanceDisk>();
+            OSDisk = new ChangeTrackingList<LargeInstanceDisk>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LargeInstanceStorageProfile"/>. </summary>
-        /// <param name="nfsIpAddress"> IP Address to connect to storage. </param>
-        /// <param name="osDisks">
+        /// <param name="nfsIPAddress"> IP Address to connect to storage. </param>
+        /// <param name="osDisk">
         /// Specifies information about the operating system disk used by Azure Large
         /// Instance.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LargeInstanceStorageProfile(string nfsIpAddress, IList<LargeInstanceDisk> osDisks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LargeInstanceStorageProfile(string nfsIPAddress, IList<LargeInstanceDisk> osDisk, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NfsIpAddress = nfsIpAddress;
-            OsDisks = osDisks;
+            NfsIPAddress = nfsIPAddress;
+            OSDisk = osDisk;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IP Address to connect to storage. </summary>
-        public string NfsIpAddress { get; set; }
+        public string NfsIPAddress { get; set; }
 
         /// <summary>
         /// Specifies information about the operating system disk used by Azure Large
         /// Instance.
         /// </summary>
-        public IList<LargeInstanceDisk> OsDisks { get; }
+        public IList<LargeInstanceDisk> OSDisk { get; }
     }
 }

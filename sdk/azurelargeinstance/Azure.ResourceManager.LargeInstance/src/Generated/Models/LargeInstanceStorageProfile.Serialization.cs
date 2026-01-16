@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 throw new FormatException($"The model {nameof(LargeInstanceStorageProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(NfsIpAddress))
+            if (Optional.IsDefined(NfsIPAddress))
             {
                 writer.WritePropertyName("nfsIpAddress"u8);
-                writer.WriteStringValue(NfsIpAddress);
+                writer.WriteStringValue(NfsIPAddress);
             }
-            if (Optional.IsCollectionDefined(OsDisks))
+            if (Optional.IsCollectionDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisks"u8);
                 writer.WriteStartArray();
-                foreach (LargeInstanceDisk item in OsDisks)
+                foreach (LargeInstanceDisk item in OSDisk)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -91,14 +91,14 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            string nfsIpAddress = default;
-            IList<LargeInstanceDisk> osDisks = default;
+            string nfsIPAddress = default;
+            IList<LargeInstanceDisk> osDisk = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("nfsIpAddress"u8))
                 {
-                    nfsIpAddress = prop.Value.GetString();
+                    nfsIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("osDisks"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     {
                         array.Add(LargeInstanceDisk.DeserializeLargeInstanceDisk(item, options));
                     }
-                    osDisks = array;
+                    osDisk = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LargeInstanceStorageProfile(nfsIpAddress, osDisks ?? new ChangeTrackingList<LargeInstanceDisk>(), additionalBinaryDataProperties);
+            return new LargeInstanceStorageProfile(nfsIPAddress, osDisk ?? new ChangeTrackingList<LargeInstanceDisk>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WritePropertyName("hardwareType"u8);
                 writer.WriteStringValue(HardwareType.Value.ToString());
             }
-            if (Optional.IsDefined(AzureLargeInstanceSize))
+            if (Optional.IsDefined(LargeInstanceSize))
             {
                 writer.WritePropertyName("azureLargeInstanceSize"u8);
-                writer.WriteStringValue(AzureLargeInstanceSize.Value.ToString());
+                writer.WriteStringValue(LargeInstanceSize.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 return null;
             }
             LargeInstanceHardwareTypeName? hardwareType = default;
-            LargeInstanceSizeName? azureLargeInstanceSize = default;
+            LargeInstanceSizeName? largeInstanceSize = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     {
                         continue;
                     }
-                    azureLargeInstanceSize = new LargeInstanceSizeName(prop.Value.GetString());
+                    largeInstanceSize = new LargeInstanceSizeName(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LargeInstanceHardwareProfile(hardwareType, azureLargeInstanceSize, additionalBinaryDataProperties);
+            return new LargeInstanceHardwareProfile(hardwareType, largeInstanceSize, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

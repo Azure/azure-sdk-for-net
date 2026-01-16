@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.LargeInstance.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LargeInstanceIPAddress"/>. </summary>
-        /// <param name="ipAddressValue"> Specifies the IP address of the network interface. </param>
+        /// <param name="ipAddress"> Specifies the IP address of the network interface. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LargeInstanceIPAddress(string ipAddressValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LargeInstanceIPAddress(string ipAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpAddressValue = ipAddressValue;
+            IPAddress = ipAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the IP address of the network interface. </summary>
-        public string IpAddressValue { get; set; }
+        public string IPAddress { get; set; }
     }
 }

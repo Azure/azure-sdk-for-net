@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         internal LargeInstanceOSProfile(string computerName, string osType, string version, string sshPublicKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputerName = computerName;
-            OsType = osType;
+            OSType = osType;
             Version = version;
             SshPublicKey = sshPublicKey;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public string ComputerName { get; set; }
 
         /// <summary> This property allows you to specify the type of the OS. </summary>
-        public string OsType { get; set; }
+        public string OSType { get; set; }
 
         /// <summary> Specifies version of operating system. </summary>
         public string Version { get; set; }

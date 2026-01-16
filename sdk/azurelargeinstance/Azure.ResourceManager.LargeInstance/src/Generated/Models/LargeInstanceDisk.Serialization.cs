@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DiskSizeGB))
+            if (Optional.IsDefined(DiskSizeInGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
-                writer.WriteNumberValue(DiskSizeGB.Value);
+                writer.WriteNumberValue(DiskSizeInGB.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Lun))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 return null;
             }
             string name = default;
-            int? diskSizeGB = default;
+            int? diskSizeInGB = default;
             int? lun = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     {
                         continue;
                     }
-                    diskSizeGB = prop.Value.GetInt32();
+                    diskSizeInGB = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("lun"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LargeInstanceDisk(name, diskSizeGB, lun, additionalBinaryDataProperties);
+            return new LargeInstanceDisk(name, diskSizeInGB, lun, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

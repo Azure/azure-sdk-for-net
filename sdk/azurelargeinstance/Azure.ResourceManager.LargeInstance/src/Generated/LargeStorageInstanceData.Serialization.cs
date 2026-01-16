@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.LargeInstance
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            AzureLargeStorageInstanceProperties properties = default;
+            LargeStorageInstanceProperties properties = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.LargeInstance
                     {
                         continue;
                     }
-                    properties = AzureLargeStorageInstanceProperties.DeserializeAzureLargeStorageInstanceProperties(prop.Value, options);
+                    properties = LargeStorageInstanceProperties.DeserializeLargeStorageInstanceProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
