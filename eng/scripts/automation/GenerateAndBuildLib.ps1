@@ -1037,6 +1037,14 @@ function GetSDKProjectFolder()
                     $resolvedSegments += ($normalizedNamespace | Where-Object { $_ })
                     continue
                 }
+                "{package-name}" {
+                    if ([string]::IsNullOrWhiteSpace($packageName)) {
+                        throw "[ERROR] 'package-name' must be provided when '{package-name}' is used in 'emitter-output-dir'."
+                    }
+                    $normalizedPackageName = ($packageName -replace "\\", "/") -split "/"
+                    $resolvedSegments += ($normalizedPackageName | Where-Object { $_ })
+                    continue
+                }
                 default {
                     if (![string]::IsNullOrWhiteSpace($segment)) {
                         $resolvedSegments += $segment
@@ -1059,8 +1067,10 @@ function GetSDKProjectFolder()
 
     if ([string]::IsNullOrWhiteSpace($packageDir)) {
         if (![string]::IsNullOrWhiteSpace($packageName)) {
+            Write-Host "Package directory is reset by package name: $packageName"
             $packageDir = $packageName
         } else {
+            Write-Host "Package directory is reset by namespace: $namespace"
             $packageDir = $namespace
         }
     }
