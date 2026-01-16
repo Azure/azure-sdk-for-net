@@ -12,19 +12,6 @@ trigger:
     - sdk/eventhub/service.projects
     - sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/eventhub/ci.functions.yml
-    - sdk/eventhub/service.projects
-    - sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

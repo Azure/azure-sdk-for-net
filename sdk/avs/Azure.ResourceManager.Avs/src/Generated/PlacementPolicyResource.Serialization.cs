@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Avs
 {
+    /// <summary></summary>
     public partial class PlacementPolicyResource : IJsonModel<PlacementPolicyData>
     {
-        private static PlacementPolicyData s_dataDeserializationInstance;
-        private static PlacementPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PlacementPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PlacementPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PlacementPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PlacementPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PlacementPolicyData>)Data).Write(writer, options);
 
-        PlacementPolicyData IJsonModel<PlacementPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PlacementPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PlacementPolicyData IJsonModel<PlacementPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PlacementPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PlacementPolicyData>(Data, options, AzureResourceManagerAvsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PlacementPolicyData IPersistableModel<PlacementPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PlacementPolicyData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<PlacementPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PlacementPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PlacementPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

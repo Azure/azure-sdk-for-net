@@ -7,6 +7,7 @@
 - [Data Plane Libraries (DPG) - Still on Swagger](#data-plane-libraries-dpg---still-on-swagger)
 - [Management Plane Libraries (MPG) - Migrated to New Emitter](#management-plane-libraries-mpg---migrated-to-new-emitter)
 - [Management Plane Libraries (MPG) - Still on Swagger](#management-plane-libraries-mpg---still-on-swagger)
+- [Provisioning Libraries](#provisioning-libraries)
 - [Libraries with No Generator](#libraries-with-no-generator)
 
 
@@ -14,21 +15,23 @@
 
 - Total libraries: 401
 - Management Plane (MPG): 227
-  - Autorest/Swagger: 155
-  - New Emitter (TypeSpec): 54
+  - Autorest/Swagger: 153
+  - New Emitter (TypeSpec): 56
   - Old TypeSpec: 18
-- Data Plane (DPG): 174
-  - Autorest/Swagger: 87
-  - New Emitter (TypeSpec): 22
-  - Old TypeSpec: 16
-- No generator: 49
+- Data Plane (DPG): 143
+  - Autorest/Swagger: 58
+  - New Emitter (TypeSpec): 24
+  - Old TypeSpec: 14
+- Provisioning: 31
+  - Custom reflection-based generator: 31
+- No generator: 47
 
 
 ## Data Plane Libraries (DPG) - Migrated to New Emitter
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 22 / 38 (57.9%)
+**Migration Status**: 24 / 38 (63.2%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -40,8 +43,8 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | batch | Azure.Compute.Batch | ✅ |
 | cognitivelanguage | Azure.AI.Language.Conversations |  |
 | cognitivelanguage | Azure.AI.Language.Conversations.Authoring |  |
-| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring |  |
-| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference |  |
+| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring | ✅ |
+| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference | ✅ |
 | cognitivelanguage | Azure.AI.Language.Text |  |
 | cognitivelanguage | Azure.AI.Language.Text.Authoring |  |
 | communication | Azure.Communication.JobRouter |  |
@@ -74,7 +77,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 
 ## Data Plane Libraries (DPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 87
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 
 | Service | Library |
 | ------- | ------- |
@@ -111,35 +114,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 87
 | monitor | Azure.Monitor.OpenTelemetry.LiveMetrics |
 | objectanchors | Azure.MixedReality.ObjectAnchors.Conversion |
 | personalizer | Azure.AI.Personalizer |
-| provisioning | Azure.Provisioning |
-| provisioning | Azure.Provisioning.AppConfiguration |
-| provisioning | Azure.Provisioning.AppContainers |
-| provisioning | Azure.Provisioning.ApplicationInsights |
-| provisioning | Azure.Provisioning.AppService |
-| provisioning | Azure.Provisioning.CognitiveServices |
-| provisioning | Azure.Provisioning.Communication |
-| provisioning | Azure.Provisioning.ContainerRegistry |
-| provisioning | Azure.Provisioning.ContainerService |
-| provisioning | Azure.Provisioning.CosmosDB |
-| provisioning | Azure.Provisioning.EventGrid |
-| provisioning | Azure.Provisioning.EventHubs |
-| provisioning | Azure.Provisioning.FrontDoor |
-| provisioning | Azure.Provisioning.KeyVault |
-| provisioning | Azure.Provisioning.Kubernetes |
-| provisioning | Azure.Provisioning.KubernetesConfiguration |
-| provisioning | Azure.Provisioning.Kusto |
-| provisioning | Azure.Provisioning.Network |
-| provisioning | Azure.Provisioning.OperationalInsights |
-| provisioning | Azure.Provisioning.PostgreSql |
-| provisioning | Azure.Provisioning.PrivateDns |
-| provisioning | Azure.Provisioning.Redis |
-| provisioning | Azure.Provisioning.RedisEnterprise |
-| provisioning | Azure.Provisioning.Search |
-| provisioning | Azure.Provisioning.ServiceBus |
-| provisioning | Azure.Provisioning.SignalR |
-| provisioning | Azure.Provisioning.Sql |
-| provisioning | Azure.Provisioning.Storage |
-| provisioning | Azure.Provisioning.WebPubSub |
 | purview | Azure.Analytics.Purview.Account |
 | purview | Azure.Analytics.Purview.Administration |
 | purview | Azure.Analytics.Purview.Catalog |
@@ -171,7 +145,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 87
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 54 / 72 (75%)
+**Migration Status**: 56 / 74 (75.7%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -206,6 +180,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | fileshares | Azure.ResourceManager.FileShares | ✅ |
 | grafana | Azure.ResourceManager.Grafana | ✅ |
 | hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | ✅ |
+| healthbot | Azure.ResourceManager.HealthBot | ✅ |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
 | hybridconnectivity | Azure.ResourceManager.HybridConnectivity |  |
 | hybridkubernetes | Azure.ResourceManager.Kubernetes | ✅ |
@@ -230,6 +205,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | quota | Azure.ResourceManager.Quota | ✅ |
 | recoveryservices | Azure.ResourceManager.RecoveryServices |  |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication |  |
+| resourceconnector | Azure.ResourceManager.ResourceConnector | ✅ |
 | resources | Azure.ResourceManager.Resources.Bicep |  |
 | secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | ✅ |
 | selfhelp | Azure.ResourceManager.SelfHelp |  |
@@ -251,7 +227,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 155
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 153
 
 | Service | Library |
 | ------- | ------- |
@@ -322,7 +298,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | graphservices | Azure.ResourceManager.GraphServices |
 | guestconfiguration | Azure.ResourceManager.GuestConfiguration |
 | hdinsight | Azure.ResourceManager.HDInsight |
-| healthbot | Azure.ResourceManager.HealthBot |
 | healthcareapis | Azure.ResourceManager.HealthcareApis |
 | hybridaks | Azure.ResourceManager.HybridContainerService |
 | hybridcompute | Azure.ResourceManager.HybridCompute |
@@ -377,7 +352,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | redisenterprise | Azure.ResourceManager.RedisEnterprise |
 | relay | Azure.ResourceManager.Relay |
 | reservations | Azure.ResourceManager.Reservations |
-| resourceconnector | Azure.ResourceManager.ResourceConnector |
 | resourcegraph | Azure.ResourceManager.ResourceGraph |
 | resourcehealth | Azure.ResourceManager.ResourceHealth |
 | resourcemanager | Azure.ResourceManager |
@@ -412,9 +386,52 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | workloads | Azure.ResourceManager.Workloads |
 
 
+## Provisioning Libraries
+
+Libraries that provide infrastructure-as-code capabilities for Azure services using a custom reflection-based generator. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
+
+**Note**: Unlike other Azure SDK libraries, Provisioning libraries use a custom reflection-based generator that analyzes Azure Resource Manager SDK types to produce strongly-typed infrastructure definition APIs.
+
+Total: 31
+
+| Service | Library |
+| ------- | ------- |
+| provisioning | Azure.Provisioning |
+| provisioning | Azure.Provisioning.AppConfiguration |
+| provisioning | Azure.Provisioning.AppContainers |
+| provisioning | Azure.Provisioning.ApplicationInsights |
+| provisioning | Azure.Provisioning.AppService |
+| provisioning | Azure.Provisioning.CognitiveServices |
+| provisioning | Azure.Provisioning.Communication |
+| provisioning | Azure.Provisioning.ContainerRegistry |
+| provisioning | Azure.Provisioning.ContainerService |
+| provisioning | Azure.Provisioning.CosmosDB |
+| provisioning | Azure.Provisioning.Deployment |
+| provisioning | Azure.Provisioning.Dns |
+| provisioning | Azure.Provisioning.EventGrid |
+| provisioning | Azure.Provisioning.EventHubs |
+| provisioning | Azure.Provisioning.FrontDoor |
+| provisioning | Azure.Provisioning.KeyVault |
+| provisioning | Azure.Provisioning.Kubernetes |
+| provisioning | Azure.Provisioning.KubernetesConfiguration |
+| provisioning | Azure.Provisioning.Kusto |
+| provisioning | Azure.Provisioning.Network |
+| provisioning | Azure.Provisioning.OperationalInsights |
+| provisioning | Azure.Provisioning.PostgreSql |
+| provisioning | Azure.Provisioning.PrivateDns |
+| provisioning | Azure.Provisioning.Redis |
+| provisioning | Azure.Provisioning.RedisEnterprise |
+| provisioning | Azure.Provisioning.Search |
+| provisioning | Azure.Provisioning.ServiceBus |
+| provisioning | Azure.Provisioning.SignalR |
+| provisioning | Azure.Provisioning.Sql |
+| provisioning | Azure.Provisioning.Storage |
+| provisioning | Azure.Provisioning.WebPubSub |
+
+
 ## Libraries with No Generator
 
-Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 49
+Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 47
 
 | Service | Library |
 | ------- | ------- |
@@ -456,8 +473,6 @@ Libraries with no generator have neither autorest.md nor tsp-location.yaml files
 | modelsrepository | Azure.IoT.ModelsRepository |
 | monitor | Azure.Monitor.OpenTelemetry.AspNetCore |
 | openai | Azure.AI.OpenAI.Assistants |
-| provisioning | Azure.Provisioning.Deployment |
-| provisioning | Azure.Provisioning.Dns |
 | servicebus | Azure.Messaging.ServiceBus |
 | storage | Azure.Storage.Blobs.ChangeFeed |
 | storage | Azure.Storage.Common |

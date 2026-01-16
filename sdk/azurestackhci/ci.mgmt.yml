@@ -2,19 +2,6 @@
 
 trigger: none
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/azurestackhci/ci.mgmt.yml
-    - sdk/azurestackhci/Azure.ResourceManager.Hci/
-    - sdk/azurestackhci/Azure.ResourceManager.Hci.Vm/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
