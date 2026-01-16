@@ -14,12 +14,12 @@ using Azure.ResourceManager.ResourceConnector;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
-    /// <summary> The List Cluster User Credential appliance. </summary>
-    public partial class ApplianceClusterUserCredentialResult : IJsonModel<ApplianceClusterUserCredentialResult>
+    /// <summary> The List Cluster Keys Results appliance. </summary>
+    public partial class ApplianceListKeysResult : IJsonModel<ApplianceListKeysResult>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApplianceClusterUserCredentialResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApplianceListKeysResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,15 +30,21 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplianceClusterUserCredentialResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceListKeysResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceClusterUserCredentialResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceListKeysResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(HybridConnectionConfig))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ArtifactProfiles))
             {
-                writer.WritePropertyName("hybridConnectionConfig"u8);
-                writer.WriteObjectValue(HybridConnectionConfig, options);
+                writer.WritePropertyName("artifactProfiles"u8);
+                writer.WriteStartObject();
+                foreach (var item in ArtifactProfiles)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
             {
@@ -49,6 +55,17 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SshKeys))
+            {
+                writer.WritePropertyName("sshKeys"u8);
+                writer.WriteStartObject();
+                foreach (var item in SshKeys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -69,41 +86,47 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplianceClusterUserCredentialResult IJsonModel<ApplianceClusterUserCredentialResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ApplianceListKeysResult IJsonModel<ApplianceListKeysResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApplianceClusterUserCredentialResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ApplianceListKeysResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplianceClusterUserCredentialResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceListKeysResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceClusterUserCredentialResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceListKeysResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApplianceClusterUserCredentialResult(document.RootElement, options);
+            return DeserializeApplianceListKeysResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApplianceClusterUserCredentialResult DeserializeApplianceClusterUserCredentialResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static ApplianceListKeysResult DeserializeApplianceListKeysResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            HybridConnectionConfig hybridConnectionConfig = default;
+            IReadOnlyDictionary<string, ApplianceArtifactProfile> artifactProfiles = default;
             IReadOnlyList<ApplianceCredentialKubeconfig> kubeconfigs = default;
+            IReadOnlyDictionary<string, ApplianceSshKey> sshKeys = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("hybridConnectionConfig"u8))
+                if (prop.NameEquals("artifactProfiles"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hybridConnectionConfig = HybridConnectionConfig.DeserializeHybridConnectionConfig(prop.Value, options);
+                    Dictionary<string, ApplianceArtifactProfile> dictionary = new Dictionary<string, ApplianceArtifactProfile>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ApplianceArtifactProfile.DeserializeApplianceArtifactProfile(prop0.Value, options));
+                    }
+                    artifactProfiles = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("kubeconfigs"u8))
@@ -120,59 +143,73 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     kubeconfigs = array;
                     continue;
                 }
+                if (prop.NameEquals("sshKeys"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ApplianceSshKey> dictionary = new Dictionary<string, ApplianceSshKey>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ApplianceSshKey.DeserializeApplianceSshKey(prop0.Value, options));
+                    }
+                    sshKeys = dictionary;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplianceClusterUserCredentialResult(hybridConnectionConfig, kubeconfigs ?? new ChangeTrackingList<ApplianceCredentialKubeconfig>(), additionalBinaryDataProperties);
+            return new ApplianceListKeysResult(artifactProfiles ?? new ChangeTrackingDictionary<string, ApplianceArtifactProfile>(), kubeconfigs ?? new ChangeTrackingList<ApplianceCredentialKubeconfig>(), sshKeys ?? new ChangeTrackingDictionary<string, ApplianceSshKey>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApplianceClusterUserCredentialResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ApplianceListKeysResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplianceClusterUserCredentialResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceListKeysResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceConnectorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceClusterUserCredentialResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceListKeysResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplianceClusterUserCredentialResult IPersistableModel<ApplianceClusterUserCredentialResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ApplianceListKeysResult IPersistableModel<ApplianceListKeysResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApplianceClusterUserCredentialResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ApplianceListKeysResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplianceClusterUserCredentialResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceListKeysResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApplianceClusterUserCredentialResult(document.RootElement, options);
+                        return DeserializeApplianceListKeysResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceClusterUserCredentialResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceListKeysResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApplianceClusterUserCredentialResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApplianceListKeysResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApplianceClusterUserCredentialResult"/> from. </param>
-        internal static ApplianceClusterUserCredentialResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApplianceListKeysResult"/> from. </param>
+        internal static ApplianceListKeysResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeApplianceClusterUserCredentialResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeApplianceListKeysResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

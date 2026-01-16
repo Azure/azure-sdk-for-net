@@ -12,15 +12,15 @@ using Azure.ResourceManager.ResourceConnector;
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
     /// <summary> Represents a supported Fabric/Infra. (AKSEdge etc...). </summary>
-    public readonly partial struct ResourceConnectorDistro : IEquatable<ResourceConnectorDistro>
+    public readonly partial struct ApplianceDistro : IEquatable<ApplianceDistro>
     {
         private readonly string _value;
         private const string AksEdgeValue = "AKSEdge";
 
-        /// <summary> Initializes a new instance of <see cref="ResourceConnectorDistro"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceDistro"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceConnectorDistro(string value)
+        public ApplianceDistro(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         }
 
         /// <summary> Gets the AksEdge. </summary>
-        public static ResourceConnectorDistro AksEdge { get; } = new ResourceConnectorDistro(AksEdgeValue);
+        public static ApplianceDistro AksEdge { get; } = new ApplianceDistro(AksEdgeValue);
 
-        /// <summary> Determines if two <see cref="ResourceConnectorDistro"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ApplianceDistro"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ResourceConnectorDistro left, ResourceConnectorDistro right) => left.Equals(right);
+        public static bool operator ==(ApplianceDistro left, ApplianceDistro right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ResourceConnectorDistro"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ApplianceDistro"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ResourceConnectorDistro left, ResourceConnectorDistro right) => !left.Equals(right);
+        public static bool operator !=(ApplianceDistro left, ApplianceDistro right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ResourceConnectorDistro"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ApplianceDistro"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceConnectorDistro(string value) => new ResourceConnectorDistro(value);
+        public static implicit operator ApplianceDistro(string value) => new ApplianceDistro(value);
 
-        /// <summary> Converts a string to a <see cref="ResourceConnectorDistro"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ApplianceDistro"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceConnectorDistro?(string value) => value == null ? null : new ResourceConnectorDistro(value);
+        public static implicit operator ApplianceDistro?(string value) => value == null ? null : new ApplianceDistro(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ResourceConnectorDistro other && Equals(other);
+        public override bool Equals(object obj) => obj is ApplianceDistro other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ResourceConnectorDistro other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ApplianceDistro other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

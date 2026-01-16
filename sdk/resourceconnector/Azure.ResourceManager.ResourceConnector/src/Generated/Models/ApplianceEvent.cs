@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
     /// <summary> Event contains information about customer driven, platform driven, or unplanned events that occurred on the Appliance. </summary>
-    public partial class ResourceConnectorEvent
+    public partial class ApplianceEvent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceConnectorEvent"/>. </summary>
-        internal ResourceConnectorEvent()
+        /// <summary> Initializes a new instance of <see cref="ApplianceEvent"/>. </summary>
+        internal ApplianceEvent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceConnectorEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceEvent"/>. </summary>
         /// <param name="type"> The type of event is used to classify how the event was initiated. </param>
         /// <param name="code"> Code is used to break down the event further to identify why it occurred. </param>
         /// <param name="status"> Status is used to represent the outcome of the event. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="severity"> Severity is the classification of the event to relay the importance of the event. </param>
         /// <param name="timestamp"> Timestamp is the time the event occurred. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceConnectorEvent(string @type, string code, string status, string message, string severity, DateTimeOffset? timestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplianceEvent(string @type, string code, string status, string message, string severity, DateTimeOffset? timestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Code = code;

@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
     /// <summary> Contains network information about the Appliance. </summary>
-    public partial class ResourceConnectorNetworkProfile
+    public partial class ApplianceNetworkProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceConnectorNetworkProfile"/>. </summary>
-        public ResourceConnectorNetworkProfile()
+        /// <summary> Initializes a new instance of <see cref="ApplianceNetworkProfile"/>. </summary>
+        public ApplianceNetworkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceConnectorNetworkProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceNetworkProfile"/>. </summary>
         /// <param name="proxyConfiguration"> Contains proxy information about the Appliance. </param>
         /// <param name="dnsConfiguration"> Contains DNS information about the Appliance. </param>
         /// <param name="gatewayConfiguration"> Contains Arc Gateway information about the Appliance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceConnectorNetworkProfile(ProxyConfiguration proxyConfiguration, DnsConfiguration dnsConfiguration, GatewayConfiguration gatewayConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplianceNetworkProfile(ProxyConfiguration proxyConfiguration, DnsConfiguration dnsConfiguration, GatewayConfiguration gatewayConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProxyConfiguration = proxyConfiguration;
             DnsConfiguration = dnsConfiguration;

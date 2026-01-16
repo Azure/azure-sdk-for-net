@@ -12,25 +12,25 @@ using Azure.ResourceManager.ResourceConnector;
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
     /// <summary> The List Cluster Keys Results appliance. </summary>
-    public partial class ApplianceClusterUserKeysResult
+    public partial class ApplianceListKeysResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApplianceClusterUserKeysResult"/>. </summary>
-        internal ApplianceClusterUserKeysResult()
+        /// <summary> Initializes a new instance of <see cref="ApplianceListKeysResult"/>. </summary>
+        internal ApplianceListKeysResult()
         {
             ArtifactProfiles = new ChangeTrackingDictionary<string, ApplianceArtifactProfile>();
             Kubeconfigs = new ChangeTrackingList<ApplianceCredentialKubeconfig>();
             SshKeys = new ChangeTrackingDictionary<string, ApplianceSshKey>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplianceClusterUserKeysResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceListKeysResult"/>. </summary>
         /// <param name="artifactProfiles"> Map of artifacts that contains a list of ArtifactProfile used to upload artifacts such as logs. </param>
         /// <param name="kubeconfigs"> The list of appliance kubeconfigs. </param>
         /// <param name="sshKeys"> Map of Customer User Public, Private SSH Keys and Certificate when available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplianceClusterUserKeysResult(IReadOnlyDictionary<string, ApplianceArtifactProfile> artifactProfiles, IReadOnlyList<ApplianceCredentialKubeconfig> kubeconfigs, IReadOnlyDictionary<string, ApplianceSshKey> sshKeys, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplianceListKeysResult(IReadOnlyDictionary<string, ApplianceArtifactProfile> artifactProfiles, IReadOnlyList<ApplianceCredentialKubeconfig> kubeconfigs, IReadOnlyDictionary<string, ApplianceSshKey> sshKeys, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ArtifactProfiles = artifactProfiles;
             Kubeconfigs = kubeconfigs;

@@ -12,7 +12,7 @@ using Azure.ResourceManager.ResourceConnector;
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
     /// <summary> Appliance’s health and state of connection to on-prem. This list of values is not exhaustive. </summary>
-    public readonly partial struct ResourceConnectorStatus : IEquatable<ResourceConnectorStatus>
+    public readonly partial struct ApplianceStatus : IEquatable<ApplianceStatus>
     {
         private readonly string _value;
         private const string WaitingForHeartbeatValue = "WaitingForHeartbeat";
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         private const string ArcGatewayUpdateCompleteValue = "ArcGatewayUpdateComplete";
         private const string ArcGatewayUpdateFailedValue = "ArcGatewayUpdateFailed";
 
-        /// <summary> Initializes a new instance of <see cref="ResourceConnectorStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceConnectorStatus(string value)
+        public ApplianceStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -71,161 +71,161 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         }
 
         /// <summary> Gets the WaitingForHeartbeat. </summary>
-        public static ResourceConnectorStatus WaitingForHeartbeat { get; } = new ResourceConnectorStatus(WaitingForHeartbeatValue);
+        public static ApplianceStatus WaitingForHeartbeat { get; } = new ApplianceStatus(WaitingForHeartbeatValue);
 
         /// <summary> Gets the Validating. </summary>
-        public static ResourceConnectorStatus Validating { get; } = new ResourceConnectorStatus(ValidatingValue);
+        public static ApplianceStatus Validating { get; } = new ApplianceStatus(ValidatingValue);
 
         /// <summary> Gets the Connecting. </summary>
-        public static ResourceConnectorStatus Connecting { get; } = new ResourceConnectorStatus(ConnectingValue);
+        public static ApplianceStatus Connecting { get; } = new ApplianceStatus(ConnectingValue);
 
         /// <summary> Gets the Connected. </summary>
-        public static ResourceConnectorStatus Connected { get; } = new ResourceConnectorStatus(ConnectedValue);
+        public static ApplianceStatus Connected { get; } = new ApplianceStatus(ConnectedValue);
 
         /// <summary> Gets the Running. </summary>
-        public static ResourceConnectorStatus Running { get; } = new ResourceConnectorStatus(RunningValue);
+        public static ApplianceStatus Running { get; } = new ApplianceStatus(RunningValue);
 
         /// <summary> Gets the PreparingForUpgrade. </summary>
-        public static ResourceConnectorStatus PreparingForUpgrade { get; } = new ResourceConnectorStatus(PreparingForUpgradeValue);
+        public static ApplianceStatus PreparingForUpgrade { get; } = new ApplianceStatus(PreparingForUpgradeValue);
 
         /// <summary> Gets the EtcdSnapshotFailed. </summary>
-        public static ResourceConnectorStatus EtcdSnapshotFailed { get; } = new ResourceConnectorStatus(EtcdSnapshotFailedValue);
+        public static ApplianceStatus EtcdSnapshotFailed { get; } = new ApplianceStatus(EtcdSnapshotFailedValue);
 
         /// <summary> Gets the UpgradePrerequisitesCompleted. </summary>
-        public static ResourceConnectorStatus UpgradePrerequisitesCompleted { get; } = new ResourceConnectorStatus(UpgradePrerequisitesCompletedValue);
+        public static ApplianceStatus UpgradePrerequisitesCompleted { get; } = new ApplianceStatus(UpgradePrerequisitesCompletedValue);
 
         /// <summary> Gets the ValidatingSFSConnectivity. </summary>
-        public static ResourceConnectorStatus ValidatingSFSConnectivity { get; } = new ResourceConnectorStatus(ValidatingSFSConnectivityValue);
+        public static ApplianceStatus ValidatingSFSConnectivity { get; } = new ApplianceStatus(ValidatingSFSConnectivityValue);
 
         /// <summary> Gets the ValidatingImageDownload. </summary>
-        public static ResourceConnectorStatus ValidatingImageDownload { get; } = new ResourceConnectorStatus(ValidatingImageDownloadValue);
+        public static ApplianceStatus ValidatingImageDownload { get; } = new ApplianceStatus(ValidatingImageDownloadValue);
 
         /// <summary> Gets the ValidatingImageUpload. </summary>
-        public static ResourceConnectorStatus ValidatingImageUpload { get; } = new ResourceConnectorStatus(ValidatingImageUploadValue);
+        public static ApplianceStatus ValidatingImageUpload { get; } = new ApplianceStatus(ValidatingImageUploadValue);
 
         /// <summary> Gets the ValidatingEtcdHealth. </summary>
-        public static ResourceConnectorStatus ValidatingEtcdHealth { get; } = new ResourceConnectorStatus(ValidatingEtcdHealthValue);
+        public static ApplianceStatus ValidatingEtcdHealth { get; } = new ApplianceStatus(ValidatingEtcdHealthValue);
 
         /// <summary> Gets the PreUpgrade. </summary>
-        public static ResourceConnectorStatus PreUpgrade { get; } = new ResourceConnectorStatus(PreUpgradeValue);
+        public static ApplianceStatus PreUpgrade { get; } = new ApplianceStatus(PreUpgradeValue);
 
         /// <summary> Gets the UpgradingKvaio. </summary>
-        public static ResourceConnectorStatus UpgradingKvaio { get; } = new ResourceConnectorStatus(UpgradingKvaioValue);
+        public static ApplianceStatus UpgradingKvaio { get; } = new ApplianceStatus(UpgradingKvaioValue);
 
         /// <summary> Gets the WaitingForKvaio. </summary>
-        public static ResourceConnectorStatus WaitingForKvaio { get; } = new ResourceConnectorStatus(WaitingForKvaioValue);
+        public static ApplianceStatus WaitingForKvaio { get; } = new ApplianceStatus(WaitingForKvaioValue);
 
         /// <summary> Gets the ImagePending. </summary>
-        public static ResourceConnectorStatus ImagePending { get; } = new ResourceConnectorStatus(ImagePendingValue);
+        public static ApplianceStatus ImagePending { get; } = new ApplianceStatus(ImagePendingValue);
 
         /// <summary> Gets the ImageProvisioning. </summary>
-        public static ResourceConnectorStatus ImageProvisioning { get; } = new ResourceConnectorStatus(ImageProvisioningValue);
+        public static ApplianceStatus ImageProvisioning { get; } = new ApplianceStatus(ImageProvisioningValue);
 
         /// <summary> Gets the ImageProvisioned. </summary>
-        public static ResourceConnectorStatus ImageProvisioned { get; } = new ResourceConnectorStatus(ImageProvisionedValue);
+        public static ApplianceStatus ImageProvisioned { get; } = new ApplianceStatus(ImageProvisionedValue);
 
         /// <summary> Gets the ImageDownloading. </summary>
-        public static ResourceConnectorStatus ImageDownloading { get; } = new ResourceConnectorStatus(ImageDownloadingValue);
+        public static ApplianceStatus ImageDownloading { get; } = new ApplianceStatus(ImageDownloadingValue);
 
         /// <summary> Gets the ImageDownloaded. </summary>
-        public static ResourceConnectorStatus ImageDownloaded { get; } = new ResourceConnectorStatus(ImageDownloadedValue);
+        public static ApplianceStatus ImageDownloaded { get; } = new ApplianceStatus(ImageDownloadedValue);
 
         /// <summary> Gets the ImageDeprovisioning. </summary>
-        public static ResourceConnectorStatus ImageDeprovisioning { get; } = new ResourceConnectorStatus(ImageDeprovisioningValue);
+        public static ApplianceStatus ImageDeprovisioning { get; } = new ApplianceStatus(ImageDeprovisioningValue);
 
         /// <summary> Gets the ImageUnknown. </summary>
-        public static ResourceConnectorStatus ImageUnknown { get; } = new ResourceConnectorStatus(ImageUnknownValue);
+        public static ApplianceStatus ImageUnknown { get; } = new ApplianceStatus(ImageUnknownValue);
 
         /// <summary> Gets the UpdatingCloudOperator. </summary>
-        public static ResourceConnectorStatus UpdatingCloudOperator { get; } = new ResourceConnectorStatus(UpdatingCloudOperatorValue);
+        public static ApplianceStatus UpdatingCloudOperator { get; } = new ApplianceStatus(UpdatingCloudOperatorValue);
 
         /// <summary> Gets the WaitingForCloudOperator. </summary>
-        public static ResourceConnectorStatus WaitingForCloudOperator { get; } = new ResourceConnectorStatus(WaitingForCloudOperatorValue);
+        public static ApplianceStatus WaitingForCloudOperator { get; } = new ApplianceStatus(WaitingForCloudOperatorValue);
 
         /// <summary> Gets the UpdatingCapi. </summary>
-        public static ResourceConnectorStatus UpdatingCapi { get; } = new ResourceConnectorStatus(UpdatingCapiValue);
+        public static ApplianceStatus UpdatingCapi { get; } = new ApplianceStatus(UpdatingCapiValue);
 
         /// <summary> Gets the UpdatingCluster. </summary>
-        public static ResourceConnectorStatus UpdatingCluster { get; } = new ResourceConnectorStatus(UpdatingClusterValue);
+        public static ApplianceStatus UpdatingCluster { get; } = new ApplianceStatus(UpdatingClusterValue);
 
         /// <summary> Gets the PostUpgrade. </summary>
-        public static ResourceConnectorStatus PostUpgrade { get; } = new ResourceConnectorStatus(PostUpgradeValue);
+        public static ApplianceStatus PostUpgrade { get; } = new ApplianceStatus(PostUpgradeValue);
 
         /// <summary> Gets the UpgradeComplete. </summary>
-        public static ResourceConnectorStatus UpgradeComplete { get; } = new ResourceConnectorStatus(UpgradeCompleteValue);
+        public static ApplianceStatus UpgradeComplete { get; } = new ApplianceStatus(UpgradeCompleteValue);
 
         /// <summary> Gets the UpgradeClusterExtensionFailedToDelete. </summary>
-        public static ResourceConnectorStatus UpgradeClusterExtensionFailedToDelete { get; } = new ResourceConnectorStatus(UpgradeClusterExtensionFailedToDeleteValue);
+        public static ApplianceStatus UpgradeClusterExtensionFailedToDelete { get; } = new ApplianceStatus(UpgradeClusterExtensionFailedToDeleteValue);
 
         /// <summary> Gets the UpgradeFailed. </summary>
-        public static ResourceConnectorStatus UpgradeFailed { get; } = new ResourceConnectorStatus(UpgradeFailedValue);
+        public static ApplianceStatus UpgradeFailed { get; } = new ApplianceStatus(UpgradeFailedValue);
 
         /// <summary> Gets the Offline. </summary>
-        public static ResourceConnectorStatus Offline { get; } = new ResourceConnectorStatus(OfflineValue);
+        public static ApplianceStatus Offline { get; } = new ApplianceStatus(OfflineValue);
 
         /// <summary> Gets the None. </summary>
-        public static ResourceConnectorStatus None { get; } = new ResourceConnectorStatus(NoneValue);
+        public static ApplianceStatus None { get; } = new ApplianceStatus(NoneValue);
 
         /// <summary> Gets the NetworkProxyUpdatePreparing. </summary>
-        public static ResourceConnectorStatus NetworkProxyUpdatePreparing { get; } = new ResourceConnectorStatus(NetworkProxyUpdatePreparingValue);
+        public static ApplianceStatus NetworkProxyUpdatePreparing { get; } = new ApplianceStatus(NetworkProxyUpdatePreparingValue);
 
         /// <summary> Gets the NetworkProxyUpdating. </summary>
-        public static ResourceConnectorStatus NetworkProxyUpdating { get; } = new ResourceConnectorStatus(NetworkProxyUpdatingValue);
+        public static ApplianceStatus NetworkProxyUpdating { get; } = new ApplianceStatus(NetworkProxyUpdatingValue);
 
         /// <summary> Gets the NetworkProxyUpdateComplete. </summary>
-        public static ResourceConnectorStatus NetworkProxyUpdateComplete { get; } = new ResourceConnectorStatus(NetworkProxyUpdateCompleteValue);
+        public static ApplianceStatus NetworkProxyUpdateComplete { get; } = new ApplianceStatus(NetworkProxyUpdateCompleteValue);
 
         /// <summary> Gets the NetworkProxyUpdateFailed. </summary>
-        public static ResourceConnectorStatus NetworkProxyUpdateFailed { get; } = new ResourceConnectorStatus(NetworkProxyUpdateFailedValue);
+        public static ApplianceStatus NetworkProxyUpdateFailed { get; } = new ApplianceStatus(NetworkProxyUpdateFailedValue);
 
         /// <summary> Gets the NetworkDnsUpdatePreparing. </summary>
-        public static ResourceConnectorStatus NetworkDnsUpdatePreparing { get; } = new ResourceConnectorStatus(NetworkDnsUpdatePreparingValue);
+        public static ApplianceStatus NetworkDnsUpdatePreparing { get; } = new ApplianceStatus(NetworkDnsUpdatePreparingValue);
 
         /// <summary> Gets the NetworkDnsUpdating. </summary>
-        public static ResourceConnectorStatus NetworkDnsUpdating { get; } = new ResourceConnectorStatus(NetworkDnsUpdatingValue);
+        public static ApplianceStatus NetworkDnsUpdating { get; } = new ApplianceStatus(NetworkDnsUpdatingValue);
 
         /// <summary> Gets the NetworkDnsUpdateComplete. </summary>
-        public static ResourceConnectorStatus NetworkDnsUpdateComplete { get; } = new ResourceConnectorStatus(NetworkDnsUpdateCompleteValue);
+        public static ApplianceStatus NetworkDnsUpdateComplete { get; } = new ApplianceStatus(NetworkDnsUpdateCompleteValue);
 
         /// <summary> Gets the NetworkDnsUpdateFailed. </summary>
-        public static ResourceConnectorStatus NetworkDnsUpdateFailed { get; } = new ResourceConnectorStatus(NetworkDnsUpdateFailedValue);
+        public static ApplianceStatus NetworkDnsUpdateFailed { get; } = new ApplianceStatus(NetworkDnsUpdateFailedValue);
 
         /// <summary> Gets the ArcGatewayUpdatePreparing. </summary>
-        public static ResourceConnectorStatus ArcGatewayUpdatePreparing { get; } = new ResourceConnectorStatus(ArcGatewayUpdatePreparingValue);
+        public static ApplianceStatus ArcGatewayUpdatePreparing { get; } = new ApplianceStatus(ArcGatewayUpdatePreparingValue);
 
         /// <summary> Gets the ArcGatewayUpdating. </summary>
-        public static ResourceConnectorStatus ArcGatewayUpdating { get; } = new ResourceConnectorStatus(ArcGatewayUpdatingValue);
+        public static ApplianceStatus ArcGatewayUpdating { get; } = new ApplianceStatus(ArcGatewayUpdatingValue);
 
         /// <summary> Gets the ArcGatewayUpdateComplete. </summary>
-        public static ResourceConnectorStatus ArcGatewayUpdateComplete { get; } = new ResourceConnectorStatus(ArcGatewayUpdateCompleteValue);
+        public static ApplianceStatus ArcGatewayUpdateComplete { get; } = new ApplianceStatus(ArcGatewayUpdateCompleteValue);
 
         /// <summary> Gets the ArcGatewayUpdateFailed. </summary>
-        public static ResourceConnectorStatus ArcGatewayUpdateFailed { get; } = new ResourceConnectorStatus(ArcGatewayUpdateFailedValue);
+        public static ApplianceStatus ArcGatewayUpdateFailed { get; } = new ApplianceStatus(ArcGatewayUpdateFailedValue);
 
-        /// <summary> Determines if two <see cref="ResourceConnectorStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ApplianceStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ResourceConnectorStatus left, ResourceConnectorStatus right) => left.Equals(right);
+        public static bool operator ==(ApplianceStatus left, ApplianceStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ResourceConnectorStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ApplianceStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ResourceConnectorStatus left, ResourceConnectorStatus right) => !left.Equals(right);
+        public static bool operator !=(ApplianceStatus left, ApplianceStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ResourceConnectorStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ApplianceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceConnectorStatus(string value) => new ResourceConnectorStatus(value);
+        public static implicit operator ApplianceStatus(string value) => new ApplianceStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ResourceConnectorStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ApplianceStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceConnectorStatus?(string value) => value == null ? null : new ResourceConnectorStatus(value);
+        public static implicit operator ApplianceStatus?(string value) => value == null ? null : new ApplianceStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ResourceConnectorStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is ApplianceStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ResourceConnectorStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ApplianceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

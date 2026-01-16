@@ -12,22 +12,22 @@ using Azure.ResourceManager.ResourceConnector;
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
     /// <summary> The List Cluster User Credential appliance. </summary>
-    public partial class ApplianceClusterUserCredentialResult
+    public partial class ApplianceListCredentialResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApplianceClusterUserCredentialResult"/>. </summary>
-        internal ApplianceClusterUserCredentialResult()
+        /// <summary> Initializes a new instance of <see cref="ApplianceListCredentialResult"/>. </summary>
+        internal ApplianceListCredentialResult()
         {
             Kubeconfigs = new ChangeTrackingList<ApplianceCredentialKubeconfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplianceClusterUserCredentialResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceListCredentialResult"/>. </summary>
         /// <param name="hybridConnectionConfig"> Contains the REP (rendezvous endpoint) and “Listener” access token from notification service (NS). </param>
         /// <param name="kubeconfigs"> The list of appliance kubeconfigs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplianceClusterUserCredentialResult(HybridConnectionConfig hybridConnectionConfig, IReadOnlyList<ApplianceCredentialKubeconfig> kubeconfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplianceListCredentialResult(HybridConnectionConfig hybridConnectionConfig, IReadOnlyList<ApplianceCredentialKubeconfig> kubeconfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HybridConnectionConfig = hybridConnectionConfig;
             Kubeconfigs = kubeconfigs;
