@@ -39,21 +39,6 @@ namespace OpenAI
             writer.WriteStringValue(Type);
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (Optional.IsCollectionDefined(Queries))
-            {
-                writer.WritePropertyName("queries"u8);
-                writer.WriteStartArray();
-                foreach (string item in Queries)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
@@ -108,7 +93,6 @@ namespace OpenAI
             }
             string @type = default;
             string query = default;
-            IList<string> queries = default;
             IList<WebSearchActionSearchSources> sources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -121,27 +105,6 @@ namespace OpenAI
                 if (prop.NameEquals("query"u8))
                 {
                     query = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("queries"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    queries = array;
                     continue;
                 }
                 if (prop.NameEquals("sources"u8))
@@ -163,7 +126,7 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalWebSearchActionSearch(@type, query, queries ?? new ChangeTrackingList<string>(), sources ?? new ChangeTrackingList<WebSearchActionSearchSources>(), additionalBinaryDataProperties);
+            return new InternalWebSearchActionSearch(@type, query, sources ?? new ChangeTrackingList<WebSearchActionSearchSources>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

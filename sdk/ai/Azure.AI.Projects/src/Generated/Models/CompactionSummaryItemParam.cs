@@ -11,7 +11,7 @@ namespace Azure.AI.Projects
     internal partial class CompactionSummaryItemParam : Item
     {
         /// <summary> Initializes a new instance of <see cref="CompactionSummaryItemParam"/>. </summary>
-        /// <param name="encryptedContent"> The encrypted content of the compaction summary. </param>
+        /// <param name="encryptedContent"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptedContent"/> is null. </exception>
         public CompactionSummaryItemParam(string encryptedContent) : base(ItemType.Compaction)
         {
@@ -24,7 +24,7 @@ namespace Azure.AI.Projects
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"></param>
-        /// <param name="encryptedContent"> The encrypted content of the compaction summary. </param>
+        /// <param name="encryptedContent"></param>
         internal CompactionSummaryItemParam(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string encryptedContent) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
@@ -34,7 +34,7 @@ namespace Azure.AI.Projects
         /// <summary> Gets or sets the Id. </summary>
         public string Id { get; set; }
 
-        /// <summary> The encrypted content of the compaction summary. </summary>
+        /// <summary> Gets the EncryptedContent. </summary>
         public string EncryptedContent { get; }
     }
 }
