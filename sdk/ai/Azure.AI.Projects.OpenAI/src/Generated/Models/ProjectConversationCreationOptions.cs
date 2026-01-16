@@ -4,23 +4,25 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
-    /// <summary> Create a conversation. </summary>
+    /// <summary> The ProjectConversationCreationOptions. </summary>
     public partial class ProjectConversationCreationOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary>
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </summary>
-        public IDictionary<string, string> Metadata { get; }
+        /// <summary> Initializes a new instance of <see cref="ProjectConversationCreationOptions"/>. </summary>
+        /// <param name="internalMetadata"></param>
+        /// <param name="items"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProjectConversationCreationOptions(InternalMetadataContainer internalMetadata, IList<global::OpenAI.Responses.ResponseItem> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            InternalMetadata = internalMetadata;
+            Items = items;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
     }
 }

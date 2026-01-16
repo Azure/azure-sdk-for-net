@@ -12,18 +12,21 @@ namespace Azure.AI.Projects.OpenAI
     {
         private readonly string _value;
         private const string MessageValue = "message";
+        private const string OutputMessageValue = "output_message";
         private const string FileSearchCallValue = "file_search_call";
-        private const string FunctionCallValue = "function_call";
-        private const string FunctionCallOutputValue = "function_call_output";
         private const string ComputerCallValue = "computer_call";
         private const string ComputerCallOutputValue = "computer_call_output";
         private const string WebSearchCallValue = "web_search_call";
-        private const string ReasoningValue = "reasoning";
-        private const string ItemReferenceValue = "item_reference";
+        private const string FunctionCallValue = "function_call";
+        private const string FunctionCallOutputValue = "function_call_output";
         private const string ImageGenerationCallValue = "image_generation_call";
         private const string CodeInterpreterCallValue = "code_interpreter_call";
         private const string LocalShellCallValue = "local_shell_call";
         private const string LocalShellCallOutputValue = "local_shell_call_output";
+        private const string ShellCallValue = "shell_call";
+        private const string ShellCallOutputValue = "shell_call_output";
+        private const string ApplyPatchCallValue = "apply_patch_call";
+        private const string ApplyPatchCallOutputValue = "apply_patch_call_output";
         private const string McpListToolsValue = "mcp_list_tools";
         private const string McpApprovalRequestValue = "mcp_approval_request";
         private const string McpApprovalResponseValue = "mcp_approval_response";
@@ -46,14 +49,11 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Gets the Message. </summary>
         public static AgentResponseItemKind Message { get; } = new AgentResponseItemKind(MessageValue);
 
+        /// <summary> Gets the OutputMessage. </summary>
+        public static AgentResponseItemKind OutputMessage { get; } = new AgentResponseItemKind(OutputMessageValue);
+
         /// <summary> Gets the FileSearchCall. </summary>
         public static AgentResponseItemKind FileSearchCall { get; } = new AgentResponseItemKind(FileSearchCallValue);
-
-        /// <summary> Gets the FunctionCall. </summary>
-        public static AgentResponseItemKind FunctionCall { get; } = new AgentResponseItemKind(FunctionCallValue);
-
-        /// <summary> Gets the FunctionCallOutput. </summary>
-        public static AgentResponseItemKind FunctionCallOutput { get; } = new AgentResponseItemKind(FunctionCallOutputValue);
 
         /// <summary> Gets the ComputerCall. </summary>
         public static AgentResponseItemKind ComputerCall { get; } = new AgentResponseItemKind(ComputerCallValue);
@@ -64,11 +64,11 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Gets the WebSearchCall. </summary>
         public static AgentResponseItemKind WebSearchCall { get; } = new AgentResponseItemKind(WebSearchCallValue);
 
-        /// <summary> Gets the Reasoning. </summary>
-        public static AgentResponseItemKind Reasoning { get; } = new AgentResponseItemKind(ReasoningValue);
+        /// <summary> Gets the FunctionCall. </summary>
+        public static AgentResponseItemKind FunctionCall { get; } = new AgentResponseItemKind(FunctionCallValue);
 
-        /// <summary> Gets the ItemReference. </summary>
-        public static AgentResponseItemKind ItemReference { get; } = new AgentResponseItemKind(ItemReferenceValue);
+        /// <summary> Gets the FunctionCallOutput. </summary>
+        public static AgentResponseItemKind FunctionCallOutput { get; } = new AgentResponseItemKind(FunctionCallOutputValue);
 
         /// <summary> Gets the ImageGenerationCall. </summary>
         public static AgentResponseItemKind ImageGenerationCall { get; } = new AgentResponseItemKind(ImageGenerationCallValue);
@@ -81,6 +81,18 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> Gets the LocalShellCallOutput. </summary>
         public static AgentResponseItemKind LocalShellCallOutput { get; } = new AgentResponseItemKind(LocalShellCallOutputValue);
+
+        /// <summary> Gets the ShellCall. </summary>
+        public static AgentResponseItemKind ShellCall { get; } = new AgentResponseItemKind(ShellCallValue);
+
+        /// <summary> Gets the ShellCallOutput. </summary>
+        public static AgentResponseItemKind ShellCallOutput { get; } = new AgentResponseItemKind(ShellCallOutputValue);
+
+        /// <summary> Gets the ApplyPatchCall. </summary>
+        public static AgentResponseItemKind ApplyPatchCall { get; } = new AgentResponseItemKind(ApplyPatchCallValue);
+
+        /// <summary> Gets the ApplyPatchCallOutput. </summary>
+        public static AgentResponseItemKind ApplyPatchCallOutput { get; } = new AgentResponseItemKind(ApplyPatchCallOutputValue);
 
         /// <summary> Gets the McpListTools. </summary>
         public static AgentResponseItemKind McpListTools { get; } = new AgentResponseItemKind(McpListToolsValue);

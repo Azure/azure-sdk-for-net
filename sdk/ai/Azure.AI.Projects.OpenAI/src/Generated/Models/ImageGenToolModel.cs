@@ -13,6 +13,7 @@ namespace OpenAI
     {
         private readonly string _value;
         private const string GptImage1Value = "gpt-image-1";
+        private const string GptImage1MiniValue = "gpt-image-1-mini";
 
         /// <summary> Initializes a new instance of <see cref="ImageGenToolModel"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -26,6 +27,9 @@ namespace OpenAI
 
         /// <summary> Gets the GptImage1. </summary>
         public static ImageGenToolModel GptImage1 { get; } = new ImageGenToolModel(GptImage1Value);
+
+        /// <summary> Gets the GptImage1Mini. </summary>
+        public static ImageGenToolModel GptImage1Mini { get; } = new ImageGenToolModel(GptImage1MiniValue);
 
         /// <summary> Determines if two <see cref="ImageGenToolModel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

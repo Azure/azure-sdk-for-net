@@ -11,11 +11,10 @@ namespace Azure.AI.Projects.OpenAI
     public partial class AgentWorkflowActionResponseItem : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="AgentWorkflowActionResponseItem"/>. </summary>
-        /// <param name="id"></param>
         /// <param name="kind"> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </param>
         /// <param name="actionId"> Unique identifier for the action. </param>
         /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
-        internal AgentWorkflowActionResponseItem(string id, string kind, string actionId, AgentWorkflowActionStatus? status) : base(AgentResponseItemKind.WorkflowAction, id)
+        internal AgentWorkflowActionResponseItem(string kind, string actionId, AgentWorkflowActionStatus? status) : base(AgentResponseItemKind.WorkflowAction)
         {
             Kind = kind;
             ActionId = actionId;
@@ -24,15 +23,14 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="AgentWorkflowActionResponseItem"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="createdBy"> The information about the creator of the item. </param>
+        /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </param>
         /// <param name="actionId"> Unique identifier for the action. </param>
         /// <param name="parentActionId"> ID of the parent action if this is a nested action. </param>
         /// <param name="previousActionId"> ID of the previous action if this action follows another. </param>
         /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
-        internal AgentWorkflowActionResponseItem(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string kind, string actionId, string parentActionId, string previousActionId, AgentWorkflowActionStatus? status) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal AgentWorkflowActionResponseItem(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string kind, string actionId, string parentActionId, string previousActionId, AgentWorkflowActionStatus? status) : base(@type, itemSource, additionalBinaryDataProperties)
         {
             Kind = kind;
             ActionId = actionId;

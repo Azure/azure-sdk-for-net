@@ -66,6 +66,11 @@ namespace OpenAI
                 writer.WritePropertyName("background"u8);
                 writer.WriteStringValue(Background.Value.ToString());
             }
+            if (Optional.IsDefined(InputFidelity))
+            {
+                writer.WritePropertyName("input_fidelity"u8);
+                writer.WriteStringValue(InputFidelity.Value.ToSerialString());
+            }
             if (Optional.IsDefined(InputImageMask))
             {
                 writer.WritePropertyName("input_image_mask"u8);
@@ -109,11 +114,12 @@ namespace OpenAI
             ImageGenToolQuality? quality = default;
             ImageGenToolSize? size = default;
             ImageGenToolOutputFormat? outputFormat = default;
-            int? outputCompression = default;
+            long? outputCompression = default;
             ImageGenToolModeration? moderation = default;
             ImageGenToolBackground? background = default;
+            InputFidelity? inputFidelity = default;
             InternalImageGenToolInputImageMask inputImageMask = default;
-            int? partialImages = default;
+            long? partialImages = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -163,7 +169,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    outputCompression = prop.Value.GetInt32();
+                    outputCompression = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("moderation"u8))
@@ -184,6 +190,16 @@ namespace OpenAI
                     background = new ImageGenToolBackground(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("input_fidelity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        inputFidelity = null;
+                        continue;
+                    }
+                    inputFidelity = prop.Value.GetString().ToInputFidelity();
+                    continue;
+                }
                 if (prop.NameEquals("input_image_mask"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -199,7 +215,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    partialImages = prop.Value.GetInt32();
+                    partialImages = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
@@ -217,6 +233,7 @@ namespace OpenAI
                 outputCompression,
                 moderation,
                 background,
+                inputFidelity,
                 inputImageMask,
                 partialImages);
         }

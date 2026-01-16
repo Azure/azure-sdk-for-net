@@ -10,7 +10,7 @@ using OpenAI;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary>
-    /// The AgentTool.
+    /// A tool that can be used to generate a response.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingAgentTool"/>, <see cref="MicrosoftFabricAgentTool"/>, <see cref="SharepointAgentTool"/>, <see cref="AzureAISearchAgentTool"/>, <see cref="OpenAPIAgentTool"/>, <see cref="BingCustomSearchAgentTool"/>, <see cref="BrowserAutomationAgentTool"/>, <see cref="AzureFunctionAgentTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2ATool"/>, and <see cref="MemorySearchTool"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTool))]
@@ -87,22 +87,30 @@ namespace Azure.AI.Projects.OpenAI
             {
                 switch (discriminator.GetString())
                 {
+                    case "code_interpreter":
+                        return InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
                     case "function":
                         return InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
                     case "file_search":
                         return InternalFileSearchTool.DeserializeInternalFileSearchTool(element, options);
                     case "computer_use_preview":
                         return InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
-                    case "web_search_preview":
-                        return InternalWebSearchPreviewTool.DeserializeInternalWebSearchPreviewTool(element, options);
-                    case "code_interpreter":
-                        return InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
+                    case "web_search":
+                        return InternalWebSearchTool.DeserializeInternalWebSearchTool(element, options);
+                    case "mcp":
+                        return InternalMCPTool.DeserializeInternalMCPTool(element, options);
                     case "image_generation":
                         return InternalImageGenTool.DeserializeInternalImageGenTool(element, options);
                     case "local_shell":
                         return InternalLocalShellTool.DeserializeInternalLocalShellTool(element, options);
-                    case "mcp":
-                        return InternalMCPTool.DeserializeInternalMCPTool(element, options);
+                    case "shell":
+                        return InternalFunctionShellToolParam.DeserializeInternalFunctionShellToolParam(element, options);
+                    case "custom":
+                        return InternalCustomToolParam.DeserializeInternalCustomToolParam(element, options);
+                    case "web_search_preview":
+                        return InternalWebSearchPreviewTool.DeserializeInternalWebSearchPreviewTool(element, options);
+                    case "apply_patch":
+                        return InternalApplyPatchToolParam.DeserializeInternalApplyPatchToolParam(element, options);
                     case "bing_grounding":
                         return BingGroundingAgentTool.DeserializeBingGroundingAgentTool(element, options);
                     case "fabric_dataagent_preview":

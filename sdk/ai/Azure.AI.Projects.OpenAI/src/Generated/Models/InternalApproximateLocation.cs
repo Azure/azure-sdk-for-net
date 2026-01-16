@@ -7,27 +7,35 @@ using System.Collections.Generic;
 
 namespace OpenAI
 {
-    internal partial class InternalApproximateLocation : InternalLocation
+    internal partial class InternalApproximateLocation
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="InternalApproximateLocation"/>. </summary>
-        public InternalApproximateLocation() : base(LocationType.Approximate)
+        public InternalApproximateLocation()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalApproximateLocation"/>. </summary>
-        /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> The type of location approximation. Always `approximate`. </param>
         /// <param name="country"></param>
         /// <param name="region"></param>
         /// <param name="city"></param>
         /// <param name="timezone"></param>
-        internal InternalApproximateLocation(LocationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string country, string region, string city, string timezone) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InternalApproximateLocation(string @type, string country, string region, string city, string timezone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Type = @type;
             Country = country;
             Region = region;
             City = city;
             Timezone = timezone;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The type of location approximation. Always `approximate`. </summary>
+        public string Type { get; } = "approximate";
 
         /// <summary> Gets or sets the Country. </summary>
         public string Country { get; set; }

@@ -5,11 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Projects.OpenAI;
 
 namespace OpenAI
 {
-    /// <summary> Execute a shell command on the server. </summary>
+    /// <summary> Local shell exec action. </summary>
     internal partial class LocalShellExecAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -18,12 +17,8 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="LocalShellExecAction"/>. </summary>
         /// <param name="command"> The command to run. </param>
         /// <param name="env"> Environment variables to set for the command. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="env"/> is null. </exception>
-        public LocalShellExecAction(IEnumerable<string> command, IDictionary<string, string> env)
+        internal LocalShellExecAction(IEnumerable<string> command, IDictionary<string, string> env)
         {
-            Argument.AssertNotNull(command, nameof(command));
-            Argument.AssertNotNull(env, nameof(env));
-
             Command = command.ToList();
             Env = env;
         }
@@ -31,12 +26,12 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="LocalShellExecAction"/>. </summary>
         /// <param name="type"> The type of the local shell action. Always `exec`. </param>
         /// <param name="command"> The command to run. </param>
-        /// <param name="timeoutMs"> Optional timeout in milliseconds for the command. </param>
-        /// <param name="workingDirectory"> Optional working directory to run the command in. </param>
+        /// <param name="timeoutMs"></param>
+        /// <param name="workingDirectory"></param>
         /// <param name="env"> Environment variables to set for the command. </param>
-        /// <param name="user"> Optional user to run the command as. </param>
+        /// <param name="user"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LocalShellExecAction(string @type, IList<string> command, int? timeoutMs, string workingDirectory, IDictionary<string, string> env, string user, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LocalShellExecAction(string @type, IList<string> command, long? timeoutMs, string workingDirectory, IDictionary<string, string> env, string user, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Command = command;
@@ -53,16 +48,16 @@ namespace OpenAI
         /// <summary> The command to run. </summary>
         public IList<string> Command { get; }
 
-        /// <summary> Optional timeout in milliseconds for the command. </summary>
-        public int? TimeoutMs { get; set; }
+        /// <summary> Gets the TimeoutMs. </summary>
+        public long? TimeoutMs { get; }
 
-        /// <summary> Optional working directory to run the command in. </summary>
-        public string WorkingDirectory { get; set; }
+        /// <summary> Gets the WorkingDirectory. </summary>
+        public string WorkingDirectory { get; }
 
         /// <summary> Environment variables to set for the command. </summary>
         public IDictionary<string, string> Env { get; }
 
-        /// <summary> Optional user to run the command as. </summary>
-        public string User { get; set; }
+        /// <summary> Gets the User. </summary>
+        public string User { get; }
     }
 }

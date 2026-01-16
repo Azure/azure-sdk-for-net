@@ -4,39 +4,36 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
-    /// <summary> Update a conversation. </summary>
+    /// <summary> The ProjectConversationUpdateOptions. </summary>
     public partial class ProjectConversationUpdateOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProjectConversationUpdateOptions"/>. </summary>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
+        /// <param name="internalMetadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
+        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
         /// </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectConversationUpdateOptions(IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectConversationUpdateOptions(InternalMetadataContainer internalMetadata)
         {
-            Metadata = metadata;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            InternalMetadata = internalMetadata;
         }
 
-        /// <summary>
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </summary>
-        public IDictionary<string, string> Metadata { get; }
+        /// <summary> Initializes a new instance of <see cref="ProjectConversationUpdateOptions"/>. </summary>
+        /// <param name="internalMetadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
+        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProjectConversationUpdateOptions(InternalMetadataContainer internalMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            InternalMetadata = internalMetadata;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
     }
 }

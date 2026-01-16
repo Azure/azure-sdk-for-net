@@ -69,7 +69,7 @@ namespace OpenAI
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToComputerActionType();
+                    @type = new ComputerActionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

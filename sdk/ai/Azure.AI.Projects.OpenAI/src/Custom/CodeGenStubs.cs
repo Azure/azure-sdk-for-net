@@ -17,3 +17,5 @@ namespace Azure.AI.Projects.OpenAI;
 [CodeGenType("MemorySearchToolCallItemResourceStatus")] public readonly partial struct MemorySearchToolCallStatus { }
 [CodeGenType("WorkflowActionOutputItemResourceStatus")] public readonly partial struct AgentWorkflowActionStatus { }
 [CodeGenType("OpenApiFunctionDefinitionFunction")] public partial class OpenAPIFunctionEntry { }
+[CodeGenType("AgentItemSource")] public partial class AgentItemSource { }
+[CodeGenType("WebSearchConfiguration")] public partial class ProjectWebSearchConfiguration { }

@@ -19,14 +19,10 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalReasoning"/>. </summary>
         /// <param name="effort"></param>
-        /// <param name="summary">
-        /// A summary of the reasoning performed by the model. This can be
-        /// useful for debugging and understanding the model's reasoning process.
-        /// One of `auto`, `concise`, or `detailed`.
-        /// </param>
-        /// <param name="generateSummary"> **Deprecated**: use `summary` instead. A summary of the reasoning performed by the model. This can be useful for debugging and understanding the model's reasoning process. One of `auto`, `concise`, or `detailed`. </param>
+        /// <param name="summary"></param>
+        /// <param name="generateSummary"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalReasoning(ReasoningEffort? effort, ReasoningSummary? summary, ReasoningGenerateSummary? generateSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalReasoning(ReasoningEffort1? effort, ReasoningSummary? summary, ReasoningGenerateSummary? generateSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Effort = effort;
             Summary = summary;
@@ -35,16 +31,12 @@ namespace OpenAI
         }
 
         /// <summary> Gets or sets the Effort. </summary>
-        public ReasoningEffort? Effort { get; set; }
+        public ReasoningEffort1? Effort { get; set; }
 
-        /// <summary>
-        /// A summary of the reasoning performed by the model. This can be
-        /// useful for debugging and understanding the model's reasoning process.
-        /// One of `auto`, `concise`, or `detailed`.
-        /// </summary>
+        /// <summary> Gets or sets the Summary. </summary>
         public ReasoningSummary? Summary { get; set; }
 
-        /// <summary> **Deprecated**: use `summary` instead. A summary of the reasoning performed by the model. This can be useful for debugging and understanding the model's reasoning process. One of `auto`, `concise`, or `detailed`. </summary>
+        /// <summary> Gets or sets the GenerateSummary. </summary>
         public ReasoningGenerateSummary? GenerateSummary { get; set; }
     }
 }

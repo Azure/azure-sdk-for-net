@@ -43,25 +43,11 @@ namespace OpenAI
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("input_schema"u8);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(InputSchema);
-#else
-            using (JsonDocument document = JsonDocument.Parse(InputSchema))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            writer.WriteObjectValue(InputSchema, options);
             if (Optional.IsDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(Annotations);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Annotations))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteObjectValue(Annotations, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -107,8 +93,8 @@ namespace OpenAI
             }
             string name = default;
             string description = default;
-            BinaryData inputSchema = default;
-            BinaryData annotations = default;
+            MCPListToolsToolInputSchema inputSchema = default;
+            MCPListToolsToolAnnotations annotations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -129,7 +115,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("input_schema"u8))
                 {
-                    inputSchema = BinaryData.FromString(prop.Value.GetRawText());
+                    inputSchema = MCPListToolsToolInputSchema.DeserializeMCPListToolsToolInputSchema(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("annotations"u8))
@@ -139,7 +125,7 @@ namespace OpenAI
                         annotations = null;
                         continue;
                     }
-                    annotations = BinaryData.FromString(prop.Value.GetRawText());
+                    annotations = MCPListToolsToolAnnotations.DeserializeMCPListToolsToolAnnotations(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -10,7 +10,7 @@ using Azure.AI.Projects.OpenAI;
 
 namespace OpenAI
 {
-    internal partial class InternalEasyInputMessage : IJsonModel<InternalEasyInputMessage>
+    internal partial class InternalEasyInputMessage : InputItem, IJsonModel<InternalEasyInputMessage>
     {
         /// <summary> Initializes a new instance of <see cref="InternalEasyInputMessage"/> for deserialization. </summary>
         internal InternalEasyInputMessage()
@@ -28,15 +28,16 @@ namespace OpenAI
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalEasyInputMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InternalEasyInputMessage)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("role"u8);
-            writer.WriteStringValue(Role);
+            writer.WriteStringValue(Role.ToSerialString());
             writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER
             writer.WriteRawValue(Content);
@@ -46,30 +47,15 @@ namespace OpenAI
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalEasyInputMessage IJsonModel<InternalEasyInputMessage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InternalEasyInputMessage IJsonModel<InternalEasyInputMessage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalEasyInputMessage)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InternalEasyInputMessage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override InputItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalEasyInputMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -88,14 +74,20 @@ namespace OpenAI
             {
                 return null;
             }
-            string role = default;
-            BinaryData content = default;
+            InputItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            EasyInputMessageRole role = default;
+            BinaryData content = default;
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = new InputItemType(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("role"u8))
                 {
-                    role = prop.Value.GetString();
+                    role = prop.Value.GetString().ToEasyInputMessageRole();
                     continue;
                 }
                 if (prop.NameEquals("content"u8))
@@ -108,14 +100,14 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalEasyInputMessage(role, content, additionalBinaryDataProperties);
+            return new InternalEasyInputMessage(@type, additionalBinaryDataProperties, role, content);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<InternalEasyInputMessage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalEasyInputMessage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -129,11 +121,11 @@ namespace OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalEasyInputMessage IPersistableModel<InternalEasyInputMessage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InternalEasyInputMessage IPersistableModel<InternalEasyInputMessage>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalEasyInputMessage)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InternalEasyInputMessage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override InputItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalEasyInputMessage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

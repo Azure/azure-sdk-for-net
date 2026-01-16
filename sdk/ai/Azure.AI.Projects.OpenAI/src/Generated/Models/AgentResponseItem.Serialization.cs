@@ -41,12 +41,10 @@ namespace Azure.AI.Projects.OpenAI
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            if (Optional.IsDefined(CreatedBy))
+            if (Optional.IsDefined(ItemSource))
             {
                 writer.WritePropertyName("created_by"u8);
-                writer.WriteObjectValue(CreatedBy, options);
+                writer.WriteObjectValue(ItemSource, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -101,37 +99,45 @@ namespace Azure.AI.Projects.OpenAI
                     case "oauth_consent_request":
                         return OAuthConsentRequestResponseItem.DeserializeOAuthConsentRequestResponseItem(element, options);
                     case "message":
-                        return InternalResponsesMessageItemResource.DeserializeInternalResponsesMessageItemResource(element, options);
-                    case "computer_call_output":
-                        return InternalComputerToolCallOutputItemResource.DeserializeInternalComputerToolCallOutputItemResource(element, options);
-                    case "function_call":
-                        return InternalFunctionToolCallItemResource.DeserializeInternalFunctionToolCallItemResource(element, options);
-                    case "function_call_output":
-                        return InternalFunctionToolCallOutputItemResource.DeserializeInternalFunctionToolCallOutputItemResource(element, options);
-                    case "mcp_approval_response":
-                        return InternalMCPApprovalResponseItemResource.DeserializeInternalMCPApprovalResponseItemResource(element, options);
+                        return InternalInputMessageResource.DeserializeInternalInputMessageResource(element, options);
+                    case "output_message":
+                        return InternalItemResourceOutputMessage.DeserializeInternalItemResourceOutputMessage(element, options);
                     case "file_search_call":
-                        return InternalFileSearchToolCallItemResource.DeserializeInternalFileSearchToolCallItemResource(element, options);
+                        return InternalItemResourceFileSearchToolCall.DeserializeInternalItemResourceFileSearchToolCall(element, options);
                     case "computer_call":
-                        return InternalComputerToolCallItemResource.DeserializeInternalComputerToolCallItemResource(element, options);
+                        return InternalItemResourceComputerToolCall.DeserializeInternalItemResourceComputerToolCall(element, options);
+                    case "computer_call_output":
+                        return InternalItemResourceComputerToolCallOutputResource.DeserializeInternalItemResourceComputerToolCallOutputResource(element, options);
                     case "web_search_call":
-                        return InternalWebSearchToolCallItemResource.DeserializeInternalWebSearchToolCallItemResource(element, options);
-                    case "reasoning":
-                        return InternalReasoningItemResource.DeserializeInternalReasoningItemResource(element, options);
+                        return InternalItemResourceWebSearchToolCall.DeserializeInternalItemResourceWebSearchToolCall(element, options);
+                    case "function_call":
+                        return InternalItemResourceFunctionToolCallResource.DeserializeInternalItemResourceFunctionToolCallResource(element, options);
+                    case "function_call_output":
+                        return InternalItemResourceFunctionToolCallOutputResource.DeserializeInternalItemResourceFunctionToolCallOutputResource(element, options);
                     case "image_generation_call":
-                        return InternalImageGenToolCallItemResource.DeserializeInternalImageGenToolCallItemResource(element, options);
+                        return InternalItemResourceImageGenToolCall.DeserializeInternalItemResourceImageGenToolCall(element, options);
                     case "code_interpreter_call":
-                        return InternalCodeInterpreterToolCallItemResource.DeserializeInternalCodeInterpreterToolCallItemResource(element, options);
+                        return InternalItemResourceCodeInterpreterToolCall.DeserializeInternalItemResourceCodeInterpreterToolCall(element, options);
                     case "local_shell_call":
-                        return InternalLocalShellToolCallItem.DeserializeInternalLocalShellToolCallItem(element, options);
+                        return InternalItemResourceLocalShellToolCall.DeserializeInternalItemResourceLocalShellToolCall(element, options);
                     case "local_shell_call_output":
-                        return InternalLocalShellToolCallOutputItem.DeserializeInternalLocalShellToolCallOutputItem(element, options);
+                        return InternalItemResourceLocalShellToolCallOutput.DeserializeInternalItemResourceLocalShellToolCallOutput(element, options);
+                    case "shell_call":
+                        return InternalItemResourceFunctionShellCall.DeserializeInternalItemResourceFunctionShellCall(element, options);
+                    case "shell_call_output":
+                        return InternalItemResourceFunctionShellCallOutput.DeserializeInternalItemResourceFunctionShellCallOutput(element, options);
+                    case "apply_patch_call":
+                        return InternalItemResourceApplyPatchToolCall.DeserializeInternalItemResourceApplyPatchToolCall(element, options);
+                    case "apply_patch_call_output":
+                        return InternalItemResourceApplyPatchToolCallOutput.DeserializeInternalItemResourceApplyPatchToolCallOutput(element, options);
                     case "mcp_list_tools":
-                        return InternalMCPListToolsItemResource.DeserializeInternalMCPListToolsItemResource(element, options);
+                        return InternalItemResourceMcpListTools.DeserializeInternalItemResourceMcpListTools(element, options);
                     case "mcp_approval_request":
-                        return InternalMCPApprovalRequestItemResource.DeserializeInternalMCPApprovalRequestItemResource(element, options);
+                        return InternalItemResourceMcpApprovalRequest.DeserializeInternalItemResourceMcpApprovalRequest(element, options);
+                    case "mcp_approval_response":
+                        return InternalItemResourceMcpApprovalResponseResource.DeserializeInternalItemResourceMcpApprovalResponseResource(element, options);
                     case "mcp_call":
-                        return InternalMCPCallItemResource.DeserializeInternalMCPCallItemResource(element, options);
+                        return InternalItemResourceMcpToolCall.DeserializeInternalItemResourceMcpToolCall(element, options);
                     case "memory_search_call":
                         return MemorySearchToolCallResponseItem.DeserializeMemorySearchToolCallResponseItem(element, options);
                 }

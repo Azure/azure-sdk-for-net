@@ -49,7 +49,7 @@ namespace OpenAI
         /// <description> <see cref="InternalComparisonFilter"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalCompoundFilter"/>. </description>
+        /// <description> <see cref="BinaryData"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

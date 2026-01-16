@@ -8,36 +8,49 @@ using System.Text.Json;
 
 namespace OpenAI
 {
-    internal partial class InternalEasyInputMessage
+    internal partial class InternalEasyInputMessage : InputItem
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="InternalEasyInputMessage"/>. </summary>
-        /// <param name="role"></param>
-        /// <param name="content"></param>
-        public InternalEasyInputMessage(string role, BinaryData content)
+        /// <param name="role">
+        /// The role of the message input. One of `user`, `assistant`, `system`, or
+        ///   `developer`.
+        /// </param>
+        /// <param name="content">
+        /// Text, image, or audio input to the model, used to generate a response.
+        ///   Can also contain previous assistant responses.
+        /// </param>
+        public InternalEasyInputMessage(EasyInputMessageRole role, BinaryData content) : base(InputItemType.Message)
         {
             Role = role;
             Content = content;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalEasyInputMessage"/>. </summary>
-        /// <param name="role"></param>
-        /// <param name="content"></param>
+        /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalEasyInputMessage(string role, BinaryData content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="role">
+        /// The role of the message input. One of `user`, `assistant`, `system`, or
+        ///   `developer`.
+        /// </param>
+        /// <param name="content">
+        /// Text, image, or audio input to the model, used to generate a response.
+        ///   Can also contain previous assistant responses.
+        /// </param>
+        internal InternalEasyInputMessage(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, EasyInputMessageRole role, BinaryData content) : base(@type, additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Gets the Role. </summary>
-        public string Role { get; }
 
         /// <summary>
-        /// Gets the Content.
+        /// The role of the message input. One of `user`, `assistant`, `system`, or
+        ///   `developer`.
+        /// </summary>
+        public EasyInputMessageRole Role { get; }
+
+        /// <summary>
+        /// Text, image, or audio input to the model, used to generate a response.
+        ///   Can also contain previous assistant responses.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -48,7 +61,7 @@ namespace OpenAI
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="InternalItemContent"/>. </description>
+        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="InputContent"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

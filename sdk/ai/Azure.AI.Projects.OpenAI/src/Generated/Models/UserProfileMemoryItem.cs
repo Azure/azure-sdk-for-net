@@ -15,7 +15,7 @@ namespace Azure.AI.Projects
         /// <param name="updatedAt"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
-        public UserProfileMemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content) : base(memoryId, updatedAt, scope, content, MemoryItemKind.UserProfile)
+        internal UserProfileMemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content) : base(memoryId, updatedAt, scope, content, MemoryItemKind.UserProfile)
         {
         }
 

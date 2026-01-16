@@ -3,13 +3,15 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
-    /// <summary> Update a conversation. </summary>
+    /// <summary> The ProjectConversationUpdateOptions. </summary>
     public partial class ProjectConversationUpdateOptions : IJsonModel<ProjectConversationUpdateOptions>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -30,21 +32,14 @@ namespace Azure.AI.Projects.OpenAI
             {
                 throw new FormatException($"The model {nameof(ProjectConversationUpdateOptions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (Optional.IsDefined(InternalMetadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue(InternalMetadata, options);
+            }
+            else
+            {
+                writer.WriteNull("metadata"u8);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -88,7 +83,7 @@ namespace Azure.AI.Projects.OpenAI
             {
                 return null;
             }
-            IDictionary<string, string> metadata = default;
+            InternalMetadataContainer internalMetadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -96,21 +91,10 @@ namespace Azure.AI.Projects.OpenAI
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        internalMetadata = null;
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    metadata = dictionary;
+                    internalMetadata = InternalMetadataContainer.DeserializeInternalMetadataContainer(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -118,7 +102,7 @@ namespace Azure.AI.Projects.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectConversationUpdateOptions(metadata ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new ProjectConversationUpdateOptions(internalMetadata, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -160,5 +144,15 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ProjectConversationUpdateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="projectConversationUpdateOptions"> The <see cref="ProjectConversationUpdateOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(ProjectConversationUpdateOptions projectConversationUpdateOptions)
+        {
+            if (projectConversationUpdateOptions == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(projectConversationUpdateOptions, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

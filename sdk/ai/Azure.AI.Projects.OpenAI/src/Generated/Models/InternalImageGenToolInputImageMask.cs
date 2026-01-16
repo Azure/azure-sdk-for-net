@@ -18,8 +18,8 @@ namespace OpenAI
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalImageGenToolInputImageMask"/>. </summary>
-        /// <param name="imageUrl"> Base64-encoded mask image. </param>
-        /// <param name="fileId"> File ID for the mask image. </param>
+        /// <param name="imageUrl"></param>
+        /// <param name="fileId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal InternalImageGenToolInputImageMask(string imageUrl, string fileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -28,10 +28,10 @@ namespace OpenAI
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Base64-encoded mask image. </summary>
+        /// <summary> Gets or sets the ImageUrl. </summary>
         public string ImageUrl { get; set; }
 
-        /// <summary> File ID for the mask image. </summary>
+        /// <summary> Gets or sets the FileId. </summary>
         public string FileId { get; set; }
     }
 }

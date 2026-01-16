@@ -36,8 +36,6 @@ namespace Azure.AI.Projects.OpenAI
                 throw new FormatException($"The model {nameof(OAuthConsentRequestResponseItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("consent_link"u8);
             writer.WriteStringValue(ConsentLink);
             writer.WritePropertyName("server_label"u8);
@@ -70,9 +68,8 @@ namespace Azure.AI.Projects.OpenAI
                 return null;
             }
             AgentResponseItemKind @type = default;
-            AgentResponseItemSource createdBy = default;
+            AgentItemSource itemSource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string id = default;
             string consentLink = default;
             string serverLabel = default;
             foreach (var prop in element.EnumerateObject())
@@ -88,12 +85,7 @@ namespace Azure.AI.Projects.OpenAI
                     {
                         continue;
                     }
-                    createdBy = AgentResponseItemSource.DeserializeAgentResponseItemSource(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
+                    itemSource = AgentItemSource.DeserializeAgentItemSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("consent_link"u8))
@@ -111,13 +103,7 @@ namespace Azure.AI.Projects.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OAuthConsentRequestResponseItem(
-                @type,
-                createdBy,
-                additionalBinaryDataProperties,
-                id,
-                consentLink,
-                serverLabel);
+            return new OAuthConsentRequestResponseItem(@type, itemSource, additionalBinaryDataProperties, consentLink, serverLabel);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

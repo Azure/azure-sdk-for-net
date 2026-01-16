@@ -21,10 +21,15 @@ public partial class ProjectConversationCreationOptions
     [CodeGenMember("Items")]
     public IList<global::OpenAI.Responses.ResponseItem> Items { get; }
 
+    [CodeGenMember("Metadata")]
+    private global::OpenAI.InternalMetadataContainer InternalMetadata { get; set; }
+
+    public IDictionary<string, string> Metadata => InternalMetadata.AdditionalProperties;
+
     /// <summary> Initializes a new instance of <see cref="ProjectConversationCreationOptions"/>. </summary>
     public ProjectConversationCreationOptions()
     {
-        Metadata = new ChangeTrackingDictionary<string, string>();
+        InternalMetadata = new global::OpenAI.InternalMetadataContainer(new ChangeTrackingDictionary<string, string>(), null);
         Items = new ChangeTrackingList<ResponseItem>();
     }
 
@@ -44,7 +49,7 @@ public partial class ProjectConversationCreationOptions
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal ProjectConversationCreationOptions(IDictionary<string, string> metadata, IList<ResponseItem> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
     {
-        Metadata = metadata;
+        InternalMetadata = new global::OpenAI.InternalMetadataContainer(metadata, null);
         Items = items;
         _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }

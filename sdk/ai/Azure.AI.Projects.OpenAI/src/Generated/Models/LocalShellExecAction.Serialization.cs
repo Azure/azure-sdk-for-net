@@ -10,7 +10,7 @@ using Azure.AI.Projects.OpenAI;
 
 namespace OpenAI
 {
-    /// <summary> Execute a shell command on the server. </summary>
+    /// <summary> Local shell exec action. </summary>
     internal partial class LocalShellExecAction : IJsonModel<LocalShellExecAction>
     {
         /// <summary> Initializes a new instance of <see cref="LocalShellExecAction"/> for deserialization. </summary>
@@ -122,7 +122,7 @@ namespace OpenAI
             }
             string @type = default;
             IList<string> command = default;
-            int? timeoutMs = default;
+            long? timeoutMs = default;
             string workingDirectory = default;
             IDictionary<string, string> env = default;
             string user = default;
@@ -158,7 +158,7 @@ namespace OpenAI
                         timeoutMs = null;
                         continue;
                     }
-                    timeoutMs = prop.Value.GetInt32();
+                    timeoutMs = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("working_directory"u8))

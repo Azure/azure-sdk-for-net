@@ -33,12 +33,17 @@ namespace OpenAI
             if (Optional.IsDefined(Ranker))
             {
                 writer.WritePropertyName("ranker"u8);
-                writer.WriteStringValue(Ranker.Value.ToString());
+                writer.WriteStringValue(Ranker.Value.ToSerialString());
             }
             if (Optional.IsDefined(ScoreThreshold))
             {
                 writer.WritePropertyName("score_threshold"u8);
                 writer.WriteNumberValue(ScoreThreshold.Value);
+            }
+            if (Optional.IsDefined(HybridSearch))
+            {
+                writer.WritePropertyName("hybrid_search"u8);
+                writer.WriteObjectValue(HybridSearch, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -82,8 +87,9 @@ namespace OpenAI
             {
                 return null;
             }
-            RankingOptionsRanker? ranker = default;
-            float? scoreThreshold = default;
+            RankerVersionType? ranker = default;
+            double? scoreThreshold = default;
+            HybridSearchOptions hybridSearch = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -93,7 +99,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    ranker = new RankingOptionsRanker(prop.Value.GetString());
+                    ranker = prop.Value.GetString().ToRankerVersionType();
                     continue;
                 }
                 if (prop.NameEquals("score_threshold"u8))
@@ -102,7 +108,16 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    scoreThreshold = prop.Value.GetSingle();
+                    scoreThreshold = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("hybrid_search"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hybridSearch = HybridSearchOptions.DeserializeHybridSearchOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -110,7 +125,7 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalRankingOptions(ranker, scoreThreshold, additionalBinaryDataProperties);
+            return new InternalRankingOptions(ranker, scoreThreshold, hybridSearch, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

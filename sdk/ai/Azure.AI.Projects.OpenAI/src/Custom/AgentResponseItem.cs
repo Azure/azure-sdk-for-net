@@ -13,11 +13,16 @@ namespace Azure.AI.Projects.OpenAI;
 [CodeGenType("AgentResponseItem")]
 public partial class AgentResponseItem
 {
+    [CodeGenMember("CreatedBy")]
+    public AgentItemSource ItemSource { get; }
+
+    public string Id { get; }
+
     public static AgentResponseItem CreateStructuredOutputsItem(BinaryData output = null)
         => new AgentStructuredOutputsResponseItem(output);
 
     public static AgentResponseItem CreateWorkflowActionItem(string actionKind, string actionId)
-        => new AgentWorkflowActionResponseItem(id: null, actionKind, actionKind, status: null);
+        => new AgentWorkflowActionResponseItem(actionKind, actionKind, status: null);
 
     public ResponseItem AsResponseResultItem()
     {

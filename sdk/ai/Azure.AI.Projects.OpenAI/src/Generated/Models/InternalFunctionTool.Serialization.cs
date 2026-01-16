@@ -43,17 +43,28 @@ namespace OpenAI
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(Parameters);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Parameters))
+                writer.WriteStartObject();
+                foreach (var item in Parameters)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
             else
             {
@@ -99,7 +110,7 @@ namespace OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string description = default;
-            BinaryData parameters = default;
+            IDictionary<string, BinaryData> parameters = default;
             bool? strict = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -127,10 +138,22 @@ namespace OpenAI
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        parameters = null;
+                        parameters = new ChangeTrackingDictionary<string, BinaryData>();
                         continue;
                     }
-                    parameters = BinaryData.FromString(prop.Value.GetRawText());
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
+                    }
+                    parameters = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("strict"u8))

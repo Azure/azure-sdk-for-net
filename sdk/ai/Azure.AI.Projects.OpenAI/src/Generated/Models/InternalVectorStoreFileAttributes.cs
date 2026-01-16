@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Azure.AI.Projects.OpenAI;
 
 namespace OpenAI
@@ -13,44 +14,37 @@ namespace OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private IDictionary<string, string> _additionalStringProperties;
+        private IDictionary<string, double> _additionalDoubleProperties;
         private IDictionary<string, bool> _additionalBooleanProperties;
-        private IDictionary<string, int> _additionalInt32Properties;
-        private IDictionary<string, float> _additionalSingleProperties;
 
         /// <summary> Initializes a new instance of <see cref="InternalVectorStoreFileAttributes"/>. </summary>
-        public InternalVectorStoreFileAttributes()
+        internal InternalVectorStoreFileAttributes()
         {
             _additionalStringProperties = new ChangeTrackingDictionary<string, string>();
+            _additionalDoubleProperties = new ChangeTrackingDictionary<string, double>();
             _additionalBooleanProperties = new ChangeTrackingDictionary<string, bool>();
-            _additionalInt32Properties = new ChangeTrackingDictionary<string, int>();
-            _additionalSingleProperties = new ChangeTrackingDictionary<string, float>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalVectorStoreFileAttributes"/>. </summary>
         /// <param name="additionalProperties"></param>
+        /// <param name="additionalDoubleProperties"></param>
         /// <param name="additionalBooleanProperties"></param>
-        /// <param name="additionalInt32Properties"></param>
-        /// <param name="additionalSingleProperties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalVectorStoreFileAttributes(IDictionary<string, string> additionalProperties, IDictionary<string, bool> additionalBooleanProperties, IDictionary<string, int> additionalInt32Properties, IDictionary<string, float> additionalSingleProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalVectorStoreFileAttributes(IReadOnlyDictionary<string, string> additionalProperties, IReadOnlyDictionary<string, double> additionalDoubleProperties, IReadOnlyDictionary<string, bool> additionalBooleanProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            _additionalStringProperties = additionalProperties;
-            _additionalBooleanProperties = additionalBooleanProperties;
-            _additionalInt32Properties = additionalInt32Properties;
-            _additionalSingleProperties = additionalSingleProperties;
+            _additionalStringProperties = new ChangeTrackingDictionary<string, string>(additionalProperties);
+            _additionalDoubleProperties = new ChangeTrackingDictionary<string, double>(additionalDoubleProperties);
+            _additionalBooleanProperties = new ChangeTrackingDictionary<string, bool>(additionalBooleanProperties);
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, string> AdditionalProperties => _additionalStringProperties;
+        public IReadOnlyDictionary<string, string> AdditionalProperties => new ReadOnlyDictionary<string, string>(_additionalStringProperties);
+
+        /// <summary> Gets the AdditionalDoubleProperties. </summary>
+        public IReadOnlyDictionary<string, double> AdditionalDoubleProperties => new ReadOnlyDictionary<string, double>(_additionalDoubleProperties);
 
         /// <summary> Gets the AdditionalBooleanProperties. </summary>
-        public IDictionary<string, bool> AdditionalBooleanProperties => _additionalBooleanProperties;
-
-        /// <summary> Gets the AdditionalInt32Properties. </summary>
-        public IDictionary<string, int> AdditionalInt32Properties => _additionalInt32Properties;
-
-        /// <summary> Gets the AdditionalSingleProperties. </summary>
-        public IDictionary<string, float> AdditionalSingleProperties => _additionalSingleProperties;
+        public IReadOnlyDictionary<string, bool> AdditionalBooleanProperties => new ReadOnlyDictionary<string, bool>(_additionalBooleanProperties);
     }
 }

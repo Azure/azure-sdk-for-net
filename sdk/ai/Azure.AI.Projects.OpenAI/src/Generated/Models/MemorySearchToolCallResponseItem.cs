@@ -11,12 +11,11 @@ namespace Azure.AI.Projects.OpenAI
     public partial class MemorySearchToolCallResponseItem : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="MemorySearchToolCallResponseItem"/>. </summary>
-        /// <param name="id"></param>
         /// <param name="status">
         /// The status of the memory search tool call. One of `in_progress`,
         /// `searching`, `completed`, `incomplete` or `failed`,
         /// </param>
-        internal MemorySearchToolCallResponseItem(string id, MemorySearchToolCallStatus status) : base(AgentResponseItemKind.MemorySearchCall, id)
+        internal MemorySearchToolCallResponseItem(MemorySearchToolCallStatus status) : base(AgentResponseItemKind.MemorySearchCall)
         {
             Status = status;
             Results = new ChangeTrackingList<MemorySearchItem>();
@@ -24,15 +23,14 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="MemorySearchToolCallResponseItem"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="createdBy"> The information about the creator of the item. </param>
+        /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status">
         /// The status of the memory search tool call. One of `in_progress`,
         /// `searching`, `completed`, `incomplete` or `failed`,
         /// </param>
         /// <param name="results"> The results returned from the memory search. </param>
-        internal MemorySearchToolCallResponseItem(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, MemorySearchToolCallStatus status, IList<MemorySearchItem> results) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal MemorySearchToolCallResponseItem(AgentResponseItemKind @type, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, MemorySearchToolCallStatus status, IList<MemorySearchItem> results) : base(@type, itemSource, additionalBinaryDataProperties)
         {
             Status = status;
             Results = results;

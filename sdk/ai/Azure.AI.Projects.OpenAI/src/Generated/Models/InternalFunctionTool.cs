@@ -13,9 +13,9 @@ namespace OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="InternalFunctionTool"/>. </summary>
         /// <param name="name"> The name of the function to call. </param>
-        /// <param name="parameters"> A JSON schema object describing the parameters of the function. </param>
-        /// <param name="strict"> Whether to enforce strict parameter validation. Default `true`. </param>
-        public InternalFunctionTool(string name, BinaryData parameters, bool? strict) : base(ToolType.Function)
+        /// <param name="parameters"></param>
+        /// <param name="strict"></param>
+        public InternalFunctionTool(string name, IDictionary<string, BinaryData> parameters, bool? strict) : base(ToolType.Function)
         {
             Name = name;
             Parameters = parameters;
@@ -26,10 +26,10 @@ namespace OpenAI
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the function to call. </param>
-        /// <param name="description"> A description of the function. Used by the model to determine whether or not to call the function. </param>
-        /// <param name="parameters"> A JSON schema object describing the parameters of the function. </param>
-        /// <param name="strict"> Whether to enforce strict parameter validation. Default `true`. </param>
-        internal InternalFunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, BinaryData parameters, bool? strict) : base(@type, additionalBinaryDataProperties)
+        /// <param name="description"></param>
+        /// <param name="parameters"></param>
+        /// <param name="strict"></param>
+        internal InternalFunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, BinaryData> parameters, bool? strict) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -40,12 +40,12 @@ namespace OpenAI
         /// <summary> The name of the function to call. </summary>
         public string Name { get; set; }
 
-        /// <summary> A description of the function. Used by the model to determine whether or not to call the function. </summary>
+        /// <summary> Gets or sets the Description. </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// A JSON schema object describing the parameters of the function.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// Gets or sets the Parameters.
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
@@ -69,9 +69,9 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Parameters { get; set; }
+        public IDictionary<string, BinaryData> Parameters { get; set; }
 
-        /// <summary> Whether to enforce strict parameter validation. Default `true`. </summary>
+        /// <summary> Gets or sets the Strict. </summary>
         public bool? Strict { get; set; }
     }
 }

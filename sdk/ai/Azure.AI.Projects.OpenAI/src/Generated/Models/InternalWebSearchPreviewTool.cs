@@ -18,29 +18,18 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="userLocation"> The user's location. </param>
+        /// <param name="userLocation"></param>
         /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
-        /// <param name="customSearchConfiguration">
-        /// The project connections attached to this tool. There can be a maximum of 1 connection
-        /// resource attached to the tool.
-        /// </param>
-        internal InternalWebSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalLocation userLocation, WebSearchPreviewToolSearchContextSize? searchContextSize, WebSearchConfiguration customSearchConfiguration) : base(@type, additionalBinaryDataProperties)
+        internal InternalWebSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalApproximateLocation userLocation, SearchContextSize? searchContextSize) : base(@type, additionalBinaryDataProperties)
         {
             UserLocation = userLocation;
             SearchContextSize = searchContextSize;
-            CustomSearchConfiguration = customSearchConfiguration;
         }
 
-        /// <summary> The user's location. </summary>
-        public InternalLocation UserLocation { get; set; }
+        /// <summary> Gets or sets the UserLocation. </summary>
+        public InternalApproximateLocation UserLocation { get; set; }
 
         /// <summary> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </summary>
-        public WebSearchPreviewToolSearchContextSize? SearchContextSize { get; set; }
-
-        /// <summary>
-        /// The project connections attached to this tool. There can be a maximum of 1 connection
-        /// resource attached to the tool.
-        /// </summary>
-        public WebSearchConfiguration CustomSearchConfiguration { get; set; }
+        public SearchContextSize? SearchContextSize { get; set; }
     }
 }

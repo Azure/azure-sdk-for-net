@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.OpenAI;
 
 namespace OpenAI
 {
@@ -16,11 +15,8 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="WebSearchActionSearchSources"/>. </summary>
         /// <param name="url"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public WebSearchActionSearchSources(string url)
+        internal WebSearchActionSearchSources(string url)
         {
-            Argument.AssertNotNull(url, nameof(url));
-
             Url = url;
         }
 

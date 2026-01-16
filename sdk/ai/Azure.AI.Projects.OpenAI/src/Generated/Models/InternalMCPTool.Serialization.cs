@@ -38,8 +38,26 @@ namespace OpenAI
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("server_label"u8);
             writer.WriteStringValue(ServerLabel);
-            writer.WritePropertyName("server_url"u8);
-            writer.WriteStringValue(ServerUrl);
+            if (Optional.IsDefined(ServerUrl))
+            {
+                writer.WritePropertyName("server_url"u8);
+                writer.WriteStringValue(ServerUrl);
+            }
+            if (Optional.IsDefined(ConnectorId))
+            {
+                writer.WritePropertyName("connector_id"u8);
+                writer.WriteStringValue(ConnectorId.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Authorization))
+            {
+                writer.WritePropertyName("authorization"u8);
+                writer.WriteStringValue(Authorization);
+            }
+            if (Optional.IsDefined(ServerDescription))
+            {
+                writer.WritePropertyName("server_description"u8);
+                writer.WriteStringValue(ServerDescription);
+            }
             if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
@@ -116,6 +134,9 @@ namespace OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverLabel = default;
             string serverUrl = default;
+            MCPToolConnectorId? connectorId = default;
+            string authorization = default;
+            string serverDescription = default;
             IDictionary<string, string> headers = default;
             BinaryData allowedTools = default;
             BinaryData requireApproval = default;
@@ -135,6 +156,25 @@ namespace OpenAI
                 if (prop.NameEquals("server_url"u8))
                 {
                     serverUrl = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("connector_id"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    connectorId = prop.Value.GetString().ToMCPToolConnectorId();
+                    continue;
+                }
+                if (prop.NameEquals("authorization"u8))
+                {
+                    authorization = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("server_description"u8))
+                {
+                    serverDescription = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("headers"u8))
@@ -193,6 +233,9 @@ namespace OpenAI
                 additionalBinaryDataProperties,
                 serverLabel,
                 serverUrl,
+                connectorId,
+                authorization,
+                serverDescription,
                 headers ?? new ChangeTrackingDictionary<string, string>(),
                 allowedTools,
                 requireApproval,

@@ -3,13 +3,14 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.OpenAI
 {
-    /// <summary> The ProjectConversation. </summary>
+    /// <summary> The conversation object. </summary>
     public partial class ProjectConversation : IJsonModel<ProjectConversation>
     {
         /// <summary> Initializes a new instance of <see cref="ProjectConversation"/> for deserialization. </summary>
@@ -39,28 +40,21 @@ namespace Azure.AI.Projects.OpenAI
             writer.WriteStringValue(Id);
             writer.WritePropertyName("object"u8);
             writer.WriteStringValue(Object);
+            writer.WritePropertyName("metadata"u8);
+            writer.WriteStartObject();
+            foreach (var item in Metadata)
+            {
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteStringValue(item.Value);
+            }
+            writer.WriteEndObject();
             writer.WritePropertyName("created_at"u8);
             writer.WriteNumberValue(CreatedAt, "U");
-            if (Optional.IsCollectionDefined(Metadata))
-            {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            else
-            {
-                writer.WriteNull("metadata"u8);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -105,8 +99,8 @@ namespace Azure.AI.Projects.OpenAI
             }
             string id = default;
             string @object = default;
-            DateTimeOffset createdAt = default;
             IDictionary<string, string> metadata = default;
+            DateTimeOffset createdAt = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,18 +114,8 @@ namespace Azure.AI.Projects.OpenAI
                     @object = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("created_at"u8))
-                {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
-                    continue;
-                }
                 if (prop.NameEquals("metadata"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        metadata = new ChangeTrackingDictionary<string, string>();
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
@@ -147,12 +131,17 @@ namespace Azure.AI.Projects.OpenAI
                     metadata = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("created_at"u8))
+                {
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectConversation(id, @object, createdAt, metadata, additionalBinaryDataProperties);
+            return new ProjectConversation(id, @object, metadata, createdAt, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -194,5 +183,13 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ProjectConversation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ProjectConversation"/> from. </param>
+        public static explicit operator ProjectConversation(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeProjectConversation(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

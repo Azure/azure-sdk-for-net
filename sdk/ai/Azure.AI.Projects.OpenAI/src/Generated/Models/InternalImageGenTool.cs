@@ -18,31 +18,32 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalImageGenTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="model"> The image generation model to use. Default: `gpt-image-1`. </param>
+        /// <param name="model"></param>
         /// <param name="quality">
         /// The quality of the generated image. One of `low`, `medium`, `high`,
-        /// or `auto`. Default: `auto`.
+        ///   or `auto`. Default: `auto`.
         /// </param>
         /// <param name="size">
         /// The size of the generated image. One of `1024x1024`, `1024x1536`,
-        /// `1536x1024`, or `auto`. Default: `auto`.
+        ///   `1536x1024`, or `auto`. Default: `auto`.
         /// </param>
         /// <param name="outputFormat">
         /// The output format of the generated image. One of `png`, `webp`, or
-        /// `jpeg`. Default: `png`.
+        ///   `jpeg`. Default: `png`.
         /// </param>
         /// <param name="outputCompression"> Compression level for the output image. Default: 100. </param>
         /// <param name="moderation"> Moderation level for the generated image. Default: `auto`. </param>
         /// <param name="background">
         /// Background type for the generated image. One of `transparent`,
-        /// `opaque`, or `auto`. Default: `auto`.
+        ///   `opaque`, or `auto`. Default: `auto`.
         /// </param>
+        /// <param name="inputFidelity"></param>
         /// <param name="inputImageMask">
         /// Optional mask for inpainting. Contains `image_url`
-        /// (string, optional) and `file_id` (string, optional).
+        ///   (string, optional) and `file_id` (string, optional).
         /// </param>
         /// <param name="partialImages"> Number of partial images to generate in streaming mode, from 0 (default value) to 3. </param>
-        internal InternalImageGenTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, int? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InternalImageGenToolInputImageMask inputImageMask, int? partialImages) : base(@type, additionalBinaryDataProperties)
+        internal InternalImageGenTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, InternalImageGenToolInputImageMask inputImageMask, long? partialImages) : base(@type, additionalBinaryDataProperties)
         {
             Model = model;
             Quality = quality;
@@ -51,50 +52,54 @@ namespace OpenAI
             OutputCompression = outputCompression;
             Moderation = moderation;
             Background = background;
+            InputFidelity = inputFidelity;
             InputImageMask = inputImageMask;
             PartialImages = partialImages;
         }
 
-        /// <summary> The image generation model to use. Default: `gpt-image-1`. </summary>
+        /// <summary> Gets or sets the Model. </summary>
         public ImageGenToolModel? Model { get; set; }
 
         /// <summary>
         /// The quality of the generated image. One of `low`, `medium`, `high`,
-        /// or `auto`. Default: `auto`.
+        ///   or `auto`. Default: `auto`.
         /// </summary>
         public ImageGenToolQuality? Quality { get; set; }
 
         /// <summary>
         /// The size of the generated image. One of `1024x1024`, `1024x1536`,
-        /// `1536x1024`, or `auto`. Default: `auto`.
+        ///   `1536x1024`, or `auto`. Default: `auto`.
         /// </summary>
         public ImageGenToolSize? Size { get; set; }
 
         /// <summary>
         /// The output format of the generated image. One of `png`, `webp`, or
-        /// `jpeg`. Default: `png`.
+        ///   `jpeg`. Default: `png`.
         /// </summary>
         public ImageGenToolOutputFormat? OutputFormat { get; set; }
 
         /// <summary> Compression level for the output image. Default: 100. </summary>
-        public int? OutputCompression { get; set; }
+        public long? OutputCompression { get; set; }
 
         /// <summary> Moderation level for the generated image. Default: `auto`. </summary>
         public ImageGenToolModeration? Moderation { get; set; }
 
         /// <summary>
         /// Background type for the generated image. One of `transparent`,
-        /// `opaque`, or `auto`. Default: `auto`.
+        ///   `opaque`, or `auto`. Default: `auto`.
         /// </summary>
         public ImageGenToolBackground? Background { get; set; }
 
+        /// <summary> Gets or sets the InputFidelity. </summary>
+        public InputFidelity? InputFidelity { get; set; }
+
         /// <summary>
         /// Optional mask for inpainting. Contains `image_url`
-        /// (string, optional) and `file_id` (string, optional).
+        ///   (string, optional) and `file_id` (string, optional).
         /// </summary>
         public InternalImageGenToolInputImageMask InputImageMask { get; set; }
 
         /// <summary> Number of partial images to generate in streaming mode, from 0 (default value) to 3. </summary>
-        public int? PartialImages { get; set; }
+        public long? PartialImages { get; set; }
     }
 }

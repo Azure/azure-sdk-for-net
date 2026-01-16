@@ -76,8 +76,7 @@ namespace Azure.AI.Projects.OpenAI
                 return null;
             }
             AgentResponseItemKind @type = default;
-            string id = default;
-            AgentResponseItemSource createdBy = default;
+            AgentItemSource itemSource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             MemorySearchToolCallStatus status = default;
             IList<MemorySearchItem> results = default;
@@ -88,18 +87,13 @@ namespace Azure.AI.Projects.OpenAI
                     @type = new AgentResponseItemKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("created_by"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createdBy = AgentResponseItemSource.DeserializeAgentResponseItemSource(prop.Value, options);
+                    itemSource = AgentItemSource.DeserializeAgentItemSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -126,13 +120,7 @@ namespace Azure.AI.Projects.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MemorySearchToolCallResponseItem(
-                @type,
-                id,
-                createdBy,
-                additionalBinaryDataProperties,
-                status,
-                results ?? new ChangeTrackingList<MemorySearchItem>());
+            return new MemorySearchToolCallResponseItem(@type, itemSource, additionalBinaryDataProperties, status, results ?? new ChangeTrackingList<MemorySearchItem>());
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
