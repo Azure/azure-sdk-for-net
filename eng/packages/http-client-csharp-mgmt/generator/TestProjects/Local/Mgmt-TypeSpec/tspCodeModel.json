@@ -14474,7 +14474,7 @@
                     "$id": "1132",
                     "methodId": "MgmtTypeSpec.Bars.list",
                     "kind": "List",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{name}/bars",
                     "operationScope": "ResourceGroup",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}"
                   },
@@ -19789,7 +19789,7 @@
                     "optional": false,
                     "scope": "Client",
                     "decorators": [],
-                    "crossLanguageDefinitionId": "MgmtTypeSpec.Bars.list.apiVersion",
+                    "crossLanguageDefinitionId": "MgmtTypeSpec..anonymous.apiVersion",
                     "readOnly": false
                   },
                   {
@@ -19821,7 +19821,7 @@
                     "scope": "Client",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "MgmtTypeSpec.Bars.list.subscriptionId"
+                    "crossLanguageDefinitionId": "MgmtTypeSpec..anonymous.subscriptionId"
                   },
                   {
                     "$id": "1520",
@@ -19845,13 +19845,13 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "MgmtTypeSpec.Bars.list.resourceGroupName"
+                    "crossLanguageDefinitionId": "MgmtTypeSpec..anonymous.resourceGroupName"
                   },
                   {
                     "$id": "1522",
                     "kind": "path",
-                    "name": "fooName",
-                    "serializedName": "fooName",
+                    "name": "name",
+                    "serializedName": "name",
                     "doc": "The name of the Foo",
                     "type": {
                       "$id": "1523",
@@ -19869,7 +19869,7 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "MgmtTypeSpec.Bars.list.fooName"
+                    "crossLanguageDefinitionId": "MgmtTypeSpec..anonymous.name"
                   },
                   {
                     "$id": "1524",
@@ -19905,7 +19905,7 @@
                 ],
                 "httpMethod": "GET",
                 "uri": "{endpoint}",
-                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{name}/bars",
                 "bufferResponse": true,
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
@@ -19935,7 +19935,7 @@
                   "isApiVersion": false,
                   "optional": false,
                   "scope": "Method",
-                  "crossLanguageDefinitionId": "MgmtTypeSpec.Bars.list.resourceGroupName",
+                  "crossLanguageDefinitionId": "MgmtTypeSpec..anonymous.resourceGroupName",
                   "readOnly": false,
                   "access": "public",
                   "decorators": []
@@ -19943,8 +19943,8 @@
                 {
                   "$id": "1527",
                   "kind": "method",
-                  "name": "fooName",
-                  "serializedName": "fooName",
+                  "name": "name",
+                  "serializedName": "name",
                   "doc": "The name of the Foo",
                   "type": {
                     "$id": "1528",
@@ -19957,7 +19957,7 @@
                   "isApiVersion": false,
                   "optional": false,
                   "scope": "Method",
-                  "crossLanguageDefinitionId": "MgmtTypeSpec.Bars.list.fooName",
+                  "crossLanguageDefinitionId": "MgmtTypeSpec..anonymous.name",
                   "readOnly": false,
                   "access": "public",
                   "decorators": []

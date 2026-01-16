@@ -12,46 +12,18 @@ namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary>
     /// The properties of a host.
-    /// Please note <see cref="AvsHostProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="GeneralAvsHostProperties"/> and <see cref="SpecializedAvsHostProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GeneralAvsHostProperties"/> and <see cref="SpecializedAvsHostProperties"/>.
     /// </summary>
     public abstract partial class AvsHostProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AvsHostProperties"/>. </summary>
-        protected AvsHostProperties()
+        /// <param name="kind"> The kind of host. </param>
+        private protected AvsHostProperties(HostKind kind)
         {
+            Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsHostProperties"/>. </summary>
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="fqdn"> Fully qualified domain name of the host. </param>
         /// <param name="maintenance"> If provided, the host is in maintenance. The value is the reason for maintenance. </param>
         /// <param name="faultDomain"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsHostProperties(HostKind kind, AvsHostProvisioningState? provisioningState, string displayName, string moRefId, string fqdn, AvsHostMaintenance? maintenance, string faultDomain, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AvsHostProperties(HostKind kind, AvsHostProvisioningState? provisioningState, string displayName, string moRefId, string fqdn, AvsHostMaintenance? maintenance, string faultDomain, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             ProvisioningState = provisioningState;
@@ -72,22 +44,28 @@ namespace Azure.ResourceManager.Avs.Models
             Fqdn = fqdn;
             Maintenance = maintenance;
             FaultDomain = faultDomain;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The kind of host. </summary>
         internal HostKind Kind { get; set; }
+
         /// <summary> The state of the host provisioning. </summary>
         public AvsHostProvisioningState? ProvisioningState { get; }
+
         /// <summary> Display name of the host in VMware vCenter. </summary>
         public string DisplayName { get; }
+
         /// <summary> vCenter managed object reference ID of the host. </summary>
         public string MoRefId { get; }
+
         /// <summary> Fully qualified domain name of the host. </summary>
         public string Fqdn { get; }
+
         /// <summary> If provided, the host is in maintenance. The value is the reason for maintenance. </summary>
         public AvsHostMaintenance? Maintenance { get; }
-        /// <summary> Gets the fault domain. </summary>
+
+        /// <summary> Gets the FaultDomain. </summary>
         public string FaultDomain { get; }
     }
 }
