@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
 
         /// <summary> Initializes a new instance of <see cref="NeonDatabaseListResult"/>. </summary>
         /// <param name="value"> The NeonDatabase items on this page. </param>
-        internal NeonDatabaseListResult(IEnumerable<NeonDatabaseData> value)
+        internal NeonDatabaseListResult(IEnumerable<NeonDatabase> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="value"> The NeonDatabase items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NeonDatabaseListResult(IList<NeonDatabaseData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NeonDatabaseListResult(IList<NeonDatabase> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         }
 
         /// <summary> The NeonDatabase items on this page. </summary>
-        public IList<NeonDatabaseData> Value { get; }
+        public IList<NeonDatabase> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

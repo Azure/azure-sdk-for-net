@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -269,7 +270,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.NeonOrganizationPatch"/> instance for mocking. </returns>
-        public static NeonOrganizationPatch NeonOrganizationPatch(IDictionary<string, string> tags = default, OrganizationResourceUpdateProperties properties = default)
+        public static NeonOrganizationPatch NeonOrganizationPatch(IDictionary<string, string> tags = default, NeonOrganizationPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -436,10 +437,10 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="NeonPostgres.NeonDatabaseData"/> instance for mocking. </returns>
-        public static NeonDatabaseData NeonDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NeonDatabaseProperties properties = default)
+        /// <returns> A new <see cref="Models.NeonDatabase"/> instance for mocking. </returns>
+        public static NeonDatabase NeonDatabase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NeonDatabaseProperties properties = default)
         {
-            return new NeonDatabaseData(
+            return new NeonDatabase(
                 id,
                 name,
                 resourceType,
@@ -454,10 +455,10 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="NeonPostgres.NeonRoleData"/> instance for mocking. </returns>
-        public static NeonRoleData NeonRoleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NeonRoleProperties properties = default)
+        /// <returns> A new <see cref="Models.NeonRole"/> instance for mocking. </returns>
+        public static NeonRole NeonRole(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NeonRoleProperties properties = default)
         {
-            return new NeonRoleData(
+            return new NeonRole(
                 id,
                 name,
                 resourceType,
@@ -472,16 +473,83 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="NeonPostgres.NeonEndpointData"/> instance for mocking. </returns>
-        public static NeonEndpointData NeonEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NeonEndpointProperties properties = default)
+        /// <returns> A new <see cref="Models.NeonEndpoint"/> instance for mocking. </returns>
+        public static NeonEndpoint NeonEndpoint(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NeonEndpointProperties properties = default)
         {
-            return new NeonEndpointData(
+            return new NeonEndpoint(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
                 properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NeonBranchProperties"/>. </summary>
+        /// <param name="entityId"> Unique identifier for the entity. </param>
+        /// <param name="entityName"> Name of the resource. </param>
+        /// <param name="createdAt"> Timestamp indicating when the entity was created. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="attributes"> Additional attributes for the entity. </param>
+        /// <param name="projectId"> The ID of the project this branch belongs to. </param>
+        /// <param name="parentId"> The ID of the parent branch. </param>
+        /// <param name="roleName"> Role name associated with the branch. </param>
+        /// <param name="databaseName"> Database name associated with the branch. </param>
+        /// <param name="roles"> Roles associated with the branch. </param>
+        /// <param name="databases"> Neon Databases associated with the branch. </param>
+        /// <param name="endpoints"> Endpoints associated with the branch. </param>
+        /// <returns> A new <see cref="Models.NeonBranchProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NeonBranchProperties NeonBranchProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IEnumerable<Attributes> attributes, string projectId, string parentId, string roleName, string databaseName, IEnumerable<NeonRoleProperties> roles, IEnumerable<NeonDatabaseProperties> databases, IEnumerable<NeonEndpointProperties> endpoints)
+        {
+            return NeonBranchProperties(entityId, entityName, createdAt, provisioningState, attributes, projectId, parentId, roleName, databaseName, roles, databases, endpoints, branchId: default, branch: default, dataSize: default, lastActive: default, computeHours: default, isProtected: default, isDefault: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NeonRoleProperties"/>. </summary>
+        /// <param name="entityId"> Unique identifier for the entity. </param>
+        /// <param name="entityName"> Name of the resource. </param>
+        /// <param name="createdAt"> Timestamp indicating when the entity was created. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="attributes"> Additional attributes for the entity. </param>
+        /// <param name="branchId"> The ID of the branch this role belongs to. </param>
+        /// <param name="permissions"> Permissions assigned to the role. </param>
+        /// <param name="isSuperUser"> Indicates whether the role has superuser privileges. </param>
+        /// <returns> A new <see cref="Models.NeonRoleProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NeonRoleProperties NeonRoleProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IEnumerable<Attributes> attributes, string branchId, IEnumerable<string> permissions, bool? isSuperUser)
+        {
+            return NeonRoleProperties(entityId, entityName, createdAt, provisioningState, attributes, branchId, permissions, isSuperUser, roleName: default, lastUpdatedOn: default, owns: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NeonDatabaseProperties"/>. </summary>
+        /// <param name="entityId"> Unique identifier for the entity. </param>
+        /// <param name="entityName"> Name of the resource. </param>
+        /// <param name="createdAt"> Timestamp indicating when the entity was created. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="attributes"> Additional attributes for the entity. </param>
+        /// <param name="branchId"> The ID of the branch this database belongs to. </param>
+        /// <param name="ownerName"> The name of the role that owns the database. </param>
+        /// <returns> A new <see cref="Models.NeonDatabaseProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NeonDatabaseProperties NeonDatabaseProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IEnumerable<Attributes> attributes, string branchId, string ownerName)
+        {
+            return NeonDatabaseProperties(entityId, entityName, createdAt, provisioningState, attributes, branchId, ownerName, databaseName: default, lastUpdatedOn: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NeonEndpointProperties"/>. </summary>
+        /// <param name="entityId"> Unique identifier for the entity. </param>
+        /// <param name="entityName"> Name of the resource. </param>
+        /// <param name="createdAt"> Timestamp indicating when the entity was created. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="attributes"> Additional attributes for the entity. </param>
+        /// <param name="projectId"> The ID of the project this endpoint belongs to. </param>
+        /// <param name="branchId"> The ID of the branch this endpoint belongs to. </param>
+        /// <param name="endpointType"> The type of the endpoint. </param>
+        /// <returns> A new <see cref="Models.NeonEndpointProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NeonEndpointProperties NeonEndpointProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IEnumerable<Attributes> attributes, string projectId, string branchId, EndpointType? endpointType)
+        {
+            return NeonEndpointProperties(entityId, entityName, createdAt, provisioningState, attributes, projectId, branchId, endpointType, endpointId: default, computeName: default, status: default, lastActiveOn: default, size: default);
         }
     }
 }

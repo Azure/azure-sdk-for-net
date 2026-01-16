@@ -10,40 +10,36 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.NeonPostgres.Models;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
     /// <summary></summary>
-    internal partial class NeonRoleOperationSource : IOperationSource<NeonRoleResource>
+    internal partial class NeonRoleOperationSource : IOperationSource<NeonRole>
     {
-        private readonly ArmClient _client;
-
         /// <summary></summary>
-        /// <param name="client"></param>
-        internal NeonRoleOperationSource(ArmClient client)
+        internal NeonRoleOperationSource()
         {
-            _client = client;
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        NeonRoleResource IOperationSource<NeonRoleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NeonRole IOperationSource<NeonRole>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NeonRoleData data = NeonRoleData.DeserializeNeonRoleData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NeonRoleResource(_client, data);
+            NeonRole result = NeonRole.DeserializeNeonRole(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<NeonRoleResource> IOperationSource<NeonRoleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NeonRole> IOperationSource<NeonRole>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NeonRoleData data = NeonRoleData.DeserializeNeonRoleData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NeonRoleResource(_client, data);
+            NeonRole result = NeonRole.DeserializeNeonRole(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (NeonDatabaseData item in Value)
+            foreach (NeonDatabase item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             {
                 return null;
             }
-            IList<NeonDatabaseData> value = default;
+            IList<NeonDatabase> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<NeonDatabaseData> array = new List<NeonDatabaseData>();
+                    List<NeonDatabase> array = new List<NeonDatabase>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NeonDatabaseData.DeserializeNeonDatabaseData(item, options));
+                        array.Add(NeonDatabase.DeserializeNeonDatabase(item, options));
                     }
                     value = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                     {
                         continue;
                     }
-                    nextLink = new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

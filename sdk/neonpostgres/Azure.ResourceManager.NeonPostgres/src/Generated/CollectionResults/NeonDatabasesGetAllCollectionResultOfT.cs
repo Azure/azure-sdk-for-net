@@ -14,7 +14,7 @@ using Azure.ResourceManager.NeonPostgres.Models;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
-    internal partial class NeonDatabasesGetAllCollectionResultOfT : Pageable<NeonDatabaseData>
+    internal partial class NeonDatabasesGetAllCollectionResultOfT : Pageable<NeonDatabase>
     {
         private readonly NeonDatabases _client;
         private readonly Guid _subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of NeonDatabasesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<NeonDatabaseData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<NeonDatabase>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NeonPostgres
                     yield break;
                 }
                 NeonDatabaseListResult result = NeonDatabaseListResult.FromResponse(response);
-                yield return Page<NeonDatabaseData>.FromValues((IReadOnlyList<NeonDatabaseData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NeonDatabase>.FromValues((IReadOnlyList<NeonDatabase>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NeonPostgres
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _organizationName, _projectName, _branchName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NeonDatabaseCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetAll");
             scope.Start();
             try
             {

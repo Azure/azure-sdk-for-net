@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
 
         /// <summary> Initializes a new instance of <see cref="EndpointListResult"/>. </summary>
         /// <param name="value"> The Endpoint items on this page. </param>
-        internal EndpointListResult(IEnumerable<NeonEndpointData> value)
+        internal EndpointListResult(IEnumerable<NeonEndpoint> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="value"> The Endpoint items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointListResult(IList<NeonEndpointData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EndpointListResult(IList<NeonEndpoint> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         }
 
         /// <summary> The Endpoint items on this page. </summary>
-        public IList<NeonEndpointData> Value { get; }
+        public IList<NeonEndpoint> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

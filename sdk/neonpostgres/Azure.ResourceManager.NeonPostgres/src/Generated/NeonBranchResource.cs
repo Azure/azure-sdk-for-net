@@ -490,26 +490,5 @@ namespace Azure.ResourceManager.NeonPostgres
                 throw;
             }
         }
-
-        /// <summary> Gets a collection of NeonDatabases in the <see cref="NeonBranchResource"/>. </summary>
-        /// <returns> An object representing collection of NeonDatabases and their operations over a NeonDatabaseResource. </returns>
-        public virtual NeonDatabaseCollection GetNeonDatabases()
-        {
-            return GetCachedClient(client => new NeonDatabaseCollection(client, Id));
-        }
-
-        /// <summary> Gets a collection of NeonRoles in the <see cref="NeonBranchResource"/>. </summary>
-        /// <returns> An object representing collection of NeonRoles and their operations over a NeonRoleResource. </returns>
-        public virtual NeonRoleCollection GetNeonRoles()
-        {
-            return GetCachedClient(client => new NeonRoleCollection(client, Id));
-        }
-
-        /// <summary> Gets a collection of NeonEndpoints in the <see cref="NeonBranchResource"/>. </summary>
-        /// <returns> An object representing collection of NeonEndpoints and their operations over a NeonEndpointResource. </returns>
-        public virtual NeonEndpointCollection GetNeonEndpoints()
-        {
-            return GetCachedClient(client => new NeonEndpointCollection(client, Id));
-        }
     }
 }

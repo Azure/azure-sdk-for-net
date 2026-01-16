@@ -13,16 +13,16 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NeonPostgres.Models;
+using Azure.ResourceManager.NeonPostgres;
 
-namespace Azure.ResourceManager.NeonPostgres
+namespace Azure.ResourceManager.NeonPostgres.Models
 {
-    /// <summary> The Neon Role resource type. </summary>
-    public partial class NeonRoleData : ResourceData, IJsonModel<NeonRoleData>
+    /// <summary> The Neon compute endpoint resource type. </summary>
+    public partial class NeonEndpoint : ResourceData, IJsonModel<NeonEndpoint>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NeonRoleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NeonEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NeonRoleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NeonEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NeonRoleData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NeonEndpoint)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.NeonPostgres
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NeonRoleData IJsonModel<NeonRoleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NeonRoleData)JsonModelCreateCore(ref reader, options);
+        NeonEndpoint IJsonModel<NeonEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NeonEndpoint)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NeonRoleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NeonEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NeonRoleData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NeonEndpoint)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNeonRoleData(document.RootElement, options);
+            return DeserializeNeonEndpoint(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NeonRoleData DeserializeNeonRoleData(JsonElement element, ModelReaderWriterOptions options)
+        internal static NeonEndpoint DeserializeNeonEndpoint(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NeonPostgres
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            NeonRoleProperties properties = default;
+            NeonEndpointProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NeonPostgres
                     {
                         continue;
                     }
-                    properties = NeonRoleProperties.DeserializeNeonRoleProperties(prop.Value, options);
+                    properties = NeonEndpointProperties.DeserializeNeonEndpointProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NeonPostgres
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NeonRoleData(
+            return new NeonEndpoint(
                 id,
                 name,
                 resourceType,
@@ -135,62 +135,62 @@ namespace Azure.ResourceManager.NeonPostgres
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NeonRoleData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NeonEndpoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NeonRoleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NeonEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNeonPostgresContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NeonRoleData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NeonEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NeonRoleData IPersistableModel<NeonRoleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NeonRoleData)PersistableModelCreateCore(data, options);
+        NeonEndpoint IPersistableModel<NeonEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options) => (NeonEndpoint)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NeonRoleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NeonEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNeonRoleData(document.RootElement, options);
+                        return DeserializeNeonEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NeonRoleData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NeonEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NeonRoleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NeonEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="neonRoleData"> The <see cref="NeonRoleData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(NeonRoleData neonRoleData)
+        /// <param name="neonEndpoint"> The <see cref="NeonEndpoint"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NeonEndpoint neonEndpoint)
         {
-            if (neonRoleData == null)
+            if (neonEndpoint == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(neonRoleData, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(neonEndpoint, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NeonRoleData"/> from. </param>
-        internal static NeonRoleData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NeonEndpoint"/> from. </param>
+        internal static NeonEndpoint FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeNeonRoleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeNeonEndpoint(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

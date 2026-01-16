@@ -93,60 +93,6 @@ namespace Azure.ResourceManager.NeonPostgres
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NeonDatabaseResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetNeonDatabaseResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NeonDatabaseResource"/> object. </returns>
-        public static NeonDatabaseResource GetNeonDatabaseResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableNeonPostgresArmClient(client).GetNeonDatabaseResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NeonRoleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetNeonRoleResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NeonRoleResource"/> object. </returns>
-        public static NeonRoleResource GetNeonRoleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableNeonPostgresArmClient(client).GetNeonRoleResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NeonEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetNeonEndpointResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NeonEndpointResource"/> object. </returns>
-        public static NeonEndpointResource GetNeonEndpointResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableNeonPostgresArmClient(client).GetNeonEndpointResource(id);
-        }
-
-        /// <summary>
         /// Gets a collection of NeonOrganizations in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -252,14 +198,14 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
         /// <param name="projectName"> The name of the Project. </param>
         /// <param name="branchName"> The name of the Branch. </param>
-        /// <param name="content"> Parameters for preflight checks. </param>
+        /// <param name="preflightCheckContent"> Parameters for preflight checks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<PreflightCheckResult>> PreflightAsync(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, PreflightCheckContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<PreflightCheckResult>> PreflightAsync(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, PreflightCheckContent preflightCheckContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).PreflightAsync(organizationName, projectName, branchName, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).PreflightAsync(organizationName, projectName, branchName, preflightCheckContent, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -273,14 +219,404 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
         /// <param name="projectName"> The name of the Project. </param>
         /// <param name="branchName"> The name of the Branch. </param>
-        /// <param name="content"> Parameters for preflight checks. </param>
+        /// <param name="preflightCheckContent"> Parameters for preflight checks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<PreflightCheckResult> Preflight(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, PreflightCheckContent content, CancellationToken cancellationToken = default)
+        public static Response<PreflightCheckResult> Preflight(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, PreflightCheckContent preflightCheckContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).Preflight(organizationName, projectName, branchName, content, cancellationToken);
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).Preflight(organizationName, projectName, branchName, preflightCheckContent, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create a NeonDatabase
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.CreateOrUpdateAsync(WaitUntil, string, string, string, string, NeonDatabase, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="neonDatabaseName"> The name of the NeonDatabase. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<NeonDatabase>> CreateOrUpdateAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string organizationName, string projectName, string branchName, string neonDatabaseName, NeonDatabase resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).CreateOrUpdateAsync(waitUntil, organizationName, projectName, branchName, neonDatabaseName, resource, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create a NeonDatabase
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.CreateOrUpdate(WaitUntil, string, string, string, string, NeonDatabase, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="neonDatabaseName"> The name of the NeonDatabase. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<NeonDatabase> CreateOrUpdate(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string organizationName, string projectName, string branchName, string neonDatabaseName, NeonDatabase resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).CreateOrUpdate(waitUntil, organizationName, projectName, branchName, neonDatabaseName, resource, cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete a NeonDatabase
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.DeleteAsync(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="neonDatabaseName"> The name of the NeonDatabase. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> DeleteAsync(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, string neonDatabaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).DeleteAsync(organizationName, projectName, branchName, neonDatabaseName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Delete a NeonDatabase
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.Delete(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="neonDatabaseName"> The name of the NeonDatabase. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response Delete(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, string neonDatabaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).Delete(organizationName, projectName, branchName, neonDatabaseName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List NeonDatabase resources by Branch
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.GetAllAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NeonDatabase"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NeonDatabase> GetAllAsync(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).GetAllAsync(organizationName, projectName, branchName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List NeonDatabase resources by Branch
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.GetAll(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NeonDatabase"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NeonDatabase> GetAll(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).GetAll(organizationName, projectName, branchName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create a NeonRole
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.CreateOrUpdateAsync(WaitUntil, string, string, string, string, NeonRole, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="neonRoleName"> The name of the NeonRole. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<NeonRole>> CreateOrUpdateAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string organizationName, string projectName, string branchName, string neonRoleName, NeonRole resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).CreateOrUpdateAsync(waitUntil, organizationName, projectName, branchName, neonRoleName, resource, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create a NeonRole
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.CreateOrUpdate(WaitUntil, string, string, string, string, NeonRole, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="neonRoleName"> The name of the NeonRole. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<NeonRole> CreateOrUpdate(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string organizationName, string projectName, string branchName, string neonRoleName, NeonRole resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).CreateOrUpdate(waitUntil, organizationName, projectName, branchName, neonRoleName, resource, cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete a NeonRole
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.DeleteAsync(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="neonRoleName"> The name of the NeonRole. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> DeleteAsync(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, string neonRoleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).DeleteAsync(organizationName, projectName, branchName, neonRoleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Delete a NeonRole
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.Delete(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="neonRoleName"> The name of the NeonRole. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response Delete(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, string neonRoleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).Delete(organizationName, projectName, branchName, neonRoleName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List NeonRole resources by Branch
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.GetAllAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NeonRole"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NeonRole> GetAllAsync(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).GetAllAsync(organizationName, projectName, branchName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List NeonRole resources by Branch
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.GetAll(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NeonRole"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NeonRole> GetAll(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).GetAll(organizationName, projectName, branchName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create a Endpoint
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.CreateOrUpdateAsync(WaitUntil, string, string, string, string, NeonEndpoint, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="endpointName"> The name of the Endpoint. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<NeonEndpoint>> CreateOrUpdateAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string organizationName, string projectName, string branchName, string endpointName, NeonEndpoint resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).CreateOrUpdateAsync(waitUntil, organizationName, projectName, branchName, endpointName, resource, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create a Endpoint
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.CreateOrUpdate(WaitUntil, string, string, string, string, NeonEndpoint, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="endpointName"> The name of the Endpoint. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<NeonEndpoint> CreateOrUpdate(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string organizationName, string projectName, string branchName, string endpointName, NeonEndpoint resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).CreateOrUpdate(waitUntil, organizationName, projectName, branchName, endpointName, resource, cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete a Endpoint
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.DeleteAsync(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="endpointName"> The name of the Endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response> DeleteAsync(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).DeleteAsync(organizationName, projectName, branchName, endpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Delete a Endpoint
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.Delete(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="endpointName"> The name of the Endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response Delete(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).Delete(organizationName, projectName, branchName, endpointName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List Endpoint resources by Branch
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.GetAllAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NeonEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NeonEndpoint> GetAllAsync(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).GetAllAsync(organizationName, projectName, branchName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List Endpoint resources by Branch
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.GetAll(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NeonEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NeonEndpoint> GetAll(this ResourceGroupResource resourceGroupResource, string organizationName, string projectName, string branchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).GetAll(organizationName, projectName, branchName, cancellationToken);
         }
 
         /// <summary>

@@ -25,6 +25,12 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         private Projects _projectsRestClient;
         private ClientDiagnostics _branchesClientDiagnostics;
         private Branches _branchesRestClient;
+        private ClientDiagnostics _neonDatabasesClientDiagnostics;
+        private NeonDatabases _neonDatabasesRestClient;
+        private ClientDiagnostics _neonRolesClientDiagnostics;
+        private NeonRoles _neonRolesRestClient;
+        private ClientDiagnostics _endpointsClientDiagnostics;
+        private Endpoints _endpointsRestClient;
 
         /// <summary> Initializes a new instance of MockableNeonPostgresResourceGroupResource for mocking. </summary>
         protected MockableNeonPostgresResourceGroupResource()
@@ -45,6 +51,18 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         private ClientDiagnostics BranchesClientDiagnostics => _branchesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NeonPostgres.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Branches BranchesRestClient => _branchesRestClient ??= new Branches(BranchesClientDiagnostics, Pipeline, Endpoint, "2025-06-23-preview");
+
+        private ClientDiagnostics NeonDatabasesClientDiagnostics => _neonDatabasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NeonPostgres.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NeonDatabases NeonDatabasesRestClient => _neonDatabasesRestClient ??= new NeonDatabases(NeonDatabasesClientDiagnostics, Pipeline, Endpoint, "2025-06-23-preview");
+
+        private ClientDiagnostics NeonRolesClientDiagnostics => _neonRolesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NeonPostgres.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NeonRoles NeonRolesRestClient => _neonRolesRestClient ??= new NeonRoles(NeonRolesClientDiagnostics, Pipeline, Endpoint, "2025-06-23-preview");
+
+        private ClientDiagnostics EndpointsClientDiagnostics => _endpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NeonPostgres.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Endpoints EndpointsRestClient => _endpointsRestClient ??= new Endpoints(EndpointsClientDiagnostics, Pipeline, Endpoint, "2025-06-23-preview");
 
         /// <summary> Gets a collection of NeonOrganizations in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of NeonOrganizations and their operations over a NeonOrganizationResource. </returns>
@@ -217,7 +235,23 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
             }
         }
 
-        /// <summary> Action to validate preflight checks. </summary>
+        /// <summary>
+        /// Action to validate preflight checks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/preflight. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Branches_Preflight. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
         /// <param name="projectName"> The name of the Project. </param>
         /// <param name="branchName"> The name of the Branch. </param>
@@ -256,7 +290,23 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
             }
         }
 
-        /// <summary> Action to validate preflight checks. </summary>
+        /// <summary>
+        /// Action to validate preflight checks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/preflight. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Branches_Preflight. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
         /// <param name="projectName"> The name of the Project. </param>
         /// <param name="branchName"> The name of the Branch. </param>
@@ -293,6 +343,954 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Create a NeonDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases/{neonDatabaseName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonDatabases_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="neonDatabaseName"> The name of the NeonDatabase. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/>, <paramref name="neonDatabaseName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="neonDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<NeonDatabase>> CreateOrUpdateAsync(WaitUntil waitUntil, string organizationName, string projectName, string branchName, string neonDatabaseName, NeonDatabase resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+            Argument.AssertNotNullOrEmpty(neonDatabaseName, nameof(neonDatabaseName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = NeonDatabasesClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NeonDatabasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, neonDatabaseName, NeonDatabase.ToRequestContent(resource), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NeonPostgresArmOperation<NeonDatabase> operation = new NeonPostgresArmOperation<NeonDatabase>(
+                    new NeonDatabaseOperationSource(),
+                    NeonDatabasesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a NeonDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases/{neonDatabaseName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonDatabases_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="neonDatabaseName"> The name of the NeonDatabase. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/>, <paramref name="neonDatabaseName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="neonDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<NeonDatabase> CreateOrUpdate(WaitUntil waitUntil, string organizationName, string projectName, string branchName, string neonDatabaseName, NeonDatabase resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+            Argument.AssertNotNullOrEmpty(neonDatabaseName, nameof(neonDatabaseName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = NeonDatabasesClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NeonDatabasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, neonDatabaseName, NeonDatabase.ToRequestContent(resource), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NeonPostgresArmOperation<NeonDatabase> operation = new NeonPostgresArmOperation<NeonDatabase>(
+                    new NeonDatabaseOperationSource(),
+                    NeonDatabasesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a NeonDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases/{neonDatabaseName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonDatabases_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="neonDatabaseName"> The name of the NeonDatabase. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="neonDatabaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="neonDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteAsync(string organizationName, string projectName, string branchName, string neonDatabaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+            Argument.AssertNotNullOrEmpty(neonDatabaseName, nameof(neonDatabaseName));
+
+            using DiagnosticScope scope = NeonDatabasesClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NeonDatabasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, neonDatabaseName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a NeonDatabase
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases/{neonDatabaseName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonDatabases_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="neonDatabaseName"> The name of the NeonDatabase. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="neonDatabaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="neonDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Delete(string organizationName, string projectName, string branchName, string neonDatabaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+            Argument.AssertNotNullOrEmpty(neonDatabaseName, nameof(neonDatabaseName));
+
+            using DiagnosticScope scope = NeonDatabasesClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NeonDatabasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, neonDatabaseName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List NeonDatabase resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonDatabases_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NeonDatabase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NeonDatabase> GetAllAsync(string organizationName, string projectName, string branchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NeonDatabasesGetAllAsyncCollectionResultOfT(
+                NeonDatabasesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                organizationName,
+                projectName,
+                branchName,
+                context);
+        }
+
+        /// <summary>
+        /// List NeonDatabase resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonDatabases_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NeonDatabase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NeonDatabase> GetAll(string organizationName, string projectName, string branchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NeonDatabasesGetAllCollectionResultOfT(
+                NeonDatabasesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                organizationName,
+                projectName,
+                branchName,
+                context);
+        }
+
+        /// <summary>
+        /// Create a NeonRole
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonRoles/{neonRoleName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonRoles_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="neonRoleName"> The name of the NeonRole. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/>, <paramref name="neonRoleName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="neonRoleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<NeonRole>> CreateOrUpdateAsync(WaitUntil waitUntil, string organizationName, string projectName, string branchName, string neonRoleName, NeonRole resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+            Argument.AssertNotNullOrEmpty(neonRoleName, nameof(neonRoleName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = NeonRolesClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NeonRolesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, neonRoleName, NeonRole.ToRequestContent(resource), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NeonPostgresArmOperation<NeonRole> operation = new NeonPostgresArmOperation<NeonRole>(
+                    new NeonRoleOperationSource(),
+                    NeonRolesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a NeonRole
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonRoles/{neonRoleName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonRoles_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="neonRoleName"> The name of the NeonRole. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/>, <paramref name="neonRoleName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="neonRoleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<NeonRole> CreateOrUpdate(WaitUntil waitUntil, string organizationName, string projectName, string branchName, string neonRoleName, NeonRole resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+            Argument.AssertNotNullOrEmpty(neonRoleName, nameof(neonRoleName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = NeonRolesClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NeonRolesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, neonRoleName, NeonRole.ToRequestContent(resource), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NeonPostgresArmOperation<NeonRole> operation = new NeonPostgresArmOperation<NeonRole>(
+                    new NeonRoleOperationSource(),
+                    NeonRolesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a NeonRole
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonRoles/{neonRoleName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonRoles_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="neonRoleName"> The name of the NeonRole. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="neonRoleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="neonRoleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteAsync(string organizationName, string projectName, string branchName, string neonRoleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+            Argument.AssertNotNullOrEmpty(neonRoleName, nameof(neonRoleName));
+
+            using DiagnosticScope scope = NeonRolesClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NeonRolesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, neonRoleName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a NeonRole
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonRoles/{neonRoleName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonRoles_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="neonRoleName"> The name of the NeonRole. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="neonRoleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="neonRoleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Delete(string organizationName, string projectName, string branchName, string neonRoleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+            Argument.AssertNotNullOrEmpty(neonRoleName, nameof(neonRoleName));
+
+            using DiagnosticScope scope = NeonRolesClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NeonRolesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, neonRoleName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List NeonRole resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonRoles. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonRoles_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NeonRole"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NeonRole> GetAllAsync(string organizationName, string projectName, string branchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NeonRolesGetAllAsyncCollectionResultOfT(
+                NeonRolesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                organizationName,
+                projectName,
+                branchName,
+                context);
+        }
+
+        /// <summary>
+        /// List NeonRole resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonRoles. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NeonRoles_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NeonRole"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NeonRole> GetAll(string organizationName, string projectName, string branchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NeonRolesGetAllCollectionResultOfT(
+                NeonRolesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                organizationName,
+                projectName,
+                branchName,
+                context);
+        }
+
+        /// <summary>
+        /// Create a Endpoint
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/endpoints/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="endpointName"> The name of the Endpoint. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/>, <paramref name="endpointName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<NeonEndpoint>> CreateOrUpdateAsync(WaitUntil waitUntil, string organizationName, string projectName, string branchName, string endpointName, NeonEndpoint resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = EndpointsClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, endpointName, NeonEndpoint.ToRequestContent(resource), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NeonPostgresArmOperation<NeonEndpoint> operation = new NeonPostgresArmOperation<NeonEndpoint>(
+                    new NeonEndpointOperationSource(),
+                    EndpointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a Endpoint
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/endpoints/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="endpointName"> The name of the Endpoint. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/>, <paramref name="endpointName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<NeonEndpoint> CreateOrUpdate(WaitUntil waitUntil, string organizationName, string projectName, string branchName, string endpointName, NeonEndpoint resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = EndpointsClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, endpointName, NeonEndpoint.ToRequestContent(resource), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NeonPostgresArmOperation<NeonEndpoint> operation = new NeonPostgresArmOperation<NeonEndpoint>(
+                    new NeonEndpointOperationSource(),
+                    EndpointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Endpoint
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/endpoints/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="endpointName"> The name of the Endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteAsync(string organizationName, string projectName, string branchName, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using DiagnosticScope scope = EndpointsClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, endpointName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Endpoint
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/endpoints/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="endpointName"> The name of the Endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Delete(string organizationName, string projectName, string branchName, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using DiagnosticScope scope = EndpointsClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, projectName, branchName, endpointName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List Endpoint resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/endpoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NeonEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NeonEndpoint> GetAllAsync(string organizationName, string projectName, string branchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EndpointsGetAllAsyncCollectionResultOfT(
+                EndpointsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                organizationName,
+                projectName,
+                branchName,
+                context);
+        }
+
+        /// <summary>
+        /// List Endpoint resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/endpoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-23-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Name of the Neon Organizations resource. </param>
+        /// <param name="projectName"> The name of the Project. </param>
+        /// <param name="branchName"> The name of the Branch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/>, <paramref name="projectName"/> or <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NeonEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NeonEndpoint> GetAll(string organizationName, string projectName, string branchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EndpointsGetAllCollectionResultOfT(
+                EndpointsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                organizationName,
+                projectName,
+                branchName,
+                context);
         }
     }
 }
