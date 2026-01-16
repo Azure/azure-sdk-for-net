@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ComputeSchedule
 {
-    internal class ScheduledActionOperationSource : IOperationSource<ScheduledActionResource>
+    /// <summary></summary>
+    internal partial class ScheduledActionOperationSource : IOperationSource<ScheduledActionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ScheduledActionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ScheduledActionResource IOperationSource<ScheduledActionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ScheduledActionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeScheduleContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ScheduledActionData data = ScheduledActionData.DeserializeScheduledActionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ScheduledActionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ScheduledActionResource> IOperationSource<ScheduledActionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ScheduledActionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeScheduleContext.Default);
-            return await Task.FromResult(new ScheduledActionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ScheduledActionData data = ScheduledActionData.DeserializeScheduledActionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ScheduledActionResource(_client, data);
         }
     }
 }

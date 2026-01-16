@@ -281,6 +281,7 @@
       "filename": "**/sdk/avs/**/*.cs",
       "words": [
         "dhcps",
+        "esxi",
         "iscsi",
         "mirrorings",
         "nsxt",
@@ -474,6 +475,8 @@
         "somaxconn",
         "sysctls",
         "tcpkeepalive",
+        "undrainable",
+        "vtpm",
         "wasi",
         "wmem"
       ]

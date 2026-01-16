@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Fabric;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
-    public partial class FabricSkuDetailsForNewCapacity : IUtf8JsonSerializable, IJsonModel<FabricSkuDetailsForNewCapacity>
+    /// <summary> The SKU details. </summary>
+    public partial class FabricSkuDetailsForNewCapacity : IJsonModel<FabricSkuDetailsForNewCapacity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FabricSkuDetailsForNewCapacity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="FabricSkuDetailsForNewCapacity"/> for deserialization. </summary>
+        internal FabricSkuDetailsForNewCapacity()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FabricSkuDetailsForNewCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,32 +35,31 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FabricSkuDetailsForNewCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FabricSkuDetailsForNewCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FabricSkuDetailsForNewCapacity)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("locations"u8);
             writer.WriteStartArray();
-            foreach (var item in Locations)
+            foreach (AzureLocation item in Locations)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -62,22 +68,27 @@ namespace Azure.ResourceManager.Fabric.Models
             }
         }
 
-        FabricSkuDetailsForNewCapacity IJsonModel<FabricSkuDetailsForNewCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FabricSkuDetailsForNewCapacity IJsonModel<FabricSkuDetailsForNewCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FabricSkuDetailsForNewCapacity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FabricSkuDetailsForNewCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FabricSkuDetailsForNewCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FabricSkuDetailsForNewCapacity)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFabricSkuDetailsForNewCapacity(document.RootElement, options);
         }
 
-        internal static FabricSkuDetailsForNewCapacity DeserializeFabricSkuDetailsForNewCapacity(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FabricSkuDetailsForNewCapacity DeserializeFabricSkuDetailsForNewCapacity(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -85,24 +96,23 @@ namespace Azure.ResourceManager.Fabric.Models
             string resourceType = default;
             string name = default;
             IReadOnlyList<AzureLocation> locations = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"u8))
+                if (prop.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    resourceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("locations"u8))
+                if (prop.NameEquals("locations"u8))
                 {
                     List<AzureLocation> array = new List<AzureLocation>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new AzureLocation(item.GetString()));
                     }
@@ -111,17 +121,19 @@ namespace Azure.ResourceManager.Fabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new FabricSkuDetailsForNewCapacity(resourceType, name, locations, serializedAdditionalRawData);
+            return new FabricSkuDetailsForNewCapacity(resourceType, name, locations, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<FabricSkuDetailsForNewCapacity>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FabricSkuDetailsForNewCapacity>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FabricSkuDetailsForNewCapacity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FabricSkuDetailsForNewCapacity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -131,15 +143,20 @@ namespace Azure.ResourceManager.Fabric.Models
             }
         }
 
-        FabricSkuDetailsForNewCapacity IPersistableModel<FabricSkuDetailsForNewCapacity>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FabricSkuDetailsForNewCapacity>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FabricSkuDetailsForNewCapacity IPersistableModel<FabricSkuDetailsForNewCapacity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FabricSkuDetailsForNewCapacity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FabricSkuDetailsForNewCapacity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFabricSkuDetailsForNewCapacity(document.RootElement, options);
                     }
                 default:
@@ -147,6 +164,7 @@ namespace Azure.ResourceManager.Fabric.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FabricSkuDetailsForNewCapacity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

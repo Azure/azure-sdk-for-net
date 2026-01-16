@@ -14,21 +14,6 @@ trigger:
     - sdk/eventhub/Azure.Messaging.EventHubs.Processor
     - sdk/eventhub/Azure.Messaging.EventHubs.Shared
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/eventhub/ci.yml
-    - sdk/eventhub/service.projects
-    - sdk/eventhub/Azure.Messaging.EventHubs
-    - sdk/eventhub/Azure.Messaging.EventHubs.Processor
-    - sdk/eventhub/Azure.Messaging.EventHubs.Shared
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

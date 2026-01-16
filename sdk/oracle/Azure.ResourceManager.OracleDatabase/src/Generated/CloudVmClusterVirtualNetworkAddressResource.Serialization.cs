@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
+    /// <summary></summary>
     public partial class CloudVmClusterVirtualNetworkAddressResource : IJsonModel<CloudVmClusterVirtualNetworkAddressData>
     {
-        private static CloudVmClusterVirtualNetworkAddressData s_dataDeserializationInstance;
-        private static CloudVmClusterVirtualNetworkAddressData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CloudVmClusterVirtualNetworkAddressData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CloudVmClusterVirtualNetworkAddressData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CloudVmClusterVirtualNetworkAddressData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudVmClusterVirtualNetworkAddressData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CloudVmClusterVirtualNetworkAddressData>)Data).Write(writer, options);
 
-        CloudVmClusterVirtualNetworkAddressData IJsonModel<CloudVmClusterVirtualNetworkAddressData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudVmClusterVirtualNetworkAddressData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudVmClusterVirtualNetworkAddressData IJsonModel<CloudVmClusterVirtualNetworkAddressData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CloudVmClusterVirtualNetworkAddressData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudVmClusterVirtualNetworkAddressData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CloudVmClusterVirtualNetworkAddressData IPersistableModel<CloudVmClusterVirtualNetworkAddressData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudVmClusterVirtualNetworkAddressData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<CloudVmClusterVirtualNetworkAddressData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudVmClusterVirtualNetworkAddressData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CloudVmClusterVirtualNetworkAddressData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

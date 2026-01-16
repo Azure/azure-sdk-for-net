@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct ExadataVmClusterStorageManagementType : IEquatable<ExadataVmClusterStorageManagementType>
     {
         private readonly string _value;
+        /// <summary> Indicates that storage management for the Cloud VM Cluster is ASM. </summary>
+        private const string AsmValue = "ASM";
+        /// <summary> Indicates that storage management for the Cloud VM Cluster is Exascale. </summary>
+        private const string ExascaleValue = "Exascale";
 
         /// <summary> Initializes a new instance of <see cref="ExadataVmClusterStorageManagementType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExadataVmClusterStorageManagementType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AsmValue = "ASM";
-        private const string ExascaleValue = "Exascale";
+            _value = value;
+        }
 
         /// <summary> Indicates that storage management for the Cloud VM Cluster is ASM. </summary>
         public static ExadataVmClusterStorageManagementType Asm { get; } = new ExadataVmClusterStorageManagementType(AsmValue);
+
         /// <summary> Indicates that storage management for the Cloud VM Cluster is Exascale. </summary>
         public static ExadataVmClusterStorageManagementType Exascale { get; } = new ExadataVmClusterStorageManagementType(ExascaleValue);
+
         /// <summary> Determines if two <see cref="ExadataVmClusterStorageManagementType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExadataVmClusterStorageManagementType left, ExadataVmClusterStorageManagementType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExadataVmClusterStorageManagementType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExadataVmClusterStorageManagementType left, ExadataVmClusterStorageManagementType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExadataVmClusterStorageManagementType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExadataVmClusterStorageManagementType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExadataVmClusterStorageManagementType(string value) => new ExadataVmClusterStorageManagementType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExadataVmClusterStorageManagementType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExadataVmClusterStorageManagementType?(string value) => value == null ? null : new ExadataVmClusterStorageManagementType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExadataVmClusterStorageManagementType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExadataVmClusterStorageManagementType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

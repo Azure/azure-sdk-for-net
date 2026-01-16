@@ -31,6 +31,8 @@ model BarProperties {
 
 @armResourceOperations
 interface Bars {
+  list is ArmResourceListByParent<Bar>;
+
   createOrUpdate is ArmResourceCreateOrUpdateAsync<Bar>;
 
   get is ArmResourceRead<Bar>;
@@ -38,9 +40,9 @@ interface Bars {
   delete is ArmResourceDeleteWithoutOkAsync<Bar>;
 
   update is ArmCustomPatchSync<Bar, Bar>;
-
-  list is ArmResourceListByParent<Bar>;
 }
+
+@@Azure.ResourceManager.Legacy.renamePathParameter(Bars.list, "fooName", "name");
 
 @singleton("current")
 @parentResource(Bar)

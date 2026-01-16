@@ -74,6 +74,9 @@ steps:
 
     # nohup does NOT continue beyond the current session if you use it within powershell
     - bash: |
+        if [[ "$(uname)" == "Darwin" ]]; then
+          export DOTNET_ROOT="$HOME/.dotnet"
+        fi
         echo "nohup $(PROXY_EXE) 1>${{ parameters.rootFolder }}/test-proxy.log 2>${{ parameters.rootFolder }}/test-proxy-error.log &"
         nohup $(PROXY_EXE) 1>${{ parameters.rootFolder }}/test-proxy.log 2>${{ parameters.rootFolder }}/test-proxy-error.log &
 
@@ -84,6 +87,8 @@ steps:
       displayName: "Run the testproxy - linux/mac"
       condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
       workingDirectory: "${{ parameters.rootFolder }}"
+      env:
+        DOTNET_ROLL_FORWARD: 'Major'
 
     - pwsh: |
         for ($i = 0; $i -lt 10; $i++) {

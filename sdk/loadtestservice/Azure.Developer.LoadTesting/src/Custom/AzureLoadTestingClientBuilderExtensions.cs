@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Developer.LoadTesting;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Microsoft.Extensions.Azure
 {

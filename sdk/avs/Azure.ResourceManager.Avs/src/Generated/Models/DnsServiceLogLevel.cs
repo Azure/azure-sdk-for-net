@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct DnsServiceLogLevel : IEquatable<DnsServiceLogLevel>
     {
         private readonly string _value;
+        /// <summary> is debug. </summary>
+        private const string DebugValue = "DEBUG";
+        /// <summary> is info. </summary>
+        private const string InfoValue = "INFO";
+        /// <summary> is warning. </summary>
+        private const string WarningValue = "WARNING";
+        /// <summary> is error. </summary>
+        private const string ErrorValue = "ERROR";
+        /// <summary> is fatal. </summary>
+        private const string FatalValue = "FATAL";
 
         /// <summary> Initializes a new instance of <see cref="DnsServiceLogLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DnsServiceLogLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DebugValue = "DEBUG";
-        private const string InfoValue = "INFO";
-        private const string WarningValue = "WARNING";
-        private const string ErrorValue = "ERROR";
-        private const string FatalValue = "FATAL";
+            _value = value;
+        }
 
         /// <summary> is debug. </summary>
         public static DnsServiceLogLevel Debug { get; } = new DnsServiceLogLevel(DebugValue);
+
         /// <summary> is info. </summary>
         public static DnsServiceLogLevel Info { get; } = new DnsServiceLogLevel(InfoValue);
+
         /// <summary> is warning. </summary>
         public static DnsServiceLogLevel Warning { get; } = new DnsServiceLogLevel(WarningValue);
+
         /// <summary> is error. </summary>
         public static DnsServiceLogLevel Error { get; } = new DnsServiceLogLevel(ErrorValue);
+
         /// <summary> is fatal. </summary>
         public static DnsServiceLogLevel Fatal { get; } = new DnsServiceLogLevel(FatalValue);
+
         /// <summary> Determines if two <see cref="DnsServiceLogLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DnsServiceLogLevel left, DnsServiceLogLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DnsServiceLogLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DnsServiceLogLevel left, DnsServiceLogLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DnsServiceLogLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DnsServiceLogLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DnsServiceLogLevel(string value) => new DnsServiceLogLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DnsServiceLogLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DnsServiceLogLevel?(string value) => value == null ? null : new DnsServiceLogLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DnsServiceLogLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DnsServiceLogLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

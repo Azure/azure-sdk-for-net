@@ -8,7 +8,6 @@ $GithubUri = "https://github.com/Azure/azure-sdk-for-net"
 $PackageRepositoryUri = "https://www.nuget.org/packages"
 
 . "$PSScriptRoot/docs/Docs-ToC.ps1"
-
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
@@ -598,7 +597,7 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
     # Install autorest locally
     Invoke-LoggedCommand "npm ci --prefix $RepoRoot"
 
-    Write-Host "Running npm ci over emitter-package.json in a temp folder to prime the npm cache"
+    Write-Host "Running npm ci over legacy-emitter-package.json in a temp folder to prime the npm cache"
 
     $tempFolder = New-TemporaryFile
     $tempFolder | Remove-Item -Force
@@ -606,9 +605,9 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
 
     Push-Location $tempFolder
     try {
-        Copy-Item "$RepoRoot/eng/emitter-package.json" "package.json"
-        if(Test-Path "$RepoRoot/eng/emitter-package-lock.json") {
-            Copy-Item "$RepoRoot/eng/emitter-package-lock.json" "package-lock.json"
+        Copy-Item "$RepoRoot/eng/legacy-emitter-package.json" "package.json"
+        if(Test-Path "$RepoRoot/eng/legacy-emitter-package-lock.json") {
+            Copy-Item "$RepoRoot/eng/legacy-emitter-package-lock.json" "package-lock.json"
             Invoke-LoggedCommand "npm ci"
         } else {
           Invoke-LoggedCommand "npm install"
@@ -631,6 +630,15 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
 }
 
 function Get-dotnet-ApiviewStatusCheckRequirement($packageInfo) {
+  $version = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
+  if ($null -eq $version) {
+    return $false
+  }
+  # Do not check APIView status for prerelease mgmt plane packages
+  if ($packageInfo.SdkType -eq "mgmt" -and $version.IsPrerelease) {
+    return $false
+  }
+
   if ($packageInfo.IsNewSdk -and ($packageInfo.SdkType -eq "client" -or $packageInfo.SdkType -eq "mgmt")) {
     return $true
   }

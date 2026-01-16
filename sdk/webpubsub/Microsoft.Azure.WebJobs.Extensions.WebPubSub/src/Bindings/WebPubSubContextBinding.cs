@@ -17,16 +17,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         private const string HttpRequestName = "$request";
         private readonly Type _userType;
-        private readonly WebPubSubFunctionsOptions _options;
+        private readonly WebPubSubServiceAccessOptions _options;
+        private readonly WebPubSubServiceAccessFactory _accessFactory;
 
         public WebPubSubContextBinding(
             BindingProviderContext context,
             IConfiguration configuration,
             INameResolver nameResolver,
-            WebPubSubFunctionsOptions options) : base(context, configuration, nameResolver)
+            WebPubSubServiceAccessOptions options,
+            WebPubSubServiceAccessFactory accessFactory) : base(context, configuration, nameResolver)
         {
             _userType = context.Parameter.ParameterType;
             _options = options;
+            _accessFactory = accessFactory;
         }
 
         protected async override Task<IValueProvider> BuildAsync(WebPubSubContextAttribute attrResolved, IReadOnlyDictionary<string, object> bindingData)
@@ -47,11 +50,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             try
             {
-                // fallback to use global settings.
-                var validationOptions = attrResolved.Connections != null ?
-                    new WebPubSubValidationOptions(attrResolved.Connections) :
-                    new WebPubSubValidationOptions(_options.ConnectionString);
-                var serviceRequest = await request.ReadWebPubSubRequestAsync(validationOptions).ConfigureAwait(false);
+                WebPubSubServiceAccess[]? accesses = null;
+                if (attrResolved?.Connections != null)
+                {
+                    var resolved = new List<WebPubSubServiceAccess>(attrResolved.Connections.Length);
+                    foreach (var sectionName in attrResolved.Connections)
+                    {
+                        if (!_accessFactory.TryCreateFromSectionName(sectionName, out var access) || access == null)
+                        {
+                            throw new InvalidOperationException($"Unable to resolve Web PubSub connection from configuration section '{sectionName}'.");
+                        }
+                        resolved.Add(access);
+                    }
+                    accesses = [.. resolved];
+                }
+
+                accesses ??= _options.WebPubSubAccess != null ? [_options.WebPubSubAccess] : null;
+                var validator = new RequestValidator(accesses);
+                var serviceRequest = await request.ReadWebPubSubRequestAsync(validator).ConfigureAwait(false);
 
                 switch (serviceRequest)
                 {

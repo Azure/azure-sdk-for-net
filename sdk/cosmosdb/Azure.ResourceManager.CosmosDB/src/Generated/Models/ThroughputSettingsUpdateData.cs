@@ -66,12 +66,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a resource throughput. </param>
-        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThroughputSettingsUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ThroughputSettingsResourceInfo resource, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ThroughputSettingsUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ThroughputSettingsResourceInfo resource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
-            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,8 +81,5 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The standard JSON format of a resource throughput. </summary>
         [WirePath("properties.resource")]
         public ThroughputSettingsResourceInfo Resource { get; set; }
-        /// <summary> Identity for the resource. </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
     }
 }

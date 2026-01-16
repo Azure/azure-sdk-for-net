@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
@@ -9,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Management.Utilities
 {
@@ -17,12 +19,14 @@ namespace Azure.Generator.Management.Utilities
         // TODO -- we should be able to just use the parameters from convenience method. But currently the xml doc provider has some bug that we build the parameters prematurely.
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
-            RequestPathPattern contextualPath,
+            MethodProvider convenienceMethod,
+            ParameterContextRegistry parameterMapping,
             TypeProvider? enclosingTypeProvider,
             bool forceLro = false)
         {
             var requiredParameters = new List<ParameterProvider>();
             var optionalParameters = new List<ParameterProvider>();
+            var scopeParameterTransformed = false;
 
             // Add WaitUntil parameter for long-running operations
             if (forceLro || serviceMethod.IsLongRunningOperation())
@@ -30,43 +34,76 @@ namespace Azure.Generator.Management.Utilities
                 requiredParameters.Add(KnownAzureParameters.WaitUntil);
             }
 
-            foreach (var parameter in serviceMethod.Operation.Parameters)
+            // Build a dictionary of convenience method parameters by name for efficient lookup
+            var convenienceParamsByName = convenienceMethod.Signature.Parameters
+                .Where(p => !p.Type.Equals(typeof(System.Threading.CancellationToken)))
+                .ToDictionary(p => p.Name, p => p);
+
+            // Loop through service method parameters and check their scope
+            foreach (var inputParameter in serviceMethod.Operation.Parameters)
             {
-                if (parameter.Scope != InputParameterScope.Method)
+                // Only include parameters with Method scope
+                if (inputParameter.Scope != InputParameterScope.Method)
                 {
                     continue;
                 }
 
-                var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
+                // Create temporary parameter to check filtering conditions
+                var tempParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(inputParameter)!;
 
-                if (contextualPath.TryGetContextualParameter(outputParameter, out _))
+                // Skip contextual parameters
+                if (parameterMapping.TryGetValue(tempParameter.WireInfo.SerializedName, out var mapping) && mapping.ContextualParameter is not null)
                 {
                     continue;
                 }
 
-                if (enclosingTypeProvider is ResourceCollectionClientProvider collectionProvider &&
-                    collectionProvider.TryGetPrivateFieldParameter(outputParameter, out _))
+                // Try to find corresponding parameter in convenience method by name
+                ParameterProvider? outputParameter = null;
+                var inputParamName = tempParameter.Name;
+
+                // Check if convenience method has a parameter with the same name
+                if (convenienceParamsByName.TryGetValue(inputParamName, out var matchedParam))
                 {
-                    continue;
+                    outputParameter = matchedParam;
+                }
+                else
+                {
+                    // If no match by name, create it from input parameter
+                    outputParameter = tempParameter;
                 }
 
-                if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
+                // TODO -- we should be able to just update the parameters from convenience method.
+                // But currently the xml doc provider has some bug that we build the parameters prematurely, we create new instance here instead.
+
+                // Rename resource model parameters to "data"
+                if (inputParameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
                 {
-                    outputParameter.Update(name: "data");
+                    outputParameter = RenameWithNewInstance(outputParameter, "data");
                 }
 
-                // Rename body parameters for resource/resourcecollection operations
-                if ((enclosingTypeProvider is ResourceClientProvider or ResourceCollectionClientProvider) &&
+                // Apply name transformations as needed
+                // For extension-scoped operations in MockableArmClient, transform the first string parameter to ResourceIdentifier scope
+                if (enclosingTypeProvider is MockableArmClientProvider &&
+                    !scopeParameterTransformed &&
+                    inputParameter.Type is InputPrimitiveType primitiveType &&
+                    primitiveType.Kind == InputPrimitiveTypeKind.String)
+                {
+                    outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
+                    scopeParameterTransformed = true;
+                }
+
+                // Rename body parameters for Resource/ResourceCollection/MockableArmClient/MockableResource operations
+                if ((enclosingTypeProvider is ResourceClientProvider or ResourceCollectionClientProvider or MockableArmClientProvider or MockableResourceProvider) &&
                     (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "POST" || serviceMethod.Operation.HttpMethod == "PATCH"))
                 {
                     var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(outputParameter);
                     if (normalizedName != null)
                     {
-                        outputParameter.Update(name: normalizedName);
+                        outputParameter = RenameWithNewInstance(outputParameter, normalizedName);
                     }
                 }
 
-                if (parameter.IsRequired)
+                if (inputParameter.IsRequired)
                 {
                     requiredParameters.Add(outputParameter);
                 }
@@ -80,5 +117,23 @@ namespace Azure.Generator.Management.Utilities
 
             return [.. requiredParameters, .. optionalParameters];
         }
+
+        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null)
+            => new(
+                    name: normalizedName,
+                    description: description ?? outputParameter.Description,
+                    type: type ?? outputParameter.Type,
+                    defaultValue: outputParameter.DefaultValue,
+                    isRef: outputParameter.IsRef,
+                    isOut: outputParameter.IsOut,
+                    isIn: outputParameter.IsIn,
+                    isParams: outputParameter.IsParams,
+                    attributes: outputParameter.Attributes,
+                    property: outputParameter.Property,
+                    field: outputParameter.Field,
+                    initializationValue: outputParameter.InitializationValue,
+                    location: outputParameter.Location,
+                    wireInfo: outputParameter.WireInfo,
+                    validation: outputParameter.Validation);
     }
 }

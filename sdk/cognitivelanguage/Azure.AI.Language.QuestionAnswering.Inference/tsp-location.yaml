@@ -1,0 +1,4 @@
+directory: specification/cognitiveservices/data-plane/LanguageQuestionAnswering
+commit: a43857e1fdbf606ac3ea8ee260dcb9552997e3b9
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

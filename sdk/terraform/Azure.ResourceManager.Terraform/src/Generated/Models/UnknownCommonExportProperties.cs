@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
-    /// <summary> Unknown version of CommonExportProperties. </summary>
     internal partial class UnknownCommonExportProperties : CommonExportProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCommonExportProperties"/>. </summary>
@@ -22,14 +21,8 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="includeManagedResource"> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </param>
         /// <param name="azureResourcesToExclude"> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </param>
         /// <param name="terraformResourcesToExclude"> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownCommonExportProperties(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, bool? includeRoleAssignment, bool? includeManagedResource, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, includeRoleAssignment, includeManagedResource, azureResourcesToExclude, terraformResourcesToExclude, serializedAdditionalRawData)
-        {
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownCommonExportProperties"/> for deserialization. </summary>
-        internal UnknownCommonExportProperties()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownCommonExportProperties(CommonExportType @type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, bool? includeRoleAssignment, bool? includeManagedResource, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, includeRoleAssignment, includeManagedResource, azureResourcesToExclude, terraformResourcesToExclude, additionalBinaryDataProperties)
         {
         }
     }

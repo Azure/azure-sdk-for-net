@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Quota
 {
+    /// <summary></summary>
     public partial class QuotaAllocationRequestStatusResource : IJsonModel<QuotaAllocationRequestStatusData>
     {
-        private static QuotaAllocationRequestStatusData s_dataDeserializationInstance;
-        private static QuotaAllocationRequestStatusData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<QuotaAllocationRequestStatusData> s_dataDeserializationInstance;
 
+        private static IJsonModel<QuotaAllocationRequestStatusData> DataDeserializationInstance => s_dataDeserializationInstance ??= new QuotaAllocationRequestStatusData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QuotaAllocationRequestStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<QuotaAllocationRequestStatusData>)Data).Write(writer, options);
 
-        QuotaAllocationRequestStatusData IJsonModel<QuotaAllocationRequestStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<QuotaAllocationRequestStatusData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        QuotaAllocationRequestStatusData IJsonModel<QuotaAllocationRequestStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<QuotaAllocationRequestStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<QuotaAllocationRequestStatusData>(Data, options, AzureResourceManagerQuotaContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         QuotaAllocationRequestStatusData IPersistableModel<QuotaAllocationRequestStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<QuotaAllocationRequestStatusData>(data, options, AzureResourceManagerQuotaContext.Default);
 
-        string IPersistableModel<QuotaAllocationRequestStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<QuotaAllocationRequestStatusData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<QuotaAllocationRequestStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

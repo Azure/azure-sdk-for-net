@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Messaging.EventGrid.SystemEvents
+namespace Microsoft.TypeSpec.Generator.Customizations
 {
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Struct), AllowMultiple = true, Inherited = true)]
     internal partial class CodeGenSerializationAttribute : Attribute

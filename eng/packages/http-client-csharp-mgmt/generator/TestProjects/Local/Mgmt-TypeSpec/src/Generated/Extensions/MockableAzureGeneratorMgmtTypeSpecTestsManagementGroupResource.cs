@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
@@ -20,9 +19,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     /// <summary> A class to add extension methods to <see cref="ManagementGroupResource"/>. </summary>
     public partial class MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource : ArmResource
     {
-        private ClientDiagnostics _groupQuotaLimitListsClientDiagnostics;
-        private GroupQuotaLimitLists _groupQuotaLimitListsRestClient;
-
         /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource for mocking. </summary>
         protected MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource()
         {
@@ -34,10 +30,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         internal MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics GroupQuotaLimitListsClientDiagnostics => _groupQuotaLimitListsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private GroupQuotaLimitLists GroupQuotaLimitListsRestClient => _groupQuotaLimitListsRestClient ??= new GroupQuotaLimitLists(GroupQuotaLimitListsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         /// <summary> Gets a collection of GroupQuotaSubscriptionRequestStatuses in the <see cref="ManagementGroupResource"/>. </summary>
         /// <returns> An object representing collection of GroupQuotaSubscriptionRequestStatuses and their operations over a GroupQuotaSubscriptionRequestStatusResource. </returns>
@@ -112,8 +104,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         }
 
         /// <summary>
-        /// Create the GroupQuota requests for a specific ResourceProvider/Location/Resource. The resourceName properties are specified in the request body. Only 1 resource quota can be requested. Please note that patch request creates a new groupQuota request.
-        /// Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.
+        /// Gets the GroupQuotaLimits for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -121,7 +112,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GroupQuotaLimitLists_Update. </description>
+        /// <description> GroupQuotaLimitLists_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -129,52 +120,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<GroupQuotaLimitListResource>> UpdateAsync(WaitUntil waitUntil, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaLimitListData data = default, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GroupQuotaLimitListResource>> GetGroupQuotaLimitListAsync(string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using DiagnosticScope scope = GroupQuotaLimitListsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = GroupQuotaLimitListsRestClient.CreateUpdateRequest(Id.Name, groupQuotaName, resourceProviderName, location, GroupQuotaLimitListData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation<GroupQuotaLimitListResource> operation = new TestsArmOperation<GroupQuotaLimitListResource>(
-                    new GroupQuotaLimitListOperationSource(Client),
-                    GroupQuotaLimitListsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await GetGroupQuotaLimitLists().GetAsync(groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Create the GroupQuota requests for a specific ResourceProvider/Location/Resource. The resourceName properties are specified in the request body. Only 1 resource quota can be requested. Please note that patch request creates a new groupQuota request.
-        /// Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.
+        /// Gets the GroupQuotaLimits for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -182,7 +144,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GroupQuotaLimitLists_Update. </description>
+        /// <description> GroupQuotaLimitLists_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -190,47 +152,92 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<GroupQuotaLimitListResource> Update(WaitUntil waitUntil, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaLimitListData data = default, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual Response<GroupQuotaLimitListResource> GetGroupQuotaLimitList(string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using DiagnosticScope scope = GroupQuotaLimitListsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = GroupQuotaLimitListsRestClient.CreateUpdateRequest(Id.Name, groupQuotaName, resourceProviderName, location, GroupQuotaLimitListData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation<GroupQuotaLimitListResource> operation = new TestsArmOperation<GroupQuotaLimitListResource>(
-                    new GroupQuotaLimitListOperationSource(Client),
-                    GroupQuotaLimitListsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetGroupQuotaLimitLists().Get(groupQuotaName, resourceProviderName, location, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SubscriptionQuotaAllocationsLists in the <see cref="ManagementGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SubscriptionQuotaAllocationsLists and their operations over a SubscriptionQuotaAllocationsListResource. </returns>
+        public virtual SubscriptionQuotaAllocationsListCollection GetSubscriptionQuotaAllocationsLists()
+        {
+            return GetCachedClient(client => new SubscriptionQuotaAllocationsListCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionQuotaAllocationsLists_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SubscriptionQuotaAllocationsListResource>> GetSubscriptionQuotaAllocationsListAsync(Guid subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
+            return await GetSubscriptionQuotaAllocationsLists().GetAsync(subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionQuotaAllocationsLists_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SubscriptionQuotaAllocationsListResource> GetSubscriptionQuotaAllocationsList(Guid subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
+            return GetSubscriptionQuotaAllocationsLists().Get(subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken);
         }
     }
 }

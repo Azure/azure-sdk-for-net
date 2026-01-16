@@ -92,6 +92,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         public ConversationAuthoringProjectSettings Settings { get; set; }
         /// <summary> The storage container name in case of conversation summarization. </summary>
         public string StorageInputContainerName { get; set; }
+        /// <summary> The new project name. </summary>
+        public string ProjectName { get; }
         /// <summary> Whether the project would be used for multiple languages or not. </summary>
         public bool? Multilingual { get; set; }
         /// <summary> The project description. </summary>

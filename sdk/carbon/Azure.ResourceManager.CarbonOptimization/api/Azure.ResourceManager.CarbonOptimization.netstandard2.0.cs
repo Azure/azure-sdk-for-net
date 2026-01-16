@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionListResult CarbonEmissionListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission> value = null, string skipToken = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CarbonOptimization.Models.SubscriptionAccessDecision> subscriptionAccessDecisionList = null) { throw null; }
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionMonthlySummary CarbonEmissionMonthlySummary(double latestMonthEmissions = 0, double previousMonthEmissions = 0, double? monthOverMonthEmissionsChangeRatio = default(double?), double? monthlyEmissionsChangeValue = default(double?), string date = null, double carbonIntensity = 0) { throw null; }
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionOverallSummary CarbonEmissionOverallSummary(double latestMonthEmissions = 0, double previousMonthEmissions = 0, double? monthOverMonthEmissionsChangeRatio = default(double?), double? monthlyEmissionsChangeValue = default(double?)) { throw null; }
+        public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange CarbonEmissionQueryDateRange(System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset endOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter CarbonEmissionQueryFilter(string reportType = null, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange dateRange = null, System.Collections.Generic.IEnumerable<string> subscriptionList = null, System.Collections.Generic.IEnumerable<string> resourceGroupUrlList = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceType> resourceTypeList = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locationList = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope> carbonScopeList = null) { throw null; }
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionTopItemMonthlySummary CarbonEmissionTopItemMonthlySummary(double latestMonthEmissions = 0, double previousMonthEmissions = 0, double? monthOverMonthEmissionsChangeRatio = default(double?), double? monthlyEmissionsChangeValue = default(double?), string itemName = null, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType categoryType = default(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType), string date = null) { throw null; }
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionTopItemsSummary CarbonEmissionTopItemsSummary(double latestMonthEmissions = 0, double previousMonthEmissions = 0, double? monthOverMonthEmissionsChangeRatio = default(double?), double? monthlyEmissionsChangeValue = default(double?), string itemName = null, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType categoryType = default(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType)) { throw null; }
@@ -58,7 +59,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public double? MonthlyEmissionsChangeValue { get { throw null; } }
         public double? MonthOverMonthEmissionsChangeRatio { get { throw null; } }
         public double PreviousMonthEmissions { get { throw null; } }
+        protected virtual Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -74,12 +78,11 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAccessDecision Allowed { get { throw null; } }
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAccessDecision Denied { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAccessDecision other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAccessDecision left, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAccessDecision right) { throw null; }
         public static implicit operator Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAccessDecision (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAccessDecision? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAccessDecision left, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAccessDecision right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -88,7 +91,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         internal CarbonEmissionAvailableDateRange() { }
         public System.DateTimeOffset EndOn { get { throw null; } }
         public System.DateTimeOffset StartOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAvailableDateRange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAvailableDateRange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAvailableDateRange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAvailableDateRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAvailableDateRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAvailableDateRange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAvailableDateRange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -107,12 +113,11 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType ResourceType { get { throw null; } }
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType Subscription { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType left, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType left, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -121,7 +126,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         internal CarbonEmissionItemDetail() : base (default(double), default(double)) { }
         public Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType CategoryType { get { throw null; } }
         public string ItemName { get { throw null; } }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionItemDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionItemDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionItemDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionItemDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionItemDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -134,7 +142,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public string SkipToken { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CarbonOptimization.Models.SubscriptionAccessDecision> SubscriptionAccessDecisionList { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionListResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionListResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionListResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionListResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionListResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -146,7 +157,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         internal CarbonEmissionMonthlySummary() : base (default(double), default(double)) { }
         public double CarbonIntensity { get { throw null; } }
         public string Date { get { throw null; } }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionMonthlySummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionMonthlySummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionMonthlySummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionMonthlySummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionMonthlySummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -156,7 +170,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
     public partial class CarbonEmissionOverallSummary : Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionOverallSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionOverallSummary>
     {
         internal CarbonEmissionOverallSummary() : base (default(double), default(double)) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionOverallSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionOverallSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionOverallSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionOverallSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionOverallSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -168,7 +185,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public CarbonEmissionQueryDateRange(System.DateTimeOffset startOn, System.DateTimeOffset endOn) { }
         public System.DateTimeOffset EndOn { get { throw null; } }
         public System.DateTimeOffset StartOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -184,7 +204,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public System.Collections.Generic.IList<string> ResourceGroupUrlList { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceType> ResourceTypeList { get { throw null; } }
         public System.Collections.Generic.IList<string> SubscriptionList { get { throw null; } }
+        protected virtual Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -204,12 +227,11 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryOrderByColumn PreviousMonthEmissions { get { throw null; } }
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryOrderByColumn ResourceGroup { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryOrderByColumn other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryOrderByColumn left, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryOrderByColumn right) { throw null; }
         public static implicit operator Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryOrderByColumn (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryOrderByColumn? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryOrderByColumn left, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryOrderByColumn right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -222,12 +244,11 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQuerySortDirection Asc { get { throw null; } }
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQuerySortDirection Desc { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQuerySortDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQuerySortDirection left, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQuerySortDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQuerySortDirection (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQuerySortDirection? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQuerySortDirection left, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQuerySortDirection right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -241,12 +262,11 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope Scope2 { get { throw null; } }
         public static Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope Scope3 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope left, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope left, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -256,7 +276,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType CategoryType { get { throw null; } }
         public string Date { get { throw null; } }
         public string ItemName { get { throw null; } }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionTopItemMonthlySummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionTopItemMonthlySummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionTopItemMonthlySummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionTopItemMonthlySummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionTopItemMonthlySummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -268,7 +291,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         internal CarbonEmissionTopItemsSummary() : base (default(double), default(double)) { }
         public Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType CategoryType { get { throw null; } }
         public string ItemName { get { throw null; } }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionTopItemsSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionTopItemsSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionTopItemsSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionTopItemsSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionTopItemsSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -283,7 +309,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public int PageSize { get { throw null; } }
         public string SkipToken { get { throw null; } set { } }
         public Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQuerySortDirection SortDirection { get { throw null; } }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.ItemDetailsQueryFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.ItemDetailsQueryFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.ItemDetailsQueryFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.ItemDetailsQueryFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.ItemDetailsQueryFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -293,7 +322,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
     public partial class MonthlySummaryReportQueryFilter : Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.MonthlySummaryReportQueryFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.MonthlySummaryReportQueryFilter>
     {
         public MonthlySummaryReportQueryFilter(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange dateRange, System.Collections.Generic.IEnumerable<string> subscriptionList, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope> carbonScopeList) : base (default(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange), default(System.Collections.Generic.IEnumerable<string>), default(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope>)) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.MonthlySummaryReportQueryFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.MonthlySummaryReportQueryFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.MonthlySummaryReportQueryFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.MonthlySummaryReportQueryFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.MonthlySummaryReportQueryFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -303,7 +335,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
     public partial class OverallSummaryReportQueryFilter : Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.OverallSummaryReportQueryFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.OverallSummaryReportQueryFilter>
     {
         public OverallSummaryReportQueryFilter(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange dateRange, System.Collections.Generic.IEnumerable<string> subscriptionList, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope> carbonScopeList) : base (default(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange), default(System.Collections.Generic.IEnumerable<string>), default(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope>)) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.OverallSummaryReportQueryFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.OverallSummaryReportQueryFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.OverallSummaryReportQueryFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.OverallSummaryReportQueryFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.OverallSummaryReportQueryFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -320,7 +355,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionItemDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionItemDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionItemDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionItemDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionItemDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -336,7 +374,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public string ResourceGroup { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionTopItemMonthlySummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionTopItemMonthlySummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionTopItemMonthlySummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionTopItemMonthlySummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionTopItemMonthlySummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -351,7 +392,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public string ResourceGroup { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionTopItemsSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionTopItemsSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionTopItemsSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionTopItemsSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionTopItemsSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -365,7 +409,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public string ItemName { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceGroupId { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionItemDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionItemDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionItemDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionItemDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionItemDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -380,7 +427,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public string ItemName { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceGroupId { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionTopItemMonthlySummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionTopItemMonthlySummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionTopItemMonthlySummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionTopItemMonthlySummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionTopItemMonthlySummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -394,7 +444,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public string ItemName { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceGroupId { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionTopItemsSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionTopItemsSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionTopItemsSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionTopItemsSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionTopItemsSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -407,7 +460,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAccessDecision Decision { get { throw null; } }
         public string DenialReason { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        protected virtual Azure.ResourceManager.CarbonOptimization.Models.SubscriptionAccessDecision JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CarbonOptimization.Models.SubscriptionAccessDecision PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.SubscriptionAccessDecision System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.SubscriptionAccessDecision>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.SubscriptionAccessDecision>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.SubscriptionAccessDecision System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.SubscriptionAccessDecision>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -419,7 +475,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public TopItemsMonthlySummaryReportQueryFilter(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange dateRange, System.Collections.Generic.IEnumerable<string> subscriptionList, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope> carbonScopeList, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType categoryType, int topItems) : base (default(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange), default(System.Collections.Generic.IEnumerable<string>), default(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope>)) { }
         public Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType CategoryType { get { throw null; } }
         public int TopItems { get { throw null; } }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.TopItemsMonthlySummaryReportQueryFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.TopItemsMonthlySummaryReportQueryFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.TopItemsMonthlySummaryReportQueryFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.TopItemsMonthlySummaryReportQueryFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.TopItemsMonthlySummaryReportQueryFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -431,7 +490,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         public TopItemsSummaryReportQueryFilter(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange dateRange, System.Collections.Generic.IEnumerable<string> subscriptionList, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope> carbonScopeList, Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType categoryType, int topItems) : base (default(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange), default(System.Collections.Generic.IEnumerable<string>), default(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionScope>)) { }
         public Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionCategoryType CategoryType { get { throw null; } }
         public int TopItems { get { throw null; } }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CarbonOptimization.Models.TopItemsSummaryReportQueryFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.TopItemsSummaryReportQueryFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CarbonOptimization.Models.TopItemsSummaryReportQueryFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CarbonOptimization.Models.TopItemsSummaryReportQueryFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CarbonOptimization.Models.TopItemsSummaryReportQueryFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

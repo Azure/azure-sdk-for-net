@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct OracleDatabaseSystemShape : IEquatable<OracleDatabaseSystemShape>
     {
         private readonly string _value;
+        /// <summary> Exadata X9M shape. </summary>
+        private const string ExadataX9MValue = "Exadata.X9M";
+        /// <summary> Exadata X11M shape. </summary>
+        private const string ExadataX11MValue = "Exadata.X11M";
+        /// <summary> Exadata DB on Exascale Infrastructure shape. </summary>
+        private const string ExadbXSValue = "ExaDbXS";
 
         /// <summary> Initializes a new instance of <see cref="OracleDatabaseSystemShape"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OracleDatabaseSystemShape(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ExadataX9MValue = "Exadata.X9M";
-        private const string ExadataX11MValue = "Exadata.X11M";
-        private const string ExadbXSValue = "ExaDbXS";
+            _value = value;
+        }
 
         /// <summary> Exadata X9M shape. </summary>
         public static OracleDatabaseSystemShape ExadataX9M { get; } = new OracleDatabaseSystemShape(ExadataX9MValue);
+
         /// <summary> Exadata X11M shape. </summary>
         public static OracleDatabaseSystemShape ExadataX11M { get; } = new OracleDatabaseSystemShape(ExadataX11MValue);
+
         /// <summary> Exadata DB on Exascale Infrastructure shape. </summary>
         public static OracleDatabaseSystemShape ExadbXS { get; } = new OracleDatabaseSystemShape(ExadbXSValue);
+
         /// <summary> Determines if two <see cref="OracleDatabaseSystemShape"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OracleDatabaseSystemShape left, OracleDatabaseSystemShape right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OracleDatabaseSystemShape"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OracleDatabaseSystemShape left, OracleDatabaseSystemShape right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OracleDatabaseSystemShape"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OracleDatabaseSystemShape"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OracleDatabaseSystemShape(string value) => new OracleDatabaseSystemShape(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OracleDatabaseSystemShape"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OracleDatabaseSystemShape?(string value) => value == null ? null : new OracleDatabaseSystemShape(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OracleDatabaseSystemShape other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OracleDatabaseSystemShape other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

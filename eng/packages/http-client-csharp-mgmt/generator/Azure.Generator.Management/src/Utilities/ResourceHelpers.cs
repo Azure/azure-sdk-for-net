@@ -65,7 +65,8 @@ namespace Azure.Generator.Management.Utilities
                 ResourceOperationKind.Create => isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate",
                 // For List operation, only resource collections have GetAll or GetAllAsync methods.
                 ResourceOperationKind.List => !isResourceCollection ? null : isAsync ? "GetAllAsync" : "GetAll",
-                ResourceOperationKind.Get => isAsync ? "GetAsync" : "Get",
+                ResourceOperationKind.Read => isAsync ? "GetAsync" : "Get",
+                ResourceOperationKind.Delete => isAsync ? "DeleteAsync" : "Delete",
                 _ => null
             };
         }
@@ -136,6 +137,49 @@ namespace Azure.Generator.Management.Utilities
                 }
             }
             return operationId;
+        }
+
+        /// <summary>
+        /// Gets the C# type for a request path parameter by its name from the given <see cref="InputServiceMethod"/>.
+        /// <para>
+        /// This method searches the operation's parameters for a path parameter matching <paramref name="parameterName"/> and returns its C# type.
+        /// If the parameter is not found, it defaults to <see cref="string"/> and emits a warning diagnostic.
+        /// </para>
+        /// <para>
+        /// For backward compatibility, if the parameter is named "subscriptionId" and its type is <see cref="Guid"/>, the method returns <see cref="string"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="parameterName">The name of the path parameter to look up.</param>
+        /// <param name="inputMethod">The input service method containing the operation and its parameters.</param>
+        /// <returns>The resolved <see cref="CSharpType"/> for the specified parameter, or <see cref="string"/> if not found.</returns>
+        public static CSharpType GetRequestPathParameterType(string parameterName, InputServiceMethod inputMethod)
+        {
+            foreach (var parameter in inputMethod.Operation.Parameters)
+            {
+                if (parameter is not InputPathParameter)
+                {
+                    continue; // we only find type for path parameters as the method name suggests
+                }
+                if (parameter.SerializedName == parameterName)
+                {
+                    var csharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(parameter.Type) ?? typeof(string);
+                    return parameterName switch
+                    {
+                        // backward compatibility requirement for subscriptionId parameters
+                        "subscriptionId" when csharpType.Equals(typeof(Guid)) => typeof(string),
+                        _ => csharpType
+                    };
+                }
+            }
+
+            // when we did not find it
+            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                code: "general-warning",
+                message: $"Cannot find parameter {parameterName} in operation {inputMethod.CrossLanguageDefinitionId}.",
+                targetCrossLanguageDefinitionId: inputMethod.CrossLanguageDefinitionId
+                );
+
+            return typeof(string); // Default to string if not found
         }
 
         /// <summary>

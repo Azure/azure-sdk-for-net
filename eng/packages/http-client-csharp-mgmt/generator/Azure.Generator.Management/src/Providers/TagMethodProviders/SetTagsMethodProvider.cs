@@ -17,14 +17,14 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
     {
         public SetTagsMethodProvider(
             ResourceClientProvider resource,
-            RequestPathPattern contextualPath,
+            OperationContext operationContext,
             ResourceOperationMethodProvider updateMethodProvider,
             InputServiceMethod getMethod,
             RestClientInfo updateRestClientInfo,
             RestClientInfo getRestClientInfo,
             bool isPatch,
             bool isAsync)
-            : base(resource, contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, isAsync,
+            : base(resource, operationContext, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, isAsync,
                    isAsync ? "SetTagsAsync" : "SetTags",
                    "Replace the tags on the resource with the given set.")
         {
