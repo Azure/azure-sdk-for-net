@@ -45,13 +45,13 @@ internal readonly struct ReferenceConfigurationSection : IConfigurationSection
 
     public string? Value
     {
-        get => DereferenceValue(_section.Value);
+        get => DereferenceValue(_section.Value, null);
         set => _section.Value = value;
     }
 
     public IEnumerable<IConfigurationSection> GetChildren()
     {
-        foreach (var child in _section.GetChildren())
+        foreach (IConfigurationSection? child in _section.GetChildren())
         {
             if (child is not null)
             {
@@ -62,9 +62,9 @@ internal readonly struct ReferenceConfigurationSection : IConfigurationSection
 
     public IChangeToken GetReloadToken() => _section.GetReloadToken();
 
-    public IConfigurationSection GetSection(string key) => new ReferenceConfigurationSection(_config, DereferenceSection(_section.GetSection(key)));
+    public IConfigurationSection GetSection(string key) => new ReferenceConfigurationSection(_config, DereferenceSection(_section.GetSection(key), null));
 
-    private IConfigurationSection DereferenceSection(IConfigurationSection section)
+    private IConfigurationSection DereferenceSection(IConfigurationSection section, HashSet<string>? visited)
     {
         if (!section.Exists())
         {
@@ -82,12 +82,18 @@ internal readonly struct ReferenceConfigurationSection : IConfigurationSection
             return section;
         }
 
-        IConfigurationSection dereferencedSection = _config.GetSection(value.Substring(1));
+        string referencePath = value.Substring(1);
+        visited ??= new HashSet<string>();
 
-        return dereferencedSection.Exists() ? DereferenceSection(dereferencedSection) : section;
+        if (!visited.Add(referencePath))
+            throw new InvalidOperationException($"Circular reference detected in configuration path. The reference chain includes section '{referencePath}' more than once.");
+
+        IConfigurationSection dereferencedSection = _config.GetSection(referencePath);
+
+        return dereferencedSection.Exists() ? DereferenceSection(dereferencedSection, visited) : section;
     }
 
-    private string? DereferenceValue(string? value)
+    private string? DereferenceValue(string? value, HashSet<string>? visited)
     {
         if (string.IsNullOrEmpty(value))
         {
@@ -99,8 +105,14 @@ internal readonly struct ReferenceConfigurationSection : IConfigurationSection
             return value;
         }
 
-        IConfigurationSection section = _config.GetSection(value.Substring(1));
+        string referencePath = value.Substring(1);
+        visited ??= new HashSet<string>();
 
-        return section.Exists() ? DereferenceValue(section.Value) : value;
+        if (!visited.Add(referencePath))
+            throw new InvalidOperationException($"Circular reference detected in configuration path. The reference chain includes section '{referencePath}' more than once.");
+
+        IConfigurationSection section = _config.GetSection(referencePath);
+
+        return section.Exists() ? DereferenceValue(section.Value, visited) : value;
     }
 }

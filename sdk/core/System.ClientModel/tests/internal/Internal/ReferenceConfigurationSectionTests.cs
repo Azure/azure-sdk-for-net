@@ -382,4 +382,59 @@ public class ReferenceConfigurationSectionTests
 
         Assert.IsNotNull(token);
     }
+
+    [Test]
+    public void CircularReferenceValue_ThrowsInvalidOperationException()
+    {
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["A"] = "$B",
+                ["B"] = "$A"
+            })
+            .Build();
+
+        ReferenceConfigurationSection sectionA = new(config, "A");
+
+        InvalidOperationException? ex = Assert.Throws<InvalidOperationException>(() => { var value = sectionA.Value; });
+        Assert.That(ex!.Message, Does.Contain("Circular reference detected"));
+        Assert.That(ex.Message, Does.Contain("reference chain"));
+    }
+
+    [Test]
+    public void CircularReferenceSection_ThrowsInvalidOperationException()
+    {
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["Section:A"] = "$Section:B",
+                ["Section:B"] = "$Section:A"
+            })
+            .Build();
+
+        ReferenceConfigurationSection section = new(config, "Section");
+
+        InvalidOperationException? ex = Assert.Throws<InvalidOperationException>(() => { var childA = section.GetSection("A"); });
+        Assert.That(ex!.Message, Does.Contain("Circular reference detected"));
+        Assert.That(ex.Message, Does.Contain("reference chain"));
+    }
+
+    [Test]
+    public void CircularReferenceChain_ThrowsInvalidOperationException()
+    {
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["A"] = "$B",
+                ["B"] = "$C",
+                ["C"] = "$A"
+            })
+            .Build();
+
+        ReferenceConfigurationSection sectionA = new(config, "A");
+
+        InvalidOperationException? ex = Assert.Throws<InvalidOperationException>(() => { var value = sectionA.Value; });
+        Assert.That(ex!.Message, Does.Contain("Circular reference detected"));
+        Assert.That(ex.Message, Does.Contain("reference chain"));
+    }
 }
