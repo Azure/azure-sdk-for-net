@@ -7,7 +7,6 @@ using Azure.Core.Pipeline;
 using Azure.AI.AgentServer.Core.Common.Http.Json;
 using Azure.AI.AgentServer.Core.Tools.Exceptions;
 using Azure.AI.AgentServer.Core.Tools.Models;
-using Azure.AI.AgentServer.Core.Tools.Utilities;
 
 namespace Azure.AI.AgentServer.Core.Tools.Operations;
 
@@ -180,9 +179,8 @@ internal class FoundryConnectedToolsOperations
             return Array.Empty<ResolvedFoundryTool>();
         }
 
-        var enrichedTools = ConnectedToolsMetadataBuilder.ParseEnrichedTools(toolsElement, _options.ToolConfig.ConnectedTools);
-
-        return ToolDescriptorBuilder.BuildDescriptors(enrichedTools, FoundryToolSource.CONNECTED);
+        var enrichedTools = ParseConnectedTools(toolsElement, _options.ToolConfig.ConnectedTools);
+        return BuildResolvedTools(enrichedTools);
     }
 
     private async Task<IReadOnlyList<ResolvedFoundryTool>> ProcessResolveToolsResponseAsync(
@@ -206,9 +204,8 @@ internal class FoundryConnectedToolsOperations
             return Array.Empty<ResolvedFoundryTool>();
         }
 
-        var enrichedTools = ConnectedToolsMetadataBuilder.ParseEnrichedTools(toolsElement, _options.ToolConfig.ConnectedTools);
-
-        return ToolDescriptorBuilder.BuildDescriptors(enrichedTools, FoundryToolSource.CONNECTED);
+        var enrichedTools = ParseConnectedTools(toolsElement, _options.ToolConfig.ConnectedTools);
+        return BuildResolvedTools(enrichedTools);
     }
 
     private object? ProcessInvokeToolResponse(Response response)
@@ -273,5 +270,105 @@ internal class FoundryConnectedToolsOperations
 
             throw new OAuthConsentRequiredException(message ?? "OAuth consent required", consentUrl);
         }
+    }
+
+    private static IReadOnlyList<FoundryToolDetails> ParseConnectedTools(
+        JsonElement toolsElement,
+        IReadOnlyList<FoundryConnectedTool> foundryTools)
+    {
+        var enrichedTools = new List<FoundryToolDetails>();
+
+        foreach (var toolEntry in toolsElement.EnumerateArray())
+        {
+            if (!toolEntry.TryGetProperty("remoteServer", out var remoteServer))
+            {
+                continue;
+            }
+
+            var projectConnectionId = remoteServer.TryGetProperty("projectConnectionId", out var projectIdElement)
+                ? projectIdElement.GetString()
+                : null;
+            var protocol = remoteServer.TryGetProperty("protocol", out var protocolElement)
+                ? protocolElement.GetString()
+                : null;
+
+            var foundryTool = foundryTools.FirstOrDefault(td =>
+                string.Equals(td.Type, protocol, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(td.ProjectConnectionId, projectConnectionId, StringComparison.OrdinalIgnoreCase));
+
+            if (!toolEntry.TryGetProperty("manifest", out var manifestArray))
+            {
+                continue;
+            }
+
+            foreach (var manifest in manifestArray.EnumerateArray())
+            {
+                var name = manifest.TryGetProperty("name", out var nameElement)
+                    ? nameElement.GetString()
+                    : null;
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    continue;
+                }
+
+                var description = manifest.TryGetProperty("description", out var descElement)
+                    ? descElement.GetString()
+                    : null;
+                var inputSchema = manifest.TryGetProperty("parameters", out var parametersElement)
+                    ? JsonSerializer.Deserialize<Dictionary<string, object?>>(
+                        parametersElement.GetRawText(),
+                        JsonExtensions.DefaultJsonSerializerOptions)
+                    : null;
+
+                var metadata = new Dictionary<string, object?>
+                {
+                    ["name"] = name,
+                    ["description"] = description,
+                    ["foundry_tool"] = foundryTool,
+                    ["projectConnectionId"] = projectConnectionId,
+                    ["protocol"] = protocol
+                };
+
+                if (inputSchema != null)
+                {
+                    metadata["inputSchema"] = inputSchema;
+                }
+
+                enrichedTools.Add(new FoundryToolDetails(
+                    name,
+                    description ?? string.Empty,
+                    metadata,
+                    inputSchema,
+                    foundryTool,
+                    projectConnectionId,
+                    protocol));
+            }
+        }
+
+        return enrichedTools;
+    }
+
+    private static IReadOnlyList<ResolvedFoundryTool> BuildResolvedTools(IReadOnlyList<FoundryToolDetails> tools)
+    {
+        if (tools.Count == 0)
+        {
+            return Array.Empty<ResolvedFoundryTool>();
+        }
+
+        var descriptors = new List<ResolvedFoundryTool>(tools.Count);
+
+        foreach (var tool in tools)
+        {
+            descriptors.Add(new ResolvedFoundryTool
+            {
+                Name = tool.Name,
+                Description = tool.Description,
+                Metadata = tool.Metadata,
+                InputSchema = tool.InputSchema,
+                FoundryTool = tool.FoundryTool
+            });
+        }
+
+        return descriptors;
     }
 }
